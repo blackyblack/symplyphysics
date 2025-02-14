@@ -11,7 +11,6 @@ rotates and the orbital velocity.
 
 ..
     TODO: find link
-    TODO: move to `gravity`?
     TODO: rename file
 """
 

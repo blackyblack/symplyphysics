@@ -16,7 +16,6 @@ and the velocity of the rocket relative to the planet.
 
 ..
     TODO find link to law
-    TODO move law to `gravity`?
 """
 
 from sympy import Eq, solve, atan

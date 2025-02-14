@@ -15,7 +15,6 @@ when aiming range is at planet radius.
 
 ..
     TODO find link
-    TODO move law to `gravity`?
 """
 
 from sympy import (Eq, solve, atan)

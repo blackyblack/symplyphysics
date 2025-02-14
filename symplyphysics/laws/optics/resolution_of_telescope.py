@@ -13,8 +13,6 @@ distinguished separately in the telescope.
 from sympy import Eq, solve
 from symplyphysics import units, Quantity, validate_input, validate_output, symbols
 
-# TODO: move to `optics`?
-
 resolution = symbols.angular_resolution
 """
 :symbols:`angular_resolution` of the telescope.
