@@ -1,12 +1,13 @@
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     dimensionless,
     convert_to_float,
+    symbols,
+    clone_as_symbol,
 )
 
 # Description
@@ -22,12 +23,13 @@ from symplyphysics import (
 
 # Link: Physics LibreTexts, formula <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_III_-_Optics_and_Modern_Physics_(OpenStax)/02%3A_Geometric_Optics_and_Image_Formation/2.09%3A_Microscopes_and_Telescopes#mjx-eqn-eq2.36>
 
-# TODO: move law to `optics`?
+# TODO: update documentation
 
-angular_magnification = Symbol("angular_magnification", dimensionless)
+angular_magnification = SymbolNew("G", dimensionless)
+# TODO: add to `symbols`
 
-focal_length_lens = Symbol("focal_length_lens", units.length)
-focal_length_eyepiece = Symbol("focal_length_eyepiece", units.length)
+focal_length_lens = clone_as_symbol(symbols.focal_length, display_symbol="F", display_latex="F")
+focal_length_eyepiece = symbols.focal_length
 
 law = Eq(angular_magnification, focal_length_lens / focal_length_eyepiece)
 

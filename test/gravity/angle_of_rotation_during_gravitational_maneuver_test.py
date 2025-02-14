@@ -1,8 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (errors, units, Quantity, assert_equal)
-
-from symplyphysics.laws.astronomy import angle_of_rotation_during_gravitational_maneuver as angle_law
+from symplyphysics.laws.gravity import angle_of_rotation_during_gravitational_maneuver as angle_law
 
 ## The mass of the Earth is 5.97e24 kilograms, the aiming range is equal to the geodetic orbit of the Earth 43,000 kilometers.
 ## Then, at a rocket speed equal to the second cosmic velocity of the Earth 11.2 kilometers per second, the angle of rotation will be 0.1475 radians.

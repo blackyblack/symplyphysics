@@ -1,8 +1,6 @@
 from sympy import Expr
-from sympy.physics.units import speed_of_light
 from symplyphysics import (
     units,
-    Symbol,
     Quantity,
     validate_input,
     validate_output,
@@ -10,7 +8,9 @@ from symplyphysics import (
     scale_vector,
     QuantityVector,
     vector_magnitude,
+    symbols,
 )
+from symplyphysics.quantities import speed_of_light
 
 # Description
 ## Relativistic momentum and total relativistic energy are related by a simple equation.
@@ -24,7 +24,7 @@ from symplyphysics import (
 # Links: Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Energy%E2%80%93momentum_relation#Heuristic_approach_for_massive_particles>
 # TODO: find a more exact link
 
-total_energy = Symbol("total_energy", units.energy)
+total_energy = symbols.energy
 
 
 def momentum_law(velocity_: Vector) -> Vector:

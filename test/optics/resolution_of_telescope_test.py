@@ -6,7 +6,7 @@ from symplyphysics import (
     Quantity,
     errors,
 )
-from symplyphysics.laws.astronomy import resolution_of_telescope as resolution_law
+from symplyphysics.laws.optics import resolution_of_telescope as resolution_law
 
 # Description
 ## Let the wavelength be 550 nanometers and the diameter of the lens be 4 millimeters.

@@ -1,5 +1,5 @@
 from sympy import Eq, Symbol as SymSymbol, sin, solve
-from symplyphysics import Quantity, print_expression
+from symplyphysics import Quantity
 from symplyphysics.core.symbols.quantities import scale_factor
 
 # Description
@@ -15,16 +15,14 @@ from symplyphysics.core.symbols.quantities import scale_factor
 
 # Condition: cross product is only defined for 3- (and 7-) dimensional vectors.
 
+# TODO: update documentation
+
 cross_product_norm = SymSymbol("cross_product_norm", positive=True)
 vector_left_norm = SymSymbol("vector_left_norm", positive=True)
 vector_right_norm = SymSymbol("vector_right_norm", positive=True)
 angle_between_vectors = SymSymbol("cosine_between_vectors", real=True)
 
 law = Eq(cross_product_norm, vector_left_norm * vector_right_norm * sin(angle_between_vectors))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 def calculate_sine_between_vectors(
