@@ -26,7 +26,7 @@ from symplyphysics import (
 ## D - lens diameter,
 ## F - focal length of the lens.
 
-relative_aperture = SymbolNew("relative_aperture", dimensionless)
+relative_aperture = SymbolNew("A", dimensionless)
 
 lens_diameter = symbols.diameter
 focal_length_lens = symbols.focal_length

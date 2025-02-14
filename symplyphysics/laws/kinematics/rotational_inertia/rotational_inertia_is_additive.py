@@ -24,14 +24,17 @@ total_rotational_inertia = symbols.rotational_inertia
 Total :symbols:`rotational_inertia` of the system.
 """
 
-_index = Idx("k")
+index = Idx("k")
+"""
+Index assigned to each part of the system.
+"""
 
-rotational_inertia = clone_as_indexed(symbols.rotational_inertia, _index)
+rotational_inertia = clone_as_indexed(symbols.rotational_inertia, index)
 """
 :symbols:`rotational_inertia` of the :math:`k`-th part of the system.
 """
 
-law = Eq(total_rotational_inertia, SumIndexed(rotational_inertia[_index], _index))
+law = Eq(total_rotational_inertia, SumIndexed(rotational_inertia[index], index))
 """
 :laws:symbol::
 
@@ -43,7 +46,7 @@ law = Eq(total_rotational_inertia, SumIndexed(rotational_inertia[_index], _index
 @validate_output(total_rotational_inertia)
 def calculate_rotational_inertia(rotational_inertias_: Sequence[Quantity]) -> Quantity:
     local_index = Idx("index_local", (1, len(rotational_inertias_)))
-    rotational_inertia_law = law.subs(_index, local_index)
+    rotational_inertia_law = law.subs(index, local_index)
     rotational_inertia_law = rotational_inertia_law.doit()
     solved = solve(rotational_inertia_law, total_rotational_inertia,
         dict=True)[0][total_rotational_inertia]

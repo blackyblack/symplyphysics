@@ -30,10 +30,10 @@ from symplyphysics.core.symbols.quantities import scale_factor
 # TODO: update documentation
 
 shear_stress = symbols.stress
-shear_modulus = SymbolNew("shear_modulus", units.pressure)
+shear_modulus = SymbolNew("G", units.pressure)
 # TODO: add to `symbols`
 
-shear_strain = SymbolNew("shear_strain", angle_type)
+shear_strain = SymbolNew("gamma", angle_type, display_latex="\\gamma")
 # TODO: add to `symbols`
 
 law = Eq(shear_stress, shear_modulus * shear_strain)

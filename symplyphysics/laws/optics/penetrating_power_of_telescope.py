@@ -21,7 +21,7 @@ from symplyphysics import (
 # TODO: find English link
 # TODO: update documentation
 
-penetrating_power_telescope = SymbolNew("penetrating_power_telescope", dimensionless)
+penetrating_power_telescope = SymbolNew("m", dimensionless)
 # TODO: add to `symbols`
 
 lens_diameter = symbols.diameter

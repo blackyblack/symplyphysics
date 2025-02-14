@@ -25,7 +25,7 @@ from symplyphysics import (
 
 # TODO: update documentation
 
-angular_magnification = SymbolNew("angular_magnification", dimensionless)
+angular_magnification = SymbolNew("G", dimensionless)
 # TODO: add to `symbols`
 
 focal_length_lens = clone_as_symbol(symbols.focal_length, display_symbol="F", display_latex="F")
