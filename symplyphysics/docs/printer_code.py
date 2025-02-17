@@ -88,7 +88,7 @@ class SymbolCodePrinter(StrPrinter):
         return f"{name}({args_str})"
 
     # pylint: disable-next=invalid-name
-    def _print_SumIndexed(self, expr: Any) -> str:
+    def _print_IndexedSum(self, expr: Any) -> str:
         # only one index of sum is supported
         # expr.args[0] contains the argument of the Sum
         # expr.args[1] contains just indexed symbol

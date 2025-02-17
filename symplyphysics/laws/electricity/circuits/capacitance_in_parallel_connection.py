@@ -19,7 +19,7 @@ from symplyphysics import (
     Quantity,
     validate_input,
     validate_output,
-    SumIndexed,
+    IndexedSum,
     global_index,
     symbols,
 )
@@ -38,7 +38,7 @@ capacitance = clone_as_indexed(symbols.capacitance)
 :symbols:`capacitance` of :math:`i`-th capacitor.
 """
 
-law = Eq(total_capacitance, SumIndexed(capacitance[global_index], global_index))
+law = Eq(total_capacitance, IndexedSum(capacitance[global_index], global_index))
 """
 :laws:symbol::
 

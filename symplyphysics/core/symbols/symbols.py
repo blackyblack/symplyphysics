@@ -61,7 +61,7 @@ class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
 
 
 
-# This is default index for indexed parameters, e.g. for using in SumIndexed
+# This is default index for indexed parameters, e.g. for using in IndexedSum
 global_index = Idx("i")
 
 
@@ -174,8 +174,8 @@ class SymbolPrinter(PrettyPrinter):
             right=right)
 
     # pylint: disable-next=invalid-name
-    def _print_SumIndexed(self, e: Expr) -> prettyForm:
-        return self._print_Function(e, func_name="SumIndexed")
+    def _print_IndexedSum(self, e: Expr) -> prettyForm:
+        return self._print_Function(e, func_name="IndexedSum")
 
 
 def next_name(name: str) -> str:

@@ -25,7 +25,7 @@ from symplyphysics import (
     validate_output,
     global_index,
     IndexedSymbol,
-    SumIndexed,
+    IndexedSum,
     symbols,
 )
 
@@ -39,7 +39,7 @@ occupancy = IndexedSymbol("N", dimension=dimensionless)
 Occupancy of energy level or particle state of index :math:`i`.
 """
 
-law = Eq(total_particle_count, SumIndexed(occupancy[global_index], global_index))
+law = Eq(total_particle_count, IndexedSum(occupancy[global_index], global_index))
 """
 :laws:symbol::
 

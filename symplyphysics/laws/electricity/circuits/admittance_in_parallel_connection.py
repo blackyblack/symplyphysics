@@ -21,7 +21,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     global_index,
-    SumIndexed,
+    IndexedSum,
     symbols,
 )
 from symplyphysics.core.symbols.symbols import clone_as_indexed
@@ -36,7 +36,7 @@ admittance = clone_as_indexed(symbols.admittance)
 :symbols:`admittance` of :math:`i`-th circuit.
 """
 
-law = Eq(total_admittance, SumIndexed(admittance[global_index], global_index))
+law = Eq(total_admittance, IndexedSum(admittance[global_index], global_index))
 """
 :laws:symbol::
 

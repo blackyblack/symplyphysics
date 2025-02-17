@@ -2,7 +2,7 @@ from typing import Any, Self
 from sympy import Expr, Basic, Idx, Sum
 
 
-class SumIndexed(Expr):
+class IndexedSum(Expr):
     """
     Represents unevaluated Sum for expression with indexed variables.
 

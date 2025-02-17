@@ -17,7 +17,7 @@ from symplyphysics import (
     Quantity,
     validate_input,
     validate_output,
-    SumIndexed,
+    IndexedSum,
     global_index,
     symbols,
 )
@@ -28,7 +28,7 @@ r"""
 :math:`i`-th voltage.
 """
 
-law = Eq(SumIndexed(voltage[global_index], global_index), 0)
+law = Eq(IndexedSum(voltage[global_index], global_index), 0)
 """
 :laws:symbol::
 

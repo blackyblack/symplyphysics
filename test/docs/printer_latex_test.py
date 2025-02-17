@@ -8,7 +8,7 @@ from symplyphysics import (
     clone_as_symbol,
     units,
     IndexedSymbol,
-    SumIndexed,
+    IndexedSum,
     ProductIndexed,
     global_index,
 )
@@ -282,11 +282,11 @@ def test_indexed_symbol() -> None:
 
 def test_indexed_sum() -> None:
     f = IndexedSymbol("F")
-    expr = SumIndexed(f[global_index], global_index)
+    expr = IndexedSum(f[global_index], global_index)
     assert latex_str(expr) == "\\sum_i {F}_{i}"
 
     with evaluate(False):
-        expr = SumIndexed(f[global_index]**2, global_index)
+        expr = IndexedSum(f[global_index]**2, global_index)
     assert latex_str(expr) == "\\sum_i {F}_{i}^{2}"
 
 

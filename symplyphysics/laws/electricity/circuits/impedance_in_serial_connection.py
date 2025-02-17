@@ -19,7 +19,7 @@ from symplyphysics import (
     Quantity,
     validate_input,
     validate_output,
-    SumIndexed,
+    IndexedSum,
     global_index,
     symbols,
 )
@@ -35,7 +35,7 @@ r"""
 :symbols:`electrical_impedance` of the :math:`i`-th component.
 """
 
-law = Eq(total_impedance, SumIndexed(impedance[global_index], global_index))
+law = Eq(total_impedance, IndexedSum(impedance[global_index], global_index))
 """
 :laws:symbol::
 

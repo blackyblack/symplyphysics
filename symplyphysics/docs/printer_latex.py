@@ -151,7 +151,7 @@ class SymbolLatexPrinter(LatexPrinter):
         return self._do_exponent(tex, exp)
 
     # pylint: disable-next=invalid-name
-    def _print_SumIndexed(self, expr: Any) -> str:
+    def _print_IndexedSum(self, expr: Any) -> str:
         # only one index of product is supported
         # expr.args[0] contains the argument of the Product
         # expr.args[1] contains just indexed symbol

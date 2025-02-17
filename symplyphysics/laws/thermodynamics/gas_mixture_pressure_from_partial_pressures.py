@@ -17,7 +17,7 @@ from symplyphysics import (
     Quantity,
     validate_input,
     validate_output,
-    SumIndexed,
+    IndexedSum,
     global_index,
     symbols,
 )
@@ -36,7 +36,7 @@ partial_pressure = clone_as_indexed(symbols.pressure)
 Partial :symbols:`pressure` of the :math:`i`-th gas component.
 """
 
-law = Eq(total_pressure, SumIndexed(partial_pressure[global_index], global_index))
+law = Eq(total_pressure, IndexedSum(partial_pressure[global_index], global_index))
 """
 :laws:symbol::
 
