@@ -9,7 +9,7 @@ from sympy.matrices.dense import DenseMatrix
 from sympy.printing.latex import LatexPrinter, accepted_latex_functions
 from sympy.core.function import AppliedUndef
 from sympy.simplify import fraction
-from ..core.symbols.symbols import DimensionSymbolNew, Function, SymbolIndexedNew
+from ..core.symbols.symbols import DimensionSymbol, Function, SymbolIndexedNew
 
 _between_two_numbers_p = (
     re.compile(r"[0-9][} ]*$"),  # search
@@ -44,7 +44,7 @@ class SymbolLatexPrinter(LatexPrinter):
 
     # pylint: disable-next=invalid-name
     def _print_Symbol(self, expr: Any, style: str = "plain") -> str:
-        display_name = expr.display_latex if isinstance(expr, DimensionSymbolNew) else getattr(
+        display_name = expr.display_latex if isinstance(expr, DimensionSymbol) else getattr(
             expr, "name")
         name: str = self._settings["symbol_names"].get(display_name)
         if name is not None:
@@ -63,9 +63,9 @@ class SymbolLatexPrinter(LatexPrinter):
     def _print_Function(self, expr: Any, exp: Any = None) -> str:
         # pylint: disable=too-many-branches
         func = expr.func.__name__
-        if isinstance(expr, DimensionSymbolNew):
+        if isinstance(expr, DimensionSymbol):
             func = expr.display_latex
-        if isinstance(expr.func, DimensionSymbolNew):
+        if isinstance(expr.func, DimensionSymbol):
             func = expr.func.display_latex
 
         if hasattr(self, "_print_" + func) and not isinstance(expr, AppliedUndef):

@@ -10,7 +10,7 @@ from sympy.concrete.products import Product
 from sympy.concrete.summations import Sum
 from sympy.integrals.integrals import Integral
 from sympy.printing.precedence import precedence, precedence_traditional, PRECEDENCE
-from ..core.symbols.symbols import DimensionSymbolNew, Function, SymbolIndexedNew
+from ..core.symbols.symbols import DimensionSymbol, Function, SymbolIndexedNew
 
 
 class SymbolCodePrinter(StrPrinter):
@@ -23,7 +23,7 @@ class SymbolCodePrinter(StrPrinter):
 
     # pylint: disable-next=invalid-name
     def _print_Symbol(self, expr: Any) -> str:
-        return expr.display_name if isinstance(expr, DimensionSymbolNew) else getattr(expr, "name")
+        return expr.display_name if isinstance(expr, DimensionSymbol) else getattr(expr, "name")
 
     # pylint: disable-next=invalid-name
     def _print_Quantity(self, expr: Any) -> str:
@@ -69,7 +69,7 @@ class SymbolCodePrinter(StrPrinter):
 
     # pylint: disable-next=invalid-name
     def _print_Function(self, expr: Any) -> str:
-        if isinstance(expr, DimensionSymbolNew):
+        if isinstance(expr, DimensionSymbol):
             if isinstance(expr, Function):
                 name = expr.display_name
                 args_str = self.stringify(expr.arguments, ", ")
@@ -77,7 +77,7 @@ class SymbolCodePrinter(StrPrinter):
                 return expr.display_name
         else:
             func = expr.func
-            if isinstance(func, DimensionSymbolNew):
+            if isinstance(func, DimensionSymbol):
                 if isinstance(func, Function):
                     name = func.display_name
                 else:

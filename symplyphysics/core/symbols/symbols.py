@@ -10,7 +10,7 @@ from sympy.printing.pretty.pretty_symbology import pretty_symbol, pretty_use_uni
 from .id_generator import next_id
 
 
-class DimensionSymbolNew:
+class DimensionSymbol:
     _dimension: Dimension
     _display_name: str
     _display_latex: str
@@ -40,7 +40,7 @@ class DimensionSymbolNew:
         return p.doprint(self.display_name)
 
 
-class Symbol(DimensionSymbolNew, SymSymbol):  # pylint: disable=too-many-ancestors
+class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
 
     def __new__(cls,
         display_symbol: Optional[str] = None,
@@ -65,7 +65,7 @@ class Symbol(DimensionSymbolNew, SymSymbol):  # pylint: disable=too-many-ancesto
 global_index = Idx("i")
 
 
-class SymbolIndexedNew(DimensionSymbolNew, IndexedBase):  # pylint: disable=too-many-ancestors
+class SymbolIndexedNew(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-ancestors
     index: Idx
 
     def __new__(cls,
@@ -96,7 +96,7 @@ class SymbolIndexedNew(DimensionSymbolNew, IndexedBase):  # pylint: disable=too-
         pass
 
 
-class Function(DimensionSymbolNew, UndefinedFunction):
+class Function(DimensionSymbol, UndefinedFunction):
     arguments: Sequence[Expr]
 
     # NOTE: Self type cannot be used in a metaclass and 'mcs' is a metaclass here

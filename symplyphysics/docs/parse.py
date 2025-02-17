@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Optional
 from sympy.physics.units.systems.si import SI
-from ..core.symbols.symbols import DimensionSymbolNew, Function
+from ..core.symbols.symbols import DimensionSymbol, Function
 from .printer_code import code_str
 from .printer_latex import latex_str
 
@@ -163,7 +163,7 @@ def find_members_and_functions(content: ast.Module) -> list[MemberWithDoc | Func
         doc = _docstring_clean(doc)
         sym = ctx[v]
         law_symbol = None
-        if isinstance(sym, DimensionSymbolNew):
+        if isinstance(sym, DimensionSymbol):
             dimension = "dimensionless" if SI.get_dimension_system().is_dimensionless(
                 sym.dimension) else str(sym.dimension.name)
             symbol_name = code_str(sym)
