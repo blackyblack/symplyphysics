@@ -20,7 +20,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = law.calculate_rotational_stiffness(test_args.tau, test_args.phi)
-    assert_equal(result, 230 * units.newton * units.meter / units.radian, tolerance=4e-3)
+    assert_equal(result, 230 * units.newton * units.meter / units.radian, relative_tolerance=4e-3)
 
 
 def test_bad_torque(test_args: Args) -> None:

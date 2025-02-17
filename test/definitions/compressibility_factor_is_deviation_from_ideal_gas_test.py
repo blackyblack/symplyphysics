@@ -29,7 +29,7 @@ def test_args_fixture() -> Args:
 def test_definition(test_args: Args) -> None:
     result = deviation_def.calculate_compressibility_factor(test_args.p, test_args.v, test_args.n,
         test_args.t)
-    assert_equal(result, 1.1, tolerance=3e-3)
+    assert_equal(result, 1.1, relative_tolerance=3e-3)
 
 
 def test_bad_pressure(test_args: Args) -> None:

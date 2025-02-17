@@ -22,7 +22,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = law.calculate_internal_energy_density_change(test_args.dq, test_args.e, test_args.dd)
-    assert_equal(result, 4.1e-2 * units.joule / units.meter**3, tolerance=5e-3)
+    assert_equal(result, 4.1e-2 * units.joule / units.meter**3, relative_tolerance=5e-3)
 
 
 def test_bad_heat(test_args: Args) -> None:

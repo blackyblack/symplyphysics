@@ -25,7 +25,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = sound_speed_law.calculate_speed_of_sound(test_args.b, test_args.rho)
-    assert_equal(result, 343 * units.meter / units.second, tolerance=2e-3)
+    assert_equal(result, 343 * units.meter / units.second, relative_tolerance=2e-3)
 
 
 def test_bad_bulk_modulus(test_args: Args) -> None:

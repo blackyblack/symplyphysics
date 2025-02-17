@@ -28,7 +28,7 @@ def test_args_fixture() -> Args:
 def test_definition(test_args: Args) -> None:
     result = compressibility_def.calculate_compressibility(test_args.v1, test_args.v2, test_args.p1,
         test_args.p2)
-    assert_equal(result, 0.2 / units.pascal, tolerance=2e-3)
+    assert_equal(result, 0.2 / units.pascal, relative_tolerance=2e-3)
 
 
 def test_bad_volume(test_args: Args) -> None:

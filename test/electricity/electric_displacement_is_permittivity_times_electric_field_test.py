@@ -16,7 +16,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = law.calculate_electric_displacement(test_args.eps, test_args.e)
-    assert_equal(result, 7.2e-7 * units.coulomb / units.meter**2, tolerance=4e-3)
+    assert_equal(result, 7.2e-7 * units.coulomb / units.meter**2, relative_tolerance=4e-3)
 
 
 def test_bad_permittivity(test_args: Args) -> None:

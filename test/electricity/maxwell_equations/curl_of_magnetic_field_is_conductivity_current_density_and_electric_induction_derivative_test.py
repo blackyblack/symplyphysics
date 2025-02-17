@@ -99,13 +99,13 @@ def test_basic_electric_induction_time_derivative(test_args: Args) -> None:
     # Increase tolerance due to very small comparables
     assert_equal(result_at_point.components[0],
         electric_induction_at_point_quantity.components[0],
-        tolerance=0.1)
+        relative_tolerance=0.1)
     assert_equal(result_at_point.components[1],
         electric_induction_at_point_quantity.components[1],
-        tolerance=0.1)
+        relative_tolerance=0.1)
     assert_equal(result_at_point.components[2],
         electric_induction_at_point_quantity.components[2],
-        tolerance=0.1)
+        relative_tolerance=0.1)
 
 
 def test_bad_coordinates(test_args: Args) -> None:

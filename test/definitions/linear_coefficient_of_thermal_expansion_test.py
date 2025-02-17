@@ -27,7 +27,7 @@ def test_args_fixture() -> Args:
 def test_law(test_args: Args) -> None:
     result = coefficient_def.calculate_linear_expansion_coefficient(test_args.l0, test_args.l1,
         test_args.t0, test_args.t1)
-    assert_equal(result, 9.9e-3 / units.kelvin, tolerance=6e-3)
+    assert_equal(result, 9.9e-3 / units.kelvin, relative_tolerance=6e-3)
 
 
 def test_bad_length(test_args: Args) -> None:

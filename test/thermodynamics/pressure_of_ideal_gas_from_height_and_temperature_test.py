@@ -26,7 +26,7 @@ def test_args_fixture() -> Args:
 def test_basic_law(test_args: Args) -> None:
     result = pressure_of_ideal_gas.calculate_final_pressure(test_args.initial_pressure,
         test_args.molecular_mass, test_args.height_change, test_args.temperature)
-    assert_equal(result, 5.6e4 * units.pascal, tolerance=0.01)
+    assert_equal(result, 5.6e4 * units.pascal, relative_tolerance=0.01)
 
 
 def test_bad_pressure(test_args: Args) -> None:

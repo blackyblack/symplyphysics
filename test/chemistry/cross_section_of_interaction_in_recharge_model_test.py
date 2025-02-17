@@ -40,7 +40,7 @@ def test_basic_cross_sectional_area_of_interaction(test_args: Args) -> None:
         test_args.temperature,
         test_args.electric_intensity,
     )
-    assert_equal(result, 1.31e-18 * units.meter**2, tolerance=0.01)
+    assert_equal(result, 1.31e-18 * units.meter**2, relative_tolerance=0.01)
 
 
 def test_bad_ionization_energy(test_args: Args) -> None:

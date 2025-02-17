@@ -30,7 +30,7 @@ def test_args_fixture() -> Args:
 def test_law(test_args: Args) -> None:
     result = gibbs_helmholtz_law.calculate_enthalpy(test_args.g0, test_args.g1, test_args.t0,
         test_args.t1, test_args.t)
-    assert_equal(result, -1.4 * prefixes.kilo * units.joule, tolerance=4e-3)
+    assert_equal(result, -1.4 * prefixes.kilo * units.joule, relative_tolerance=4e-3)
 
 
 def test_bad_energy(test_args: Args) -> None:

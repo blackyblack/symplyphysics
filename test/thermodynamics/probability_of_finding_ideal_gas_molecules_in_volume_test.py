@@ -22,7 +22,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = probability_law.calculate_probability(test_args.v0, test_args.v, test_args.n)
-    assert_equal(result, 1.75e-46, tolerance=2e-3)
+    assert_equal(result, 1.75e-46, relative_tolerance=2e-3)
 
 
 def test_bad_volume(test_args: Args) -> None:

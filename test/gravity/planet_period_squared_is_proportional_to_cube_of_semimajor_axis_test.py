@@ -25,7 +25,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = law_of_periods.calculate_rotation_period(test_args.M, test_args.a)
-    assert_equal(result, 73.1 * units.year, tolerance=1e-2)
+    assert_equal(result, 73.1 * units.year, relative_tolerance=1e-2)
 
 
 def test_bad_mass(test_args: Args) -> None:

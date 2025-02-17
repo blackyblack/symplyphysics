@@ -29,7 +29,7 @@ def test_args_fixture() -> Args:
 def test_law(test_args: Args) -> None:
     result = intensity_law.calculate_intensity(test_args.rho, test_args.v, test_args.w,
         test_args.s_max)
-    assert_equal(result, 0.82 * units.watt / units.meter**2, tolerance=2e-3)
+    assert_equal(result, 0.82 * units.watt / units.meter**2, relative_tolerance=2e-3)
 
 
 def test_bad_density(test_args: Args) -> None:

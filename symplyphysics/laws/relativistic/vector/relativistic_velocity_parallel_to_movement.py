@@ -102,7 +102,7 @@ def calculate_parallel_velocity_component_in_lab_frame(
         proper_frame_velocity_.to_base_vector(),
     )
 
-    assert_equal(Quantity(vector_magnitude(cross)).scale_factor, 0, tolerance=tolerance_)
+    assert_equal(Quantity(vector_magnitude(cross)).scale_factor, 0, relative_tolerance=tolerance_)
 
     result = parallel_velocity_component_in_lab_frame_law(
         parallel_velocity_component_in_proper_frame_.to_base_vector(),

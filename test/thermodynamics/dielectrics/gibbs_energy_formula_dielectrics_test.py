@@ -16,7 +16,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = law.calculate_gibbs_energy_density(test_args.f, test_args.e, test_args.d)
-    assert_equal(result, -8 * units.joule / units.meter**3, tolerance=4e-3)
+    assert_equal(result, -8 * units.joule / units.meter**3, relative_tolerance=4e-3)
 
 
 def test_bad_free_energy_density(test_args: Args) -> None:

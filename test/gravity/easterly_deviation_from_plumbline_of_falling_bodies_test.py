@@ -23,7 +23,7 @@ def test_args_fixture() -> Args:
 def test_law(test_args: Args) -> None:
     result = law.calculate_easterly_deviation_from_plumbline(test_args.tf, test_args.tr,
         test_args.h, test_args.lat)
-    assert_equal(result, 1.2 * units.centimeter, tolerance=2e-2)
+    assert_equal(result, 1.2 * units.centimeter, relative_tolerance=2e-2)
 
 
 def test_bad_time(test_args: Args) -> None:

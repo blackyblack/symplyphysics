@@ -29,7 +29,7 @@ def test_args_fixture() -> Args:
 def test_law(test_args: Args) -> None:
     result = standing_wave_law.calculate_displacement(test_args.a, test_args.k, test_args.x,
         test_args.w, test_args.t)
-    assert_equal(result, -3.6 * units.centimeter, tolerance=6e-3)
+    assert_equal(result, -3.6 * units.centimeter, relative_tolerance=6e-3)
 
 
 def test_bad_angular_wavenumber(test_args: Args) -> None:

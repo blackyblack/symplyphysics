@@ -24,7 +24,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = heat_capacity_law.calculate_isochoric_molar_heat_capacity(test_args.gamma)
-    assert_equal(result, 12.5 * units.joule / (units.kelvin * units.mole), tolerance=3e-3)
+    assert_equal(result, 12.5 * units.joule / (units.kelvin * units.mole), relative_tolerance=3e-3)
 
 
 def test_bad_index() -> None:

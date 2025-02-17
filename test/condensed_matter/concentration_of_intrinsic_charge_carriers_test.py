@@ -31,7 +31,7 @@ def test_basic_charge_carriers_concentration(test_args: Args) -> None:
         test_args.density_of_states_in_conduction_band, test_args.density_of_states_in_valence_band,
         test_args.band_gap, test_args.temperature)
     # NOTE: high tolerance due to very high inaccuracy of available examples
-    assert_equal(result, 1e10 / units.centimeter**3, tolerance=0.1)
+    assert_equal(result, 1e10 / units.centimeter**3, relative_tolerance=0.1)
 
 
 def test_bad_density_of_states_in_conduction_band(test_args: Args) -> None:
