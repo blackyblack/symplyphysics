@@ -65,7 +65,7 @@ class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
 global_index = Idx("i")
 
 
-class SymbolIndexedNew(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-ancestors
+class IndexedSymbol(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-ancestors
     index: Idx
 
     def __new__(cls,
@@ -204,7 +204,7 @@ def _process_subscript_and_names(
     return f"{code_name}_{subscript}", f"{latex_name}_{{{subscript}}}"
 
 
-def clone_as_symbol(source: Symbol | SymbolIndexedNew,
+def clone_as_symbol(source: Symbol | IndexedSymbol,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
@@ -226,7 +226,7 @@ def clone_as_symbol(source: Symbol | SymbolIndexedNew,
 
 
 def clone_as_function(
-    source: Symbol | SymbolIndexedNew,
+    source: Symbol | IndexedSymbol,
     arguments: Sequence[Expr] = (),
     *,
     display_symbol: Optional[str] = None,
@@ -250,17 +250,17 @@ def clone_as_function(
 
 
 def clone_as_indexed(
-    source: Symbol | SymbolIndexedNew,
+    source: Symbol | IndexedSymbol,
     index: Optional[Idx] = None,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
     **assumptions: Any,
-) -> SymbolIndexedNew:
+) -> IndexedSymbol:
     assumptions = assumptions or source.assumptions0
     display_symbol = display_symbol or source.display_name
     display_latex = display_latex or source.display_latex
-    return SymbolIndexedNew(
+    return IndexedSymbol(
         display_symbol,
         index,
         source.dimension,

@@ -24,7 +24,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     global_index,
-    SymbolIndexedNew,
+    IndexedSymbol,
     SumIndexed,
     symbols,
 )
@@ -34,7 +34,7 @@ total_particle_count = symbols.particle_count
 Total :symbols:`particle_count` of the system.
 """
 
-occupancy = SymbolIndexedNew("N", dimension=dimensionless)
+occupancy = IndexedSymbol("N", dimension=dimensionless)
 """
 Occupancy of energy level or particle state of index :math:`i`.
 """

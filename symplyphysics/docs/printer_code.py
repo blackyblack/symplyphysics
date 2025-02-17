@@ -10,7 +10,7 @@ from sympy.concrete.products import Product
 from sympy.concrete.summations import Sum
 from sympy.integrals.integrals import Integral
 from sympy.printing.precedence import precedence, precedence_traditional, PRECEDENCE
-from ..core.symbols.symbols import DimensionSymbol, Function, SymbolIndexedNew
+from ..core.symbols.symbols import DimensionSymbol, Function, IndexedSymbol
 
 
 class SymbolCodePrinter(StrPrinter):
@@ -30,7 +30,7 @@ class SymbolCodePrinter(StrPrinter):
         return self._print_Symbol(expr)
 
     # pylint: disable-next=invalid-name
-    def _print_SymbolIndexedNew(self, expr: Any) -> str:
+    def _print_IndexedSymbol(self, expr: Any) -> str:
         return self._print_Symbol(expr)
 
     # pylint: disable-next=invalid-name
@@ -270,7 +270,7 @@ def code_str(expr: Any, **settings: Any) -> str:
             for arg in expr.arguments
         ]
         expr = expr(*arguments)
-    if isinstance(expr, SymbolIndexedNew):
+    if isinstance(expr, IndexedSymbol):
         expr = expr[expr.index]
 
     return printer.doprint(expr)

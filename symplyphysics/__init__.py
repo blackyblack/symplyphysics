@@ -7,7 +7,7 @@ from .core.symbols.quantities import Quantity, subs_list
 from .core.convert import convert_to, convert_to_float, convert_to_si
 from .core.operations.sum_indexed import SumIndexed
 from .core.operations.product_indexed import ProductIndexed
-from .core.symbols.symbols import print_expression, clone_as_symbol, global_index, Function, Symbol, SymbolIndexedNew, clone_as_function, Matrix
+from .core.symbols.symbols import print_expression, clone_as_symbol, global_index, Function, Symbol, IndexedSymbol, clone_as_function, Matrix
 from .core.symbols.prefixes import prefixes
 from .core.quantity_decorator import validate_input, validate_output
 from .core.vectors.vectors import Vector, QuantityVector
@@ -35,7 +35,7 @@ __all__ = [
     "clone_as_function",
     "Function",
     "Symbol",
-    "SymbolIndexedNew",
+    "IndexedSymbol",
     "Matrix",
     # convert
     "convert_to",

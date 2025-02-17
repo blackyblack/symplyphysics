@@ -9,7 +9,7 @@ from sympy.matrices.dense import DenseMatrix
 from sympy.printing.latex import LatexPrinter, accepted_latex_functions
 from sympy.core.function import AppliedUndef
 from sympy.simplify import fraction
-from ..core.symbols.symbols import DimensionSymbol, Function, SymbolIndexedNew
+from ..core.symbols.symbols import DimensionSymbol, Function, IndexedSymbol
 
 _between_two_numbers_p = (
     re.compile(r"[0-9][} ]*$"),  # search
@@ -56,7 +56,7 @@ class SymbolLatexPrinter(LatexPrinter):
         return self._print_Symbol(expr)
 
     # pylint: disable-next=invalid-name
-    def _print_SymbolIndexedNew(self, expr: Any) -> str:
+    def _print_IndexedSymbol(self, expr: Any) -> str:
         return self._print_Symbol(expr)
 
     # pylint: disable-next=invalid-name
@@ -305,7 +305,7 @@ def latex_str(expr: Any, **settings: Any) -> str:
             for arg in expr.arguments
         ]
         expr = expr(*arguments)
-    if isinstance(expr, SymbolIndexedNew):
+    if isinstance(expr, IndexedSymbol):
         expr = expr[expr.index]
 
     return printer.doprint(expr)

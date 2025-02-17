@@ -7,7 +7,7 @@ from symplyphysics import (
     clone_as_function,
     clone_as_symbol,
     units,
-    SymbolIndexedNew,
+    IndexedSymbol,
     SumIndexed,
     ProductIndexed,
     global_index,
@@ -275,13 +275,13 @@ def test_immutable_matrix() -> None:
 
 
 def test_indexed_symbol() -> None:
-    f = SymbolIndexedNew("F")
+    f = IndexedSymbol("F")
     expr = f[global_index]
     assert latex_str(expr) == "{F}_{i}"
 
 
 def test_indexed_sum() -> None:
-    f = SymbolIndexedNew("F")
+    f = IndexedSymbol("F")
     expr = SumIndexed(f[global_index], global_index)
     assert latex_str(expr) == "\\sum_i {F}_{i}"
 
@@ -291,7 +291,7 @@ def test_indexed_sum() -> None:
 
 
 def test_indexed_product() -> None:
-    f = SymbolIndexedNew("F")
+    f = IndexedSymbol("F")
 
     expr = ProductIndexed(f[global_index], global_index)
     assert latex_str(expr) == "\\prod_i {F}_{i}"
