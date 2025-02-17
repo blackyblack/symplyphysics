@@ -10,23 +10,6 @@ from sympy.printing.pretty.pretty_symbology import pretty_symbol, pretty_use_uni
 from .id_generator import next_id
 
 
-class DimensionSymbol:
-    _dimension: Dimension
-    _display_name: str
-
-    def __init__(self, display_name: str, dimension: Dimension = Dimension(S.One)) -> None:
-        self._dimension = dimension
-        self._display_name = display_name
-
-    @property
-    def dimension(self) -> Dimension:
-        return self._dimension
-
-    @property
-    def display_name(self) -> str:
-        return self._display_name
-
-
 class DimensionSymbolNew:
     _dimension: Dimension
     _display_name: str

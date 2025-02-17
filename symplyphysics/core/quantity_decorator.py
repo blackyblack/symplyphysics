@@ -3,10 +3,10 @@ import inspect
 from typing import Any, Callable, Sequence, TypeAlias
 from sympy.physics.units import Quantity as SymQuantity, Dimension
 
-from .symbols.symbols import DimensionSymbol, DimensionSymbolNew, Function, Symbol, SymbolIndexedNew
+from .symbols.symbols import DimensionSymbolNew, Function, Symbol, SymbolIndexedNew
 from .dimensions import assert_equivalent_dimension, ScalarValue
 
-_ValueType: TypeAlias = ScalarValue | SymQuantity | DimensionSymbol | DimensionSymbolNew
+_ValueType: TypeAlias = ScalarValue | SymQuantity | DimensionSymbolNew
 
 _UnitType: TypeAlias = Dimension | Symbol | Function | SymbolIndexedNew
 
@@ -23,8 +23,6 @@ def _assert_expected_unit(
     for item in values:
         if isinstance(item, SymQuantity):
             components.append(item)
-        elif isinstance(item, DimensionSymbol):
-            components.append(item.dimension)
         elif isinstance(item, DimensionSymbolNew):
             components.append(item.dimension)
         else:
@@ -38,7 +36,7 @@ def _assert_expected_unit(
 
     expected_unit_dimensions: list[Dimension] = []
     for u in list(expected_units):
-        d = u.dimension if isinstance(u, (DimensionSymbol, DimensionSymbolNew)) else u
+        d = u.dimension if isinstance(u, DimensionSymbolNew) else u
         expected_unit_dimensions.append(d)
 
     for idx, c in enumerate(components):
