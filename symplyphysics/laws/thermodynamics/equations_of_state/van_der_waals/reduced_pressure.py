@@ -13,7 +13,7 @@ from sympy import Eq
 from symplyphysics import (
     dimensionless,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     convert_to_float,
@@ -21,7 +21,7 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-reduced_pressure = SymbolNew("p_r", dimensionless)
+reduced_pressure = Symbol("p_r", dimensionless)
 """
 Reduced :symbols:`pressure` of the van der Waals fluid.
 """

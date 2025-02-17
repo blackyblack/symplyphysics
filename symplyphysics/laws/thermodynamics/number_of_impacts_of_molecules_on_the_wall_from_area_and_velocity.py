@@ -22,7 +22,7 @@ projection of velocity in said direction and time.
 from sympy import Eq, solve
 from symplyphysics import (
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -30,7 +30,7 @@ from symplyphysics import (
     symbols,
 )
 
-impact_count = SymbolNew("N", dimensionless)
+impact_count = Symbol("N", dimensionless)
 """
 Impact count.
 """

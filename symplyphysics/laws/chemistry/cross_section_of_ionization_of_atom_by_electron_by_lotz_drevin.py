@@ -19,7 +19,7 @@ Lotz-Drewin approximation for the ionization cross section is considered.
 """
 
 from sympy import Eq, solve, pi, log
-from symplyphysics import (Quantity, SymbolNew, validate_input, validate_output, dimensionless,
+from symplyphysics import (Quantity, Symbol, validate_input, validate_output, dimensionless,
     symbols, clone_as_symbol)
 from symplyphysics.quantities import bohr_radius, hydrogen_ionization_energy
 
@@ -38,12 +38,12 @@ electron_energy = symbols.energy
 :symbols:`energy` of ionizing electrons.
 """
 
-first_coefficient = SymbolNew("A", dimensionless)
+first_coefficient = Symbol("A", dimensionless)
 """
 A coefficient used in the calculation.
 """
 
-second_coefficient = SymbolNew("B", dimensionless)
+second_coefficient = Symbol("B", dimensionless)
 """
 A coefficient used in the calculation.
 """

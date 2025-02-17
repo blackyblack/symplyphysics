@@ -26,18 +26,18 @@ they are exactly out of phase and their interference is *fully destructive*.
 """
 
 from sympy import Eq, sin, cos
-from symplyphysics import Quantity, validate_input, symbols, SymbolNew
+from symplyphysics import Quantity, validate_input, symbols, Symbol
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.core.quantity_decorator import validate_output_same
 from symplyphysics.core.dimensions import any_dimension
 
-total_displacement = SymbolNew("u", any_dimension)
+total_displacement = Symbol("u", any_dimension)
 """
 Displacement of the resulting wave.
 """
 
-amplitude = SymbolNew("u_max", any_dimension, display_latex="u_\\text{max}")
+amplitude = Symbol("u_max", any_dimension, display_latex="u_\\text{max}")
 """
 Amplitude of the interfering waves.
 """

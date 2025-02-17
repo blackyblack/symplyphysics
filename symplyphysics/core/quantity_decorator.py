@@ -3,12 +3,12 @@ import inspect
 from typing import Any, Callable, Sequence, TypeAlias
 from sympy.physics.units import Quantity as SymQuantity, Dimension
 
-from .symbols.symbols import DimensionSymbol, DimensionSymbolNew, FunctionNew, SymbolNew, SymbolIndexedNew
+from .symbols.symbols import DimensionSymbol, DimensionSymbolNew, FunctionNew, Symbol, SymbolIndexedNew
 from .dimensions import assert_equivalent_dimension, ScalarValue
 
 _ValueType: TypeAlias = ScalarValue | SymQuantity | DimensionSymbol | DimensionSymbolNew
 
-_UnitType: TypeAlias = Dimension | SymbolNew | FunctionNew | SymbolIndexedNew
+_UnitType: TypeAlias = Dimension | Symbol | FunctionNew | SymbolIndexedNew
 
 
 def _assert_expected_unit(
@@ -81,7 +81,7 @@ def validate_input(**decorator_kwargs: Any) -> Callable[[Callable[..., Any]], Ca
 # @validate_output(units.length)
 # @validate_output(body_volume)
 def validate_output(
-    expected_unit: Dimension | SymbolNew | FunctionNew | SymbolIndexedNew
+    expected_unit: Dimension | Symbol | FunctionNew | SymbolIndexedNew
 ) -> Callable[[Any], Callable[..., Any]]:
 
     def validate_func(func: Callable[..., Any]) -> Callable[..., Any]:

@@ -1,7 +1,7 @@
 from sympy import Eq, solve
 from symplyphysics import (
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -26,7 +26,7 @@ from symplyphysics import (
 ## D - lens diameter,
 ## F - focal length of the lens.
 
-relative_aperture = SymbolNew("A", dimensionless)
+relative_aperture = Symbol("A", dimensionless)
 
 lens_diameter = symbols.diameter
 focal_length_lens = symbols.focal_length

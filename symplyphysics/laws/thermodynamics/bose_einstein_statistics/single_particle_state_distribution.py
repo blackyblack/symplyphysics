@@ -24,7 +24,7 @@ from symplyphysics import (
     convert_to_float,
     dimensionless,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     symbols,
@@ -32,7 +32,7 @@ from symplyphysics import (
     quantities,
 )
 
-occupancy_of_state = SymbolNew("n_i", dimensionless)
+occupancy_of_state = Symbol("n_i", dimensionless)
 """
 Occupancy of single-particle state :math:`i`.
 """

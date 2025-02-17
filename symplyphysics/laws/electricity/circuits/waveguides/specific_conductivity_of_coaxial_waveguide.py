@@ -17,13 +17,13 @@ from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     symbols,
 )
 
-specific_conductance = SymbolNew("G", units.conductance / units.length)
+specific_conductance = Symbol("G", units.conductance / units.length)
 """
 :symbols:`electrical_conductance` of the waveguide per unit :symbols:`length`.
 """
@@ -33,7 +33,7 @@ angular_frequency = symbols.angular_frequency
 :symbols:`angular_frequency` of the signal.
 """
 
-specific_capacitance = SymbolNew("C", units.capacitance / units.length)
+specific_capacitance = Symbol("C", units.capacitance / units.length)
 """
 :symbols:`capacitance` per unit :symbols:`length`.
 """

@@ -27,46 +27,46 @@ from symplyphysics import (
     validate_input,
     validate_output,
     dimensionless,
-    SymbolNew,
+    Symbol,
     Matrix,
 )
 
-input_reflected_power_wave = SymbolNew("b_i", sqrt(units.power), display_latex="b_\\text{i}")
+input_reflected_power_wave = Symbol("b_i", sqrt(units.power), display_latex="b_\\text{i}")
 """
 Outgoing ("reflected") power wave at input port.
 """
 
-output_reflected_power_wave = SymbolNew("b_o", sqrt(units.power), display_latex="b_\\text{o}")
+output_reflected_power_wave = Symbol("b_o", sqrt(units.power), display_latex="b_\\text{o}")
 """
 Outgoing ("reflected") power wave at output port.
 """
 
-input_incident_power_wave = SymbolNew("a_i", sqrt(units.power), display_latex="a_\\text{i}")
+input_incident_power_wave = Symbol("a_i", sqrt(units.power), display_latex="a_\\text{i}")
 """
 Incident power wave at input port.
 """
 
-output_incident_power_wave = SymbolNew("a_o", sqrt(units.power), display_latex="a_\\text{o}")
+output_incident_power_wave = Symbol("a_o", sqrt(units.power), display_latex="a_\\text{o}")
 """
 Incident power wave at output port.
 """
 
-input_voltage_reflection_coefficient = SymbolNew("S_ii", dimensionless, display_latex="S_\\text{ii}")
+input_voltage_reflection_coefficient = Symbol("S_ii", dimensionless, display_latex="S_\\text{ii}")
 """
 Input port :symbols:`voltage` :symbols:`reflection_coefficient`.
 """
 
-reverse_voltage_gain = SymbolNew("S_io", dimensionless, display_latex="S_\\text{io}")
+reverse_voltage_gain = Symbol("S_io", dimensionless, display_latex="S_\\text{io}")
 """
 Reverse :symbols:`voltage` :symbols:`circuit_gain`.
 """
 
-forward_voltage_gain = SymbolNew("S_oi", dimensionless, display_latex="S_\\text{oi}")
+forward_voltage_gain = Symbol("S_oi", dimensionless, display_latex="S_\\text{oi}")
 """
 Forward :symbols:`voltage` :symbols:`circuit_gain`.
 """
 
-output_voltage_reflection_coefficient = SymbolNew("S_oo", dimensionless, display_latex="S_\\text{oo}")
+output_voltage_reflection_coefficient = Symbol("S_oo", dimensionless, display_latex="S_\\text{oo}")
 """
 Output port :symbols:`voltage` :symbols:`reflection_coefficient`.
 """

@@ -2,7 +2,7 @@ from sympy import Eq, solve, log
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -21,7 +21,7 @@ from symplyphysics import (
 # TODO: find English link
 # TODO: update documentation
 
-penetrating_power_telescope = SymbolNew("m", dimensionless)
+penetrating_power_telescope = Symbol("m", dimensionless)
 # TODO: add to `symbols`
 
 lens_diameter = symbols.diameter

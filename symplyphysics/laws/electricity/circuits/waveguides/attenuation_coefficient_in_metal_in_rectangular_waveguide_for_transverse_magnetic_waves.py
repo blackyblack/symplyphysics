@@ -21,7 +21,7 @@ from symplyphysics import (
     dimensionless,
     symbols,
     clone_as_symbol,
-    SymbolNew,
+    Symbol,
 )
 
 attenuation_coefficient = symbols.attenuation_coefficient
@@ -34,13 +34,13 @@ surface_resistance = clone_as_symbol(symbols.electrical_resistance, display_symb
 :symbols:`electrical_resistance` of the surface.
 """
 
-first_index = SymbolNew("m", dimensionless)
+first_index = Symbol("m", dimensionless)
 """
 The first index shows how many half-wavelengths fit across the width of the cross
 section.
 """
 
-second_index = SymbolNew("n", dimensionless)
+second_index = Symbol("n", dimensionless)
 """
 The second index shows how many half-wavelengths fit across the height of the cross
 section.
@@ -77,7 +77,7 @@ _reduced_wavelength = wavelength / (2 * critical_wavelength)
 
 law = Eq(
     attenuation_coefficient,
-    (2 * _reduced_resistance * (second_index**2 * _reduced_dimension**3 + first_index**2)) 
+    (2 * _reduced_resistance * (second_index**2 * _reduced_dimension**3 + first_index**2))
     / (
         width
         * sqrt(1 - _reduced_wavelength**2)

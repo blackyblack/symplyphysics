@@ -43,7 +43,7 @@ class SymbolLatexPrinter(LatexPrinter):
         LatexPrinter.__init__(self, settings)
 
     # pylint: disable-next=invalid-name
-    def _print_SymbolNew(self, expr: Any, style: str = "plain") -> str:
+    def _print_Symbol(self, expr: Any, style: str = "plain") -> str:
         display_name = expr.display_latex if isinstance(expr, DimensionSymbolNew) else getattr(
             expr, "name")
         name: str = self._settings["symbol_names"].get(display_name)
@@ -53,11 +53,11 @@ class SymbolLatexPrinter(LatexPrinter):
 
     # pylint: disable-next=invalid-name
     def _print_Quantity(self, expr: Any) -> str:
-        return self._print_SymbolNew(expr)
+        return self._print_Symbol(expr)
 
     # pylint: disable-next=invalid-name
     def _print_SymbolIndexedNew(self, expr: Any) -> str:
-        return self._print_SymbolNew(expr)
+        return self._print_Symbol(expr)
 
     def _print_Function(self, expr: Any, exp: Any = None) -> str:
         # pylint: disable=too-many-branches

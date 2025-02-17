@@ -22,7 +22,7 @@ from symplyphysics import (
     symbols,
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     clone_as_symbol,
@@ -38,7 +38,7 @@ mass = symbols.mass
 :symbols:`mass` of the oscillator.
 """
 
-amplitude = SymbolNew("A", units.length)
+amplitude = Symbol("A", units.length)
 """
 Amplitude, or maximum absolute displacement, of the oscillator.
 """

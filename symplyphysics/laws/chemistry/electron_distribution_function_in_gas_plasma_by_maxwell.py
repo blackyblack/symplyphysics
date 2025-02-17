@@ -26,7 +26,7 @@ from sympy import Eq, Rational, solve, exp
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -36,7 +36,7 @@ from symplyphysics import (
 from symplyphysics.quantities import elementary_charge
 from symplyphysics.core.symbols.probability import Probability
 
-distribution_function = SymbolNew("f", dimensionless)
+distribution_function = Symbol("f", dimensionless)
 """
 Electron distribution function.
 """

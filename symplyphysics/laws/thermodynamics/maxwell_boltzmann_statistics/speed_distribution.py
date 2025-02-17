@@ -35,20 +35,19 @@ from sympy import (
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     clone_as_symbol,
     symbols,
     CoordinateSystem,
     quantities,
-    
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.geometry.elements import volume_element_magnitude
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import velocity_component_distribution
 
-speed_distribution_function = SymbolNew("f(v)", 1 / units.velocity)
+speed_distribution_function = Symbol("f(v)", 1 / units.velocity)
 """
 :symbols:`speed` distribution function.
 """

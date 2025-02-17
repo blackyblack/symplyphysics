@@ -26,7 +26,7 @@ from symplyphysics import (
     symbols,
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -43,7 +43,7 @@ mass = symbols.mass
 :symbols:`mass` of the star.
 """
 
-indicator = SymbolNew("n", dimensionless)
+indicator = Symbol("n", dimensionless)
 """
 A dimensionless parameter whose value depends on the mass of the star.
 """

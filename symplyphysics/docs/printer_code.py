@@ -22,15 +22,15 @@ class SymbolCodePrinter(StrPrinter):
         StrPrinter.__init__(self, settings)
 
     # pylint: disable-next=invalid-name
-    def _print_SymbolNew(self, expr: Any) -> str:
+    def _print_Symbol(self, expr: Any) -> str:
         return expr.display_name if isinstance(expr, DimensionSymbolNew) else getattr(expr, "name")
 
     def _print_Quantity(self, expr: Any) -> str:
-        return self._print_SymbolNew(expr)
+        return self._print_Symbol(expr)
 
     # pylint: disable-next=invalid-name
     def _print_SymbolIndexedNew(self, expr: Any) -> str:
-        return self._print_SymbolNew(expr)
+        return self._print_Symbol(expr)
 
     def _print_Pow(self, expr: Any, _rational: bool = False) -> str:
         prec = precedence(expr)

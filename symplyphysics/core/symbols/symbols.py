@@ -57,7 +57,7 @@ class DimensionSymbolNew:
         return p.doprint(self.display_name)
 
 
-class SymbolNew(DimensionSymbolNew, SymSymbol):  # pylint: disable=too-many-ancestors
+class Symbol(DimensionSymbolNew, SymSymbol):  # pylint: disable=too-many-ancestors
 
     def __new__(cls,
         display_symbol: Optional[str] = None,
@@ -165,7 +165,7 @@ class SymbolPrinter(PrettyPrinter):
         return self._settings["use_unicode"]
 
     def _print_Symbol(self, e: Expr, bold_name: bool = False) -> prettyForm:
-        symb_name = e.display_name if isinstance(e, SymbolNew) else getattr(e, "name")
+        symb_name = e.display_name if isinstance(e, Symbol) else getattr(e, "name")
         symb = pretty_symbol(symb_name, bold_name)
         return prettyForm(symb)
 
@@ -221,12 +221,12 @@ def _process_subscript_and_names(
     return f"{code_name}_{subscript}", f"{latex_name}_{{{subscript}}}"
 
 
-def clone_as_symbol(source: SymbolNew | SymbolIndexedNew,
+def clone_as_symbol(source: Symbol | SymbolIndexedNew,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
     subscript: Optional[str] = None,
-    **assumptions: Any) -> SymbolNew:
+    **assumptions: Any) -> Symbol:
     assumptions = assumptions or source.assumptions0
     display_symbol = display_symbol or source.display_name
     display_latex = display_latex or source.display_latex
@@ -234,7 +234,7 @@ def clone_as_symbol(source: SymbolNew | SymbolIndexedNew,
     display_symbol, display_latex = _process_subscript_and_names(display_symbol, display_latex,
         subscript)
 
-    return SymbolNew(
+    return Symbol(
         display_symbol,
         source.dimension,
         display_latex=display_latex,
@@ -243,7 +243,7 @@ def clone_as_symbol(source: SymbolNew | SymbolIndexedNew,
 
 
 def clone_as_function(
-    source: SymbolNew | SymbolIndexedNew,
+    source: Symbol | SymbolIndexedNew,
     arguments: Sequence[Expr] = (),
     *,
     display_symbol: Optional[str] = None,
@@ -267,7 +267,7 @@ def clone_as_function(
 
 
 def clone_as_indexed(
-    source: SymbolNew | SymbolIndexedNew,
+    source: Symbol | SymbolIndexedNew,
     index: Optional[Idx] = None,
     *,
     display_symbol: Optional[str] = None,

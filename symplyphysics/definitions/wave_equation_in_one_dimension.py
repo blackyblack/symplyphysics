@@ -24,7 +24,7 @@ from symplyphysics import (
     symbols,
     clone_as_symbol,
     FunctionNew,
-    SymbolNew,
+    Symbol,
 )
 from symplyphysics.core.dimensions import any_dimension
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -66,7 +66,7 @@ definition = Eq(
 ## u_m - amplitude of displacement
 ## phi - phase lag
 
-amplitude = SymbolNew("u_m", any_dimension)
+amplitude = Symbol("u_m", any_dimension)
 phase_lag = clone_as_symbol(symbols.phase_shift, real=True)
 _length_unit = symbols.length
 

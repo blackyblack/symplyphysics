@@ -1,7 +1,7 @@
 from sympy import Eq, solve
 from symplyphysics import (
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -25,7 +25,7 @@ from symplyphysics import (
 
 # TODO: update documentation
 
-angular_magnification = SymbolNew("G", dimensionless)
+angular_magnification = Symbol("G", dimensionless)
 # TODO: add to `symbols`
 
 focal_length_lens = clone_as_symbol(symbols.focal_length, display_symbol="F", display_latex="F")

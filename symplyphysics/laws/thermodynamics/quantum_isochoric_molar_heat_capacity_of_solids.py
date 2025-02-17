@@ -22,7 +22,7 @@ from sympy import Eq, exp
 from symplyphysics import (
     dimensionless,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     quantities,
@@ -39,7 +39,7 @@ isochoric_molar_heat_capacity = clone_as_symbol(
 :symbols:`molar_heat_capacity` at constant :symbols:`volume`.
 """
 
-reduced_photon_energy = SymbolNew("x", dimensionless)
+reduced_photon_energy = Symbol("x", dimensionless)
 r"""
 Reduced photon energy, defined as the ratio of photon energy :math:`\hbar \omega` or :math:`h \nu` to
 thermal energy :math:`k_\text{B} T`.

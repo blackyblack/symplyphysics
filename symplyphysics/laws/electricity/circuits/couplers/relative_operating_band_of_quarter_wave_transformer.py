@@ -13,7 +13,7 @@ connected and the load resistance.
 from sympy import Eq, solve, pi, acos, sqrt
 from symplyphysics import (
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -22,7 +22,7 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-relative_bandwidth = SymbolNew("b", dimensionless)
+relative_bandwidth = Symbol("b", dimensionless)
 """
 Relative operating bandwidth is the ratio of the bandwidth to the center frequency.
 """

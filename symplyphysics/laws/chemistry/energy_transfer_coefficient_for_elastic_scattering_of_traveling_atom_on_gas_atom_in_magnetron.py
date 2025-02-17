@@ -11,10 +11,10 @@ the mass of the traveling atom and the mass of the gas atom.
 """
 
 from sympy import Eq, solve
-from symplyphysics import (Quantity, SymbolNew, validate_input, validate_output, dimensionless,
+from symplyphysics import (Quantity, Symbol, validate_input, validate_output, dimensionless,
     convert_to_float, clone_as_symbol, symbols)
 
-energy_transfer_coefficient = SymbolNew("x", dimensionless)
+energy_transfer_coefficient = Symbol("x", dimensionless)
 """
 Energy transfer coefficient.
 """

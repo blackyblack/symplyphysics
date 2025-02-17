@@ -33,7 +33,7 @@ from symplyphysics import (
     validate_output,
     symbols,
     quantities,
-    SymbolNew,
+    Symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import compressibility_factor_is_deviation_from_ideal_gas as compressibility_def
@@ -43,7 +43,7 @@ from symplyphysics.laws.quantities import (
     quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,
 )
 
-second_virial_coefficient = SymbolNew("C_2", units.volume / units.amount_of_substance)
+second_virial_coefficient = Symbol("C_2", units.volume / units.amount_of_substance)
 """
 Second virial coefficient of the virial expansion.
 """

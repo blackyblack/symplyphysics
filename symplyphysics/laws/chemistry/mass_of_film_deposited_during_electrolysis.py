@@ -17,7 +17,7 @@ through a solution or melt of an electrolyte.
 """
 
 from sympy import Eq, solve
-from symplyphysics import Quantity, validate_input, validate_output, symbols, SymbolNew, dimensionless
+from symplyphysics import Quantity, validate_input, validate_output, symbols, Symbol, dimensionless
 from symplyphysics.quantities import elementary_charge, avogadro_constant
 
 film_mass = symbols.mass
@@ -35,7 +35,7 @@ molar_mass = symbols.molar_mass
 :symbols:`molar_mass` of deposited metal.
 """
 
-current_output = SymbolNew("B", dimensionless)
+current_output = Symbol("B", dimensionless)
 """
 Current output is the fraction of electric current spent on the passage of the target electrochemical reaction.
 """

@@ -22,7 +22,7 @@ from sympy import Eq, solve, Matrix, S
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     dimensionless,
     convert_to,
@@ -31,23 +31,23 @@ from symplyphysics import (
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
-voltage_voltage_parameter = SymbolNew("A", dimensionless)
+voltage_voltage_parameter = Symbol("A", dimensionless)
 """
 Ratio of input :symbols:`voltage` to output :symbols:`voltage` at idle at the output.
 """
 
-voltage_current_parameter = SymbolNew("B", units.impedance)
+voltage_current_parameter = Symbol("B", units.impedance)
 """
 Ratio of input :symbols:`voltage` to output :symbols:`current` in case of a short
 circuit at the output.
 """
 
-current_voltage_parameter = SymbolNew("C", units.conductance)
+current_voltage_parameter = Symbol("C", units.conductance)
 """
 Ratio of input :symbols:`current` to output :symbols:`voltage` at idle at the output.
 """
 
-current_current_parameter = SymbolNew("D", dimensionless)
+current_current_parameter = Symbol("D", dimensionless)
 """
 Ratio of input :symbols:`current` to output :symbols:`current` in case of a short
 circuit at the output.

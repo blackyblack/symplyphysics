@@ -17,14 +17,14 @@ on the local value of the electric intensity.
 """
 
 from sympy import Eq, solve
-from symplyphysics import (units, Quantity, SymbolNew, validate_input, validate_output, symbols)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
 
 speed = symbols.speed
 """
 :symbols:`speed` of charged particles in the gas.
 """
 
-mobility_at_unit_pressure = SymbolNew("mu",
+mobility_at_unit_pressure = Symbol("mu",
     units.speed * units.pressure * units.length / units.voltage,
     display_latex="\\mu")
 """

@@ -28,7 +28,7 @@ between the change in light's frequency and the change in the gravitational pote
 from sympy import Eq, solve
 from symplyphysics import (
     units,
-    SymbolNew,
+    Symbol,
     Quantity,
     validate_input,
     validate_output,
@@ -52,7 +52,7 @@ r"""
 The :symbols:`temporal_frequency` of light within an infinitesimal section :math:`d \vec r`.
 """
 
-gravitational_potential_change = SymbolNew("d(phi)", units.velocity**2, display_latex="d \\phi")
+gravitational_potential_change = Symbol("d(phi)", units.velocity**2, display_latex="d \\phi")
 r"""
 The infinitesimal change in :ref:`gravitational potential <gravitational potential>` after passing an
 infinitesimal section :math:`d \vec r`.

@@ -29,30 +29,30 @@ from symplyphysics import (
     convert_to_float,
     symbols,
     clone_as_symbol,
-    SymbolNew,
+    Symbol,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity.circuits.transmission_lines import transmission_matrix_for_a_series_load_in_line as series_law
 from symplyphysics.laws.electricity.circuits.transmission_lines import transmission_matrix_for_a_parallel_load_in_line as parallel_law
 
-voltage_voltage_parameter = SymbolNew("A", dimensionless)
+voltage_voltage_parameter = Symbol("A", dimensionless)
 """
 Ratio of input :symbols:`voltage` to output :symbols:`voltage` at idle at the output.
 """
 
-voltage_current_parameter = SymbolNew("B", units.impedance)
+voltage_current_parameter = Symbol("B", units.impedance)
 """
 Ratio of input :symbols:`voltage` to output :symbols:`current` in case of a short
 circuit at the output.
 """
 
-current_voltage_parameter = SymbolNew("C", units.conductance)
+current_voltage_parameter = Symbol("C", units.conductance)
 """
 Ratio of input :symbols:`current` to output :symbols:`voltage` at idle at the output.
 """
 
-current_current_parameter = SymbolNew("D", dimensionless)
+current_current_parameter = Symbol("D", dimensionless)
 """
 Ratio of input :symbols:`current` to output :symbols:`current` in case of a short
 circuit at the output.

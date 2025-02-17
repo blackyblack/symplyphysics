@@ -21,7 +21,7 @@ from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -40,22 +40,22 @@ load_impedance = clone_as_symbol(symbols.electrical_impedance, display_symbol="Z
 Load :symbols:`electrical_impedance`.
 """
 
-voltage_voltage_parameter = SymbolNew("A", dimensionless)
+voltage_voltage_parameter = Symbol("A", dimensionless)
 """
 Ratio of input voltage to output voltage at idle at the output.
 """
 
-voltage_current_parameter = SymbolNew("B", units.impedance)
+voltage_current_parameter = Symbol("B", units.impedance)
 """
 Ratio of input voltage to output current in case of a short circuit at the output.
 """
 
-current_voltage_parameter = SymbolNew("C", units.conductance)
+current_voltage_parameter = Symbol("C", units.conductance)
 """
 Ratio of input current to output voltage at idle at the output.
 """
 
-current_current_parameter = SymbolNew("D", dimensionless)
+current_current_parameter = Symbol("D", dimensionless)
 """
 Ratio of input current to output current in case of a short circuit at the output.
 """

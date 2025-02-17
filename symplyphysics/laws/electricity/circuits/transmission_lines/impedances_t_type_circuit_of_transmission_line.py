@@ -11,11 +11,10 @@ circuit by knowing the transmission line parameters.
     TODO: find link
 """
 
-from sympy import Eq, solve, I, sinh, tanh, cosh, Symbol as SymSymbol, S
+from sympy import Eq, solve, sinh, tanh, cosh, Symbol as SymSymbol, S
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
     validate_input,
     validate_output,
     symbols,

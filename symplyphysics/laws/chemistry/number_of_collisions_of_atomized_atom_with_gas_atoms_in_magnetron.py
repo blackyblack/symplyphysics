@@ -17,7 +17,7 @@ traveling atom and the energy transfer coefficient between the atom and the gas 
 from sympy import Eq, solve, log
 from symplyphysics import (
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -26,7 +26,7 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-collision_count = SymbolNew("N", dimensionless)
+collision_count = Symbol("N", dimensionless)
 """
 Number of collisions between the particle and gas.
 """
@@ -41,7 +41,7 @@ thermal_energy = symbols.energy
 :symbols:`energy` of thermal motion in the plasma.
 """
 
-energy_transfer_coefficient = SymbolNew("x", dimensionless)
+energy_transfer_coefficient = Symbol("x", dimensionless)
 """
 Energy transfer coefficient between the particle and the gas.
 """

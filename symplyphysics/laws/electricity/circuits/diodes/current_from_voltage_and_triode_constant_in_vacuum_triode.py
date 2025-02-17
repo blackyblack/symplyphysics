@@ -19,7 +19,7 @@ from sympy import Eq, Rational, solve
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     symbols,
@@ -31,7 +31,7 @@ anode_current = symbols.current
 Anode :symbols:`current`.
 """
 
-triode_constant = SymbolNew("g", units.current / units.voltage**Rational(3, 2))
+triode_constant = Symbol("g", units.current / units.voltage**Rational(3, 2))
 """
 Triode constant which depends only on the relative position, shape and size of the
 electrodes of the vacuum triode.

@@ -14,13 +14,13 @@ from sympy import Eq, Rational, solve, sqrt
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     symbols,
 )
 
-steepness = SymbolNew("S", units.current / units.voltage)
+steepness = Symbol("S", units.current / units.voltage)
 """
 Steepness of the volt-ampere characteristic of the vacuum diode.
 """

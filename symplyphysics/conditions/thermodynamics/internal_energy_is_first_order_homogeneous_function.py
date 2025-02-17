@@ -1,5 +1,5 @@
 from sympy import Eq
-from symplyphysics import dimensionless, SymbolNew, symbols, clone_as_function
+from symplyphysics import dimensionless, Symbol, symbols, clone_as_function
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import internal_energy_differential as internal_energy_law
 
@@ -22,7 +22,7 @@ entropy = symbols.entropy
 volume = symbols.volume
 particle_count = symbols.particle_count
 internal_energy = clone_as_function(symbols.internal_energy, [entropy, volume, particle_count])
-factor = SymbolNew("k", dimensionless)
+factor = Symbol("k", dimensionless)
 
 homogeneity_condition = Eq(
     internal_energy(factor * entropy, factor * volume, factor * particle_count),

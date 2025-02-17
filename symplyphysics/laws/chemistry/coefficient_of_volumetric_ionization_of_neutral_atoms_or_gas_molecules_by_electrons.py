@@ -19,7 +19,7 @@ from sympy import Eq, solve, exp
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     symbols,
@@ -30,12 +30,12 @@ ionization_coefficient = symbols.ionization_coefficient
 :symbols:`ionization_coefficient` of the gas.
 """
 
-first_constant = SymbolNew("A", 1 / units.length / units.pressure)
+first_constant = Symbol("A", 1 / units.length / units.pressure)
 """
 The first gas constant used in this model.
 """
 
-second_constant = SymbolNew("B", units.voltage / units.length / units.pressure)
+second_constant = Symbol("B", units.voltage / units.length / units.pressure)
 """
 The second gas constant used in this model.
 """

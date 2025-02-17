@@ -30,7 +30,7 @@ from sympy import Eq, O
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     convert_to_float,
@@ -42,21 +42,21 @@ compressibility_factor = symbols.compressibility_factor
 :symbols:`compressibility_factor`. Also see :doc:`definitions.compressibility_factor_is_deviation_from_ideal_gas`.
 """
 
-second_virial_coefficient = SymbolNew("C_2",
+second_virial_coefficient = Symbol("C_2",
     units.volume / units.amount_of_substance,
     real=True)
 """
 Second virial coefficient correponding to pair interactions between particles.
 """
 
-third_virial_coefficient = SymbolNew("C_3",
+third_virial_coefficient = Symbol("C_3",
     (units.volume / units.amount_of_substance)**2,
     real=True)
 """
 Third virial coefficient corresponding to 3-body interaction between particles.
 """
 
-molar_density = SymbolNew("rho_m", units.amount_of_substance / units.volume, positive=True, display_latex="\\rho_\\text{m}")
+molar_density = Symbol("rho_m", units.amount_of_substance / units.volume, positive=True, display_latex="\\rho_\\text{m}")
 """
 Molar density of the system, or :symbols:`amount_of_substance` per unit :symbols:`volume`.
 See :doc:`laws.quantities.quantity_is_volumetric_density_times_volume`.
