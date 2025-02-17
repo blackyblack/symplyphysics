@@ -8,7 +8,8 @@ from sympy.physics.units.definitions.dimension_definitions import angle as angle
 
 from ..dimensions import assert_equivalent_dimension, dimensionless, ScalarValue
 from ..symbols.quantities import Quantity, subs_list
-from ..symbols.symbols import DimensionSymbol, next_name
+from ..symbols.id_generator import next_id
+from ..symbols.symbols import DimensionSymbol
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
 
 
@@ -130,7 +131,11 @@ class QuantityVector(DimensionSymbol):
                 coordinate_system.coord_system_type, idx) else dimension
             assert_equivalent_dimension(c, c.display_name, "QuantityVector", dimension_to_check)
             scale_factors.append(c.scale_factor)
-        DimensionSymbol.__init__(self, next_name("VEC"), dimension)
+
+        i = next_id()
+        code_str = f"VEC{i}"
+        latex_str = f"v_{{{i}}}"
+        DimensionSymbol.__init__(self, code_str, dimension, display_latex=latex_str)
         self._inner_vector = Vector(scale_factors, coordinate_system)
 
     @property

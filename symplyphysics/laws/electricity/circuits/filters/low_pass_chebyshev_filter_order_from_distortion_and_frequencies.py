@@ -12,7 +12,7 @@ lets through all frequencies from :math:`0` to the set frequency.
 from sympy import Eq, solve, acos, ceiling
 from symplyphysics import (
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -21,17 +21,17 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-filter_order = SymbolNew("N", dimensionless)
+filter_order = Symbol("N", dimensionless)
 """
 Filter order. See :symbols:`positive_number`.
 """
 
-bandwidth_distortion = SymbolNew("e", dimensionless)
+bandwidth_distortion = Symbol("e", dimensionless)
 """
 Bandwidth distortion, which corresponds to the number of ripples in the bandwidth.
 """
 
-band_stop_distortion = SymbolNew("e_1", dimensionless)
+band_stop_distortion = Symbol("e_1", dimensionless)
 """
 Band-stop distortion, which sets the required suppression level in the filter band-stop.
 """

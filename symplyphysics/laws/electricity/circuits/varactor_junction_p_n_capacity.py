@@ -14,7 +14,7 @@ calculate the capacity of the varactor at a given voltage.
 from sympy import Eq, solve
 from symplyphysics import (
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -43,7 +43,7 @@ A certain constant having the dimension of :symbols:`voltage` which depends on t
 material.
 """
 
-doping_coefficient = SymbolNew("y", dimensionless)
+doping_coefficient = Symbol("y", dimensionless)
 """
 Doping coefficient.
 """

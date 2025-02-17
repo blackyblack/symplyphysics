@@ -1,5 +1,5 @@
 from sympy import Eq, solve, cos
-from symplyphysics import Quantity, validate_input, symbols, SymbolNew
+from symplyphysics import Quantity, validate_input, symbols, Symbol
 from symplyphysics.core.quantity_decorator import validate_output_same
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.core.dimensions import any_dimension
@@ -15,8 +15,8 @@ from symplyphysics.core.dimensions import any_dimension
 # TODO: update documentation
 
 vector_angle = symbols.angle
-vector_length = SymbolNew("v", any_dimension)
-projection = SymbolNew("v_axis", any_dimension, display_latex="v_\\text{axis}")
+vector_length = Symbol("v", any_dimension)
+projection = Symbol("v_axis", any_dimension, display_latex="v_\\text{axis}")
 
 law = Eq(projection, vector_length * cos(vector_angle))
 

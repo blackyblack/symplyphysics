@@ -21,17 +21,17 @@ from symplyphysics import (
     symbols,
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
 )
 
-gibbs_energy_density = SymbolNew("G", units.energy / units.volume)
+gibbs_energy_density = Symbol("G", units.energy / units.volume)
 """
 :symbols:`gibbs_energy` of the system per unit :symbols:`volume`.
 """
 
-free_energy_density = SymbolNew("F", units.energy / units.volume)
+free_energy_density = Symbol("F", units.energy / units.volume)
 """
 :symbols:`helmholtz_free_energy` of the system per units :symbols:`volume`.
 """

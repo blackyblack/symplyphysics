@@ -14,7 +14,7 @@ from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     symbols,
@@ -26,7 +26,7 @@ current = symbols.current
 Corona discharge :symbols:`current`.
 """
 
-experimental_coefficient = SymbolNew("A", units.charge / (units.area * units.voltage))
+experimental_coefficient = Symbol("A", units.charge / (units.area * units.voltage))
 """
 Coefficient of the gas which is experimentally determined.
 """

@@ -19,7 +19,7 @@ from symplyphysics import (
     symbols,
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     quantities,
@@ -45,7 +45,7 @@ resistance_initial = clone_as_symbol(symbols.electrical_resistance, subscript="0
 :symbols:`electrical_resistance` at :attr:`~symplyphysics.quantities.standard_conditions_temperature`.
 """
 
-temperature_coefficient = SymbolNew("a", 1 / units.temperature)
+temperature_coefficient = Symbol("a", 1 / units.temperature)
 """
 Temperature coefficient of resistance.
 """

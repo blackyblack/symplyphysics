@@ -16,7 +16,7 @@ to accumulate energy as magnetic field.
 from sympy import Eq, solve
 from symplyphysics import (
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -33,7 +33,7 @@ absolute_permeability = symbols.absolute_permeability
 :symbols:`absolute_permeability` of the medium within the coil.
 """
 
-turn_count = SymbolNew("N", dimensionless)
+turn_count = Symbol("N", dimensionless)
 """
 Number of turns in the coil.
 """

@@ -25,7 +25,7 @@ from symplyphysics import (
     dimensionless,
     symbols,
     clone_as_symbol,
-    SymbolNew,
+    Symbol,
 )
 
 odd_mode_wave_impedance = clone_as_symbol(symbols.wave_impedance, display_symbol="eta_o", display_latex="\\eta_\\text{o}")
@@ -33,7 +33,7 @@ odd_mode_wave_impedance = clone_as_symbol(symbols.wave_impedance, display_symbol
 :symbols:`wave_impedance` of the odd mode.
 """
 
-coupling_factor = SymbolNew("C", dimensionless)
+coupling_factor = Symbol("C", dimensionless)
 """
 Coupling factor between coupler segments.
 """

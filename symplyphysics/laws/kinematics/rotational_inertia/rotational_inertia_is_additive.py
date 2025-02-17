@@ -16,7 +16,7 @@ inertia of each part of the system.
 
 from typing import Sequence
 from sympy import Eq, Idx, solve
-from symplyphysics import Quantity, validate_input, validate_output, SumIndexed, symbols
+from symplyphysics import Quantity, validate_input, validate_output, IndexedSum, symbols
 from symplyphysics.core.symbols.symbols import clone_as_indexed
 
 total_rotational_inertia = symbols.rotational_inertia
@@ -34,7 +34,7 @@ rotational_inertia = clone_as_indexed(symbols.rotational_inertia, index)
 :symbols:`rotational_inertia` of the :math:`k`-th part of the system.
 """
 
-law = Eq(total_rotational_inertia, SumIndexed(rotational_inertia[index], index))
+law = Eq(total_rotational_inertia, IndexedSum(rotational_inertia[index], index))
 """
 :laws:symbol::
 

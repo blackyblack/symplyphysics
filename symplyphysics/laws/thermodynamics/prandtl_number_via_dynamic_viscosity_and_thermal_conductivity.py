@@ -14,7 +14,7 @@ and thermal conductivity.
 from sympy import Eq, solve
 from symplyphysics import (
     Quantity,
-    SymbolNew,
+    Symbol,
     units,
     validate_input,
     validate_output,
@@ -29,7 +29,7 @@ prandtl_number = symbols.prandtl_number
 :symbols:`prandtl_number` of the fluid.
 """
 
-isobaric_specific_heat_capacity = SymbolNew("c_p", units.energy / units.mass / units.temperature)
+isobaric_specific_heat_capacity = Symbol("c_p", units.energy / units.mass / units.temperature)
 """
 :symbols:`heat_capacity` at constant :symbols:`pressure` per unit :symbols:`mass`.
 """

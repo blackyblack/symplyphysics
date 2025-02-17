@@ -19,7 +19,7 @@ from symplyphysics import (
     Quantity,
     validate_input,
     validate_output,
-    SumIndexed,
+    IndexedSum,
     global_index,
     symbols,
 )
@@ -38,7 +38,7 @@ r"""
 Resistance of the :math:`i`-th component.
 """
 
-law = Eq(total_resistance, SumIndexed(resistance[global_index], global_index))
+law = Eq(total_resistance, IndexedSum(resistance[global_index], global_index))
 r"""
 :laws:symbol::
 

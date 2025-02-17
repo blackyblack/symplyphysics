@@ -90,7 +90,7 @@ law = Eq(cross_section,
 def calculate_cross_sectional_area_of_interaction(ionization_energy_: Quantity,
     mass_of_atom_: Quantity, pressure_: Quantity, temperature_: Quantity,
     electric_intensity_: Quantity) -> Quantity:
-    # NOTE `nsolve` doesn't recognize `SymbolNew` instances, works fine with our old `Symbol` class though.
+    # NOTE `nsolve` doesn't recognize `Symbol` instances, works fine with our old `Symbol` class though.
     cross_section_sym = SymSymbol("sigma")
     eqn = law.subs({
         cross_section: cross_section_sym,

@@ -9,7 +9,7 @@ from sympy.matrices.dense import DenseMatrix
 from sympy.printing.latex import LatexPrinter, accepted_latex_functions
 from sympy.core.function import AppliedUndef
 from sympy.simplify import fraction
-from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew, SymbolIndexedNew
+from ..core.symbols.symbols import DimensionSymbol, Function, IndexedSymbol
 
 _between_two_numbers_p = (
     re.compile(r"[0-9][} ]*$"),  # search
@@ -43,8 +43,8 @@ class SymbolLatexPrinter(LatexPrinter):
         LatexPrinter.__init__(self, settings)
 
     # pylint: disable-next=invalid-name
-    def _print_SymbolNew(self, expr: Any, style: str = "plain") -> str:
-        display_name = expr.display_latex if isinstance(expr, DimensionSymbolNew) else getattr(
+    def _print_Symbol(self, expr: Any, style: str = "plain") -> str:
+        display_name = expr.display_latex if isinstance(expr, DimensionSymbol) else getattr(
             expr, "name")
         name: str = self._settings["symbol_names"].get(display_name)
         if name is not None:
@@ -53,18 +53,19 @@ class SymbolLatexPrinter(LatexPrinter):
 
     # pylint: disable-next=invalid-name
     def _print_Quantity(self, expr: Any) -> str:
-        return self._print_SymbolNew(expr)
+        return self._print_Symbol(expr)
 
     # pylint: disable-next=invalid-name
-    def _print_SymbolIndexedNew(self, expr: Any) -> str:
-        return self._print_SymbolNew(expr)
+    def _print_IndexedSymbol(self, expr: Any) -> str:
+        return self._print_Symbol(expr)
 
+    # pylint: disable-next=invalid-name
     def _print_Function(self, expr: Any, exp: Any = None) -> str:
         # pylint: disable=too-many-branches
         func = expr.func.__name__
-        if isinstance(expr, DimensionSymbolNew):
+        if isinstance(expr, DimensionSymbol):
             func = expr.display_latex
-        if isinstance(expr.func, DimensionSymbolNew):
+        if isinstance(expr.func, DimensionSymbol):
             func = expr.func.display_latex
 
         if hasattr(self, "_print_" + func) and not isinstance(expr, AppliedUndef):
@@ -138,6 +139,7 @@ class SymbolLatexPrinter(LatexPrinter):
         return name % ",".join(args)
 
     # TODO: use e^ for shorter expressions
+    # pylint: disable-next=invalid-name
     def _print_ExpBase(self, expr: Any, exp: Any = None) -> str:
         args = [str(self._print(arg)) for arg in expr.args]
         can_fold_brackets = self._settings["fold_func_brackets"] and \
@@ -149,7 +151,7 @@ class SymbolLatexPrinter(LatexPrinter):
         return self._do_exponent(tex, exp)
 
     # pylint: disable-next=invalid-name
-    def _print_SumIndexed(self, expr: Any) -> str:
+    def _print_IndexedSum(self, expr: Any) -> str:
         # only one index of product is supported
         # expr.args[0] contains the argument of the Product
         # expr.args[1] contains just indexed symbol
@@ -157,7 +159,7 @@ class SymbolLatexPrinter(LatexPrinter):
         return f"\\sum_{self._print(index)} {self._print(arg)}"
 
     # pylint: disable-next=invalid-name
-    def _print_ProductIndexed(self, expr: Any) -> str:
+    def _print_IndexedProduct(self, expr: Any) -> str:
         # only one index of sum is supported
         arg, index = expr.args
         return f"\\prod_{self._print(index)} {self._print(arg)}"
@@ -191,6 +193,7 @@ class SymbolLatexPrinter(LatexPrinter):
             terms.append(term)
         return (Mul(*terms, evaluate=False), sign)
 
+    # pylint: disable-next=invalid-name
     def _print_Mul(self, expr: Mul) -> str:
         separator: str = self._settings["mul_symbol_latex"]
         numbersep: str = self._settings["mul_symbol_latex_numbers"]
@@ -263,6 +266,7 @@ class SymbolLatexPrinter(LatexPrinter):
             return True
         return False
 
+    # pylint: disable-next=invalid-name
     def _print_Add(self, expr: Expr, _order: bool = False) -> str:
         tex = ""
         for i, term in enumerate(expr.args):
@@ -280,6 +284,7 @@ class SymbolLatexPrinter(LatexPrinter):
 
         return tex
 
+    # pylint: disable-next=invalid-name
     def _print_DenseMatrix(self, expr: DenseMatrix) -> str:
         rows, cols = expr.shape
 
@@ -294,13 +299,13 @@ class SymbolLatexPrinter(LatexPrinter):
 def latex_str(expr: Any, **settings: Any) -> str:
     printer = SymbolLatexPrinter(settings)
 
-    if isinstance(expr, FunctionNew):
+    if isinstance(expr, Function):
         arguments = [
-            SymSymbol(arg.display_name) if isinstance(arg, FunctionNew) else arg
+            SymSymbol(arg.display_name) if isinstance(arg, Function) else arg
             for arg in expr.arguments
         ]
         expr = expr(*arguments)
-    if isinstance(expr, SymbolIndexedNew):
+    if isinstance(expr, IndexedSymbol):
         expr = expr[expr.index]
 
     return printer.doprint(expr)

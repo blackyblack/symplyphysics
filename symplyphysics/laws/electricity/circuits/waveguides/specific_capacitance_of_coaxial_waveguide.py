@@ -16,14 +16,14 @@ from sympy import Eq, solve, pi, ln
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     symbols,
     clone_as_symbol,
 )
 
-specific_capacitance = SymbolNew("C", units.capacitance / units.length)
+specific_capacitance = Symbol("C", units.capacitance / units.length)
 """
 :symbols:`capacitance` of the waveguide per unit :symbols:`length`.
 """

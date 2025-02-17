@@ -18,7 +18,7 @@ from sympy import Eq, solve, Matrix, sqrt
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -52,7 +52,7 @@ transmission_line_impedance = clone_as_symbol(symbols.electrical_impedance, subs
 connected.
 """
 
-power_ratio = SymbolNew("k", dimensionless)
+power_ratio = Symbol("k", dimensionless)
 """
 Ratio of the :symbols:`power` at the outputs of the divider.
 """

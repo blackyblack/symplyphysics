@@ -16,7 +16,7 @@ from sympy import Eq, solve, sqrt
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     symbols,
@@ -37,7 +37,7 @@ angular_frequency = symbols.angular_frequency
 :symbols:`angular_frequency` of the signal.
 """
 
-specific_conductance = SymbolNew("G", units.conductance / units.length)
+specific_conductance = Symbol("G", units.conductance / units.length)
 """
 Specific conductance of the conductor, i.e. :symbols:`electrical_conductance` per unit
 :symbols:`length`.

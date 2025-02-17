@@ -15,7 +15,7 @@ reduced pressure-volume curve at the same reduced temperature.
 from sympy import Eq, Rational, solve
 from symplyphysics import (
     dimensionless,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     convert_to_float,
@@ -32,17 +32,17 @@ from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import (
     reduced_temperature as reduced_temperature_law,
 )
 
-reduced_pressure = SymbolNew("p_r", dimensionless)
+reduced_pressure = Symbol("p_r", dimensionless)
 """
 See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.reduced_pressure`.
 """
 
-reduced_volume = SymbolNew("V_r", dimensionless)
+reduced_volume = Symbol("V_r", dimensionless)
 """
 See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.reduced_volume`.
 """
 
-reduced_temperature = SymbolNew("T_r", dimensionless)
+reduced_temperature = Symbol("T_r", dimensionless)
 """
 See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.reduced_temperature`.
 """

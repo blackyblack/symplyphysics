@@ -22,18 +22,18 @@ from symplyphysics import (
     symbols,
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     clone_as_symbol,
     validate_input,
     validate_output,
 )
 
-internal_energy_density_change = SymbolNew("dU", units.energy / units.volume)
+internal_energy_density_change = Symbol("dU", units.energy / units.volume)
 """
 Infinitesimal change in :symbols:`internal_energy` per unit :symbols:`volume`.
 """
 
-heat_density = SymbolNew("delta(Q)", units.energy / units.volume, display_latex="\\delta Q")
+heat_density = Symbol("delta(Q)", units.energy / units.volume, display_latex="\\delta Q")
 """
 Small amount of :symbols:`heat` added to or taken from the system per unit :symbols:`volume`.
 """

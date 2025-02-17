@@ -14,7 +14,7 @@ from sympy import Eq, Expr, solve, simplify
 from sympy.vector import Laplacian
 from symplyphysics import (
     SI,
-    FunctionNew,
+    Function,
     units,
     Quantity,
     validate_input,
@@ -59,7 +59,7 @@ neutron_flux = clone_as_function(symbols.neutron_flux, [position])
 :symbols:`neutron_flux` as a function of :attr:`~position`.
 """
 
-neutron_flux_laplacian = FunctionNew("Laplace(Phi)", [position], 1 / (units.length**4 * units.time), display_latex="\\nabla^{2} \\Phi")
+neutron_flux_laplacian = Function("Laplace(Phi)", [position], 1 / (units.length**4 * units.time), display_latex="\\nabla^{2} \\Phi")
 """
 Laplacian of the :attr:`~neutron_flux` as a function of :attr:`~position`.
 """

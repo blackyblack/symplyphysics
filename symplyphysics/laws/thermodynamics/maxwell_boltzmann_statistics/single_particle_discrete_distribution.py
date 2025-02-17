@@ -24,7 +24,7 @@ from sympy import Eq, exp, solve
 from symplyphysics import (
     dimensionless,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     symbols,
@@ -32,7 +32,7 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-occupancy_of_state = SymbolNew("N_i", dimensionless)
+occupancy_of_state = Symbol("N_i", dimensionless)
 """
 Occupancy of, or expected number of particles in, the single-particle microstate :math:`i`.
 """

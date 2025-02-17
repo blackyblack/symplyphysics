@@ -26,7 +26,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    SumIndexed,
+    IndexedSum,
     global_index,
 )
 from symplyphysics.core.symbols.symbols import clone_as_indexed
@@ -41,7 +41,7 @@ component_mass = clone_as_indexed(symbols.mass)
 :symbols:`mass` of the :math:`i`-th component.
 """
 
-law = Eq(mixture_mass, SumIndexed(component_mass[global_index], global_index))
+law = Eq(mixture_mass, IndexedSum(component_mass[global_index], global_index))
 """
 :laws:symbol::
 

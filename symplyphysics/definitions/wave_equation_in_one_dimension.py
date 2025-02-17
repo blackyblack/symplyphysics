@@ -23,8 +23,8 @@ from symplyphysics import (
     validate_input,
     symbols,
     clone_as_symbol,
-    FunctionNew,
-    SymbolNew,
+    Function,
+    Symbol,
 )
 from symplyphysics.core.dimensions import any_dimension
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -40,7 +40,7 @@ time = clone_as_symbol(symbols.time, positive=True)
 :symbols:`time`.
 """
 
-displacement = FunctionNew("u", [position, time], any_dimension)  # pylint: disable=invalid-name
+displacement = Function("u", [position, time], any_dimension)  # pylint: disable=invalid-name
 """
 Factor representing a displacement from rest position, which could be
 pressure, position, electric field, etc., as a function of position
@@ -66,7 +66,7 @@ definition = Eq(
 ## u_m - amplitude of displacement
 ## phi - phase lag
 
-amplitude = SymbolNew("u_m", any_dimension)
+amplitude = Symbol("u_m", any_dimension)
 phase_lag = clone_as_symbol(symbols.phase_shift, real=True)
 _length_unit = symbols.length
 

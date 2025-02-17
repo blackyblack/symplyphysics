@@ -15,7 +15,7 @@ from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     dimensionless,
     symbols,
@@ -44,24 +44,24 @@ output_current = clone_as_symbol(symbols.current, display_symbol="I_o", display_
 Output :symbols:`current`.
 """
 
-input_input_parameter = SymbolNew("H_ii", units.impedance, display_latex="H_\\text{ii}")
+input_input_parameter = Symbol("H_ii", units.impedance, display_latex="H_\\text{ii}")
 """
 Ratio of input :symbols:`voltage` to input :symbols:`current` in case of a short circuit
 at the output.
 """
 
-input_output_parameter = SymbolNew("H_io", dimensionless, display_latex="H_\\text{io}")
+input_output_parameter = Symbol("H_io", dimensionless, display_latex="H_\\text{io}")
 """
 Ratio of input :symbols:`voltage` to output :symbols:`voltage` at idle at the input.
 """
 
-output_input_parameter = SymbolNew("H_oi", dimensionless, display_latex="H_\\text{oi}")
+output_input_parameter = Symbol("H_oi", dimensionless, display_latex="H_\\text{oi}")
 """
 Ratio of output :symbols:`current` to input :symbols:`current` in case of a short circuit
 at the output.
 """
 
-output_output_parameter = SymbolNew("H_oo", units.conductance, display_latex="H_\\text{oo}")
+output_output_parameter = Symbol("H_oo", units.conductance, display_latex="H_\\text{oo}")
 """
 Ratio of output :symbols:`current` to output :symbols:`voltage` at idle at the input.
 """

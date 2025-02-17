@@ -25,7 +25,7 @@ from symplyphysics import (
     symbols,
     clone_as_symbol,
     clone_as_function,
-    SymbolNew,
+    Symbol,
 )
 from symplyphysics.core.dimensions import any_dimension
 from symplyphysics.core.geometry.line import two_point_function, Point2D
@@ -44,7 +44,7 @@ temperature = symbols.temperature
 :symbols:`temperature` of the body.
 """
 
-parameters = SymbolNew("q", any_dimension)
+parameters = Symbol("q", any_dimension)
 """
 Parameters other than :attr:`~temperature` on which the volume function depends.
 """

@@ -23,7 +23,7 @@ from symplyphysics import (
     Quantity,
     validate_input,
     validate_output,
-    SumIndexed,
+    IndexedSum,
     symbols,
 )
 from symplyphysics.core.symbols.symbols import clone_as_indexed
@@ -35,7 +35,7 @@ r"""
 :math:`k`-th current flowing through the node.
 """
 
-law = Eq(SumIndexed(current[index], index), 0)
+law = Eq(IndexedSum(current[index], index), 0)
 """
 :laws:symbol::
 

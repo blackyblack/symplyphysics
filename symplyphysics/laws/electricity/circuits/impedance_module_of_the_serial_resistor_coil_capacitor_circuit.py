@@ -11,13 +11,13 @@ in series. Then you can find the impedance module of such a circuit.
 """
 
 from sympy import (Eq, solve, sqrt, Idx, expand)
-from symplyphysics import (units, Quantity, SymbolNew, validate_input, validate_output, global_index, symbols, clone_as_symbol)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, global_index, symbols, clone_as_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity.circuits import capacitor_impedance_from_capacitive_reactance as capacitor_impedance_law
 from symplyphysics.laws.electricity.circuits import coil_impedance_from_inductive_reactance as coil_impedance_law
 from symplyphysics.laws.electricity.circuits import impedance_in_serial_connection as serial_law
 
-circuit_impedance_module = SymbolNew("abs(Z)", units.impedance, display_latex="|Z|")
+circuit_impedance_module = Symbol("abs(Z)", units.impedance, display_latex="|Z|")
 """
 Absolute value of the circuit's :symbols:`electrical_impedance`.
 """

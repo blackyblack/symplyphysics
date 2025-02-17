@@ -26,7 +26,7 @@ from symplyphysics import (
     units,
     quantities,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     convert_to_float,
@@ -37,7 +37,7 @@ equilibrium_constant = symbols.equilibrium_constant
 Equilibrium constant of the reaction.
 """
 
-reaction_standard_gibbs_energy = SymbolNew("Delta(G)",
+reaction_standard_gibbs_energy = Symbol("Delta(G)",
     units.energy / units.amount_of_substance,
     display_latex="\\Delta G")
 r"""

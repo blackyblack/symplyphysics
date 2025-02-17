@@ -18,14 +18,14 @@ from sympy import Eq, Integral
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     symbols,
     clone_as_function,
 )
 
-molar_internal_energy = SymbolNew("u_m", units.energy / units.amount_of_substance, display_latex="u_\\text{m}")
+molar_internal_energy = Symbol("u_m", units.energy / units.amount_of_substance, display_latex="u_\\text{m}")
 """
 :symbols:`internal_energy` of the van der Waals fluid per unit :symbols:`amount_of_substance`.
 """

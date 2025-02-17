@@ -26,7 +26,7 @@ from sympy import Eq, Rational, sqrt, pi, exp, solve
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     clone_as_symbol,
@@ -42,7 +42,7 @@ energy = clone_as_symbol(symbols.energy, positive=True)
 :symbols:`energy` of the ensemble.
 """
 
-energy_distribution_function = SymbolNew("f(E)", 1 / units.energy, positive=True)
+energy_distribution_function = Symbol("f(E)", 1 / units.energy, positive=True)
 """
 :attr:`~energy` distribution function.
 """

@@ -24,7 +24,7 @@ from symplyphysics import (
     Quantity,
     validate_input,
     validate_output,
-    SumIndexed,
+    IndexedSum,
     global_index,
     symbols,
 )
@@ -40,7 +40,7 @@ amount_of_component = clone_as_indexed(symbols.amount_of_substance)
 :symbols:`amount_of_substance` in the :math:`i`-th component.
 """
 
-law = Eq(amount_of_mixture, SumIndexed(amount_of_component[global_index], global_index))
+law = Eq(amount_of_mixture, IndexedSum(amount_of_component[global_index], global_index))
 """
 :laws:symbol::
 

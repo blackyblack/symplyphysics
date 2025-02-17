@@ -2,7 +2,7 @@ from typing import Any, Self
 from sympy import Expr, Basic, Idx, Product
 
 
-class ProductIndexed(Expr):
+class IndexedProduct(Expr):
     """
     Represents unevaluated product for expression with indexed variables.
 

@@ -15,7 +15,7 @@ from sympy import Eq, solve, Matrix, sqrt
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -48,7 +48,7 @@ transmission_line_admittance = clone_as_symbol(symbols.admittance, subscript="0"
 :symbols:`admittance` of the transmission line.
 """
 
-power_ratio = SymbolNew("k", dimensionless)
+power_ratio = Symbol("k", dimensionless)
 """
 Ratio of the power at the outputs of the coupler.
 """

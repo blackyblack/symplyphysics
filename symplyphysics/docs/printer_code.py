@@ -10,7 +10,7 @@ from sympy.concrete.products import Product
 from sympy.concrete.summations import Sum
 from sympy.integrals.integrals import Integral
 from sympy.printing.precedence import precedence, precedence_traditional, PRECEDENCE
-from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew, SymbolIndexedNew
+from ..core.symbols.symbols import DimensionSymbol, Function, IndexedSymbol
 
 
 class SymbolCodePrinter(StrPrinter):
@@ -22,16 +22,18 @@ class SymbolCodePrinter(StrPrinter):
         StrPrinter.__init__(self, settings)
 
     # pylint: disable-next=invalid-name
-    def _print_SymbolNew(self, expr: Any) -> str:
-        return expr.display_name if isinstance(expr, DimensionSymbolNew) else getattr(expr, "name")
-
-    def _print_Quantity(self, expr: Any) -> str:
-        return self._print_SymbolNew(expr)
+    def _print_Symbol(self, expr: Any) -> str:
+        return expr.display_name if isinstance(expr, DimensionSymbol) else getattr(expr, "name")
 
     # pylint: disable-next=invalid-name
-    def _print_SymbolIndexedNew(self, expr: Any) -> str:
-        return self._print_SymbolNew(expr)
+    def _print_Quantity(self, expr: Any) -> str:
+        return self._print_Symbol(expr)
 
+    # pylint: disable-next=invalid-name
+    def _print_IndexedSymbol(self, expr: Any) -> str:
+        return self._print_Symbol(expr)
+
+    # pylint: disable-next=invalid-name
     def _print_Pow(self, expr: Any, _rational: bool = False) -> str:
         prec = precedence(expr)
 
@@ -56,6 +58,7 @@ class SymbolCodePrinter(StrPrinter):
                 return f"{self.parenthesize(expr.base, prec, strict=False)}^{e[1:-1]}"
         return f"{self.parenthesize(expr.base, prec, strict=False)}^{e}"
 
+    # pylint: disable-next=invalid-name
     def _print_Relational(self, expr: Any) -> str:
         lhs_code = self._print(expr.lhs)
         rhs_code = self._print(expr.rhs)
@@ -64,17 +67,18 @@ class SymbolCodePrinter(StrPrinter):
         }
         return f"{lhs_code} {charmap[expr.rel_op]} {rhs_code}"
 
+    # pylint: disable-next=invalid-name
     def _print_Function(self, expr: Any) -> str:
-        if isinstance(expr, DimensionSymbolNew):
-            if isinstance(expr, FunctionNew):
+        if isinstance(expr, DimensionSymbol):
+            if isinstance(expr, Function):
                 name = expr.display_name
                 args_str = self.stringify(expr.arguments, ", ")
             else:
                 return expr.display_name
         else:
             func = expr.func
-            if isinstance(func, DimensionSymbolNew):
-                if isinstance(func, FunctionNew):
+            if isinstance(func, DimensionSymbol):
+                if isinstance(func, Function):
                     name = func.display_name
                 else:
                     return func.display_name
@@ -84,15 +88,15 @@ class SymbolCodePrinter(StrPrinter):
         return f"{name}({args_str})"
 
     # pylint: disable-next=invalid-name
-    def _print_SumIndexed(self, expr: Any) -> str:
+    def _print_IndexedSum(self, expr: Any) -> str:
         # only one index of sum is supported
         # expr.args[0] contains the argument of the Sum
         # expr.args[1] contains just indexed symbol
         applied, index = expr.args
         return f"Sum({self._print(applied)}, {self._print(index)})"
-    
+
     # pylint: disable-next=invalid-name
-    def _print_ProductIndexed(self, expr: Any) -> str:
+    def _print_IndexedProduct(self, expr: Any) -> str:
         # only one index of product is supported
         # expr.args[0] contains the argument of the Product
         # expr.args[1] contains just indexed symbol
@@ -150,6 +154,7 @@ class SymbolCodePrinter(StrPrinter):
         tex = f"{snumer_str} / {sdenom_str}"
         return tex
 
+    # pylint: disable-next=invalid-name
     def _print_Mul(self, expr: Mul) -> str:
         separator = " * "
 
@@ -221,6 +226,7 @@ class SymbolCodePrinter(StrPrinter):
             return True
         return False
 
+    # pylint: disable-next=invalid-name
     def _print_Add(self, expr: Expr, _order: bool = False) -> str:
         tex = ""
         for i, term in enumerate(expr.args):
@@ -238,6 +244,7 @@ class SymbolCodePrinter(StrPrinter):
 
         return tex
 
+    # pylint: disable-next=invalid-name
     def _print_DenseMatrix(self, expr: DenseMatrix) -> str:
         rows, cols = expr.shape
 
@@ -257,13 +264,13 @@ class SymbolCodePrinter(StrPrinter):
 def code_str(expr: Any, **settings: Any) -> str:
     printer = SymbolCodePrinter(settings)
 
-    if isinstance(expr, FunctionNew):
+    if isinstance(expr, Function):
         arguments = [
-            SymSymbol(arg.display_name) if isinstance(arg, FunctionNew) else arg
+            SymSymbol(arg.display_name) if isinstance(arg, Function) else arg
             for arg in expr.arguments
         ]
         expr = expr(*arguments)
-    if isinstance(expr, SymbolIndexedNew):
+    if isinstance(expr, IndexedSymbol):
         expr = expr[expr.index]
 
     return printer.doprint(expr)

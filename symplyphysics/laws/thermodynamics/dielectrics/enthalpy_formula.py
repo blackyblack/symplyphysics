@@ -21,17 +21,17 @@ from symplyphysics import (
     symbols,
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
 )
 
-enthalpy_density = SymbolNew("H", units.energy / units.volume)
+enthalpy_density = Symbol("H", units.energy / units.volume)
 """
 :symbols:`enthalpy` of the system per unit :symbols:`volume`.
 """
 
-internal_energy_density = SymbolNew("U", units.energy / units.volume)
+internal_energy_density = Symbol("U", units.energy / units.volume)
 """
 :symbols:`internal_energy` of the system per units :symbols:`volume`.
 """

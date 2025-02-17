@@ -30,7 +30,7 @@ the boundary equation :math:`f(x) = T(x, 0)`.
 from sympy import Eq, sin, exp, pi
 from symplyphysics import (
     units,
-    SymbolNew,
+    Symbol,
     Quantity,
     validate_input,
     validate_output,
@@ -44,7 +44,7 @@ Solution to the heat equation corresponding to the :math:`n`:sup:`th` mode.
 See :symbols:`temperature`.
 """
 
-scaling_coefficient = SymbolNew("B_n", units.temperature)
+scaling_coefficient = Symbol("B_n", units.temperature)
 """
 Scaling coefficient of the solution, see :ref:`Notes <heat_transfer_zero_temperature_solution_coefficient_note>`.
 """

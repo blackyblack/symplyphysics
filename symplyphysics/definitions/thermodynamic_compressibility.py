@@ -25,7 +25,7 @@ from symplyphysics import (
     validate_output,
     symbols,
     clone_as_function,
-    SymbolNew,
+    Symbol,
 )
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 from symplyphysics.core.dimensions import any_dimension
@@ -40,7 +40,7 @@ pressure = symbols.pressure
 :symbols:`pressure` in the gas.
 """
 
-parameters = SymbolNew("q", any_dimension)
+parameters = Symbol("q", any_dimension)
 """
 Parameters other than :attr:`~pressure` on which the volume function depends.
 """

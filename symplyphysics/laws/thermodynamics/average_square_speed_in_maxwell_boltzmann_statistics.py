@@ -20,12 +20,12 @@ and inversely proportional to the mass of the gas.
 """
 
 from sympy import (Eq, solve, S, stats, Interval)
-from symplyphysics import (units, Quantity, SymbolNew, validate_input, validate_output, symbols,
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols,
     clone_as_symbol, quantities)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
 
-average_square_speed = SymbolNew("avg(v^2)", units.velocity**2, positive=True, display_latex="\\langle v^2 \\rangle")
+average_square_speed = Symbol("avg(v^2)", units.velocity**2, positive=True, display_latex="\\langle v^2 \\rangle")
 """
 Average square of the :symbols:`speed` of gas molecules.
 """

@@ -15,7 +15,7 @@ case is a triode with flat electrodes.
 from sympy import Eq, solve
 from symplyphysics import (
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -24,12 +24,12 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-direct_permeability_coefficient = SymbolNew("D", dimensionless)
+direct_permeability_coefficient = Symbol("D", dimensionless)
 """
 Direct permeability coefficient of the grid.
 """
 
-first_tabular_coefficient = SymbolNew("C_1", dimensionless)
+first_tabular_coefficient = Symbol("C_1", dimensionless)
 """
 First tabular coefficient.
 """
@@ -44,7 +44,7 @@ distance = symbols.euclidean_distance
 :symbols:`euclidean_distance` between anode and grid.
 """
 
-second_tabular_coefficient = SymbolNew("C_2", dimensionless)
+second_tabular_coefficient = Symbol("C_2", dimensionless)
 """
 Second tabular coefficient.
 """

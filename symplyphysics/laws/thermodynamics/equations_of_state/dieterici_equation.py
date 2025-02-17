@@ -30,7 +30,7 @@ from sympy import Eq, solve, exp
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     symbols,
@@ -42,7 +42,7 @@ pressure = symbols.pressure
 :symbols:`pressure` inside the system.
 """
 
-molar_volume = SymbolNew("V_m", units.volume / units.amount_of_substance)
+molar_volume = Symbol("V_m", units.volume / units.amount_of_substance)
 """
 :symbols:`volume` of the system per :symbols:`amount_of_substance`.
 """
