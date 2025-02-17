@@ -23,7 +23,7 @@ from symplyphysics import (
     validate_input,
     symbols,
     clone_as_symbol,
-    FunctionNew,
+    Function,
     Symbol,
 )
 from symplyphysics.core.dimensions import any_dimension
@@ -40,7 +40,7 @@ time = clone_as_symbol(symbols.time, positive=True)
 :symbols:`time`.
 """
 
-displacement = FunctionNew("u", [position, time], any_dimension)  # pylint: disable=invalid-name
+displacement = Function("u", [position, time], any_dimension)  # pylint: disable=invalid-name
 """
 Factor representing a displacement from rest position, which could be
 pressure, position, electric field, etc., as a function of position

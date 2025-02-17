@@ -9,7 +9,7 @@ from sympy.matrices.dense import DenseMatrix
 from sympy.printing.latex import LatexPrinter, accepted_latex_functions
 from sympy.core.function import AppliedUndef
 from sympy.simplify import fraction
-from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew, SymbolIndexedNew
+from ..core.symbols.symbols import DimensionSymbolNew, Function, SymbolIndexedNew
 
 _between_two_numbers_p = (
     re.compile(r"[0-9][} ]*$"),  # search
@@ -59,6 +59,7 @@ class SymbolLatexPrinter(LatexPrinter):
     def _print_SymbolIndexedNew(self, expr: Any) -> str:
         return self._print_Symbol(expr)
 
+    # pylint: disable-next=invalid-name
     def _print_Function(self, expr: Any, exp: Any = None) -> str:
         # pylint: disable=too-many-branches
         func = expr.func.__name__
@@ -138,6 +139,7 @@ class SymbolLatexPrinter(LatexPrinter):
         return name % ",".join(args)
 
     # TODO: use e^ for shorter expressions
+    # pylint: disable-next=invalid-name
     def _print_ExpBase(self, expr: Any, exp: Any = None) -> str:
         args = [str(self._print(arg)) for arg in expr.args]
         can_fold_brackets = self._settings["fold_func_brackets"] and \
@@ -191,6 +193,7 @@ class SymbolLatexPrinter(LatexPrinter):
             terms.append(term)
         return (Mul(*terms, evaluate=False), sign)
 
+    # pylint: disable-next=invalid-name
     def _print_Mul(self, expr: Mul) -> str:
         separator: str = self._settings["mul_symbol_latex"]
         numbersep: str = self._settings["mul_symbol_latex_numbers"]
@@ -263,6 +266,7 @@ class SymbolLatexPrinter(LatexPrinter):
             return True
         return False
 
+    # pylint: disable-next=invalid-name
     def _print_Add(self, expr: Expr, _order: bool = False) -> str:
         tex = ""
         for i, term in enumerate(expr.args):
@@ -280,6 +284,7 @@ class SymbolLatexPrinter(LatexPrinter):
 
         return tex
 
+    # pylint: disable-next=invalid-name
     def _print_DenseMatrix(self, expr: DenseMatrix) -> str:
         rows, cols = expr.shape
 
@@ -294,9 +299,9 @@ class SymbolLatexPrinter(LatexPrinter):
 def latex_str(expr: Any, **settings: Any) -> str:
     printer = SymbolLatexPrinter(settings)
 
-    if isinstance(expr, FunctionNew):
+    if isinstance(expr, Function):
         arguments = [
-            SymSymbol(arg.display_name) if isinstance(arg, FunctionNew) else arg
+            SymSymbol(arg.display_name) if isinstance(arg, Function) else arg
             for arg in expr.arguments
         ]
         expr = expr(*arguments)

@@ -113,7 +113,7 @@ class SymbolIndexedNew(DimensionSymbolNew, IndexedBase):  # pylint: disable=too-
         pass
 
 
-class FunctionNew(DimensionSymbolNew, UndefinedFunction):
+class Function(DimensionSymbolNew, UndefinedFunction):
     arguments: Sequence[Expr]
 
     # NOTE: Self type cannot be used in a metaclass and 'mcs' is a metaclass here
@@ -125,7 +125,7 @@ class FunctionNew(DimensionSymbolNew, UndefinedFunction):
         _dimension: Dimension = Dimension(S.One),
         *,
         display_latex: Optional[str] = None,
-        **options: Any) -> FunctionNew:
+        **options: Any) -> Function:
         return UndefinedFunction.__new__(mcs, next_name("FUN"), **options)
 
     def __init__(cls,
@@ -182,7 +182,7 @@ class SymbolPrinter(PrettyPrinter):
         # pylint: disable=too-many-arguments, too-many-positional-arguments
         # optional argument func_name for supplying custom names
         # works only for applied functions
-        func_name = e.func.display_name if isinstance(e.func, FunctionNew) else func_name
+        func_name = e.func.display_name if isinstance(e.func, Function) else func_name
         return self._helper_print_function(e.func,
             e.args,
             sort=sort,
@@ -250,14 +250,14 @@ def clone_as_function(
     display_latex: Optional[str] = None,
     subscript: Optional[str] = None,
     **assumptions: Any,
-) -> FunctionNew:
+) -> Function:
     display_symbol = display_symbol or source.display_name
     display_latex = display_latex or source.display_latex
 
     display_symbol, display_latex = _process_subscript_and_names(display_symbol, display_latex,
         subscript)
 
-    return FunctionNew(
+    return Function(
         display_symbol,
         arguments,
         source.dimension,
