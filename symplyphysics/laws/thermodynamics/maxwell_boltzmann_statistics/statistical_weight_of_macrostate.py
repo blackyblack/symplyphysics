@@ -23,7 +23,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     global_index,
-    ProductIndexed,
+    IndexedProduct,
     IndexedSum,
     symbols,
 )
@@ -42,7 +42,7 @@ particle_count_in_state = clone_as_indexed(symbols.particle_count)
 law = Eq(
     statistical_weight,
     factorial(IndexedSum(particle_count_in_state[global_index], global_index)) /
-    ProductIndexed(factorial(particle_count_in_state[global_index]), global_index),
+    IndexedProduct(factorial(particle_count_in_state[global_index]), global_index),
 )
 """
 :laws:symbol::

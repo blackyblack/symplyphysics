@@ -159,7 +159,7 @@ class SymbolLatexPrinter(LatexPrinter):
         return f"\\sum_{self._print(index)} {self._print(arg)}"
 
     # pylint: disable-next=invalid-name
-    def _print_ProductIndexed(self, expr: Any) -> str:
+    def _print_IndexedProduct(self, expr: Any) -> str:
         # only one index of sum is supported
         arg, index = expr.args
         return f"\\prod_{self._print(index)} {self._print(arg)}"

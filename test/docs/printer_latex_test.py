@@ -9,7 +9,7 @@ from symplyphysics import (
     units,
     IndexedSymbol,
     IndexedSum,
-    ProductIndexed,
+    IndexedProduct,
     global_index,
 )
 from symplyphysics.docs.printer_latex import latex_str
@@ -293,9 +293,9 @@ def test_indexed_sum() -> None:
 def test_indexed_product() -> None:
     f = IndexedSymbol("F")
 
-    expr = ProductIndexed(f[global_index], global_index)
+    expr = IndexedProduct(f[global_index], global_index)
     assert latex_str(expr) == "\\prod_i {F}_{i}"
 
     with evaluate(False):
-        expr = ProductIndexed(f[global_index]**2, global_index)
+        expr = IndexedProduct(f[global_index]**2, global_index)
     assert latex_str(expr) == "\\prod_i {F}_{i}^{2}"
