@@ -20,7 +20,7 @@ the gas in question.
 from sympy import Eq
 from symplyphysics import (
     dimensionless,
-    SymbolNew,
+    Symbol,
     Quantity,
     validate_input,
     validate_output,
@@ -29,7 +29,7 @@ from symplyphysics import (
     quantities,
 )
 
-reduced_temperature = SymbolNew("theta", dimensionless, display_latex="\\theta")
+reduced_temperature = Symbol("theta", dimensionless, display_latex="\\theta")
 """
 Reduced :symbols:`temperature`.
 """

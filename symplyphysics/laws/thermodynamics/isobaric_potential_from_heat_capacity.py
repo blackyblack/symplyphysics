@@ -29,23 +29,23 @@ from symplyphysics import (
     symbols,
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     clone_as_symbol,
 )
 
-standard_molar_gibbs_energy_change = SymbolNew("Delta(G_m)", units.energy / units.amount_of_substance, display_latex="\\Delta G_\\text{m}")
+standard_molar_gibbs_energy_change = Symbol("Delta(G_m)", units.energy / units.amount_of_substance, display_latex="\\Delta G_\\text{m}")
 """
 Standard change of :symbols:`gibbs_energy` per unit :symbols:`amount_of_substance`.
 """
 
-standard_molar_enthalpy_change = SymbolNew("Delta(H_m)", units.energy / units.amount_of_substance, display_latex="\\Delta H_\\text{m}")
+standard_molar_enthalpy_change = Symbol("Delta(H_m)", units.energy / units.amount_of_substance, display_latex="\\Delta H_\\text{m}")
 """
 Standard change of :symbols:`enthalpy` per unit :symbols:`amount_of_substance`.
 """
 
-standard_molar_entropy_change = SymbolNew("Delta(S_m)", units.energy / units.amount_of_substance / units.temperature, display_latex="\\Delta S_\\text{m}")
+standard_molar_entropy_change = Symbol("Delta(S_m)", units.energy / units.amount_of_substance / units.temperature, display_latex="\\Delta S_\\text{m}")
 """
 Standard change of :symbols:`entropy` per unit :symbols:`amount_of_substance`.
 """

@@ -22,7 +22,7 @@ from symplyphysics import (
     Quantity,
     validate_input,
     validate_output,
-    SumIndexed,
+    IndexedSum,
     global_index,
     symbols,
 )
@@ -38,7 +38,7 @@ subsystem_entropy = clone_as_indexed(symbols.entropy)
 :symbols:`entropy` of the :math:`i`-th subsystem.
 """
 
-law = Eq(total_entropy, SumIndexed(subsystem_entropy[global_index], global_index))
+law = Eq(total_entropy, IndexedSum(subsystem_entropy[global_index], global_index))
 """
 :laws:symbol::
 

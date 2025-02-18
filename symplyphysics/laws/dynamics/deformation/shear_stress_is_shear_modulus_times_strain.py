@@ -6,6 +6,7 @@ from symplyphysics import (
     Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 from symplyphysics.core.symbols.quantities import scale_factor
 
@@ -26,10 +27,14 @@ from symplyphysics.core.symbols.quantities import scale_factor
 ## For a visual representation of shear stress visit [this](https://vuzdoc.org/htm/img/3/6176/223.png)
 
 # Links: Wikipedia <https://en.wikipedia.org/wiki/Shear_stress#Pure>
+# TODO: update documentation
 
-shear_stress = Symbol("shear_stress", units.pressure)
-shear_modulus = Symbol("shear_modulus", units.pressure)
-shear_strain = Symbol("shear_strain", angle_type)
+shear_stress = symbols.stress
+shear_modulus = Symbol("G", units.pressure)
+# TODO: add to `symbols`
+
+shear_strain = Symbol("gamma", angle_type, display_latex="\\gamma")
+# TODO: add to `symbols`
 
 law = Eq(shear_stress, shear_modulus * shear_strain)
 

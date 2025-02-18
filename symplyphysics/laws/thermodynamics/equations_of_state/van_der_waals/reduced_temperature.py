@@ -15,13 +15,13 @@ from symplyphysics import (
     symbols,
     dimensionless,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     convert_to_float,
 )
 
-reduced_temperature = SymbolNew("T_r", dimensionless)
+reduced_temperature = Symbol("T_r", dimensionless)
 """
 Reduced :symbols:`temperature` of the van der Waals fluid.
 """

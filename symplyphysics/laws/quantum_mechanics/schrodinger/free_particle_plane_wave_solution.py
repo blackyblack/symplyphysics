@@ -33,7 +33,7 @@ from symplyphysics import (
     convert_to,
     quantities,
     symbols,
-    SymbolNew,
+    Symbol,
     dimensionless,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -43,7 +43,7 @@ from symplyphysics.laws.quantum_mechanics.schrodinger import (
     time_dependent_via_time_independent_solution as time_dependent_law,
 )
 
-dimensionless_wave_function = SymbolNew("psi", dimensionless, display_latex="\\psi")
+dimensionless_wave_function = Symbol("psi", dimensionless, display_latex="\\psi")
 """
 Dimensionless :symbols:`wave_function` describing the particle's state. The dimension
 coefficient has been omitted since this wave function cannot be normalized as it is,

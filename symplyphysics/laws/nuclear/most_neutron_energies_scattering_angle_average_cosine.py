@@ -11,14 +11,14 @@ target nucleus.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import symbols, SymbolNew, dimensionless
+from symplyphysics import symbols, Symbol, dimensionless
 
 mass_number = symbols.mass_number
 """
 :symbols:`mass_number` of the target nucleus.
 """
 
-average_scattering_angle_cosine = SymbolNew("mu", dimensionless, display_latex="\\mu")
+average_scattering_angle_cosine = Symbol("mu", dimensionless, display_latex="\\mu")
 """
 Average of the cosine of the angle at which neutrons are scattered in the medium in the
 lab system.

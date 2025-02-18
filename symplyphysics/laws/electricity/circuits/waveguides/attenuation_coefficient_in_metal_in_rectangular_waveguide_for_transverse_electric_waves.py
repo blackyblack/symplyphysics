@@ -21,7 +21,7 @@ frequency of signal and specific conductivity of conductor.
 from sympy import Eq, solve, sqrt
 from symplyphysics import (
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -39,13 +39,13 @@ surface_resistance = clone_as_symbol(symbols.electrical_resistance, display_symb
 :symbols:`electrical_resistance` of the surface.
 """
 
-first_index = SymbolNew("m", dimensionless)
+first_index = Symbol("m", dimensionless)
 """
 The first index shows how many half-wavelengths fit across the width of the cross
 section.
 """
 
-second_index = SymbolNew("n", dimensionless)
+second_index = Symbol("n", dimensionless)
 """
 The second index shows how many half-wavelengths fit across the height of the cross
 section.
@@ -87,8 +87,8 @@ law = Eq(
     * (
         ((1 + _reduced_dimension) * _reduced_wavelength**2)
         + (
-            1 - _reduced_wavelength**2) 
-            * (_reduced_dimension * (_reduced_dimension * second_index**2 + first_index**2)) 
+            1 - _reduced_wavelength**2)
+            * (_reduced_dimension * (_reduced_dimension * second_index**2 + first_index**2))
             / ((_reduced_dimension * second_index)**2 + first_index**2)
     )
 )

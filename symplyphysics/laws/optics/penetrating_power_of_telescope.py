@@ -7,6 +7,7 @@ from symplyphysics import (
     validate_output,
     dimensionless,
     convert_to_float,
+    symbols,
 )
 
 # Description
@@ -18,14 +19,14 @@ from symplyphysics import (
 
 # Possible link: https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%BE%D0%BD%D0%B8%D1%86%D0%B0%D1%8E%D1%89%D0%B0%D1%8F_%D1%81%D0%B8%D0%BB%D0%B0
 # TODO: find English link
+# TODO: update documentation
 
-# TODO: move law to `optics`?
+penetrating_power_telescope = Symbol("m", dimensionless)
+# TODO: add to `symbols`
 
-penetrating_power_telescope = Symbol("penetrating_power_telescope", dimensionless)
+lens_diameter = symbols.diameter
 
-lens_diameter = Symbol("lens_diameter", units.length)
-
-one_millimeter = Quantity(1 * units.millimeter)
+one_millimeter = Quantity(1 * units.millimeter, display_symbol="D_0")
 
 law = Eq(penetrating_power_telescope, 2.5 + 5 * log(lens_diameter / one_millimeter, 10))
 

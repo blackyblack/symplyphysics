@@ -17,14 +17,14 @@ from sympy import Eq, solve, pi, sqrt
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     symbols,
     clone_as_symbol,
 )
 
-specific_resistance = SymbolNew("R", units.impedance / units.length)
+specific_resistance = Symbol("R", units.impedance / units.length)
 """
 :symbols:`electrical_resistance` of coaxial waveguide per unit :symbols:`length`.
 """
@@ -39,7 +39,7 @@ angular_frequency = symbols.angular_frequency
 :symbols:`angular_frequency` of the signal.
 """
 
-specific_conductance = SymbolNew("G", units.conductance / units.length)
+specific_conductance = Symbol("G", units.conductance / units.length)
 """
 :symbols:`electrical_conductance` per unit :symbols:`length`.
 """

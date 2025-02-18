@@ -16,7 +16,7 @@ from sympy import Eq, exp, cos, solve
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     symbols,
@@ -40,7 +40,7 @@ time = symbols.time
 :symbols:`time` at which :attr:`~displacement` is measured.
 """
 
-scaling_coefficient = SymbolNew("a", units.length, real=True)
+scaling_coefficient = Symbol("a", units.length, real=True)
 """
 Scaling coefficient to be found using initial conditions.
 """

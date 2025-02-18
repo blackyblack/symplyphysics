@@ -9,7 +9,7 @@ is given by approximating functions of the order of :math:`n`.
 
 from sympy import Eq, solve
 from symplyphysics import (
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -22,18 +22,18 @@ frequency = symbols.temporal_frequency
 :symbols:`temporal_frequency` of the signal.
 """
 
-filter_function = SymbolNew("F", dimensionless)
+filter_function = Symbol("F", dimensionless)
 """
 Function (of :attr:`~frequency`) of order :math:`n` which approximates the transfer
 coefficient.
 """
 
-bandwidth_distortion = SymbolNew("e", dimensionless)
+bandwidth_distortion = Symbol("e", dimensionless)
 """
 Bandwidth distortion determines the maximum distortion in the bandwidth.
 """
 
-transfer_coefficient = SymbolNew("H", dimensionless)
+transfer_coefficient = Symbol("H", dimensionless)
 """
 Transfer coefficient of the filter.
 """

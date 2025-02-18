@@ -12,7 +12,7 @@ equal to the ratio of the resonator's resistance to the load resistance.
 from sympy import Eq, solve
 from symplyphysics import (
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -21,7 +21,7 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-coupling_parameter = SymbolNew("g", dimensionless)
+coupling_parameter = Symbol("g", dimensionless)
 """
 Coupling parameter of the resonator.
 """

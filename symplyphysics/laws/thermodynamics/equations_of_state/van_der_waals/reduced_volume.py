@@ -15,10 +15,9 @@ See :ref:`vdw_reduced_units_def`.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     dimensionless,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     convert_to_float,
@@ -26,7 +25,7 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-reduced_volume = SymbolNew("V_r", dimensionless)
+reduced_volume = Symbol("V_r", dimensionless)
 """
 Reduced :symbols:`volume` of the van der Waals fluid.
 """

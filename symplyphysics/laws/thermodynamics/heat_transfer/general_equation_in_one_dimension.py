@@ -20,7 +20,7 @@ the evolution of heat transferred from hotter to colder environments in time and
 """
 
 from sympy import Eq, Derivative
-from symplyphysics import units, SymbolNew, symbols, clone_as_function
+from symplyphysics import units, Symbol, symbols, clone_as_function
 
 position = symbols.position
 """
@@ -42,7 +42,7 @@ medium_density = symbols.density
 :symbols:`density` of the medium.
 """
 
-medium_specific_isobaric_heat_capacity = SymbolNew("c_p", units.energy / (units.temperature * units.mass))
+medium_specific_isobaric_heat_capacity = Symbol("c_p", units.energy / (units.temperature * units.mass))
 """
 :symbols:`heat_capacity` of the medium at constant :symbols:`pressure` per unit :symbols:`mass`.
 """

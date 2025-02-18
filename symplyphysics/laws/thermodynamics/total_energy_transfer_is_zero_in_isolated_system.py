@@ -16,7 +16,7 @@ from symplyphysics import (
     Quantity,
     validate_input,
     validate_output,
-    SumIndexed,
+    IndexedSum,
     global_index,
     symbols,
 )
@@ -27,7 +27,7 @@ energy = clone_as_indexed(symbols.energy)
 Amount of :symbols:`energy` transferred between parts of the system.
 """
 
-law = Eq(SumIndexed(energy[global_index], global_index), 0)
+law = Eq(IndexedSum(energy[global_index], global_index), 0)
 """
 :laws:symbol::
 

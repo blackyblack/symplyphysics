@@ -40,7 +40,7 @@ from sympy import Eq, Idx, factorial
 from symplyphysics import (
     convert_to_float,
     validate_output,
-    ProductIndexed,
+    IndexedProduct,
     global_index,
     assert_equal,
     symbols,
@@ -74,7 +74,7 @@ particle_count_in_cell = clone_as_indexed(symbols.particle_count)
 
 law = Eq(
     macrostate_probability,
-    statistical_weight * ProductIndexed(
+    statistical_weight * IndexedProduct(
     particle_in_cell_probability[global_index]**particle_count_in_cell[global_index],
     global_index,
     ),

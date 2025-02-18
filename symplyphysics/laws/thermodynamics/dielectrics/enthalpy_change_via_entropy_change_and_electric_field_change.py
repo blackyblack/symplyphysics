@@ -22,13 +22,13 @@ from symplyphysics import (
     symbols,
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     clone_as_symbol,
     validate_input,
     validate_output,
 )
 
-enthalpy_density_change = SymbolNew("dH", units.energy / units.volume)
+enthalpy_density_change = Symbol("dH", units.energy / units.volume)
 """
 Infinitesimal change in :symbols:`enthalpy` of the system per unit :symbols:`volume`.
 """
@@ -38,7 +38,7 @@ temperature = symbols.temperature
 :symbols:`temperature` of the system.
 """
 
-entropy_density_change = SymbolNew("dS", units.energy / units.temperature / units.volume)
+entropy_density_change = Symbol("dS", units.energy / units.temperature / units.volume)
 """
 Infinitesimal change in :symbols:`entropy` of the system per unit :symbols:`volume`.
 """

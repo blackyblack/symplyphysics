@@ -5,12 +5,12 @@ from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import SI
 from sympy.multipledispatch import dispatch
 
-from .symbols import DimensionSymbolNew, next_name
+from .symbols import DimensionSymbol, next_name
 from ..dimensions import collect_factor_and_dimension
 from ..errors import UnitsError
 
 
-class Quantity(DimensionSymbolNew, SymQuantity):  # pylint: disable=too-many-ancestors
+class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancestors
 
     # pylint: disable-next=signature-differs
     def __new__(cls,

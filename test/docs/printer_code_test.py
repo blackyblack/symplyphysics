@@ -3,13 +3,13 @@ from pytest import fixture
 from sympy import I, Integral, evaluate, exp, log, pi, sin, sqrt, Matrix, ImmutableMatrix
 from symplyphysics import (
     Quantity,
-    SymbolNew,
+    Symbol,
     clone_as_symbol,
     clone_as_function,
     units,
-    SymbolIndexedNew,
-    SumIndexed,
-    ProductIndexed,
+    IndexedSymbol,
+    IndexedSum,
+    IndexedProduct,
     global_index,
 )
 from symplyphysics.docs.printer_code import code_str
@@ -36,18 +36,18 @@ Args = namedtuple(
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    mass = SymbolNew("m")
-    temperature = SymbolNew("T")
+    mass = Symbol("m")
+    temperature = Symbol("T")
     boltzmann_constant = Quantity(display_symbol="k_B")
-    energy = SymbolNew("E")
-    time = SymbolNew("t")
-    force = SymbolNew("F")
-    speed = SymbolNew("v")
+    energy = Symbol("E")
+    time = Symbol("t")
+    force = Symbol("F")
+    speed = Symbol("v")
     speed_of_light = Quantity(display_symbol="c")
-    charge = SymbolNew("q")
-    distance = SymbolNew("d")
+    charge = Symbol("q")
+    distance = Symbol("d")
     vacuum_permittivity = Quantity(display_symbol="epsilon_0")
-    intensity = SymbolNew("I")
+    intensity = Symbol("I")
     return Args(
         mass=mass,
         temperature=temperature,
@@ -65,78 +65,78 @@ def test_args_fixture() -> Args:
 
 
 def test_add() -> None:
-    a = SymbolNew("a")
-    b = SymbolNew("b")
+    a = Symbol("a")
+    b = Symbol("b")
     with evaluate(False):
         expr = a + b
     assert code_str(expr) == "a + b"
 
 
 def test_add_no_braces() -> None:
-    a = SymbolNew("a")
-    b = SymbolNew("b")
-    c = SymbolNew("c")
+    a = Symbol("a")
+    b = Symbol("b")
+    c = Symbol("c")
     with evaluate(False):
         expr = a + b + c
     assert code_str(expr) == "a + b + c"
 
 
 def test_mul() -> None:
-    a = SymbolNew("a")
-    b = SymbolNew("b")
+    a = Symbol("a")
+    b = Symbol("b")
     with evaluate(False):
         expr = a * b
     assert code_str(expr) == "a * b"
 
 
 def test_div() -> None:
-    a = SymbolNew("a")
-    b = SymbolNew("b")
+    a = Symbol("a")
+    b = Symbol("b")
     with evaluate(False):
         expr = a / b
     assert code_str(expr) == "a / b"
 
 
 def test_div_no_braces() -> None:
-    a = SymbolNew("a")
-    b = SymbolNew("b")
-    c = SymbolNew("c")
-    d = SymbolNew("d")
+    a = Symbol("a")
+    b = Symbol("b")
+    c = Symbol("c")
+    d = Symbol("d")
     with evaluate(False):
         expr = a / b + c / d
     assert code_str(expr) == "a / b + c / d"
 
 
 def test_div_braces_common_frac() -> None:
-    a = SymbolNew("a")
-    b = SymbolNew("b")
-    c = SymbolNew("c")
-    d = SymbolNew("d")
+    a = Symbol("a")
+    b = Symbol("b")
+    c = Symbol("c")
+    d = Symbol("d")
     with evaluate(False):
         expr = (a + b) / (c + d)
     assert code_str(expr) == "(a + b) / (c + d)"
 
 
 def test_sub() -> None:
-    a = SymbolNew("a")
-    b = SymbolNew("b")
+    a = Symbol("a")
+    b = Symbol("b")
     with evaluate(False):
         expr = a - b
     assert code_str(expr) == "a - b"
 
 
 def test_sub_no_braces() -> None:
-    a = SymbolNew("a")
-    b = SymbolNew("b")
-    c = SymbolNew("c")
+    a = Symbol("a")
+    b = Symbol("b")
+    c = Symbol("c")
     with evaluate(False):
         expr = a - b + c
     assert code_str(expr) == "a - b + c"
 
 
 def test_mul_with_braces() -> None:
-    a = SymbolNew("a")
-    b = SymbolNew("b")
+    a = Symbol("a")
+    b = Symbol("b")
     with evaluate(False):
         expr = a * (b + a)
     assert code_str(expr) == "a * (b + a)"
@@ -146,10 +146,10 @@ def test_mul_with_braces() -> None:
 
 
 def test_mul_with_double_braces() -> None:
-    a = SymbolNew("a")
-    b = SymbolNew("b")
-    c = SymbolNew("c")
-    d = SymbolNew("d")
+    a = Symbol("a")
+    b = Symbol("b")
+    c = Symbol("c")
+    d = Symbol("d")
     with evaluate(False):
         expr = (a + b) * (c + d)
     assert code_str(expr) == "(a + b) * (c + d)"
@@ -185,7 +185,7 @@ def test_mul_sqrt(test_args: Args) -> None:
 
 
 def test_mul_fraction_and_sin(test_args: Args) -> None:
-    natural_angular_frequency = SymbolNew("w_0", display_latex="\\omega_0")
+    natural_angular_frequency = Symbol("w_0", display_latex="\\omega_0")
     time = test_args.time
     with evaluate(False):
         expr = (test_args.force / (2 * test_args.mass * natural_angular_frequency)) * time * sin(
@@ -231,10 +231,10 @@ def test_log_squared(test_args: Args) -> None:
 
 
 def test_mutable_matrix() -> None:
-    a = SymbolNew("a")
-    b = SymbolNew("b")
-    c = SymbolNew("c")
-    d = SymbolNew("d")
+    a = Symbol("a")
+    b = Symbol("b")
+    c = Symbol("c")
+    d = Symbol("d")
 
     # 2-by-2 matrix
     with evaluate(False):
@@ -253,10 +253,10 @@ def test_mutable_matrix() -> None:
 
 
 def test_immutable_matrix() -> None:
-    a = SymbolNew("a")
-    b = SymbolNew("b")
-    c = SymbolNew("c")
-    d = SymbolNew("d")
+    a = Symbol("a")
+    b = Symbol("b")
+    c = Symbol("c")
+    d = Symbol("d")
 
     # 2-by-2 matrix
     with evaluate(False):
@@ -275,47 +275,47 @@ def test_immutable_matrix() -> None:
 
 
 def test_indexed_symbol() -> None:
-    f = SymbolIndexedNew("F")
+    f = IndexedSymbol("F")
     expr = f[global_index]
     assert code_str(expr) == "F[i]"
 
 
 def test_indexed_sum() -> None:
-    f = SymbolIndexedNew("F")
+    f = IndexedSymbol("F")
 
-    expr = SumIndexed(f[global_index], global_index)
+    expr = IndexedSum(f[global_index], global_index)
     assert code_str(expr) == "Sum(F[i], i)"
 
     with evaluate(False):
-        expr = SumIndexed(f[global_index]**2, global_index)
+        expr = IndexedSum(f[global_index]**2, global_index)
     assert code_str(expr) == "Sum(F[i]^2, i)"
 
 
 def test_indexed_product() -> None:
-    f = SymbolIndexedNew("F")
+    f = IndexedSymbol("F")
 
-    expr = ProductIndexed(f[global_index], global_index)
+    expr = IndexedProduct(f[global_index], global_index)
     assert code_str(expr) == "Product(F[i], i)"
 
     with evaluate(False):
-        expr = ProductIndexed(f[global_index]**2, global_index)
+        expr = IndexedProduct(f[global_index]**2, global_index)
     assert code_str(expr) == "Product(F[i]^2, i)"
 
 
 def test_average() -> None:
-    a = SymbolNew("a")
+    a = Symbol("a")
     expr = symbolic.Average(a)
     assert code_str(expr) == "avg(a)"
 
 
 def test_finite_difference() -> None:
-    a = SymbolNew("a")
+    a = Symbol("a")
     expr = symbolic.FiniteDifference(a)
     assert code_str(expr) == "Delta(a)"
 
 
 def test_exact_differential() -> None:
-    a = SymbolNew("a")
+    a = Symbol("a")
 
     expr = symbolic.ExactDifferential(a)
     assert code_str(expr) == "da"
@@ -325,6 +325,6 @@ def test_exact_differential() -> None:
 
 
 def test_inexact_differential() -> None:
-    a = SymbolNew("a")
+    a = Symbol("a")
     expr = symbolic.InexactDifferential(a)
     assert code_str(expr) == "delta(a)"

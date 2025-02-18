@@ -22,12 +22,12 @@ from symplyphysics import (
     validate_output,
 )
 
-damping_constant = Symbol("damping_constant", units.mass / units.time)
+damping_constant = Symbol("b", units.mass / units.time)
 """
 Non-negative damping constant.
 
-Symbol:
-    :code:`b`
+..
+    TODO: add to `symbols`
 """
 
 

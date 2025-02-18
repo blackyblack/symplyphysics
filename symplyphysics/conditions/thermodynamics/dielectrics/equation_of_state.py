@@ -13,7 +13,7 @@ supplied from experiment or derived from the theory of dielectric polarization.
 """
 
 from sympy import Eq
-from symplyphysics import FunctionNew, symbols
+from symplyphysics import Function, symbols
 
 electric_displacement = symbols.electric_displacement
 """
@@ -35,7 +35,7 @@ density = symbols.density
 :symbols:`density` of the medium.
 """
 
-state_function = FunctionNew(
+state_function = Function(
     "f",
     [electric_field_strength, temperature, density],
     electric_displacement.dimension,

@@ -27,26 +27,26 @@ from symplyphysics import (
     dimensionless,
     convert_to_float,
     symbols,
-    SymbolNew
+    Symbol
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
-voltage_voltage_parameter = SymbolNew("A", dimensionless)
+voltage_voltage_parameter = Symbol("A", dimensionless)
 """
 Ratio of input :symbols:`voltage` to output :symbols:`voltage` at idle at the output.
 """
 
-voltage_current_parameter = SymbolNew("B", units.impedance)
+voltage_current_parameter = Symbol("B", units.impedance)
 """
 Ratio of input :symbols:`voltage` to output :symbols:`current` in case of a short circuit at the output.
 """
 
-current_voltage_parameter = SymbolNew("C", units.conductance)
+current_voltage_parameter = Symbol("C", units.conductance)
 """
 Ratio of input :symbols:`current` to output :symbols:`voltage` at idle at the output.
 """
 
-current_current_parameter = SymbolNew("D", dimensionless)
+current_current_parameter = Symbol("D", dimensionless)
 """
 Ratio of input :symbols:`current` to output :symbols:`current` in case of a short circuit at the output.
 """
@@ -56,22 +56,22 @@ surge_impedance = symbols.surge_impedance
 :symbols:`surge_impedance`.
 """
 
-input_voltage_reflection_coefficient = SymbolNew("S_ii", dimensionless, display_latex="S_\\text{ii}")
+input_voltage_reflection_coefficient = Symbol("S_ii", dimensionless, display_latex="S_\\text{ii}")
 """
 Input port :symbols:`voltage` :symbols:`reflection_coefficient`.
 """
 
-reverse_voltage_gain = SymbolNew("S_io", dimensionless, display_latex="S_\\text{io}")
+reverse_voltage_gain = Symbol("S_io", dimensionless, display_latex="S_\\text{io}")
 """
 Reverse :symbols:`voltage` :symbols:`circuit_gain`.
 """
 
-forward_voltage_gain = SymbolNew("S_oi", dimensionless, display_latex="S_\\text{oi}")
+forward_voltage_gain = Symbol("S_oi", dimensionless, display_latex="S_\\text{oi}")
 """
 Forward :symbols:`voltage` :symbols:`circuit_gain`.
 """
 
-output_voltage_reflection_coefficient = SymbolNew("S_oo", dimensionless, display_latex="S_\\text{oo}")
+output_voltage_reflection_coefficient = Symbol("S_oo", dimensionless, display_latex="S_\\text{oo}")
 """
 Output port :symbols:`voltage` :symbols:`reflection_coefficient`.
 """

@@ -20,7 +20,7 @@ becomes per unit of time.
 from sympy import Eq, solve
 from symplyphysics import (
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -43,7 +43,7 @@ target_molar_mass = symbols.molar_mass
 :symbols:`molar_mass` of target atoms.
 """
 
-sputtering_coefficient = SymbolNew("Y", dimensionless)
+sputtering_coefficient = Symbol("Y", dimensionless)
 """
 Sputtering coefficient. Shows how many target atoms are knocked out of the target by a single ion.
 """

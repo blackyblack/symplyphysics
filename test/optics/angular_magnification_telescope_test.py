@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.astronomy import angular_magnification_telescope as magnification_law
+from symplyphysics.laws.optics import angular_magnification_telescope as magnification_law
 
 # Description
 ## With a focal length of the lens equal to 20 meters and a focal length of the eyepiece equal to 0.5 meters,

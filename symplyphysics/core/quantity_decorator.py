@@ -3,13 +3,13 @@ import inspect
 from typing import Any, Callable, Sequence, TypeAlias
 from sympy.physics.units import Quantity as SymQuantity, Dimension
 
-from .symbols.symbols import DimensionSymbol, DimensionSymbolNew, Function, FunctionNew, Symbol, SymbolNew, SymbolIndexedNew
+from .symbols.symbols import DimensionSymbol, Function, Symbol, IndexedSymbol
 from .operations.symbolic import Symbolic
 from .dimensions import assert_equivalent_dimension, ScalarValue
 
-_ValueType: TypeAlias = ScalarValue | SymQuantity | DimensionSymbol | DimensionSymbolNew | Symbolic
+_ValueType: TypeAlias = ScalarValue | SymQuantity | DimensionSymbol | Symbolic
 
-_UnitType: TypeAlias = Dimension | Symbol | Function | SymbolNew | FunctionNew | SymbolIndexedNew | Symbolic
+_UnitType: TypeAlias = Dimension | Symbol | Function | IndexedSymbol | Symbolic
 
 
 def _assert_expected_unit(
@@ -26,8 +26,6 @@ def _assert_expected_unit(
             components.append(item)
         elif isinstance(item, DimensionSymbol):
             components.append(item.dimension)
-        elif isinstance(item, DimensionSymbolNew):
-            components.append(item.dimension)
         elif isinstance(item, Symbolic):
             components.append(item.dimension)
         else:
@@ -41,7 +39,7 @@ def _assert_expected_unit(
 
     expected_unit_dimensions: list[Dimension] = []
     for u in list(expected_units):
-        d = u.dimension if isinstance(u, (DimensionSymbol, DimensionSymbolNew, Symbolic)) else u
+        d = u.dimension if isinstance(u, (DimensionSymbol, Symbolic)) else u
         expected_unit_dimensions.append(d)
 
     for idx, c in enumerate(components):
@@ -84,7 +82,7 @@ def validate_input(**decorator_kwargs: Any) -> Callable[[Callable[..., Any]], Ca
 # @validate_output(units.length)
 # @validate_output(body_volume)
 def validate_output(
-    expected_unit: Dimension | Symbol | Function | SymbolNew | FunctionNew | SymbolIndexedNew
+    expected_unit: Dimension | Symbol | Function | IndexedSymbol
 ) -> Callable[[Any], Callable[..., Any]]:
 
     def validate_func(func: Callable[..., Any]) -> Callable[..., Any]:

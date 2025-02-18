@@ -11,9 +11,9 @@ is and the higher geometric buckling of the reactor is.
 #. `Wikipedia, see fourth equation <https://en.wikipedia.org/wiki/Geometric_and_material_buckling#Derivation>`__.
 """
 
-from sympy import (Eq, solve, Expr, symbols, simplify, Equality)
+from sympy import (Eq, solve, Expr, simplify, Equality)
 from sympy.vector import Laplacian
-from symplyphysics import (SI, units, Quantity, validate_output, symbols, clone_as_function, FunctionNew)
+from symplyphysics import (SI, units, Quantity, validate_output, symbols, clone_as_function, Function)
 from symplyphysics.core.dimensions import collect_factor_and_dimension
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.nuclear import diffusion_equation_from_neutron_flux as diffusion_equation
@@ -33,7 +33,7 @@ geometric_buckling = symbols.geometric_buckling
 :symbols:`geometric_buckling`.
 """
 
-neutron_flux_laplacian = FunctionNew("Laplace(Phi)", [position], 1 / (units.length**4 * units.time), display_latex="\\nabla^{2} \\Phi")
+neutron_flux_laplacian = Function("Laplace(Phi)", [position], 1 / (units.length**4 * units.time), display_latex="\\nabla^{2} \\Phi")
 """
 Laplacian of the :attr:`~neutron_flux` as a function of :attr:`~position`.
 """
@@ -58,6 +58,7 @@ law = Eq(geometric_buckling, -1 * neutron_flux_laplacian(position) / neutron_flu
 
 # Check laplacian definition is the same as in diffusion equation
 
+# pylint: disable-next=protected-access
 _diffusion_equation_laplacian = diffusion_equation._neutron_flux_laplacian_definition.rhs.subs(
     diffusion_equation.neutron_flux(diffusion_equation.position), neutron_flux(position))
 assert expr_equals(_diffusion_equation_laplacian, _neutron_flux_laplacian_definition.rhs)

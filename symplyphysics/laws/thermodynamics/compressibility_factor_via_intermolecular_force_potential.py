@@ -29,9 +29,7 @@ from symplyphysics import (
     clone_as_symbol,
     clone_as_function,
     symbols,
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     convert_to_float,
@@ -98,7 +96,7 @@ law = Eq(
 
 # Calculate the compressibility factor for the model of hard spheres
 
-_sphere_diameter = Symbol("sphere_diameter", units.length, positive=True)
+_sphere_diameter = clone_as_symbol(symbols.diameter, positive=True)
 
 _hard_spheres_potential = hard_spheres_potential.law.rhs.subs({
     hard_spheres_potential.distance: intermolecular_distance,

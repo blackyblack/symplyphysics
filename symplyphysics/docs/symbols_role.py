@@ -3,7 +3,7 @@ from types import ModuleType
 
 import re
 
-from symplyphysics import symbols, SymbolNew
+from symplyphysics import symbols, Symbol
 
 _symbols_pattern = re.compile(r":symbols:`(\w*)`")
 
@@ -16,7 +16,7 @@ for _attr in set(dir(symbols)) - set(symbols.__all__):
         _symbols_by_module[_attr] = set()
         for _sub_attr in dir(_obj):
             _sub_obj = getattr(_obj, _sub_attr)
-            if isinstance(_sub_obj, SymbolNew):
+            if isinstance(_sub_obj, Symbol):
                 _symbols_by_module[_attr].add(_sub_attr)
 
 

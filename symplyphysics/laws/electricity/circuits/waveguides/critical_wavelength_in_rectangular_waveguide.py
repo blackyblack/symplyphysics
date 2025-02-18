@@ -18,7 +18,7 @@ from symplyphysics import (
     dimensionless,
     symbols,
     clone_as_symbol,
-    SymbolNew,
+    Symbol,
 )
 
 critical_wavelength = clone_as_symbol(symbols.wavelength, display_symbol="lambda_c", display_latex="\\lambda_\\text{c}")
@@ -26,13 +26,13 @@ critical_wavelength = clone_as_symbol(symbols.wavelength, display_symbol="lambda
 Critical :symbols:`wavelength` in the waveguide. See :ref:`Critical wavelength of waveguide`.
 """
 
-first_index = SymbolNew("m", dimensionless)
+first_index = Symbol("m", dimensionless)
 """
 The first index shows how many half-wavelengths fit across the width of the cross
 section.
 """
 
-second_index = SymbolNew("n", dimensionless)
+second_index = Symbol("n", dimensionless)
 """
 The second index shows how many half-wavelengths fit across the height of the cross
 section.

@@ -2,7 +2,7 @@ import ast
 from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Optional
-from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew
+from ..core.symbols.symbols import DimensionSymbol, Function
 from ..core.dimensions import print_dimension
 from .printer_code import code_str
 from .printer_latex import latex_str
@@ -164,11 +164,11 @@ def find_members_and_functions(content: ast.Module) -> list[MemberWithDoc | Func
         doc = _docstring_clean(doc)
         sym = ctx[v]
         law_symbol = None
-        if isinstance(sym, DimensionSymbolNew):
+        if isinstance(sym, DimensionSymbol):
             dimension = print_dimension(sym.dimension)
             symbol_name = code_str(sym)
             symbol_type = (LawSymbolTypes.FUNCTION
-                if isinstance(sym, FunctionNew) else LawSymbolTypes.SYMBOL)
+                if isinstance(sym, Function) else LawSymbolTypes.SYMBOL)
             symbol_latex = latex_str(sym)
             law_symbol = LawSymbol(symbol_name, symbol_type, symbol_latex, dimension)
         elif isinstance(sym, Symbolic):

@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 
 from sympy import solve, Eq
-from symplyphysics import print_expression, units, Symbol
+from symplyphysics import print_expression, symbols, clone_as_symbol
 from symplyphysics.laws.dynamics import potential_energy_from_mass_and_height as potential_energy
 
 # Under what condition will the potential energies of two different bodies be the same
 # if the mass of the first body is half the mass of the second body?
 
-height_1 = Symbol("height_1", units.length)
-height_2 = Symbol("height_2", units.length)
-body_mass_1 = Symbol("body_mass_1", units.mass)
+height_1 = clone_as_symbol(symbols.height, subscript="1")
+height_2 = clone_as_symbol(symbols.height, subscript="2")
+body_mass_1 = symbols.mass
 
 Ep1 = potential_energy.law.subs({
     potential_energy.mass: body_mass_1,

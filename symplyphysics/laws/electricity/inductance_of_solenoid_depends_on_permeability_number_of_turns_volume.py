@@ -19,7 +19,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    SymbolNew,
+    Symbol,
     units,
 )
 
@@ -33,7 +33,7 @@ absolute_permeability = symbols.absolute_permeability
 :symbols:`absolute_permeability` of the inside of the coil.
 """
 
-specific_coil_turn_count = SymbolNew("n", 1 / units.length)
+specific_coil_turn_count = Symbol("n", 1 / units.length)
 """
 Number of turns in the coil per unit length.
 """

@@ -11,7 +11,6 @@ that it can overcome the gravitational attraction of the Earth and the Sun and l
 
 ..
     TODO: find English link
-    TODO: move to `gravity`?
 """
 
 from sympy import (Eq, solve, sqrt)

@@ -14,7 +14,7 @@ section and the averaged cosine of the scattering angle.
 from sympy import (Eq, solve)
 from symplyphysics import (
     Quantity,
-    SymbolNew,
+    Symbol,
     dimensionless,
     validate_input,
     validate_output,
@@ -27,7 +27,7 @@ macroscopic_scattering_cross_section = clone_as_symbol(symbols.macroscopic_cross
 :symbols:`macroscopic_cross_section` of scattering.
 """
 
-average_scattering_angle_cosine = SymbolNew("mu", dimensionless, display_latex="\\mu")
+average_scattering_angle_cosine = Symbol("mu", dimensionless, display_latex="\\mu")
 """
 Average of the cosine of the angle at which neutrons are scattered in the medium in the
 lab system.

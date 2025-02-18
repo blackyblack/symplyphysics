@@ -21,7 +21,7 @@ from symplyphysics import (
     convert_to_float,
     validate_input,
     validate_output,
-    SumIndexed,
+    IndexedSum,
     global_index,
     symbols,
 )
@@ -38,7 +38,7 @@ boltzmann_factor = clone_as_indexed(symbols.boltzmann_factor)
 <definitions.boltzmann_factor_via_state_energy_and_temperature>`.
 """
 
-law = Eq(partition_function, SumIndexed(boltzmann_factor[global_index], global_index))
+law = Eq(partition_function, IndexedSum(boltzmann_factor[global_index], global_index))
 """
 :laws:symbol::
 

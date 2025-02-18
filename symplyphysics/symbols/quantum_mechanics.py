@@ -7,9 +7,9 @@ Symbols related to quantum mechanics.
 
 from sympy import sqrt
 from sympy.physics import units
-from symplyphysics.core.symbols.symbols import SymbolNew
+from symplyphysics.core.symbols.symbols import Symbol
 
-wave_function = SymbolNew("psi", 1 / sqrt(units.length), display_latex="\\psi")
+wave_function = Symbol("psi", 1 / sqrt(units.length), display_latex="\\psi")
 """
 The **wave function** is a complex-valued quantity describing the quantum state of an isolated quantum system.
 
@@ -18,7 +18,7 @@ The **wave function** is a complex-valued quantity describing the quantum state 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Wave_function>`__.
 """
 
-probability_density = SymbolNew("rho", 1 / units.length, display_latex="\\rho")
+probability_density = Symbol("rho", 1 / units.length, display_latex="\\rho")
 """
 The **probability density**, or **probability amplitude**, is a real number that provides a relationship between
 the quantum state vector of a system and the results of observations of that system. It is the likelihood of

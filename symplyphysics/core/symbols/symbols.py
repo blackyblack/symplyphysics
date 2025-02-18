@@ -13,23 +13,6 @@ from .id_generator import next_id
 class DimensionSymbol:
     _dimension: Dimension
     _display_name: str
-
-    def __init__(self, display_name: str, dimension: Dimension = Dimension(S.One)) -> None:
-        self._dimension = dimension
-        self._display_name = display_name
-
-    @property
-    def dimension(self) -> Dimension:
-        return self._dimension
-
-    @property
-    def display_name(self) -> str:
-        return self._display_name
-
-
-class DimensionSymbolNew:
-    _dimension: Dimension
-    _display_name: str
     _display_latex: str
 
     def __init__(self,
@@ -60,23 +43,6 @@ class DimensionSymbolNew:
 class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
 
     def __new__(cls,
-        display_name: Optional[str] = None,
-        _dimension: Dimension = Dimension(S.One),
-        **assumptions: Any) -> Self:
-        name = next_name("SYM") if display_name is None else next_name(display_name)
-        return SymSymbol.__new__(cls, name, **assumptions)
-
-    def __init__(self,
-        display_name: Optional[str] = None,
-        dimension: Dimension = Dimension(S.One),
-        **_assumptions: Any) -> None:
-        display_name = display_name or str(self.name)
-        super().__init__(display_name, dimension)
-
-
-class SymbolNew(DimensionSymbolNew, SymSymbol):  # pylint: disable=too-many-ancestors
-
-    def __new__(cls,
         display_symbol: Optional[str] = None,
         _dimension: Dimension = Dimension(S.One),
         *,
@@ -94,38 +60,12 @@ class SymbolNew(DimensionSymbolNew, SymSymbol):  # pylint: disable=too-many-ance
         super().__init__(display_name, dimension, display_latex=display_latex)
 
 
-class SymbolIndexed(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-ancestors
 
-    def __new__(cls,
-        name_or_symbol: Optional[str | SymSymbol] = None,
-        _dimension: Dimension = Dimension(S.One),
-        **assumptions: Any) -> Self:
-        # SymPy subs() and solve() creates dummy symbols. Allow create new indexed symbols
-        # without renaming
-        if isinstance(name_or_symbol, SymSymbol):
-            return IndexedBase.__new__(cls, name_or_symbol, **assumptions)
-        name = next_name("SYM") if name_or_symbol is None else next_name(name_or_symbol)
-        return IndexedBase.__new__(cls, name, **assumptions)
-
-    def __init__(self,
-        name_or_symbol: Optional[str | SymSymbol] = None,
-        dimension: Dimension = Dimension(S.One),
-        **_assumptions: Any) -> None:
-        display_name = str(self.name) if name_or_symbol is None else str(name_or_symbol)
-        super().__init__(display_name, dimension)
-
-    def _eval_nseries(self, _x: Any, _n: Any, _logx: Any, _cdir: Any) -> Any:
-        pass
-
-    def _sympystr(self, p: Printer) -> str:
-        return p.doprint(self.display_name)
-
-
-# This is default index for indexed parameters, e.g. for using in SumIndexed
+# This is default index for indexed parameters, e.g. for using in IndexedSum
 global_index = Idx("i")
 
 
-class SymbolIndexedNew(DimensionSymbolNew, IndexedBase):  # pylint: disable=too-many-ancestors
+class IndexedSymbol(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-ancestors
     index: Idx
 
     def __new__(cls,
@@ -157,24 +97,6 @@ class SymbolIndexedNew(DimensionSymbolNew, IndexedBase):  # pylint: disable=too-
 
 
 class Function(DimensionSymbol, UndefinedFunction):
-
-    # NOTE: Self type cannot be used in a metaclass and 'mcs' is a metaclass here
-    def __new__(mcs,
-        display_name: Optional[str] = None,
-        _dimension: Dimension = Dimension(S.One),
-        **options: Any) -> Function:
-        name = next_name("FUN") if display_name is None else next_name(display_name)
-        return UndefinedFunction.__new__(mcs, name, **options)
-
-    def __init__(cls,
-        display_name: Optional[str] = None,
-        dimension: Dimension = Dimension(S.One),
-        **_options: Any) -> None:
-        display_name = display_name or str(cls.name)  # type: ignore[attr-defined]
-        super().__init__(display_name, dimension)
-
-
-class FunctionNew(DimensionSymbolNew, UndefinedFunction):
     arguments: Sequence[Expr]
 
     # NOTE: Self type cannot be used in a metaclass and 'mcs' is a metaclass here
@@ -186,7 +108,7 @@ class FunctionNew(DimensionSymbolNew, UndefinedFunction):
         _dimension: Dimension = Dimension(S.One),
         *,
         display_latex: Optional[str] = None,
-        **options: Any) -> FunctionNew:
+        **options: Any) -> Function:
         return UndefinedFunction.__new__(mcs, next_name("FUN"), **options)
 
     def __init__(cls,
@@ -226,7 +148,7 @@ class SymbolPrinter(PrettyPrinter):
         return self._settings["use_unicode"]
 
     def _print_Symbol(self, e: Expr, bold_name: bool = False) -> prettyForm:
-        symb_name = e.display_name if isinstance(e, (Symbol, SymbolNew)) else getattr(e, "name")
+        symb_name = e.display_name if isinstance(e, Symbol) else getattr(e, "name")
         symb = pretty_symbol(symb_name, bold_name)
         return prettyForm(symb)
 
@@ -243,8 +165,7 @@ class SymbolPrinter(PrettyPrinter):
         # pylint: disable=too-many-arguments, too-many-positional-arguments
         # optional argument func_name for supplying custom names
         # works only for applied functions
-        func_name = e.func.display_name if isinstance(e.func,
-            (Function, FunctionNew)) else func_name
+        func_name = e.func.display_name if isinstance(e.func, Function) else func_name
         return self._helper_print_function(e.func,
             e.args,
             sort=sort,
@@ -253,8 +174,8 @@ class SymbolPrinter(PrettyPrinter):
             right=right)
 
     # pylint: disable-next=invalid-name
-    def _print_SumIndexed(self, e: Expr) -> prettyForm:
-        return self._print_Function(e, func_name="SumIndexed")
+    def _print_IndexedSum(self, e: Expr) -> prettyForm:
+        return self._print_Function(e, func_name="IndexedSum")
 
 
 def next_name(name: str) -> str:
@@ -283,12 +204,12 @@ def _process_subscript_and_names(
     return f"{code_name}_{subscript}", f"{latex_name}_{{{subscript}}}"
 
 
-def clone_as_symbol(source: SymbolNew | SymbolIndexedNew,
+def clone_as_symbol(source: Symbol | IndexedSymbol,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
     subscript: Optional[str] = None,
-    **assumptions: Any) -> SymbolNew:
+    **assumptions: Any) -> Symbol:
     assumptions = assumptions or source.assumptions0
     display_symbol = display_symbol or source.display_name
     display_latex = display_latex or source.display_latex
@@ -296,7 +217,7 @@ def clone_as_symbol(source: SymbolNew | SymbolIndexedNew,
     display_symbol, display_latex = _process_subscript_and_names(display_symbol, display_latex,
         subscript)
 
-    return SymbolNew(
+    return Symbol(
         display_symbol,
         source.dimension,
         display_latex=display_latex,
@@ -305,21 +226,21 @@ def clone_as_symbol(source: SymbolNew | SymbolIndexedNew,
 
 
 def clone_as_function(
-    source: SymbolNew | SymbolIndexedNew,
+    source: Symbol | IndexedSymbol,
     arguments: Sequence[Expr] = (),
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
     subscript: Optional[str] = None,
     **assumptions: Any,
-) -> FunctionNew:
+) -> Function:
     display_symbol = display_symbol or source.display_name
     display_latex = display_latex or source.display_latex
 
     display_symbol, display_latex = _process_subscript_and_names(display_symbol, display_latex,
         subscript)
 
-    return FunctionNew(
+    return Function(
         display_symbol,
         arguments,
         source.dimension,
@@ -329,17 +250,17 @@ def clone_as_function(
 
 
 def clone_as_indexed(
-    source: SymbolNew | SymbolIndexedNew,
+    source: Symbol | IndexedSymbol,
     index: Optional[Idx] = None,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
     **assumptions: Any,
-) -> SymbolIndexedNew:
+) -> IndexedSymbol:
     assumptions = assumptions or source.assumptions0
     display_symbol = display_symbol or source.display_name
     display_latex = display_latex or source.display_latex
-    return SymbolIndexedNew(
+    return IndexedSymbol(
         display_symbol,
         index,
         source.dimension,

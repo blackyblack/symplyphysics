@@ -30,7 +30,7 @@ from sympy import Eq, sqrt, pi, exp
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     clone_as_symbol,
@@ -38,7 +38,7 @@ from symplyphysics import (
     quantities,
 )
 
-velocity_component_distribution = SymbolNew("f(v_k)", 1 / units.velocity)
+velocity_component_distribution = Symbol("f(v_k)", 1 / units.velocity)
 """
 Distribution function of velocity component :math:`v_k`.
 """

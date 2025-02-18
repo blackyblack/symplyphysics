@@ -33,13 +33,13 @@ from sympy.functions.special.bessel import besselk
 from symplyphysics import (
     convert_to_float,
     dimensionless,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     symbols,
 )
 
-distribution_function = SymbolNew("f(gamma)", dimensionless, display_latex="f(\\gamma)")
+distribution_function = Symbol("f(gamma)", dimensionless, display_latex="f(\\gamma)")
 """
 :attr:`~lorentz_factor` distribution function.
 """
@@ -49,7 +49,7 @@ lorentz_factor = symbols.lorentz_factor
 :symbols:`lorentz_factor` of relativistic particles.
 """
 
-reduced_temperature = SymbolNew("theta", dimensionless, display_latex="\\theta")
+reduced_temperature = Symbol("theta", dimensionless, display_latex="\\theta")
 """
 :doc:`Reduced temperature <laws.thermodynamics.relativistic.reduced_temperature_in_maxwell_juettner_statistics>` of the system.
 """

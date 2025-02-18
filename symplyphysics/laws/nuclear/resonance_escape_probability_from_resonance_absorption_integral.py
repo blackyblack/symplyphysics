@@ -18,7 +18,7 @@ from sympy import Eq, solve, exp
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     dimensionless,
     convert_to_float,
     validate_input,
@@ -33,13 +33,13 @@ absorber_number_density = symbols.number_density
 :symbols:`number_density` of atoms in the absorber.
 """
 
-effective_resonance_integral = SymbolNew("J_eff", units.area, display_latex="J_\\text{eff}")
+effective_resonance_integral = Symbol("J_eff", units.area, display_latex="J_\\text{eff}")
 """
 Effective resonance integral characterizes the absorption of neutrons by a single
 nucleus in the resonance region.
 """
 
-lethargy_gain_per_scattering = SymbolNew("xi", dimensionless, display_latex="\\xi")
+lethargy_gain_per_scattering = Symbol("xi", dimensionless, display_latex="\\xi")
 """
 Average lethargy gain per scattering event. Lethargy is defined as decrease in neutron
 energy.

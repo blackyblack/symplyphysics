@@ -16,14 +16,14 @@ from sympy import Eq, solve, pi, ln
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     symbols,
     clone_as_symbol,
 )
 
-specific_inductance = SymbolNew("L", units.inductance / units.length)
+specific_inductance = Symbol("L", units.inductance / units.length)
 """
 :symbols:`inductance` of the waveguide per unit :symbols:`length`.
 """

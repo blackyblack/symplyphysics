@@ -19,7 +19,7 @@ of coupler segments, it is possible to calculate the wave impedance for an even 
 from sympy import Eq, solve, sqrt
 from symplyphysics import (
     Quantity,
-    SymbolNew,
+    Symbol,
     validate_input,
     validate_output,
     dimensionless,
@@ -37,7 +37,7 @@ odd_mode_wave_impedance = clone_as_symbol(symbols.wave_impedance, display_symbol
 :symbols:`wave_impedance` of the odd mode.
 """
 
-coupling_factor = SymbolNew("C", dimensionless)
+coupling_factor = Symbol("C", dimensionless)
 """
 Coupling factor between coupler segments.
 """

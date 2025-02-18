@@ -22,18 +22,18 @@ from symplyphysics import (
     symbols,
     units,
     Quantity,
-    SymbolNew,
+    Symbol,
     clone_as_symbol,
     validate_input,
     validate_output,
 )
 
-gibbs_energy_density_change = SymbolNew("dG", units.energy / units.volume)
+gibbs_energy_density_change = Symbol("dG", units.energy / units.volume)
 """
 Infinitesimal change in :symbols:`gibbs_energy` of the system per unit :symbols:`volume`.
 """
 
-entropy_density = SymbolNew("S", units.energy / units.temperature / units.volume)
+entropy_density = Symbol("S", units.energy / units.temperature / units.volume)
 """
 :symbols:`entropy` of the system per unit :symbols:`volume`.
 """
