@@ -76,12 +76,10 @@ def _functions_to_doc(members: Sequence[FunctionWithDoc]) -> str:
     return content
 
 
-def print_law(title: str, description: str, items: Sequence[MemberWithDoc | FunctionWithDoc],
+def print_law(title: str, description: str, members: Sequence[MemberWithDoc], functions: Sequence[FunctionWithDoc],
     doc_name: str) -> str:
     law_content = "" + title + "\n" + ("-" * len(title)) + "\n\n" + description + "\n\n"
     law_content = law_content + ".. py:currentmodule:: " + doc_name + "\n\n"
-    members = [m for m in items if isinstance(m, MemberWithDoc)]
-    functions = [m for m in items if isinstance(m, FunctionWithDoc)]
     law_content = law_content + _members_to_doc(members, doc_name)
     law_content = law_content + _functions_to_doc(functions)
 
@@ -91,7 +89,7 @@ def print_law(title: str, description: str, items: Sequence[MemberWithDoc | Func
 # TODO: split to smaller functions
 
 
-def print_package(title: str, description: str, items: Sequence[MemberWithDoc | FunctionWithDoc],
+def print_package(title: str, description: str, members: Sequence[MemberWithDoc], functions: Sequence[FunctionWithDoc],
     doc_name: str, laws: Sequence[str], packages: Sequence[str]) -> str:
     # pylint: disable=too-many-arguments, too-many-positional-arguments
     package_content = "" + title + "\n" + ("=" * len(title)) + "\n\n" + description + "\n\n"
@@ -103,8 +101,6 @@ def print_package(title: str, description: str, items: Sequence[MemberWithDoc | 
         for l in laws:
             package_content = package_content + "  " + l + "\n"
 
-    members = [m for m in items if isinstance(m, MemberWithDoc)]
-    functions = [m for m in items if isinstance(m, FunctionWithDoc)]
     package_content = package_content + _members_to_doc(members, doc_name)
     package_content = package_content + _functions_to_doc(functions)
 

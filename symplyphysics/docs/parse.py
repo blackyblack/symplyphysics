@@ -121,7 +121,9 @@ def find_description(content: str) -> Optional[str]:
     return "\n".join(content_lines)
 
 
-def find_members_and_functions(content: ast.Module) -> list[MemberWithDoc | FunctionWithDoc]:
+def find_members_and_functions(
+    content: ast.Module,
+) -> tuple[list[MemberWithDoc], list[FunctionWithDoc]]:
     # pylint: disable=too-many-branches
     law_functions: list[FunctionWithDoc] = []
     law_members: list[str] = []
@@ -155,7 +157,8 @@ def find_members_and_functions(content: ast.Module) -> list[MemberWithDoc | Func
     compiled = compile(content, "string", "exec")
     ctx: dict[str, Any] = {}
     exec(compiled, {}, ctx)  # pylint: disable=exec-used
-    result: list[MemberWithDoc | FunctionWithDoc] = []
+    members: list[MemberWithDoc] = []
+    functions: list[FunctionWithDoc] = []
     for v in law_members:
         doc = docstrings.get(v)
         if doc is None:
@@ -172,7 +175,7 @@ def find_members_and_functions(content: ast.Module) -> list[MemberWithDoc | Func
             symbol_latex = latex_str(sym)
             law_symbol = LawSymbol(symbol_name, symbol_type, symbol_latex, dimension)
         directives = _docstring_find_law_directives(doc)
-        result.append(MemberWithDoc(v, doc, law_symbol, directives, sym))
+        members.append(MemberWithDoc(v, doc, law_symbol, directives, sym))
     for lf in law_functions:
-        result.append(lf)
-    return result
+        functions.append(lf)
+    return members, functions

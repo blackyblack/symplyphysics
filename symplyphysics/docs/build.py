@@ -34,8 +34,8 @@ def process_law_package(directory: str, laws: Sequence[str], packages: Sequence[
     packages = [package_name_strip_root + "." + p for p in packages]
 
     package_parsed = patch_sympy_evaluate(package_parsed)
-    package_items = find_members_and_functions(package_parsed)
-    package_content = print_package(package_title, package_description, package_items, package_name,
+    members, functions = find_members_and_functions(package_parsed)
+    package_content = print_package(package_title, package_description, members, functions, package_name,
         laws, packages)
 
     package_doc_file = os.path.normpath(os.path.join(output_dir, package_name_strip_root + ".rst"))
@@ -75,10 +75,10 @@ def process_law(directory: str, law_filename: str, output_dir: str, quiet: bool)
 
     law_parsed = patch_sympy_evaluate(law_parsed)
     try:
-        law_items = find_members_and_functions(law_parsed)
+        members, functions = find_members_and_functions(law_parsed)
     except Exception as e:
         raise ValueError(f"Exception has been raised in '{filename}'.") from e
-    doc_content = print_law(law_title, law_description, law_items, law_module_name)
+    doc_content = print_law(law_title, law_description, members, functions, law_module_name)
 
     law_module_name_strip_root = ".".join(law_module_name.split(".")[1:])
     doc_name = law_module_name_strip_root + ".rst"
