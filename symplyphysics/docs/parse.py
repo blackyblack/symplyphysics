@@ -1,4 +1,5 @@
 import ast
+import re
 from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Optional
@@ -50,132 +51,156 @@ class FunctionWithDoc:
     docstring: str
 
 
-def _docstring_clean(doc: str) -> str:
-    doc = doc.replace("\r\n", "\n")
-    doc = doc.replace("\n\r", "\n")
-    while True:
-        if not doc.startswith("\n"):
-            break
-        doc = doc.removeprefix("\n")
-    while True:
-        if not doc.endswith("\n"):
-            break
-        doc = doc.removesuffix("\n")
-    doc = doc.replace("\r\n:laws:sympy-eval::\r\n", "")
-    doc = doc.replace("\n:laws:sympy-eval::\n", "")
-    doc = doc.replace(":laws:sympy-eval::", "")
+_LAWS_SYMPY_EVAL_PATTERN = re.compile(r"\n?:laws:sympy-eval::\n?")
 
+
+def _docstring_clean(doc: str) -> str:
+    doc = _LAWS_SYMPY_EVAL_PATTERN.sub("", doc)
+    doc = doc.strip("\n")
     return doc
 
 
+_LAWS_SYMBOL_STR = ":laws:symbol::"
+_LAWS_LATEX_STR = ":laws:latex::"
+
+
 def _docstring_find_law_directives(doc: str) -> list[LawDirective]:
-    directives = []
-    position = doc.find(":laws:symbol::")
+    directives: list[LawDirective] = []
+
+    position = doc.find(_LAWS_SYMBOL_STR)
     if position >= 0:
         directives.append(
-            LawDirective(position, position + len(":laws:symbol::"), LawDirectiveTypes.SYMBOL))
-    position = doc.find(":laws:latex::")
+            LawDirective(position, position + len(_LAWS_SYMBOL_STR), LawDirectiveTypes.SYMBOL))
+
+    position = doc.find(_LAWS_LATEX_STR)
     if position >= 0:
         directives.append(
-            LawDirective(position, position + len(":laws:latex::"), LawDirectiveTypes.LATEX))
+            LawDirective(position, position + len(_LAWS_LATEX_STR), LawDirectiveTypes.LATEX))
+
     return directives
 
 
-def find_title(content: str) -> Optional[str]:
-    content_lines = content.splitlines()
-    for i, c in enumerate(content_lines):
-        l = len(c)
-        if l == 0:
-            continue
-        if c == ("=" * l) and i > 0:
-            return "\n".join(content_lines[0:i])
-        if c == ("-" * l) and i > 0:
-            return "\n".join(content_lines[0:i])
-    return None
+def find_title_and_description(doc: str) -> Optional[tuple[str, str]]:
 
+    def is_section_break(line: str, char: str) -> bool:
+        return all(c == char for c in line)
 
-def find_description(content: str) -> Optional[str]:
-    content_lines = content.splitlines()
-    section_break = 0
-    for i, c in enumerate(content_lines):
-        l = len(c)
-        if l == 0:
+    lines = doc.splitlines()
+
+    for idx, line in enumerate(lines[1:], start=1):
+        if not line:
             continue
-        if c == ("=" * l) and i > 0:
-            section_break = i
+
+        if is_section_break(line, "=") or is_section_break(line, "-"):
+            section_break = idx
             break
-        if c == ("-" * l) and i > 0:
-            section_break = i
-            break
-    if section_break == 0:
+    else:
         return None
-    content_lines = content_lines[section_break + 1:]
-    # Remove possible empty lines after title separator
-    while True:
-        if len(content_lines) == 0:
-            return ""
-        if len(content_lines[0]) == 0:
-            content_lines.pop(0)
-            continue
-        break
-    return "\n".join(content_lines)
+
+    title = "\n".join(lines[:section_break])
+    description_lines = lines[section_break + 1:]
+
+    # Remove possible empty lines after section break
+    while description_lines:
+        if description_lines[0]:
+            break
+        description_lines.pop(0)
+
+    description = "\n".join(description_lines)
+
+    return title, description
 
 
 def find_members_and_functions(
-    content: ast.Module,
-) -> tuple[list[MemberWithDoc], list[FunctionWithDoc]]:
-    # pylint: disable=too-many-branches
-    law_functions: list[FunctionWithDoc] = []
-    law_members: list[str] = []
-    current_member: Optional[str] = None
-    docstrings: dict[str, str] = {}
+    module: ast.Module,) -> tuple[list[MemberWithDoc], list[FunctionWithDoc]]:
+    """
+    Parses ``module`` collecting documented members (i.e. variables) and defined functions.
+    """
 
-    for e in content.body:
-        if isinstance(e, ast.FunctionDef):
-            doc = ast.get_docstring(e)
-            if doc is None:
-                continue
-            args_list_str: list[str] = [a.arg for a in e.args.args]
-            maybe_return_str = None if e.returns is None else (
-                e.returns.id if isinstance(e.returns, ast.Name) else None)
-            doc = _docstring_clean(doc)
-            law_functions.append(FunctionWithDoc(e.name, args_list_str, maybe_return_str, doc))
-            continue
-        if isinstance(e, ast.Assign):
-            for t in e.targets:
-                try:
-                    name = getattr(t, "id")
-                except AttributeError:
-                    continue
-                law_members.append(name)
-                current_member = name
-            continue
-        if isinstance(e, ast.Expr) and current_member is not None and isinstance(
-                e.value, ast.Constant):
-            docstrings[current_member] = e.value.value
-            continue
-    compiled = compile(content, "string", "exec")
-    ctx: dict[str, Any] = {}
-    exec(compiled, {}, ctx)  # pylint: disable=exec-used
-    members: list[MemberWithDoc] = []
-    functions: list[FunctionWithDoc] = []
-    for v in law_members:
-        doc = docstrings.get(v)
+    def process_function(stmt: ast.FunctionDef) -> Optional[FunctionWithDoc]:
+        doc = ast.get_docstring(stmt)
         if doc is None:
-            continue
+            return None
         doc = _docstring_clean(doc)
-        sym = ctx[v]
-        law_symbol = None
-        if isinstance(sym, DimensionSymbol):
+
+        name = stmt.name
+        parameters = [arg.arg for arg in stmt.args.args]
+
+        returns = stmt.returns
+        return_type = returns.id if returns and isinstance(returns, ast.Name) else None
+
+        return FunctionWithDoc(name, parameters, return_type, doc)
+
+    def process_assign(stmt: ast.Assign) -> Optional[str]:
+        for target in stmt.targets:
+            if isinstance(target, ast.Name):
+                name = target.id
+                break
+        else:
+            return None
+
+        return name
+
+    def process_body() -> tuple[list[FunctionWithDoc], list[str], dict[str, str]]:
+        functions: list[FunctionWithDoc] = []
+        member_names: list[str] = []
+        current_member_name: Optional[str] = None
+        docstrings: dict[str, str] = {}
+
+        for e in module.body:
+            if isinstance(e, ast.FunctionDef):
+                function_ = process_function(e)
+                if function_:
+                    functions.append(function_)
+                continue
+
+            if isinstance(e, ast.Assign):
+                current_member_name = process_assign(e)
+                if current_member_name:
+                    member_names.append(current_member_name)
+                continue
+
+            if (isinstance(e, ast.Expr) and current_member_name and
+                    isinstance(e.value, ast.Constant)):
+                docstrings[current_member_name] = e.value.value
+
+        return functions, member_names, docstrings
+
+    def process_member_name(name: str) -> Optional[MemberWithDoc]:
+        doc = docstrings.get(name)
+        if doc is None:
+            return None
+        doc = _docstring_clean(doc)
+
+        value = context[name]
+        symbol: Optional[LawSymbol] = None
+
+        if isinstance(value, DimensionSymbol):
+            # TODO: use `core.dimensions.print_dimension` here when merged
             dimension = "dimensionless" if SI.get_dimension_system().is_dimensionless(
-                sym.dimension) else str(sym.dimension.name)
-            symbol_name = code_str(sym)
+                value.dimension) else str(value.dimension.name)
+
+            symbol_name = code_str(value)
+            symbol_latex = latex_str(value)
+
             symbol_type = (LawSymbolTypes.FUNCTION
-                if isinstance(sym, Function) else LawSymbolTypes.SYMBOL)
-            symbol_latex = latex_str(sym)
-            law_symbol = LawSymbol(symbol_name, symbol_type, symbol_latex, dimension)
+                if isinstance(value, Function) else LawSymbolTypes.SYMBOL)
+
+            symbol = LawSymbol(symbol_name, symbol_type, symbol_latex, dimension)
+
         directives = _docstring_find_law_directives(doc)
-        members.append(MemberWithDoc(v, doc, law_symbol, directives, sym))
-    for lf in law_functions:
-        functions.append(lf)
+        return MemberWithDoc(name, doc, symbol, directives, value)
+
+    functions, member_names, docstrings = process_body()
+
+    compiled = compile(module, "string", "exec")
+    context: dict[str, Any] = {}
+    exec(compiled, {}, context)  # pylint: disable=exec-used
+
+    members: list[MemberWithDoc] = []
+    for member_name in member_names:
+        member = process_member_name(member_name)
+        if member:
+            members.append(member)
+
     return members, functions

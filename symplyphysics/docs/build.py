@@ -2,7 +2,7 @@ import ast
 import os
 from pathlib import Path
 from typing import Optional, Sequence
-from .parse import find_description, find_members_and_functions, find_title
+from .parse import find_members_and_functions, find_title_and_description
 from .view import print_law, print_package
 from .patch import patch_sympy_evaluate
 
@@ -17,13 +17,7 @@ def _parse_documentation(source: ast.Module) -> Optional[tuple[str, str]]:
     if docstring is None:
         return None
 
-    title = find_title(docstring)
-    if title is None:
-        return None
-
-    description = find_description(docstring) or ""
-
-    return title, description
+    return find_title_and_description(docstring)
 
 
 def _is_private(s: str) -> bool:
