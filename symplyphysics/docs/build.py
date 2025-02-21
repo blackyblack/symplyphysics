@@ -19,7 +19,7 @@ from .patch import patch_sympy_evaluate
 
 def _parse_documentation(source: ast.Module) -> Optional[tuple[str, str]]:
     """
-    Returns\:
+    Returns\\:
      
     * the title and description parsed from the ``source`` docstring.
 
@@ -49,7 +49,7 @@ def process_law_package(directory: str, laws: Sequence[str], packages: Sequence[
 
     Suppresses generating messages if ``quiet`` is `True`.
 
-    Returns\:
+    Returns\\:
 
     * the stem of the path to the written package documentation file.
 
@@ -103,7 +103,7 @@ def process_law(directory: str, filename: str, output_dir: str, quiet: bool) -> 
 
     Suppresses generating messages if ``quiet`` is `True`.
 
-    Returns\:
+    Returns\\:
 
     * the stem of the path to the law documentation file.
 

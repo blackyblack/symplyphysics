@@ -1,6 +1,6 @@
 """
-This module provides a function `patch_sympy_evaluate` for disabling `sympy` evaluation in certain
-situations for documentation purposes.
+This module provides a function `patch_sympy_evaluate` for disabling `sympy` evaluation for
+documentation purposes.
 """
 
 import ast
