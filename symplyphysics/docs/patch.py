@@ -19,6 +19,8 @@ def patch_sympy_evaluate(module: ast.Module) -> ast.Module:
     """
     Patches ``module`` so that `sympy` does not evaluate the expressions within it for
     documentation purposes, except for nodes where explicit evaluation has been documented.
+
+    Returns the patched module.
     """
 
     module.body.insert(1, _IMPORT_NODE)
