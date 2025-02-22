@@ -1,6 +1,20 @@
 """
 This module provides a parsing functionality for the documentation of laws.
 
+Classes:
+
+* `LawDirective` contains the location information of a directive in the docstring.
+  `LawDirectiveType` enumerates possible types of directives.
+
+* `LawSymbol` stores the printing information and dimension of a module's variable.
+  `LawSymbolType` enumerates possible types of symbols.
+
+* `MemberWithDoc` contains the documentation information as well as the associated `LawSymbol`.
+
+* `FunctionWithDoc` contains the documentation information and the function signature.
+
+Functions:
+
 * `find_title_and_description` attempts to find a title and a description in the top docstring of
   a module.
 
@@ -19,7 +33,7 @@ from .printer_code import code_str
 from .printer_latex import latex_str
 
 
-class LawDirectiveTypes(Enum):
+class LawDirectiveType(Enum):
     """Enumeration of possible directives."""
 
     SYMBOL = 0
@@ -29,7 +43,7 @@ class LawDirectiveTypes(Enum):
     """Latex-printed representation."""
 
 
-class LawSymbolTypes(Enum):
+class LawSymbolType(Enum):
     """Enumeration of possible types of module variables."""
 
     SYMBOL = 0
@@ -49,7 +63,7 @@ class LawDirective:
     end: int
     """Final location of the directive."""
 
-    directive_type: LawDirectiveTypes
+    directive_type: LawDirectiveType
     """Type of the directive."""
 
 
@@ -60,7 +74,7 @@ class LawSymbol:
     symbol: str
     """Code-printed representation of the symbol."""
 
-    symbol_type: LawSymbolTypes
+    symbol_type: LawSymbolType
     """Type of the symbol."""
 
     latex: Optional[str]
@@ -132,12 +146,12 @@ def _find_law_directives(doc: str) -> list[LawDirective]:
     position = doc.find(_LAWS_SYMBOL_STR)
     if position >= 0:
         directives.append(
-            LawDirective(position, position + len(_LAWS_SYMBOL_STR), LawDirectiveTypes.SYMBOL))
+            LawDirective(position, position + len(_LAWS_SYMBOL_STR), LawDirectiveType.SYMBOL))
 
     position = doc.find(_LAWS_LATEX_STR)
     if position >= 0:
         directives.append(
-            LawDirective(position, position + len(_LAWS_LATEX_STR), LawDirectiveTypes.LATEX))
+            LawDirective(position, position + len(_LAWS_LATEX_STR), LawDirectiveType.LATEX))
 
     return directives
 
@@ -250,8 +264,8 @@ def find_members_and_functions(
             symbol_name = code_str(value)
             symbol_latex = latex_str(value)
 
-            symbol_type = (LawSymbolTypes.FUNCTION
-                if isinstance(value, Function) else LawSymbolTypes.SYMBOL)
+            symbol_type = (LawSymbolType.FUNCTION
+                if isinstance(value, Function) else LawSymbolType.SYMBOL)
 
             symbol = LawSymbol(symbol_name, symbol_type, symbol_latex, dimension)
 
@@ -273,4 +287,13 @@ def find_members_and_functions(
     return members, functions
 
 
-__all__ = ["find_title_and_description", "find_members_and_functions"]
+__all__ = [
+    "LawDirectiveType",
+    "LawSymbolType",
+    "LawDirective",
+    "LawSymbol",
+    "MemberWithDoc",
+    "FunctionWithDoc",
+    "find_title_and_description",
+    "find_members_and_functions",
+]

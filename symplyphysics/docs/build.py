@@ -1,11 +1,6 @@
 """
-This module provides a functionality for generating rST files for laws and packages.
-
-* `process_law_package` processes the `__init__.py` file of a law directory.
-
-* `process_law` processes the law file.
-
-* `generate_laws_docs` is manages the overall recursive processing of laws and packages.
+This module provides the function `generate_laws_docs` that generates rST files for laws and
+packages in a given directory.
 """
 
 import ast
@@ -39,7 +34,7 @@ def _is_private(s: str) -> bool:
     return s.startswith(".") or s.startswith("_")
 
 
-def process_law_package(directory: str, laws: Sequence[str], packages: Sequence[str],
+def _process_law_package(directory: str, laws: Sequence[str], packages: Sequence[str],
     output_dir: str, quiet: bool) -> Optional[str]:
     """
     Processes the `__init__.py` file of the law package ``directory`` containing ``laws`` and
@@ -95,7 +90,7 @@ def process_law_package(directory: str, laws: Sequence[str], packages: Sequence[
     return doc_file_stem
 
 
-def process_law(directory: str, filename: str, output_dir: str, quiet: bool) -> Optional[str]:
+def _process_law(directory: str, filename: str, output_dir: str, quiet: bool) -> Optional[str]:
     """
     Processes the law in the given ``directory`` under the ``filename``.
 
@@ -175,14 +170,14 @@ def generate_laws_docs(source_dir: str, output_dir: str, exclude_dirs: Sequence[
 
         laws: list[str] = []
         for file in files:
-            law_name = process_law(path, file, output_dir, quiet)
+            law_name = _process_law(path, file, output_dir, quiet)
             if law_name is None:
                 continue
             laws.append(law_name)
 
-        package_name = process_law_package(path, laws, dirs, output_dir, quiet)
+        package_name = _process_law_package(path, laws, dirs, output_dir, quiet)
         if package_name is None:
             continue
 
 
-__all__ = ["process_law_package", "process_law", "generate_laws_docs"]
+__all__ = ["generate_laws_docs"]

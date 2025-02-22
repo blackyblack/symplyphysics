@@ -9,7 +9,7 @@ This module provides a functionality for printing laws and packages.
 from typing import Sequence, Optional
 from .printer_latex import latex_str
 from .printer_code import code_str
-from .parse import FunctionWithDoc, LawDirectiveTypes, MemberWithDoc
+from .parse import FunctionWithDoc, LawDirectiveType, MemberWithDoc
 
 _INDENT = "    "
 
@@ -66,7 +66,7 @@ def _members_to_doc(members: Sequence[MemberWithDoc], doc_name: str) -> str:
             after = doc[directive.end + offset:]
 
             match directive.directive_type:
-                case LawDirectiveTypes.SYMBOL:
+                case LawDirectiveType.SYMBOL:
                     try:
                         code = code_str(member.value)
                     except ValueError as e:
@@ -78,7 +78,7 @@ def _members_to_doc(members: Sequence[MemberWithDoc], doc_name: str) -> str:
                         after=after,
                     )
 
-                case LawDirectiveTypes.LATEX:
+                case LawDirectiveType.LATEX:
                     try:
                         latex = latex_str(member.value)
                     except ValueError as e:
