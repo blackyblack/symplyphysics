@@ -12,7 +12,7 @@ on the orthogonal distance to the plane of symmetry inside the slab.
 
 from sympy import Eq, pi, cos
 from sympy.vector import CoordSys3D
-from symplyphysics import Quantity, units, symbols, clone_as_function, clone_as_symbol
+from symplyphysics import Quantity, units, symbols, clone_as_symbol
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux
 
 dimension_factor = clone_as_symbol(symbols.neutron_flux, subscript="0")
@@ -38,9 +38,9 @@ neutron_flux = symbols.neutron_flux
 
 # This constant is being used for geometric buckling calculation
 # See: [geometric buckling for uniform slab](geometric_buckling_for_uniform_slab.py)
-_axial_constant = pi / thickness
+axial_constant = pi / thickness
 
-law = Eq(neutron_flux, dimension_factor * cos(_axial_constant * distance))
+law = Eq(neutron_flux, dimension_factor * cos(axial_constant * distance))
 """
 :laws:symbol::
 
@@ -66,8 +66,8 @@ _neutron_flux_function_cartesian = law.subs(distance, _x * _unit_length)
 _solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
     _neutron_flux_function_cartesian.rhs)
 
-# check with the derived law: Bg^2 = _axial_constant**2
-assert _solved.rhs == _axial_constant**2
+# check with the derived law: Bg^2 = axial_constant**2
+assert _solved.rhs == axial_constant**2
 
 
 # There is no calculate() method. Neutron flux is usually being used internally to pass to other laws.

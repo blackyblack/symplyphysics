@@ -7,8 +7,8 @@ parameters of the transmission matrix.
 
 **Notes:**
 
-#. See :ref:`Transmission matrix`.
-#. See :ref:`Scattering matrix`.
+#. See :ref:`Transmission Matrix <transmission_matrix_def>`.
+#. See :ref:`Scattering Matrix <scattering_matrix_def>`.
 #. See `this site <https://www.microwaves101.com/encyclopedias/s-parameters>`__ for more
    information about :math:`S`-parameters.
 #. See this `Wikipedia page <https://en.wikipedia.org/wiki/Scattering_parameters#Two-port_S-parameters>`__

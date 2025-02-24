@@ -1,4 +1,4 @@
-r"""
+"""
 Equilibrium voltage difference in p-n junction via concentrations
 =================================================================
 
@@ -10,9 +10,9 @@ The p-n junction has a potential barrier preventing the movement of charge carri
 
 **Conditions:**
 
-#. :math:`n_\text{a}` is constant on the p side and zero on the n side.
-#. :math:`n_\text{d}` is constant on the n side and zero on the p side.
-#. The semiconductor is non-degenerate, i.e. :math:`n_\text{i}` is independent of
+#. :math:`n_\\text{a}` is constant on the p side and zero on the n side.
+#. :math:`n_\\text{d}` is constant on the n side and zero on the p side.
+#. The semiconductor is non-degenerate, i.e. :math:`n_\\text{i}` is independent of
    the Fermi energy.
 
 **Links:**

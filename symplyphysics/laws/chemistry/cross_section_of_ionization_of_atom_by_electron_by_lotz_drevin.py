@@ -28,7 +28,7 @@ cross_section = symbols.cross_section
 :symbols:`cross_section` of ionization.
 """
 
-ionization_energy = clone_as_symbol(symbols.energy, subscript="\\text{i}")
+ionization_energy = clone_as_symbol(symbols.energy, display_symbol="E_i", display_latex="E_\\text{i}")
 """
 :symbols:`energy` of ionization of atoms.
 """

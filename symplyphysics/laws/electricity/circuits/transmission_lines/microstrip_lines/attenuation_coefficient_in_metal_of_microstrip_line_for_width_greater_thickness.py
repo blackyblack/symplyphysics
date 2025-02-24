@@ -48,8 +48,7 @@ substrate_thickness = symbols.thickness
 
 effective_width = clone_as_symbol(symbols.length, display_symbol="w_eff", display_latex="w_\\text{eff}")
 """
-Effective width (see :symbols:`length`) of the microstrip line. See :ref:`Effective
-width of microstrip line`.
+Effective width (see :symbols:`length`) of the microstrip line. See :ref:`Effective width of microstrip line <effective_width_microstrip_line_def>`.
 """
 
 thickness = clone_as_symbol(symbols.thickness, display_symbol="t", display_latex="t")
@@ -59,8 +58,7 @@ thickness = clone_as_symbol(symbols.thickness, display_symbol="t", display_latex
 
 effective_permittivity = clone_as_symbol(symbols.relative_permittivity, display_symbol="epsilon_eff", display_latex="\\varepsilon_\\text{eff}")
 """
-Effective :symbols:`relative_permittivity` of the microstrip line. See :ref:`Effective
-permittivity of microstrip line`.
+Effective :symbols:`relative_permittivity` of the microstrip line. See :ref:`Effective permittivity of microstrip line <effective_permittivity_microstrip_line_def>`.
 """
 
 constant = Quantity(6.1e-5 / units.ohm**2, display_symbol="a")

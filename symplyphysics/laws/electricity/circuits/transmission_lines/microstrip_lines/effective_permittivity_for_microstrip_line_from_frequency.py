@@ -31,7 +31,7 @@ effective_permittivity = clone_as_symbol(
 )
 """
 Effective :symbols:`relative_permittivity` of the microstrip line when frequency
-dependence is taken into account. See :ref:`Effective permittivity of microstrip line`.
+dependence is taken into account. See :ref:`Effective permittivity of microstrip line <effective_permittivity_microstrip_line_def>`.
 """
 
 relative_permittivity = symbols.relative_permittivity
@@ -61,7 +61,7 @@ independent_effective_permittivity = clone_as_symbol(
 )
 """
 :symbols:`relative_permittivity` of the microstrip line when frequency dependence is
-omitted. See :ref:`Effective permittivity of microstrip line`.
+omitted. See :ref:`Effective permittivity of microstrip line <effective_permittivity_microstrip_line_def>`.
 """
 
 # the following block prevents the re-ordering of terms for the code printer
