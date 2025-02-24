@@ -17,8 +17,9 @@ When a wave propagates along a coplanar line, part of the field goes out, since 
 coplanar line does not have metal borders on all sides, unlike, for example, rectangular
 waveguides.
 
-Effective permittivity of coplanar line
----------------------------------------
+.. _effective_permittivity_coplanar_line_def:
+
+**Effective permittivity of coplanar line**
 
 Imagine an environment in which the field will have the same magnitude as the field of a
 coplanar line. The (relative) permittivity of such a medium will be called the

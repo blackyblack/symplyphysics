@@ -18,7 +18,7 @@ See below for symbol descriptions.
     TODO: find link
 """
 
-from sympy import Eq, solve, sqrt, root,  pi, log, evaluate
+from sympy import Eq, solve, sqrt, root, log, evaluate
 from symplyphysics import (
     units,
     Quantity,
@@ -35,8 +35,7 @@ wave_impedance = symbols.wave_impedance
 
 effective_permittivity = clone_as_symbol(symbols.relative_permittivity, display_symbol="epsilon_eff", display_latex="\\varepsilon_\\text{eff}")
 """
-Effective :symbols:`relative_permittivity` of the coplanar line. See :ref:`Effective
-permittivity of coplanar line`.
+Effective :symbols:`relative_permittivity` of the coplanar line. See :ref:`Effective permittivity of coplanar line <effective_permittivity_coplanar_line_def>`.
 """
 
 electrode_distance = symbols.euclidean_distance

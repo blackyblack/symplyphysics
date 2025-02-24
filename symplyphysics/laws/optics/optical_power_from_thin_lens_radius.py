@@ -1,5 +1,5 @@
 """
-Optical power from thin lens radii and refractive indeces
+Optical power from thin lens radii and refractive indices
 =========================================================
 
 Optical power of a thin lens can be calculated from the radii of its front and back

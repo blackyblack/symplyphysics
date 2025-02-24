@@ -39,9 +39,9 @@ neutron_flux = symbols.neutron_flux
 
 # This constant is being used for geometric buckling calculation
 # See: [geometric buckling for uniform sphere](geometric_buckling_for_uniform_sphere.py)
-_radial_constant = pi / radius
+radial_constant = pi / radius
 
-law = Eq(neutron_flux, dimension_factor * (sin(_radial_constant * radial_distance) / radial_distance))
+law = Eq(neutron_flux, dimension_factor * (sin(radial_constant * radial_distance) / radial_distance))
 """
 :laws:symbol::
 
@@ -68,7 +68,7 @@ _neutron_flux_function_spherical = law.subs(radial_distance, _r * _unit_length)
 _solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
     _neutron_flux_function_spherical.rhs)
 
-# check with the derived law: Bg^2 = _radial_constant**2
-assert _solved.rhs == _radial_constant**2
+# check with the derived law: Bg^2 = radial_constant**2
+assert _solved.rhs == radial_constant**2
 
 # There is no calculate() method. Neutron flux is usually being used internally to pass to other laws.

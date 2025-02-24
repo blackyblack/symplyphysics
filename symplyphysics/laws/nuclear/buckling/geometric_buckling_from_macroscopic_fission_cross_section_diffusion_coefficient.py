@@ -85,7 +85,7 @@ _buckling_eq2 = buckling_law.law.subs({
 })
 
 derived_law = [
-    _diffusion_eq1, _buckling_eq2, diffusion_equation_law._neutron_flux_laplacian_definition
+    _diffusion_eq1, _buckling_eq2, diffusion_equation_law.neutron_flux_laplacian_definition
 ]
 
 ## Check the equivalence of 'law' and 'derived_law'

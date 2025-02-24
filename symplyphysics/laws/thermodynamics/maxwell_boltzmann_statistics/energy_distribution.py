@@ -1,4 +1,4 @@
-r"""
+"""
 Energy distribution
 ===================
 
