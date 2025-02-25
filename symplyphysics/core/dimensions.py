@@ -238,7 +238,7 @@ def assert_equivalent_dimension(
     def _is_number(value: Any) -> bool:
         try:
             complex(value)
-        except TypeError:
+        except (TypeError, ValueError):
             return False
 
         return True
@@ -256,7 +256,7 @@ def assert_equivalent_dimension(
         (scale_factor, arg) = collect_factor_and_dimension(arg)
 
         if not _is_number(scale_factor):
-            # NOTE: this should probably be something like `ValueError`
+            # NOTE: this should probably raise `ValueError` or `TypeError`
             raise UnitsError(f"Argument '{param_name}' to function '{func_name}' should "
                 f"not contain free symbols: '{scale_factor}'")
 
