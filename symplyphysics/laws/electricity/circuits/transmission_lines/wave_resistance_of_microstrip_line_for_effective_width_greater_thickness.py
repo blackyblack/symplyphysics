@@ -41,8 +41,7 @@ effective_permittivity = clone_as_symbol(
     display_latex="\\varepsilon_\\text{eff}",
 )
 """
-Effective :symbols:`relative_permittivity` of the microstrip line. See :ref:`Effective
-permittivity of microstrip line`.
+Effective :symbols:`relative_permittivity` of the microstrip line. See :ref:`Effective permittivity of microstrip line <effective_permittivity_microstrip_line_def>`.
 """
 
 substrate_thickness = symbols.thickness
@@ -52,8 +51,7 @@ substrate_thickness = symbols.thickness
 
 effective_width = clone_as_symbol(symbols.length, display_symbol="w_eff", display_latex="w_\\text{eff}")
 """
-Effective width (see :symbols:`length`) of the microstrip line. See :ref:`Effective
-width of microstrip line`.
+Effective width (see :symbols:`length`) of the microstrip line. See :ref:`Effective width of microstrip line <effective_width_microstrip_line_def>`.
 """
 
 # the following block prevents the re-ordering of terms for the code printer

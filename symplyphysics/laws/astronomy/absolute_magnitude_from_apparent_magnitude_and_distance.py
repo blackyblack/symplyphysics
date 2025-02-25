@@ -39,8 +39,8 @@ distance_constant = Quantity(
     display_symbol="d_0",
     display_latex="d_0",
 )
-r"""
-Constant equal to :math:`2.063 \cdot 10^6` astronomical units.
+"""
+Constant equal to :math:`2.063 \\cdot 10^6` astronomical units.
 """
 
 law = Eq(absolute_magnitude, apparent_magnitude - 5 * log(distance / distance_constant, 10))

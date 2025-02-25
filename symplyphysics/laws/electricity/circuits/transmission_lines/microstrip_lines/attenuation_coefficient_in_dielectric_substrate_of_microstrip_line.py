@@ -35,8 +35,7 @@ effective_permittivity = clone_as_symbol(
     display_latex="\\varepsilon_\\text{eff}",
 )
 """
-Effective :symbols:`relative_permittivity` of the microstrip line. See :ref:`Effective
-permittivity of microstrip line`.
+Effective :symbols:`relative_permittivity` of the microstrip line. See :ref:`Effective permittivity of microstrip line <effective_permittivity_microstrip_line_def>`.
 """
 
 wavelength = symbols.wavelength

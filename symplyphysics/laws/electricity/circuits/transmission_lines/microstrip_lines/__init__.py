@@ -13,8 +13,9 @@ When a wave propagates along a microstrip line, part of the field goes out, sinc
 microstrip line does not have metal borders on all sides, unlike, for example,
 rectangular waveguides.
 
-Effective permittivity of microstrip line
------------------------------------------
+.. _effective_permittivity_microstrip_line_def:
+
+**Effective permittivity of microstrip line**
 
 Imagine an environment in which the field will have the same magnitude as the field of a
 microstrip line. The (relative) permittivity of such a medium will be called the
@@ -24,8 +25,9 @@ microstrip line. The (relative) permittivity of such a medium will be called the
     :height: 150px
     :align: center
 
-Effective width of microstrip line
-----------------------------------
+.. _effective_width_microstrip_line_def:
+
+**Effective width of microstrip line**
 
 *Effective width* of a microstrip line is the width of such a flat capacitor, the
 electric intensity between the plates of which is equal to the electric intensity in the

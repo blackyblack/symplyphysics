@@ -8,7 +8,7 @@ the load.
 
 **Notes:**
 
-#. See :ref:`Transmission matrix`.
+#. See :ref:`Transmission Matrix <transmission_matrix_def>`.
 
 **Conditions:**
 

@@ -7,7 +7,7 @@ impedance of this device.
 
 **Notes:**
 
-#. See :ref:`Transmission matrix`.
+#. See :ref:`Transmission Matrix <transmission_matrix_def>`.
 
 **Links:**
 

@@ -26,8 +26,7 @@ from symplyphysics import (
 
 effective_width = clone_as_symbol(symbols.length, display_symbol="w_eff", display_latex="w_\\text{eff}")
 """
-Effective width (see :symbols:`length`) of the microstrip line. See :ref:`Effective
-width of microstrip line`.
+Effective width (see :symbols:`length`) of the microstrip line. See :ref:`Effective width of microstrip line <effective_width_microstrip_line_def>`.
 """
 
 width = clone_as_symbol(symbols.length, display_symbol="w", display_latex="w")

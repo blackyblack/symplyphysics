@@ -64,7 +64,7 @@ neutron_flux_laplacian = Function("Laplace(Phi)", [position], 1 / (units.length*
 Laplacian of the :attr:`~neutron_flux` as a function of :attr:`~position`.
 """
 
-_neutron_flux_laplacian_definition = Eq(neutron_flux_laplacian(position),
+neutron_flux_laplacian_definition = Eq(neutron_flux_laplacian(position),
     Laplacian(neutron_flux(position)),
     evaluate=False)
 
@@ -90,7 +90,7 @@ def apply_neutron_flux_function(neutron_flux_function_: Expr) -> Expr:
     # Manually divide to unit_length to get Laplacian dimension. CoordSys3D coordinates are dimensionless, hence
     # Laplacian cannot properly calculate resulting dimension.
     unit_length = Quantity(1, dimension=units.length)
-    neutron_flux_laplacian_eval = _neutron_flux_laplacian_definition.rhs.subs(
+    neutron_flux_laplacian_eval = neutron_flux_laplacian_definition.rhs.subs(
         neutron_flux(position), neutron_flux_function_).doit() / unit_length**2
     applied_law = law.subs(neutron_flux_laplacian(position), neutron_flux_laplacian_eval)
     applied_law = applied_law.subs(neutron_flux(position), neutron_flux_function_)

@@ -30,17 +30,17 @@ quality_factor = symbols.quality_factor
 :symbols:`quality_factor` of the oscillator.
 """
 
-resonant_angular_frequency = clone_as_symbol(symbols.angular_frequency, subscript="\\text{r}")
+resonant_angular_frequency = clone_as_symbol(symbols.angular_frequency, display_symbol="w_r", display_latex="\\omega_\\text{r}")
 """
 Resonant :symbols:`angular_frequency` of the oscillator.
 """
 
-energy_stored = clone_as_symbol(symbols.energy, subscript="\\text{stored}")
+energy_stored = clone_as_symbol(symbols.energy, display_symbol="E_stored", display_latex="E_\\text{stored}")
 """
 :symbols:`energy` stored in the oscillator.
 """
 
-power_loss = clone_as_symbol(symbols.power, subscript="\\text{loss}")
+power_loss = clone_as_symbol(symbols.power, display_symbol="P_loss", display_latex="P_\\text{loss}")
 """
 :symbols:`power` lost by the oscillator, i.e. the rate of energy dissipating from it.
 """
