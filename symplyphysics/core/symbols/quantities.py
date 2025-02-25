@@ -9,7 +9,6 @@ from sympy.multipledispatch import dispatch
 
 from .symbols import DimensionSymbol, next_name
 from ..dimensions import collect_quantity_factor_and_dimension
-from ..errors import UnitsError
 
 
 class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: disable=too-many-ancestors
@@ -37,9 +36,13 @@ class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: d
         display_latex: Optional[str] = None,
         dimension: Optional[Dimension] = None) -> None:
         (scale, dimension_) = collect_quantity_factor_and_dimension(expr)
-        if scale.free_symbols:
-            raise UnitsError(f"Argument '{expr}' to function 'Quantity()' should "
-                f"not contain free symbols")
+        try:
+            _ = complex(scale)  # if this fails, then ``scale`` contains a symbolic sub-expression
+        except Exception as e:
+            raise ValueError(
+                f"Argument '{expr}' to function 'Quantity()' should "
+                f"be an expression made of numbers and quantities.",) from e
+
         dimension = dimension or dimension_
         display_symbol = display_symbol or str(self.name)
         super().__init__(display_symbol, dimension, display_latex=display_latex)
