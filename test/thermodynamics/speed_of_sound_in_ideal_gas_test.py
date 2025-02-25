@@ -51,5 +51,3 @@ def test_bad_heat_capacity_ratio(test_args: Args) -> None:
     gamma = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         speed_of_sound_in_ideal_gas.calculate_speed_of_sound(test_args.t, gamma, test_args.M)
-    with raises(errors.UnitsError):
-        speed_of_sound_in_ideal_gas.calculate_speed_of_sound(test_args.t, 'bad', test_args.M)

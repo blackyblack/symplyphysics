@@ -1,10 +1,8 @@
 from __future__ import annotations
 
 from typing import Any, Callable, TypeAlias, Iterable
-from sympy import Abs, Expr, S, Derivative, Function as SymFunction, Min, Number
-from sympy.core.add import Add
-from sympy.core.mul import Mul
-from sympy.core.power import Pow
+from sympy import Abs, Expr, S, Derivative, Function as SymFunction, Min, Max, sympify, Add, Mul, Pow
+from sympy.functions.elementary.miscellaneous import MinMaxBase
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import dimsys_SI
 
@@ -25,113 +23,138 @@ class AnyDimension(Dimension):  # type: ignore[misc]
 any_dimension = AnyDimension()
 
 
+def _is_number(value: Any) -> bool:
+    try:
+        complex(value)
+    except (TypeError, ValueError):
+        return False
+
+    return True
+
+
 # pylint: disable-next=too-many-statements
-def collect_factor_and_dimension(expr: Expr) -> tuple[Expr, Dimension]:
+def collect_quantity_factor_and_dimension(expr: Expr) -> tuple[Expr, Dimension]:
     """
     Return tuple with scale factor expression and dimension expression. Designed to be
     used during the instantiation of the `symplyphysics.Quantity` class.
     """
 
+    def _is_any_dimension(factor: Expr) -> bool:
+        return factor in (S.Zero, S.Infinity, S.NegativeInfinity)
+
     def _collect_quantity(expr: SymQuantity) -> tuple[Expr, Dimension]:
         return (expr.scale_factor, expr.dimension)
 
-    def _collect_mul(expr: Mul) -> tuple[Expr, Dimension]:
-        factor = S.One
-        dimension = dimensionless
-        for arg in expr.args:
-            (arg_factor, arg_dim) = collect_factor_and_dimension(arg)
-            factor *= arg_factor
-            dimension *= arg_dim
-        return (factor, dimension)
+    def _collect_binary_wrapper(
+        inner: Callable[[Expr, Dimension, Expr], tuple[Expr, Dimension]]
+    ) -> Callable[[Expr], tuple[Expr, Dimension]]:
+
+        def outer(expr: Expr) -> tuple[Expr, Dimension]:
+            factor, dim = collect_quantity_factor_and_dimension(expr.args[0])
+            for arg in expr.args[1:]:
+                factor, dim = inner(factor, dim, arg)
+            return (factor, dim)
+
+        return outer
+
+    @_collect_binary_wrapper
+    def _collect_mul(factor: Expr, dim: Dimension, arg: Expr) -> tuple[Expr, Dimension]:
+        arg_factor, arg_dim = collect_quantity_factor_and_dimension(arg)
+
+        return (factor * arg_factor, dim * arg_dim)
 
     def _collect_pow(expr: Pow) -> tuple[Expr, Dimension]:
-        pow_expr: Expr = S.One
-        (factor, dim) = collect_factor_and_dimension(expr.base)
-        pow_expr *= factor
-        (exp_factor, exp_dim) = collect_factor_and_dimension(expr.exp)
-        if not dimsys_SI.is_dimensionless(exp_dim):
-            raise ValueError(
-                f"Dimension of '{expr.exp}' is {exp_dim}, but it should be dimensionless")
-        exp_dim = S.One
-        return (pow_expr**exp_factor, dim**(exp_factor * exp_dim))
+        (base_factor, base_dim) = collect_quantity_factor_and_dimension(expr.base)
+        (exp_factor, exp_dim) = collect_quantity_factor_and_dimension(expr.exp)
 
-    def _collect_add(expr: Add) -> tuple[Expr, Dimension]:
-        sum_expr: Expr = S.Zero
-        (factor, dim) = collect_factor_and_dimension(expr.args[0])
-        sum_expr += factor
-        for addend in expr.args[1:]:
-            (addend_factor, addend_dim) = collect_factor_and_dimension(addend)
-            # automatically convert zero to the dimension of it's additives
-            if dim != addend_dim and not dimsys_SI.equivalent_dims(dim, addend_dim):
-                if factor == S.Zero:
-                    dim = addend_dim
-                elif addend_factor == S.Zero:
-                    addend_dim = dim
-            if dim != addend_dim and not dimsys_SI.equivalent_dims(dim, addend_dim):
-                raise ValueError(f"Dimension of '{addend}' is {addend_dim}, but it should be {dim}")
-            sum_expr += addend_factor
-        return (sum_expr, dim)
+        if _is_any_dimension(exp_factor) or dimsys_SI.is_dimensionless(exp_dim):
+            return (base_factor**exp_factor, base_dim**exp_factor)
+
+        raise ValueError(f"Dimension of '{expr.exp}' is {exp_dim}, but it should be dimensionless")
+
+    @_collect_binary_wrapper
+    def _collect_add(factor: Expr, dim: Dimension, arg: Expr) -> tuple[Expr, Dimension]:
+        arg_factor, arg_dim = collect_quantity_factor_and_dimension(arg)
+
+        if _is_any_dimension(factor):
+            dim = arg_dim
+        elif _is_any_dimension(arg_factor):
+            arg_dim = dim
+
+        if not dimsys_SI.equivalent_dims(dim, arg_dim):
+            raise ValueError(f"Dimension of '{arg}' is {arg_dim}, but it should be {dim}")
+
+        return (factor + arg_factor, dim)
 
     def _collect_abs(expr: Abs) -> tuple[Expr, Dimension]:
-        arg_factor, arg_dim = collect_factor_and_dimension(expr.args[0])
+        arg_factor, arg_dim = collect_quantity_factor_and_dimension(expr.args[0])
         return (Abs(arg_factor), arg_dim)
 
-    def _collect_min(expr: Min) -> tuple[Expr, Dimension]:
-        (factor, dim) = collect_factor_and_dimension(expr.args[0])
-        if not factor.is_Number:
-            raise ValueError(f"Min should contain Number arguments. Got {factor}")
-        min_expr = factor
-        for addend in expr.args[1:]:
-            (addend_factor, addend_dim) = collect_factor_and_dimension(addend)
-            # automatically convert zero to the dimension of it's additives
-            if dim != addend_dim and not dimsys_SI.equivalent_dims(dim, addend_dim):
-                if factor == S.Zero:
-                    dim = addend_dim
-                elif addend_factor == S.Zero:
-                    addend_dim = dim
-            if dim != addend_dim and not dimsys_SI.equivalent_dims(dim, addend_dim):
-                raise ValueError(f"Dimension of '{addend}' is {addend_dim}, but it should be {dim}")
-            if not addend_factor.is_Number:
-                raise ValueError(f"Min should contain Number arguments. Got {addend_factor}")
-            min_number = Number(min_expr)
-            addend_number = Number(addend_factor)
-            min_expr = min_expr if min_number <= addend_number else addend_factor
-        return (min_expr, dim)
+    def _collect_min_max(expr: MinMaxBase) -> tuple[Expr, Dimension]:
+        cls = type(expr)
+
+        @_collect_binary_wrapper
+        def wrapped(factor: Expr, dim: Dimension, arg: Expr) -> tuple[Expr, Dimension]:
+            arg_factor, arg_dim = collect_quantity_factor_and_dimension(arg)
+
+            if _is_any_dimension(factor):
+                dim = arg_dim
+            elif _is_any_dimension(arg_factor):
+                arg_dim = dim
+
+            if not dimsys_SI.equivalent_dims(dim, arg_dim):
+                raise ValueError(f"Dimension of '{arg}' is {arg_dim}, but it should be {dim}")
+
+            return (cls(factor, arg_factor), dim)
+
+        return wrapped(expr)
 
     def _collect_function(expr: SymFunction) -> tuple[Expr, Dimension]:
         factors: list[Expr] = []
+
         for arg in expr.args:
-            (f, d) = collect_factor_and_dimension(arg)
+            (arg_factor, arg_dim) = collect_quantity_factor_and_dimension(arg)
+
             # only functions with dimensionless arguments are supported
-            if not dimsys_SI.is_dimensionless(d):
-                raise ValueError(f"Dimension of '{arg}' is {d}, but it should be dimensionless")
-            factors.append(f)
-        ret = expr.func(*(f for f in factors))
-        return (ret, dimensionless)
+            if _is_any_dimension(arg_factor) or dimsys_SI.is_dimensionless(arg_dim):
+                factors.append(arg_factor)
+                continue
+
+            raise ValueError(f"Dimension of '{arg}' is {arg_dim}, but it should be dimensionless")
+
+        factor = expr.func(*(f for f in factors))
+        return (factor, dimensionless)
 
     def _unsupported_derivative(expr: Derivative) -> tuple[Expr, Dimension]:
-        raise ValueError(f"Dimension '{expr}' should not contain unevaluated Derivative")
+        raise ValueError(f"'{expr}' should not contain unevaluated Derivative")
 
-    cases: dict[type, Callable[[Any], tuple[Expr, Dimension]]] = {
+    def _collect_default(expr: Expr) -> tuple[Expr, Dimension]:
+        if not _is_number(expr):
+            raise ValueError(f"'{expr}' should be an expression made of numbers or quantities.")
+
+        return expr, dimensionless
+
+    cases: dict[type, Callable[[Expr], tuple[Expr, Dimension]]] = {
         SymQuantity: _collect_quantity,
         Mul: _collect_mul,
         Pow: _collect_pow,
         Add: _collect_add,
         Abs: _collect_abs,
-        Min: _collect_min,
+        MinMaxBase: _collect_min_max,
         Derivative: _unsupported_derivative,
         SymFunction: _collect_function,
     }
 
-    for k, v in cases.items():
-        if isinstance(expr, k):
-            return v(expr)
-    return (expr, dimensionless)
+    for type_, collector in cases.items():
+        if isinstance(expr, type_):
+            return collector(expr)
+
+    return _collect_default(expr)
 
 
 def collect_dimension(expr: Expr) -> Dimension:
     """
-    Returns the dimension of the given expression. Unlike `collect_factor_and_dimension`
+    Returns the dimension of the given expression. Unlike `collect_quantity_factor_and_dimension`
     it supports derivatives, symbols, and functions with dimensionful arguments.
     """
 
@@ -233,18 +256,11 @@ def assert_equivalent_dimension(
     def _is_any_dimension(scale_factor: Expr, dimension: Dimension) -> bool:
         """`Zero` and `Infinity` can be of any dimension, as well as `AnyDimension` instances."""
 
-        return scale_factor in (S.Zero, S.Infinity) or isinstance(dimension, AnyDimension)
-
-    def _is_number(value: Any) -> bool:
-        try:
-            complex(value)
-        except (TypeError, ValueError):
-            return False
-
-        return True
+        return (scale_factor in (S.Zero, S.Infinity, S.NegativeInfinity) or
+            isinstance(dimension, AnyDimension))
 
     if not isinstance(expected_unit, Dimension):
-        expected_scale_factor, expected_unit = collect_factor_and_dimension(expected_unit)
+        expected_scale_factor, expected_unit = collect_quantity_factor_and_dimension(expected_unit)
 
         if _is_any_dimension(expected_scale_factor, expected_unit):
             return
@@ -253,7 +269,7 @@ def assert_equivalent_dimension(
     expected_unit = expected_unit.subs("angle", S.One)
 
     if not isinstance(arg, Dimension):
-        (scale_factor, arg) = collect_factor_and_dimension(arg)
+        (scale_factor, arg) = collect_quantity_factor_and_dimension(sympify(arg))
 
         if not _is_number(scale_factor):
             # NOTE: this should probably raise `ValueError` or `TypeError`
@@ -291,7 +307,7 @@ __all__ = [
     "ScalarValue",
     "AnyDimension",
     "any_dimension",
-    "collect_factor_and_dimension",
+    "collect_quantity_factor_and_dimension",
     "collect_dimension",
     "assert_equivalent_dimension",
     "dimensionless",

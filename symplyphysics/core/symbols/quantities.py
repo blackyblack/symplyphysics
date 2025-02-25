@@ -8,7 +8,7 @@ from sympy.physics.units.systems.si import SI
 from sympy.multipledispatch import dispatch
 
 from .symbols import DimensionSymbol, next_name
-from ..dimensions import collect_factor_and_dimension
+from ..dimensions import collect_quantity_factor_and_dimension
 from ..errors import UnitsError
 
 
@@ -36,7 +36,7 @@ class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: d
         display_symbol: Optional[str] = None,
         display_latex: Optional[str] = None,
         dimension: Optional[Dimension] = None) -> None:
-        (scale, dimension_) = collect_factor_and_dimension(sympify(expr))
+        (scale, dimension_) = collect_quantity_factor_and_dimension(sympify(expr))
         if scale.free_symbols:
             raise UnitsError(f"Argument '{expr}' to function 'Quantity()' should "
                 f"not contain free symbols")

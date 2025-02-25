@@ -13,8 +13,9 @@ is and the higher geometric buckling of the reactor is.
 
 from sympy import (Eq, solve, Expr, simplify, Equality)
 from sympy.vector import Laplacian
-from symplyphysics import (SI, units, Quantity, validate_output, symbols, clone_as_function, Function)
-from symplyphysics.core.dimensions import collect_factor_and_dimension
+from symplyphysics import (SI, units, Quantity, validate_output, symbols, clone_as_function,
+    Function)
+from symplyphysics.core.dimensions import collect_quantity_factor_and_dimension
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.nuclear import diffusion_equation_from_neutron_flux as diffusion_equation
 
@@ -33,7 +34,9 @@ geometric_buckling = symbols.geometric_buckling
 :symbols:`geometric_buckling`.
 """
 
-neutron_flux_laplacian = Function("Laplace(Phi)", [position], 1 / (units.length**4 * units.time), display_latex="\\nabla^{2} \\Phi")
+neutron_flux_laplacian = Function("Laplace(Phi)", [position],
+    1 / (units.length**4 * units.time),
+    display_latex="\\nabla^{2} \\Phi")
 """
 Laplacian of the :attr:`~neutron_flux` as a function of :attr:`~position`.
 """
@@ -80,12 +83,10 @@ def apply_neutron_flux_function(neutron_flux_function_: Expr) -> Equality:
 # neutron_flux_function_ should be a function on CoordSys3D
 # neutron_flux_function_ geometry should be defined with Quantity, eg width.dimension == units.length
 @validate_output(geometric_buckling)
-def calculate_geometric_buckling_squared(neutron_flux_function_: Expr) -> Quantity:
-    # this is like validate_input but does not require no free symbols
-    (_, dimension) = collect_factor_and_dimension(neutron_flux_function_)
+def calculate_geometric_buckling_squared(neutron_flux_function_: Expr, radius: Expr) -> Quantity:
+    (_, dimension) = collect_quantity_factor_and_dimension(neutron_flux_function_.subs(radius, 1))
     assert SI.get_dimension_system().equivalent_dims(dimension, neutron_flux.dimension)
 
     result_expr = apply_neutron_flux_function(neutron_flux_function_)
-    result_buckling_expr = solve(result_expr, geometric_buckling,
-        dict=True)[0][geometric_buckling]
+    result_buckling_expr = solve(result_expr, geometric_buckling, dict=True)[0][geometric_buckling]
     return Quantity(result_buckling_expr)

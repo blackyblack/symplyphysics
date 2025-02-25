@@ -32,21 +32,21 @@ def test_bad_density(test_args: Args) -> None:
     bad_density = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         calculate_hydrostatic_pressure(bad_density, test_args.h, test_args.acceleration)
-    with raises(errors.UnitsError):
-        calculate_hydrostatic_pressure("not a quantity", test_args.h, test_args.acceleration)
+    with raises(TypeError):
+        calculate_hydrostatic_pressure(100, test_args.h, test_args.acceleration)
 
 
 def test_bad_depth(test_args: Args) -> None:
     bad_depth = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         calculate_hydrostatic_pressure(test_args.rho, bad_depth, test_args.acceleration)
-    with raises(errors.UnitsError):
-        calculate_hydrostatic_pressure(test_args.rho, "not a quantity", test_args.acceleration)
+    with raises(TypeError):
+        calculate_hydrostatic_pressure(test_args.rho, 100, test_args.acceleration)
 
 
 def test_bad_acceleration(test_args: Args) -> None:
     bad_acceleration = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         calculate_hydrostatic_pressure(test_args.rho, test_args.h, bad_acceleration)
-    with raises(errors.UnitsError):
-        calculate_hydrostatic_pressure(test_args.rho, test_args.h, "not a quantity")
+    with raises(TypeError):
+        calculate_hydrostatic_pressure(test_args.rho, test_args.h, 100)
