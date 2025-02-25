@@ -41,7 +41,7 @@ law = Eq(geometric_buckling, (pi / thickness)**2)
 # Unfortunately sympy does not support solving with complex boundary conditions so we simply check with known
 # solution for the neutron flux:
 # See [neutron flux for uniform slab](./neutron_flux_for_uniform_slab.py)
-_geometric_buckling_slab_squared = slab_flux._axial_constant**2  # pylint: disable=protected-access
+_geometric_buckling_slab_squared = slab_flux.axial_constant**2
 _geometric_buckling_slab_solved = _geometric_buckling_slab_squared.subs(slab_flux.thickness,
     thickness)
 assert _geometric_buckling_slab_solved == law.rhs

@@ -1,4 +1,4 @@
-r"""
+"""
 Effective mass of electron via energy
 =====================================
 
@@ -38,12 +38,12 @@ from symplyphysics import (
 effective_mass = clone_as_symbol(symbols.mass,
     display_symbol="m_eff",
     display_latex="m_\\text{eff}")
-r"""
+"""
 Effective :symbols:`mass` of the electron.
 """
 
 angular_wavenumber = symbols.angular_wavenumber
-r"""
+"""
 :symbols:`angular_wavenumber`.
 """
 
@@ -54,7 +54,7 @@ Electron energy as a function of angular wavenumber.
 
 law = Eq(effective_mass, quantities.hbar**2 / Derivative(energy(angular_wavenumber),
     (angular_wavenumber, 2)))
-r"""
+"""
 :laws:symbol::
 
 :laws:latex::

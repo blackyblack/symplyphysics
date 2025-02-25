@@ -51,11 +51,8 @@ law = Eq(geometric_buckling, (pi / length)**2 + (pi / width)**2 + (pi / height)*
 # Unfortunately sympy does not support solving with complex boundary conditions so we simply check with known
 # solution for the neutron flux:
 # See [neutron flux for uniform parallelepiped](./neutron_flux_for_uniform_parallelepiped.py)
-_geometric_buckling_parallelepiped_squared = (
-    # pylint: disable-next=protected-access
-    parallelepiped_flux._width_constant**2 +
-    # pylint: disable-next=protected-access
-    parallelepiped_flux._length_constant**2 + parallelepiped_flux._height_constant**2)
+_geometric_buckling_parallelepiped_squared = (parallelepiped_flux.width_constant**2 +
+    parallelepiped_flux.length_constant**2 + parallelepiped_flux.height_constant**2)
 _geometric_buckling_parallelepiped_solved = _geometric_buckling_parallelepiped_squared.subs({
     parallelepiped_flux.width: width,
     parallelepiped_flux.length: length,

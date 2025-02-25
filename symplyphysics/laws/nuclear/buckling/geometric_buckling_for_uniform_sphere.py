@@ -36,7 +36,7 @@ law = Eq(geometric_buckling, (pi / radius)**2)
 # Unfortunately sympy does not support solving with complex boundary conditions so we simply check with known
 # solution for the neutron flux:
 # See [neutron flux for uniform sphere](./neutron_flux_for_uniform_sphere.py)
-_geometric_buckling_sphere_squared = sphere_flux._radial_constant**2  # pylint: disable=protected-access
+_geometric_buckling_sphere_squared = sphere_flux.radial_constant**2
 _geometric_buckling_sphere_flux_solved = _geometric_buckling_sphere_squared.subs(
     sphere_flux.radius, radius)
 assert _geometric_buckling_sphere_flux_solved == law.rhs

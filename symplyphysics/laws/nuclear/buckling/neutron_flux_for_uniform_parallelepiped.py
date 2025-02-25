@@ -55,21 +55,21 @@ neutron_flux = symbols.neutron_flux
 
 # These constants are being used for geometric buckling calculation
 # See: [geometric buckling for uniform parallelepiped](geometric_buckling_for_uniform_parallelepiped.py)
-_length_constant = pi / length
-_width_constant = pi / width
-_height_constant = pi / height
+length_constant = pi / length
+width_constant = pi / width
+height_constant = pi / height
 
 # derived the same way as uniform slab axial_constant
-assert _length_constant == neutron_flux_for_uniform_slab._axial_constant.subs(  # pylint: disable=protected-access
+assert length_constant == neutron_flux_for_uniform_slab.axial_constant.subs(
     neutron_flux_for_uniform_slab.thickness, length)
-assert _width_constant == neutron_flux_for_uniform_slab._axial_constant.subs(  # pylint: disable=protected-access
+assert width_constant == neutron_flux_for_uniform_slab.axial_constant.subs(
     neutron_flux_for_uniform_slab.thickness, width)
-assert _height_constant == neutron_flux_for_uniform_slab._axial_constant.subs(  # pylint: disable=protected-access
+assert height_constant == neutron_flux_for_uniform_slab.axial_constant.subs(
     neutron_flux_for_uniform_slab.thickness, height)
 
 law = Eq(
     neutron_flux,
-    dimension_factor * cos(_width_constant * x) * cos(_length_constant * y) * cos(_height_constant * z))
+    dimension_factor * cos(width_constant * x) * cos(length_constant * y) * cos(height_constant * z))
 """
 :laws:symbol::
 
@@ -101,8 +101,8 @@ neutron_flux_function_cartesian = law.subs({
 _solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
     neutron_flux_function_cartesian.rhs)
 
-# check with the derived law: Bg^2 = _width_constant**2 + _length_constant**2 + _height_constant**2
-assert _solved.rhs == (_width_constant**2 + _length_constant**2 + _height_constant**2)
+# check with the derived law: Bg^2 = width_constant**2 + length_constant**2 + height_constant**2
+assert _solved.rhs == (width_constant**2 + length_constant**2 + height_constant**2)
 
 
 # There is no calculate() method. Neutron flux is usually being used internally to pass to other laws.

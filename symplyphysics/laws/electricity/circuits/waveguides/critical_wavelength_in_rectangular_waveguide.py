@@ -23,7 +23,7 @@ from symplyphysics import (
 
 critical_wavelength = clone_as_symbol(symbols.wavelength, display_symbol="lambda_c", display_latex="\\lambda_\\text{c}")
 """
-Critical :symbols:`wavelength` in the waveguide. See :ref:`Critical wavelength of waveguide`.
+Critical :symbols:`wavelength` in the waveguide. See :ref:`Critical wavelength of waveguide <critical_wavelength_waveguide_def>`.
 """
 
 first_index = Symbol("m", dimensionless)

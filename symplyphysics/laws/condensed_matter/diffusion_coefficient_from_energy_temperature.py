@@ -34,7 +34,7 @@ diffusion_coefficient = symbols.diffusion_coefficient
 :symbols:`diffusion_coefficient`.
 """
 
-energy = clone_as_symbol(symbols.energy, subscript="\\text{A}")
+energy = clone_as_symbol(symbols.energy, display_symbol="E_A", display_latex="E_\\text{A}")
 """
 Activation :symbols:`energy` of the dopant.
 """

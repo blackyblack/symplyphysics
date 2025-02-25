@@ -53,17 +53,17 @@ neutron_flux = symbols.neutron_flux
 
 # These constants are being used for geometric buckling calculation
 # See: [geometric buckling for uniform cylinder](geometric_buckling_for_uniform_cylinder.py)
-_radial_constant = 2.405 / radius
-_axial_constant = pi / height
+radial_constant = 2.405 / radius
+axial_constant = pi / height
 
 # derived the same way as uniform slab _axial_constant
-assert _axial_constant == neutron_flux_for_uniform_slab._axial_constant.subs(  # pylint: disable=protected-access
+assert axial_constant == neutron_flux_for_uniform_slab.axial_constant.subs(
     neutron_flux_for_uniform_slab.thickness, height)
 
 law = Eq(
     neutron_flux,
-    dimension_factor * besselj(0, _radial_constant * radial_distance) *
-    cos(_axial_constant * axial_coordinate))
+    dimension_factor * besselj(0, radial_constant * radial_distance) *
+    cos(axial_constant * axial_coordinate))
 """
 :laws:symbol::
 
@@ -100,8 +100,8 @@ _neutron_flux_function_cylindrical = law.subs({
 _solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
     _neutron_flux_function_cylindrical.rhs)
 
-# check with the derived law: Bg^2 = _radial_constant**2 + _axial_constant**2
+# check with the derived law: Bg^2 = radial_constant**2 + axial_constant**2
 # limit decimals to bypass rounding errors
-assert _solved.rhs.evalf(7) == (_radial_constant**2 + _axial_constant**2).evalf(7)
+assert _solved.rhs.evalf(7) == (radial_constant**2 + axial_constant**2).evalf(7)
 
 # There is no calculate() method. Neutron flux is usually being used internally to pass to other laws.

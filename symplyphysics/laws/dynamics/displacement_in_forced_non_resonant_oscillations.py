@@ -73,7 +73,7 @@ The :symbols:`angular_frequency` of the external driving force.
 """
 
 driving_phase_lag = symbols.phase_shift
-r"""
+"""
 The :symbols:`phase_shift` of the oscillations of the external force.
 """
 

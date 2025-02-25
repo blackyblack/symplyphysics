@@ -9,7 +9,7 @@ transmission matrix of this line.
 
 **Notes:**
 
-#. See :ref:`Transmission matrix`.
+#. See :ref:`Transmission Matrix <transmission_matrix_def>`.
 #. Scheme of the circuit:
 
 .. image:: https://en.wikipedia.org/wiki/%CE%A0_pad#/media/File:Attenuator,_Pi-section.svg
