@@ -13,7 +13,7 @@ from sympy.printing.precedence import precedence, precedence_traditional, PRECED
 from ..core.symbols.symbols import DimensionSymbol, Function, IndexedSymbol
 
 
-class SymbolCodePrinter(StrPrinter):
+class SymbolCodePrinter(StrPrinter):  # type: ignore[misc]
     """
     A printer to convert Symplyphysics law expressions to symbols
     """
@@ -23,7 +23,10 @@ class SymbolCodePrinter(StrPrinter):
 
     # pylint: disable-next=invalid-name
     def _print_Symbol(self, expr: Any) -> str:
-        return expr.display_name if isinstance(expr, DimensionSymbol) else getattr(expr, "name")
+        if isinstance(expr, DimensionSymbol):
+            return expr.display_name
+
+        return str(getattr(expr, "name"))
 
     # pylint: disable-next=invalid-name
     def _print_Quantity(self, expr: Any) -> str:
@@ -258,20 +261,20 @@ class SymbolCodePrinter(StrPrinter):
             return "[" + ", ".join(parts) + "]"
 
         parts = [print_row(row) for row in range(rows)]
-        return "[" + ", ".join(parts) +"]"
+        return "[" + ", ".join(parts) + "]"
 
     def _print_Average(self, expr: Any) -> str:
         return f"avg({self._print(expr.factor)})"
-    
+
     def _print_FiniteDifference(self, expr: Any) -> str:
         return f"Delta({self._print(expr.factor)})"
-    
+
     def _print_ExactDifferential(self, expr: Any) -> str:
         if expr.wrap_code:
             return f"d({self._print(expr.factor)})"
         else:
             return f"d{self._print(expr.factor)}"
-    
+
     def _print_InexactDifferential(self, expr: Any) -> str:
         return f"delta({self._print(expr.factor)})"
 
@@ -288,4 +291,4 @@ def code_str(expr: Any, **settings: Any) -> str:
     if isinstance(expr, IndexedSymbol):
         expr = expr[expr.index]
 
-    return printer.doprint(expr)
+    return str(printer.doprint(expr))

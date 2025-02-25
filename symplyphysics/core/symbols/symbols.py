@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Any, Optional, Sequence, Self
+from typing import Any, Optional, Sequence
 from sympy import S, Idx, MatAdd, MatMul, MatrixBase, Symbol as SymSymbol, Expr, Equality, IndexedBase, Matrix as SymMatrix
 from sympy.physics.units import Dimension
 from sympy.core.function import UndefinedFunction
@@ -37,18 +37,19 @@ class DimensionSymbol:
         return self._display_latex
 
     def _sympystr(self, p: Printer) -> str:
-        return p.doprint(self.display_name)
+        return str(p.doprint(self.display_name))
 
 
-class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
+class Symbol(DimensionSymbol, SymSymbol):  # type: ignore[misc]  # pylint: disable=too-many-ancestors
 
     def __new__(cls,
         display_symbol: Optional[str] = None,
         _dimension: Dimension = Dimension(S.One),
         *,
         display_latex: Optional[str] = None,
-        **assumptions: Any) -> Self:
-        return SymSymbol.__new__(cls, next_name("SYM"), **assumptions)
+        **assumptions: Any) -> Symbol:
+        obj = SymSymbol.__new__(cls, next_name("SYM"), **assumptions)
+        return obj  # type: ignore[no-any-return]
 
     def __init__(self,
         display_symbol: Optional[str] = None,
@@ -60,12 +61,11 @@ class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
         super().__init__(display_name, dimension, display_latex=display_latex)
 
 
-
 # This is default index for indexed parameters, e.g. for using in IndexedSum
 global_index = Idx("i")
 
 
-class IndexedSymbol(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-ancestors
+class IndexedSymbol(DimensionSymbol, IndexedBase):  # type: ignore[misc]  # pylint: disable=too-many-ancestors
     index: Idx
 
     def __new__(cls,
@@ -74,12 +74,14 @@ class IndexedSymbol(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-a
         _dimension: Dimension = Dimension(S.One),
         *,
         display_latex: Optional[str] = None,
-        **assumptions: Any) -> Self:
+        **assumptions: Any) -> IndexedSymbol:
         # SymPy subs() and solve() creates dummy symbols. Allow create new indexed symbols
         # without renaming
         if isinstance(name_or_symbol, SymSymbol):
-            return IndexedBase.__new__(cls, name_or_symbol, **assumptions)
-        return IndexedBase.__new__(cls, next_name("SYM"), **assumptions)
+            obj = IndexedBase.__new__(cls, name_or_symbol, **assumptions)
+        else:
+            obj = IndexedBase.__new__(cls, next_name("SYM"), **assumptions)
+        return obj  # type: ignore[no-any-return]
 
     def __init__(self,
         name_or_symbol: Optional[str | SymSymbol] = None,
@@ -96,7 +98,7 @@ class IndexedSymbol(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-a
         pass
 
 
-class Function(DimensionSymbol, UndefinedFunction):
+class Function(DimensionSymbol, UndefinedFunction):  # type: ignore[misc]
     arguments: Sequence[Expr]
 
     # NOTE: Self type cannot be used in a metaclass and 'mcs' is a metaclass here
@@ -109,7 +111,8 @@ class Function(DimensionSymbol, UndefinedFunction):
         *,
         display_latex: Optional[str] = None,
         **options: Any) -> Function:
-        return UndefinedFunction.__new__(mcs, next_name("FUN"), **options)
+        obj = UndefinedFunction.__new__(mcs, next_name("FUN"), **options)
+        return obj  # type: ignore[no-any-return]
 
     def __init__(cls,
         display_symbol: Optional[str] = None,
@@ -126,7 +129,8 @@ class Function(DimensionSymbol, UndefinedFunction):
         return str(cls.display_name)
 
 
-class Matrix(SymMatrix):  # pylint: disable=too-many-ancestors
+class Matrix(SymMatrix):  # type: ignore[misc]  # pylint: disable=too-many-ancestors
+
     def __mul__(self: MatrixBase, other: MatrixBase) -> Expr:
         return MatMul(self, other)
 
@@ -139,13 +143,13 @@ class Matrix(SymMatrix):  # pylint: disable=too-many-ancestors
 # to user friendly names.
 
 
-class SymbolPrinter(PrettyPrinter):
+class SymbolPrinter(PrettyPrinter):  # type: ignore[misc]
 
     def __init__(self, **settings: Any) -> None:
         super().__init__(settings)
 
     def is_unicode(self) -> bool:
-        return self._settings["use_unicode"]
+        return bool(self._settings["use_unicode"])
 
     def _print_Symbol(self, e: Expr, bold_name: bool = False) -> prettyForm:
         symb_name = e.display_name if isinstance(e, Symbol) else getattr(e, "name")
@@ -188,7 +192,7 @@ def print_expression(expr: Expr | Equality | Sequence[Expr | Equality]) -> str:
     use_unicode = pprinter.is_unicode()
     uflag = pretty_use_unicode(use_unicode)
     try:
-        return pprinter.doprint(expr)
+        return str(pprinter.doprint(expr))
     finally:
         pretty_use_unicode(uflag)
 

@@ -41,7 +41,7 @@ def maximum_angle_of_incidence(incident_index_: float, refracted_index_: float) 
     solved = solve(eqn, angle_of_incidence)
 
     # if the equation has no solution, it means that the maximum angle is pi/2
-    return solved[0] if solved else pi / 2
+    return float(solved[0] if solved else pi / 2)
 
 
 assert maximum_angle_of_incidence(AIR_REFRACTIVE_INDEX,

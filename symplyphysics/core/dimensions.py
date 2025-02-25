@@ -13,10 +13,10 @@ from .errors import UnitsError
 ScalarValue: TypeAlias = Expr | float
 
 
-class AnyDimension(Dimension):
+class AnyDimension(Dimension):  # type: ignore[misc]
     # pylint: disable-next=signature-differs
     def __new__(cls) -> AnyDimension:
-        return super().__new__(cls, "any_dimension")
+        return super().__new__(cls, "any_dimension")  # type: ignore[no-any-return]
 
     def _eval_nseries(self, _x: Any, _n: Any, _logx: Any, _cdir: Any) -> Any:
         pass
@@ -50,7 +50,8 @@ def collect_factor_and_dimension(expr: Expr) -> tuple[Expr, Dimension]:
         pow_expr *= factor
         (exp_factor, exp_dim) = collect_factor_and_dimension(expr.exp)
         if not dimsys_SI.is_dimensionless(exp_dim):
-            raise ValueError(f"Dimension of '{expr.exp}' is {exp_dim}, but it should be dimensionless")
+            raise ValueError(
+                f"Dimension of '{expr.exp}' is {exp_dim}, but it should be dimensionless")
         exp_dim = S.One
         return (pow_expr**exp_factor, dim**(exp_factor * exp_dim))
 
@@ -150,7 +151,8 @@ def collect_dimension(expr: Expr) -> Dimension:
     def _collect_pow(expr: Pow) -> Dimension:
         exp_dim = collect_dimension(expr.exp)
         if not dimsys_SI.is_dimensionless(exp_dim):
-            raise ValueError(f"Dimension of '{expr.exp}' is {exp_dim}, but it should be dimensionless")
+            raise ValueError(
+                f"Dimension of '{expr.exp}' is {exp_dim}, but it should be dimensionless")
 
         if expr.base == S.Zero or expr.exp == S.Zero:  # pylint: disable=consider-using-in
             return Dimension(S.One)
@@ -243,8 +245,7 @@ def assert_equivalent_dimension(arg: SymQuantity | ScalarValue | Dimension, para
     #HACK: this allows to treat angle type as dimensionless
     arg_dimension = dimension.subs("angle", S.One)
     # angle is dimensionless but equivalent_dims() fails to compare it
-    if dimsys_SI.is_dimensionless(
-            expected_dimension) and dimsys_SI.is_dimensionless(arg_dimension):
+    if dimsys_SI.is_dimensionless(expected_dimension) and dimsys_SI.is_dimensionless(arg_dimension):
         return
     if not dimsys_SI.equivalent_dims(arg_dimension, expected_dimension):
         raise UnitsError(f"Argument '{param_name}' to function '{func_name}' must "
@@ -259,3 +260,19 @@ dimensionless = Dimension(S.One)
 
 def print_dimension(dimension: Dimension) -> str:
     return "dimensionless" if dimsys_SI.is_dimensionless(dimension) else str(dimension.name)
+
+
+__all__ = [
+    # re-exports
+    "Dimension",
+
+    # locals
+    "ScalarValue",
+    "AnyDimension",
+    "any_dimension",
+    "collect_factor_and_dimension",
+    "collect_dimension",
+    "assert_equivalent_dimension",
+    "dimensionless",
+    "print_dimension",
+]

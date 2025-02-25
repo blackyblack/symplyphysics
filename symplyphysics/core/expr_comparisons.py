@@ -15,5 +15,5 @@ def expr_equals(lhs: Any, rhs: Any) -> bool:
 
 
 ## SymPy does not allow to compare Abs with non-Abs values so we apply abs() to both sides.
-def expr_equals_abs(lhs: SupportsAbs, rhs: SupportsAbs) -> bool:
+def expr_equals_abs(lhs: SupportsAbs, rhs: SupportsAbs) -> bool:  # type: ignore[type-arg]
     return expr_equals(abs(lhs), abs(rhs))

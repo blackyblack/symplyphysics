@@ -63,10 +63,10 @@ _acceleration_derived = solve(_centripetal_law_applied,
     dict=True)[0][centripetal_law.centripetal_acceleration]
 
 _acceleration_law_applied = acceleration_law.law.subs({
-    acceleration_law.symbols.acceleration: _acceleration_derived,
+    symbols.acceleration: _acceleration_derived,
 })
-_force_derived = solve(_acceleration_law_applied, acceleration_law.symbols.force,
-    dict=True)[0][acceleration_law.symbols.force]
+_force_derived = solve(_acceleration_law_applied, symbols.force,
+    dict=True)[0][symbols.force]
 
 # Let's write down Newton's second law: ma = F. F is, in this case, the force of gravity. And in the general case,
 # when a body moves along a circle with a constant speed in modulus, its acceleration is equal to the centripetal
@@ -74,7 +74,7 @@ _force_derived = solve(_acceleration_law_applied, acceleration_law.symbols.force
 _gravity_force_law_applied = gravity_force_law.law.subs({
     gravity_force_law.first_mass: planet_mass,
     gravity_force_law.gravitational_force: _force_derived,
-    gravity_force_law.second_mass: acceleration_law.symbols.mass,
+    gravity_force_law.second_mass: symbols.mass,
     gravity_force_law.distance_between_mass_centers: radius + height,
 })
 # The first cosmic speed is the minimum horizontal speed that must be given to an object so that it moves in

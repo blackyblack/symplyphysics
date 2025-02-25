@@ -1,3 +1,5 @@
+# mypy: disable-error-code="arg-type, comparison-overlap"
+
 from typing import Any, Mapping, Sequence, TypeVar
 from abc import abstractmethod
 

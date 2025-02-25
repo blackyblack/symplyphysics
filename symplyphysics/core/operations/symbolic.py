@@ -4,7 +4,7 @@ from sympy import Expr, Symbol as SymSymbol
 from ..dimensions import Dimension, collect_dimension
 
 
-class Symbolic(SymSymbol):  # pylint: disable=too-many-ancestors
+class Symbolic(SymSymbol):  # type: ignore[misc]  # pylint: disable=too-many-ancestors
     """
     This class is intended to be subclassed for custom code printing.
     """
@@ -41,7 +41,8 @@ class Symbolic(SymSymbol):  # pylint: disable=too-many-ancestors
         inner = str(expr)
         display_name = f"{cls_name}({inner})"
 
-        return super().__new__(cls, display_name, **assumptions)
+        obj = super().__new__(cls, display_name, **assumptions)
+        return obj  # type: ignore[no-any-return]
 
     def __init__(
         self,

@@ -17,3 +17,12 @@ def two_point_function(p1: Point2D, p2: Point2D, x: Expr) -> Expr:
         raise ValueError("Line equation does not depend on y.")
 
     return y_functions[0].subs(x_, x)
+
+
+__all__ = [
+    # re-exports
+    "Point2D",
+
+    # locals
+    "two_point_function",
+]

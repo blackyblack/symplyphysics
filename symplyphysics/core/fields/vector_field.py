@@ -33,14 +33,14 @@ def _subs_with_point(expr: Sequence[ScalarValue], coordinate_system: CoordinateS
 # system invariant.
 class VectorField:
     # Can contain lambda or some value. If value is stored, it will be returned when field is applied.
-    _point_function: FieldFunction
+    _point_function: FieldFunction  # type: ignore[type-arg]
     #NOTE: 4 and higher dimensional fields are not supported cause of using CoordSys3D
     #      that allows rebasing vector field to different coordinate systems.
     _coordinate_system: CoordinateSystem
 
     def __init__(
         self,
-        point_function: FieldFunction,
+        point_function: FieldFunction,  # type: ignore[type-arg]
         coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)
     ) -> None:
         self._point_function = point_function
@@ -78,7 +78,7 @@ class VectorField:
         return self._coordinate_system
 
     @property
-    def field_function(self) -> FieldFunction:
+    def field_function(self) -> FieldFunction:  # type: ignore[type-arg]
         return self._point_function
 
     # Constructs new VectorField from Vector.

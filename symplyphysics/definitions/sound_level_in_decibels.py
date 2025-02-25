@@ -18,6 +18,7 @@ from symplyphysics import (
     validate_output,
     symbols,
 )
+from symplyphysics.core.symbols.quantities import scale_factor
 
 sound_level = symbols.sound_intensity_level
 """
@@ -51,4 +52,4 @@ definition = Eq(sound_level, reference_sound_level * log(intensity / reference_i
 @validate_output(sound_level)
 def calculate_sound_level(intensity_: Quantity) -> float:
     result = definition.rhs.subs(intensity, intensity_)
-    return Quantity(result).scale_factor
+    return scale_factor(Quantity(result))
