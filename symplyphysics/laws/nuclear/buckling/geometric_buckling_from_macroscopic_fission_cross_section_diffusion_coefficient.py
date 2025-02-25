@@ -24,7 +24,9 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.nuclear import diffusion_equation_from_neutron_flux as diffusion_equation_law
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux as buckling_law
 
-neutrons_per_fission = clone_as_symbol(symbols.particle_count, display_symbol="nu", display_latex="\\nu")
+neutrons_per_fission = clone_as_symbol(symbols.particle_count,
+    display_symbol="nu",
+    display_latex="\\nu")
 """
 The average number of neutrons produced per fission. See :symbols:`particle_count`.
 """
@@ -34,12 +36,16 @@ effective_multiplication_factor = symbols.effective_multiplication_factor
 :symbols:`effective_multiplication_factor`.
 """
 
-macroscopic_fission_cross_section = clone_as_symbol(symbols.macroscopic_cross_section, display_symbol="Sigma_f", display_latex="\\Sigma_\\text{f}")
+macroscopic_fission_cross_section = clone_as_symbol(symbols.macroscopic_cross_section,
+    display_symbol="Sigma_f",
+    display_latex="\\Sigma_\\text{f}")
 """
 :symbols:`macroscopic_cross_section` of fission.
 """
 
-macroscopic_absorption_cross_section = clone_as_symbol(symbols.macroscopic_cross_section, display_symbol="Sigma_a", display_latex="\\Sigma_\\text{a}")
+macroscopic_absorption_cross_section = clone_as_symbol(symbols.macroscopic_cross_section,
+    display_symbol="Sigma_a",
+    display_latex="\\Sigma_\\text{a}")
 """
 :symbols:`macroscopic_cross_section` of absorption.
 """
@@ -85,12 +91,14 @@ _buckling_eq2 = buckling_law.law.subs({
 })
 
 derived_law = [
-    _diffusion_eq1, _buckling_eq2, diffusion_equation_law._neutron_flux_laplacian_definition
+    _diffusion_eq1,
+    _buckling_eq2,
+    diffusion_equation_law._neutron_flux_laplacian_definition  # pylint: disable=protected-access
 ]
 
 ## Check the equivalence of 'law' and 'derived_law'
-_derived_geometric_buckling_squared = solve(derived_law, (geometric_buckling,
-    diffusion_equation_law.neutron_flux(diffusion_equation_law.position),
+_derived_geometric_buckling_squared = solve(derived_law,
+    (geometric_buckling, diffusion_equation_law.neutron_flux(diffusion_equation_law.position),
     diffusion_equation_law.neutron_flux_laplacian(diffusion_equation_law.position)),
     dict=True)[0][geometric_buckling]
 assert expr_equals(law.rhs, _derived_geometric_buckling_squared)
@@ -105,8 +113,7 @@ assert expr_equals(law.rhs, _derived_geometric_buckling_squared)
 def calculate_buckling(neutrons_per_fission_: float, effective_multiplication_factor_: float,
     macroscopic_fission_cross_section_: Quantity, macroscopic_absorption_cross_section_: Quantity,
     diffusion_coefficient_: Quantity) -> Quantity:
-    result_buckling_expr = solve(law, geometric_buckling,
-        dict=True)[0][geometric_buckling]
+    result_buckling_expr = solve(law, geometric_buckling, dict=True)[0][geometric_buckling]
     result_expr = result_buckling_expr.subs({
         neutrons_per_fission: neutrons_per_fission_,
         effective_multiplication_factor: effective_multiplication_factor_,

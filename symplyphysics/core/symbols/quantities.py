@@ -78,5 +78,5 @@ def subs_list(input_: Sequence[Expr | float], subs_: dict[Expr, Quantity]) -> Se
 def scale_factor(quantity_: Quantity | float) -> float:
     if isinstance(quantity_, Quantity):
         return float(quantity_.scale_factor)
-    
+
     return quantity_

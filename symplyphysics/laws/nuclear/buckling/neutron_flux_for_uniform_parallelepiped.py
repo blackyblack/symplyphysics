@@ -60,11 +60,11 @@ _width_constant = pi / width
 _height_constant = pi / height
 
 # derived the same way as uniform slab axial_constant
-assert _length_constant == neutron_flux_for_uniform_slab._axial_constant.subs(
+assert _length_constant == neutron_flux_for_uniform_slab._axial_constant.subs(  # pylint: disable=protected-access
     neutron_flux_for_uniform_slab.thickness, length)
-assert _width_constant == neutron_flux_for_uniform_slab._axial_constant.subs(
+assert _width_constant == neutron_flux_for_uniform_slab._axial_constant.subs(  # pylint: disable=protected-access
     neutron_flux_for_uniform_slab.thickness, width)
-assert _height_constant == neutron_flux_for_uniform_slab._axial_constant.subs(
+assert _height_constant == neutron_flux_for_uniform_slab._axial_constant.subs(  # pylint: disable=protected-access
     neutron_flux_for_uniform_slab.thickness, height)
 
 law = Eq(

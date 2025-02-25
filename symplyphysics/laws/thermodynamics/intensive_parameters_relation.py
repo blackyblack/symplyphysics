@@ -17,7 +17,6 @@ parameters, or degrees of freedom.
 
 from sympy import Eq, solve
 from symplyphysics import (
-    clone_as_symbol,
     symbols,
     Quantity,
     validate_input,

@@ -18,7 +18,7 @@ See below for symbol descriptions.
     TODO: find link
 """
 
-from sympy import Eq, solve, sqrt, root,  pi, log, evaluate
+from sympy import Eq, solve, sqrt, root, log, evaluate
 from symplyphysics import (
     units,
     Quantity,

@@ -283,7 +283,7 @@ class SymbolLatexPrinter(LatexPrinter):   # type: ignore[misc]
             tex += term_tex
 
         return tex
-    
+
     # pylint: disable-next=invalid-name
     def _print_DenseMatrix(self, expr: DenseMatrix) -> str:
         rows, cols = expr.shape
@@ -295,29 +295,33 @@ class SymbolLatexPrinter(LatexPrinter):   # type: ignore[misc]
         parts = [print_row(row) for row in range(rows)]
         return "\\begin{pmatrix} " + " \\\\ ".join(parts) + " \\end{pmatrix}"
 
+    # pylint: disable-next=invalid-name
     def _print_Average(self, expr: Any) -> str:
         return f"\\langle {self._print(expr.factor)} \\rangle"
-    
+
+    # pylint: disable-next=invalid-name
     def _print_FiniteDifference(self, expr: Any) -> str:
         inner = self._print(expr.factor)
         if expr.wrap_latex:
             return f"\\Delta \\left( {inner} \\right)"
-        else:
-            return f"\\Delta {inner}"
-        
+
+        return f"\\Delta {inner}"
+
+    # pylint: disable-next=invalid-name
     def _print_ExactDifferential(self, expr: Any) -> str:
         inner = self._print(expr.factor)
         if expr.wrap_latex:
             return f"d \\left( {inner} \\right)"
-        else:
-            return f"d {inner}"
 
+        return f"d {inner}"
+
+    # pylint: disable-next=invalid-name
     def _print_InexactDifferential(self, expr: Any) -> str:
         inner = self._print(expr.factor)
         if expr.wrap_latex:
             return f"\\delta \\left( {inner} \\right)"
-        else:
-            return f"\\delta {inner}"
+
+        return f"\\delta {inner}"
 
 
 def latex_str(expr: Any, **settings: Any) -> str:

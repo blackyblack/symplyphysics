@@ -76,15 +76,15 @@ _first_expression = (
 )
 
 _second_expression = (
-    first_grid_direct_permeability_coefficient 
-    * second_grid_direct_permeability_coefficient 
+    first_grid_direct_permeability_coefficient
+    * second_grid_direct_permeability_coefficient
     * third_grid_direct_permeability_coefficient
     * anode_voltage
 )
 
 _third_expression = (
-    1 
-    + ((anode_distance / first_grid_distance)**Rational(4, 3)) 
+    1
+    + ((anode_distance / first_grid_distance)**Rational(4, 3))
     * first_grid_direct_permeability_coefficient
 )
 

@@ -12,7 +12,7 @@ on the orthogonal distance to the plane of symmetry inside the slab.
 
 from sympy import Eq, pi, cos
 from sympy.vector import CoordSys3D
-from symplyphysics import Quantity, units, symbols, clone_as_function, clone_as_symbol
+from symplyphysics import Quantity, units, symbols, clone_as_symbol
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux
 
 dimension_factor = clone_as_symbol(symbols.neutron_flux, subscript="0")

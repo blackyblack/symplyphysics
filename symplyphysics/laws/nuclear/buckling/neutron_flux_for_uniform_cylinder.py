@@ -57,7 +57,7 @@ _radial_constant = 2.405 / radius
 _axial_constant = pi / height
 
 # derived the same way as uniform slab _axial_constant
-assert _axial_constant == neutron_flux_for_uniform_slab._axial_constant.subs(
+assert _axial_constant == neutron_flux_for_uniform_slab._axial_constant.subs(  # pylint: disable=protected-access
     neutron_flux_for_uniform_slab.thickness, height)
 
 law = Eq(

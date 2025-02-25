@@ -263,18 +263,22 @@ class SymbolCodePrinter(StrPrinter):  # type: ignore[misc]
         parts = [print_row(row) for row in range(rows)]
         return "[" + ", ".join(parts) + "]"
 
+    # pylint: disable-next=invalid-name
     def _print_Average(self, expr: Any) -> str:
         return f"avg({self._print(expr.factor)})"
 
+    # pylint: disable-next=invalid-name
     def _print_FiniteDifference(self, expr: Any) -> str:
         return f"Delta({self._print(expr.factor)})"
 
+    # pylint: disable-next=invalid-name
     def _print_ExactDifferential(self, expr: Any) -> str:
         if expr.wrap_code:
             return f"d({self._print(expr.factor)})"
-        else:
-            return f"d{self._print(expr.factor)}"
 
+        return f"d{self._print(expr.factor)}"
+
+    # pylint: disable-next=invalid-name
     def _print_InexactDifferential(self, expr: Any) -> str:
         return f"delta({self._print(expr.factor)})"
 
