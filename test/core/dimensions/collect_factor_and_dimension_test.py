@@ -77,23 +77,16 @@ def test_function() -> None:
     assert_equal(factor, sin(4.4 * pi / 180))
     assert dimsys_SI.equivalent_dims(dim, dimensionless)
 
-    dimensionful_qty = Quantity(-2 * units.length)
+    dimensionful_qty = Quantity(-2 * units.meter)
     with evaluate(False):
         expr = sin(dimensionful_qty)
     with raises(ValueError):
         collect_factor_and_dimension(expr)
 
 
-def test_dimension() -> None:
-    expr = units.length * units.time
-    factor, dim = collect_factor_and_dimension(expr)
-    assert_equal(factor, 1)
-    assert dimsys_SI.equivalent_dims(dim, expr)
-
-
 def test_derivative() -> None:
     with evaluate(False):
-        expr = Derivative(Quantity(units.time), symbols.length)
+        expr = Derivative(Quantity(3), symbols.length)
     with raises(ValueError):
         collect_factor_and_dimension(expr)
 

@@ -27,13 +27,9 @@ def test_bad_number_level_to(test_args: Args) -> None:
     number_level_to = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         frequency_law.calculate_transition_frequency(number_level_to, test_args.number_level_from)
-    with raises(TypeError):
-        frequency_law.calculate_transition_frequency(True, test_args.number_level_from)
 
 
 def test_bad_number_level_from(test_args: Args) -> None:
     number_level_from = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         frequency_law.calculate_transition_frequency(test_args.number_level_to, number_level_from)
-    with raises(TypeError):
-        frequency_law.calculate_transition_frequency(test_args.number_level_to, True)

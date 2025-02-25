@@ -120,12 +120,6 @@ def test_derivative() -> None:
     assert dimsys_SI.equivalent_dims(dim, units.current / units.length)
 
 
-def test_dimension() -> None:
-    expr = units.length
-    dim = collect_dimension(expr)
-    assert dimsys_SI.equivalent_dims(dim, expr)
-
-
 def test_has_dimension_field() -> None:
     # sympy.Quantity
     expr = Quantity(4.0 * units.meter)

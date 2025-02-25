@@ -86,12 +86,6 @@ def test_invalid_pow_quantity() -> None:
         Quantity(expr)
 
 
-def test_dimension_quantity() -> None:
-    q = Quantity(units.length)
-    assert q.scale_factor == 1
-    assert SI.get_dimension_system().equivalent_dims(q.dimension, units.length)
-
-
 def test_invalid_derivative_quantity() -> None:
     a = Quantity(10 * units.second)
     expr = Derivative(a**2, a)

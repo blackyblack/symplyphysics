@@ -109,9 +109,6 @@ def collect_factor_and_dimension(expr: Expr) -> tuple[Expr, Dimension]:
         ret = expr.func(*(f for f in factors))
         return (ret, dimensionless)
 
-    def _collect_dimension(expr: Dimension) -> tuple[Expr, Dimension]:
-        return (S.One, expr)
-
     def _unsupported_derivative(expr: Derivative) -> tuple[Expr, Dimension]:
         raise ValueError(f"Dimension '{expr}' should not contain unevaluated Derivative")
 
@@ -124,7 +121,6 @@ def collect_factor_and_dimension(expr: Expr) -> tuple[Expr, Dimension]:
         Min: _collect_min,
         Derivative: _unsupported_derivative,
         SymFunction: _collect_function,
-        Dimension: _collect_dimension,
     }
 
     for k, v in cases.items():
@@ -189,9 +185,6 @@ def collect_dimension(expr: Expr) -> Dimension:
             dim /= arg_dim**n
         return dim
 
-    def _collect_dimension(expr: Dimension) -> Dimension:
-        return expr
-
     # early return that works for `sympy.Quantity`, `SymbolNew`, `SymbolIndexedNew`, and `FunctionNew`
     if hasattr(expr, "dimension"):
         return getattr(expr, "dimension")
@@ -203,7 +196,6 @@ def collect_dimension(expr: Expr) -> Dimension:
         Abs: _collect_abs,
         Min: _collect_min,
         Derivative: _collect_derivative,
-        Dimension: _collect_dimension,
     }
 
     for k, v in cases.items():
@@ -218,41 +210,70 @@ def collect_dimension(expr: Expr) -> Dimension:
     return dimensionless
 
 
-def assert_equivalent_dimension(arg: SymQuantity | ScalarValue | Dimension, param_name: str,
-    func_name: str, expected_unit: SymQuantity | Dimension) -> None:
-    expected_dimension = dimensionless
-    if isinstance(expected_unit, Dimension):
-        expected_dimension = expected_unit
-    else:
-        (expected_scale_factor, expected_dimension) = collect_factor_and_dimension(expected_unit)
-        # zero can be of any dimension, infinity can be of any dimension
-        if expected_scale_factor in (S.Zero, S.Infinity):
+def assert_equivalent_dimension(
+    arg: SymQuantity | ScalarValue | Dimension,
+    param_name: str,
+    func_name: str,
+    expected_unit: SymQuantity | Dimension,
+) -> None:
+    """
+    Asserts if the dimension of the argument matches the provided unit.
+
+    Args:
+        arg: Expression or dimension.
+        param_name: Name of the parameter of the calling function.
+        func_name: Name of the calling function.
+        expected_unit: Expression or dimension which `arg` is compared to.
+
+    Raises:
+        TypeError: If `arg` is a number, but `expected_unit` is not dimensionless.
+        UnitsError: If the dimensions don't match otherwise, or when the scale factor of `arg` is not a number.
+    """
+
+    def _is_any_dimension(scale_factor: Expr, dimension: Dimension) -> bool:
+        """`Zero` and `Infinity` can be of any dimension, as well as `AnyDimension` instances."""
+
+        return scale_factor in (S.Zero, S.Infinity) or isinstance(dimension, AnyDimension)
+
+    def _is_number(value: Any) -> bool:
+        try:
+            complex(value)
+        except TypeError:
+            return False
+
+        return True
+
+    if not isinstance(expected_unit, Dimension):
+        expected_scale_factor, expected_unit = collect_factor_and_dimension(expected_unit)
+
+        if _is_any_dimension(expected_scale_factor, expected_unit):
             return
-        # AnyDimension can be of any dimension
-        if isinstance(expected_dimension, AnyDimension):
+
+    # HACK: this allows to treat angle type as dimensionless
+    expected_unit = expected_unit.subs("angle", S.One)
+
+    if not isinstance(arg, Dimension):
+        (scale_factor, arg) = collect_factor_and_dimension(arg)
+
+        if not _is_number(scale_factor):
+            # NOTE: this should probably be something like `ValueError`
+            raise UnitsError(f"Argument '{param_name}' to function '{func_name}' should "
+                f"not contain free symbols: '{scale_factor}'")
+
+        if _is_any_dimension(scale_factor, arg):
             return
-    #HACK: this allows to treat angle type as dimensionless
-    expected_dimension = expected_dimension.subs("angle", S.One)
-    if isinstance(arg, (float | int)):
-        if dimsys_SI.is_dimensionless(expected_dimension):
-            return
+
+    # HACK: this allows to treat angle type as dimensionless
+    arg = arg.subs("angle", S.One)
+
+    if dimsys_SI.is_dimensionless(arg) and not dimsys_SI.is_dimensionless(expected_unit):
+        # NOTE: this should probably be `UnitsError`
         raise TypeError(f"Argument '{param_name}' to function '{func_name}'"
-            f" is Number but '{expected_dimension}' is not dimensionless")
-    (scale_factor, dimension) = collect_factor_and_dimension(arg)
-    # zero can be of any dimension, infinity can be of any dimension
-    if scale_factor in (S.Zero, S.Infinity):
-        return
-    #HACK: this allows to treat angle type as dimensionless
-    arg_dimension = dimension.subs("angle", S.One)
-    # angle is dimensionless but equivalent_dims() fails to compare it
-    if dimsys_SI.is_dimensionless(expected_dimension) and dimsys_SI.is_dimensionless(arg_dimension):
-        return
-    if not dimsys_SI.equivalent_dims(arg_dimension, expected_dimension):
+            f" is Number but '{expected_unit}' is not dimensionless")
+
+    if not dimsys_SI.equivalent_dims(arg, expected_unit):
         raise UnitsError(f"Argument '{param_name}' to function '{func_name}' must "
-            f"be in units equivalent to '{expected_dimension.name}', got {arg_dimension.name}")
-    if scale_factor.free_symbols:
-        raise UnitsError(f"Argument '{param_name}' to function '{func_name}' should "
-            f"not contain free symbols")
+            f"be in units equivalent to '{expected_unit.name}', got {arg.name}")
 
 
 dimensionless = Dimension(S.One)
