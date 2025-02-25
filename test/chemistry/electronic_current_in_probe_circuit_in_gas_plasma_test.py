@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (errors, units, Quantity, assert_equal, prefixes)
+from symplyphysics import (errors, units, Quantity, assert_equal)
 
 from symplyphysics.laws.chemistry import electronic_current_in_probe_circuit_in_gas_plasma as current_law
 
@@ -37,7 +37,7 @@ def test_basic_current(test_args: Args) -> None:
         test_args.floating_plasma_potential,
         test_args.probe_potential,
     )
-    assert_equal(result, 425.84 * prefixes.milli * units.ampere)
+    assert_equal(result, 425.84 * units.milli * units.ampere)
 
 
 def test_bad_area_probe_surface(test_args: Args) -> None:

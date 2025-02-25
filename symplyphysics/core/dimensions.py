@@ -4,6 +4,7 @@ from typing import Any, Callable, TypeAlias, Iterable
 from sympy import Abs, Expr, S, Derivative, Function as SymFunction, Min, Max, sympify, Add, Mul, Pow
 from sympy.functions.elementary.miscellaneous import MinMaxBase
 from sympy.physics.units import Dimension, Quantity as SymQuantity
+from sympy.physics.units.prefixes import Prefix
 from sympy.physics.units.systems.si import dimsys_SI
 
 from .errors import UnitsError
@@ -49,6 +50,9 @@ def collect_quantity_factor_and_dimension(expr: Expr) -> tuple[Expr, Dimension]:
 
     def _collect_quantity(expr: SymQuantity) -> tuple[Expr, Dimension]:
         return (expr.scale_factor, expr.dimension)
+
+    def _collect_prefix(expr: Prefix) -> tuple[Expr, Dimension]:
+        return (expr.scale_factor, dimensionless)
 
     def _elementwise_wrapper(
         inner: Callable[[Expr, Dimension, Expr], tuple[Expr, Dimension]]
@@ -103,7 +107,6 @@ def collect_quantity_factor_and_dimension(expr: Expr) -> tuple[Expr, Dimension]:
     def _collect_min_max(expr: MinMaxBase) -> tuple[Expr, Dimension]:
         cls = type(expr)
 
-        @_elementwise_wrapper
         def collect(factor: Expr, dim: Dimension, arg: Expr) -> tuple[Expr, Dimension]:
             arg_factor, arg_dim = collect_quantity_factor_and_dimension(arg)
 
@@ -117,7 +120,7 @@ def collect_quantity_factor_and_dimension(expr: Expr) -> tuple[Expr, Dimension]:
 
             return (cls(factor, arg_factor), dim)
 
-        return collect(expr)
+        return _elementwise_wrapper(collect)(expr)
 
     def _collect_function(expr: SymFunction) -> tuple[Expr, Dimension]:
         factors: list[Expr] = []
@@ -148,6 +151,7 @@ def collect_quantity_factor_and_dimension(expr: Expr) -> tuple[Expr, Dimension]:
 
     cases: dict[type, Callable[[Expr], tuple[Expr, Dimension]]] = {
         SymQuantity: _collect_quantity,
+        Prefix: _collect_prefix,
         Mul: _collect_mul,
         Pow: _collect_pow,
         Add: _collect_add,
@@ -164,6 +168,7 @@ def collect_quantity_factor_and_dimension(expr: Expr) -> tuple[Expr, Dimension]:
     return _collect_default(expr)
 
 
+# pylint: disable-next=too-many-statements
 def collect_expression_and_dimension(expr: Expr) -> tuple[Expr, Dimension]:
     """
     Returns the simplified representation and the dimension of the given expression. Unlike
@@ -175,7 +180,7 @@ def collect_expression_and_dimension(expr: Expr) -> tuple[Expr, Dimension]:
         UnitsError: if the dimensions of sub-expressions don't match.
     """
 
-    from .symbols.quantities import Quantity
+    from .symbols.quantities import Quantity  # pylint: disable=import-outside-toplevel
 
     def _split_numeric_and_symbolic(
         expr: Expr,) -> tuple[list[Expr], list[SymQuantity], list[tuple[Expr, Dimension]]]:
@@ -256,7 +261,7 @@ def collect_expression_and_dimension(expr: Expr) -> tuple[Expr, Dimension]:
             if _is_any_dimension(qty.scale_factor):
                 continue
 
-            elif not dimsys_SI.equivalent_dims(dim, qty.dimension):
+            if not dimsys_SI.equivalent_dims(dim, qty.dimension):
                 raise UnitsError(f"The dimension of {qty} is {qty.dimension}, expected {dim}")
 
         for sym_expr, sym_dim in syms:
@@ -267,7 +272,7 @@ def collect_expression_and_dimension(expr: Expr) -> tuple[Expr, Dimension]:
             if _is_any_dimension(sym_expr):
                 continue
 
-            elif not dimsys_SI.equivalent_dims(dim, sym_dim):
+            if not dimsys_SI.equivalent_dims(dim, sym_dim):
                 raise UnitsError(f"The dimension of '{sym_expr}' is {sym_dim}, expected {dim}")
 
         # edge case when both `qtys` and `syms` are empty and all `nums` are of any dimension
