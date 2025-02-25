@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import Any
 from sympy import Expr, Symbol as SymSymbol
-from ..dimensions import Dimension, collect_dimension
+from ..dimensions import Dimension, collect_expression_and_dimension
 
 
 class Symbolic(SymSymbol):  # type: ignore[misc]  # pylint: disable=too-many-ancestors
@@ -52,7 +52,7 @@ class Symbolic(SymSymbol):  # type: ignore[misc]  # pylint: disable=too-many-anc
         wrap_latex: bool = False,
     ) -> None:
         self.factor = expr
-        self.dimension = collect_dimension(expr)
+        self.dimension = collect_expression_and_dimension(expr)[1]
         self.wrap_code = wrap_code
         self.wrap_latex = wrap_latex
 

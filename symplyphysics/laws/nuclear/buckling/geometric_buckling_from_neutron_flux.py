@@ -15,7 +15,7 @@ from sympy import (Eq, solve, Expr, simplify, Equality)
 from sympy.vector import Laplacian
 from symplyphysics import (SI, units, Quantity, validate_output, symbols, clone_as_function,
     Function)
-from symplyphysics.core.dimensions import collect_quantity_factor_and_dimension
+from symplyphysics.core.dimensions import collect_expression_and_dimension
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.nuclear import diffusion_equation_from_neutron_flux as diffusion_equation
 
@@ -83,8 +83,8 @@ def apply_neutron_flux_function(neutron_flux_function_: Expr) -> Equality:
 # neutron_flux_function_ should be a function on CoordSys3D
 # neutron_flux_function_ geometry should be defined with Quantity, eg width.dimension == units.length
 @validate_output(geometric_buckling)
-def calculate_geometric_buckling_squared(neutron_flux_function_: Expr, radius: Expr) -> Quantity:
-    (_, dimension) = collect_quantity_factor_and_dimension(neutron_flux_function_.subs(radius, 1))
+def calculate_geometric_buckling_squared(neutron_flux_function_: Expr) -> Quantity:
+    (_, dimension) = collect_expression_and_dimension(neutron_flux_function_)
     assert SI.get_dimension_system().equivalent_dims(dimension, neutron_flux.dimension)
 
     result_expr = apply_neutron_flux_function(neutron_flux_function_)

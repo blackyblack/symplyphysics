@@ -24,7 +24,7 @@ from symplyphysics import (
     clone_as_function,
     clone_as_symbol,
 )
-from symplyphysics.core.dimensions import collect_quantity_factor_and_dimension
+from symplyphysics.core.dimensions import collect_expression_and_dimension
 
 diffusion_coefficient = symbols.neutron_diffusion_coefficient
 """
@@ -114,10 +114,9 @@ def apply_neutron_flux_function(neutron_flux_function_: Expr) -> Expr:
 @validate_output(effective_multiplication_factor)
 def calculate_multiplication_factor(neutron_flux_function_: Expr, neutrons_per_fission_: float,
     macroscopic_fission_cross_section_: Quantity, macroscopic_absorption_cross_section_: Quantity,
-    diffusion_coefficient_: Quantity, x: Expr, y: Expr, z: Expr) -> float:
+    diffusion_coefficient_: Quantity) -> float:
 
-    subs = {x: 1, y: 1, z: 1}
-    (_, dimension) = collect_quantity_factor_and_dimension(neutron_flux_function_.subs(subs))
+    (_, dimension) = collect_expression_and_dimension(neutron_flux_function_)
     assert SI.get_dimension_system().equivalent_dims(dimension, neutron_flux.dimension)
 
     applied_law = apply_neutron_flux_function(neutron_flux_function_)

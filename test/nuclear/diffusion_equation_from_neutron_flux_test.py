@@ -10,7 +10,7 @@ from symplyphysics import (
 )
 from symplyphysics.laws.nuclear import diffusion_equation_from_neutron_flux as diffusion_equation
 
-Args = namedtuple("Args", ["f", "v", "Sf", "Sa", "D", "x", "y", "z"])
+Args = namedtuple("Args", ["f", "v", "Sf", "Sa", "D"])
 
 
 @fixture(name="test_args")
@@ -34,15 +34,12 @@ def test_args_fixture() -> Args:
         v=neutrons_per_fission,
         Sf=macro_fission_cross_section,
         Sa=macro_abs_cross_section,
-        D=diffusion_coefficient,
-        x=x,
-        y=y,
-        z=z)
+        D=diffusion_coefficient)
 
 
 def test_basic_multiplication_factor(test_args: Args) -> None:
     result = diffusion_equation.calculate_multiplication_factor(test_args.f, test_args.v,
-        test_args.Sf, test_args.Sa, test_args.D, test_args.x, test_args.y, test_args.z)
+        test_args.Sf, test_args.Sa, test_args.D)
     assert_equal(result, 0.712)
 
 
@@ -50,23 +47,23 @@ def test_bad_diffusion_coefficient(test_args: Args) -> None:
     Db = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         diffusion_equation.calculate_multiplication_factor(test_args.f, test_args.v, test_args.Sf,
-            test_args.Sa, Db, test_args.x, test_args.y, test_args.z)
+            test_args.Sa, Db)
     with raises(TypeError):
         diffusion_equation.calculate_multiplication_factor(test_args.f, test_args.v, test_args.Sf,
-            test_args.Sa, 100, test_args.x, test_args.y, test_args.z)
+            test_args.Sa, 100)
 
 
 def test_bad_macroscopic_cross_section(test_args: Args) -> None:
     Sb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         diffusion_equation.calculate_multiplication_factor(test_args.f, test_args.v, Sb,
-            test_args.Sa, test_args.D, test_args.x, test_args.y, test_args.z)
+            test_args.Sa, test_args.D)
     with raises(TypeError):
         diffusion_equation.calculate_multiplication_factor(test_args.f, test_args.v, 100,
-            test_args.Sa, test_args.D, test_args.x, test_args.y, test_args.z)
+            test_args.Sa, test_args.D)
     with raises(errors.UnitsError):
         diffusion_equation.calculate_multiplication_factor(test_args.f, test_args.v, test_args.Sf,
-            Sb, test_args.D, test_args.x, test_args.y, test_args.z)
+            Sb, test_args.D)
     with raises(TypeError):
         diffusion_equation.calculate_multiplication_factor(test_args.f, test_args.v, test_args.Sf,
-            100, test_args.D, test_args.x, test_args.y, test_args.z)
+            100, test_args.D)
