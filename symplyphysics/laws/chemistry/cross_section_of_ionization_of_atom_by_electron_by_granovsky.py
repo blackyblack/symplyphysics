@@ -23,12 +23,12 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-effective_cross_section = clone_as_symbol(symbols.cross_section, subscript="\\text{eff}")
+effective_cross_section = clone_as_symbol(symbols.cross_section, display_symbol="sigma_eff", display_latex="\\sigma_\\text{eff}")
 """
 Effective :symbols:`cross_section` of ionization of particles.
 """
 
-ionization_energy = clone_as_symbol(symbols.energy, subscript="\\text{i}")
+ionization_energy = clone_as_symbol(symbols.energy, display_symbol="sigma_i", display_latex="\\sigma_\\text{i}")
 """
 Ionization :symbols:`energy`.
 """
@@ -38,12 +38,12 @@ electron_energy = symbols.energy
 :symbols:`energy` of ionizing electrons.
 """
 
-maximum_cross_section = clone_as_symbol(symbols.cross_section, subscript="\\text{max}")
+maximum_cross_section = clone_as_symbol(symbols.cross_section, display_symbol="sigma_max", display_latex="\\sigma_\\text{max}")
 """
 Maximum :symbols:`cross_section` of ionization.
 """
 
-maximum_electron_energy = clone_as_symbol(symbols.energy, subscript="\\text{max}")
+maximum_electron_energy = clone_as_symbol(symbols.energy, display_symbol="E_max", display_latex="E_\\text{max}")
 """
 Maximum :symbols:`energy` of ionizing electrons.
 """

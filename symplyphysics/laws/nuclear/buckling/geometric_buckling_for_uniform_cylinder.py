@@ -46,7 +46,7 @@ law = Eq(geometric_buckling, (2.405 / radius)**2 + (pi / height)**2)
 # Unfortunately sympy does not support solving with complex boundary conditions so we simply check with known
 # solution for the neutron flux:
 # See [neutron flux for uniform cylinder](./neutron_flux_for_uniform_cylinder.py)
-_geometric_buckling_cylinder_squared = cylinder_flux._radial_constant**2 + cylinder_flux._axial_constant**2
+_geometric_buckling_cylinder_squared = cylinder_flux.radial_constant**2 + cylinder_flux.axial_constant**2
 _geometric_buckling_cylinder_solved = _geometric_buckling_cylinder_squared.subs({
     cylinder_flux.radius: radius,
     cylinder_flux.height: height

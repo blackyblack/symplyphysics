@@ -1,4 +1,4 @@
-r"""
+"""
 Average speed in Maxwell—Boltzmann statistics
 =============================================
 

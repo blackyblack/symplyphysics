@@ -8,7 +8,7 @@ parameters :math:`A, B, C, D` of the transmission matrix of a lossless line.
 
 **Notes:**
 
-#. See :ref:`Transmission matrix`.
+#. See :ref:`Transmission Matrix <transmission_matrix_def>`.
 
 **Conditions:**
 

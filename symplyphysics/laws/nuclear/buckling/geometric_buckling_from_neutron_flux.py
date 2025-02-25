@@ -40,9 +40,10 @@ Laplacian of the :attr:`~neutron_flux` as a function of :attr:`~position`.
 
 # As Laplacian is a second derivative over space coordinates (x, y, z), resulting dimension should be
 # original dimension / units.length**2
+# pylint: disable-next=comparison-with-callable
 assert neutron_flux_laplacian.dimension == diffusion_equation.neutron_flux_laplacian.dimension
 
-_neutron_flux_laplacian_definition = Eq(neutron_flux_laplacian(position),
+neutron_flux_laplacian_definition = Eq(neutron_flux_laplacian(position),
     Laplacian(neutron_flux(position)),
     evaluate=False)
 
@@ -58,10 +59,9 @@ law = Eq(geometric_buckling, -1 * neutron_flux_laplacian(position) / neutron_flu
 
 # Check laplacian definition is the same as in diffusion equation
 
-# pylint: disable-next=protected-access
-_diffusion_equation_laplacian = diffusion_equation._neutron_flux_laplacian_definition.rhs.subs(
+_diffusion_equation_laplacian = diffusion_equation.neutron_flux_laplacian_definition.rhs.subs(
     diffusion_equation.neutron_flux(diffusion_equation.position), neutron_flux(position))
-assert expr_equals(_diffusion_equation_laplacian, _neutron_flux_laplacian_definition.rhs)
+assert expr_equals(_diffusion_equation_laplacian, neutron_flux_laplacian_definition.rhs)
 
 
 # neutron_flux_function_ should be a function on CoordSys3D
@@ -70,7 +70,7 @@ def apply_neutron_flux_function(neutron_flux_function_: Expr) -> Equality:
     # Manually divide to unit_length to get Laplacian dimension. CoordSys3D coordinates are dimensionless, hence
     # Laplacian cannot properly calculate resulting dimension.
     unit_length = Quantity(1, dimension=units.length)
-    neutron_flux_laplacian_eval = _neutron_flux_laplacian_definition.rhs.subs(
+    neutron_flux_laplacian_eval = neutron_flux_laplacian_definition.rhs.subs(
         neutron_flux(position), neutron_flux_function_).doit() / unit_length**2
     applied_law = law.subs(neutron_flux_laplacian(position), neutron_flux_laplacian_eval)
     applied_law = applied_law.subs(neutron_flux(position), neutron_flux_function_)

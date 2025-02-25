@@ -32,22 +32,22 @@ current_density = symbols.current_density
 :symbols:`current_density` of charge carriers.
 """
 
-electrons_concentration = clone_as_symbol(symbols.number_density, subscript="\\text{e}")
+electrons_concentration = clone_as_symbol(symbols.number_density, display_symbol="n_e", display_latex="n_\\text{e}")
 """
 Concentration (:symbols:`number_density`) of electrons.
 """
 
-holes_concentration = clone_as_symbol(symbols.number_density, subscript="\\text{h}")
+holes_concentration = clone_as_symbol(symbols.number_density, display_symbol="n_h", display_latex="n_\\text{h}")
 """
 Concentration (:symbols:`number_density`) of holes.
 """
 
-electrons_mobility = clone_as_symbol(symbols.mobility, subscript="\\text{e}")
+electrons_mobility = clone_as_symbol(symbols.mobility, display_symbol="mu_e", display_latex="\\mu_\\text{e}")
 """
 :symbols:`mobility` of electrons.
 """
 
-holes_mobility = clone_as_symbol(symbols.mobility, subscript="\\text{h}")
+holes_mobility = clone_as_symbol(symbols.mobility, display_symbol="mu_h", display_latex="\\mu_\\text{h}")
 """
 :symbols:`mobility` of holes.
 """

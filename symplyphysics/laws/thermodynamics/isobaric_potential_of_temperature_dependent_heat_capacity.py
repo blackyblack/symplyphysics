@@ -90,14 +90,13 @@ law = Eq(
     thermal_effect_=molar_enthalpy_change,
     entropy_=molar_entropy,
     temperature_=temperature,
-    heat_capacity_=symbols.molar_heat_capacity,  # FIXME: remove this quantity from test since it's unused
     coefficient_capacity_1_=first_capacity_coefficient,
     coefficient_capacity_2_=second_capacity_coefficient,
     coefficient_capacity_3_=third_capacity_coefficient,
 )
 @validate_output(molar_gibbs_energy_change)
 def calculate_isobaric_potential(thermal_effect_: Quantity, entropy_: Quantity,
-    temperature_: Quantity, heat_capacity_: Quantity, coefficient_capacity_1_: Quantity,
+    temperature_: Quantity, coefficient_capacity_1_: Quantity,
     coefficient_capacity_2_: Quantity, coefficient_capacity_3_: Quantity) -> Quantity:
     # pylint: disable=too-many-arguments, too-many-positional-arguments
     result_expr = solve(law, molar_gibbs_energy_change, dict=True)[0][molar_gibbs_energy_change]
