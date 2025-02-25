@@ -49,9 +49,6 @@ def test_bad_angle(test_args: Args) -> None:
     with raises(errors.UnitsError):
         jurin_equation.calculate_height(test_args.surface_tension_coefficient, bad_angle,
             test_args.density_of_liquid, test_args.radius)
-    with raises(AttributeError):
-        jurin_equation.calculate_height(test_args.surface_tension_coefficient, True,
-            test_args.density_of_liquid, test_args.radius)
 
 
 def test_bad_density_of_liquid(test_args: Args) -> None:

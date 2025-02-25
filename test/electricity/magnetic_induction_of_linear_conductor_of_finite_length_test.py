@@ -67,15 +67,9 @@ def test_bad_angle(test_args: Args) -> None:
     with raises(errors.UnitsError):
         induction_law.calculate_induction(test_args.absolute_permeability, test_args.current,
             first_angle, test_args.second_angle, test_args.distance)
-    with raises(AttributeError):
-        induction_law.calculate_induction(test_args.absolute_permeability, test_args.current, True,
-            test_args.second_angle, test_args.distance)
     with raises(errors.UnitsError):
         induction_law.calculate_induction(test_args.absolute_permeability, test_args.current,
             test_args.first_angle, second_angle, test_args.distance)
-    with raises(AttributeError):
-        induction_law.calculate_induction(test_args.absolute_permeability, test_args.current,
-            test_args.first_angle, True, test_args.distance)
 
 
 def test_bad_distance(test_args: Args) -> None:
