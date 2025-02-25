@@ -220,7 +220,7 @@ def assert_equivalent_dimension(
     Asserts if the dimension of the argument matches the provided unit.
 
     Args:
-        arg: Expression or dimension.
+        arg: Number, quantity, expression made of numbers and quantities, or dimension.
         param_name: Name of the parameter of the calling function.
         func_name: Name of the calling function.
         expected_unit: Expression or dimension which `arg` is compared to.
