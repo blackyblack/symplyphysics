@@ -16,7 +16,7 @@ from symplyphysics.core.dimensions import assert_equivalent_dimension, ScalarVal
 from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.core.vectors.vectors import QuantityVector
 
-_APPROX_RELATIVE_TOLERANCE = 0.001
+APPROX_RELATIVE_TOLERANCE = 0.001
 
 
 def approx_equal_numbers(
@@ -34,7 +34,7 @@ def approx_equal_numbers(
     """
 
     if relative_tolerance is None:
-        relative_tolerance = _APPROX_RELATIVE_TOLERANCE
+        relative_tolerance = APPROX_RELATIVE_TOLERANCE
     if absolute_tolerance is None:
         absolute_tolerance = abs(lhs * relative_tolerance)
 
@@ -107,7 +107,7 @@ def assert_equal(
     elif relative_tolerance is not None:
         expected_tolerance = relative_tolerance
     else:
-        expected_tolerance = _APPROX_RELATIVE_TOLERANCE
+        expected_tolerance = APPROX_RELATIVE_TOLERANCE
 
     def error_message() -> str:
         return f"Expected {N(lhs.scale_factor)} to be equal to {N(rhs.scale_factor)} with tolerance {expected_tolerance}"
