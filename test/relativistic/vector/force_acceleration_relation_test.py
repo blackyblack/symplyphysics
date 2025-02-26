@@ -44,7 +44,7 @@ def test_acceleration_law(test_args: Args) -> None:
         result_vector,
         subs={law.rest_mass: test_args.m},
     )
-    assert_equal_vectors(result, test_args.a, tolerance=3e-3)
+    assert_equal_vectors(result, test_args.a, relative_tolerance=3e-3)
 
 
 def test_force_law(test_args: Args) -> None:
@@ -58,7 +58,7 @@ def test_mass_law(test_args: Args) -> None:
         test_args.a.to_base_vector(),
         test_args.v.to_base_vector(),
     )
-    assert_equal(result, test_args.m, tolerance=1e-3)
+    assert_equal(result, test_args.m, relative_tolerance=1e-3)
 
 
 def test_bad_mass(test_args: Args) -> None:

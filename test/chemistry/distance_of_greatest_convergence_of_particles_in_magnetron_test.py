@@ -26,7 +26,7 @@ def test_basic_distance_of_convergence_of_particles(test_args: Args) -> None:
     result = distance_law.calculate_distance_of_convergence_of_particles(
         test_args.discharge_voltage, test_args.atomic_number_of_first_atom,
         test_args.atomic_number_of_second_atom)
-    assert_equal(result, 0.2 * units.nanometer, tolerance=0.01)
+    assert_equal(result, 0.2 * units.nanometer, relative_tolerance=0.01)
 
 
 def test_bad_discharge_voltage(test_args: Args) -> None:

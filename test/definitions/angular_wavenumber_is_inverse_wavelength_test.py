@@ -22,7 +22,7 @@ def test_args_fixture() -> Args:
 
 def test_definition(test_args: Args) -> None:
     result = wavenumber_def.calculate_wavenumber(test_args.lambda_)
-    assert_equal(result, 2.09 * units.radian / units.meter, tolerance=3e-3)
+    assert_equal(result, 2.09 * units.radian / units.meter, relative_tolerance=3e-3)
 
 
 def test_bad_wavelength() -> None:

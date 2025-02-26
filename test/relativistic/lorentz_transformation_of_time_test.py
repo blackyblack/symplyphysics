@@ -21,7 +21,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = time_law.calculate_time_in_proper_frame(test_args.t, test_args.x, test_args.v)
-    assert_equal(result, 1.15 * units.second, tolerance=4e-3)
+    assert_equal(result, 1.15 * units.second, relative_tolerance=4e-3)
 
 
 def test_bad_time(test_args: Args) -> None:

@@ -23,7 +23,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = relation.calculate_relativistic_energy(test_args.p, test_args.m)
-    assert_equal(result, 2.61 * units.electronvolt, tolerance=2e-3)
+    assert_equal(result, 2.61 * units.electronvolt, relative_tolerance=2e-3)
 
 
 def test_bad_momentum(test_args: Args) -> None:

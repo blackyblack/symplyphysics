@@ -25,7 +25,7 @@ def test_args_fixture() -> Args:
 def test_law(test_args: Args) -> None:
     result = boltzmann_factor_via_state_energy_and_temperature.calculate_boltzmann_factor(
         test_args.e, test_args.t)
-    assert_equal(result, 0.0267, tolerance=2e-3)
+    assert_equal(result, 0.0267, relative_tolerance=2e-3)
 
 
 def test_bad_energy(test_args: Args) -> None:

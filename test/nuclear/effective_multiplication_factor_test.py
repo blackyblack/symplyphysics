@@ -21,7 +21,7 @@ def test_args_fixture() -> Args:
 def test_basic_multiplication_factor(test_args: Args) -> None:
     result = effective_multiplication_factor.calculate_multiplication_factor(
         test_args.kinf, test_args.Pf, test_args.Pt)
-    assert_equal(result, 1, tolerance=0.01)
+    assert_equal(result, 1, relative_tolerance=0.01)
 
 
 def test_bad_fast_non_leakage(test_args: Args) -> None:

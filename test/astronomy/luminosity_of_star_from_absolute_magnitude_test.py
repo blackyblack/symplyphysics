@@ -19,7 +19,7 @@ def test_args_fixture() -> Args:
 
 def test_basic_luminosity(test_args: Args) -> None:
     result = luminosity_law.calculate_luminosity(test_args.absolute_magnitude)
-    assert_equal(result, 4.78e21 * units.joule / units.second, tolerance=2e-3)
+    assert_equal(result, 4.78e21 * units.joule / units.second, relative_tolerance=2e-3)
 
 
 def test_bad_absolute_magnitude() -> None:

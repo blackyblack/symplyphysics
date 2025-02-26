@@ -27,7 +27,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = state_distribution.calculate_occupancy_of_state(test_args.e, test_args.mu, test_args.t)
-    assert_equal(result, 0.24, tolerance=6e-3)
+    assert_equal(result, 0.24, relative_tolerance=6e-3)
 
 
 def test_bad_energy(test_args: Args) -> None:

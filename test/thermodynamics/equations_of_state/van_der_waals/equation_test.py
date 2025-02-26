@@ -37,7 +37,7 @@ def test_args_fixture() -> Args:
 
 def test_basic_pressure(test_args: Args) -> None:
     result = waals_law.calculate_pressure(test_args.v, test_args.t, test_args.a, test_args.b)
-    assert_equal(result, 90 * units.atm, tolerance=0.01)
+    assert_equal(result, 90 * units.atm, relative_tolerance=0.01)
 
 
 def test_bad_temperature(test_args: Args) -> None:

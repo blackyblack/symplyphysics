@@ -31,7 +31,7 @@ def test_args_fixture() -> Args:
 
 def test_momentum_law(test_args: Args) -> None:
     result = law.calculate_momentum(test_args.m, test_args.v)
-    assert_equal_vectors(result, test_args.p, tolerance=4e-3)
+    assert_equal_vectors(result, test_args.p, relative_tolerance=4e-3)
 
 
 def test_velocity_law(test_args: Args) -> None:
@@ -40,7 +40,7 @@ def test_velocity_law(test_args: Args) -> None:
         result_vector,
         subs={law.rest_mass: test_args.m},
     )
-    assert_equal_vectors(test_args.v, result, tolerance=4e-3)
+    assert_equal_vectors(test_args.v, result, relative_tolerance=4e-3)
 
 
 def test_bad_mass(test_args: Args) -> None:

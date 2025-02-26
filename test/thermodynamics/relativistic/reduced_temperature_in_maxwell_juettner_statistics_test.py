@@ -21,7 +21,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = law.calculate_reduced_temperature(test_args.t, test_args.m)
-    assert_equal(result, 0.17, tolerance=9e-3)
+    assert_equal(result, 0.17, relative_tolerance=9e-3)
 
 
 def test_bad_temperature(test_args: Args) -> None:

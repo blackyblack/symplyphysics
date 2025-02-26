@@ -20,7 +20,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = law.calculate_semimajor_axis(test_args.k, test_args.e)
-    assert_equal(result, 1.0 * units.astronomical_unit, tolerance=9e-3)
+    assert_equal(result, 1.0 * units.astronomical_unit, relative_tolerance=9e-3)
 
 
 def test_bad_kepler_constant(test_args: Args) -> None:

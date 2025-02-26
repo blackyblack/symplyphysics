@@ -25,7 +25,7 @@ def test_args_fixture() -> Args:
 def test_law(test_args: Args) -> None:
     result = mayers_relation.calculate_isochoric_heat_capacity(test_args.cp, test_args.v,
         test_args.t, test_args.a, test_args.b)
-    assert_equal(result, 2.33 * units.joule / units.kelvin, tolerance=2e-3)
+    assert_equal(result, 2.33 * units.joule / units.kelvin, relative_tolerance=2e-3)
 
 
 def test_bad_heat_capacity(test_args: Args) -> None:

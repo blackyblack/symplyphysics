@@ -24,7 +24,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = gibbs_energy_formula.calculate_gibbs_energy(test_args.mu, test_args.n)
-    assert_equal(result, -32 * units.joule, tolerance=2e-3)
+    assert_equal(result, -32 * units.joule, relative_tolerance=2e-3)
 
 
 def test_bad_chemical_potential(test_args: Args) -> None:

@@ -42,7 +42,7 @@ def test_basic_height_barrier(test_args: Args) -> None:
         test_args.temperature, test_args.charge_electron)
     # NOTE: onsite intrinsic charge carriers are caclulated instead of hardcoded 1e10 value,
     #       therefore result in our test is not very accurate
-    assert_equal(result, 0.529 * units.volt, tolerance=0.1)
+    assert_equal(result, 0.529 * units.volt, relative_tolerance=0.1)
 
 
 def test_bad_donors_concentration(test_args: Args) -> None:

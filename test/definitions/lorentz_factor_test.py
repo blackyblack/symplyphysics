@@ -22,7 +22,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = lorentz_factor.calculate_lorentz_factor(test_args.v)
-    assert_equal(result, 1.34, tolerance=2e-3)
+    assert_equal(result, 1.34, relative_tolerance=2e-3)
 
 
 def test_bad_velocity() -> None:

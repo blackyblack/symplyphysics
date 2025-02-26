@@ -8,4 +8,4 @@ from symplyphysics.laws.thermodynamics import (
 
 def test_law() -> None:
     result = dulong_petit_law.calculate_isochoric_molar_heat_capacity()
-    assert_equal(result, 24.9 * units.joule / (units.kelvin * units.mole), tolerance=2e-3)
+    assert_equal(result, 24.9 * units.joule / (units.kelvin * units.mole), relative_tolerance=2e-3)

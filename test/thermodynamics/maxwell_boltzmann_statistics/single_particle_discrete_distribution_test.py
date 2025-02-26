@@ -28,7 +28,7 @@ def test_args_fixture() -> Args:
 def test_law(test_args: Args) -> None:
     result = law.calculate_particle_count_in_microstate(test_args.n, test_args.e, test_args.t,
         test_args.z)
-    assert_equal(result, 188, tolerance=2e-3)
+    assert_equal(result, 188, relative_tolerance=2e-3)
 
 
 def test_bad_particle_count(test_args: Args) -> None:

@@ -22,7 +22,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = law.calculate_elastic_energy_density(test_args.p, test_args.k)
-    assert_equal(result, 6.2 * prefixes.kilo * units.joule / units.meter**3, tolerance=8e-3)
+    assert_equal(result, 6.2 * prefixes.kilo * units.joule / units.meter**3, relative_tolerance=8e-3)
 
 
 def test_bad_pressure(test_args: Args) -> None:

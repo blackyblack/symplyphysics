@@ -22,7 +22,7 @@ def test_args_fixture() -> Args:
 def test_basic_induction(test_args: Args) -> None:
     result = induction_law.calculate_induction(test_args.current, test_args.length,
         test_args.number_turns)
-    assert_equal(result, 2.76e-5 * units.tesla, tolerance=2e-3)
+    assert_equal(result, 2.76e-5 * units.tesla, relative_tolerance=2e-3)
 
 
 def test_bad_current(test_args: Args) -> None:

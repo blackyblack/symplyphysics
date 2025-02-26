@@ -21,7 +21,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = law.calculate_semiminor_axis(test_args.s, test_args.a, test_args.m)
-    assert_equal(result, 0.9999 * units.astronomical_unit, tolerance=2e-3)
+    assert_equal(result, 0.9999 * units.astronomical_unit, relative_tolerance=2e-3)
 
 
 def test_bad_sector_speed(test_args: Args) -> None:

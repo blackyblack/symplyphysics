@@ -28,7 +28,7 @@ def test_args_fixture() -> Args:
 def test_law(test_args: Args) -> None:
     result = enthalpy_law.calculate_enthalpy_derivative(test_args.v0, test_args.v1, test_args.t0,
         test_args.t1)
-    assert_equal(result, 92 * units.joule / units.atmosphere, tolerance=1e-2)
+    assert_equal(result, 92 * units.joule / units.atmosphere, relative_tolerance=1e-2)
 
 
 def test_bad_volume(test_args: Args) -> None:

@@ -31,7 +31,7 @@ def test_args_fixture() -> Args:
 
 def test_lab_law(test_args: Args) -> None:
     result = law.calculate_parallel_velocity_component_in_lab_frame(test_args.up, test_args.v)
-    assert_equal_vectors(result, test_args.ul, tolerance=2e-3)
+    assert_equal_vectors(result, test_args.ul, relative_tolerance=2e-3)
 
 
 def test_proper_law(test_args: Args) -> None:
@@ -40,7 +40,7 @@ def test_proper_law(test_args: Args) -> None:
         test_args.v.to_base_vector(),
     )
     result = QuantityVector.from_base_vector(result_vector)
-    assert_equal_vectors(result, test_args.up, tolerance=2e-3)
+    assert_equal_vectors(result, test_args.up, relative_tolerance=2e-3)
 
 
 def test_relative_law(test_args: Args) -> None:
@@ -49,7 +49,7 @@ def test_relative_law(test_args: Args) -> None:
         test_args.ul.to_base_vector(),
     )
     result = QuantityVector.from_base_vector(result_vector)
-    assert_equal_vectors(result, test_args.v, tolerance=2e-3)
+    assert_equal_vectors(result, test_args.v, relative_tolerance=2e-3)
 
 
 def test_non_collinear_velocities() -> None:
