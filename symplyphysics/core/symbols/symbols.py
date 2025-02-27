@@ -37,7 +37,7 @@ class DimensionSymbol:
         return self._display_latex
 
     def _sympystr(self, p: Printer) -> str:
-        return p.doprint(self.display_name)  # type: ignore[no-any-return]
+        return str(p.doprint(self.display_name))
 
 
 class Symbol(DimensionSymbol, SymSymbol):  # type: ignore[misc]  # pylint: disable=too-many-ancestors

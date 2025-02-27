@@ -60,7 +60,7 @@ class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: d
     def _eval_is_positive(self) -> bool:
         # NOTE: returns False for complex values, see https://github.com/blackyblack/symplyphysics/blob/3e7e05b9837c70bb23d36202b9e958b739cd36bc/test/electricity/circuits/transmission_lines/transmission_matrix_lossy_transmission_line_test.py#L23
         try:
-            return bool(self.scale_factor >= 0)
+            return scale_factor(self) >= 0
         except TypeError:
             return False
 
@@ -71,7 +71,7 @@ class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: d
 # Allows for some SymPy comparisons, eg Piecewise function
 @dispatch(Quantity, Quantity)  # type: ignore[misc]
 def _eval_is_ge(lhs: Quantity, rhs: Quantity) -> bool:
-    return lhs.scale_factor >= rhs.scale_factor  # type: ignore[no-any-return]
+    return scale_factor(lhs) >= scale_factor(rhs)
 
 
 def subs_list(input_: Sequence[Expr | float], subs_: dict[Expr, Quantity]) -> Sequence[Quantity]:

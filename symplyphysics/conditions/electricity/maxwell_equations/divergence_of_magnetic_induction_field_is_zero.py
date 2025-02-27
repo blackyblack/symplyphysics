@@ -1,6 +1,7 @@
 from symplyphysics import Quantity
 from symplyphysics.core.fields.operators import divergence_operator
 from symplyphysics.core.fields.vector_field import VectorField
+from symplyphysics.core.symbols.quantities import scale_factor
 
 ## Description
 ## The divergence of magnetic induction is equal to zero. A simpler formulation of the law
@@ -17,4 +18,4 @@ from symplyphysics.core.fields.vector_field import VectorField
 def magnetic_field_divergence_condition(magnetic_induction_: VectorField) -> bool:
     divergence_magnetic_induction = divergence_operator(magnetic_induction_)
     divergence_magnetic_induction_quantity = Quantity(divergence_magnetic_induction)
-    return divergence_magnetic_induction_quantity.scale_factor == 0  # type: ignore[no-any-return]
+    return scale_factor(divergence_magnetic_induction_quantity) == 0
