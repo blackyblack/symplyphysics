@@ -295,4 +295,4 @@ def code_str(expr: Any, **settings: Any) -> str:
     if isinstance(expr, IndexedSymbol):
         expr = expr[expr.index]
 
-    return str(printer.doprint(expr))
+    return printer.doprint(expr)  # type: ignore[no-any-return]

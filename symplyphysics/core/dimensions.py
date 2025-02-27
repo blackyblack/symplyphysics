@@ -9,7 +9,7 @@ from sympy.physics.units.systems.si import dimsys_SI
 
 from .errors import UnitsError
 
-ScalarValue: TypeAlias = Expr | float | int
+ScalarValue: TypeAlias = Expr | float
 
 
 class AnyDimension(Dimension):  # type: ignore[misc]

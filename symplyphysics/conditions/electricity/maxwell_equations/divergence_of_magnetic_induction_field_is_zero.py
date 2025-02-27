@@ -17,4 +17,4 @@ from symplyphysics.core.fields.vector_field import VectorField
 def magnetic_field_divergence_condition(magnetic_induction_: VectorField) -> bool:
     divergence_magnetic_induction = divergence_operator(magnetic_induction_)
     divergence_magnetic_induction_quantity = Quantity(divergence_magnetic_induction)
-    return bool(divergence_magnetic_induction_quantity.scale_factor == 0)
+    return divergence_magnetic_induction_quantity.scale_factor == 0  # type: ignore[no-any-return]

@@ -108,7 +108,7 @@ class ExactDifferential(Symbolic):  # pylint: disable=too-many-ancestors
     #. `Wikipedia <https://en.wikipedia.org/wiki/Exact_differential#>`__.
     """
 
-
+    
 class InexactDifferential(Symbolic):  # pylint: disable=too-many-ancestors
     """
     A differential is said to be **inexact** (or **imperfect**) when its integral is

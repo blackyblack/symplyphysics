@@ -71,7 +71,7 @@ class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: d
 # Allows for some SymPy comparisons, eg Piecewise function
 @dispatch(Quantity, Quantity)  # type: ignore[misc]
 def _eval_is_ge(lhs: Quantity, rhs: Quantity) -> bool:
-    return bool(lhs.scale_factor >= rhs.scale_factor)
+    return lhs.scale_factor >= rhs.scale_factor  # type: ignore[no-any-return]
 
 
 def subs_list(input_: Sequence[Expr | float], subs_: dict[Expr, Quantity]) -> Sequence[Quantity]:

@@ -37,7 +37,7 @@ class DimensionSymbol:
         return self._display_latex
 
     def _sympystr(self, p: Printer) -> str:
-        return str(p.doprint(self.display_name))
+        return p.doprint(self.display_name)  # type: ignore[no-any-return]
 
 
 class Symbol(DimensionSymbol, SymSymbol):  # type: ignore[misc]  # pylint: disable=too-many-ancestors
@@ -126,7 +126,7 @@ class Function(DimensionSymbol, UndefinedFunction):  # type: ignore[misc]
         super().__init__(display_name, dimension, display_latex=display_latex)
 
     def __repr__(cls) -> str:
-        return str(cls.display_name)
+        return cls.display_name
 
 
 class Matrix(SymMatrix):  # type: ignore[misc]  # pylint: disable=too-many-ancestors
@@ -192,7 +192,7 @@ def print_expression(expr: Expr | Equality | Sequence[Expr | Equality]) -> str:
     use_unicode = pprinter.is_unicode()
     uflag = pretty_use_unicode(use_unicode)
     try:
-        return str(pprinter.doprint(expr))
+        return pprinter.doprint(expr)  # type: ignore[no-any-return]
     finally:
         pretty_use_unicode(uflag)
 

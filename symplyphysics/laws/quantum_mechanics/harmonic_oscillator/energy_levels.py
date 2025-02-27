@@ -21,7 +21,7 @@ are equidistant, i.e. the difference between successive energy levels is the sam
 """
 
 from sympy import Eq, Rational, solve, symbols as sym_symbols, sqrt
-from sympy.functions.special.polynomials import hermite as _hermite
+from sympy.functions.special.polynomials import hermite
 from symplyphysics import (
     Quantity,
     validate_input,
@@ -96,9 +96,9 @@ _energy_expr = solve(
 
 # See [this](https://en.wikipedia.org/wiki/Hermite_polynomials#Recurrence_relation)
 _hermite_recurrence_relation = Eq(
-    _hermite(mode_number + 1, _reduced_position),
-    2 * _reduced_position * _hermite(mode_number, _reduced_position) -
-    2 * mode_number * _hermite(mode_number - 1, _reduced_position),
+    hermite(mode_number + 1, _reduced_position),
+    2 * _reduced_position * hermite(mode_number, _reduced_position) -
+    2 * mode_number * hermite(mode_number - 1, _reduced_position),
 )
 
 _energy_expr = solve(
@@ -108,7 +108,7 @@ _energy_expr = solve(
     ),
     (
     energy_level,
-    _hermite(mode_number - 2, _reduced_position),
+    hermite(mode_number - 2, _reduced_position),
     ),
     dict=True,
 )[0][energy_level].simplify()
