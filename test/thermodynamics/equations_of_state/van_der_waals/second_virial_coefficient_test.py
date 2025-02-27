@@ -27,7 +27,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = virial_law.calculate_second_virial_coefficient(test_args.a, test_args.b, test_args.t)
-    assert_equal(result, -22.3 * units.milliliter / units.mole, tolerance=2e-3)
+    assert_equal(result, -22.3 * units.milliliter / units.mole, relative_tolerance=2e-3)
 
 
 def test_bad_first_coefficient(test_args: Args) -> None:

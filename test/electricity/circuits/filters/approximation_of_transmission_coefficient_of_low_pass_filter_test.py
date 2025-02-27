@@ -31,7 +31,7 @@ def test_args_fixture() -> Args:
 def test_basic_coefficient(test_args: Args) -> None:
     result = coefficient_law.calculate_coefficient(test_args.filter_function_at_frequency,
         test_args.bandwidth_distortion)
-    assert_equal(result, 0.94, tolerance=0.01)
+    assert_equal(result, 0.94, relative_tolerance=0.01)
 
 
 def test_bad_bandwidth_distortion(test_args: Args) -> None:

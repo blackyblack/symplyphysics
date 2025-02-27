@@ -19,7 +19,7 @@ def test_args_fixture() -> Args:
 
 def test_basic_speed(test_args: Args) -> None:
     result = speed_law.calculate_speed(test_args.distance_to_galaxy)
-    assert_equal(result, 101827 * units.kilometer / units.second, tolerance=9e-3)
+    assert_equal(result, 101827 * units.kilometer / units.second, relative_tolerance=9e-3)
 
 
 def test_bad_distance_to_galaxy() -> None:

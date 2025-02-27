@@ -23,7 +23,7 @@ def test_args_fixture() -> Args:
 def test_basic_migration_area(test_args: Args) -> None:
     result = migration_area.calculate_migration_area(test_args.Ld, test_args.th)
     # water migration area = 78.8 cm^2
-    assert_equal(result, 78.8 * units.centimeter**2, tolerance=0.01)
+    assert_equal(result, 78.8 * units.centimeter**2, relative_tolerance=0.01)
 
 
 def test_bad_diffusion_area(test_args: Args) -> None:

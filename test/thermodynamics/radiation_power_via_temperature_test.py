@@ -25,7 +25,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = radiation_law.calculate_energy_radiation_rate(test_args.e, test_args.a, test_args.t)
-    assert_equal(result, 229 * units.watt, tolerance=3e-3)
+    assert_equal(result, 229 * units.watt, relative_tolerance=3e-3)
 
 
 def test_bad_emissivity(test_args: Args) -> None:

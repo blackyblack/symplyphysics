@@ -31,7 +31,7 @@ def test_law(test_args: Args) -> None:
     assert_equal_vectors(
         result,
         QuantityVector([4.97 * units.meter, 5.00 * units.meter, -118.0 * units.meter]),
-        tolerance=4e-3,
+        relative_tolerance=4e-3,
     )
 
 

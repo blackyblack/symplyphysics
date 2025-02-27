@@ -22,7 +22,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = law.calculate_total_energy(test_args.m, test_args.v, test_args.u)
-    assert_equal(result, -2.6e33 * units.joule, tolerance=5e-3)
+    assert_equal(result, -2.6e33 * units.joule, relative_tolerance=5e-3)
 
 
 def test_bad_mass(test_args: Args) -> None:

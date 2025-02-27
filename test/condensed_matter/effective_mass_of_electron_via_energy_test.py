@@ -41,7 +41,7 @@ def test_args_fixture() -> Args:
 
 def test_basic_mass(test_args: Args) -> None:
     result = ef_mass_el.calculate_mass(test_args.energy_function, test_args.wavenumber)
-    assert_equal(result, 0.24 * test_args.mass_electron, tolerance=0.01)
+    assert_equal(result, 0.24 * test_args.mass_electron, relative_tolerance=0.01)
 
 
 def test_mass_increases_with_increasing_wave_number(test_args: Args) -> None:

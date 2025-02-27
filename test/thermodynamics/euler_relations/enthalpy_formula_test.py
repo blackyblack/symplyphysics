@@ -28,7 +28,7 @@ def test_args_fixture() -> Args:
 def test_law(test_args: Args) -> None:
     result = enthalpy_formula.calculate_enthalpy(test_args.t, test_args.s, test_args.mu,
         test_args.n)
-    assert_equal(result, 98 * prefixes.kilo * units.joule, tolerance=5e-3)
+    assert_equal(result, 98 * prefixes.kilo * units.joule, relative_tolerance=5e-3)
 
 
 def test_bad_temperature(test_args: Args) -> None:

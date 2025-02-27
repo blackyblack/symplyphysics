@@ -29,7 +29,7 @@ def test_args_fixture() -> Args:
 def test_critically_damped(test_args: Args) -> None:
     result = damped_eqn.calculate_displacement(test_args.x0, test_args.v0, test_args.w, test_args.z,
         test_args.t)
-    assert_equal(result, 0.0259 * units.meter, tolerance=2e-3)
+    assert_equal(result, 0.0259 * units.meter, relative_tolerance=2e-3)
 
 
 def test_bad_initial_position(test_args: Args) -> None:

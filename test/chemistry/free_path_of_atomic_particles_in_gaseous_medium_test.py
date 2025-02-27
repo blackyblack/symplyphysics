@@ -29,7 +29,7 @@ def test_args_fixture() -> Args:
 def test_basic_free_path_length(test_args: Args) -> None:
     result = path_law.calculate_free_path_length(test_args.pressure, test_args.temperature,
         test_args.cross_sectional_area_of_interaction)
-    assert_equal(result, 130 * units.nanometer, tolerance=0.3)
+    assert_equal(result, 130 * units.nanometer, relative_tolerance=0.3)
 
 
 def test_bad_pressure(test_args: Args) -> None:

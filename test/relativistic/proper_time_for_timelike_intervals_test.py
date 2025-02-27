@@ -21,7 +21,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = time_law.calculate_proper_time(test_args.ds)
-    assert_equal(result, 3.34 * prefixes.pico * units.second, tolerance=2e-3)
+    assert_equal(result, 3.34 * prefixes.pico * units.second, relative_tolerance=2e-3)
 
 
 def test_bad_interval() -> None:

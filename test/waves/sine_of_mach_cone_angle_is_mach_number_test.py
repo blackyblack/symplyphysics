@@ -23,7 +23,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = mach_angle_law.calculate_mach_cone_angle(test_args.m)
-    assert_equal(result, 0.411 * units.radian, tolerance=2e-3)
+    assert_equal(result, 0.411 * units.radian, relative_tolerance=2e-3)
 
 
 def test_bad_mach_number() -> None:

@@ -29,7 +29,7 @@ def test_args_fixture() -> Args:
 def test_law(test_args: Args) -> None:
     result = distribution_law.calculate_velocity_component_distribution(
         test_args.v, test_args.m, test_args.t)
-    assert_equal(result, 1.64e-3 / (units.meter / units.second), tolerance=2e-3)
+    assert_equal(result, 1.64e-3 / (units.meter / units.second), relative_tolerance=2e-3)
 
 
 def test_bad_velocity(test_args: Args) -> None:

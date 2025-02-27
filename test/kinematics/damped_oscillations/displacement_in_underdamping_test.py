@@ -29,7 +29,7 @@ def test_args_fixture() -> Args:
 def test_law(test_args: Args) -> None:
     result = displacement_in_underdamping.calculate_displacement(test_args.x_init,
         test_args.lambda_, test_args.w, test_args.phi, test_args.t)
-    assert_equal(result, -0.215 * units.meter, tolerance=2e-3)
+    assert_equal(result, -0.215 * units.meter, relative_tolerance=2e-3)
 
 
 def test_bad_initial_position(test_args: Args) -> None:

@@ -24,7 +24,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = heat_capacity_ratio.calculate_heat_capacity_ratio(test_args.cp, test_args.cv)
-    assert_equal(result, 1.67, tolerance=2e-3)
+    assert_equal(result, 1.67, relative_tolerance=2e-3)
 
 
 def test_bad_heat_capacity(test_args: Args) -> None:

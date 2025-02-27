@@ -34,7 +34,7 @@ def test_basic_current(test_args: Args) -> None:
     result = current_law.calculate_current_density(test_args.electrons_concentration,
         test_args.holes_concentration, test_args.electrons_mobility, test_args.holes_mobility,
         test_args.electric_intensity)
-    assert_equal(result, 120 * units.ampere / units.centimeter**2, tolerance=3e-3)
+    assert_equal(result, 120 * units.ampere / units.centimeter**2, relative_tolerance=3e-3)
 
 
 def test_bad_electrons_concentration(test_args: Args) -> None:

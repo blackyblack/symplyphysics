@@ -23,7 +23,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = law.calculate_rotation_period(test_args.a, test_args.ms, test_args.mp)
-    assert_equal(result, 0.89 * units.year, tolerance=5e-3)
+    assert_equal(result, 0.89 * units.year, relative_tolerance=5e-3)
 
 
 def test_bad_length(test_args: Args) -> None:

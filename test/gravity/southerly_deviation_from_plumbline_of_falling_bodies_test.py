@@ -23,7 +23,7 @@ def test_args_fixture() -> Args:
 def test_law(test_args: Args) -> None:
     result = law.calculate_southerly_deviation_from_plumbline(test_args.tf, test_args.tr,
         test_args.s, test_args.lat)
-    assert_equal(result, 1.6 * units.micrometer, tolerance=2e-2)
+    assert_equal(result, 1.6 * units.micrometer, relative_tolerance=2e-2)
 
 
 def test_bad_time(test_args: Args) -> None:

@@ -24,7 +24,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = energy_distribution.calculate_energy_distribution_function(test_args.e, test_args.t)
-    assert_equal(result, 2.78 / units.joule, tolerance=2e-3)
+    assert_equal(result, 2.78 / units.joule, relative_tolerance=2e-3)
 
 
 def test_bad_energy(test_args: Args) -> None:

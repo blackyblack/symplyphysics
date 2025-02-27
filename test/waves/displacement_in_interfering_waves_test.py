@@ -31,7 +31,7 @@ def test_args_fixture() -> Args:
 def test_law(test_args: Args) -> None:
     result = interference_law.calculate_displacement(test_args.a, test_args.phi, test_args.k,
         test_args.w, test_args.x, test_args.t)
-    assert_equal(result, 1.33 * units.centimeter, tolerance=3e-3)
+    assert_equal(result, 1.33 * units.centimeter, relative_tolerance=3e-3)
 
 
 def test_bad_phase_shift(test_args: Args) -> None:

@@ -21,7 +21,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = law.calculate_frequency_change(test_args.nu, test_args.dphi)
-    assert_equal(result, -6.7e-12 * units.hertz, tolerance=4e-3)
+    assert_equal(result, -6.7e-12 * units.hertz, relative_tolerance=4e-3)
 
 
 def test_bad_frequency(test_args: Args) -> None:

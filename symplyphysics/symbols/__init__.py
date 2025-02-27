@@ -138,6 +138,7 @@ __all__ = [
     "stress",
     "shear_stress",
     "flow_speed",
+    "speed_of_sound",
     # electrodynamics
     "admittance",
     "electrical_conductance",
@@ -183,6 +184,7 @@ __all__ = [
     "phase_constant",
     "propagation_constant",
     "dielectric_loss_tangent",
+    "magnetic_field_strength",
     # optics
     "relative_refractive_index",
     "radiant_exitance",
@@ -266,4 +268,8 @@ __all__ = [
     "half_life",
     "neutron_diffusion_coefficient",
     "reproduction_factor",
+    "migration_area",
+    "macroscopic_cross_section",
+    "fast_utilization",
+    "fast_fission_factor",
 ]

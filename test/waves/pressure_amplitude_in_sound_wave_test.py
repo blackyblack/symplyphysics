@@ -29,7 +29,7 @@ def test_args_fixture() -> Args:
 def test_law(test_args: Args) -> None:
     result = pressure_law.calculate_pressure_amplitude(test_args.v, test_args.rho, test_args.w,
         test_args.a)
-    assert_equal(result, 28.7 * units.pascal, tolerance=2e-3)
+    assert_equal(result, 28.7 * units.pascal, relative_tolerance=2e-3)
 
 
 def test_bad_speed(test_args: Args) -> None:
