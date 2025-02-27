@@ -1,111 +1,233 @@
-from typing import Sequence
+"""
+This module provides a functionality for printing laws and packages.
+
+* `print_law` constructs the documentation for a law.
+
+* `print_package` constructs the documentation for a package.
+"""
+
+from typing import Sequence, Optional
 from .printer_latex import latex_str
 from .printer_code import code_str
-from .parse import FunctionWithDoc, LawDirectiveTypes, MemberWithDoc
+from .parse import FunctionWithDoc, LawDirectiveType, MemberWithDoc
 
-INDENT_SPACES = 4
+_INDENT = "    "
 
 
-def _indent_docstring(doc: str, indent: int) -> str:
-    lines = doc.split("\n")
-    for i, l in enumerate(lines):
-        if len(l) == 0:
+def _indent_docstring(doc: str, count: int = 1) -> str:
+    lines = doc.splitlines()
+    for i, line in enumerate(lines):
+        if not line:
             continue
-        lines[i] = (" " * indent) + l
+        lines[i] = (_INDENT * count) + line
     return "\n".join(lines)
 
 
+_SYMBOL_DIRECTIVE_TEMPLATE = """\
+{before}:code:`{code}`
+{after}\
+"""
+
+_LATEX_DIRECTIVE_TEMPLATE = """\
+{before}Latex:
+    .. math::
+{ii_latex}
+{after}\
+"""
+
+_MEMBER_TEMPLATE = """\
+.. py:data:: {name}
+
+{i_doc}
+"""
+
+_LAW_SYMBOL_TEMPLATE = """\
+Symbol:
+    :code:`{code}`
+
+Latex:
+    :math:`{latex}`
+
+Dimension:
+    :code:`{dimension}`
+"""
+
+
 def _members_to_doc(members: Sequence[MemberWithDoc], doc_name: str) -> str:
-    content = ""
-    for m in members:
-        if m.name.startswith("_"):
-            continue
-        doc = m.docstring
+
+    def process_member_docstring(member: MemberWithDoc) -> str:
+        doc = member.docstring
         offset = 0
-        sorted_directives = m.directives
-        sorted_directives.sort(key=lambda k: k.start)
-        for d in sorted_directives:
+
+        for directive in sorted(member.directives, key=lambda k: k.start):
             doc_length = len(doc)
-            if d.directive_type == LawDirectiveTypes.SYMBOL:
-                try:
-                    code = code_str(m.value)
-                except ValueError as e:
-                    raise ValueError(f"Error during code printing in '{doc_name}'.") from e
-                directive_str = ":code:`" + code + "`"
-                doc = doc[0:d.start + offset] + directive_str + "\n" + doc[d.end + offset:]
-                offset = offset + len(doc) - doc_length
-                continue
-            if d.directive_type == LawDirectiveTypes.LATEX:
-                directive_str = "Latex:\n" + _indent_docstring(".. math::\n", INDENT_SPACES)
-                try:
-                    latex = latex_str(m.value)
-                except ValueError as e:
-                    raise ValueError(f"Error during latex printing in '{doc_name}'.") from e
-                directive_str = directive_str + _indent_docstring(latex,
-                    INDENT_SPACES * 2)
-                doc = doc[0:d.start + offset] + directive_str + "\n" + doc[d.end + offset:]
-                offset = offset + len(doc) - doc_length
-                continue
-        doc = _indent_docstring(doc, INDENT_SPACES)
-        content = content + ".. py:data:: " + m.name + "\n\n"
-        content = content + doc + "\n\n"
-        if m.symbol is not None:
-            symbol_name = "Symbol:\n" + _indent_docstring(":code:`" + m.symbol.symbol + "`",
-                INDENT_SPACES)
-            content = content + _indent_docstring(symbol_name, INDENT_SPACES) + "\n\n"
-            if m.symbol.latex is not None:
-                latex_string = m.symbol.latex
-                symbol_latex = "Latex:\n" + _indent_docstring(":math:`" + latex_string + "`",
-                    INDENT_SPACES)
-                content = content + _indent_docstring(symbol_latex, INDENT_SPACES) + "\n\n"
-            symbol_dimension = "Dimension:\n" + _indent_docstring(
-                ":code:`" + m.symbol.dimension + "`", INDENT_SPACES)
-            content = content + _indent_docstring(symbol_dimension, INDENT_SPACES) + "\n\n"
-    return content
+
+            before = doc[:directive.start + offset]
+            after = doc[directive.end + offset:]
+
+            match directive.directive_type:
+                case LawDirectiveType.SYMBOL:
+                    try:
+                        code = code_str(member.value)
+                    except ValueError as e:
+                        raise ValueError(f"Error during code printing in '{doc_name}'.") from e
+
+                    doc = _SYMBOL_DIRECTIVE_TEMPLATE.format(
+                        before=before,
+                        code=code,
+                        after=after,
+                    )
+
+                case LawDirectiveType.LATEX:
+                    try:
+                        latex = latex_str(member.value)
+                    except ValueError as e:
+                        raise ValueError(f"Error during latex printing in '{doc_name}'.") from e
+
+                    doc = _LATEX_DIRECTIVE_TEMPLATE.format(
+                        before=before,
+                        ii_latex=_indent_docstring(latex, count=2),
+                        after=after,
+                    )
+
+            offset += len(doc) - doc_length
+
+        return doc
+
+    def member_to_doc(member: MemberWithDoc) -> Optional[str]:
+        if member.name.startswith("_"):
+            return None
+
+        docstring = process_member_docstring(member)
+        doc = _MEMBER_TEMPLATE.format(name=member.name, i_doc=_indent_docstring(docstring))
+
+        if member.symbol:
+            symbol = _LAW_SYMBOL_TEMPLATE.format(
+                code=member.symbol.symbol,
+                latex=member.symbol.latex,
+                dimension=member.symbol.dimension,
+            )
+            doc += f"\n{symbol}"
+
+        return doc
+
+    docs = []
+    for member in members:
+        doc = member_to_doc(member)
+        if doc is not None:
+            docs.append(doc)
+
+    return "\n\n".join(docs)
+
+
+_FUNCTION_TEMPLATE = """\
+.. py:function:: {name}({args})
+
+{i_doc}
+"""
 
 
 def _functions_to_doc(members: Sequence[FunctionWithDoc]) -> str:
-    content = ""
-    for m in members:
-        if m.name.startswith("_"):
-            continue
-        doc = _indent_docstring(m.docstring, INDENT_SPACES)
-        args = ", ".join(m.parameters)
-        content = content + ".. py:function:: " + m.name + "(" + args + ")" + "\n\n"
-        content = content + doc + "\n\n"
-    return content
+
+    def function_to_doc(function_: FunctionWithDoc) -> Optional[str]:
+        if function_.name.startswith("_"):
+            return None
+
+        return _FUNCTION_TEMPLATE.format(
+            name=function_.name,
+            args=", ".join(function_.parameters),
+            i_doc=_indent_docstring(function_.docstring),
+        )
+
+    docs = []
+    for function_ in members:
+        doc = function_to_doc(function_)
+        if doc is not None:
+            docs.append(doc)
+
+    return "\n\n".join(docs)
 
 
-def print_law(title: str, description: str, items: Sequence[MemberWithDoc | FunctionWithDoc],
-    doc_name: str) -> str:
-    law_content = "" + title + "\n" + ("-" * len(title)) + "\n\n" + description + "\n\n"
-    law_content = law_content + ".. py:currentmodule:: " + doc_name + "\n\n"
-    members = [m for m in items if isinstance(m, MemberWithDoc)]
-    functions = [m for m in items if isinstance(m, FunctionWithDoc)]
-    law_content = law_content + _members_to_doc(members, doc_name)
-    law_content = law_content + _functions_to_doc(functions)
+_HEADER_TEMPLATE = """\
+{title}
+{section_break}
 
-    return law_content
+{description}
+
+.. py:currentmodule:: {doc_name}\
+"""
+
+_CONTENTS_TEMPLATE = """\
+**Contents:**
+
+.. toctree::
+    :maxdepth: 4
+
+{i_packages}
+{i_laws}\
+"""
+
+_FOOTER_TEMPLATE = """\
+{members}
+
+{functions}\
+"""
+
+
+def print_law(title: str, description: str, members: Sequence[MemberWithDoc],
+    functions: Sequence[FunctionWithDoc], doc_name: str) -> str:
+    """Constructs the documentation string of a law."""
+
+    header = _HEADER_TEMPLATE.format(
+        title=title,
+        section_break="=" * len(title),
+        description=description,
+        doc_name=doc_name,
+    )
+
+    footer = _FOOTER_TEMPLATE.format(
+        members=_members_to_doc(members, doc_name),
+        functions=_functions_to_doc(functions),
+    )
+
+    return f"{header}\n\n{footer}"
 
 
 # TODO: split to smaller functions
 
 
-def print_package(title: str, description: str, items: Sequence[MemberWithDoc | FunctionWithDoc],
-    doc_name: str, laws: Sequence[str], packages: Sequence[str]) -> str:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
-    package_content = "" + title + "\n" + ("=" * len(title)) + "\n\n" + description + "\n\n"
-    package_content = package_content + ".. py:currentmodule:: " + doc_name + "\n\n"
-    if len(packages) > 0 or len(laws) > 0:
-        package_content = package_content + "Contents:\n\n" + ".. toctree::\n" + "  :maxdepth: 4\n\n"
-        for p in packages:
-            package_content = package_content + "  " + p + "\n"
-        for l in laws:
-            package_content = package_content + "  " + l + "\n"
+# pylint: disable-next=too-many-arguments, too-many-positional-arguments
+def print_package(title: str, description: str, members: Sequence[MemberWithDoc],
+    functions: Sequence[FunctionWithDoc], doc_name: str, laws: Sequence[str],
+    packages: Sequence[str]) -> str:
+    """Construct the documentation string of a package."""
 
-    members = [m for m in items if isinstance(m, MemberWithDoc)]
-    functions = [m for m in items if isinstance(m, FunctionWithDoc)]
-    package_content = package_content + _members_to_doc(members, doc_name)
-    package_content = package_content + _functions_to_doc(functions)
+    results = []
 
-    return package_content
+    header = _HEADER_TEMPLATE.format(
+        title=title,
+        section_break="=" * len(title),
+        description=description,
+        doc_name=doc_name,
+    )
+    results.append(header)
+
+    if packages or laws:
+        joined_packages = "\n".join(map(_indent_docstring, packages))
+        joined_laws = "\n".join(map(_indent_docstring, laws))
+        contents = _CONTENTS_TEMPLATE.format(
+            i_packages=joined_packages,
+            i_laws=joined_laws,
+        )
+        results.append(contents)
+
+    footer = _FOOTER_TEMPLATE.format(
+        members=_members_to_doc(members, doc_name),
+        functions=_functions_to_doc(functions),
+    )
+    results.append(footer)
+
+    return "\n\n".join(results)
+
+
+__all__ = ["print_law", "print_package"]

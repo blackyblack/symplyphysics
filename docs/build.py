@@ -15,12 +15,14 @@ def get_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(usage="%(prog)s [OPTIONS] <SOURCE_FILE>...",
         description="Generate ReStructuredText for Symplyphysics laws.")
 
-    parser.add_argument("-l",
+    parser.add_argument(
+        "-l",
         "--laws-source-dir",
         action="store",
         dest="laws_source_dir",
         default="symplyphysics",
-        help="laws source directory to generate rST files from")
+        help="laws source directory to generate rST files from",
+    )
 
     parser.add_argument(
         "-g",
@@ -39,19 +41,23 @@ def get_parser() -> argparse.ArgumentParser:
         help="directories to exclude from parsing",
     )
 
-    parser.add_argument("-o",
+    parser.add_argument(
+        "-o",
         "--output-dir",
         action="store",
         dest="output_dir",
         default="html",
-        help="directory to generate HTML output into")
+        help="directory to generate HTML output into",
+    )
 
-    parser.add_argument("-c",
+    parser.add_argument(
+        "-c",
         "--conf-dir",
         action="store",
         dest="conf_dir",
         default="docs",
-        help="directory where conf.py file is stored")
+        help="directory where conf.py file is stored",
+    )
 
     parser.add_argument(
         "-q",
@@ -90,7 +96,7 @@ def get_parser() -> argparse.ArgumentParser:
 
 def process_generated_files(generated_dir: str) -> None:
     for file_path in Path(generated_dir).iterdir():
-        with open(file_path, "r+", encoding="utf-8") as file:
+        with open(file_path, "r+", encoding="utf-8", newline=None) as file:
             doc = file.read()
 
             # processing logic goes here
@@ -102,7 +108,7 @@ def process_generated_files(generated_dir: str) -> None:
             file.write(doc)
 
 
-def main(argv: Sequence[str] = ()) -> None:
+def main(argv: Sequence[str]) -> None:
     args = get_parser().parse_args(argv or sys.argv[1:])
 
     if not args.build_only:
