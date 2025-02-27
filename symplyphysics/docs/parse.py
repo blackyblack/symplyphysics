@@ -257,8 +257,7 @@ def find_members_and_functions(
         value = context[name]
         symbol: Optional[LawSymbol] = None
 
-        if isinstance(value, DimensionSymbol):
-            # TODO: use `core.dimensions.print_dimension` here when merged
+        if isinstance(value, (DimensionSymbol, Symbolic)):
             dimension = print_dimension(value.dimension)
 
             symbol_name = code_str(value)
