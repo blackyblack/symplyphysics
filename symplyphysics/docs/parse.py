@@ -259,8 +259,7 @@ def find_members_and_functions(
 
         if isinstance(value, DimensionSymbol):
             # TODO: use `core.dimensions.print_dimension` here when merged
-            dimension = "dimensionless" if SI.get_dimension_system().is_dimensionless(
-                value.dimension) else str(value.dimension.name)
+            dimension = print_dimension(value.dimension)
 
             symbol_name = code_str(value)
             symbol_latex = latex_str(value)
