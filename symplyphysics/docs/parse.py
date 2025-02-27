@@ -168,6 +168,8 @@ def find_title_and_description(doc: str) -> Optional[tuple[str, str]]:
 
     lines = doc.splitlines()
 
+    section_break: Optional[int] = None
+
     for idx, line in enumerate(lines[1:], start=1):
         if not line:
             continue
@@ -175,15 +177,16 @@ def find_title_and_description(doc: str) -> Optional[tuple[str, str]]:
         if is_section_break(line, "=") or is_section_break(line, "-"):
             section_break = idx
             break
-    else:
+
+    if section_break is None:
         return None
 
     title = "\n".join(lines[:section_break])
     description_lines = lines[section_break + 1:]
 
     # Remove possible empty lines after section break
-    while description_lines:
-        if description_lines[0]:
+    while True:
+        if not description_lines or description_lines[0]:
             break
         description_lines.pop(0)
 
@@ -215,12 +218,9 @@ def find_members_and_functions(
     def process_assign(stmt: ast.Assign) -> Optional[str]:
         for target in stmt.targets:
             if isinstance(target, ast.Name):
-                name = target.id
-                break
-        else:
-            return None
+                return target.id
 
-        return name
+        return None
 
     def process_body() -> tuple[list[FunctionWithDoc], list[str], dict[str, str]]:
         functions: list[FunctionWithDoc] = []

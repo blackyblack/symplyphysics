@@ -28,18 +28,21 @@ def process_string(doc: str, path: Path) -> str:
         index_from, index_to = match.span()
         name = match.group(1)
 
+        found = False
         for directory, collection in _symbols_by_module.items():
             if name in collection:
-                part_before = doc[last_index_to:index_from]
-                text = f":attr:`~symplyphysics.symbols.{directory}.{name}`"
-
-                parts.append(part_before)
-                parts.append(text)
-
-                last_index_to = index_to
+                found = True
                 break
-        else:
+        if not found:
             raise ValueError(f"Unknown symbol '{name}' in '{path}'.")
+
+        part_before = doc[last_index_to:index_from]
+        text = f":attr:`~symplyphysics.symbols.{directory}.{name}`"
+
+        parts.append(part_before)
+        parts.append(text)
+
+        last_index_to = index_to
 
     # no substitution happened
     if not parts:
