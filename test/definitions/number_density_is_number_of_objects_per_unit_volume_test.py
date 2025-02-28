@@ -24,7 +24,7 @@ def test_basic_density(test_args: Args) -> None:
 
 
 def test_bad_volume(test_args: Args) -> None:
-    Vb = Quantity(1 * units.length)
+    Vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         law.calculate_number_density(test_args.o, Vb)
     with raises(TypeError):

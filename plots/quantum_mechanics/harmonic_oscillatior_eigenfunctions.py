@@ -3,7 +3,7 @@
 from sympy import pi
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import units, convert_to
+from symplyphysics import units, convert_to, quantities
 from symplyphysics.laws.quantum_mechanics.harmonic_oscillator import wave_eigenfunctions
 
 values = {
@@ -24,7 +24,7 @@ base_plot = plot(
 
 law = wave_eigenfunctions.law.rhs.subs({
     pi: pi.evalf(),
-    wave_eigenfunctions.hbar: convert_to(units.hbar, units.joule * units.second).evalf(),
+    quantities.hbar: convert_to(units.hbar, units.joule * units.second).evalf(),
 })
 
 for mode_number_ in mode_numbers_:

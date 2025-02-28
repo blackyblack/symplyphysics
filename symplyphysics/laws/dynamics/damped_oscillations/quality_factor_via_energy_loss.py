@@ -24,6 +24,7 @@ from symplyphysics import (
     symbols,
     clone_as_symbol,
 )
+from symplyphysics.core.symbols.quantities import scale_factor
 
 quality_factor = symbols.quality_factor
 """
@@ -69,4 +70,4 @@ def calculate_quality_factor(
         energy_stored: energy_stored_,
         power_loss: power_loss_,
     })
-    return Quantity(result).scale_factor
+    return scale_factor(Quantity(result))

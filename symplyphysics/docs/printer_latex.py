@@ -32,7 +32,7 @@ def _discard_minus_sign(expr: Expr) -> tuple[Expr, bool]:
     return (Mul(*args, evaluate=False), sign)
 
 
-class SymbolLatexPrinter(LatexPrinter):
+class SymbolLatexPrinter(LatexPrinter):   # type: ignore[misc]
     """
     A printer to convert Symplyphysics law expressions to latex
     """
@@ -69,7 +69,7 @@ class SymbolLatexPrinter(LatexPrinter):
             func = expr.func.display_latex
 
         if hasattr(self, "_print_" + func) and not isinstance(expr, AppliedUndef):
-            return getattr(self, "_print_" + func)(expr, exp)
+            return str(getattr(self, "_print_" + func)(expr, exp))
 
         args = [str(self._print(arg)) for arg in expr.args]
         # How inverse trig functions should be displayed, formats are:
@@ -148,7 +148,7 @@ class SymbolLatexPrinter(LatexPrinter):
         args_str = self._print(expr.args[0])
         name = f"{args_str}" if can_fold_brackets else f"\\left({args_str} \\right)"
         tex = f"\\exp{{{name}}}"
-        return self._do_exponent(tex, exp)
+        return str(self._do_exponent(tex, exp))
 
     # pylint: disable-next=invalid-name
     def _print_IndexedSum(self, expr: Any) -> str:
@@ -295,6 +295,34 @@ class SymbolLatexPrinter(LatexPrinter):
         parts = [print_row(row) for row in range(rows)]
         return "\\begin{pmatrix} " + " \\\\ ".join(parts) + " \\end{pmatrix}"
 
+    # pylint: disable-next=invalid-name
+    def _print_Average(self, expr: Any) -> str:
+        return f"\\langle {self._print(expr.factor)} \\rangle"
+
+    # pylint: disable-next=invalid-name
+    def _print_FiniteDifference(self, expr: Any) -> str:
+        inner = self._print(expr.factor)
+        if expr.wrap_latex:
+            return f"\\Delta \\left( {inner} \\right)"
+
+        return f"\\Delta {inner}"
+
+    # pylint: disable-next=invalid-name
+    def _print_ExactDifferential(self, expr: Any) -> str:
+        inner = self._print(expr.factor)
+        if expr.wrap_latex:
+            return f"d \\left( {inner} \\right)"
+
+        return f"d {inner}"
+
+    # pylint: disable-next=invalid-name
+    def _print_InexactDifferential(self, expr: Any) -> str:
+        inner = self._print(expr.factor)
+        if expr.wrap_latex:
+            return f"\\delta \\left( {inner} \\right)"
+
+        return f"\\delta {inner}"
+
 
 def latex_str(expr: Any, **settings: Any) -> str:
     printer = SymbolLatexPrinter(settings)
@@ -308,4 +336,4 @@ def latex_str(expr: Any, **settings: Any) -> str:
     if isinstance(expr, IndexedSymbol):
         expr = expr[expr.index]
 
-    return printer.doprint(expr)
+    return str(printer.doprint(expr))

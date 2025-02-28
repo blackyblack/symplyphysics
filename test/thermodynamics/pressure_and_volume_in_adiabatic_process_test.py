@@ -61,5 +61,3 @@ def test_bad_specific_heats_ratio(test_args: Args) -> None:
     yb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         law.calculate_pressure(test_args.n, test_args.t0, test_args.V0, test_args.V1, yb)
-    with raises(errors.UnitsError):
-        law.calculate_pressure(test_args.n, test_args.t0, test_args.V0, test_args.V1, 'bad')

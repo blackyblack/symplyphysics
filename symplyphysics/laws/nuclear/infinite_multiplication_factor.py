@@ -60,4 +60,4 @@ def calculate_multiplication_factor(neutron_reproduction_: float, fast_fission_:
         resonance_escape_probability: resonance_escape_probability_,
         thermal_utilization_factor: thermal_utilisation_
     })
-    return result_expr.evalf()
+    return float(result_expr.evalf())

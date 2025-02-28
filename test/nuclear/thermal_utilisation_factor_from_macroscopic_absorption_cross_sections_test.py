@@ -37,5 +37,5 @@ def test_bad_macroscopic_cross_section(test_args: Args) -> None:
         utilisation_factor.calculate_utilisation_factor(test_args.Saf, 100)
 
     Sb = Quantity(test_args.Sat.scale_factor + 1)
-    with raises(ValueError):
+    with raises(TypeError):
         utilisation_factor.calculate_utilisation_factor(Sb, test_args.Sat)

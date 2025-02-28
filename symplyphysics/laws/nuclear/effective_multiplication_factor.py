@@ -55,4 +55,4 @@ def calculate_multiplication_factor(infinite_multiplication_factor_: float,
         fast_non_leakage_probability: fast_non_leakage_probability_,
         thermal_non_leakage_probability: thermal_non_leakage_probability_
     })
-    return result_expr.evalf()
+    return float(result_expr.evalf())

@@ -31,7 +31,7 @@ def test_bad_velocity(test_args: Args) -> None:
         reynolds_number_formula.calculate_reynolds_number(test_args.d, test_args.rho, bv,
             test_args.mu)
     with raises(TypeError):
-        reynolds_number_formula.calculate_reynolds_number(test_args.d, test_args.rho, 0,
+        reynolds_number_formula.calculate_reynolds_number(test_args.d, test_args.rho, 100,
             test_args.mu)
 
 
@@ -41,7 +41,7 @@ def test_bad_diameter(test_args: Args) -> None:
         reynolds_number_formula.calculate_reynolds_number(bd, test_args.rho, test_args.v,
             test_args.mu)
     with raises(TypeError):
-        reynolds_number_formula.calculate_reynolds_number(0, test_args.rho, test_args.v,
+        reynolds_number_formula.calculate_reynolds_number(100, test_args.rho, test_args.v,
             test_args.mu)
 
 

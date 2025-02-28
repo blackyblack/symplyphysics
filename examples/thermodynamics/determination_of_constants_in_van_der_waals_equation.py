@@ -31,7 +31,7 @@ base_values_of_state_equation = {
     temperature_before: Quantity(300 * units.kelvins),
     temperature_after: Quantity(350 * units.kelvins),
     volume: Quantity(0.25 * units.liters),
-    amount_of_substance: Quantity(1 * units.amount_of_substance),
+    amount_of_substance: Quantity(1 * units.mole),
     pressure_before: Quantity(90 * units.atmospheres),
     pressure_after: Quantity(110 * units.atmospheres),
 }

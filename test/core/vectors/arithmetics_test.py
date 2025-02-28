@@ -3,9 +3,10 @@ from pytest import fixture, raises
 from sympy import atan2, cos, pi, sin, sqrt, Rational, nan
 from symplyphysics import (SI, Quantity, dimensionless, units, QuantityVector, Vector,
     CoordinateSystem, coordinates_transform)
+from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.vectors.arithmetics import (add_cartesian_vectors, cross_cartesian_vectors,
     dot_vectors, equal_vectors, scale_vector, vector_magnitude, vector_unit, project_vector,
-    reject_cartesian_vector, ScalarValue)
+    reject_cartesian_vector)
 
 Args = namedtuple("Args", ["C"])
 

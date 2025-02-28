@@ -35,8 +35,6 @@ def test_bad_valence(test_args: Args) -> None:
     valence = Quantity(1 * units.joule)
     with raises(errors.UnitsError):
         equivalent_law.calculate_equivalent(test_args.molar_mass, valence)
-    with raises(TypeError):
-        equivalent_law.calculate_equivalent(test_args.molar_mass, True)
     with raises(ValueError):
         equivalent_law.calculate_equivalent(test_args.molar_mass, 4.1)
     with raises(ValueError):

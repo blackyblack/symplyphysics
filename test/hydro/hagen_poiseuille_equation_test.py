@@ -27,7 +27,7 @@ def test_bad_dynamic_viscosity(test_args: Args) -> None:
         hagen_poiseuille_equation.calculate_delta_pressure(bad_mu, test_args.l, test_args.q,
             test_args.r)
     with raises(TypeError):
-        hagen_poiseuille_equation.calculate_delta_pressure(0, test_args.l, test_args.q, test_args.r)
+        hagen_poiseuille_equation.calculate_delta_pressure(100, test_args.l, test_args.q, test_args.r)
 
 
 def test_bad_length(test_args: Args) -> None:
@@ -36,7 +36,7 @@ def test_bad_length(test_args: Args) -> None:
         hagen_poiseuille_equation.calculate_delta_pressure(test_args.mu, bad_l, test_args.q,
             test_args.r)
     with raises(TypeError):
-        hagen_poiseuille_equation.calculate_delta_pressure(test_args.mu, 0, test_args.q,
+        hagen_poiseuille_equation.calculate_delta_pressure(test_args.mu, 100, test_args.q,
             test_args.r)
 
 
@@ -46,7 +46,7 @@ def test_bad_flow_rate(test_args: Args) -> None:
         hagen_poiseuille_equation.calculate_delta_pressure(test_args.mu, test_args.l, bad_q,
             test_args.r)
     with raises(TypeError):
-        hagen_poiseuille_equation.calculate_delta_pressure(test_args.mu, test_args.l, 0,
+        hagen_poiseuille_equation.calculate_delta_pressure(test_args.mu, test_args.l, 100,
             test_args.r)
 
 
@@ -57,4 +57,4 @@ def test_bad_radius(test_args: Args) -> None:
             bad_r)
     with raises(TypeError):
         hagen_poiseuille_equation.calculate_delta_pressure(test_args.mu, test_args.l, test_args.q,
-            0)
+            100)

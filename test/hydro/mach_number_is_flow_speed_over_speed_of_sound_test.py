@@ -28,7 +28,7 @@ def test_bad_velocity(test_args: Args) -> None:
             bv, test_args.speed_of_sound)
     with raises(TypeError):
         mach_number_is_flow_speed_over_speed_of_sound.calculate_mach_number(
-            0, test_args.speed_of_sound)
+            100, test_args.speed_of_sound)
 
 
 def test_bad_speed_of_sound(test_args: Args) -> None:
@@ -36,4 +36,4 @@ def test_bad_speed_of_sound(test_args: Args) -> None:
     with raises(errors.UnitsError):
         mach_number_is_flow_speed_over_speed_of_sound.calculate_mach_number(test_args.velocity, bss)
     with raises(TypeError):
-        mach_number_is_flow_speed_over_speed_of_sound.calculate_mach_number(test_args.velocity, 0)
+        mach_number_is_flow_speed_over_speed_of_sound.calculate_mach_number(test_args.velocity, 100)

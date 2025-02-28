@@ -27,10 +27,11 @@ import re
 from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Optional
-from sympy.physics.units.systems.si import SI
 from ..core.symbols.symbols import DimensionSymbol, Function
+from ..core.dimensions import print_dimension
 from .printer_code import code_str
 from .printer_latex import latex_str
+from ..core.operations.symbolic import Symbolic
 
 
 class LawDirectiveType(Enum):
@@ -256,10 +257,8 @@ def find_members_and_functions(
         value = context[name]
         symbol: Optional[LawSymbol] = None
 
-        if isinstance(value, DimensionSymbol):
-            # TODO: use `core.dimensions.print_dimension` here when merged
-            dimension = "dimensionless" if SI.get_dimension_system().is_dimensionless(
-                value.dimension) else str(value.dimension.name)
+        if isinstance(value, (DimensionSymbol, Symbolic)):
+            dimension = print_dimension(value.dimension)
 
             symbol_name = code_str(value)
             symbol_latex = latex_str(value)

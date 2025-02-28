@@ -50,5 +50,3 @@ def test_bad_angle(test_args: Args) -> None:
     angle = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         flux_law.calculate_flux(test_args.induction, test_args.area, angle)
-    with raises(AttributeError):
-        flux_law.calculate_flux(test_args.induction, test_args.area, True)

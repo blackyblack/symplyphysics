@@ -28,6 +28,7 @@ from symplyphysics import (
     quantities,
     clone_as_symbol,
 )
+from symplyphysics.core.operations.symbolic import FiniteDifference
 
 final_pressure = symbols.pressure
 """
@@ -44,11 +45,7 @@ molecular_mass = symbols.mass
 :symbols:`mass` of a single gas molecule.
 """
 
-height_change = clone_as_symbol(
-    symbols.height,
-    display_symbol="Delta(h)",
-    display_latex="\\Delta h",
-)
+height_change = FiniteDifference(symbols.height)
 """
 Change in :symbols:`height` between :attr:`~initial_pressure` and :attr:`~final_pressure`.
 """

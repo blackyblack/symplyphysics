@@ -13,6 +13,7 @@ from symplyphysics import (
     global_index,
 )
 from symplyphysics.docs.printer_code import code_str
+from symplyphysics.core.operations import symbolic
 
 Args = namedtuple(
     "Args",
@@ -299,3 +300,31 @@ def test_indexed_product() -> None:
     with evaluate(False):
         expr = IndexedProduct(f[global_index]**2, global_index)
     assert code_str(expr) == "Product(F[i]^2, i)"
+
+
+def test_average() -> None:
+    a = Symbol("a")
+    expr = symbolic.Average(a)
+    assert code_str(expr) == "avg(a)"
+
+
+def test_finite_difference() -> None:
+    a = Symbol("a")
+    expr = symbolic.FiniteDifference(a)
+    assert code_str(expr) == "Delta(a)"
+
+
+def test_exact_differential() -> None:
+    a = Symbol("a")
+
+    expr = symbolic.ExactDifferential(a)
+    assert code_str(expr) == "da"
+
+    expr = symbolic.ExactDifferential(a, wrap_code=True)
+    assert code_str(expr) == "d(a)"
+
+
+def test_inexact_differential() -> None:
+    a = Symbol("a")
+    expr = symbolic.InexactDifferential(a)
+    assert code_str(expr) == "delta(a)"
