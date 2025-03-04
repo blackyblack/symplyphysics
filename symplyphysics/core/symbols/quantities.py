@@ -1,21 +1,23 @@
 from __future__ import annotations
 
 from functools import partial
-from typing import Any, Optional, Sequence
+from typing import Any, Optional, Sequence, Any
 from sympy import S, Expr, sympify, Abs
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import SI
 from sympy.multipledispatch import dispatch
+from sympy.printing.printer import Printer
 
 from .symbols import DimensionSymbol, next_name
 from ..dimensions.collect_quantity import collect_quantity_factor_and_dimension
+from ..dimensions import dimension_to_si_unit
 
 
 class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: disable=too-many-ancestors
 
     # pylint: disable-next=signature-differs
     def __new__(cls,
-        _expr: Expr | float = S.One,
+        _expr: Any = S.One,
         *,
         display_symbol: Optional[str] = None,
         display_latex: Optional[str] = None,
@@ -30,7 +32,7 @@ class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: d
         return obj  # type: ignore[no-any-return]
 
     def __init__(self,
-        expr: Expr | float = S.One,
+        expr: Any = S.One,
         *,
         display_symbol: Optional[str] = None,
         display_latex: Optional[str] = None,
@@ -66,6 +68,21 @@ class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: d
 
     def _eval_Abs(self) -> Quantity:
         return self.__class__(Abs(self.scale_factor), dimension=self.dimension)
+
+    def _sympystr(self, p: Printer) -> str:
+        if "QTY" not in self.display_name:
+            return self.display_name
+
+        si_unit = dimension_to_si_unit(self.dimension)
+        si_value = (self.convert_to(si_unit) / si_unit).evalf(3)
+
+        qty: SymQuantity
+        for qty in si_unit.atoms(SymQuantity):
+            abbrev = qty.abbrev
+            if abbrev:
+                si_unit = si_unit.subs(qty, abbrev)
+
+        return str(p.doprint(si_value * si_unit))
 
 
 # Allows for some SymPy comparisons, eg Piecewise function
