@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any, Callable, TypeAlias, Iterable
 from sympy import Abs, Expr, S, Derivative, Function as SymFunction, Min, Max, sympify, Add, Mul, Pow
 from sympy.functions.elementary.miscellaneous import MinMaxBase
+from sympy.physics import units
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.prefixes import Prefix
 from sympy.physics.units.systems.si import dimsys_SI
@@ -25,10 +26,17 @@ any_dimension = AnyDimension()
 
 
 def _is_any_dimension(factor: Expr) -> bool:
+    """
+    Checks if ``factor`` is `0`, `±Inf`, or `NaN`, which can have any dimension due to their
+    absorbing nature.
+    """
+
     return factor in (S.Zero, S.Infinity, S.NegativeInfinity, S.NaN)
 
 
 def _is_number(value: Any) -> bool:
+    """Checks if ``value`` is a (complex) number."""
+
     try:
         complex(value)
     except (TypeError, ValueError):
@@ -421,15 +429,42 @@ def assert_equivalent_dimension(
 
 
 dimensionless = Dimension(S.One)
+"""Alias for `Dimension(1)`."""
 
 
 def print_dimension(dimension: Dimension) -> str:
+    """Returns the prettified name of ``dimension``."""
+
     return "dimensionless" if dimsys_SI.is_dimensionless(dimension) else str(dimension.name)
+
+
+_si_conversions = {
+    units.length: units.meter,
+    units.mass: units.kilogram,
+    units.time: units.second,
+    units.current: units.ampere,
+    units.temperature: units.kelvin,
+    units.amount_of_substance: units.mole,
+    units.luminous_intensity: units.candela,
+}
+
+
+def dimension_to_si_unit(dimension: Dimension) -> Expr:
+    """Converts ``dimension`` to the corresponding SI unit."""
+
+    si_unit = S.One
+
+    dependencies = dimsys_SI.get_dimensional_dependencies(dimension)
+    for dim, n in dependencies.items():
+        si_unit *= _si_conversions.get(dim, S.One)**n
+
+    return si_unit
 
 
 __all__ = [
     # re-exports
     "Dimension",
+    "dimsys_SI",
 
     # locals
     "ScalarValue",
@@ -440,4 +475,5 @@ __all__ = [
     "assert_equivalent_dimension",
     "dimensionless",
     "print_dimension",
+    "dimension_to_si_unit",
 ]
