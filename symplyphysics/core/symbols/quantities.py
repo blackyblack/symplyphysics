@@ -74,9 +74,15 @@ class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: d
             return self.display_name
 
         si_unit = dimension_to_si_unit(self.dimension)
-        si_value = (self.convert_to(si_unit) / si_unit).evalf(3)
+
+        si_value = self.convert_to(si_unit) / si_unit
 
         qty: SymQuantity
+
+        for qty in si_value.atoms(SymQuantity):
+            si_value = si_value.subs(qty, 1)
+        si_value = si_value.n(3)
+
         for qty in si_unit.atoms(SymQuantity):
             abbrev = qty.abbrev
             if abbrev:
