@@ -1,7 +1,5 @@
-from typing import Iterable, TypeAlias
-from sympy import Expr
-
-Coordinate: TypeAlias = Expr | float
+from typing import Iterable, Any
+from sympy import Expr, sympify, S
 
 
 # This class not only represents point in space, but any trajectory in any-dimensional space.
@@ -9,23 +7,23 @@ Coordinate: TypeAlias = Expr | float
 # represents a plane in 3D-space, where C is SympPy CoordSys3D.
 class Point:
     # may contain not number but sympy expression, eg C.x
-    _coordinates: list[Coordinate] = []
+    _coordinates: list[Expr] = []
 
-    def __init__(self, *coordinates: Coordinate) -> None:
-        self._coordinates = list(coordinates)
+    def __init__(self, *coordinates: Any) -> None:
+        self._coordinates = list(map(sympify, coordinates))
 
     @property
-    def coordinates(self) -> Iterable[Coordinate]:
+    def coordinates(self) -> Iterable[Expr]:
         return iter(self._coordinates)
 
-    def coordinate(self, index: int) -> Coordinate:
+    def coordinate(self, index: int) -> Expr:
         if len(self._coordinates) <= index:
             return 0
         return self._coordinates[index]
 
-    def set_coordinate(self, index: int, value: Coordinate) -> None:
+    def set_coordinate(self, index: int, value: Any) -> None:
         if value is None:
-            value = 0
+            value = S.Zero
         if len(self._coordinates) <= index:
-            self._coordinates.extend([0] * (index + 1 - len(self._coordinates)))
-        self._coordinates[index] = value
+            self._coordinates.extend([S.Zero] * (index + 1 - len(self._coordinates)))
+        self._coordinates[index] = sympify(value)

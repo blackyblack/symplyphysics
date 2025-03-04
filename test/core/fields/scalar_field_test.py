@@ -1,9 +1,8 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from sympy import atan, cos, pi, sin, sqrt, symbols, simplify, sympify
+from sympy import atan, cos, pi, sin, sqrt, symbols, simplify, sympify, Expr
 from sympy.vector import express
 from symplyphysics.core.test_decorators import unsupported_usage
-from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.points.cylinder_point import CylinderPoint
 from symplyphysics.core.points.sphere_point import SpherePoint
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
@@ -25,7 +24,7 @@ def test_args_fixture() -> Args:
 
 def test_basic_field() -> None:
 
-    def field_function(p: CartesianPoint) -> ScalarValue:
+    def field_function(p: CartesianPoint) -> Expr:
         return p.z * p.y
 
     field = ScalarField(field_function)

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from sympy import solve, symbols
+from sympy import solve, symbols, Expr
 from symplyphysics import (
     print_expression,
     vector_magnitude,
@@ -8,7 +8,6 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.fields.scalar_field import ScalarField
 from symplyphysics.core.points.cartesian_point import CartesianPoint
 from symplyphysics.laws.dynamics.fields import (
@@ -33,7 +32,7 @@ values = {
 }
 
 
-def potential_energy_function(point: CartesianPoint) -> ScalarValue:
+def potential_energy_function(point: CartesianPoint) -> Expr:
     return A / point.x**12 - B / point.x**6
 
 

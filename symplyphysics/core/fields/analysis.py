@@ -1,7 +1,6 @@
-from typing import Sequence
+from typing import Sequence, Any
 from sympy import Expr, integrate, simplify
 from symplyphysics import Vector, dot_vectors, vector_magnitude, vector_unit
-from ..dimensions import ScalarValue
 from ..fields.operators import curl_operator, divergence_operator
 from ..fields.vector_field import VectorField
 from ..geometry.elements import parametrized_curve_element, parametrized_curve_element_magnitude, volume_element_magnitude
@@ -10,8 +9,11 @@ from ..fields.parameters import ParameterLimits
 
 
 # trajectory should be array with projections to coordinates, eg [3 * cos(parameter), 3 * sin(parameter)]
-def circulation_along_curve(field: VectorField, trajectory: Sequence[Expr],
-    parameter_limits: ParameterLimits) -> ScalarValue:
+def circulation_along_curve(
+    field: VectorField,
+    trajectory: Sequence[Any],
+    parameter_limits: ParameterLimits,
+) -> Expr:
     (parameter, parameter_from, parameter_to) = parameter_limits
     field_applied = field.apply(trajectory)
     curve_element_vector = parametrized_curve_element(Vector(trajectory, field.coordinate_system),
@@ -23,8 +25,12 @@ def circulation_along_curve(field: VectorField, trajectory: Sequence[Expr],
 
 # calculate circulation along curve using surface that has this curve as a boundary
 # surface should be array with projections to coordinates, eg [parameter1 * cos(parameter2), parameter1 * sin(parameter2)]
-def circulation_along_surface_boundary(field: VectorField, surface: Sequence[Expr],
-    parameter_and_limits1: ParameterLimits, parameter_and_limits2: ParameterLimits) -> ScalarValue:
+def circulation_along_surface_boundary(
+    field: VectorField,
+    surface: Sequence[Any],
+    parameter_and_limits1: ParameterLimits,
+    parameter_and_limits2: ParameterLimits,
+) -> Expr:
     # circulation over surface is flux of curl of the field
     field_rotor_vector_field = curl_operator(field)
     return flux_across_surface(field_rotor_vector_field, surface, parameter_and_limits1,
@@ -33,8 +39,11 @@ def circulation_along_surface_boundary(field: VectorField, surface: Sequence[Exp
 
 # trajectory should be array with projections to coordinates, eg [3 * cos(parameter), 3 * sin(parameter)]
 # trajectory and field should be 2-dimensional, on XY plane
-def flux_across_curve(field: VectorField, trajectory: Sequence[Expr],
-    parameter_limits: ParameterLimits) -> ScalarValue:
+def flux_across_curve(
+    field: VectorField,
+    trajectory: Sequence[Any],
+    parameter_limits: ParameterLimits,
+) -> Expr:
     if len(trajectory) > 2:
         raise ValueError(f"Trajectory should have at most 2 components, got {len(trajectory)}")
     (parameter, parameter_from, parameter_to) = parameter_limits
@@ -51,8 +60,12 @@ def flux_across_curve(field: VectorField, trajectory: Sequence[Expr],
 
 
 # trajectory should be array with projections to coordinates, eg [3 * cos(parameter), 3 * sin(parameter)]
-def flux_across_surface(field: VectorField, surface: Sequence[Expr],
-    parameter_and_limits1: ParameterLimits, parameter_and_limits2: ParameterLimits) -> ScalarValue:
+def flux_across_surface(
+    field: VectorField,
+    surface: Sequence[Any],
+    parameter_and_limits1: ParameterLimits,
+    parameter_and_limits2: ParameterLimits,
+) -> Expr:
     (parameter1, parameter1_from, parameter1_to) = parameter_and_limits1
     (parameter2, parameter2_from, parameter2_to) = parameter_and_limits2
     # calculate SurfaceIntegral integrand, which is Dot(Field, dS)
@@ -66,8 +79,12 @@ def flux_across_surface(field: VectorField, surface: Sequence[Expr],
 
 
 # flux across some curve, that is a surface boundary is double integral of divergence of the field
-def flux_across_surface_boundary(field: VectorField, surface: Sequence[Expr],
-    parameter_and_limits1: ParameterLimits, parameter_and_limits2: ParameterLimits) -> ScalarValue:
+def flux_across_surface_boundary(
+    field: VectorField,
+    surface: Sequence[Any],
+    parameter_and_limits1: ParameterLimits,
+    parameter_and_limits2: ParameterLimits,
+) -> Expr:
     (parameter1, parameter1_from, parameter1_to) = parameter_and_limits1
     (parameter2, parameter2_from, parameter2_to) = parameter_and_limits2
     field_divergence = divergence_operator(field)
@@ -83,9 +100,12 @@ def flux_across_surface_boundary(field: VectorField, surface: Sequence[Expr],
 # over volume.
 # Parametrized volumes are not supported. We define volume by the integral limits.
 # Integration starts from the last limit, ie z_limits
-def flux_across_volume_boundary(field: VectorField, x_limits: tuple[ScalarValue, ScalarValue],
-    y_limits: tuple[ScalarValue, ScalarValue], z_limits: tuple[ScalarValue,
-    ScalarValue]) -> ScalarValue:
+def flux_across_volume_boundary(
+    field: VectorField,
+    x_limits: tuple[Any, Any],
+    y_limits: tuple[Any, Any],
+    z_limits: tuple[Any, Any],
+) -> Expr:
     (x_from, x_to) = x_limits
     (y_from, y_to) = y_limits
     (z_from, z_to) = z_limits

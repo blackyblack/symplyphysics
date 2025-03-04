@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, TypeAlias
+from typing import Any
 from sympy import Expr, S
 from sympy.physics import units
 from sympy.physics.units import Dimension, Quantity as SymQuantity
@@ -9,8 +9,6 @@ from sympy.physics.units.systems.si import dimsys_SI
 from ..errors import UnitsError
 from .collect_quantity import collect_quantity_factor_and_dimension
 from .miscellaneous import is_any_dimension, is_number
-
-ScalarValue: TypeAlias = Expr | float
 
 
 class AnyDimension(Dimension):  # type: ignore[misc]
@@ -26,7 +24,7 @@ any_dimension = AnyDimension()
 
 
 def assert_equivalent_dimension(
-    arg: SymQuantity | ScalarValue | Dimension,
+    arg: SymQuantity | Any | Dimension,
     param_name: str,
     func_name: str,
     expected_unit: SymQuantity | Dimension,
@@ -113,7 +111,6 @@ __all__ = [
     "dimsys_SI",
 
     # locals
-    "ScalarValue",
     "AnyDimension",
     "any_dimension",
     "assert_equivalent_dimension",

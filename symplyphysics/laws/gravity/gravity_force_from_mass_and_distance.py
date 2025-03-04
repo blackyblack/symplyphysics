@@ -15,7 +15,7 @@ bodies and inversely proportional to the distance squared between the bodies.
 #. `Physics LibreTexts. Newton's Law of Universal Gravitation (13.2.1) <https://phys.libretexts.org/Workbench/PH_245_Textbook_V2/13%3A_Gravitation/13.02%3A_Newton's_Law_of_Universal_Gravitation>`__.
 """
 
-from sympy import Eq, solve, sqrt
+from sympy import Eq, solve, sqrt, Expr
 from symplyphysics import (
     Quantity,
     validate_input,
@@ -25,7 +25,6 @@ from symplyphysics import (
     symbols,
     quantities,
 )
-from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.points.cartesian_point import CartesianPoint
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.fields.scalar_field import ScalarField
@@ -72,7 +71,7 @@ _potential = gravitational_potential_energy.law.rhs.subs({
 })
 
 
-def potential_field_function(point: CartesianPoint) -> ScalarValue:
+def potential_field_function(point: CartesianPoint) -> Expr:
     return _potential.subs(
         distance_between_mass_centers,
         sqrt(point.x**2 + point.y**2 + point.z**2),

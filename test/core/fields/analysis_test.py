@@ -1,9 +1,8 @@
 from collections import namedtuple
 from typing import Sequence
 from pytest import fixture, mark, raises
-from sympy import Expr, cos, pi, sin, sqrt, Symbol as SymSymbol, sympify
+from sympy import Expr, cos, pi, sin, sqrt, Symbol as SymSymbol, sympify, S
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
-from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.fields.analysis import circulation_along_curve, circulation_along_surface_boundary, flux_across_curve, flux_across_surface, flux_across_surface_boundary, flux_across_volume_boundary
 from symplyphysics.core.fields.vector_field import VectorField
 from symplyphysics.core.points.cartesian_point import CartesianPoint
@@ -227,8 +226,8 @@ def test_basic_flux_across_volume_boundary(test_args: Args) -> None:
 def test_basic_flux_across_sphere_boundary() -> None:
     B = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
 
-    def field_function(p: CylinderPoint) -> Sequence[ScalarValue]:
-        return [p.radius**3, 0, 0]
+    def field_function(p: CylinderPoint) -> Sequence[Expr]:
+        return [p.radius**3, S.Zero, S.Zero]
 
     field = VectorField(field_function, B)
     result = flux_across_volume_boundary(field, (1, 2), (0, 2 * pi), (0, 5))

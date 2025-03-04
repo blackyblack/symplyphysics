@@ -1,27 +1,27 @@
 from functools import reduce
 from operator import add
-from typing import Optional, Sequence
+from typing import Optional, Sequence, Any
 from sympy import S, Expr, cos, sin, sqrt, sympify, diff, integrate
 
 from .vectors import Vector
 from ..expr_comparisons import expr_equals
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
-from ..dimensions import ScalarValue
 
 
 # Add zeroes so that both vectors have the same length.
 # Use 'max_size' to increase or trim vector size. Vectors are aligned to the
 # larger (more dimensions) vector size if not set.
 def _extend_two_vectors(
-        vector_left: Vector,
-        vector_right: Vector,
-        max_size: Optional[int] = None) -> tuple[Sequence[ScalarValue], Sequence[ScalarValue]]:
+    vector_left: Vector,
+    vector_right: Vector,
+    max_size: Optional[int] = None,
+) -> tuple[Sequence[Expr], Sequence[Expr]]:
     max_size = max(len(vector_left.components), len(
         vector_right.components)) if max_size is None else max_size
     list_left_extended = list(
-        vector_left.components) + [0] * (max_size - len(vector_left.components))
+        vector_left.components) + [S.Zero] * (max_size - len(vector_left.components))
     list_right_extended = list(
-        vector_right.components) + [0] * (max_size - len(vector_right.components))
+        vector_right.components) + [S.Zero] * (max_size - len(vector_right.components))
     return (list_left_extended, list_right_extended)
 
 
@@ -88,7 +88,7 @@ def subtract_cartesian_vectors(*vectors: Vector) -> Vector:
 
 # Change Vector magnitude (length)
 # Scalar multiplication changes the magnitude of the vector and does not change it's direction.
-def scale_vector(scalar_value: ScalarValue, vector: Vector) -> Vector:
+def scale_vector(scalar_value: Any, vector: Vector) -> Vector:
     if vector.coordinate_system.coord_system_type == CoordinateSystem.System.CARTESIAN:
         vector_components = [scalar_value * e for e in vector.components]
         return Vector(vector_components, vector.coordinate_system)
@@ -110,8 +110,10 @@ def scale_vector(scalar_value: ScalarValue, vector: Vector) -> Vector:
 
 
 # Multiply elements of two lists respectively and sum the results
-def _multiply_lists_and_sum(list_left: Sequence[ScalarValue],
-    list_right: Sequence[ScalarValue]) -> Expr:
+def _multiply_lists_and_sum(
+    list_left: Sequence[Any],
+    list_right: Sequence[Any],
+) -> Expr:
     return sympify(reduce(add, map(lambda lr: lr[0] * lr[1], zip(list_left, list_right)), 0))
 
 

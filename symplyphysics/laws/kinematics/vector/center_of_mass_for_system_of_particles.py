@@ -11,7 +11,7 @@ the sum of weighted relative positions of the distributed mass is zero.
 """
 
 from typing import Sequence
-from sympy import S
+from sympy import S, Expr
 from symplyphysics import (
     units,
     validate_input,
@@ -22,11 +22,10 @@ from symplyphysics import (
     add_cartesian_vectors,
     scale_vector,
 )
-from symplyphysics.core.dimensions import ScalarValue
 
 
 def center_of_mass_law(
-    masses_: Sequence[ScalarValue],
+    masses_: Sequence[Expr],
     position_vectors_: Sequence[Vector],
 ) -> Vector:
     r"""

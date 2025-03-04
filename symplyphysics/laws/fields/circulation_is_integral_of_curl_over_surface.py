@@ -1,7 +1,6 @@
-from typing import Sequence
+from typing import Sequence, Any
 from sympy import (Expr, Symbol as SymSymbol)
 from symplyphysics import Quantity
-from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.fields.analysis import circulation_along_surface_boundary
 from symplyphysics.core.fields.vector_field import VectorField
 
@@ -41,17 +40,23 @@ parameter1 = SymSymbol("parameter1")
 parameter2 = SymSymbol("parameter2")
 
 
-def circulation_law(field: VectorField, trajectory: Sequence[Expr],
-    parameter1_limits: tuple[ScalarValue, ScalarValue], parameter2_limits: tuple[ScalarValue,
-    ScalarValue]) -> ScalarValue:
+def circulation_law(
+    field: VectorField,
+    trajectory: Sequence[Any],
+    parameter1_limits: tuple[Any, Any],
+    parameter2_limits: tuple[Any, Any],
+) -> Expr:
     return circulation_along_surface_boundary(field, trajectory,
         (parameter1, parameter1_limits[0], parameter1_limits[1]),
         (parameter2, parameter2_limits[0], parameter2_limits[1]))
 
 
 # surface should be array with projections to coordinates, eg [parameter1 * cos(parameter2), parameter1 * sin(parameter2)]
-def calculate_circulation(field: VectorField, surface: Sequence[Expr],
-    parameter1_limits: tuple[ScalarValue, ScalarValue], parameter2_limits: tuple[ScalarValue,
-    ScalarValue]) -> Quantity:
+def calculate_circulation(
+    field: VectorField,
+    surface: Sequence[Any],
+    parameter1_limits: tuple[Any, Any],
+    parameter2_limits: tuple[Any, Any],
+) -> Quantity:
     result_expr = circulation_law(field, surface, parameter1_limits, parameter2_limits)
     return Quantity(result_expr)

@@ -5,9 +5,9 @@ from sympy.physics.units import Quantity as SymQuantity, Dimension
 
 from .symbols.symbols import DimensionSymbol, Function, Symbol, IndexedSymbol
 from .operations.symbolic import Symbolic
-from .dimensions import assert_equivalent_dimension, ScalarValue
+from .dimensions import assert_equivalent_dimension
 
-_ValueType: TypeAlias = ScalarValue | SymQuantity | DimensionSymbol | Symbolic
+_ValueType: TypeAlias = Any | SymQuantity | DimensionSymbol | Symbolic
 
 _UnitType: TypeAlias = Dimension | Symbol | Function | IndexedSymbol | Symbolic
 
@@ -18,7 +18,7 @@ def _assert_expected_unit(
     param_name: str,
     function_name: str,
 ) -> None:
-    components: list[ScalarValue | SymQuantity | Dimension] = []
+    components: list[Any | SymQuantity | Dimension] = []
     indexed = isinstance(value, Sequence)
     values = list(value) if isinstance(value, Sequence) else list([value])
     for item in values:

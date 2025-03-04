@@ -1,7 +1,6 @@
-from typing import Sequence
-from sympy import (Expr, Symbol as SymSymbol)
+from typing import Sequence, Any
+from sympy import Expr, Symbol as SymSymbol
 from symplyphysics import Quantity
-from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.fields.analysis import circulation_along_curve
 from symplyphysics.core.fields.vector_field import VectorField
 
@@ -36,14 +35,21 @@ from symplyphysics.core.fields.vector_field import VectorField
 parameter = SymSymbol("parameter")
 
 
-def circulation_law(field: VectorField, trajectory: Sequence[Expr], parameter_from: ScalarValue,
-    parameter_to: ScalarValue) -> ScalarValue:
+def circulation_law(
+    field: VectorField,
+    trajectory: Sequence[Any],
+    parameter_from: Any,
+    parameter_to: Any,
+) -> Expr:
     return circulation_along_curve(field, trajectory, (parameter, parameter_from, parameter_to))
 
 
 # trajectory should be array with projections to coordinates, eg [3 * cos(parameter), 3 * sin(parameter)]
-def calculate_circulation(field: VectorField, trajectory: Sequence[Expr],
-    parameter_limits: tuple[ScalarValue, ScalarValue]) -> Quantity:
+def calculate_circulation(
+    field: VectorField,
+    trajectory: Sequence[Expr],
+    parameter_limits: tuple[Any, Any],
+) -> Quantity:
     (parameter_from, parameter_to) = parameter_limits
     result_expr = circulation_law(field, trajectory, parameter_from, parameter_to)
     return Quantity(result_expr)

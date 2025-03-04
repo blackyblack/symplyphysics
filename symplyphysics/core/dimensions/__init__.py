@@ -1,7 +1,7 @@
 from sympy.physics.units import Dimension
 from sympy.physics.units.systems.si import dimsys_SI
 
-from .dimensions import ScalarValue, any_dimension, assert_equivalent_dimension, dimension_to_si_unit, print_dimension
+from .dimensions import any_dimension, assert_equivalent_dimension, dimension_to_si_unit, print_dimension
 from .collect_quantity import collect_quantity_factor_and_dimension
 from .collect_expression import collect_expression_and_dimension
 from .miscellaneous import dimensionless
@@ -12,7 +12,6 @@ __all__ = [
     "dimsys_SI",
 
     # .dimensions
-    "ScalarValue",
     "any_dimension",
     "assert_equivalent_dimension",
     "print_dimension",

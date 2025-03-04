@@ -6,7 +6,7 @@ from sympy.vector.operators import _get_coord_systems
 from sympy.physics.units import Dimension
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 
-from ..dimensions import assert_equivalent_dimension, dimensionless, ScalarValue
+from ..dimensions import assert_equivalent_dimension, dimensionless
 from ..symbols.quantities import Quantity, subs_list
 from ..symbols.id_generator import next_id
 from ..symbols.symbols import DimensionSymbol
@@ -26,22 +26,22 @@ class Vector:
     #NOTE: 4 and higher dimensional vectors are not supported cause of using CoordSys3D
     #      to allow rebasing vector coordinate system.
     _coordinate_system: CoordinateSystem
-    _components: list[ScalarValue]
+    _components: list[Expr]
 
     def __init__(
         self,
-        components: Sequence[ScalarValue],
+        components: Sequence[Any],
         coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)
     ) -> None:
         self._coordinate_system = coordinate_system
-        self._components = list(components)
+        self._components = list(map(sympify, components))
 
     @property
     def coordinate_system(self) -> CoordinateSystem:
         return self._coordinate_system
 
     @property
-    def components(self) -> Sequence[ScalarValue]:
+    def components(self) -> Sequence[Expr]:
         return self._components
 
     # Converts SymPy Vector to Vector
@@ -111,7 +111,7 @@ class QuantityVector(DimensionSymbol):
     _inner_vector: Vector
 
     def __init__(self,
-        components: Sequence[Quantity | ScalarValue],
+        components: Sequence[Quantity | Any],
         coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN),
         *,
         dimension: Optional[Dimension] = None) -> None:
