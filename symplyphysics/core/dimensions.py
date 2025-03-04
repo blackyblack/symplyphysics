@@ -1,3 +1,5 @@
+# pylint: disable=cyclic-import
+
 from __future__ import annotations
 
 from typing import Any, Callable, TypeAlias, Iterable
@@ -187,8 +189,6 @@ def collect_expression_and_dimension(expr: Expr) -> tuple[Expr, Dimension]:
         ValueError: if a sub-expression is dimensionful instead of dimensionless.
         UnitsError: if the dimensions of sub-expressions don't match.
     """
-
-    from .symbols.quantities import Quantity  # pylint: disable=import-outside-toplevel
 
     def _split_numeric_and_symbolic(
         expr: Expr,) -> tuple[list[Expr], list[SymQuantity], list[tuple[Expr, Dimension]]]:
@@ -477,3 +477,6 @@ __all__ = [
     "print_dimension",
     "dimension_to_si_unit",
 ]
+
+# Delayed to avoid cyclic import
+from .symbols.quantities import Quantity

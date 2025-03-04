@@ -1,3 +1,5 @@
+# pylint: disable=cyclic-import
+
 from __future__ import annotations
 
 from functools import partial
@@ -8,7 +10,6 @@ from sympy.physics.units.systems.si import SI
 from sympy.multipledispatch import dispatch
 
 from .symbols import DimensionSymbol, next_name
-from ..dimensions import collect_quantity_factor_and_dimension
 
 
 class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: disable=too-many-ancestors
@@ -83,3 +84,7 @@ def scale_factor(quantity_: Quantity | float) -> float:
         return float(quantity_.scale_factor)
 
     return quantity_
+
+
+# Delayed to avoid cyclic import
+from ..dimensions import collect_quantity_factor_and_dimension  # pylint: disable=wrong-import-position
