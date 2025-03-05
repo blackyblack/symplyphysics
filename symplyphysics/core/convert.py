@@ -23,7 +23,7 @@ def convert_to_float(value: Expr) -> float:
     return float(convert_to(value, S.One))
 
 
-def convert_to_si(value: Expr | float) -> Expr:
+def convert_to_si(value: Any) -> Expr:
     if not isinstance(value, SymQuantity):
         value = Quantity(value)
 

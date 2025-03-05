@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from functools import partial
-from typing import Any, Optional, Sequence, Any
+from typing import Any, Optional, Sequence
 from sympy import S, Expr, sympify, Abs
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import SI
@@ -10,7 +10,7 @@ from sympy.printing.printer import Printer
 
 from .symbols import DimensionSymbol, next_name
 from ..dimensions.collect_quantity import collect_quantity_factor_and_dimension
-from ..dimensions import dimension_to_si_unit
+from ..dimensions.dimensions import dimension_to_si_unit  # to avoid cyclic import
 
 
 class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: disable=too-many-ancestors
@@ -97,7 +97,7 @@ def _eval_is_ge(lhs: Quantity, rhs: Quantity) -> bool:
     return scale_factor(lhs) >= scale_factor(rhs)
 
 
-def subs_list(input_: Sequence[Expr | float], subs_: dict[Expr, Quantity]) -> Sequence[Quantity]:
+def subs_list(input_: Sequence[Any], subs_: dict[Expr, Quantity]) -> Sequence[Quantity]:
     return [Quantity(sympify(c).subs(subs_)) for c in input_]
 
 

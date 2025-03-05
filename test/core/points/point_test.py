@@ -1,4 +1,5 @@
-from sympy import Expr, symbols
+from typing import Any
+from sympy import symbols
 from sympy.vector import CoordSys3D
 from symplyphysics.core.points.cartesian_point import CartesianPoint
 from symplyphysics.core.points.cylinder_point import CylinderPoint
@@ -6,7 +7,7 @@ from symplyphysics.core.points.sphere_point import SpherePoint
 from symplyphysics.core.points.point import Point
 
 
-def _assert_point(point_: Point, expected_: list[Expr | float]) -> None:
+def _assert_point(point_: Point, expected_: list[Any]) -> None:
     for idx, c in enumerate(point_.coordinates):
         assert c == expected_[idx]
 

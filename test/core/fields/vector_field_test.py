@@ -1,5 +1,5 @@
 from collections import namedtuple
-from typing import Sequence
+from typing import Sequence, Any
 from pytest import fixture, raises
 from sympy import Expr, atan, cos, sin, sqrt, symbols
 from sympy.vector import express
@@ -11,7 +11,7 @@ from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateS
 from symplyphysics.core.fields.vector_field import VectorField
 
 
-def _assert_point(field_: VectorField, point_: Point, expected_: Sequence[Expr | float]) -> None:
+def _assert_point(field_: VectorField, point_: Point, expected_: Sequence[Any]) -> None:
     value = field_(point_)
     for idx, v in enumerate(value.components):
         assert v == expected_[idx]

@@ -106,11 +106,6 @@ def dimension_to_si_unit(dimension: Dimension) -> Expr:
 
 
 __all__ = [
-    # re-exports
-    "Dimension",
-    "dimsys_SI",
-
-    # locals
     "AnyDimension",
     "any_dimension",
     "assert_equivalent_dimension",

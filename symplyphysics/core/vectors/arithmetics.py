@@ -234,7 +234,7 @@ def diff_cartesian_vector(
 
 def integrate_cartesian_vector(
     vector_: Vector,
-    *args: Expr | tuple[Expr, Expr, Expr],
+    *args: Expr | tuple[Expr, Any, Any],
 ) -> Vector:
     if vector_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
         raise ValueError(
