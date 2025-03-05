@@ -3,14 +3,12 @@ Symplyphysics code printer
 """
 
 from typing import Any
-from sympy import S, Expr, Mod, Mul, StrPrinter, E, Symbol as SymSymbol
+from sympy import S, Expr, Mul, StrPrinter, E, Symbol as SymSymbol
 from sympy.matrices.dense import DenseMatrix
 from sympy.simplify import fraction
-from sympy.concrete.products import Product
-from sympy.concrete.summations import Sum
-from sympy.integrals.integrals import Integral
-from sympy.printing.precedence import precedence, precedence_traditional, PRECEDENCE
+from sympy.printing.precedence import precedence
 from ..core.symbols.symbols import DimensionSymbol, Function, IndexedSymbol
+from .miscellaneous import needs_mul_brackets, needs_add_brackets
 
 
 class SymbolCodePrinter(StrPrinter):  # type: ignore[misc]
@@ -116,44 +114,17 @@ class SymbolCodePrinter(StrPrinter):  # type: ignore[misc]
         str_base = self._print(base)
         return f"log({str_value}, {str_base})"
 
-    def _needs_mul_brackets(self, expr: Expr, first: bool = False, last: bool = False) -> bool:
-        # pylint: disable=too-many-return-statements
-        """
-        Returns True if the expression needs to be wrapped in brackets when
-        printed as part of a Mul, False otherwise. This is True for Add,
-        but also for some container objects that would not need brackets
-        when appearing last in a Mul, e.g. an Integral. ``last=True``
-        specifies that this expr is the last to appear in a Mul.
-        ``first=True`` specifies that this expr is the first to appear in
-        a Mul.
-        """
-        if expr.is_Mul:
-            if not first and expr.could_extract_minus_sign():
-                return True
-        elif precedence_traditional(expr) < PRECEDENCE["Mul"]:
-            return True
-        elif expr.is_Relational:
-            return True
-        if expr.is_Piecewise:
-            return True
-        if any(expr.has(x) for x in (Mod,)):
-            return True
-        if (not last and any(expr.has(x) for x in (Integral, Product, Sum))):
-            return True
-
-        return False
-
     def _print_div(self, numer: Expr, denom: Expr) -> str:
         snumer = self._print_Mul(numer) if numer.is_Mul else str(self._print(numer))
         sdenom = self._print_Mul(denom) if denom.is_Mul else str(self._print(denom))
 
-        snumer_str = f"({snumer})" if self._needs_mul_brackets(numer, True, False) else snumer
+        snumer_str = f"({snumer})" if needs_mul_brackets(numer, first=True, last=False) else snumer
         mul_in_denom = False
         if denom.is_Mul:
             denom_args = [a for a in denom.args if a != S.One]
             mul_in_denom = len(denom_args) > 1
-        sdenom_str = f"({sdenom})" if self._needs_mul_brackets(denom, False,
-            True) or mul_in_denom else sdenom
+        sdenom_str = f"({sdenom})" if needs_mul_brackets(denom, first=False,
+            last=True) or mul_in_denom else sdenom
         tex = f"{snumer_str} / {sdenom_str}"
         return tex
 
@@ -175,7 +146,7 @@ class SymbolCodePrinter(StrPrinter):  # type: ignore[misc]
 
             for i, term in enumerate(args):
                 term_tex = self._print(term)
-                if self._needs_mul_brackets(term, first=i == 0, last=i == len(args) - 1):
+                if needs_mul_brackets(term, first=i == 0, last=i == len(args) - 1):
                     term_tex = f"({term_tex})"
 
                 if _tex:
@@ -210,24 +181,12 @@ class SymbolCodePrinter(StrPrinter):  # type: ignore[misc]
             if d_n.is_Mul:
                 denom_args = [a for a in d_n.args if a != S.One]
                 mul_in_denom = len(denom_args) > 1
-            sdenom_str = f"({sdenom})" if self._needs_mul_brackets(d_n, False,
-                True) or mul_in_denom else sdenom
+            sdenom_str = (f"({sdenom})"
+                if needs_mul_brackets(d_n, first=False, last=True) or mul_in_denom else sdenom)
             return f"{tex} / {sdenom_str}"
         else:
             tex2 = self._print_div(d_d, d_n)
         return f"{tex}{separator}{tex2}"
-
-    def _needs_add_brackets(self, expr: Expr) -> bool:
-        """
-        Returns True if the expression needs to be wrapped in brackets when
-        printed as part of an Add, False otherwise.  This is False for most
-        things.
-        """
-        if expr.is_Relational:
-            return True
-        if any(expr.has(x) for x in (Mod,)):
-            return True
-        return False
 
     # pylint: disable-next=invalid-name
     def _print_Add(self, expr: Expr, _order: bool = False) -> str:
@@ -241,7 +200,7 @@ class SymbolCodePrinter(StrPrinter):  # type: ignore[misc]
             else:
                 tex += " + "
             term_tex = self._print(term)
-            if self._needs_add_brackets(term):
+            if needs_add_brackets(term):
                 term_tex = f"({term_tex})"
             tex += term_tex
 
