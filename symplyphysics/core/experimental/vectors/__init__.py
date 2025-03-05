@@ -91,6 +91,7 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
     _id: int
 
     is_symbol = True
+    is_nonnegative = True
 
     def __new__(
         cls,
@@ -106,8 +107,7 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
             if not isinstance(norm, Expr):
                 raise TypeError(f"Norm {norm} must be an Expr, got {type(norm).__name__}.")
 
-            is_non_negative = ask(Q.nonnegative(norm))
-            if is_non_negative is not None and not is_non_negative:
+            if not ask(Q.nonnegative(norm)):
                 raise ValueError(f"Norm must be non-negative, got {norm}.")
 
             if norm == 0:
@@ -177,7 +177,7 @@ class VectorNorm(Expr):  # type: ignore[misc]
     def argument(self) -> VectorExpr:
         return self.args[0]  # type: ignore[no-any-return]
 
-    # NOTE: Add __new__ that would dispatch the code execusion depending on the value of `vector`
+    # NOTE: Add __new__ that would dispatch the code execution depending on the value of `vector`
     # For now, this is handled by the function `norm` below.
     def __init__(self, vector: VectorExpr) -> None:
         self._args = (vector,)

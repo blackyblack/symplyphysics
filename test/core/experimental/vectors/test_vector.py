@@ -1,6 +1,6 @@
 from pytest import raises
 from sympy import Basic, Symbol as SymSymbol
-from symplyphysics import units, dimensionless, symbols, assert_equal
+from symplyphysics import units, dimensionless, symbols, assert_equal, clone_as_symbol
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.errors import UnitsError
 from symplyphysics.core.experimental.vectors import VectorSymbol, ZERO, norm, VectorScale
@@ -25,9 +25,14 @@ def test_init() -> None:
     assert force.norm is None
     assert not force.is_zero
 
-    force_with_norm = VectorSymbol(name, dim, norm=symbols.force, display_latex=latex)
-    assert force_with_norm.norm == symbols.force
+    force_magnitude = clone_as_symbol(symbols.force, positive=True)
+    force_with_norm = VectorSymbol(name, dim, norm=force_magnitude, display_latex=latex)
+    assert force_with_norm.norm == force_magnitude
     assert not force_with_norm.is_zero
+
+    # The norm should be explicitly non-negative; real and complex expressions in general are not supported.
+    with raises(ValueError):
+        VectorSymbol(name, dim, norm=symbols.force, display_latex=latex)
 
     one_newton_force = VectorSymbol(name, dim, norm=1 * units.newton, display_latex=latex)
     assert_equal(one_newton_force.norm, 1 * units.newton)
