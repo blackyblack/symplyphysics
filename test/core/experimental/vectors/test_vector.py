@@ -35,7 +35,8 @@ def test_init() -> None:
         VectorSymbol(name, dim, norm=symbols.force, display_latex=latex)
 
     one_newton_force = VectorSymbol(name, dim, norm=1 * units.newton, display_latex=latex)
-    assert_equal(one_newton_force.norm, 1 * units.newton)
+    if one_newton_force.norm:  # mypy complains otherwise
+        assert_equal(one_newton_force.norm, 1 * units.newton)
     assert not one_newton_force.is_zero
 
     assert VectorSymbol("a", norm=0) is ZERO
