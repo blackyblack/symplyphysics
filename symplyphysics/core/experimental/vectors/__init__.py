@@ -76,6 +76,15 @@ ZERO = _VectorZero()
 class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
     """
     Class representing a symbolic vector.
+
+    The ``display_symbol``, ``display_latex``, and ``dimension`` parameters are used to instantiate
+    the ``DimensionSymbol`` class.
+
+    The ``norm`` parameter represents the **norm**, in other words **length** or **magnitude**, of
+    the vector. It can be a number, an expression, a quantity, or a symbol, but its dimension must
+    match the ``dimension`` of the vector symbol. Note that only ``dimensionless`` vectors with
+    ``norm=1`` can be considered as **unit vectors**. As a counterexample, a force vector of
+    magnitude `1 N` is not a unit vector since its norm contains a dimensionful quantity `N`.
     """
 
     _norm: Optional[Expr]
@@ -280,9 +289,13 @@ class VectorScale(VectorExpr):
         return VectorScale(vector, scale, evaluate=False)
 
     def _sympystr(self, p: Printer) -> str:
+        from symplyphysics.docs.printer_code import SymbolCodePrinter
+
         vector, value = self.args
 
-        if isinstance(value, (Add, Mul)):
+        # NOTE: `p` is not needed for `_needs_mul_brackets`, we could refactor it out of the
+        # `SymbolCodePrinter` class.
+        if SymbolCodePrinter._needs_mul_brackets(p, value, last=True):
             return f"{p.doprint(vector)}*({p.doprint(value)})"
 
         return f"{p.doprint(vector)}*{p.doprint(value)}"
