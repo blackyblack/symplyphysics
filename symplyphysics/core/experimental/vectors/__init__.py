@@ -4,7 +4,6 @@ from collections import defaultdict
 from typing import Any, Optional, Sequence
 
 from sympy import Add, Atom, Basic, Expr, Mul, S, sympify, ask, Q, simplify
-from sympy.core.evalf import EvalfMixin
 from sympy.core.parameters import global_parameters
 from sympy.physics.units import Dimension
 from sympy.physics.units.systems.si import dimsys_SI
@@ -16,7 +15,7 @@ from symplyphysics.core.symbols.id_generator import next_id
 from symplyphysics.core.symbols.symbols import DimensionSymbol
 
 
-class VectorExpr(Basic, EvalfMixin):  # type: ignore[misc]
+class VectorExpr(Basic):  # type: ignore[misc]
     """
     Base class for all vector expressions.
     """
@@ -74,9 +73,6 @@ ZERO = _VectorZero()
 class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
     """
     Class representing a symbolic vector.
-
-    Note that the norm of the vector cannot be `0`, instead, use the pre-defined constant `ZERO`
-    for the zero vector.
     """
 
     _norm: Optional[Expr]
@@ -203,9 +199,6 @@ class VectorNorm(Expr):  # type: ignore[misc]
     def _sympystr(self, p: Printer) -> str:
         return f"norm({p.doprint(self.argument)})"
 
-    def _eval_evalf(self, prec: int) -> VectorNorm:
-        return VectorNorm(self.argument.evalf(n=prec)).doit()
-
 
 def norm(vector: VectorExpr) -> Expr:
     return VectorNorm(vector).doit()
@@ -295,9 +288,6 @@ class VectorScale(VectorExpr):
             return f"{p.doprint(vector)}*({p.doprint(value)})"
 
         return f"{p.doprint(vector)}*{p.doprint(value)}"
-
-    def _eval_evalf(self, prec: int) -> VectorScale:
-        return VectorScale(self.vector.evalf(n=prec), self.scale.evalf(n=prec)).doit()
 
 
 class Scale(Expr):  # type: ignore[misc]
@@ -415,9 +405,6 @@ class VectorAdd(VectorExpr):
 
     def _sympystr(self, p: Printer) -> str:
         return " + ".join(map(p.doprint, self.args))
-
-    def _eval_evalf(self, prec: int) -> VectorAdd:
-        return VectorAdd(*(addend.evalf(n=prec) for addend in self.args)).doit()
 
 
 __all__ = [

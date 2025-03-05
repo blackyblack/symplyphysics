@@ -1,5 +1,5 @@
 from pytest import raises
-from sympy import Basic, Symbol as SymSymbol, pi
+from sympy import Basic, Symbol as SymSymbol, Atom
 from symplyphysics import units, dimensionless, symbols, assert_equal
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.errors import UnitsError
@@ -120,13 +120,6 @@ def test_vector_scaling() -> None:
     scaled_acceleration = scaled_force.subs(force, acceleration)
     assert scaled_acceleration == acceleration * scale
 
-    # .evalf
-
-    # TODO: for some reason this doesn't produce the intended result
-    scaled_vector: VectorScale = force * pi
-    with raises(AssertionError):
-        assert scaled_vector.evalf(3) == force * pi.evalf(3)
-
 
 def test_vector_norm() -> None:
     # VectorSymbol
@@ -164,12 +157,6 @@ def test_vector_norm() -> None:
     # NOTE: We have to force `.doit` after substitution since `__new__` doesn't handle it
     assert norm(force).subs(force, unit).doit() == norm(unit)
 
-    # .evalf
-
-    # NOTE: Both sides differ slightly, (LHS - RHS) / norm(F) = -4.8e-4
-    with raises(AssertionError):
-        assert expr_equals(norm(force * pi).evalf(3), norm(force) * pi.evalf(3))
-
 
 def test_vector_add() -> None:
     force_1 = VectorSymbol("F_1", units.force)
@@ -205,9 +192,3 @@ def test_vector_add() -> None:
 
     # NOTE: We have to force `.doit` after substitution since `__new__` doesn't handle it
     assert sum_123.subs(force_3, force_1).doit() == force_1 * 2 + force_2
-
-    # .evalf
-
-    # NOTE: for some reason, `pi` in the LHS simply gets evaluated with maximum pricision
-    with raises(AssertionError):
-        assert (force_1 * pi + force_2).evalf(3) == force_1 * pi.evalf(3) + force_2
