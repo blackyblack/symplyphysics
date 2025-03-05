@@ -33,9 +33,7 @@ def test_init() -> None:
     assert_equal(one_newton_force.norm, 1 * units.newton)
     assert not one_newton_force.is_zero
 
-    # NOTE: Norm of a symbol can't be 0 (probably needs to be fixed)
-    with raises(ValueError):
-        VectorSymbol("a", norm=0)
+    assert VectorSymbol("a", norm=0) is ZERO
 
     # Correct dimension of norm
     VectorSymbol("S", units.area, norm=1 * units.meter**2)

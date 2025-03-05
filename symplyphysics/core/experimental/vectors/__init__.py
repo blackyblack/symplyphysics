@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections import defaultdict
 from typing import Any, Optional, Sequence
 
-from sympy import Add, Atom, Basic, Expr, Mul, S, sympify
+from sympy import Add, Atom, Basic, Expr, Mul, S, sympify, ask, Q, simplify
 from sympy.core.evalf import EvalfMixin
 from sympy.core.parameters import global_parameters
 from sympy.physics.units import Dimension
@@ -46,7 +46,7 @@ class VectorExpr(Basic, EvalfMixin):  # type: ignore[misc]
 
     @property
     def is_zero(self) -> bool:
-        # check with `isinstance` in case the user instanciates their own zero vector.
+        # check with `isinstance` in case the user instantiates their own zero vector.
         return isinstance(self, _VectorZero)
 
 
@@ -87,12 +87,32 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
     def __new__(
         cls,
         display_symbol: Optional[str] = None,
-        dimension: Optional[Dimension] = None,
+        dimension: Dimension = Dimension(1),
         *,
         norm: Optional[Any] = None,  # pylint: disable=redefined-outer-name
         display_latex: Optional[str] = None,
-    ) -> VectorSymbol:
-        return VectorExpr.__new__(cls)
+    ) -> VectorExpr:
+        if norm is not None:
+            norm = simplify(norm)
+
+            if not isinstance(norm, Expr):
+                raise TypeError(f"Norm {norm} must be an Expr, got {type(norm).__name__}.")
+
+            is_non_negative = ask(Q.nonnegative(norm))
+            if is_non_negative is not None and not is_non_negative:
+                raise ValueError(f"Norm must be non-negative, got {norm}.")
+
+            if norm == 0:
+                return ZERO
+
+        obj = VectorExpr.__new__(cls)
+        obj.__init__(
+            display_symbol=display_symbol,
+            dimension=dimension,
+            norm=norm,
+            display_latex=display_latex,
+        )
+        return obj
 
     def __init__(
         self,
@@ -119,24 +139,6 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
         )
 
         if norm is not None:
-            norm = sympify(norm)
-
-            if not isinstance(norm, Expr):
-                raise TypeError(f"Norm {norm} must be an Expr, got {type(norm).__name__}.")
-
-            try:
-                is_non_negative = bool(norm >= 0)
-            except TypeError:
-                # The case of more complex expressions that we can't compare.
-                pass
-            else:
-                if not is_non_negative:
-                    raise ValueError(f"Norm must be non-negative, got {norm}.")
-
-            # TODO: move it into __new__?
-            if norm == 0:
-                raise ValueError("Use the constant ZERO for a zero vector.")
-
             norm_dim = collect_expression_and_dimension(norm)[1]
             if not dimsys_SI.equivalent_dims(norm_dim, self.dimension):
                 raise UnitsError(f"The norm must be {self.dimension}, got {norm_dim}.")
@@ -163,7 +165,7 @@ class VectorNorm(Expr):  # type: ignore[misc]
 
     1. **Absolute homogeneity**: for all scalars `k` and vectors `a`, `norm(k * a) = abs(k) * norm(a)`.
 
-    1. **Positive definiteness**: for all vectors `a`, `norm(a) = 0` iff `a = 0`.
+    1. **Positive definiteness**: for all vectors `a`, `norm(a) = 0` if and only if `a = 0`.
 
     **Links:**
 
