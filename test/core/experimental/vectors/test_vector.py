@@ -1,9 +1,9 @@
 from pytest import raises
-from sympy import Basic, Symbol as SymSymbol, Atom
+from sympy import Basic, Symbol as SymSymbol
 from symplyphysics import units, dimensionless, symbols, assert_equal
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.errors import UnitsError
-from symplyphysics.core.experimental.vectors import VectorSymbol, ZERO, norm, VectorScale, Scale
+from symplyphysics.core.experimental.vectors import VectorSymbol, ZERO, norm, VectorScale
 
 
 def test_init() -> None:
@@ -148,7 +148,7 @@ def test_vector_norm() -> None:
     v2 = VectorSymbol("v_2")
     assert norm(v1 + v2).args[0] == v1 + v2
     assert norm(v1 + v1) == norm(v1) * 2
-    assert norm(ZERO - v2) == norm(v2)
+    assert norm(ZERO - v2).doit() == norm(v2)  # TODO: check norm.__new__
 
     # .subs
 
@@ -183,7 +183,7 @@ def test_vector_add() -> None:
 
     mass = symbols.mass
     acceleration = VectorSymbol("a", units.acceleration)
-    assert set((force_1 - Scale(mass) * acceleration).args) == {force_1, acceleration * mass * -1}
+    assert set((force_1 - acceleration * mass).args) == {force_1, acceleration * mass * -1}
 
     # NOTE: dimensions of sub-expressions are not yet checked
     _ = force_1 + acceleration

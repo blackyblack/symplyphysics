@@ -55,6 +55,9 @@ class _VectorZero(VectorExpr):
     except for the constant `ZERO` since under the `definition of vector spaces
     <https://en.wikipedia.org/wiki/Vector_space#Definition_and_basic_properties>` there can only
     be one zero.
+
+    Note that the zero vector can be considered having arbitrary (physical) dimension as it can be
+    added to all vectors.
     """
 
     def _sympystr(self, _p: Printer) -> str:
@@ -101,14 +104,7 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
             if norm == 0:
                 return ZERO
 
-        obj = VectorExpr.__new__(cls)
-        obj.__init__(
-            display_symbol=display_symbol,
-            dimension=dimension,
-            norm=norm,
-            display_latex=display_latex,
-        )
-        return obj
+        return VectorExpr.__new__(cls)
 
     def __init__(
         self,
@@ -172,7 +168,7 @@ class VectorNorm(Expr):  # type: ignore[misc]
     def argument(self) -> VectorExpr:
         return self.args[0]  # type: ignore[no-any-return]
 
-    # NOTE: Add __new__ that would dispatch the code execusing depending on the value of `vector`
+    # NOTE: Add __new__ that would dispatch the code execusion depending on the value of `vector`
     # For now, this is handled by the function `norm` below.
     def __init__(self, vector: VectorExpr) -> None:
         self._args = (vector,)
@@ -228,6 +224,8 @@ class VectorScale(VectorExpr):
     2. For all scalars `k`, `k * 0 = 0` where `0` is the zero vector.
 
     3. For all scalars `k` and vectors `a`, `k * a = 0` implies `k = 0` or `a = 0`.
+
+    4. For all vectors `a`, `(-1) * a = -a` where `-a` is the additive inverse of `a`.
 
     **Links:**
 
@@ -290,34 +288,24 @@ class VectorScale(VectorExpr):
         return f"{p.doprint(vector)}*{p.doprint(value)}"
 
 
-class Scale(Expr):  # type: ignore[misc]
-    """
-    Wrapper class intended to allow the scale to come first in the case of scalar multiplication,
-    since using an unwrapped `Expr` in the LHS of the multiplication would yield a `TypeError`.
-    """
-
-    def __init__(self, scale: Any) -> None:
-        self._args = (scale,)
-
-    def __mul__(self, other: Any) -> VectorScale:
-        if isinstance(other, VectorExpr):
-            return VectorScale(other, self.args[0]).doit()
-
-        raise TypeError(
-            f"Scale can only be multiplied with a VectorExpr, got {type(other).__name__}.")
-
-    def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
-        pass
-
-
 class VectorAdd(VectorExpr):
     """
-    Class representing the notion of vector addition as a property of vectors.
+    Class representing the notion of vector *addition* as a property of vectors.
 
-    Note that only 
+    Note that the addends must have the same (physical) dimension to be added together.
 
     This operation has the following properties:
-    
+
+    1. **Associativity**: for all vectors `a, b, c`, `a + (b + c) = (a + b) + c`.
+
+    2. **Commutativity**: for all vectors `a, b`, `a + b = b + a`.
+
+    3. Existence of **identity vector** `0`: for all vectors `a`, `a + 0 = a`.
+
+    4. Existence of **inverse vector**: for all vectors `a`, there exists a vector `-a` s.t. `a + (-a) = 0`.
+
+    The *subtraction* of two vectors can be defined as such: for all vectors `a, b`, `a - b = a + (-b)`.
+
     **Links:**
 
     1. `Wikipedia <https://en.wikipedia.org/wiki/Vector_space#Definition_and_basic_properties>`__.
@@ -409,7 +397,6 @@ class VectorAdd(VectorExpr):
 
 __all__ = [
     "ZERO",
-    "Scale",
     "VectorAdd",
     "VectorExpr",
     "VectorNorm",
