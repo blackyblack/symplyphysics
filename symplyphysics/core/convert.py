@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, SupportsFloat
 from sympy import Expr, S, sympify
 from sympy.physics.units import Quantity as SymQuantity
 
@@ -23,7 +23,7 @@ def convert_to_float(value: Expr) -> float:
     return float(convert_to(value, S.One))
 
 
-def convert_to_si(value: Any) -> Expr:
+def convert_to_si(value: SupportsFloat) -> Expr:
     if not isinstance(value, SymQuantity):
         value = Quantity(value)
 

@@ -190,7 +190,7 @@ _cases: dict[type, Callable[[Any], tuple[Expr, Dimension]]] = {
 }
 
 
-def collect_expression_and_dimension(expr: Expr) -> tuple[Expr, Dimension]:
+def collect_expression_and_dimension(expr: Any) -> tuple[Expr, Dimension]:
     """
     Returns the simplified representation and the dimension of the given expression. Unlike
     `collect_quantity_factor_and_dimension` it supports derivatives, symbols, and functions with

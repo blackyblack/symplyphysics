@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, SupportsFloat
 from sympy import Expr, Pow, Derivative, Abs, Mul, Add, Function as SymFunction, sympify
 from sympy.functions.elementary.miscellaneous import MinMaxBase
 from sympy.physics.units import Quantity as SymQuantity, Dimension
@@ -131,7 +131,7 @@ _cases: dict[type, Callable[[Expr], tuple[Expr, Dimension]]] = {
 }
 
 
-def collect_quantity_factor_and_dimension(expr: Expr) -> tuple[Expr, Dimension]:
+def collect_quantity_factor_and_dimension(expr: SupportsFloat) -> tuple[Expr, Dimension]:
     """
     Returns tuple with scale factor expression and dimension expression. Designed to be
     used during the instantiation of the `symplyphysics.Quantity` class.

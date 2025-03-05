@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, SupportsFloat
 from sympy import Expr, S
 from sympy.physics import units
 from sympy.physics.units import Dimension, Quantity as SymQuantity
@@ -24,7 +24,7 @@ any_dimension = AnyDimension()
 
 
 def assert_equivalent_dimension(
-    arg: SymQuantity | Any | Dimension,
+    arg: SupportsFloat | Dimension,
     param_name: str,
     func_name: str,
     expected_unit: SymQuantity | Dimension,

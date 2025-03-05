@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from functools import partial
-from typing import Any, Optional, Sequence
+from typing import Any, Optional, Sequence, SupportsFloat
 from sympy import S, Expr, sympify, Abs
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import SI
@@ -17,7 +17,7 @@ class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: d
 
     # pylint: disable-next=signature-differs
     def __new__(cls,
-        _expr: Any = S.One,
+        _expr: SupportsFloat = S.One,
         *,
         display_symbol: Optional[str] = None,
         display_latex: Optional[str] = None,
@@ -32,14 +32,15 @@ class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: d
         return obj  # type: ignore[no-any-return]
 
     def __init__(self,
-        expr: Any = S.One,
+        expr: SupportsFloat = S.One,
         *,
         display_symbol: Optional[str] = None,
         display_latex: Optional[str] = None,
         dimension: Optional[Dimension] = None) -> None:
         (scale, dimension_) = collect_quantity_factor_and_dimension(expr)
         try:
-            _ = complex(scale)  # if this fails, then ``scale`` contains a symbolic sub-expression
+            # if this fails (but it shouldn't), then ``scale`` contains a symbolic sub-expression
+            _ = complex(scale)
         except Exception as e:
             raise ValueError(
                 f"Argument '{expr}' to function 'Quantity()' should "
@@ -97,12 +98,20 @@ def _eval_is_ge(lhs: Quantity, rhs: Quantity) -> bool:
     return scale_factor(lhs) >= scale_factor(rhs)
 
 
-def subs_list(input_: Sequence[Any], subs_: dict[Expr, Quantity]) -> Sequence[Quantity]:
+def subs_list(
+    input_: Sequence[SupportsFloat],
+    subs_: dict[Expr, SymQuantity],
+) -> Sequence[Quantity]:
     return [Quantity(sympify(c).subs(subs_)) for c in input_]
 
 
-def scale_factor(quantity_: Quantity | float) -> float:
-    if isinstance(quantity_, Quantity):
+def scale_factor(quantity_: SupportsFloat) -> float:
+    """
+    Exctracts the scale factor converted to `float` from the input if it is a quantity. Otherwise
+    simply calls `float` on the input.
+    """
+
+    if isinstance(quantity_, SymQuantity):
         return float(quantity_.scale_factor)
 
-    return quantity_
+    return float(quantity_)

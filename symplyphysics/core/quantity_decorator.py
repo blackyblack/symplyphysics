@@ -1,13 +1,13 @@
 import functools
 import inspect
-from typing import Any, Callable, Sequence, TypeAlias
+from typing import Any, Callable, Sequence, TypeAlias, SupportsFloat
 from sympy.physics.units import Quantity as SymQuantity, Dimension
 
 from .symbols.symbols import DimensionSymbol, Function, Symbol, IndexedSymbol
 from .operations.symbolic import Symbolic
 from .dimensions import assert_equivalent_dimension
 
-_ValueType: TypeAlias = Any | SymQuantity | DimensionSymbol | Symbolic
+_ValueType: TypeAlias = SupportsFloat | DimensionSymbol | Symbolic
 
 _UnitType: TypeAlias = Dimension | Symbol | Function | IndexedSymbol | Symbolic
 
@@ -18,7 +18,7 @@ def _assert_expected_unit(
     param_name: str,
     function_name: str,
 ) -> None:
-    components: list[Any | SymQuantity | Dimension] = []
+    components: list[SupportsFloat | Dimension] = []
     indexed = isinstance(value, Sequence)
     values = list(value) if isinstance(value, Sequence) else list([value])
     for item in values:

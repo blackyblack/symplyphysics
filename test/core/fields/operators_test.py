@@ -1,5 +1,5 @@
 from collections import namedtuple
-from typing import Sequence, Any
+from typing import Sequence
 from pytest import fixture
 from sympy import Expr, cos, exp, sin, Symbol as SymSymbol, sqrt, S
 from sympy.vector import VectorZero
