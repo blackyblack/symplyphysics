@@ -124,13 +124,7 @@ class BaseCoordinateSystem(Basic, metaclass=ABCMeta):  # type: ignore[misc]
         return type(self)(base_scalars=base_scalars, base_vectors=base_vectors)
 
 
-class RectilinearCoordinateSystem(BaseCoordinateSystem):  # pylint: disable=abstract-method
-    """
-    A **rectilinear** coordinate system is based on the intersection of straight lines.
-    """
-
-
-class CartesianCoordinateSystem(RectilinearCoordinateSystem):
+class CartesianCoordinateSystem(BaseCoordinateSystem):
 
     @staticmethod
     def _base_scalar_dimensions() -> tuple[Dimension, Dimension, Dimension]:
@@ -181,14 +175,7 @@ class CartesianCoordinateSystem(RectilinearCoordinateSystem):
         return S.One, S.One, S.One
 
 
-class CurvilinearCoordinateSystem(BaseCoordinateSystem):  # pylint: disable=abstract-method
-    """
-    A **curvilinear** coordinate system (in a narrow sense) is based on the intersection of curved
-    lines, or a combination of curved and straight lines.
-    """
-
-
-class CylindricalCoordinateSystem(CurvilinearCoordinateSystem):
+class CylindricalCoordinateSystem(BaseCoordinateSystem):
 
     @staticmethod
     def _base_scalar_dimensions() -> tuple[Dimension, Dimension, Dimension]:
@@ -227,7 +214,7 @@ class CylindricalCoordinateSystem(CurvilinearCoordinateSystem):
         return S.One, self.rho, S.One
 
 
-class SphericalCoordinateSystem(CurvilinearCoordinateSystem):
+class SphericalCoordinateSystem(BaseCoordinateSystem):
 
     @staticmethod
     def _base_scalar_dimensions() -> tuple[Dimension, Dimension, Dimension]:
@@ -277,7 +264,7 @@ __all__ = [
     "BaseCoordinateSystem",
     "RectilinearCoordinateSystem",
     "CartesianCoordinateSystem",
-    "CurvilinearCoordinateSystem",
+    "BaseCoordinateSystem",
     "CylindricalCoordinateSystem",
     "SphericalCoordinateSystem",
 ]

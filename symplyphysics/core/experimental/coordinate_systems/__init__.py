@@ -1,8 +1,6 @@
 from .coordinate_systems import (
     BaseCoordinateSystem,
-    RectilinearCoordinateSystem,
     CartesianCoordinateSystem,
-    CurvilinearCoordinateSystem,
     CylindricalCoordinateSystem,
     SphericalCoordinateSystem,
 )
@@ -10,9 +8,7 @@ from .coordinate_systems import (
 __all__ = [
     # .coordinate_systems
     "BaseCoordinateSystem",
-    "RectilinearCoordinateSystem",
     "CartesianCoordinateSystem",
-    "CurvilinearCoordinateSystem",
     "CylindricalCoordinateSystem",
     "SphericalCoordinateSystem",
 ]
