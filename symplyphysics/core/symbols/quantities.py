@@ -1,21 +1,23 @@
 from __future__ import annotations
 
 from functools import partial
-from typing import Any, Optional, Sequence
+from typing import Any, Optional, Sequence, SupportsFloat
 from sympy import S, Expr, sympify, Abs
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import SI
 from sympy.multipledispatch import dispatch
+from sympy.printing.printer import Printer
 
 from .symbols import DimensionSymbol, next_name
-from ..dimensions import collect_quantity_factor_and_dimension
+from ..dimensions.collect_quantity import collect_quantity_factor_and_dimension
+from ..dimensions.dimensions import dimension_to_si_unit  # to avoid cyclic import
 
 
 class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: disable=too-many-ancestors
 
     # pylint: disable-next=signature-differs
     def __new__(cls,
-        _expr: Expr | float = S.One,
+        _expr: SupportsFloat = S.One,
         *,
         display_symbol: Optional[str] = None,
         display_latex: Optional[str] = None,
@@ -30,14 +32,15 @@ class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: d
         return obj  # type: ignore[no-any-return]
 
     def __init__(self,
-        expr: Expr | float = S.One,
+        expr: SupportsFloat = S.One,
         *,
         display_symbol: Optional[str] = None,
         display_latex: Optional[str] = None,
         dimension: Optional[Dimension] = None) -> None:
         (scale, dimension_) = collect_quantity_factor_and_dimension(expr)
         try:
-            _ = complex(scale)  # if this fails, then ``scale`` contains a symbolic sub-expression
+            # if this fails (but it shouldn't), then ``scale`` contains a symbolic sub-expression
+            _ = complex(scale)
         except Exception as e:
             raise ValueError(
                 f"Argument '{expr}' to function 'Quantity()' should "
@@ -67,6 +70,27 @@ class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: d
     def _eval_Abs(self) -> Quantity:
         return self.__class__(Abs(self.scale_factor), dimension=self.dimension)
 
+    def _sympystr(self, p: Printer) -> str:
+        if "QTY" not in self.display_name:
+            return self.display_name
+
+        si_unit = dimension_to_si_unit(self.dimension)
+
+        si_value = self.convert_to(si_unit) / si_unit
+
+        qty: SymQuantity
+
+        for qty in si_value.atoms(SymQuantity):
+            si_value = si_value.subs(qty, 1)
+        si_value = si_value.n(3)
+
+        for qty in si_unit.atoms(SymQuantity):
+            abbrev = qty.abbrev
+            if abbrev:
+                si_unit = si_unit.subs(qty, abbrev)
+
+        return str(p.doprint(si_value * si_unit))
+
 
 # Allows for some SymPy comparisons, eg Piecewise function
 @dispatch(Quantity, Quantity)  # type: ignore[misc]
@@ -74,12 +98,20 @@ def _eval_is_ge(lhs: Quantity, rhs: Quantity) -> bool:
     return scale_factor(lhs) >= scale_factor(rhs)
 
 
-def subs_list(input_: Sequence[Expr | float], subs_: dict[Expr, Quantity]) -> Sequence[Quantity]:
+def subs_list(
+    input_: Sequence[SupportsFloat],
+    subs_: dict[Expr, SymQuantity],
+) -> Sequence[Quantity]:
     return [Quantity(sympify(c).subs(subs_)) for c in input_]
 
 
-def scale_factor(quantity_: Quantity | float) -> float:
-    if isinstance(quantity_, Quantity):
+def scale_factor(quantity_: SupportsFloat) -> float:
+    """
+    Extracts the scale factor converted to `float` from the input if it is a quantity. Otherwise
+    simply calls `float` on the input.
+    """
+
+    if isinstance(quantity_, SymQuantity):
         return float(quantity_.scale_factor)
 
-    return quantity_
+    return float(quantity_)

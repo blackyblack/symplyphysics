@@ -1,7 +1,6 @@
-from typing import Sequence
+from typing import Sequence, Any
 from sympy import (Expr, Symbol as SymSymbol)
 from symplyphysics import Quantity
-from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.fields.analysis import flux_across_surface
 from symplyphysics.core.fields.vector_field import VectorField
 
@@ -37,16 +36,23 @@ parameter1 = SymSymbol("parameter1")
 parameter2 = SymSymbol("parameter2")
 
 
-def flux_law(field: VectorField, trajectory: Sequence[Expr], parameter1_limits: tuple[ScalarValue,
-    ScalarValue], parameter2_limits: tuple[ScalarValue, ScalarValue]) -> ScalarValue:
+def flux_law(
+    field: VectorField,
+    trajectory: Sequence[Any],
+    parameter1_limits: tuple[Any, Any],
+    parameter2_limits: tuple[Any, Any],
+) -> Expr:
     return flux_across_surface(field, trajectory,
         (parameter1, parameter1_limits[0], parameter1_limits[1]),
         (parameter2, parameter2_limits[0], parameter2_limits[1]))
 
 
 # surface should be array with projections to coordinates, eg [3 * cos(parameter), 3 * sin(parameter)]
-def calculate_flux(field: VectorField, surface: Sequence[Expr],
-    parameter1_limits: tuple[ScalarValue, ScalarValue], parameter2_limits: tuple[ScalarValue,
-    ScalarValue]) -> Quantity:
+def calculate_flux(
+    field: VectorField,
+    surface: Sequence[Any],
+    parameter1_limits: tuple[Any, Any],
+    parameter2_limits: tuple[Any, Any],
+) -> Quantity:
     result_expr = flux_law(field, surface, parameter1_limits, parameter2_limits)
     return Quantity(result_expr)

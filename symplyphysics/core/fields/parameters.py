@@ -1,6 +1,5 @@
-from typing import TypeAlias
+from typing import TypeAlias, Any
 from sympy import Expr
-from ..dimensions import ScalarValue
 
 ParameterType: TypeAlias = Expr
-ParameterLimits: TypeAlias = tuple[ParameterType, ScalarValue, ScalarValue]
+ParameterLimits: TypeAlias = tuple[ParameterType, Any, Any]

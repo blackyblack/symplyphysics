@@ -1,11 +1,8 @@
-from typing import Any
-from sympy import Expr, sympify, S
-from sympy.physics import units
+from typing import Any, SupportsFloat
+from sympy import Expr, S, sympify
 from sympy.physics.units import Quantity as SymQuantity
-from sympy.physics.units.systems.si import dimsys_SI
-from sympy.physics.units.definitions import dimension_definitions
 
-from .dimensions import assert_equivalent_dimension
+from .dimensions import assert_equivalent_dimension, dimension_to_si_unit
 from .symbols.quantities import Quantity
 
 
@@ -13,41 +10,31 @@ def convert_to(value: Expr, target_unit: Expr) -> Expr:
     """
     Convert ``value`` to its scale factor with ``value`` unit represented as ``target_unit``.
     """
-    value_quantity = value if isinstance(value, Quantity) else Quantity(value)
-    target_quantity = target_unit if isinstance(target_unit, Quantity) else Quantity(target_unit)
-    assert_equivalent_dimension(value_quantity, value_quantity.dimension.name, "convert_to",
-        target_quantity.dimension)
-    return sympify(value_quantity.scale_factor) * (1 / sympify(target_quantity.scale_factor))
+    if not isinstance(value, SymQuantity):
+        value = Quantity(value)
+    if not isinstance(target_unit, SymQuantity):
+        target_unit = Quantity(target_unit)
+
+    assert_equivalent_dimension(value, value.dimension.name, "convert_to", target_unit.dimension)
+    return sympify(value.scale_factor) * (1 / sympify(target_unit.scale_factor))
 
 
 def convert_to_float(value: Expr) -> float:
     return float(convert_to(value, S.One))
 
 
-_si_conversions: dict[units.Dimension, Expr] = {
-    dimension_definitions.angle: S.One,
-    dimension_definitions.length: units.meter,
-    dimension_definitions.mass: units.kilogram,
-    dimension_definitions.time: units.second,
-    dimension_definitions.current: units.ampere,
-    dimension_definitions.temperature: units.kelvin,
-    dimension_definitions.amount_of_substance: units.mole,
-    dimension_definitions.luminous_intensity: units.candela,
-}
+def convert_to_si(value: SupportsFloat) -> Expr:
+    if not isinstance(value, SymQuantity):
+        value = Quantity(value)
 
-
-def convert_to_si(value: Expr | float) -> Expr:
-    quantity = value if isinstance(value, Quantity) else Quantity(value)
-    dependencies = dimsys_SI.get_dimensional_dependencies(quantity.dimension)
-    unit = S.One
-    for dimension, power in dependencies.items():
-        unit *= _si_conversions[dimension]**power
-    return convert_to(quantity, unit)
+    unit = dimension_to_si_unit(value.dimension)
+    return convert_to(value, unit)
 
 
 def evaluate_quantity(quantity: Expr, **kwargs: Any) -> Quantity:
-    if not isinstance(quantity, Quantity):
+    if not isinstance(quantity, SymQuantity):
         quantity = Quantity(quantity)
+
     scale_factor_ = quantity.scale_factor.evalf(**kwargs)
     dimension = quantity.dimension
     return Quantity(scale_factor_, dimension=dimension)

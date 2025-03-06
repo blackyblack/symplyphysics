@@ -1,9 +1,8 @@
 from collections import namedtuple
 from typing import Sequence
 from pytest import fixture
-from sympy import Expr, cos, exp, sin, Symbol as SymSymbol, sqrt
+from sympy import Expr, cos, exp, sin, Symbol as SymSymbol, sqrt, S
 from sympy.vector import VectorZero
-from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
 from symplyphysics.core.fields.vector_field import VectorField
@@ -40,7 +39,7 @@ def test_basic_gradient() -> None:
 def test_cylindrical_gradient() -> None:
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
 
-    def field_function(p: CylinderPoint) -> ScalarValue:
+    def field_function(p: CylinderPoint) -> Expr:
         return p.r**2 + p.r * p.z * sin(p.theta) - p.z**2
 
     cylindrical_field = ScalarField(field_function, C1)
@@ -61,7 +60,7 @@ def test_cylindrical_gradient() -> None:
 def test_spherical_gradient() -> None:
     C1 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
 
-    def field_function(p: SpherePoint) -> ScalarValue:
+    def field_function(p: SpherePoint) -> Expr:
         return -p.r**2 * cos(2 * p.phi + p.theta)
 
     spherical_field = ScalarField(field_function, C1)
@@ -97,8 +96,12 @@ def test_cylindrical_divergence(test_args: Args) -> None:
     # verify that in cylindrical coordinates result is same
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
 
-    def field_function(p: CylinderPoint) -> Sequence[ScalarValue]:
-        return [p.radius * 2 / 3, 0, p.height * 2 / 3]
+    def field_function(p: CylinderPoint) -> Sequence[Expr]:
+        return [
+            p.radius * 2 / 3,
+            S.Zero,
+            p.height * 2 / 3,
+        ]
 
     cylindrical_field = VectorField(field_function, C1)
     result = divergence_operator(cylindrical_field)
@@ -108,10 +111,11 @@ def test_cylindrical_divergence(test_args: Args) -> None:
 def test_spherical_divergence() -> None:
     C1 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
 
-    def field_function(p: SpherePoint) -> Sequence[ScalarValue]:
+    def field_function(p: SpherePoint) -> Sequence[Expr]:
         return [
             1 / p.radius**2 * cos(p.polar_angle),
-            cos(p.polar_angle), p.radius * sin(p.polar_angle) * cos(p.azimuthal_angle)
+            cos(p.polar_angle),
+            p.radius * sin(p.polar_angle) * cos(p.azimuthal_angle),
         ]
 
     field = VectorField(field_function, C1)
@@ -137,10 +141,11 @@ def test_basic_curl(test_args: Args) -> None:
 def test_cylindrical_curl() -> None:
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
 
-    def field_function(p: CylinderPoint) -> Sequence[ScalarValue]:
+    def field_function(p: CylinderPoint) -> Sequence[Expr]:
         return [
-            p.radius * sin(p.azimuthal_angle), p.radius**2 * p.height,
-            p.height * cos(p.azimuthal_angle)
+            p.radius * sin(p.azimuthal_angle),
+            p.radius**2 * p.height,
+            p.height * cos(p.azimuthal_angle),
         ]
 
     field = VectorField(field_function, C1)
@@ -157,10 +162,11 @@ def test_cylindrical_curl() -> None:
 def test_spherical_curl() -> None:
     C1 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
 
-    def field_function(p: SpherePoint) -> Sequence[ScalarValue]:
+    def field_function(p: SpherePoint) -> Sequence[Expr]:
         return [
             1 / p.radius**2 * cos(p.polar_angle),
-            cos(p.polar_angle), p.radius * sin(p.polar_angle) * cos(p.azimuthal_angle)
+            cos(p.polar_angle),
+            p.radius * sin(p.polar_angle) * cos(p.azimuthal_angle),
         ]
 
     field = VectorField(field_function, C1)

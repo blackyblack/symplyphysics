@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections import defaultdict
 from typing import Any, Optional, Sequence
 
-from sympy import Add, Atom, Basic, Expr, Mul, S, sympify, ask, Q, simplify
+from sympy import Atom, Basic, Expr, S, sympify, ask, Q, simplify
 from sympy.core.parameters import global_parameters
 from sympy.physics.units import Dimension
 from sympy.physics.units.systems.si import dimsys_SI
@@ -13,6 +13,7 @@ from symplyphysics.core.dimensions import collect_expression_and_dimension
 from symplyphysics.core.errors import UnitsError
 from symplyphysics.core.symbols.id_generator import next_id
 from symplyphysics.core.symbols.symbols import DimensionSymbol
+from symplyphysics.docs.miscellaneous import needs_mul_brackets
 
 
 class VectorExpr(Basic):  # type: ignore[misc]
@@ -289,13 +290,9 @@ class VectorScale(VectorExpr):
         return VectorScale(vector, scale, evaluate=False)
 
     def _sympystr(self, p: Printer) -> str:
-        from symplyphysics.docs.printer_code import SymbolCodePrinter
-
         vector, value = self.args
 
-        # NOTE: `p` is not needed for `_needs_mul_brackets`, we could refactor it out of the
-        # `SymbolCodePrinter` class.
-        if SymbolCodePrinter._needs_mul_brackets(p, value, last=True):
+        if needs_mul_brackets(value, last=True):
             return f"{p.doprint(vector)}*({p.doprint(value)})"
 
         return f"{p.doprint(vector)}*{p.doprint(value)}"
@@ -383,7 +380,7 @@ class VectorAdd(VectorExpr):
 
         mapping = filter_scales(collect_scales(flatten_additions(self.args)))
 
-        scaled_addends = [vector * scale for vector, scale in mapping.items()]
+        scaled_addends: list[VectorExpr] = [vector * scale for vector, scale in mapping.items()]
 
         match len(scaled_addends):
             case 0:
