@@ -43,6 +43,13 @@ def _check_base_vectors(base_vectors: Sequence[VectorSymbol]) -> None:
 
 
 class BaseCoordinateSystem(Basic, metaclass=ABCMeta):  # type: ignore[misc]
+    """
+    Base class for coordinate systems.
+
+    Note that we only deal with **orthogonal** coordinates, in which the coordinate surfaces meet
+    at right angles at all points in space. Only in such coordinates the metric tensor is diagonal,
+    swhich simplifies the calculations. The opposite is called **skew** coordinates.
+    """
 
     def __new__(
         cls,
@@ -117,11 +124,13 @@ class BaseCoordinateSystem(Basic, metaclass=ABCMeta):  # type: ignore[misc]
         return type(self)(base_scalars=base_scalars, base_vectors=base_vectors)
 
 
-class OrtholinearCoordinateSystem(BaseCoordinateSystem):  # pylint: disable=abstract-method
-    pass
+class RectilinearCoordinateSystem(BaseCoordinateSystem):  # pylint: disable=abstract-method
+    """
+    A **rectilinear** coordinate system is based on the intersection of straight lines.
+    """
 
 
-class CartesianCoordinateSystem(OrtholinearCoordinateSystem):
+class CartesianCoordinateSystem(RectilinearCoordinateSystem):
 
     @staticmethod
     def _base_scalar_dimensions() -> tuple[Dimension, Dimension, Dimension]:
@@ -173,7 +182,10 @@ class CartesianCoordinateSystem(OrtholinearCoordinateSystem):
 
 
 class CurvilinearCoordinateSystem(BaseCoordinateSystem):  # pylint: disable=abstract-method
-    pass
+    """
+    A **curvilinear** coordinate system (in a narrow sense) is based on the intersection of curved
+    lines, or a combination of curved and straight lines.
+    """
 
 
 class CylindricalCoordinateSystem(CurvilinearCoordinateSystem):
@@ -263,7 +275,7 @@ class SphericalCoordinateSystem(CurvilinearCoordinateSystem):
 
 __all__ = [
     "BaseCoordinateSystem",
-    "OrtholinearCoordinateSystem",
+    "RectilinearCoordinateSystem",
     "CartesianCoordinateSystem",
     "CurvilinearCoordinateSystem",
     "CylindricalCoordinateSystem",
