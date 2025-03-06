@@ -1,10 +1,9 @@
 from collections import namedtuple
-from typing import Sequence
+from typing import Sequence, Any
 from pytest import fixture, raises
 from sympy import Expr, atan, cos, sin, sqrt, symbols
 from sympy.vector import express
 from symplyphysics.core.test_decorators import unsupported_usage
-from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.points.cylinder_point import CylinderPoint
 from symplyphysics.core.points.cartesian_point import CartesianPoint
 from symplyphysics.core.points.point import Point
@@ -12,7 +11,7 @@ from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateS
 from symplyphysics.core.fields.vector_field import VectorField
 
 
-def _assert_point(field_: VectorField, point_: Point, expected_: Sequence[Expr | float]) -> None:
+def _assert_point(field_: VectorField, point_: Point, expected_: Sequence[Any]) -> None:
     value = field_(point_)
     for idx, v in enumerate(value.components):
         assert v == expected_[idx]
@@ -32,7 +31,7 @@ def test_args_fixture() -> Args:
 
 def test_basic_field() -> None:
 
-    def field_function(p: CartesianPoint) -> Sequence[ScalarValue]:
+    def field_function(p: CartesianPoint) -> Sequence[Expr]:
         return [p.y, p.x]
 
     field = VectorField(field_function)
@@ -176,7 +175,7 @@ def test_basic_apply_to_basis(test_args: Args) -> None:
 
 def test_custom_names_apply_to_basis() -> None:
 
-    def field_function(p: CylinderPoint) -> Sequence[ScalarValue]:
+    def field_function(p: CylinderPoint) -> Sequence[Expr]:
         return [p.radius, p.azimuthal_angle, p.height]
 
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)

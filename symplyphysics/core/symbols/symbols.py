@@ -125,7 +125,7 @@ class Function(DimensionSymbol, UndefinedFunction):  # type: ignore[misc]
         cls.arguments = arguments
         super().__init__(display_name, dimension, display_latex=display_latex)
 
-    def __repr__(cls) -> str:
+    def __repr__(cls) -> str:  # pylint: disable=invalid-repr-returned
         return cls.display_name
 
 

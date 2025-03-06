@@ -1,9 +1,9 @@
+from typing import Any
 from collections import namedtuple
 from pytest import fixture, raises
 from sympy import atan2, cos, pi, sin, sqrt, Rational, nan
 from symplyphysics import (SI, Quantity, dimensionless, units, QuantityVector, Vector,
     CoordinateSystem, coordinates_transform)
-from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.vectors.arithmetics import (add_cartesian_vectors, cross_cartesian_vectors,
     dot_vectors, equal_vectors, scale_vector, vector_magnitude, vector_unit, project_vector,
     reject_cartesian_vector)
@@ -560,7 +560,7 @@ def test_basic_quantity_unit_vector() -> None:
 def test_cartesian_vector_projection() -> None:
     w = Vector([1, 2, -1])
 
-    def check(v: Vector, correct: list[ScalarValue]) -> None:
+    def check(v: Vector, correct: list[Any]) -> None:
         derived = project_vector(v, w)
         assert vector_magnitude(cross_cartesian_vectors(derived, w)) == 0
         assert derived.components == correct
@@ -577,7 +577,7 @@ def test_cartesian_vector_projection() -> None:
 def test_cartesian_vector_rejection() -> None:
     w = Vector([1, 2, -1])
 
-    def check(v: Vector, correct: list[ScalarValue]) -> None:
+    def check(v: Vector, correct: list[Any]) -> None:
         derived = reject_cartesian_vector(v, w)
         assert dot_vectors(derived, w) == 0
         assert derived.components == correct

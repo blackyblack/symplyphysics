@@ -380,7 +380,7 @@ class VectorAdd(VectorExpr):
 
         mapping = filter_scales(collect_scales(flatten_additions(self.args)))
 
-        scaled_addends = [vector * scale for vector, scale in mapping.items()]
+        scaled_addends: list[VectorExpr] = [vector * scale for vector, scale in mapping.items()]
 
         match len(scaled_addends):
             case 0:

@@ -23,7 +23,7 @@ for _attr in set(dir(symbols)) - set(symbols.__all__):
             if isinstance(_sub_obj, Symbol):
                 _symbols_by_module[_attr].add(_sub_attr)
 if _unincluded:
-    _s_unincluded = ", ".join(_unincluded)
+    _s_unincluded = ", ".join(_unincluded)  # pylint: disable=invalid-name
     raise ValueError(f"Include {_s_unincluded} in .__all__.")
 
 
@@ -35,12 +35,11 @@ def process_string(doc: str, path: Path) -> str:
         index_from, index_to = match.span()
         name = match.group(1)
 
-        found = False
+        directory = ""
         for directory, collection in _symbols_by_module.items():
             if name in collection:
-                found = True
                 break
-        if not found:
+        if not directory:
             raise ValueError(f"Unknown symbol '{name}' in '{path}'.")
 
         part_before = doc[last_index_to:index_from]

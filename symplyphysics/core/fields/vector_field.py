@@ -1,6 +1,6 @@
 from __future__ import annotations
 from functools import partial
-from typing import Callable, Sequence, TypeAlias, TypeVar
+from typing import Callable, Sequence, TypeAlias, TypeVar, Any
 from sympy import Expr, sympify
 from sympy.vector import Vector as SymVector
 
@@ -10,14 +10,16 @@ from ..points.sphere_point import SpherePoint
 from ..points.cylinder_point import CylinderPoint
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
 from ..vectors.vectors import Vector
-from ...core.dimensions import ScalarValue
 
 T = TypeVar("T", bound="Point")
-FieldFunction: TypeAlias = Callable[[T], Sequence[ScalarValue]] | Sequence[ScalarValue]
+FieldFunction: TypeAlias = Callable[[T], Sequence[Expr]] | Sequence[Any]
 
 
-def _subs_with_point(expr: Sequence[ScalarValue], coordinate_system: CoordinateSystem,
-    point_: Point) -> Sequence[Expr]:
+def _subs_with_point(
+    expr: Sequence[Any],
+    coordinate_system: CoordinateSystem,
+    point_: Point,
+) -> Sequence[Expr]:
     base_scalars = coordinate_system.coord_system.base_scalars()
     result: list[Expr] = []
     for e in expr:
@@ -43,6 +45,9 @@ class VectorField:
         point_function: FieldFunction,  # type: ignore[type-arg]
         coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)
     ) -> None:
+        if not callable(point_function):
+            point_function = list(map(sympify, point_function))
+
         self._point_function = point_function
         self._coordinate_system = coordinate_system
 
@@ -90,15 +95,17 @@ class VectorField:
     # Constructs new VectorField from SymPy expression.
     # Can contain value instead of SymPy Vector, eg 0.5, but it should be sympified.
     @staticmethod
-    def from_sympy_vector(sympy_vector_: SymVector,
-        coordinate_system: CoordinateSystem) -> VectorField:
+    def from_sympy_vector(
+        sympy_vector_: SymVector,
+        coordinate_system: CoordinateSystem,
+    ) -> VectorField:
         field_vector = Vector.from_sympy_vector(sympy_vector_, coordinate_system)
         return VectorField.from_vector(field_vector)
 
     # Applies field to a trajectory / surface / volume - calls field functions with each element of the trajectory as parameter.
     # trajectory_ - list of expressions that correspond to a function in some space, eg [param, param] for a linear function y = x
     # return - vector parametrized by trajectory parameters.
-    def apply(self, trajectory_: Sequence[Expr | float]) -> Vector:
+    def apply(self, trajectory_: Sequence[Any]) -> Vector:
         trajectory_as_point = Point(*trajectory_)
         if self._coordinate_system.coord_system_type == CoordinateSystem.System.CARTESIAN:
             trajectory_as_point = CartesianPoint(*trajectory_)

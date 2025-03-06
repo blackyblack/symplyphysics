@@ -8,11 +8,11 @@ quantity vectors are equal to each other within some tolerance.
 * `assert_equal_vectors` asserts that two quantity vectors are equal.
 """
 
-from typing import Optional
+from typing import Optional, SupportsFloat
 from pytest import approx
 from sympy import N, re, im
 from sympy.physics.units import Dimension
-from symplyphysics.core.dimensions import assert_equivalent_dimension, ScalarValue
+from symplyphysics.core.dimensions import assert_equivalent_dimension
 from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.core.vectors.vectors import QuantityVector
 
@@ -44,7 +44,7 @@ def approx_equal_numbers(
 
 def approx_equal_quantities(
     lhs: Quantity,
-    rhs: ScalarValue,
+    rhs: SupportsFloat,
     *,
     relative_tolerance: Optional[float] = None,
     absolute_tolerance: Optional[float] = None,
@@ -80,8 +80,8 @@ def approx_equal_quantities(
 
 # Combined with assert for better test output
 def assert_equal(
-    lhs: ScalarValue,
-    rhs: ScalarValue,
+    lhs: SupportsFloat,
+    rhs: SupportsFloat,
     *,
     relative_tolerance: Optional[float] = None,
     absolute_tolerance: Optional[float] = None,
