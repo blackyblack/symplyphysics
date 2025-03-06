@@ -22,14 +22,17 @@ def test_base_init() -> None:
     good_scalars = [x, y, z]
     good_vectors = [i, j, k]
 
+    # If the base scalars are specified, there should be exactly 3 of them
     for idx in range(1, 3):
         with raises(ValueError):
             CartesianCoordinateSystem(base_scalars=good_scalars[:idx])
 
+    # If the base vectors are specified, there should be exactly 3 of them
     for idx in range(1, 3):
         with raises(ValueError):
             CartesianCoordinateSystem(base_vectors=good_vectors[:idx])
 
+    # The base vectors must be unique
     with raises(ValueError):
         CartesianCoordinateSystem(base_vectors=[i, i, k])
     with raises(ValueError):
@@ -76,6 +79,7 @@ def test_cartesian_system() -> None:
 
     # errors
 
+    # Wrong dimension of base scalars
     good_scalars = [x, y, z]
     bad_scalar = Symbol("s", units.area)
     for idx in range(3):
@@ -86,6 +90,7 @@ def test_cartesian_system() -> None:
         with raises(UnitsError):
             CartesianCoordinateSystem(base_scalars=bad_scalars)
 
+    # Wrong dimension of base vectors
     good_vectors = [i, j, k]
     bad_vector = VectorSymbol("i", units.length)
     for idx in range(3):
@@ -134,6 +139,7 @@ def test_cylindrical_system() -> None:
 
     # errors
 
+    # Wrong dimension of base scalars
     good_scalars = [rho, phi, z]
     bad_scalar = Symbol("S", units.energy / units.temperature)
     for idx in range(3):
@@ -144,6 +150,7 @@ def test_cylindrical_system() -> None:
         with raises(UnitsError):
             CylindricalCoordinateSystem(base_scalars=bad_scalars)
 
+    # Wrong dimension of base vectors
     good_vectors = [e_rho, e_phi, e_z]
     bad_vector = VectorSymbol("a", units.force)
     for idx in range(3):
@@ -195,6 +202,7 @@ def test_spherical_system() -> None:
 
     # errors
 
+    # Wrong dimension of base scalars
     good_scalars = [r, theta, phi]
     bad_scalar = Symbol("T", units.temperature)
     for idx in range(3):
@@ -205,6 +213,7 @@ def test_spherical_system() -> None:
         with raises(UnitsError):
             SphericalCoordinateSystem(base_scalars=bad_scalars)
 
+    # Wrong dimension of base vectors
     good_vectors = [e_rho, e_theta, e_phi]
     bad_vector = VectorSymbol("E", units.force / units.charge)
     for idx in range(3):
