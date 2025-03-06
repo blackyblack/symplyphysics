@@ -48,7 +48,7 @@ class BaseCoordinateSystem(Basic, metaclass=ABCMeta):  # type: ignore[misc]
 
     Note that we only deal with **orthogonal** coordinates, in which the coordinate surfaces meet
     at right angles at all points in space. Only in such coordinates the metric tensor is diagonal,
-    swhich simplifies the calculations. The opposite is called **skew** coordinates.
+    which simplifies the calculations. The opposite is called **skew** coordinates.
     """
 
     def __new__(
