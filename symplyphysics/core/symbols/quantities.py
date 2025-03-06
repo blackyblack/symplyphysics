@@ -107,7 +107,7 @@ def subs_list(
 
 def scale_factor(quantity_: SupportsFloat) -> float:
     """
-    Exctracts the scale factor converted to `float` from the input if it is a quantity. Otherwise
+    Extracts the scale factor converted to `float` from the input if it is a quantity. Otherwise
     simply calls `float` on the input.
     """
 
