@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from sympy import atan, cos, pi, sin, sqrt, symbols, simplify, sympify, Expr
+from sympy import atan, cos, pi, sin, sqrt, symbols, simplify, Expr
 from sympy.vector import express
 from symplyphysics.core.test_decorators import unsupported_usage
 from symplyphysics.core.points.cylinder_point import CylinderPoint
@@ -240,7 +240,7 @@ def test_invariant_transformed_trajectory_field_apply(test_args: Args) -> None:
     field = ScalarField(lambda p: p.x**2 + 2 * p.y**2)
     point = [1, 2]
     trajectory = [test_args.C.coord_system.x, test_args.C.coord_system.y + 5]
-    trajectory_value = sympify(field.apply(trajectory))
+    trajectory_value = field.apply(trajectory)
     assert trajectory_value == test_args.C.coord_system.x**2 + 2 * (test_args.C.coord_system.y +
         5)**2
     assert trajectory_value.subs({
@@ -254,7 +254,7 @@ def test_invariant_transformed_trajectory_field_apply(test_args: Args) -> None:
         express(trajectory[0], B.coord_system, variables=True),
         express(trajectory[1], B.coord_system, variables=True)
     ]
-    transformed_trajectory_value = sympify(field.apply(transformed_trajectory))
+    transformed_trajectory_value = field.apply(transformed_trajectory)
 
     p1 = test_args.C.coord_system.origin.locate_new(
         "p1", point[0] * test_args.C.coord_system.i + point[1] * test_args.C.coord_system.j)

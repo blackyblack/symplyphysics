@@ -102,7 +102,7 @@ def subs_list(
     input_: Sequence[SupportsFloat],
     subs_: dict[Expr, SymQuantity],
 ) -> Sequence[Quantity]:
-    return [Quantity(sympify(c).subs(subs_)) for c in input_]
+    return [Quantity(sympify(c, strict=True).subs(subs_)) for c in input_]
 
 
 def scale_factor(quantity_: SupportsFloat) -> float:

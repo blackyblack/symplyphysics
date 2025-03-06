@@ -1,4 +1,4 @@
-from sympy import Expr, symbols as sym_symbols, sympify
+from sympy import Expr, symbols as sym_symbols
 from symplyphysics import (
     units,
     Quantity,
@@ -112,7 +112,7 @@ _force_derived = force_law(_acceleration_via_force, _velocity).simplify()
 
 for _force_derived_component, _force_component in zip(_force_derived.components, _force.components):
     assert expr_equals(
-        sympify(_force_derived_component),
+        _force_derived_component,
         _force_component,
     )
 
@@ -122,7 +122,7 @@ _acceleration_derived = acceleration_law(_force_via_acceleration, _velocity).sim
 for _acceleration_derived_component, _acceleration_component in zip(
         _acceleration_derived.components, _acceleration.components):
     assert expr_equals(
-        sympify(_acceleration_derived_component),
+        _acceleration_derived_component,
         _acceleration_component,
     )
 

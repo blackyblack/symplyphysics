@@ -10,7 +10,7 @@ to the net force exerted on the body.
 #. `Britannica <https://www.britannica.com/science/Newtons-laws-of-motion/Newtons-second-law-F-ma>`__.
 """
 
-from sympy import (Eq, solve, sympify)
+from sympy import (Eq, solve)
 from symplyphysics import (Vector, Quantity, validate_input, validate_output, symbols)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics.vector import acceleration_from_force as acceleration_law_vector
@@ -43,8 +43,8 @@ law = Eq(acceleration, force / mass)
 _force_vector = Vector([force])
 _acceleration_vector = acceleration_law_vector.acceleration_law(_force_vector)
 assert len(_acceleration_vector.components) == 1
-_acceleration_with_mass = sympify(_acceleration_vector.components[0]).subs(
-    acceleration_law_vector.mass, mass)
+_acceleration_with_mass = _acceleration_vector.components[0].subs(acceleration_law_vector.mass,
+    mass)
 assert expr_equals(_acceleration_with_mass, law.rhs)
 
 

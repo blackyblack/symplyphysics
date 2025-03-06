@@ -58,7 +58,7 @@ def add_cartesian_vectors(*vectors: Vector) -> Vector:
 
         (list_left_extended, list_right_extended) = _extend_two_vectors(vector_left, vector_right)
         result = [
-            sympify(left_component + right_component)
+            sympify(left_component + right_component, strict=True)
             for (left_component, right_component) in zip(list_left_extended, list_right_extended)
         ]
 
@@ -114,7 +114,8 @@ def _multiply_lists_and_sum(
     list_left: Sequence[Any],
     list_right: Sequence[Any],
 ) -> Expr:
-    return sympify(reduce(add, map(lambda lr: lr[0] * lr[1], zip(list_left, list_right)), 0))
+    return sympify(reduce(add, map(lambda lr: lr[0] * lr[1], zip(list_left, list_right)), 0),
+        strict=True)
 
 
 # Dot product of two vectors

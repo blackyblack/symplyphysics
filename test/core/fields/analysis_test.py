@@ -1,7 +1,7 @@
 from collections import namedtuple
 from typing import Sequence
 from pytest import fixture, mark, raises
-from sympy import Expr, cos, pi, sin, sqrt, Symbol as SymSymbol, sympify, S
+from sympy import Expr, cos, pi, sin, sqrt, Symbol as SymSymbol, S
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
 from symplyphysics.core.fields.analysis import circulation_along_curve, circulation_along_surface_boundary, flux_across_curve, flux_across_surface, flux_across_surface_boundary, flux_across_volume_boundary
 from symplyphysics.core.fields.vector_field import VectorField
@@ -24,8 +24,7 @@ def test_basic_circulation_along_curve(test_args: Args) -> None:
     field = VectorField(lambda point: [point.y, 0, point.x + point.z], test_args.C)
     curve = [cos(test_args.parameter1), sin(test_args.parameter1)]
     result = circulation_along_curve(field, curve, (test_args.parameter1, 0, pi / 2))
-    result_sym = sympify(result)
-    assert approx_equal_numbers(result_sym.evalf(4), (-pi / 4).evalf(4))
+    assert approx_equal_numbers(result.evalf(4), (-pi / 4).evalf(4))
 
 
 def test_circle_circulation(test_args: Args) -> None:
@@ -33,8 +32,7 @@ def test_circle_circulation(test_args: Args) -> None:
     radius = SymSymbol("radius")
     circle = [radius * cos(test_args.parameter1), radius * sin(test_args.parameter1)]
     result = circulation_along_curve(field, circle, (test_args.parameter1, 0, 2 * pi))
-    result_sym = sympify(result)
-    approx_equal_numbers(result_sym.evalf(4), (2 * pi * radius**2).evalf(4))
+    approx_equal_numbers(result.evalf(4), (2 * pi * radius**2).evalf(4))
 
 
 def test_implicit_circulation_along_curve(test_args: Args) -> None:
@@ -43,8 +41,7 @@ def test_implicit_circulation_along_curve(test_args: Args) -> None:
     # parametrize by circulation_def.parameter
     circle = [3 * cos(test_args.parameter1), 3 * sin(test_args.parameter1)]
     result = circulation_along_curve(field, circle, (test_args.parameter1, 0, 2 * pi))
-    result_sym = sympify(result)
-    approx_equal_numbers(result_sym.evalf(4), (-18 * pi).evalf(4))
+    approx_equal_numbers(result.evalf(4), (-18 * pi).evalf(4))
     # now try to define trajectory without parametrization
     # parametrized solution uses angle [0, 2*pi] that corresponds to the counter-clockwise direction
     # so we should integrate in the same direction: [r, -r] for upper part of the circle and [-r, r] for lower
@@ -55,9 +52,7 @@ def test_implicit_circulation_along_curve(test_args: Args) -> None:
     circle_implicit_down = [test_args.parameter1, -sqrt(9 - test_args.parameter1**2)]
     result_down = circulation_along_curve(field, circle_implicit_down,
         (test_args.parameter1, -3, 3))
-    result_up_sym = sympify(result_up)
-    result_down_sym = sympify(result_down)
-    approx_equal_numbers(result_up_sym.evalf(4) + result_down_sym.evalf(4), (-18 * pi).evalf(4))
+    approx_equal_numbers(result_up.evalf(4) + result_down.evalf(4), (-18 * pi).evalf(4))
 
 
 def test_orthogonal_movement_circulation_along_curve(test_args: Args) -> None:
@@ -69,8 +64,7 @@ def test_orthogonal_movement_circulation_along_curve(test_args: Args) -> None:
     # trajectory is upwards straight line
     trajectory_vertical = [1, 0, test_args.parameter1]
     result = circulation_along_curve(field, trajectory_vertical, (test_args.parameter1, 0, 2 * pi))
-    result_sym = sympify(result)
-    approx_equal_numbers(result_sym.evalf(4), (2 * pi).evalf(4))
+    approx_equal_numbers(result.evalf(4), (2 * pi).evalf(4))
 
 
 def test_basic_circulation_along_surface_boundary(test_args: Args) -> None:
@@ -82,15 +76,13 @@ def test_basic_circulation_along_surface_boundary(test_args: Args) -> None:
     ]
     result = circulation_along_surface_boundary(field, surface, (test_args.parameter1, 0, 1),
         (test_args.parameter2, 0, pi / 2))
-    result_sym = sympify(result)
-    approx_equal_numbers(result_sym.evalf(4), (-pi / 4).evalf(4))
+    approx_equal_numbers(result.evalf(4), (-pi / 4).evalf(4))
     # circle, which is a cylinder's boundary
     curve = [cos(test_args.parameter1), sin(test_args.parameter1)]
     result_from_boundary = circulation_along_curve(field, curve, (test_args.parameter1, 0, pi / 2))
     # verify that 'circulation_along_curve()' result is the same as when using
     # 'circulation_along_surface_boundary()'
-    result_from_boundary_sym = sympify(result_from_boundary)
-    approx_equal_numbers(result_from_boundary_sym.evalf(4), result_sym.evalf(4))
+    approx_equal_numbers(result_from_boundary.evalf(4), result.evalf(4))
 
 
 def test_cone_circulation_along_surface_boundary(test_args: Args) -> None:
@@ -104,8 +96,7 @@ def test_cone_circulation_along_surface_boundary(test_args: Args) -> None:
     ]
     result = circulation_along_surface_boundary(field, cone, (test_args.parameter1, 0, 1),
         (test_args.parameter2, 0, 2 * pi))
-    result_sym = sympify(result)
-    approx_equal_numbers(result_sym.evalf(4), (-18 * pi).evalf(4))
+    approx_equal_numbers(result.evalf(4), (-18 * pi).evalf(4))
 
 
 # non-surface trajectories (eg circle) result in zero circulation
@@ -114,8 +105,7 @@ def test_circle_circulation_along_surface_boundary(test_args: Args) -> None:
     surface = [cos(test_args.parameter1), sin(test_args.parameter1)]
     result = circulation_along_surface_boundary(field, surface, (test_args.parameter1, 0, 1),
         (test_args.parameter2, 0, pi / 2))
-    result_sym = sympify(result)
-    approx_equal_numbers(result_sym.evalf(4), 0)
+    approx_equal_numbers(result.evalf(4), 0)
 
 
 def test_basic_flux_across_curve(test_args: Args) -> None:
@@ -123,8 +113,7 @@ def test_basic_flux_across_curve(test_args: Args) -> None:
     # flux over circle of radius = 2
     curve = [2 * cos(test_args.parameter1), 2 * sin(test_args.parameter1)]
     result = flux_across_curve(field, curve, (test_args.parameter1, 0, 2 * pi))
-    result_sym = sympify(result)
-    approx_equal_numbers(result_sym.evalf(4), (8 * pi).evalf(4))
+    approx_equal_numbers(result.evalf(4), (8 * pi).evalf(4))
 
 
 def test_ellipse_flux(test_args: Args) -> None:
@@ -132,8 +121,7 @@ def test_ellipse_flux(test_args: Args) -> None:
     # flux over ellipse with axes 2 and 1
     curve = [2 * cos(test_args.parameter1), sin(test_args.parameter1)]
     result = flux_across_curve(field, curve, (test_args.parameter1, 0, 2 * pi))
-    result_sym = sympify(result)
-    approx_equal_numbers(result_sym.evalf(4), (10 * pi).evalf(4))
+    approx_equal_numbers(result.evalf(4), (10 * pi).evalf(4))
 
 
 # 3-dimensional curves are not supported
@@ -154,8 +142,7 @@ def test_basic_flux_across_surface(test_args: Args) -> None:
     ]
     result = flux_across_surface(field, curve, (test_args.parameter1, -2, 1),
         (test_args.parameter2, 0, 2 * pi))
-    result_sym = sympify(result)
-    approx_equal_numbers(result_sym.evalf(4), (12 * pi).evalf(4))
+    approx_equal_numbers(result.evalf(4), (12 * pi).evalf(4))
 
 
 def _distance(point: CartesianPoint) -> Expr:
@@ -176,8 +163,7 @@ def test_gravitational_field_flux(test_args: Args) -> None:
     ]
     result = flux_across_surface(field, trajectory, (test_args.parameter1, 0, 2 * pi),
         (test_args.parameter2, 0, pi))
-    result_sym = sympify(result)
-    approx_equal_numbers(result_sym.evalf(4), (4 * pi).evalf(4))
+    approx_equal_numbers(result.evalf(4), (4 * pi).evalf(4))
     # if -G * M multiplier is applied, we will get Gauss law for gravity:
     # https://en.wikipedia.org/wiki/Gauss%27s_law_for_gravity
 
@@ -193,8 +179,7 @@ def test_basic_flux_across_surface_boundary(test_args: Args) -> None:
     ]
     result = flux_across_surface_boundary(field, circle, (test_args.parameter1, 0, 2),
         (test_args.parameter2, 0, 2 * pi))
-    result_sym = sympify(result)
-    approx_equal_numbers(result_sym.evalf(4), (8 * pi).evalf(4))
+    approx_equal_numbers(result.evalf(4), (8 * pi).evalf(4))
 
 
 # non parametrized surface works for any divergence, but is harder to manipulate with
@@ -206,8 +191,7 @@ def test_non_parametrized_flux_across_surface_boundary(test_args: Args) -> None:
     # flux over circle of radius 3
     result = flux_across_surface_boundary(field, circle_implicit,
         (x, -sqrt(9 - y**2), sqrt(9 - y**2)), (y, -3, 3))
-    result_sym = sympify(result)
-    approx_equal_numbers(result_sym.evalf(4), (9 * pi).evalf(4))
+    approx_equal_numbers(result.evalf(4), (9 * pi).evalf(4))
 
 
 def test_basic_flux_across_volume_boundary(test_args: Args) -> None:
@@ -217,8 +201,7 @@ def test_basic_flux_across_volume_boundary(test_args: Args) -> None:
     y = field.coordinate_system.coord_system.base_scalars()[1]
     result = flux_across_volume_boundary(field, (-2, 2), (-sqrt(4 - x**2), sqrt(4 - x**2)),
         (0, sqrt(4 - x**2 - y**2)))
-    result_sym = sympify(result)
-    approx_equal_numbers(result_sym.evalf(4), (4 * pi).evalf(4))
+    approx_equal_numbers(result.evalf(4), (4 * pi).evalf(4))
 
 
 # A vector field exists in the region between two concentric cylindrical surfaces defined by
@@ -231,5 +214,4 @@ def test_basic_flux_across_sphere_boundary() -> None:
 
     field = VectorField(field_function, B)
     result = flux_across_volume_boundary(field, (1, 2), (0, 2 * pi), (0, 5))
-    result_sym = sympify(result)
-    approx_equal_numbers(result_sym.evalf(4), (150 * pi).evalf(4))
+    approx_equal_numbers(result.evalf(4), (150 * pi).evalf(4))

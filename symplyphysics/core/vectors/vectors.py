@@ -34,7 +34,7 @@ class Vector:
         coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)
     ) -> None:
         self._coordinate_system = coordinate_system
-        self._components = list(map(sympify, components))
+        self._components = [sympify(c, strict=True) for c in components]
 
     @property
     def coordinate_system(self) -> CoordinateSystem:
@@ -102,7 +102,7 @@ class Vector:
         return Vector(components, self.coordinate_system)
 
     def subs(self, *args: Any) -> Vector:
-        components = [sympify(component).subs(*args) for component in self.components]
+        components = [sympify(component, strict=True).subs(*args) for component in self.components]
         return Vector(components, self.coordinate_system)
 
 
