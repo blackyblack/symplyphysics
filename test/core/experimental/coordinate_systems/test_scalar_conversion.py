@@ -153,7 +153,7 @@ def test_spherical_to_spherical(test_args: Args) -> None:
     correct_point = dict(zip(new_sph.base_scalars, old_point.values()))
     assert equal_points(new_point, correct_point)
 
-    wrong_point = dict(zip(test_args.sph.base_scalars, [S.Zero] * 3))
+    wrong_point = dict(zip(new_sph.base_scalars, [S.Zero] * 3))
     assert not equal_points(new_point, wrong_point)
 
 
