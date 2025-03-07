@@ -262,9 +262,7 @@ class SphericalCoordinateSystem(BaseCoordinateSystem):
 
 __all__ = [
     "BaseCoordinateSystem",
-    "RectilinearCoordinateSystem",
     "CartesianCoordinateSystem",
-    "BaseCoordinateSystem",
     "CylindricalCoordinateSystem",
     "SphericalCoordinateSystem",
 ]

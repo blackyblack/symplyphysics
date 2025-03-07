@@ -108,7 +108,7 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
             if not isinstance(norm, Expr):
                 raise TypeError(f"Norm {norm} must be an Expr, got {type(norm).__name__}.")
 
-            if not ask(Q.nonnegative(norm)):
+            if not ask(Q.nonnegative(norm)):  # pylint: disable=too-many-function-args
                 raise ValueError(f"Norm must be non-negative, got {norm}.")
 
             if norm == 0:
