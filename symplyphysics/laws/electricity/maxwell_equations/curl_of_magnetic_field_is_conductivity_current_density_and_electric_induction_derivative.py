@@ -1,4 +1,4 @@
-from sympy import diff, sympify
+from sympy import diff
 from symplyphysics import (QuantityVector, add_cartesian_vectors, scale_vector, units,
     Quantity, validate_input, validate_output, symbols)
 from symplyphysics.core.fields.operators import curl_operator
@@ -78,8 +78,7 @@ def calculate_conductivity_current_density_at_point(magnetic_intensity_: VectorF
 
     electric_induction_vector = electric_induction_.apply(cartesian_point_)
     for i, c in enumerate(electric_induction_vector.components):
-        expr = sympify(c)
-        expr = expr.subs(time, time_)
+        expr = c.subs(time, time_)
         assert_equivalent_dimension(expr, f"electric_induction_vector[{i}]",
             "calculate_conductivity_current_density_at_point", units.charge / units.area)
 

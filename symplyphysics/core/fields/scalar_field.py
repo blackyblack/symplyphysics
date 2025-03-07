@@ -17,7 +17,7 @@ FieldFunction: TypeAlias = Callable[[T], Expr] | Any
 def _subs_with_point(expr: Any, coordinate_system: CoordinateSystem, point_: Point) -> Expr:
     base_scalars = coordinate_system.coord_system.base_scalars()
     # convert Any to Expr
-    expression = sympify(expr)
+    expression = sympify(expr, strict=True)
     for i, scalar in enumerate(base_scalars):
         expression = expression.subs(scalar, point_.coordinate(i))
     return expression
@@ -42,7 +42,7 @@ class ScalarField:
         coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)
     ) -> None:
         if not callable(point_function):
-            point_function = sympify(point_function)
+            point_function = sympify(point_function, strict=True)
 
         self._point_function = point_function
         self._coordinate_system = coordinate_system
@@ -109,7 +109,7 @@ class ScalarField:
 
     # Converts ScalarField to SymPy expression
     def to_expression(self) -> Expr:
-        return sympify(self.apply_to_basis())
+        return self.apply_to_basis()
 
     # Convert field coordinate system to new basis and construct new field.
     # Scalar field invariant (coordinate system independence) should hold.

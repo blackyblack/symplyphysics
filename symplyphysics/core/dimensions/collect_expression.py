@@ -1,4 +1,4 @@
-from typing import Iterable, Callable, Any
+from typing import Iterable, Callable, Any, SupportsFloat
 from sympy import Expr, S, Mul, Add, Pow, Abs, Min, Max, Derivative, Function as SymFunction, sympify
 from sympy.functions.elementary.miscellaneous import MinMaxBase
 from sympy.physics.units import Dimension, Quantity as SymQuantity
@@ -190,7 +190,7 @@ _cases: dict[type, Callable[[Any], tuple[Expr, Dimension]]] = {
 }
 
 
-def collect_expression_and_dimension(expr: Any) -> tuple[Expr, Dimension]:
+def collect_expression_and_dimension(expr: SupportsFloat) -> tuple[Expr, Dimension]:
     """
     Returns the simplified representation and the dimension of the given expression. Unlike
     `collect_quantity_factor_and_dimension` it supports derivatives, symbols, and functions with
@@ -201,7 +201,7 @@ def collect_expression_and_dimension(expr: Any) -> tuple[Expr, Dimension]:
         UnitsError: if the dimensions of sub-expressions don't match.
     """
 
-    expr = sympify(expr)
+    expr = sympify(expr)  # no `strict` because we want to allow sympy functions here too
 
     # early return that works for `sympy.Quantity`, `SymbolNew`, `SymbolIndexedNew`, and `FunctionNew`
     if hasattr(expr, "dimension"):

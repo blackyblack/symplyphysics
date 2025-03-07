@@ -1,5 +1,5 @@
 from typing import Any, SupportsFloat
-from sympy import Expr, S, sympify
+from sympy import Expr, S
 from sympy.physics.units import Quantity as SymQuantity
 
 from .dimensions import assert_equivalent_dimension, dimension_to_si_unit
@@ -16,7 +16,7 @@ def convert_to(value: Expr, target_unit: Expr) -> Expr:
         target_unit = Quantity(target_unit)
 
     assert_equivalent_dimension(value, value.dimension.name, "convert_to", target_unit.dimension)
-    return sympify(value.scale_factor) * (1 / sympify(target_unit.scale_factor))
+    return value.scale_factor / target_unit.scale_factor
 
 
 def convert_to_float(value: Expr) -> float:

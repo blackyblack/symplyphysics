@@ -23,7 +23,7 @@ def _subs_with_point(
     base_scalars = coordinate_system.coord_system.base_scalars()
     result: list[Expr] = []
     for e in expr:
-        expression = sympify(e)
+        expression = sympify(e, strict=True)
         for i, scalar in enumerate(base_scalars):
             expression = expression.subs(scalar, point_.coordinate(i))
         result.append(expression)
@@ -46,7 +46,7 @@ class VectorField:
         coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)
     ) -> None:
         if not callable(point_function):
-            point_function = list(map(sympify, point_function))
+            point_function = [sympify(c, strict=True) for c in point_function]
 
         self._point_function = point_function
         self._coordinate_system = coordinate_system

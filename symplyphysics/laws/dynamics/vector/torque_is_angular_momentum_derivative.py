@@ -1,4 +1,4 @@
-from sympy import Derivative, sympify
+from sympy import Derivative
 from symplyphysics import (
     units,
     Quantity,
@@ -48,5 +48,5 @@ def calculate_torque(
         add_cartesian_vectors(angular_momentum_after_.to_base_vector(),
         scale_vector(-1, angular_momentum_before_.to_base_vector())))
     result_torque_vector = torque_law(angular_momentum_function)
-    result_components = [sympify(component).doit() for component in result_torque_vector.components]
+    result_components = [component.doit() for component in result_torque_vector.components]
     return QuantityVector(result_components, angular_momentum_before_.coordinate_system)

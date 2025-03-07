@@ -24,7 +24,7 @@ deformation of the spring.
 #. `Wikipedia, last formula in paragraph <https://en.wikipedia.org/wiki/Hooke%27s_law#Linear_springs>`__.
 """
 
-from sympy import Eq, sympify
+from sympy import Eq
 from symplyphysics import (
     symbols,
     Quantity,
@@ -66,7 +66,7 @@ law = Eq(spring_reaction, -1 * stiffness * deformation)
 _deformation_vector = Vector([deformation])
 _spring_reaction_vector_derived = hookes_vector_law.force_law(_deformation_vector)
 assert len(_spring_reaction_vector_derived.components) == 1
-_spring_reaction_derived = sympify(_spring_reaction_vector_derived.components[0]).subs(
+_spring_reaction_derived = _spring_reaction_vector_derived.components[0].subs(
     hookes_vector_law.stiffness, stiffness)
 assert expr_equals(_spring_reaction_derived, law.rhs)
 

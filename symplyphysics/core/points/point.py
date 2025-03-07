@@ -10,7 +10,7 @@ class Point:
     _coordinates: list[Expr] = []
 
     def __init__(self, *coordinates: Any) -> None:
-        self._coordinates = list(map(sympify, coordinates))
+        self._coordinates = [sympify(c, strict=True) for c in coordinates]
 
     @property
     def coordinates(self) -> Iterable[Expr]:
@@ -26,4 +26,4 @@ class Point:
             value = S.Zero
         if len(self._coordinates) <= index:
             self._coordinates.extend([S.Zero] * (index + 1 - len(self._coordinates)))
-        self._coordinates[index] = sympify(value)
+        self._coordinates[index] = sympify(value, strict=True)

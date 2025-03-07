@@ -22,16 +22,7 @@ particles in thermodynamic equilibrium, the speed distribution function is a fun
 #. `Wikipedia <https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution#Distribution_for_the_speed>`__.
 """
 
-from sympy import (
-    Eq,
-    Rational,
-    sqrt,
-    pi,
-    exp,
-    symbols as sym_symbols,
-    solve,
-    sympify,
-)
+from sympy import (Eq, Rational, sqrt, pi, exp, symbols as sym_symbols, solve)
 from symplyphysics import (
     units,
     Quantity,
@@ -104,9 +95,8 @@ _radius, _azimuthal_angle, _polar_angle = _spherical_coordinate_system.coord_sys
 # The speed distribution depends solely on the radial component of the velocity vector.
 # Therefore we integrate over polar and azimuthal angles to get rid of them.
 # We work in the three-dimensional velocity space `d^3(v)` so radius is speed (magnitude of velocity vector)
-_spherical_volume_velocity_element = (sympify(
-    volume_element_magnitude(_spherical_coordinate_system)).subs(_radius, particle_speed).integrate(
-    (_polar_angle, 0, pi), (_azimuthal_angle, 0, 2 * pi)))
+_spherical_volume_velocity_element = (volume_element_magnitude(_spherical_coordinate_system).subs(
+    _radius, particle_speed).integrate((_polar_angle, 0, pi), (_azimuthal_angle, 0, 2 * pi)))
 
 # `v_x`, `v_y` and `v_z` are independent random variables, therefore we can get the distribution of
 # the velocity vector `v` by multiplying the distributions of its coordinates.

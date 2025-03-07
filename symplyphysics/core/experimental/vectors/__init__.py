@@ -259,7 +259,7 @@ class VectorScale(VectorExpr):
         evaluate = kwargs.get("evaluate", global_parameters.evaluate)
 
         if evaluate:
-            scale = sympify(scale)
+            scale = sympify(scale, strict=True)
             if not isinstance(scale, Expr):
                 raise TypeError(f"Scale {scale} must be an Expr, got {type(scale).__name__}.")
 
