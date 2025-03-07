@@ -108,6 +108,9 @@ def convert_base_scalars(
     }
 
 
+# A fall-through case
+# 1) when the type of either of the inputs hasn't been registered in `dispatch`, this will raise a `TypeError`
+# 2) or when both inputs belong to the same coordinate system type, a trivial substitution is returned.
 @dispatch(BaseCoordinateSystem, BaseCoordinateSystem)  # type: ignore[no-redef]
 # pylint: disable-next=function-redefined
 def convert_base_scalars(
