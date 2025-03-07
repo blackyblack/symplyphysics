@@ -120,9 +120,6 @@ def convert_base_scalars(
         raise TypeError(
             f"Conversion between {old_type.__name__} and {new_type.__name__} is not supported.")
 
-    if old_system is new_system:
-        return {}
-
     o1, o2, o3 = old_system.base_scalars
     n1, n2, n3 = new_system.base_scalars
 
