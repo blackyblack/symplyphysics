@@ -9,8 +9,8 @@ from symplyphysics.core.experimental.coordinate_systems import (
     CylindricalCoordinateSystem,
     SphericalCoordinateSystem,
 )
-from symplyphysics.core.experimental.coordinate_systems.convert_base_scalars import convert_base_scalars
-from symplyphysics.core.experimental.coordinate_systems.convert_base_vectors import convert_base_vectors
+from symplyphysics.core.experimental.coordinate_systems.convert_base_scalars import express_base_scalars
+from symplyphysics.core.experimental.coordinate_systems.convert_base_vectors import express_base_vectors
 
 Point: TypeAlias = dict[SymSymbol, Expr]
 
@@ -70,7 +70,7 @@ def convert_point(
     new_system: BaseCoordinateSystem,
 ) -> Point:
     # Point coordinates change contravariantly
-    conversion = convert_base_scalars(new_system, old_system)  # pylint: disable=arguments-out-of-order
+    conversion = express_base_scalars(new_system, old_system)  # pylint: disable=arguments-out-of-order
     return {new_coordinate: expr.subs(old_point) for new_coordinate, expr in conversion.items()}
 
 
@@ -81,7 +81,7 @@ def convert_vector(
     new_point: Point,
 ) -> VectorExpr:
     # Basic vectors change covariantly
-    conversion = convert_base_vectors(old_system, new_system)
+    conversion = express_base_vectors(old_system, new_system)
     return old_vector.subs(conversion).subs(new_point).doit()
 
 
@@ -187,15 +187,15 @@ def test_unregistered_coordinate_system(test_args: Args) -> None:
     new_cart = NewCartesianCoordinateSystem()
 
     with raises(TypeError):
-        convert_base_vectors(new_cart, test_args.cart)
+        express_base_vectors(new_cart, test_args.cart)
 
     with raises(TypeError):
-        convert_base_vectors(test_args.cart, new_cart)
+        express_base_vectors(test_args.cart, new_cart)
 
     # NOTE: conversion between identical coordinate systems is allowed, even if unregistered
-    _ = convert_base_vectors(new_cart, new_cart)
-    _ = convert_base_vectors(new_cart, NewCartesianCoordinateSystem())
-    _ = convert_base_vectors(NewCartesianCoordinateSystem(), new_cart)
+    _ = express_base_vectors(new_cart, new_cart)
+    _ = express_base_vectors(new_cart, NewCartesianCoordinateSystem())
+    _ = express_base_vectors(NewCartesianCoordinateSystem(), new_cart)
 
 
 def test_same_system(test_args: Args) -> None:

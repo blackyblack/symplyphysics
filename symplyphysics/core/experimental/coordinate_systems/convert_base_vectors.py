@@ -10,15 +10,15 @@ from . import (
     SphericalCoordinateSystem,
 )
 
-VectorConversion: TypeAlias = Mapping[VectorSymbol, VectorExpr]
+VectorMapping: TypeAlias = Mapping[VectorSymbol, VectorExpr]
 
 
 @dispatch(CartesianCoordinateSystem, CylindricalCoordinateSystem)
 # pylint: disable-next=function-redefined
-def convert_base_vectors(
+def express_base_vectors(
     old_system: CartesianCoordinateSystem,
     new_system: CylindricalCoordinateSystem,
-) -> VectorConversion:
+) -> VectorMapping:
     i, j, k = old_system.base_vectors
     e_rho, e_phi, e_z = new_system.base_vectors
 
@@ -33,10 +33,10 @@ def convert_base_vectors(
 
 @dispatch(CartesianCoordinateSystem, SphericalCoordinateSystem)  # type: ignore[no-redef]
 # pylint: disable-next=function-redefined
-def convert_base_vectors(
+def express_base_vectors(
     old_system: CartesianCoordinateSystem,
     new_system: SphericalCoordinateSystem,
-) -> VectorConversion:
+) -> VectorMapping:
     i, j, k = old_system.base_vectors
     e_r, e_theta, e_phi = new_system.base_vectors
 
@@ -52,10 +52,10 @@ def convert_base_vectors(
 
 @dispatch(CylindricalCoordinateSystem, CartesianCoordinateSystem)  # type: ignore[no-redef]
 # pylint: disable-next=function-redefined
-def convert_base_vectors(
+def express_base_vectors(
     old_system: CylindricalCoordinateSystem,
     new_system: CartesianCoordinateSystem,
-) -> VectorConversion:
+) -> VectorMapping:
     e_rho, e_phi, e_z = old_system.base_vectors
     i, j, k = new_system.base_vectors
 
@@ -72,10 +72,10 @@ def convert_base_vectors(
 
 @dispatch(CylindricalCoordinateSystem, SphericalCoordinateSystem)  # type: ignore[no-redef]
 # pylint: disable-next=function-redefined
-def convert_base_vectors(
+def express_base_vectors(
     old_system: CylindricalCoordinateSystem,
     new_system: SphericalCoordinateSystem,
-) -> VectorConversion:
+) -> VectorMapping:
     e_rho, e_phi, e_z = old_system.base_vectors
     e_r, e_theta, e_phi_ = new_system.base_vectors
 
@@ -90,10 +90,10 @@ def convert_base_vectors(
 
 @dispatch(SphericalCoordinateSystem, CartesianCoordinateSystem)  # type: ignore[no-redef]
 # pylint: disable-next=function-redefined
-def convert_base_vectors(
+def express_base_vectors(
     old_system: SphericalCoordinateSystem,
     new_system: CartesianCoordinateSystem,
-) -> VectorConversion:
+) -> VectorMapping:
     e_r, e_theta, e_phi = old_system.base_vectors
     i, j, k = new_system.base_vectors
 
@@ -111,10 +111,10 @@ def convert_base_vectors(
 
 @dispatch(SphericalCoordinateSystem, CylindricalCoordinateSystem)  # type: ignore[no-redef]
 # pylint: disable-next=function-redefined
-def convert_base_vectors(
+def express_base_vectors(
     old_system: SphericalCoordinateSystem,
     new_system: CylindricalCoordinateSystem,
-) -> VectorConversion:
+) -> VectorMapping:
     e_r, e_theta, e_phi = old_system.base_vectors
     e_rho, e_phi_, e_z = new_system.base_vectors
 
@@ -132,10 +132,10 @@ def convert_base_vectors(
 
 @dispatch(BaseCoordinateSystem, BaseCoordinateSystem)  # type: ignore[no-redef]
 # pylint: disable-next=function-redefined
-def convert_base_vectors(
+def express_base_vectors(
     old_system: BaseCoordinateSystem,
     new_system: BaseCoordinateSystem,
-) -> VectorConversion:
+) -> VectorMapping:
     old_type = type(old_system)
     new_type = type(new_system)
     if old_type is not new_type:
@@ -155,4 +155,4 @@ def convert_base_vectors(
     }
 
 
-__all__ = ["convert_base_vectors"]
+__all__ = ["express_base_vectors"]
