@@ -9,8 +9,8 @@ from symplyphysics.core.experimental.coordinate_systems import (
     CylindricalCoordinateSystem,
     SphericalCoordinateSystem,
 )
-from symplyphysics.core.experimental.coordinate_systems.convert_base_scalars import express_base_scalars
-from symplyphysics.core.experimental.coordinate_systems.convert_base_vectors import express_base_vectors
+from symplyphysics.core.experimental.coordinate_systems.express_base_scalars import express_base_scalars
+from symplyphysics.core.experimental.coordinate_systems.express_base_vectors import express_base_vectors
 
 Point: TypeAlias = dict[SymSymbol, Expr]
 
