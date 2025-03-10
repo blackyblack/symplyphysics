@@ -46,7 +46,7 @@ def convert_base_vectors(
     return {
         i: (e_r * sin(theta) + e_theta * cos(theta)) * cos(phi) - e_phi * sin(phi),
         j: (e_r * sin(theta) + e_theta * cos(theta)) * sin(phi) + e_phi * cos(phi),
-        k: e_r * cos(phi) - e_theta * sin(theta)
+        k: e_r * cos(theta) - e_theta * sin(theta)
     }
 
 
@@ -104,7 +104,7 @@ def convert_base_vectors(
 
     return {
         e_r: (i * x + j * y + k * z) / r,
-        e_theta: i * (x * z / sqrt(rho * r)) + j * (y * z / sqrt(rho * r)) + k * (rho / r),
+        e_theta: i * (x * z / (rho * r)) + j * (y * z / (rho * r)) - k * (rho / r),
         e_phi: (-i * y + j * x) / rho,
     }
 
