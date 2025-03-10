@@ -2,10 +2,14 @@
 Work is integral of force over distance
 =======================================
 
-Assuming a one-dimensional environment, when the force F on a particle-like object depends
-on the position of the object, the work done by F on the object while the object moves
-from one position to another is to be found by integrating the force along the path of the
-object.
+Assuming a one-dimensional environment, when the force :math:`F` on a particle-like object depends
+on the position of the object, the work done by :math:`F` on the object while the object moves from
+one position to another is to be found by integrating the force along the path of the object.
+
+**Notes:**
+
+#. When the force is constant, a :ref:`simpler law <Mechanical work is force times distance>` could
+   be used.
 
 **Links:**
 
@@ -54,6 +58,8 @@ law = Eq(work, Integral(force(position), (position, position_before, position_af
 
 :laws:latex::
 """
+
+# This law can be proved by integration of `symplyphysics/laws/dynamics/mechanical_work_from_force_and_distance.py`
 
 
 # Assuming the force changes linearly with respect to position
