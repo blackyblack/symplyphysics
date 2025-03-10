@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-from collections import defaultdict
-from typing import Any, Optional, Sequence
+from typing import Any, Optional
 
 from sympy import Atom, Basic, Expr, S, sympify, ask, Q, simplify
 from sympy.core.parameters import global_parameters
@@ -28,16 +27,18 @@ class VectorExpr(Basic):  # type: ignore[misc]
         return VectorAdd(self, other).doit()
 
     def __sub__(self, other: VectorExpr) -> VectorExpr:
+        # Refer to the consequence in VectorAdd
         return VectorAdd(self, -other).doit()
 
     def __mul__(self, other: Any) -> VectorExpr:
         return VectorScale(self, other).doit()
 
     def __neg__(self) -> VectorExpr:
+        # Refer to consequence #4 in VectorScale
         return VectorScale(self, -1).doit()
 
     def __pos__(self) -> VectorExpr:
-        return self
+        return self.doit()
 
     def __truediv__(self, other: Any) -> VectorExpr:
         # NOTE: probably need to check if `other` is not `0` to return a special "NaN" vector
@@ -48,6 +49,25 @@ class VectorExpr(Basic):  # type: ignore[misc]
     def is_zero(self) -> bool:
         # check with `isinstance` in case the user instantiates their own zero vector.
         return isinstance(self, _VectorZero)
+
+    def subs(self, *args: Any, **kwargs: Any) -> VectorExpr:
+        return super().subs(*args, **kwargs)  # type: ignore[no-any-return]
+
+    def as_symbol_combination(self) -> tuple[tuple[VectorSymbol, Expr], ...]:
+        """
+        Express `self` as a linear combination of `VectorSymbol`. Each term is represented by a
+        `(VectorSymbol, Expr)` tuple, and each symbol must appear in the combination only once.
+
+        Examples:
+        =========
+
+        >>> from symplyphysics.core.experimental.coordinate_systems import CartesianCoordinateSystem
+        >>> c = CartesianCoordinateSystem()
+        >>> VectorAdd(c.i, VectorScale(c.j / S(2), S(4)), ZERO, -c.i * 2).as_symbol_combination()
+        ((i, -1), (j, 2))
+        """
+
+        raise NotImplementedError(f"Implement this method in {type(self).__name__}.")
 
 
 class _VectorZero(VectorExpr):
@@ -63,6 +83,9 @@ class _VectorZero(VectorExpr):
 
     def _sympystr(self, _p: Printer) -> str:
         return "0"
+
+    def as_symbol_combination(self) -> tuple[tuple[VectorSymbol, Expr], ...]:
+        return ()
 
 
 ZERO = _VectorZero()
@@ -154,6 +177,9 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
     def _hashable_content(self) -> tuple[Any, ...]:
         return (self._id,)
 
+    def as_symbol_combination(self) -> tuple[tuple[VectorSymbol, Expr], ...]:
+        return ((self, S.One),)
+
 
 class VectorNorm(Expr):  # type: ignore[misc]
     """
@@ -161,13 +187,13 @@ class VectorNorm(Expr):  # type: ignore[misc]
 
     The vector argument is stored in position `0` of `self.args`.
 
-    The vector norm has the following properties:
+    The vector norm has the following **properties**:
 
     1. **Subadditivity**: for all vectors `a` and `b`, `norm(a + b) <= norm(a) + norm(b)`.
 
-    1. **Absolute homogeneity**: for all scalars `k` and vectors `a`, `norm(k * a) = abs(k) * norm(a)`.
+    2. **Absolute homogeneity**: for all scalars `k` and vectors `a`, `norm(k * a) = abs(k) * norm(a)`.
 
-    1. **Positive definiteness**: for all vectors `a`, `norm(a) = 0` if and only if `a = 0`.
+    3. **Positive definiteness**: for all vectors `a`, `norm(a) = 0` if and only if `a = 0`.
 
     **Links:**
 
@@ -183,17 +209,20 @@ class VectorNorm(Expr):  # type: ignore[misc]
     def __init__(self, vector: VectorExpr) -> None:
         self._args = (vector,)
 
-    def doit(self, **_hints: Any) -> Expr:
+    def doit(self, **hints: Any) -> Expr:
         vector = self.argument
 
-        # Norm is positively definite.
+        if hints.get("deep", True):
+            vector = vector.doit()
+
+        # Refer to property #3
         if vector.is_zero:
             return S.Zero
 
         if isinstance(vector, VectorSymbol) and vector.norm is not None:
             return vector.norm
 
-        # Norm is absolutely homogenous.
+        # Refer to property #2
         if isinstance(vector, VectorScale):
             return VectorNorm(vector.args[0]) * abs(vector.args[1])
 
@@ -214,7 +243,7 @@ class VectorScale(VectorExpr):
     """
     Class representing the notion of scalar multiplication as a property of vectors.
 
-    This operation has the following properties:
+    This operation has the following **properties**:
 
     1. Field and vector multiplications are compatible: for all scalars `k, l` and vectors `a`,
        `k * (s * a) = (k * s) * a`.
@@ -227,7 +256,7 @@ class VectorScale(VectorExpr):
     The last property, distributivity of scalar multiplication w.r.t. field addition, is not
     represented within the functionality of `VectorScale`.
 
-    As a consequence of the properties of the vector field, one has
+    As a **consequence** of the properties of the vector field, one has
 
     1. For all vectors `a`, `0 * k = 0`.
 
@@ -266,28 +295,25 @@ class VectorScale(VectorExpr):
         self._args = (vector, scale)
 
     def doit(self, **_hints: Any) -> VectorExpr:
-        vector = self.vector
-        scale = self.scale
+        combination = self.as_symbol_combination()
 
-        # Refer to property #1 in class docstring.
-        while isinstance(vector, VectorScale):
-            scale *= vector.scale
-            vector = vector.vector
+        match combination:
+            case ():
+                # Refer to consequence #2
+                return ZERO
+            case ((v, s),):
+                # Refer to property #2
+                if s == 1:
+                    return v
 
-        # Refer to consequence #1 in class docstring
-        if scale == 0:
-            return ZERO
+                # Refer to consequence #1
+                if s == 0:
+                    return ZERO
 
-        # Refer to consequence #1 and property #2 in class docstring
-        if vector.is_zero or scale == 1:
-            return vector
-
-        # Refer to property #3 in class docstring
-        if isinstance(vector, VectorAdd):
-            addends = [VectorScale(addend, scale) for addend in vector.args]
-            return VectorAdd(*addends)
-
-        return VectorScale(vector, scale, evaluate=False)
+                return VectorScale(v, s, evaluate=False)
+            case _:
+                # Refer to property #3
+                return VectorAdd(*(v * s for v, s in combination))
 
     def _sympystr(self, p: Printer) -> str:
         vector, value = self.args
@@ -296,6 +322,12 @@ class VectorScale(VectorExpr):
             return f"{p.doprint(vector)}*({p.doprint(value)})"
 
         return f"{p.doprint(vector)}*{p.doprint(value)}"
+
+    def as_symbol_combination(self) -> tuple[tuple[VectorSymbol, Expr], ...]:
+        scale = self.scale
+        vector = self.vector
+
+        return tuple((v, s * scale) for v, s in vector.as_symbol_combination())
 
 
 class VectorAdd(VectorExpr):
@@ -312,14 +344,20 @@ class VectorAdd(VectorExpr):
 
     3. Existence of **identity vector** `0`: for all vectors `a`, `a + 0 = a`.
 
-    4. Existence of **inverse vector**: for all vectors `a`, there exists a vector `-a` s.t. `a + (-a) = 0`.
+    4. Existence of **inverse vector**: for all vectors `a`, there exists a vector `-a` s.t.
+    `a + (-a) = 0`.
 
-    The *subtraction* of two vectors can be defined as such: for all vectors `a, b`, `a - b = a + (-b)`.
+    As a **consequence**, the *subtraction* of two vectors can be defined as such: for all vectors
+    `a, b`, `a - b = a + (-b)`.
 
     **Links:**
 
     1. `Wikipedia <https://en.wikipedia.org/wiki/Vector_space#Definition_and_basic_properties>`__.
     """
+
+    @property
+    def addends(self) -> tuple[VectorExpr]:
+        return self.args  # type: ignore[no-any-return]
 
     def __init__(self, *vectors: VectorExpr) -> None:
         # TODO: Add dispatch depending on the value of `vector` and `scale`?
@@ -334,75 +372,42 @@ class VectorAdd(VectorExpr):
         self._args = vectors
 
     def doit(self, **_hints: Any) -> VectorExpr:
+        combination = self.as_symbol_combination()
 
-        def flatten_additions(addends: Sequence[VectorExpr]) -> list[VectorExpr]:
-            addends = list(addends)
-            i = 0
-
-            while i < len(addends):
-                addend = addends[i]
-
-                if addend.is_zero:  # NOTE: use `addend == vector_identity`?
-                    addends.pop(i)
-                    continue
-
-                if isinstance(addend, VectorAdd):
-                    addends.pop(i)
-                    addends.extend(addend.args)
-                    continue
-
-                i += 1
-
-            return addends
-
-        def collect_scales(addends: Sequence[VectorExpr]) -> dict[VectorExpr, Expr]:
-            mapping: defaultdict[VectorExpr, Expr] = defaultdict(lambda: S.Zero)
-
-            for addend in addends:
-                if isinstance(addend, VectorScale):
-                    mapping[addend.args[0]] += addend.args[1]
-                else:
-                    mapping[addend] += S.One
-
-            return mapping
-
-        def filter_scales(mapping: dict[VectorExpr, Expr]) -> dict[VectorExpr, Expr]:
-            excluded_keys = []
-
-            for vector, scale in mapping.items():
-                if scale == 0:  # NOTE: use `addend == field_identity`?
-                    excluded_keys.append(vector)
-
-            for key in excluded_keys:
-                del mapping[key]
-
-            return mapping
-
-        mapping = filter_scales(collect_scales(flatten_additions(self.args)))
-
-        scaled_addends: list[VectorExpr] = [vector * scale for vector, scale in mapping.items()]
-
-        match len(scaled_addends):
-            case 0:
-                return ZERO  # NOTE: use `vector_identity`?
-            case 1:
-                return scaled_addends[0]
+        match combination:
+            case ():
+                return ZERO
+            case ((v, s),):
+                return v * s  # type: ignore[no-any-return]
             case _:
-                return VectorAdd(*scaled_addends)
+                return VectorAdd(*(v * s for v, s in combination))
 
     # TODO: order the addends in __init__? so that we could return a consistent `_hashable_contents`
     # tuple and get rid of custom __eq__
     def __eq__(self, other: object) -> bool:
-        if not isinstance(other, VectorAdd):
-            return False
-
-        return set(self.args) == set(other.args)
+        return type(other) is type(self) and self.args == other.args  # type: ignore[attr-defined]
 
     def __hash__(self) -> int:
         return hash(self.args)
 
     def _sympystr(self, p: Printer) -> str:
         return " + ".join(map(p.doprint, self.args))
+
+    def as_symbol_combination(self) -> tuple[tuple[VectorSymbol, Expr], ...]:
+        mapping: dict[VectorSymbol, Expr] = {}
+
+        for addend in self.addends:
+            for v, s in addend.as_symbol_combination():
+                if v in mapping:
+                    mapping[v] += s
+                else:
+                    mapping[v] = s
+
+        for v, s in mapping.items():
+            mapping[v] = simplify(s)
+
+        combination = tuple((v, s) for v, s in mapping.items() if s != 0)
+        return combination
 
 
 __all__ = [
