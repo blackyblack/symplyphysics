@@ -95,10 +95,16 @@ def test_cartesian_to_cartesian(test_args: Args) -> None:
     new_point = convert_point(test_args.p_cart, test_args.cart, new_cart)
     new_vector = convert_vector(test_args.v_cart, test_args.cart, new_cart, new_point)
 
-    substitution = dict(zip(test_args.cart.base_vectors, new_cart.base_vectors))
-    correct_vector = test_args.v_cart.subs(substitution)
+    _, j, k = new_cart.base_vectors
+    correct_vector = j + k * 2
 
     assert equal_vectors(new_vector, correct_vector)
+
+    # The transformation of basis vectors between Cartesian coordinates does *not* depend how we
+    # choose the point where the vector is applied.
+    other_point = {new_cart.x: S(0), new_cart.y: S(-4), new_cart.z: S(5.5)}
+    other_vector = convert_vector(test_args.v_cart, test_args.cart, new_cart, other_point)
+    assert equal_vectors(new_vector, other_vector)
 
     assert not equal_vectors(new_vector, ZERO)
 
@@ -108,13 +114,23 @@ def test_cartesian_to_cylindrical(test_args: Args) -> None:
 
     assert equal_vectors(new_vector, test_args.v_cyl)
 
+    # The transformation of basis vectors when at least one of the systems is not Cartesian depends
+    # on the point where the vector is applied.
+    other_point = {test_args.cyl.rho: S(2), test_args.cyl.phi: pi / 3, test_args.cyl.z: S(-1)}
+    other_vector = convert_vector(test_args.v_cart, test_args.cart, test_args.cyl, other_point)
+    assert not equal_vectors(new_vector, other_vector)
+
     assert not equal_vectors(new_vector, ZERO)
 
 
 def test_cartesian_to_spherical(test_args: Args) -> None:
-    new_vector = convert_vector(test_args.v_sph, test_args.cart, test_args.sph, test_args.p_sph)
+    new_vector = convert_vector(test_args.v_cart, test_args.cart, test_args.sph, test_args.p_sph)
 
     assert equal_vectors(new_vector, test_args.v_sph)
+
+    other_point = {test_args.sph.r: S(4), test_args.sph.theta: 2 * pi / 3, test_args.sph.phi: pi}
+    other_vector = convert_vector(test_args.v_cart, test_args.cart, test_args.sph, other_point)
+    assert not equal_vectors(new_vector, other_vector)
 
     assert not equal_vectors(new_vector, ZERO)
 
@@ -123,6 +139,10 @@ def test_cylindrical_to_cartesian(test_args: Args) -> None:
     new_vector = convert_vector(test_args.v_cyl, test_args.cyl, test_args.cart, test_args.p_cart)
 
     assert equal_vectors(new_vector, test_args.v_cart)
+
+    other_point = {test_args.cart.x: S(3), test_args.cart.y: S(0), test_args.cart.z: S(-1)}
+    other_vector = convert_vector(test_args.v_cyl, test_args.cyl, test_args.cart, other_point)
+    assert not equal_vectors(new_vector, other_vector)
 
     assert not equal_vectors(new_vector, ZERO)
 
@@ -133,10 +153,14 @@ def test_cylindrical_to_cylindrical(test_args: Args) -> None:
     new_point = convert_point(test_args.p_cyl, test_args.cyl, new_cyl)
     new_vector = convert_vector(test_args.v_cyl, test_args.cyl, new_cyl, new_point)
 
-    substitution = dict(zip(test_args.cyl.base_vectors, new_cyl.base_vectors))
-    correct_vector = test_args.v_cyl.subs(substitution)
+    _, e_phi, e_z = new_cyl.base_vectors
+    correct_vector = -e_phi + e_z * 2
 
     assert equal_vectors(new_vector, correct_vector)
+
+    other_point = {new_cyl.rho: S(10), new_cyl.phi: S(0), new_cyl.z: S(-1)}
+    other_vector = convert_vector(test_args.v_cyl, test_args.cyl, new_cyl, other_point)
+    assert equal_vectors(new_vector, other_vector)  # FIXME! they should be different
 
     assert not equal_vectors(new_vector, ZERO)
 
@@ -171,8 +195,8 @@ def test_spherical_to_spherical(test_args: Args) -> None:
     new_point = convert_point(test_args.p_sph, test_args.sph, new_sph)
     new_vector = convert_vector(test_args.v_sph, test_args.sph, new_sph, new_point)
 
-    substitution = dict(zip(test_args.sph.base_vectors, new_sph.base_vectors))
-    correct_vector = test_args.v_sph.subs(substitution)
+    e_r, e_theta, e_phi = new_sph.base_vectors
+    correct_vector = e_r * -sqrt(2) - e_phi + e_theta * -sqrt(2)
 
     assert equal_vectors(new_vector, correct_vector)
 
