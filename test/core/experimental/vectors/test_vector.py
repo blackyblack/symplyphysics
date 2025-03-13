@@ -3,7 +3,7 @@ from sympy import Basic, Symbol as SymSymbol
 from symplyphysics import units, dimensionless, symbols, assert_equal, clone_as_symbol
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.errors import UnitsError
-from symplyphysics.core.experimental.vectors import VectorSymbol, ZERO, norm, VectorScale
+from symplyphysics.core.experimental.vectors import VectorSymbol, ZERO, norm, VectorScale, dot, cross
 
 
 def test_init() -> None:
@@ -198,3 +198,43 @@ def test_vector_add() -> None:
 
     # NOTE: We have to force `.doit` after substitution since `__new__` doesn't handle it
     assert sum_123.subs(force_3, force_1).doit() == force_1 * 2 + force_2
+
+
+def test_vector_dot() -> None:
+    f1 = VectorSymbol("F_1", units.force)
+    f2 = VectorSymbol("F_2", units.force)
+    v1 = VectorSymbol("v_1", units.velocity)
+    v2 = VectorSymbol("v_2", units.velocity)
+
+    assert expr_equals(dot(ZERO, ZERO), 0)
+
+    assert expr_equals(dot(f1, f1), norm(f1)**2)
+    assert expr_equals(dot(ZERO, f1), 0)
+    assert expr_equals(dot(f1, ZERO), 0)
+
+    assert expr_equals(dot(f1 + f2, f1), norm(f1)**2 + dot(f1, f2))
+    assert expr_equals(dot(f1 + f2, f2 + f1), norm(f1)**2 + 2 * dot(f1, f2) + norm(f2)**2)
+    assert expr_equals(dot(f1 + f2, f1 - f2), norm(f1)**2 - norm(f2)**2)
+    assert expr_equals(dot(f1 + f2, ZERO), 0)
+    assert expr_equals(dot(ZERO, f1 + f2), 0)
+
+    assert expr_equals(
+        dot(f1 + f2 * 2, -v1 + v2),
+        -dot(f1, v1) - 2 * dot(f2, v1) + dot(f1, v2) + 2 * dot(f2, v2),
+    )
+
+
+def test_vector_cross() -> None:
+    f1 = VectorSymbol("F_1", units.force)
+    f2 = VectorSymbol("F_2", units.force)
+    v1 = VectorSymbol("v_1", units.velocity)
+    v2 = VectorSymbol("v_2", units.velocity)
+
+    assert norm(cross(f1, f1)) == 0
+    assert norm(cross(f1, f2)) != 0
+    assert norm(cross(ZERO, ZERO)) == 0
+    assert norm(cross(ZERO, f1)) == 0
+    assert norm(cross(f1, ZERO)) == 0
+
+    assert norm(cross(f1, f1 + f2) - cross(f1, f2)) == 0
+    assert norm(cross(f1 + f2, f1 + f2) - cross(f1, f2) * 2) == 0

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Any, Optional
+from typing import Any, Optional, TypeAlias
+from collections import defaultdict
 
 from sympy import Atom, Basic, Expr, S, sympify, ask, Q, simplify
 from sympy.core.parameters import global_parameters
@@ -13,6 +14,7 @@ from symplyphysics.core.errors import UnitsError
 from symplyphysics.core.symbols.id_generator import next_id
 from symplyphysics.core.symbols.symbols import DimensionSymbol
 from symplyphysics.docs.miscellaneous import needs_mul_brackets
+from ..miscellaneous import sort_with_sign
 
 
 class VectorExpr(Basic):  # type: ignore[misc]
@@ -51,9 +53,9 @@ class VectorExpr(Basic):  # type: ignore[misc]
         return isinstance(self, _VectorZero)
 
     def subs(self, *args: Any, **kwargs: Any) -> VectorExpr:
-        return super().subs(*args, **kwargs)  # type: ignore[no-any-return]
+        return Basic.subs(self, *args, **kwargs)  # type: ignore[no-any-return]
 
-    def as_symbol_combination(self) -> tuple[tuple[VectorSymbol, Expr], ...]:
+    def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
         """
         Express `self` as a linear combination of `VectorSymbol`. Each term is represented by a
         `(VectorSymbol, Expr)` tuple, and each symbol must appear in the combination only once.
@@ -70,7 +72,7 @@ class VectorExpr(Basic):  # type: ignore[misc]
         raise NotImplementedError(f"Implement this method in {type(self).__name__}.")
 
 
-class _VectorZero(VectorExpr):
+class _VectorZero(VectorExpr, Atom):  # type: ignore[misc]
     """
     Class expressing the notion of a zero vector. This class isn't intended to be instantiated
     except for the constant `ZERO` since under the `definition of vector spaces
@@ -84,7 +86,7 @@ class _VectorZero(VectorExpr):
     def _sympystr(self, _p: Printer) -> str:
         return "0"
 
-    def as_symbol_combination(self) -> tuple[tuple[VectorSymbol, Expr], ...]:
+    def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
         return ()
 
 
@@ -177,7 +179,7 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
     def _hashable_content(self) -> tuple[Any, ...]:
         return (self._id,)
 
-    def as_symbol_combination(self) -> tuple[tuple[VectorSymbol, Expr], ...]:
+    def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
         return ((self, S.One),)
 
 
@@ -323,7 +325,7 @@ class VectorScale(VectorExpr):
 
         return f"{p.doprint(vector)}*{p.doprint(value)}"
 
-    def as_symbol_combination(self) -> tuple[tuple[VectorSymbol, Expr], ...]:
+    def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
         scale = self.scale
         vector = self.vector
 
@@ -394,28 +396,259 @@ class VectorAdd(VectorExpr):
         return " + ".join(map(p.doprint, self.args))
 
     def as_symbol_combination(self) -> tuple[tuple[VectorSymbol, Expr], ...]:
-        mapping: dict[VectorSymbol, Expr] = {}
+        mapping: dict[AtomicVectorExpr, Expr] = defaultdict(lambda: S.Zero)
 
         for addend in self.addends:
             for v, s in addend.as_symbol_combination():
-                if v in mapping:
-                    mapping[v] += s
-                else:
-                    mapping[v] = s
+                mapping[v] += s
 
-        for v, s in mapping.items():
-            mapping[v] = simplify(s)
+        return tuple((v, s) for v, s in mapping.items() if s != 0)
 
-        combination = tuple((v, s) for v, s in mapping.items() if s != 0)
-        return combination
 
+class VectorDot(Expr):  # type: ignore[misc]
+
+    @property
+    def lhs(self) -> VectorExpr:
+        return self.args[0]  # type: ignore[no-any-return]
+
+    @property
+    def rhs(self) -> VectorExpr:
+        return self.args[1]  # type: ignore[no-any-return]
+
+    def __init__(self, lhs: VectorExpr, rhs: VectorExpr) -> None:
+        self._args = (lhs, rhs)
+
+    def doit(self, **_hints: Any) -> Expr:
+        lhs = self.lhs
+        rhs = self.rhs
+
+        if isinstance(lhs, AtomicVectorExpr) and isinstance(rhs, AtomicVectorExpr):
+            return self.from_atomic(lhs, rhs)
+
+        result = S.Zero
+
+        for lhs_v, lhs_s in lhs.as_symbol_combination():
+            for rhs_v, rhs_s in rhs.as_symbol_combination():
+                result += VectorDot.from_atomic(lhs_v, rhs_v) * lhs_s * rhs_s
+
+        return simplify(result)
+
+    def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
+        pass
+
+    def _sympystr(self, p: Printer) -> str:
+        return f"dot({p.doprint(self.lhs)}, {p.doprint(self.rhs)})"
+
+    @classmethod
+    def from_atomic(cls, lhs: AtomicVectorExpr, rhs: AtomicVectorExpr) -> Expr:
+        """
+        1. `dot(v, w)` is left unchanged unless `v = w`, in which case `dot(v, v) = norm(v)**2`.
+
+        2. `dot(v, cross(c, d)) = mixed(v, c, d)`.
+
+        3. `dot(cross(a, b), w) = mixed(w, a, b)`.
+
+        4. `dot(cross(a, b), cross(c, d)) = dot(a, b) * dot(c, d) - dot(b, c) * dot(a, d)`.
+        """
+
+        if isinstance(lhs, VectorSymbol):
+            if isinstance(rhs, VectorSymbol):
+                # both are VectorSymbol
+                sign, args = sort_with_sign([lhs, rhs], key=id)
+                if sign == 0:
+                    return VectorNorm(lhs)**2
+
+                return cls(*args)
+
+            # lhs is VectorSymbol, rhs is VectorSymbolCross
+            return VectorMixedProduct.from_symbols(lhs, rhs.lhs, rhs.rhs)
+
+        if isinstance(rhs, VectorSymbol):
+            # lhs is VectorSymbolCross, rhs is VectorSymbol
+            return VectorMixedProduct.from_symbols(rhs, lhs.lhs, lhs.rhs)
+
+        # both are VectorSymbolCross
+        a = lhs.lhs
+        b = lhs.rhs
+        c = rhs.lhs
+        d = rhs.rhs
+
+        return (cls.from_atomic(a, b) * cls.from_atomic(b, d) -
+            cls.from_atomic(b, c) * cls.from_atomic(a, d))
+
+
+def dot(lhs: VectorExpr, rhs: VectorExpr) -> Expr:
+    return VectorDot(lhs, rhs).doit()
+
+
+class VectorCross(VectorExpr):
+
+    @property
+    def lhs(self) -> VectorExpr:
+        return self.args[0]  # type: ignore[no-any-return]
+
+    @property
+    def rhs(self) -> VectorExpr:
+        return self.args[1]  # type: ignore[no-any-return]
+
+    def __init__(self, lhs: VectorExpr, rhs: VectorExpr) -> None:
+        self._args = (lhs, rhs)
+
+    def doit(self, **hints: Any) -> VectorExpr:
+        if isinstance(self, VectorSymbolCross):
+            return self.doit(**hints)
+
+        return VectorAdd(*(v * s for v, s in self.as_symbol_combination()))
+
+    def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
+
+        mapping: dict[AtomicVectorExpr, Expr] = defaultdict(lambda: S.Zero)
+
+        for lhs_v, lhs_s in self.lhs.as_symbol_combination():
+            for rhs_v, rhs_s in self.rhs.as_symbol_combination():
+                new_factor = lhs_s * rhs_s
+
+                for v, s in self.from_atomic(lhs_v, rhs_v).as_symbol_combination():
+                    mapping[v] += s * new_factor
+
+        return tuple((v, s) for v, s in mapping.items() if s != 0)
+
+    def _sympystr(self, p: Printer) -> str:
+        return f"cross({p.doprint(self.lhs)}, {p.doprint(self.rhs)})"
+
+    @classmethod
+    def from_atomic(cls, lhs: AtomicVectorExpr, rhs: AtomicVectorExpr) -> VectorExpr:
+        """
+        1. `cross(v, w)` is left unchanged.
+
+        2. `cross(v, cross(c, d)) = c * dot(v, d) - d * dot(v, c)`, referred to as the
+            Lagrange's formula.
+
+        3. `cross(cross(a, b), w) = b * dot(w, a) - a * dot(w, b)` due to anticommutativity of
+            the cross product.
+
+        4. `cross(cross(a, b), cross(c, d)) = c * mixed(d, a, b) - d * mixed(c, a, b)` from the
+            Lagrange's formula.
+
+        **Links:**
+
+        1. `Lagrange's formula <https://en.wikipedia.org/wiki/Triple_product#Vector_triple_product>`__.
+        """
+
+        if isinstance(lhs, VectorSymbolCross):
+            a = lhs.lhs
+            b = lhs.rhs
+
+            if isinstance(rhs, VectorSymbolCross):
+                c = rhs.lhs
+                d = rhs.rhs
+
+                # Refer to formula #4
+                return (  # type: ignore[no-any-return]
+                    c * VectorMixedProduct.from_symbols(d, a, b) -
+                    d * VectorMixedProduct.from_symbols(c, a, b))
+
+            # Refer to formula #3
+            return (  # type: ignore[no-any-return]
+                b * VectorDot.from_atomic(rhs, a) - a * VectorDot.from_atomic(rhs, b))
+
+        if isinstance(rhs, VectorSymbolCross):
+            c, d = rhs.args
+
+            # Refer to formula #2
+            return (  # type: ignore[no-any-return]
+                c * VectorDot.from_atomic(lhs, d) - d * VectorDot.from_atomic(lhs, c))
+
+        # Refer to formula #1
+        return VectorSymbolCross.from_symbols(lhs, rhs)
+
+
+class VectorSymbolCross(VectorCross):
+
+    @property
+    def lhs(self) -> VectorSymbol:
+        return self.args[0]  # type: ignore[no-any-return]
+
+    @property
+    def rhs(self) -> VectorSymbol:
+        return self.args[1]  # type: ignore[no-any-return]
+
+    def __init__(self, lhs: VectorSymbol, rhs: VectorSymbol) -> None:
+        super().__init__(lhs, rhs)
+
+    def doit(self, **_hints: Any) -> VectorExpr:
+        return self.from_symbols(self.lhs, self.rhs)
+
+    def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
+        result = self.from_symbols(self.lhs, self.rhs)
+
+        if result is ZERO:
+            return ()
+
+        return ((result, S.One),)
+
+    @classmethod
+    def from_symbols(cls, lhs: VectorSymbol, rhs: VectorSymbol) -> VectorExpr:
+        sign, args = sort_with_sign([lhs, rhs], key=id)
+
+        if sign == 0:
+            return ZERO
+
+        return cls(*args)
+
+
+def cross(lhs: VectorExpr, rhs: VectorExpr) -> VectorExpr:
+    return VectorCross(lhs, rhs).doit()
+
+
+class VectorMixedProduct(Expr):  # type: ignore[misc]
+
+    @property
+    def vectors(self) -> tuple[VectorExpr, VectorExpr, VectorExpr]:
+        a, b, c = self.args
+        return a, b, c
+
+    def __init__(self, *args: VectorExpr) -> None:
+        a, b, c = args
+
+        for arg in args:
+            if not isinstance(arg, VectorExpr):
+                raise TypeError(f"All operands must be VectorExpr, got {type(arg).__name__}")
+
+        self._args = a, b, c
+
+    def doit(self, **_hints: Any) -> Expr:
+        a, b, c = self.vectors
+
+        return dot(a, cross(b, c))  # NOTE: probably check for simplifications
+
+    def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
+        pass
+
+    def _sympystr(self, p: Printer) -> str:
+        a, b, c = self.args
+        return f"mixed({p.doprint(a)}, {p.doprint(b)}, {p.doprint(c)})"
+
+    @classmethod
+    def from_symbols(cls, *args: VectorSymbol) -> Expr:
+        sign, sorted_args = sort_with_sign(args, key=id)
+
+        if sign == 0:
+            return S.Zero
+
+        return sign * cls(*sorted_args)
+
+
+AtomicVectorExpr: TypeAlias = VectorSymbol | VectorSymbolCross
 
 __all__ = [
     "ZERO",
     "VectorAdd",
+    "VectorDot",
     "VectorExpr",
     "VectorNorm",
     "VectorScale",
     "VectorSymbol",
+    "dot",
     "norm",
 ]
