@@ -9,15 +9,15 @@ from . import (
     SphericalCoordinateSystem,
 )
 
-ScalarConversion: TypeAlias = Mapping[SymSymbol, Expr]
+ScalarMapping: TypeAlias = Mapping[SymSymbol, Expr]
 
 
 @dispatch(CartesianCoordinateSystem, CylindricalCoordinateSystem)
 # pylint: disable-next=function-redefined
-def convert_base_scalars(
+def express_base_scalars(
     old_system: CartesianCoordinateSystem,
     new_system: CylindricalCoordinateSystem,
-) -> ScalarConversion:
+) -> ScalarMapping:
     x, y, z = old_system.base_scalars
     rho, phi, z_ = new_system.base_scalars
 
@@ -30,10 +30,10 @@ def convert_base_scalars(
 
 @dispatch(CartesianCoordinateSystem, SphericalCoordinateSystem)  # type: ignore[no-redef]
 # pylint: disable-next=function-redefined
-def convert_base_scalars(
+def express_base_scalars(
     old_system: CartesianCoordinateSystem,
     new_system: SphericalCoordinateSystem,
-) -> ScalarConversion:
+) -> ScalarMapping:
     x, y, z = old_system.base_scalars
     r, theta, phi = new_system.base_scalars
 
@@ -46,10 +46,10 @@ def convert_base_scalars(
 
 @dispatch(CylindricalCoordinateSystem, CartesianCoordinateSystem)  # type: ignore[no-redef]
 # pylint: disable-next=function-redefined
-def convert_base_scalars(
+def express_base_scalars(
     old_system: CylindricalCoordinateSystem,
     new_system: CartesianCoordinateSystem,
-) -> ScalarConversion:
+) -> ScalarMapping:
     rho, phi, z = old_system.base_scalars
     x, y, z_ = new_system.base_scalars
 
@@ -62,10 +62,10 @@ def convert_base_scalars(
 
 @dispatch(CylindricalCoordinateSystem, SphericalCoordinateSystem)  # type: ignore[no-redef]
 # pylint: disable-next=function-redefined
-def convert_base_scalars(
+def express_base_scalars(
     old_system: CylindricalCoordinateSystem,
     new_system: SphericalCoordinateSystem,
-) -> ScalarConversion:
+) -> ScalarMapping:
     rho, phi, z = old_system.base_scalars
     r, theta, phi_ = new_system.base_scalars
 
@@ -78,10 +78,10 @@ def convert_base_scalars(
 
 @dispatch(SphericalCoordinateSystem, CartesianCoordinateSystem)  # type: ignore[no-redef]
 # pylint: disable-next=function-redefined
-def convert_base_scalars(
+def express_base_scalars(
     old_system: SphericalCoordinateSystem,
     new_system: CartesianCoordinateSystem,
-) -> ScalarConversion:
+) -> ScalarMapping:
     r, theta, phi = old_system.base_scalars
     x, y, z = new_system.base_scalars
 
@@ -94,10 +94,10 @@ def convert_base_scalars(
 
 @dispatch(SphericalCoordinateSystem, CylindricalCoordinateSystem)  # type: ignore[no-redef]
 # pylint: disable-next=function-redefined
-def convert_base_scalars(
+def express_base_scalars(
     old_system: SphericalCoordinateSystem,
     new_system: CylindricalCoordinateSystem,
-) -> ScalarConversion:
+) -> ScalarMapping:
     r, theta, phi = old_system.base_scalars
     rho, phi_, z = new_system.base_scalars
 
@@ -113,10 +113,10 @@ def convert_base_scalars(
 # 2) or when both inputs belong to the same coordinate system type, a trivial substitution is returned.
 @dispatch(BaseCoordinateSystem, BaseCoordinateSystem)  # type: ignore[no-redef]
 # pylint: disable-next=function-redefined
-def convert_base_scalars(
+def express_base_scalars(
     old_system: BaseCoordinateSystem,
     new_system: BaseCoordinateSystem,
-) -> ScalarConversion:
+) -> ScalarMapping:
     old_type = type(old_system)
     new_type = type(new_system)
     if old_type is not new_type:
@@ -133,4 +133,4 @@ def convert_base_scalars(
     }
 
 
-__all__ = ["convert_base_scalars"]
+__all__ = ["express_base_scalars"]

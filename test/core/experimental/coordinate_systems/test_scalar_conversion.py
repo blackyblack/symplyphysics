@@ -4,11 +4,12 @@ from pytest import fixture, raises
 from sympy import Expr, Symbol as SymSymbol, S, pi, sqrt
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.experimental.coordinate_systems import (
+    BaseCoordinateSystem,
     CartesianCoordinateSystem,
     CylindricalCoordinateSystem,
     SphericalCoordinateSystem,
 )
-from symplyphysics.core.experimental.coordinate_systems.convert_base_scalars import convert_base_scalars, ScalarConversion
+from symplyphysics.core.experimental.coordinate_systems.express_base_scalars import express_base_scalars
 
 Point: TypeAlias = dict[SymSymbol, Expr]
 
@@ -38,8 +39,14 @@ def test_args_fixture() -> Args:
     return Args(cart=cart, cyl=cyl, sph=sph, p_cart=p_cart, p_cyl=p_cyl, p_sph=p_sph)
 
 
-def apply_conversion(point: Point, conversion: ScalarConversion) -> Point:
-    return {new_coordinate: expr.subs(point) for (new_coordinate, expr) in conversion.items()}
+def convert_point(
+    old_point: Point,
+    old_system: BaseCoordinateSystem,
+    new_system: BaseCoordinateSystem,
+) -> Point:
+    # Point coordinates change contravariantly
+    conversion = express_base_scalars(new_system, old_system)  # pylint: disable=arguments-out-of-order
+    return {new_coordinate: expr.subs(old_point) for new_coordinate, expr in conversion.items()}
 
 
 def equal_points(point1: Point, point2: Point) -> bool:
@@ -47,14 +54,11 @@ def equal_points(point1: Point, point2: Point) -> bool:
 
 
 def test_cartesian_to_cartesian(test_args: Args) -> None:
-    old_point = test_args.p_cart
-
     new_cart = CartesianCoordinateSystem()
 
-    conversion = convert_base_scalars(new_cart, test_args.cart)
-    new_point = apply_conversion(old_point, conversion)
+    new_point = convert_point(test_args.p_cart, test_args.cart, new_cart)
 
-    correct_point = dict(zip(new_cart.base_scalars, old_point.values()))
+    correct_point = dict(zip(new_cart.base_scalars, test_args.p_cart.values()))
     assert equal_points(new_point, correct_point)
 
     wrong_point = dict(zip(new_cart.base_scalars, [S.Zero] * 3))
@@ -62,9 +66,7 @@ def test_cartesian_to_cartesian(test_args: Args) -> None:
 
 
 def test_cartesian_to_cylindrical(test_args: Args) -> None:
-    old_point = test_args.p_cart
-    conversion = convert_base_scalars(test_args.cyl, test_args.cart)
-    new_point = apply_conversion(old_point, conversion)
+    new_point = convert_point(test_args.p_cart, test_args.cart, test_args.cyl)
 
     assert equal_points(new_point, test_args.p_cyl)
 
@@ -73,9 +75,7 @@ def test_cartesian_to_cylindrical(test_args: Args) -> None:
 
 
 def test_cartesian_to_spherical(test_args: Args) -> None:
-    old_point = test_args.p_cart
-    conversion = convert_base_scalars(test_args.sph, test_args.cart)
-    new_point = apply_conversion(old_point, conversion)
+    new_point = convert_point(test_args.p_cart, test_args.cart, test_args.sph)
 
     assert equal_points(new_point, test_args.p_sph)
 
@@ -84,9 +84,7 @@ def test_cartesian_to_spherical(test_args: Args) -> None:
 
 
 def test_cylindrical_to_cartesian(test_args: Args) -> None:
-    old_point = test_args.p_cyl
-    conversion = convert_base_scalars(test_args.cart, test_args.cyl)
-    new_point = apply_conversion(old_point, conversion)
+    new_point = convert_point(test_args.p_cyl, test_args.cyl, test_args.cart)
 
     assert equal_points(new_point, test_args.p_cart)
 
@@ -95,14 +93,11 @@ def test_cylindrical_to_cartesian(test_args: Args) -> None:
 
 
 def test_cylindrical_to_cylindrical(test_args: Args) -> None:
-    old_point = test_args.p_cyl
-
     new_cyl = CylindricalCoordinateSystem()
 
-    conversion = convert_base_scalars(new_cyl, test_args.cyl)
-    new_point = apply_conversion(old_point, conversion)
+    new_point = convert_point(test_args.p_cyl, test_args.cyl, new_cyl)
 
-    correct_point = dict(zip(new_cyl.base_scalars, old_point.values()))
+    correct_point = dict(zip(new_cyl.base_scalars, test_args.p_cyl.values()))
     assert equal_points(new_point, correct_point)
 
     wrong_point = dict(zip(new_cyl.base_scalars, [S.Zero] * 3))
@@ -110,9 +105,7 @@ def test_cylindrical_to_cylindrical(test_args: Args) -> None:
 
 
 def test_cylindrical_to_spherical(test_args: Args) -> None:
-    old_point = test_args.p_cyl
-    conversion = convert_base_scalars(test_args.sph, test_args.cyl)
-    new_point = apply_conversion(old_point, conversion)
+    new_point = convert_point(test_args.p_cyl, test_args.cyl, test_args.sph)
 
     assert equal_points(new_point, test_args.p_sph)
 
@@ -121,9 +114,7 @@ def test_cylindrical_to_spherical(test_args: Args) -> None:
 
 
 def test_spherical_to_cartesian(test_args: Args) -> None:
-    old_point = test_args.p_sph
-    conversion = convert_base_scalars(test_args.cart, test_args.sph)
-    new_point = apply_conversion(old_point, conversion)
+    new_point = convert_point(test_args.p_sph, test_args.sph, test_args.cart)
 
     assert equal_points(new_point, test_args.p_cart)
 
@@ -132,9 +123,7 @@ def test_spherical_to_cartesian(test_args: Args) -> None:
 
 
 def test_spherical_to_cylindrical(test_args: Args) -> None:
-    old_point = test_args.p_sph
-    conversion = convert_base_scalars(test_args.cyl, test_args.sph)
-    new_point = apply_conversion(old_point, conversion)
+    new_point = convert_point(test_args.p_sph, test_args.sph, test_args.cyl)
 
     assert equal_points(new_point, test_args.p_cyl)
 
@@ -143,14 +132,11 @@ def test_spherical_to_cylindrical(test_args: Args) -> None:
 
 
 def test_spherical_to_spherical(test_args: Args) -> None:
-    old_point = test_args.p_sph
-
     new_sph = SphericalCoordinateSystem()
 
-    conversion = convert_base_scalars(new_sph, test_args.sph)
-    new_point = apply_conversion(old_point, conversion)
+    new_point = convert_point(test_args.p_sph, test_args.sph, new_sph)
 
-    correct_point = dict(zip(new_sph.base_scalars, old_point.values()))
+    correct_point = dict(zip(new_sph.base_scalars, test_args.p_sph.values()))
     assert equal_points(new_point, correct_point)
 
     wrong_point = dict(zip(new_sph.base_scalars, [S.Zero] * 3))
@@ -165,24 +151,21 @@ def test_unregistered_coordinate_system(test_args: Args) -> None:
     new_cart = NewCartesianCoordinateSystem()
 
     with raises(TypeError):
-        convert_base_scalars(new_cart, test_args.cart)
+        express_base_scalars(new_cart, test_args.cart)
 
     with raises(TypeError):
-        convert_base_scalars(test_args.cart, new_cart)
+        express_base_scalars(test_args.cart, new_cart)
 
-    # NOTE: conversion between identical coordinate systems, even if unregistered
-    _ = convert_base_scalars(new_cart, new_cart)
+    # NOTE: conversion between identical coordinate systems is allowed, even if unregistered
+    _ = express_base_scalars(new_cart, new_cart)
 
 
 def test_same_system(test_args: Args) -> None:
-    conversion = convert_base_scalars(test_args.cart, test_args.cart)
-    old_point = test_args.p_cart
-    assert equal_points(old_point, apply_conversion(old_point, conversion))
+    new_point = convert_point(test_args.p_cart, test_args.cart, test_args.cart)
+    assert equal_points(test_args.p_cart, new_point)
 
-    conversion = convert_base_scalars(test_args.cyl, test_args.cyl)
-    old_point = test_args.p_cyl
-    assert equal_points(old_point, apply_conversion(old_point, conversion))
+    new_point = convert_point(test_args.p_cyl, test_args.cyl, test_args.cyl)
+    assert equal_points(test_args.p_cyl, new_point)
 
-    conversion = convert_base_scalars(test_args.sph, test_args.sph)
-    old_point = test_args.p_sph
-    assert equal_points(old_point, apply_conversion(old_point, conversion))
+    new_point = convert_point(test_args.p_sph, test_args.sph, test_args.sph)
+    assert equal_points(test_args.p_sph, new_point)
