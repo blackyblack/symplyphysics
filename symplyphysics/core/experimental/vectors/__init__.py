@@ -200,6 +200,8 @@ class VectorNorm(Expr):  # type: ignore[misc]
     1. `Wikipedia <https://en.wikipedia.org/wiki/Norm_(mathematics)>`__.
     """
 
+    is_nonnegative = True
+
     @property
     def argument(self) -> VectorExpr:
         return self.args[0]  # type: ignore[no-any-return]
@@ -225,6 +227,9 @@ class VectorNorm(Expr):  # type: ignore[misc]
         # Refer to property #2
         if isinstance(vector, VectorScale):
             return VectorNorm(vector.args[0]) * abs(vector.args[1])
+
+        # TODO: add support for the following relation:
+        # for all vectors `a, b` and scalars `k`, `norm(a * k + b * k) = norm(a + b) * abs(k)`
 
         return self
 
