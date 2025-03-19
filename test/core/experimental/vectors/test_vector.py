@@ -166,14 +166,13 @@ def test_vector_norm() -> None:
     v2 = VectorSymbol("v_2")
     assert norm(v1 + v2).args[0] == v1 + v2
     assert norm(v1 + v1) == norm(v1) * 2
-    assert norm(ZERO - v2).doit() == norm(v2)  # TODO: check norm.__new__
+    assert norm(ZERO - v2) == norm(v2)
 
     # .subs
 
     assert norm(force * real_scale).subs(real_scale, 3) == norm(force) * 3
 
-    # NOTE: We have to force `.doit` after substitution since `__new__` doesn't handle it
-    assert norm(force).subs(force, unit).doit() == norm(unit)
+    assert norm(force).subs(force, unit) == norm(unit)
 
 
 def test_vector_add() -> None:
@@ -208,8 +207,7 @@ def test_vector_add() -> None:
 
     # .subs
 
-    # NOTE: We have to force `.doit` after substitution since `__new__` doesn't handle it
-    assert sum_123.subs(force_3, force_1).doit() == force_1 * 2 + force_2
+    assert sum_123.subs(force_3, force_1) == force_1 * 2 + force_2
 
 
 def test_vector_dot() -> None:

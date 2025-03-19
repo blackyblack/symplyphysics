@@ -17,6 +17,11 @@ from ..miscellaneous import sort_with_sign, Registry
 
 
 class _AtomicRegistry:
+    """
+    Helper class that associates all `AtomicVectorExpr` with a number. This is needed to order
+    the arguments in such operations as `VectorDot` or `VectorCross`.
+    """
+
     _symbol_registry: Registry[VectorSymbol]
     _cross_registry: Registry[VectorSymbolCross]
 
@@ -95,8 +100,8 @@ class VectorExpr(Basic):  # type: ignore[misc]
 
     def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
         """
-        Express `self` as a linear combination of `VectorSymbol`. Each term is represented by a
-        `(AtomicVectorExpr, Expr)` tuple, and each symbol must appear in the combination only once.
+        Express `self` as a linear combination of `AtomicVectorExpr`. Each term is represented by a
+        `(AtomicVectorExpr, Expr)` tuple, and each vector must appear in the combination only once.
 
         Examples:
         =========
@@ -137,6 +142,7 @@ ZERO = _VectorZero()
 #       using the supplied components equals the norm given at the instantiation of the symbol.
 #       But perhaps this simply gives us additional information about the vector and there's no
 #       need to worry.
+# TODO: Add support for axial vectors.
 class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
     """
     Class representing a symbolic vector.
@@ -438,7 +444,7 @@ class VectorAdd(VectorExpr):
 
     @cacheit
     def __new__(cls, *vectors: VectorExpr, **kwargs: Any) -> VectorExpr:
-        # TODO: add dimension check for the arguments
+        # NOTE: add dimension check for the arguments?
 
         evaluate = kwargs.get("evaluate", global_parameters.evaluate)
 
@@ -489,6 +495,43 @@ class VectorAdd(VectorExpr):
 
 
 class VectorDot(Expr):  # type: ignore[misc]
+    """
+    The **dot product**, or **scalar product**, is a binary operation that takes two vectors and
+    returns a single number.
+
+    Geometrically, the dot product can be expressed using the length (`norm`) of the vectors and
+    the (non-directional) `angle` between them: `dot(a, b) = norm(a) * norm(b) * cos(angle(a, b))`
+    where `a` and `b` are vectors.
+
+    In particular,
+
+    1. `dot(a, b) = 0` if and only if `a` and `b` are orthogonal.
+
+    2. `dot(a, b) = norm(a) * norm(b)` if and only if `a` and `b` are codirectional.
+
+    3. `dot(a, a) = norm(a)^2` as a result of (2).
+
+    The dot product has the following **properties**:
+
+    1. **Commutativity**: for all vectors `a, b`, `dot(a, b) = dot(b, a)`.
+
+    2. **Linearity** in the **first** argument: for all vectors `a, b, c` and scalars `k, l`,
+       `dot(a * k + b * l, c) = k * dot(a, c) + l * dot(b, c)`.
+
+    3. **Linearity** in the **second** argument, which follows from (1) and (2).
+
+    4. **Absense of cancellation**: for all vectors `a, b, c` s.t. `a ≠ 0`, `dot(a, b) = dot(a, c)`
+       does not imply `b = c`.
+
+    5. Applicability of the **product rule**: for all vector-valued differentiable functions
+       `a, b`, `d[dot(a, b)] = dot(d[a], b) + dot(a, d[b])` where `d[v]` denotes the derivative of
+       vector `v`.
+
+    Note that the properties and relations mentioned only apply to **real-valued vectors**.
+
+    The dot product is a *true scalar* in a sense that it is unchanged if the orientation of the
+    frame is reversed.
+    """
 
     @property
     def lhs(self) -> VectorExpr:
@@ -578,6 +621,45 @@ dot = VectorDot  # pylint: disable=invalid-name
 
 
 class VectorCross(VectorExpr):
+    """
+    The **cross product**, or **vector product**, is a binary operation that takes two vectors and
+    returns another vector. The cross product is only defined in a *3-dimensional space* (although
+    the its construction is also possible in a 7-dimensional space, the following properties do not
+    hold there).
+
+    Geometrically, the cross product between vectors `a` and `b` can be defined as `cross(a, b) =
+    norm(a) * norm(b) * sin(angle(a, b)) * n` where `norm` is the length operator and `n` is a unit
+    vector orthogonal to the plane containing `a` and `b` with such direction that the ordered set
+    `(a, b, n)` is positively oriented.
+
+    The cross product has the following **properties**:
+
+    1. **Anticommutativity**: for all vectors `a, b`, `cross(a, b) = -cross(b, a)`.
+
+    2. For any vector `a`, `cross(a, a) = 0`, which follows from (1).
+
+    3. **Distributivity over addition**: for all vectors `a, b, c`, `cross(a, b + c) =
+       cross(a, b) + cross(a, c)`.
+
+    4. **Absense of associativity**: for all vectors `a, b, c`, `cross(a, cross(b, c)) ≠
+       cross(cross(a, b), c)`.
+
+    5. However, the **Jacobi identity** is satisfied: for all vectors `a, b, c`,
+       `cross(a, cross(b, c)) + cross(b, cross(c, a)) + cross(c, cross(b, a)) = 0`.
+
+    6. **Absense of cancellation**: for all vectors `a, b, c` s.t. `a ≠ 0`, `cross(a, b) =
+       cross(a, c)` does not imply `b = c`. This only happens if `dot(a, b) = dot(a, c)` holds.
+
+    7. Applicability of the **product rule**: for all vector-valued differentiable functions
+       `a, b`, `d[cross(a, b)] = cross(d[a], b) + cross(a, d[b])` where `d[v]` denotes the
+       derivative of vector `v`.
+
+    It is related to the dot product by the following relation: for all vectors `a, b`,
+    `norm(cross(a, b))^2 + dot(a, b)^2 = norm(a)^2 * norm(b)^2`.
+
+    The cross product is a *pseudovector*, i.e. it is negated if the orientation of the frame is
+    reversed.
+    """
 
     @property
     def lhs(self) -> VectorExpr:
@@ -684,6 +766,9 @@ class VectorCross(VectorExpr):
 
 
 class VectorSymbolCross(VectorCross):
+    """
+    A helper class for the cross product between two symbolic vectors.
+    """
 
     @property
     def lhs(self) -> VectorSymbol:
@@ -734,6 +819,30 @@ cross = VectorCross  # pylint: disable=invalid-name
 
 
 class VectorMixedProduct(Expr):  # type: ignore[misc]
+    """
+    The **scalar triple product**, or **mixed product**, is defined as the dot product of one
+    vector with the cross product with the other two.
+
+    Geometrically, given vectors `a, b, c` the scalar triple product `dot(a, cross(b, c))` can be
+    interpreted as the signed volume of the parallelepiped defined by these vectors.
+
+    The mixed product has the following **properties**:
+
+    1. It does not change under a positive permutation of the arguments: for all vectors `a, b, c`,
+       `mixed(a, b, c) = mixed(b, c, a) = mixed(c, a, b)`.
+
+    2. It is negated under a negative permutation of the arguments: for all vectors `a, b, c`,
+       `mixed(a, c, b) = mixed(b, a, c) = mixed(c, b, a) = -mixed(a, b, c)`.
+
+    3. The scalar triple product is zero if and only if the three vectors `a, b, c` are coplanar.
+
+    4. It is linear in all arguments.
+
+    The scalar triple product is a *pseudoscalar*, i.e. it is negated if the orientation of the
+    frame is reversed.
+    """
+
+    is_real = True
 
     @property
     def vectors(self) -> tuple[VectorExpr, VectorExpr, VectorExpr]:
