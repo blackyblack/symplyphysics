@@ -221,6 +221,7 @@ def test_vector_dot() -> None:
     assert expr_equals(dot(ZERO, ZERO), 0)
 
     assert expr_equals(dot(f1, f1), norm(f1)**2)
+    assert expr_equals(dot(f1, f2), dot(f1, f2))
     assert expr_equals(dot(ZERO, f1), 0)
     assert expr_equals(dot(f1, ZERO), 0)
 
@@ -248,6 +249,7 @@ def test_vector_cross() -> None:
     assert vector_equals(cross(ZERO, f1), ZERO)
     assert vector_equals(cross(f1, ZERO), ZERO)
 
+    assert vector_equals(cross(f1, f2), cross(f1, f2))
     assert vector_equals(cross(f1, f2), -cross(f2, f1))
 
     assert vector_equals(cross(f1, f1 + f2), cross(f1, f2))

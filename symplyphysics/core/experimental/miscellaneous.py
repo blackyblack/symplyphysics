@@ -40,6 +40,9 @@ class Registry(Generic[_T]):
         self._mapping = {}
 
     def add(self, value: _T) -> None:
+        if value in self._mapping:
+            return
+
         self._index += 1
         self._mapping[value] = self._index
 

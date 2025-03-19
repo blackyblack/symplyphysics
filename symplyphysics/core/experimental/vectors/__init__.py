@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any, Optional, TypeAlias, assert_never
 from collections import defaultdict
 
-from sympy import Atom, Basic, Expr, S, sympify, ask, Q, simplify
+from sympy import Atom, Basic, Expr, S, sympify, ask, Q, simplify, cacheit
 from sympy.core.parameters import global_parameters
 from sympy.physics.units import Dimension
 from sympy.physics.units.systems.si import dimsys_SI
@@ -11,7 +11,6 @@ from sympy.printing.printer import Printer
 
 from symplyphysics.core.dimensions import collect_expression_and_dimension
 from symplyphysics.core.errors import UnitsError
-from symplyphysics.core.symbols.id_generator import next_id
 from symplyphysics.core.symbols.symbols import DimensionSymbol
 from symplyphysics.docs.miscellaneous import needs_mul_brackets
 from ..miscellaneous import sort_with_sign, Registry
@@ -34,7 +33,7 @@ class _AtomicRegistry:
             self._cross_registry.add(value)
             return
 
-        raise TypeError(f"Unknown atomic vector type {type(value).__name__}.")
+        assert_never(value)
 
     def get(self, value: AtomicVectorExpr) -> int:
         offset = self._offset(value)
@@ -51,10 +50,11 @@ class _AtomicRegistry:
         if isinstance(value, VectorSymbol):
             return 0
 
+        # `VectorSymbolCross` should come after `VectorSymbol`
         if isinstance(value, VectorSymbolCross):
             return len(self._symbol_registry)
 
-        raise TypeError(f"Unknown atomic vector type {type(value).__name__}.")
+        assert_never(value)
 
 
 _atomic_registry = _AtomicRegistry()
@@ -69,26 +69,26 @@ class VectorExpr(Basic):  # type: ignore[misc]
         return self
 
     def __add__(self, other: VectorExpr) -> VectorExpr:
-        return VectorAdd(self, other).doit()
+        return VectorAdd(self, other)
 
     def __sub__(self, other: VectorExpr) -> VectorExpr:
         # Refer to the consequence in VectorAdd
-        return VectorAdd(self, -other).doit()
+        return VectorAdd(self, -other)
 
     def __mul__(self, other: Any) -> VectorExpr:
-        return VectorScale(self, other).doit()
+        return VectorScale(self, other)
 
     def __neg__(self) -> VectorExpr:
         # Refer to consequence #4 in VectorScale
-        return VectorScale(self, -1).doit()
+        return VectorScale(self, -1)
 
     def __pos__(self) -> VectorExpr:
-        return self.doit()
+        return self
 
     def __truediv__(self, other: Any) -> VectorExpr:
         # NOTE: probably need to check if `other` is not `0` to return a special "NaN" vector
 
-        return VectorScale(self, 1 / other).doit()
+        return VectorScale(self, 1 / other)
 
     def subs(self, *args: Any, **kwargs: Any) -> VectorExpr:
         return Basic.subs(self, *args, **kwargs)  # type: ignore[no-any-return]
@@ -96,7 +96,7 @@ class VectorExpr(Basic):  # type: ignore[misc]
     def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
         """
         Express `self` as a linear combination of `VectorSymbol`. Each term is represented by a
-        `(VectorSymbol, Expr)` tuple, and each symbol must appear in the combination only once.
+        `(AtomicVectorExpr, Expr)` tuple, and each symbol must appear in the combination only once.
 
         Examples:
         =========
@@ -152,10 +152,8 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
     """
 
     _norm: Optional[Expr]
-    _id: int
 
     is_symbol = True
-    is_nonnegative = True
 
     def __new__(
         cls,
@@ -177,47 +175,52 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
             if norm == 0:
                 return ZERO
 
-        return VectorExpr.__new__(cls)
+        obj = VectorExpr.__new__(cls)
+        obj._norm = norm
 
-    def __init__(
-        self,
-        display_symbol: Optional[str] = None,
-        dimension: Dimension = Dimension(1),
-        *,
-        norm: Optional[Any] = None,  # pylint: disable=redefined-outer-name
-        display_latex: Optional[str] = None,
-    ) -> None:
-        self._id = next_id("VEC")
+        _atomic_registry.add(obj)
+        id_ = _atomic_registry.get(obj)
 
         if not display_symbol:
-            display_symbol = f"VEC{self._id}"
+            display_symbol = f"VEC{id_}"
             if not display_latex:
-                display_latex = f"\\mathbf{{v}}_{{{self._id}}}"
+                display_latex = f"\\mathbf{{v}}_{{{id_}}}"
         elif not display_latex:
             display_latex = f"\\mathbf{{{display_symbol}}}"
 
         DimensionSymbol.__init__(
-            self,
+            obj,
             display_name=display_symbol,
             dimension=dimension,
             display_latex=display_latex,
         )
+        Atom.__init__(obj)
 
         if norm is not None:
+            dim = getattr(obj, "dimension")
             norm_dim = collect_expression_and_dimension(norm)[1]
-            if not dimsys_SI.equivalent_dims(norm_dim, self.dimension):
-                raise UnitsError(f"The norm must be {self.dimension}, got {norm_dim}.")
+            if not dimsys_SI.equivalent_dims(norm_dim, dim):
+                raise UnitsError(f"The norm must be {dim}, got {norm_dim}.")
 
-        self._norm = norm
+        return obj
 
-        _atomic_registry.add(self)
+    # Needed since `DimensionSymbol` doesn't accept the `norm` parameter
+    def __init__(  # pylint: disable=super-init-not-called
+        self,
+        display_symbol: Optional[str] = None,  # pylint: disable=unused-argument
+        dimension: Dimension = Dimension(1),
+        *,
+        norm: Optional[Any] = None,  # pylint: disable=redefined-outer-name, unused-argument
+        display_latex: Optional[str] = None,
+    ):
+        pass
 
     @property
     def norm(self) -> Optional[Expr]:
         return self._norm
 
     def _hashable_content(self) -> tuple[Any, ...]:
-        return (self._id,)
+        return (id(self),)
 
     def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
         return ((self, S.One),)
@@ -242,21 +245,27 @@ class VectorNorm(Expr):  # type: ignore[misc]
     1. `Wikipedia <https://en.wikipedia.org/wiki/Norm_(mathematics)>`__.
     """
 
+    is_nonnegative = True
+
     @property
     def argument(self) -> VectorExpr:
         return self.args[0]  # type: ignore[no-any-return]
 
-    # NOTE: Add __new__ that would dispatch the code execution depending on the value of `vector`
-    # For now, this is handled by the function `norm` below.
-    def __init__(self, vector: VectorExpr) -> None:
-        self._args = (vector,)
+    @cacheit
+    def __new__(cls, vector: VectorExpr, **kwargs: Any) -> Expr:
+        evaluate = kwargs.get("evaluate", global_parameters.evaluate)
 
-    def doit(self, **hints: Any) -> Expr:
-        vector = self.argument
+        if evaluate:
+            obj = cls.from_vector(vector)
+            if obj is not None:
+                return obj
 
-        if hints.get("deep", True):
-            vector = vector.doit()
+        obj = super().__new__(cls)
+        obj._args = (vector,)
+        return obj
 
+    @classmethod
+    def from_vector(cls, vector: VectorExpr) -> Optional[Expr]:
         # Refer to property #3
         if isinstance(vector, _VectorZero):
             return S.Zero
@@ -266,7 +275,22 @@ class VectorNorm(Expr):  # type: ignore[misc]
 
         # Refer to property #2
         if isinstance(vector, VectorScale):
-            return VectorNorm(vector.args[0]) * abs(vector.args[1])
+            return cls(vector.vector) * abs(vector.scale)
+
+        # NOTE: add case `norm(v * a + w * a) = norm(v + w) * abs(a)`
+
+        return None
+
+    def doit(self, **hints: Any) -> Expr:
+        vector = self.argument
+
+        if hints.get("deep", True):
+            vector = vector.doit()
+
+        result = self.from_vector(vector)
+
+        if result is not None:
+            return result
 
         return self
 
@@ -277,8 +301,7 @@ class VectorNorm(Expr):  # type: ignore[misc]
         return f"norm({p.doprint(self.argument)})"
 
 
-def norm(vector: VectorExpr) -> Expr:
-    return VectorNorm(vector).doit()
+norm = VectorNorm  # pylint: disable=invalid-name
 
 
 class VectorScale(VectorExpr):
@@ -321,23 +344,24 @@ class VectorScale(VectorExpr):
     def scale(self) -> Expr:
         return self.args[1]
 
+    @cacheit
     def __new__(cls, vector: VectorExpr, scale: Any, **kwargs: Any) -> VectorScale:
-        # TODO: Add dispatch depending on the value of `vector` and `scale`?
-
-        return super().__new__(cls)  # type: ignore[no-any-return]
-
-    def __init__(self, vector: VectorExpr, scale: Any, **kwargs: Any) -> None:
         evaluate = kwargs.get("evaluate", global_parameters.evaluate)
 
         if evaluate:
-            scale = sympify(scale, strict=True)
-            if not isinstance(scale, Expr):
-                raise TypeError(f"Scale {scale} must be an Expr, got {type(scale).__name__}.")
+            return cls.from_arguments(vector, scale)
 
-        self._args = (vector, scale)
+        obj = super().__new__(cls)
+        obj._args = (vector, scale)
+        return obj  # type: ignore[no-any-return]
 
-    def doit(self, **_hints: Any) -> VectorExpr:
-        combination = self.as_symbol_combination()
+    @classmethod
+    def from_arguments(cls, vector: VectorExpr, scale: Any) -> VectorExpr:
+        scale = sympify(scale, strict=True)
+        if not isinstance(scale, Expr):
+            raise TypeError(f"Scale {scale} must be an Expr, got {type(scale).__name__}.")
+
+        combination = [(v, s * scale) for v, s in vector.as_symbol_combination()]
 
         match combination:
             case ():
@@ -352,10 +376,16 @@ class VectorScale(VectorExpr):
                 if s == 0:
                     return ZERO
 
-                return VectorScale(v, s, evaluate=False)
+                return cls(v, s, evaluate=False)
             case _:
                 # Refer to property #3
-                return VectorAdd(*(v * s for v, s in combination))
+                return VectorAdd(
+                    *(cls(v, s, evaluate=False) for v, s in combination),
+                    evaluate=False,
+                )
+
+    def doit(self, **_hints: Any) -> VectorExpr:
+        return self.from_arguments(self.vector, self.scale)
 
     def _sympystr(self, p: Printer) -> str:
         vector, value = self.args
@@ -369,7 +399,12 @@ class VectorScale(VectorExpr):
         scale = self.scale
         vector = self.vector
 
-        return tuple((v, s * scale) for v, s in vector.as_symbol_combination())
+        result: list[tuple[AtomicVectorExpr, Expr]] = []
+        for v, s0 in vector.as_symbol_combination():
+            s1 = s0 * scale
+            if s1 != 0:
+                result.append((v, s1))
+        return tuple(result)
 
 
 class VectorAdd(VectorExpr):
@@ -401,20 +436,29 @@ class VectorAdd(VectorExpr):
     def addends(self) -> tuple[VectorExpr]:
         return self.args  # type: ignore[no-any-return]
 
-    def __init__(self, *vectors: VectorExpr) -> None:
-        # TODO: Add dispatch depending on the value of `vector` and `scale`?
-        # TODO: if `vectors` is empty, return `ZERO` (in __new__?)
-
+    @cacheit
+    def __new__(cls, *vectors: VectorExpr, **kwargs: Any) -> VectorExpr:
         # TODO: add dimension check for the arguments
 
-        for vector in vectors:
-            if not isinstance(vector, VectorExpr):
-                raise TypeError(f"All addends must be VectorExpr, got {type(vector).__name__}")
+        evaluate = kwargs.get("evaluate", global_parameters.evaluate)
 
-        self._args = vectors
+        if evaluate:
+            for vector in vectors:
+                if not isinstance(vector, VectorExpr):
+                    raise TypeError(f"All addends must be VectorExpr, got {type(vector).__name__}")
 
-    def doit(self, **_hints: Any) -> VectorExpr:
-        combination = self.as_symbol_combination()
+            return cls.from_vectors(*vectors)
+
+        obj = super().__new__(cls)
+        obj._args = vectors
+        return obj  # type: ignore[no-any-return]
+
+    @classmethod
+    def from_vectors(cls, *vectors: VectorExpr) -> VectorExpr:
+        if not vectors:
+            return ZERO
+
+        combination = cls._as_symbol_combination(*vectors)
 
         match combination:
             case ():
@@ -422,31 +466,29 @@ class VectorAdd(VectorExpr):
             case ((v, s),):
                 return v * s  # type: ignore[no-any-return]
             case _:
-                return VectorAdd(*(v * s for v, s in combination))
+                return cls(*(v * s for v, s in combination), evaluate=False)
 
-    # TODO: order the addends in __init__? so that we could return a consistent `_hashable_contents`
-    # tuple and get rid of custom __eq__
-    def __eq__(self, other: object) -> bool:
-        return type(other) is type(self) and self.args == other.args  # type: ignore[attr-defined]
-
-    def __hash__(self) -> int:
-        return hash(self.args)
+    def doit(self, **_hints: Any) -> VectorExpr:
+        return self.from_vectors(*self.addends)
 
     def _sympystr(self, p: Printer) -> str:
         return " + ".join(map(p.doprint, self.args))
 
-    def as_symbol_combination(self) -> tuple[tuple[VectorSymbol, Expr], ...]:
+    @staticmethod
+    def _as_symbol_combination(*addends: VectorExpr) -> tuple[tuple[VectorExpr, Expr], ...]:
         mapping: dict[AtomicVectorExpr, Expr] = defaultdict(lambda: S.Zero)
 
-        for addend in self.addends:
+        for addend in addends:
             for v, s in addend.as_symbol_combination():
                 mapping[v] += s
 
         return tuple((v, s) for v, s in mapping.items() if s != 0)
 
+    def as_symbol_combination(self) -> tuple[tuple[VectorSymbol, Expr], ...]:
+        return self._as_symbol_combination(*self.addends)
+
 
 class VectorDot(Expr):  # type: ignore[misc]
-    _done: bool
 
     @property
     def lhs(self) -> VectorExpr:
@@ -456,30 +498,47 @@ class VectorDot(Expr):  # type: ignore[misc]
     def rhs(self) -> VectorExpr:
         return self.args[1]  # type: ignore[no-any-return]
 
-    def __new__(cls, lhs: VectorExpr, rhs: VectorExpr, done: bool = False) -> VectorDot:
-        return super().__new__(cls)  # type: ignore[no-any-return]
+    @cacheit
+    def __new__(cls, lhs: VectorExpr, rhs: VectorExpr, **kwargs: Any) -> Expr:
+        evaluate = kwargs.get("evaluate", global_parameters.evaluate)
 
-    def __init__(self, lhs: VectorExpr, rhs: VectorExpr, done: bool = False) -> None:
-        self._args = (lhs, rhs)
-        self._done = done
+        if evaluate:
+            return cls.from_vectors(lhs, rhs)
+
+        obj = super().__new__(cls)
+        obj._args = (lhs, rhs)
+        return obj
 
     def doit(self, **_hints: Any) -> Expr:
-        if self._done:
-            return self
-
-        result = S.Zero
-
-        for lhs_v, lhs_s in self.lhs.as_symbol_combination():
-            for rhs_v, rhs_s in self.rhs.as_symbol_combination():
-                result += VectorDot.from_atomic(lhs_v, rhs_v) * lhs_s * rhs_s
-
-        return simplify(result, doit=False)
+        return self.from_vectors(self.lhs, self.rhs)
 
     def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
         pass
 
     def _sympystr(self, p: Printer) -> str:
         return f"dot({p.doprint(self.lhs)}, {p.doprint(self.rhs)})"
+
+    @classmethod
+    def from_vectors(cls, lhs: VectorExpr, rhs: VectorExpr) -> Expr:
+        if isinstance(lhs, AtomicVectorExpr) and isinstance(rhs, AtomicVectorExpr):
+            return cls.from_atomic(lhs, rhs)
+
+        result = S.Zero
+
+        for lhs_v, lhs_s in lhs.as_symbol_combination():
+            for rhs_v, rhs_s in rhs.as_symbol_combination():
+                result += cls.from_atomic(lhs_v, rhs_v) * lhs_s * rhs_s
+
+        return result
+
+    @classmethod
+    def from_symbols(cls, lhs: VectorSymbol, rhs: VectorSymbol) -> Expr:
+        sign, args = sort_with_sign((lhs, rhs), key=_atomic_registry.get)
+
+        if sign == 0:
+            return VectorNorm(lhs)**2
+
+        return cls(*args, evaluate=False)
 
     @classmethod
     def from_atomic(cls, lhs: AtomicVectorExpr, rhs: AtomicVectorExpr) -> Expr:
@@ -496,12 +555,7 @@ class VectorDot(Expr):  # type: ignore[misc]
         if isinstance(lhs, VectorSymbol):
             if isinstance(rhs, VectorSymbol):
                 # both are VectorSymbol
-                sign, args = sort_with_sign((lhs, rhs), key=_atomic_registry.get)
-
-                if sign == 0:
-                    return VectorNorm(lhs)**2
-
-                return cls(*args, done=True)  # type: ignore[misc]
+                return cls.from_symbols(lhs, rhs)
 
             # lhs is VectorSymbol, rhs is VectorSymbolCross
             return VectorMixedProduct.from_symbols(lhs, rhs.lhs, rhs.rhs)
@@ -516,12 +570,11 @@ class VectorDot(Expr):  # type: ignore[misc]
         c = rhs.lhs
         d = rhs.rhs
 
-        return (cls.from_atomic(a, b) * cls.from_atomic(b, d) -
-            cls.from_atomic(b, c) * cls.from_atomic(a, d))
+        return (cls.from_symbols(a, b) * cls.from_symbols(b, d) -
+            cls.from_symbols(b, c) * cls.from_symbols(a, d))
 
 
-def dot(lhs: VectorExpr, rhs: VectorExpr) -> Expr:
-    return VectorDot(lhs, rhs).doit()
+dot = VectorDot  # pylint: disable=invalid-name
 
 
 class VectorCross(VectorExpr):
@@ -534,27 +587,51 @@ class VectorCross(VectorExpr):
     def rhs(self) -> VectorExpr:
         return self.args[1]  # type: ignore[no-any-return]
 
-    def __init__(self, lhs: VectorExpr, rhs: VectorExpr) -> None:
-        self._args = (lhs, rhs)
+    @cacheit
+    def __new__(cls, lhs: VectorExpr, rhs: VectorExpr, **kwargs: Any) -> VectorExpr:
+        evaluate = kwargs.get("evaluate", global_parameters.evaluate)
 
-    def doit(self, **hints: Any) -> VectorExpr:
-        if isinstance(self, VectorSymbolCross):
-            return self.doit(**hints)
+        if evaluate:
+            return cls.from_vectors(lhs, rhs)
 
-        return VectorAdd(*(v * s for v, s in self.as_symbol_combination()))
+        obj = super().__new__(cls)
+        obj._args = (lhs, rhs)
+        return obj  # type: ignore[no-any-return]
 
-    def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
+    @classmethod
+    def from_vectors(cls, lhs: VectorExpr, rhs: VectorExpr) -> VectorExpr:
+        if isinstance(lhs, VectorSymbol) and isinstance(rhs, VectorSymbol):
+            return VectorSymbolCross(lhs, rhs)
 
+        combination = cls._as_symbol_combination(lhs, rhs)
+
+        return VectorAdd(
+            *(VectorScale(v, s, evaluate=False) for v, s in combination),
+            evaluate=False,
+        )
+
+    def doit(self, **_hints: Any) -> VectorExpr:
+        return self.from_vectors(self.lhs, self.rhs)
+
+    @classmethod
+    def _as_symbol_combination(
+        cls,
+        lhs: VectorExpr,
+        rhs: VectorExpr,
+    ) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
         mapping: dict[AtomicVectorExpr, Expr] = defaultdict(lambda: S.Zero)
 
-        for lhs_v, lhs_s in self.lhs.as_symbol_combination():
-            for rhs_v, rhs_s in self.rhs.as_symbol_combination():
+        for lhs_v, lhs_s in lhs.as_symbol_combination():
+            for rhs_v, rhs_s in rhs.as_symbol_combination():
                 new_factor = lhs_s * rhs_s
 
-                for v, s in self.from_atomic(lhs_v, rhs_v).as_symbol_combination():
+                for v, s in cls.from_atomic(lhs_v, rhs_v).as_symbol_combination():
                     mapping[v] += s * new_factor
 
         return tuple((v, s) for v, s in mapping.items() if s != 0)
+
+    def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
+        return self._as_symbol_combination(self.lhs, self.rhs)
 
     def _sympystr(self, p: Printer) -> str:
         return f"cross({p.doprint(self.lhs)}, {p.doprint(self.rhs)})"
@@ -607,7 +684,6 @@ class VectorCross(VectorExpr):
 
 
 class VectorSymbolCross(VectorCross):
-    _done: bool
 
     @property
     def lhs(self) -> VectorSymbol:
@@ -617,33 +693,32 @@ class VectorSymbolCross(VectorCross):
     def rhs(self) -> VectorSymbol:
         return self.args[1]  # type: ignore[no-any-return]
 
-    def __new__(cls, lhs: VectorSymbol, rhs: VectorSymbol, done: bool = False) -> VectorSymbolCross:
-        return super().__new__(cls)  # type: ignore[no-any-return]
+    @cacheit
+    def __new__(cls, lhs: VectorSymbol, rhs: VectorSymbol, **kwargs: Any) -> VectorSymbolCross:
+        evaluate = kwargs.get("evaluate", global_parameters.evaluate)
 
-    def __init__(self, lhs: VectorSymbol, rhs: VectorSymbol, done: bool = False) -> None:
-        super().__init__(lhs, rhs)
+        if evaluate:
+            return cls.from_symbols(lhs, rhs)
 
-        if done:
-            _atomic_registry.add(self)
-
-        self._done = done
+        obj = super().__new__(cls, lhs, rhs, evaluate=False)
+        _atomic_registry.add(obj)
+        return obj
 
     def doit(self, **_hints: Any) -> VectorExpr:
-        if self._done:
-            return self
-
         return self.from_symbols(self.lhs, self.rhs)
 
     def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
-        if self._done:
-            return ((self, S.One),)
+        sign, args = sort_with_sign((self.lhs, self.rhs), key=_atomic_registry.get)
 
-        result = self.from_symbols(self.lhs, self.rhs)
-
-        if result is ZERO:
+        if sign == 0:
             return ()
 
-        return ((result, S.One),)
+        if sign == -1:
+            result = type(self)(*args, evaluate=False)
+        else:
+            result = self
+
+        return ((result, S(sign)),)
 
     @classmethod
     def from_symbols(cls, lhs: VectorSymbol, rhs: VectorSymbol) -> VectorExpr:
@@ -652,43 +727,42 @@ class VectorSymbolCross(VectorCross):
         if sign == 0:
             return ZERO
 
-        return cls(*args, done=True) * sign  # type: ignore[misc]
+        return cls(*args, evaluate=False) * sign
 
 
-def cross(lhs: VectorExpr, rhs: VectorExpr) -> VectorExpr:
-    return VectorCross(lhs, rhs).doit()
+cross = VectorCross  # pylint: disable=invalid-name
 
 
 class VectorMixedProduct(Expr):  # type: ignore[misc]
-    _done: bool
 
     @property
     def vectors(self) -> tuple[VectorExpr, VectorExpr, VectorExpr]:
         a, b, c = self.args
         return a, b, c
 
-    def __new__(cls, *args: VectorExpr, done: bool = False) -> VectorMixedProduct:
-        return super().__new__(cls)  # type: ignore[no-any-return]
+    @cacheit
+    def __new__(cls, *vectors: VectorExpr, **kwargs: Any) -> Expr:
+        a, b, c = vectors
 
-    def __init__(self, *args: VectorExpr, done: bool = False) -> None:
-        a, b, c = args
+        evaluate = kwargs.get("evaluate", global_parameters.evaluate)
 
-        for arg in args:
-            if not isinstance(arg, VectorExpr):
-                raise TypeError(f"All operands must be VectorExpr, got {type(arg).__name__}")
+        if evaluate:
+            return cls.from_vectors(*vectors)
 
-        self._args = a, b, c
-        self._done = done
+        obj = super().__new__(cls)
+        obj._args = (a, b, c)
+        return obj
+
+    @classmethod
+    def from_vectors(cls, *vectors: VectorExpr) -> Expr:
+        if all(isinstance(v, VectorSymbol) for v in vectors):
+            return cls.from_symbols(*vectors)
+
+        a, b, c = vectors
+        return dot(a, cross(b, c))
 
     def doit(self, **_hints: Any) -> Expr:
-        if self._done:
-            return self
-
-        if all(isinstance(v, VectorSymbol) for v in self.vectors):
-            return self.from_symbols(*self.vectors)
-
-        a, b, c = self.vectors
-        return dot(a, cross(b, c))  # NOTE: probably check for simplifications
+        return self.from_vectors(*self.vectors)
 
     def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
         pass
@@ -698,13 +772,13 @@ class VectorMixedProduct(Expr):  # type: ignore[misc]
         return f"mixed({p.doprint(a)}, {p.doprint(b)}, {p.doprint(c)})"
 
     @classmethod
-    def from_symbols(cls, *args: VectorSymbol) -> Expr:
-        sign, sorted_args = sort_with_sign(args, key=_atomic_registry.get)
+    def from_symbols(cls, *vectors: VectorSymbol) -> Expr:
+        sign, sorted_args = sort_with_sign(vectors, key=_atomic_registry.get)
 
         if sign == 0:
             return S.Zero
 
-        return sign * cls(*sorted_args, done=True)
+        return sign * cls(*sorted_args, evaluate=False)
 
 
 AtomicVectorExpr: TypeAlias = VectorSymbol | VectorSymbolCross
