@@ -1,4 +1,4 @@
-from typing import TypeVar, Iterable, Callable, Any, Optional
+from typing import TypeVar, Iterable, Callable, Any, Optional, Generic
 from sympy.combinatorics.permutations import Permutation
 
 _T = TypeVar("_T")
@@ -24,3 +24,27 @@ def sort_with_sign(
         sign = Permutation(indeces).signature()
 
     return sign, new_it
+
+
+class Registry(Generic[_T]):
+    """
+    A registry contains a mapping of the given elements to integers in the order of their addition
+    into the registry.
+    """
+
+    _index: int
+    _mapping: dict[_T, int]
+
+    def __init__(self) -> None:
+        self._index = 0
+        self._mapping = {}
+
+    def add(self, value: _T) -> None:
+        self._index += 1
+        self._mapping[value] = self._index
+
+    def get(self, value: _T) -> int:
+        return self._mapping[value]
+
+    def __len__(self) -> int:
+        return self._index
