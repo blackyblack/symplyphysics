@@ -3,7 +3,20 @@ from sympy import Basic, Symbol as SymSymbol
 from symplyphysics import units, dimensionless, symbols, assert_equal, clone_as_symbol
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.errors import UnitsError
-from symplyphysics.core.experimental.vectors import VectorSymbol, ZERO, norm, VectorScale
+from symplyphysics.core.experimental.vectors import (
+    VectorSymbol,
+    ZERO,
+    VectorNorm as norm,
+    VectorScale,
+    VectorDot as dot,
+    VectorCross as cross,
+    VectorExpr,
+    VectorMixedProduct,
+)
+
+
+def vector_equals(lhs: VectorExpr, rhs: VectorExpr) -> bool:
+    return bool(norm(lhs - rhs) == 0)
 
 
 def test_init() -> None:
@@ -84,7 +97,6 @@ def test_equality() -> None:
 
 def test_zero_vector() -> None:
     assert norm(ZERO) == 0
-    assert ZERO.is_zero
 
 
 def test_vector_scaling() -> None:
@@ -154,14 +166,13 @@ def test_vector_norm() -> None:
     v2 = VectorSymbol("v_2")
     assert norm(v1 + v2).args[0] == v1 + v2
     assert norm(v1 + v1) == norm(v1) * 2
-    assert norm(ZERO - v2).doit() == norm(v2)  # TODO: check norm.__new__
+    assert norm(ZERO - v2) == norm(v2)
 
     # .subs
 
     assert norm(force * real_scale).subs(real_scale, 3) == norm(force) * 3
 
-    # NOTE: We have to force `.doit` after substitution since `__new__` doesn't handle it
-    assert norm(force).subs(force, unit).doit() == norm(unit)
+    assert norm(force).subs(force, unit) == norm(unit)
 
 
 def test_vector_add() -> None:
@@ -196,5 +207,88 @@ def test_vector_add() -> None:
 
     # .subs
 
-    # NOTE: We have to force `.doit` after substitution since `__new__` doesn't handle it
-    assert sum_123.subs(force_3, force_1).doit() == force_1 * 2 + force_2
+    assert sum_123.subs(force_3, force_1) == force_1 * 2 + force_2
+
+
+def test_vector_dot() -> None:
+    f1 = VectorSymbol("F_1", units.force)
+    f2 = VectorSymbol("F_2", units.force)
+    v1 = VectorSymbol("v_1", units.velocity)
+    v2 = VectorSymbol("v_2", units.velocity)
+
+    assert expr_equals(dot(ZERO, ZERO), 0)
+
+    assert expr_equals(dot(f1, f1), norm(f1)**2)
+    assert expr_equals(dot(f1, f2), dot(f1, f2))
+    assert expr_equals(dot(ZERO, f1), 0)
+    assert expr_equals(dot(f1, ZERO), 0)
+
+    assert expr_equals(dot(f1 + f2, f1), norm(f1)**2 + dot(f1, f2))
+    assert expr_equals(dot(f1 + f2, f2 + f1), norm(f1)**2 + 2 * dot(f1, f2) + norm(f2)**2)
+    assert expr_equals(dot(f1 + f2, f1 - f2), norm(f1)**2 - norm(f2)**2)
+    assert expr_equals(dot(f1 + f2, ZERO), 0)
+    assert expr_equals(dot(ZERO, f1 + f2), 0)
+
+    assert expr_equals(
+        dot(f1 + f2 * 2, -v1 + v2),
+        -dot(f1, v1) - 2 * dot(f2, v1) + dot(f1, v2) + 2 * dot(f2, v2),
+    )
+
+
+def test_vector_cross() -> None:
+    f1 = VectorSymbol("F_1", units.force)
+    f2 = VectorSymbol("F_2", units.force)
+    v1 = VectorSymbol("v_1", units.velocity)
+    v2 = VectorSymbol("v_2", units.velocity)
+
+    assert vector_equals(cross(f1, f1), ZERO)
+    assert not vector_equals(cross(f1, f2), ZERO)
+    assert vector_equals(cross(ZERO, ZERO), ZERO)
+    assert vector_equals(cross(ZERO, f1), ZERO)
+    assert vector_equals(cross(f1, ZERO), ZERO)
+
+    assert vector_equals(cross(f1, f2), cross(f1, f2))
+    assert vector_equals(cross(f1, f2), -cross(f2, f1))
+
+    assert vector_equals(cross(f1, f1 + f2), cross(f1, f2))
+    assert vector_equals(cross(f1 + f2, f1 + f2), ZERO)
+
+    assert vector_equals(
+        cross(f1 + f2 * 2, -v1 + v2),
+        -cross(f1, v1) + cross(f1, v2) + cross(f2, v1) * (-2) + cross(f2, v2) * 2,
+    )
+
+
+def test_vector_mixed() -> None:
+    a = VectorSymbol("a")
+    b = VectorSymbol("b")
+    c = VectorSymbol("c")
+
+    # even permutation
+    assert expr_equals(VectorMixedProduct(a, b, c), VectorMixedProduct(b, c, a))
+    assert expr_equals(VectorMixedProduct(a, b, c), VectorMixedProduct(c, a, b))
+
+    # odd permutation
+    assert expr_equals(VectorMixedProduct(a, b, c), -1 * VectorMixedProduct(b, a, c))
+    assert expr_equals(VectorMixedProduct(a, b, c), -1 * VectorMixedProduct(a, c, b))
+    assert expr_equals(VectorMixedProduct(a, b, c), -1 * VectorMixedProduct(c, b, a))
+
+    # repeating arguments
+    assert expr_equals(VectorMixedProduct(a, a, c), 0)
+    assert expr_equals(VectorMixedProduct(a, b, a), 0)
+    assert expr_equals(VectorMixedProduct(a, b, b), 0)
+    assert expr_equals(VectorMixedProduct(a + b, a + b, c), 0)
+    assert expr_equals(VectorMixedProduct(a, b + c, b + c), 0)
+    assert expr_equals(VectorMixedProduct(a + c, b, a + c), 0)
+
+    assert expr_equals(VectorMixedProduct(ZERO, b, c), 0)
+    assert expr_equals(VectorMixedProduct(ZERO, ZERO, c), 0)
+    assert expr_equals(VectorMixedProduct(a, ZERO, c), 0)
+    assert expr_equals(VectorMixedProduct(a, ZERO, ZERO), 0)
+    assert expr_equals(VectorMixedProduct(ZERO, ZERO, ZERO), 0)
+    assert expr_equals(VectorMixedProduct(ZERO, b, ZERO), 0)
+    assert expr_equals(VectorMixedProduct(a, b, ZERO), 0)
+
+    assert expr_equals(VectorMixedProduct(a, b, c), dot(a, cross(b, c)))
+
+    assert expr_equals(VectorMixedProduct(a - b, b - c, c - a), 0)
