@@ -115,7 +115,6 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
     _id: int
 
     is_symbol = True
-    is_nonnegative = True
 
     def __new__(
         cls,
