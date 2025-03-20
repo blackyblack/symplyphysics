@@ -40,6 +40,8 @@ def force_law(acceleration_: Vector) -> Vector:
     return scale_vector(mass, acceleration_)
 
 
+# NOTE: Proof of concept for the experimental features
+
 __force = VectorSymbol("F", units.force)
 __acceleration = VectorSymbol("a", units.acceleration)
 
