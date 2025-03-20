@@ -1,11 +1,11 @@
 from typing import Callable, Any
 from sympy import Basic, S, Eq, sympify, solve as sym_solve
-from ..vectors import VectorExpr, VectorSymbol, norm, VectorAdd
+from ..vectors import VectorExpr, VectorSymbol, VectorNorm as norm, VectorAdd
 
 
-def apply(eqn: Any, f: Callable[[Basic], Basic], *, zero: Basic = S.Zero) -> Eq:
+def apply(eqn: Basic, f: Callable[[Basic], Basic], *, zero: Basic = S.Zero) -> Eq:
     """
-    Applies `f` to both sides of the equation `eqn`, if it is an equality, else treats `f` as the
+    Applies `f` to both sides of the equation `eqn`, if it is an equality, else treats `eqn` as the
     left-hand side and `zero` as the right-hand side and applies `f` to them. Returns an equation
     object.
 
@@ -24,7 +24,20 @@ def apply(eqn: Any, f: Callable[[Basic], Basic], *, zero: Basic = S.Zero) -> Eq:
     return Eq(f(lhs), f(rhs), evaluate=False)
 
 
-def solve_into_eq(f: Any, symbol: Any, **flags: Any) -> list[Eq]:
+def solve_into_eq(f: Basic, symbol: Basic, **flags: Any) -> list[Eq]:
+    """
+    Solves `f` w.r.t. `symbol` such that the result is presented as a sequence of `Eq` rather than
+    simple list of values or dict.
+
+    Args:
+        f: Equation in question.
+        symbol: symbol or expression with respect to which `f` is solved.
+
+    Kwargs
+    ------
+        Refer to the documentation of `sympy.solve`. The keyword `dict` is forced to be `True`.
+    """
+
     flags["dict"] = True
     solution = sym_solve(f, symbol, **flags)[0]
     return [Eq(lhs, rhs) for lhs, rhs in solution.items()]
@@ -76,7 +89,7 @@ def express_atomic(
             break
 
     if i is None:
-        raise ValueError("...")
+        raise ValueError(f"The expression {expr} does not contain the symbol {atomic}.")
 
     combination_rhs = combination[:i] + combination[i + 1:]
     scale = combination[i][1]

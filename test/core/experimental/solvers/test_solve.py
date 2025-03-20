@@ -1,8 +1,8 @@
-from pytest import raises, mark
+from pytest import raises
 from sympy import Eq, evaluate
 from symplyphysics import Symbol
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.experimental.vectors import VectorSymbol, norm, ZERO
+from symplyphysics.core.experimental.vectors import VectorSymbol, VectorNorm as norm, ZERO
 from symplyphysics.core.experimental.solvers import apply, express_atomic, vector_equals
 
 
@@ -36,7 +36,6 @@ def test_apply() -> None:
         apply(eqn, lambda side: side + a)
 
 
-@mark.skip("Fix VectorAdd")
 def test_vector_equals() -> None:
     a = VectorSymbol("a")
     b = VectorSymbol("b")
@@ -49,11 +48,11 @@ def test_vector_equals() -> None:
 
     with evaluate(False):
         lhs = a + c
-        rhs = c + b + a - b  # FIXME: Recursion error when evaluating scale factor
+        rhs = c + b + a - b
     assert vector_equals(lhs, rhs)
 
     with evaluate(False):
-        lhs = a + b * 3 - a * 2 + a - b - b - b  # FIXME: Recursion error when evaluating scale factor
+        lhs = a + b * 3 - a * 2 + a - b - b - b
     assert vector_equals(lhs, ZERO)
 
 
@@ -67,18 +66,29 @@ def test_express_atomic() -> None:
     assert vector_equals(new_eqn.lhs, b)
     assert vector_equals(new_eqn.rhs, a * 2 + c)
 
+    new_eqn = express_atomic(old_expr, a, reduce_factor=False)
+    assert vector_equals(new_eqn.lhs, a * (-2))
+    assert vector_equals(new_eqn.rhs, c - b)
+
     old_eqn = Eq(a * 2, c - b)
     new_eqn = express_atomic(old_eqn, b)
     assert vector_equals(new_eqn.lhs, b)
     assert vector_equals(new_eqn.rhs, c - a * 2)
 
+    new_eqn = express_atomic(old_eqn, c, reduce_factor=False)
+    assert vector_equals(new_eqn.lhs, c)
+    assert vector_equals(new_eqn.rhs, a * 2 + b)
+
+    # The expression is not a VectorExpr
     with raises(TypeError):
         express_atomic(norm(a), a)
 
+    # The expression does not contain the symbol
     old_expr = a + c
     with raises(ValueError):
         express_atomic(old_expr, b)
 
+    # The equation does not contain the symbol
     old_eqn = Eq(a, c)
     with raises(ValueError):
         express_atomic(old_eqn, b)

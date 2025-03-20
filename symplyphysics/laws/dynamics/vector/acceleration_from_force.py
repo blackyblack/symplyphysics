@@ -1,4 +1,4 @@
-from sympy import solve, Eq
+from sympy import solve
 from symplyphysics import (
     units,
     Quantity,
@@ -18,9 +18,6 @@ from symplyphysics.definitions import (
 )
 from symplyphysics.laws.dynamics.vector import force_is_derivative_of_momentum as _force_momentum_law
 
-from symplyphysics.core.experimental.vectors import VectorSymbol, norm
-from symplyphysics.core.experimental.solvers import express_atomic, apply, solve_into_eq, vector_equals
-
 # Description
 ## Newton's second law in vector form: a = 1/m * F
 ## Where:
@@ -39,22 +36,6 @@ def acceleration_law(force_: Vector) -> Vector:
 def force_law(acceleration_: Vector) -> Vector:
     return scale_vector(mass, acceleration_)
 
-
-# NOTE: Proof of concept for the experimental features
-
-__force = VectorSymbol("F", units.force)
-__acceleration = VectorSymbol("a", units.acceleration)
-
-__force_law = Eq(__force, __acceleration * mass)
-
-__acceleration_law = express_atomic(__force_law, __acceleration)
-assert vector_equals(__acceleration_law.lhs, __acceleration)
-assert vector_equals(__acceleration_law.rhs, __force / mass)
-
-__mass_eqn = apply(__force_law, norm)
-__mass_law = solve_into_eq(__mass_eqn, mass)[0]
-assert expr_equals(__mass_law.lhs, mass)
-assert expr_equals(__mass_law.rhs, norm(__force) / norm(__acceleration))
 
 # Derive this law from law of force and momentum
 # Condition: mass is constant
