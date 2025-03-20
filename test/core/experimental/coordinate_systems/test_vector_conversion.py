@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from pytest import fixture, raises
 from sympy import Expr, Symbol as SymSymbol, S, pi, sqrt
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.experimental.vectors import VectorExpr, norm, ZERO
+from symplyphysics.core.experimental.vectors import VectorExpr, VectorNorm as norm, ZERO
 from symplyphysics.core.experimental.coordinate_systems import (
     BaseCoordinateSystem,
     CartesianCoordinateSystem,
