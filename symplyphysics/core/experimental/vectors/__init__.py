@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any, Optional, TypeAlias, assert_never
 from collections import defaultdict
 
-from sympy import Atom, Basic, Expr, S, sympify, ask, Q, simplify, cacheit
+from sympy import Atom, Basic, Expr, S, sympify, ask, Q, simplify
 from sympy.core.parameters import global_parameters
 from sympy.physics.units import Dimension
 from sympy.physics.units.systems.si import dimsys_SI
@@ -13,7 +13,7 @@ from symplyphysics.core.dimensions import collect_expression_and_dimension
 from symplyphysics.core.errors import UnitsError
 from symplyphysics.core.symbols.symbols import DimensionSymbol
 from symplyphysics.docs.miscellaneous import needs_mul_brackets
-from ..miscellaneous import sort_with_sign, Registry
+from ..miscellaneous import sort_with_sign, Registry, cacheit
 
 
 class _AtomicRegistry:
@@ -23,7 +23,7 @@ class _AtomicRegistry:
     """
 
     _symbol_registry: Registry[VectorSymbol]
-    _cross_registry: Registry[VectorSymbolCross]
+    _cross_registry: Registry[_VectorSymbolCross]
 
     def __init__(self) -> None:
         self._symbol_registry = Registry()
@@ -34,7 +34,7 @@ class _AtomicRegistry:
             self._symbol_registry.add(value)
             return
 
-        if isinstance(value, VectorSymbolCross):
+        if isinstance(value, _VectorSymbolCross):
             self._cross_registry.add(value)
             return
 
@@ -46,7 +46,7 @@ class _AtomicRegistry:
         if isinstance(value, VectorSymbol):
             return offset + self._symbol_registry.get(value)
 
-        if isinstance(value, VectorSymbolCross):
+        if isinstance(value, _VectorSymbolCross):
             return offset + self._cross_registry.get(value)
 
         assert_never(value)
@@ -55,8 +55,8 @@ class _AtomicRegistry:
         if isinstance(value, VectorSymbol):
             return 0
 
-        # `VectorSymbolCross` should come after `VectorSymbol`
-        if isinstance(value, VectorSymbolCross):
+        # `_VectorSymbolCross` should come after `VectorSymbol`
+        if isinstance(value, _VectorSymbolCross):
             return len(self._symbol_registry)
 
         assert_never(value)
@@ -166,7 +166,7 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
         display_symbol: Optional[str] = None,
         dimension: Dimension = Dimension(1),
         *,
-        norm: Optional[Any] = None,  # pylint: disable=redefined-outer-name
+        norm: Optional[Any] = None,
         display_latex: Optional[str] = None,
     ) -> VectorExpr:
         if norm is not None:
@@ -181,11 +181,22 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
             if norm == 0:
                 return ZERO
 
-        obj = VectorExpr.__new__(cls)
+        obj = super().__new__(cls)
         obj._norm = norm
 
         _atomic_registry.add(obj)
-        id_ = _atomic_registry.get(obj)
+
+        return obj  # type: ignore[no-any-return]
+
+    def __init__(
+        self,
+        display_symbol: Optional[str] = None,
+        dimension: Dimension = Dimension(1),
+        *,
+        norm: Optional[Any] = None,
+        display_latex: Optional[str] = None,
+    ):
+        id_ = _atomic_registry.get(self)
 
         if not display_symbol:
             display_symbol = f"VEC{id_}"
@@ -195,31 +206,19 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
             display_latex = f"\\mathbf{{{display_symbol}}}"
 
         DimensionSymbol.__init__(
-            obj,
+            self,
             display_name=display_symbol,
             dimension=dimension,
             display_latex=display_latex,
         )
-        Atom.__init__(obj)
+        VectorExpr.__init__(self)
+        Atom.__init__(self)
 
         if norm is not None:
-            dim = getattr(obj, "dimension")
+            dim = getattr(self, "dimension")
             norm_dim = collect_expression_and_dimension(norm)[1]
             if not dimsys_SI.equivalent_dims(norm_dim, dim):
                 raise UnitsError(f"The norm must be {dim}, got {norm_dim}.")
-
-        return obj
-
-    # Needed since `DimensionSymbol` doesn't accept the `norm` parameter
-    def __init__(  # pylint: disable=super-init-not-called
-        self,
-        display_symbol: Optional[str] = None,  # pylint: disable=unused-argument
-        dimension: Dimension = Dimension(1),
-        *,
-        norm: Optional[Any] = None,  # pylint: disable=redefined-outer-name, unused-argument
-        display_latex: Optional[str] = None,
-    ):
-        pass
 
     @property
     def norm(self) -> Optional[Expr]:
@@ -305,9 +304,6 @@ class VectorNorm(Expr):  # type: ignore[misc]
 
     def _sympystr(self, p: Printer) -> str:
         return f"norm({p.doprint(self.argument)})"
-
-
-norm = VectorNorm  # pylint: disable=invalid-name
 
 
 class VectorScale(VectorExpr):
@@ -600,14 +596,14 @@ class VectorDot(Expr):  # type: ignore[misc]
                 # both are VectorSymbol
                 return cls.from_symbols(lhs, rhs)
 
-            # lhs is VectorSymbol, rhs is VectorSymbolCross
+            # lhs is VectorSymbol, rhs is _VectorSymbolCross
             return VectorMixedProduct.from_symbols(lhs, rhs.lhs, rhs.rhs)
 
         if isinstance(rhs, VectorSymbol):
-            # lhs is VectorSymbolCross, rhs is VectorSymbol
+            # lhs is _VectorSymbolCross, rhs is VectorSymbol
             return VectorMixedProduct.from_symbols(rhs, lhs.lhs, lhs.rhs)
 
-        # both are VectorSymbolCross
+        # both are _VectorSymbolCross
         a = lhs.lhs
         b = lhs.rhs
         c = rhs.lhs
@@ -617,14 +613,11 @@ class VectorDot(Expr):  # type: ignore[misc]
             cls.from_symbols(b, c) * cls.from_symbols(a, d))
 
 
-dot = VectorDot  # pylint: disable=invalid-name
-
-
 class VectorCross(VectorExpr):
     """
     The **cross product**, or **vector product**, is a binary operation that takes two vectors and
     returns another vector. The cross product is only defined in a *3-dimensional space* (although
-    the its construction is also possible in a 7-dimensional space, the following properties do not
+    its construction is also possible in a 7-dimensional space, the following properties do not
     hold there).
 
     Geometrically, the cross product between vectors `a` and `b` can be defined as `cross(a, b) =
@@ -683,7 +676,7 @@ class VectorCross(VectorExpr):
     @classmethod
     def from_vectors(cls, lhs: VectorExpr, rhs: VectorExpr) -> VectorExpr:
         if isinstance(lhs, VectorSymbol) and isinstance(rhs, VectorSymbol):
-            return VectorSymbolCross(lhs, rhs)
+            return _VectorSymbolCross(lhs, rhs)
 
         combination = cls._as_symbol_combination(lhs, rhs)
 
@@ -737,11 +730,11 @@ class VectorCross(VectorExpr):
         1. `Lagrange's formula <https://en.wikipedia.org/wiki/Triple_product#Vector_triple_product>`__.
         """
 
-        if isinstance(lhs, VectorSymbolCross):
+        if isinstance(lhs, _VectorSymbolCross):
             a = lhs.lhs
             b = lhs.rhs
 
-            if isinstance(rhs, VectorSymbolCross):
+            if isinstance(rhs, _VectorSymbolCross):
                 c = rhs.lhs
                 d = rhs.rhs
 
@@ -754,7 +747,7 @@ class VectorCross(VectorExpr):
             return (  # type: ignore[no-any-return]
                 b * VectorDot.from_atomic(rhs, a) - a * VectorDot.from_atomic(rhs, b))
 
-        if isinstance(rhs, VectorSymbolCross):
+        if isinstance(rhs, _VectorSymbolCross):
             c, d = rhs.args
 
             # Refer to formula #2
@@ -762,10 +755,10 @@ class VectorCross(VectorExpr):
                 c * VectorDot.from_atomic(lhs, d) - d * VectorDot.from_atomic(lhs, c))
 
         # Refer to formula #1
-        return VectorSymbolCross.from_symbols(lhs, rhs)
+        return _VectorSymbolCross.from_symbols(lhs, rhs)
 
 
-class VectorSymbolCross(VectorCross):
+class _VectorSymbolCross(VectorCross):
     """
     A helper class for the cross product between two symbolic vectors.
     """
@@ -779,7 +772,7 @@ class VectorSymbolCross(VectorCross):
         return self.args[1]  # type: ignore[no-any-return]
 
     @cacheit
-    def __new__(cls, lhs: VectorSymbol, rhs: VectorSymbol, **kwargs: Any) -> VectorSymbolCross:
+    def __new__(cls, lhs: VectorSymbol, rhs: VectorSymbol, **kwargs: Any) -> _VectorSymbolCross:
         evaluate = kwargs.get("evaluate", global_parameters.evaluate)
 
         if evaluate:
@@ -813,9 +806,6 @@ class VectorSymbolCross(VectorCross):
             return ZERO
 
         return cls(*args, evaluate=False) * sign
-
-
-cross = VectorCross  # pylint: disable=invalid-name
 
 
 class VectorMixedProduct(Expr):  # type: ignore[misc]
@@ -868,7 +858,7 @@ class VectorMixedProduct(Expr):  # type: ignore[misc]
             return cls.from_symbols(*vectors)
 
         a, b, c = vectors
-        return dot(a, cross(b, c))
+        return VectorDot(a, VectorCross(b, c))
 
     def doit(self, **_hints: Any) -> Expr:
         return self.from_vectors(*self.vectors)
@@ -890,7 +880,7 @@ class VectorMixedProduct(Expr):  # type: ignore[misc]
         return sign * cls(*sorted_args, evaluate=False)
 
 
-AtomicVectorExpr: TypeAlias = VectorSymbol | VectorSymbolCross
+AtomicVectorExpr: TypeAlias = VectorSymbol | _VectorSymbolCross
 
 __all__ = [
     "ZERO",
@@ -903,7 +893,4 @@ __all__ = [
     "VectorNorm",
     "VectorScale",
     "VectorSymbol",
-    "cross",
-    "dot",
-    "norm",
 ]

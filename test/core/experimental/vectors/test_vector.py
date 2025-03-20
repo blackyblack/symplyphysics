@@ -6,10 +6,10 @@ from symplyphysics.core.errors import UnitsError
 from symplyphysics.core.experimental.vectors import (
     VectorSymbol,
     ZERO,
-    norm,
+    VectorNorm as norm,
     VectorScale,
-    dot,
-    cross,
+    VectorDot as dot,
+    VectorCross as cross,
     VectorExpr,
     VectorMixedProduct,
 )
