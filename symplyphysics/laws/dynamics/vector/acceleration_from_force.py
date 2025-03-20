@@ -1,4 +1,4 @@
-from sympy import solve
+from sympy import solve, Eq
 from symplyphysics import (
     units,
     Quantity,
@@ -9,13 +9,17 @@ from symplyphysics import (
     validate_output,
     symbols,
     clone_as_function,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
-    acceleration_is_speed_derivative as acceleration_def,
-    momentum_is_mass_times_speed as momentum_def,
+    acceleration_is_speed_derivative as _acceleration_def,
+    momentum_is_mass_times_speed as _momentum_def,
 )
-from symplyphysics.laws.dynamics.vector import force_is_derivative_of_momentum as force_momentum_law
+from symplyphysics.laws.dynamics.vector import force_is_derivative_of_momentum as _force_momentum_law
+
+from symplyphysics.core.experimental.vectors import VectorSymbol, norm
+from symplyphysics.core.experimental.solvers import express_atomic, apply, solve_into_eq, vector_equals
 
 # Description
 ## Newton's second law in vector form: a = 1/m * F
@@ -25,7 +29,7 @@ from symplyphysics.laws.dynamics.vector import force_is_derivative_of_momentum a
 ## a - acceleration vector,
 ## * - scalar multiplication (scale vector).
 
-mass = symbols.mass
+mass = clone_as_symbol(symbols.mass, positive=True)
 
 
 def acceleration_law(force_: Vector) -> Vector:
@@ -36,28 +40,42 @@ def force_law(acceleration_: Vector) -> Vector:
     return scale_vector(mass, acceleration_)
 
 
+__force = VectorSymbol("F", units.force)
+__acceleration = VectorSymbol("a", units.acceleration)
+
+__force_law = Eq(__force, __acceleration * mass)
+
+__acceleration_law = express_atomic(__force_law, __acceleration)
+assert vector_equals(__acceleration_law.lhs, __acceleration)
+assert vector_equals(__acceleration_law.rhs, __force / mass)
+
+__mass_eqn = apply(__force_law, norm)
+__mass_law = solve_into_eq(__mass_eqn, mass)[0]
+assert expr_equals(__mass_law.lhs, mass)
+assert expr_equals(__mass_law.rhs, norm(__force) / norm(__acceleration))
+
 # Derive this law from law of force and momentum
 # Condition: mass is constant
 
-time = force_momentum_law.time
+time = _force_momentum_law.time
 
 _momentum_x = clone_as_function(symbols.momentum, [time], subscript="x")
 _momentum_y = clone_as_function(symbols.momentum, [time], subscript="y")
 _momentum_z = clone_as_function(symbols.momentum, [time], subscript="z")
 _momentum_vec = Vector([_momentum_x(time), _momentum_y(time), _momentum_z(time)])
 
-_force_derived = force_momentum_law.force_law(_momentum_vec)
+_force_derived = _force_momentum_law.force_law(_momentum_vec)
 
-_momentum_def_sub = momentum_def.definition.subs(momentum_def.mass, mass)
-_velocity_from_momentum = solve(_momentum_def_sub, momentum_def.speed)[0]
+_momentum_def_sub = _momentum_def.definition.subs(_momentum_def.mass, mass)
+_velocity_from_momentum = solve(_momentum_def_sub, _momentum_def.speed)[0]
 _velocity_vec = Vector([
-    _velocity_from_momentum.subs(momentum_def.momentum, momentum_component)
+    _velocity_from_momentum.subs(_momentum_def.momentum, momentum_component)
     for momentum_component in _momentum_vec.components
 ])
 
-_acceleration_def_sub = acceleration_def.definition.rhs.subs(acceleration_def.time, time)
+_acceleration_def_sub = _acceleration_def.definition.rhs.subs(_acceleration_def.time, time)
 _acceleration_vec = Vector([
-    _acceleration_def_sub.subs(acceleration_def.speed(time), velocity_component)
+    _acceleration_def_sub.subs(_acceleration_def.speed(time), velocity_component)
     for velocity_component in _velocity_vec.components
 ])
 
