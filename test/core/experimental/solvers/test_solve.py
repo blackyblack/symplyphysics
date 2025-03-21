@@ -3,7 +3,7 @@ from sympy import Eq, evaluate
 from symplyphysics import Symbol
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.experimental.vectors import VectorSymbol, VectorNorm as norm, ZERO
-from symplyphysics.core.experimental.solvers import apply, express_atomic, vector_equals
+from symplyphysics.core.experimental.solvers import apply, solve_for_vector, vector_equals
 
 
 def test_apply() -> None:
@@ -62,33 +62,33 @@ def test_express_atomic() -> None:
     c = VectorSymbol("c")
 
     old_expr = a * 2 - b + c
-    new_eqn = express_atomic(old_expr, b)
+    new_eqn = solve_for_vector(old_expr, b)
     assert vector_equals(new_eqn.lhs, b)
     assert vector_equals(new_eqn.rhs, a * 2 + c)
 
-    new_eqn = express_atomic(old_expr, a, reduce_factor=False)
+    new_eqn = solve_for_vector(old_expr, a, reduce_factor=False)
     assert vector_equals(new_eqn.lhs, a * (-2))
     assert vector_equals(new_eqn.rhs, c - b)
 
     old_eqn = Eq(a * 2, c - b)
-    new_eqn = express_atomic(old_eqn, b)
+    new_eqn = solve_for_vector(old_eqn, b)
     assert vector_equals(new_eqn.lhs, b)
     assert vector_equals(new_eqn.rhs, c - a * 2)
 
-    new_eqn = express_atomic(old_eqn, c, reduce_factor=False)
+    new_eqn = solve_for_vector(old_eqn, c, reduce_factor=False)
     assert vector_equals(new_eqn.lhs, c)
     assert vector_equals(new_eqn.rhs, a * 2 + b)
 
     # The expression is not a VectorExpr
     with raises(TypeError):
-        express_atomic(norm(a), a)
+        solve_for_vector(norm(a), a)
 
     # The expression does not contain the symbol
     old_expr = a + c
     with raises(ValueError):
-        express_atomic(old_expr, b)
+        solve_for_vector(old_expr, b)
 
     # The equation does not contain the symbol
     old_eqn = Eq(a, c)
     with raises(ValueError):
-        express_atomic(old_eqn, b)
+        solve_for_vector(old_eqn, b)

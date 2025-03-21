@@ -24,14 +24,14 @@ def apply(eqn: Basic, f: Callable[[Basic], Basic], *, zero: Basic = S.Zero) -> E
     return Eq(f(lhs), f(rhs), evaluate=False)
 
 
-def solve_into_eq(f: Basic, symbol: Basic, **flags: Any) -> list[Eq]:
+def solve_for_scalar(f: Basic, symbol: Basic, **flags: Any) -> list[Eq]:
     """
     Solves `f` w.r.t. `symbol` such that the result is presented as a sequence of `Eq` rather than
-    simple list of values or dict.
+    simple list of values or dict (which is what `sympy.solve` produces).
 
     Args:
-        f: Equation in question.
-        symbol: symbol or expression with respect to which `f` is solved.
+        f: Equation to be solved.
+        symbol: Symbol or expression with respect to which `f` is solved.
 
     Kwargs
     ------
@@ -50,24 +50,22 @@ def vector_equals(lhs: VectorExpr, rhs: VectorExpr) -> bool:
     return bool(norm(diff) == 0)
 
 
-def express_atomic(
+def solve_for_vector(
     expr: Eq | VectorExpr,
     atomic: VectorSymbol,
     reduce_factor: bool = True,
 ) -> Eq:
     """
-    Rewrites `expr` so that `atomic` appears in the LHS. Note that only the symbols that make up
-    the linear combination in `expr` are taken into account when searching for `atomic`.
+    Viewing `expr` as a linear combination of vectors, expresses the `atomic` vector using the rest
+    of the vectors comprising that linear combination.
 
-    Args:
-        expr: A vector expression or vector equation.
-        atomic: The vector symbol to be expressed.
-        reduce_factor:
-            When set to `True`, reduces both sides of the equation by the factor to which `atomic`
-            is multiplied.
+    To elaborate, suppose `expr` is written in the form `sum(k_i * v_i, i)` where `{k_i}` are
+    scalars and `{v_i}` are (atomic) vectors (which can always be done for vector expressions).
+    Then, if `atomic` is found under index `j` within `{v_i}`, rewrites `expr` in the form `atomic
+    = sum(-k_i * v_i, i ≠ j)` if `reduce_factor = True`, or in the form `-k_j * v_j =
+    sum(k_i * v_i, i ≠ j)` if `reduce_factor = False`.
 
-    Returns:
-        An equation with `atomic` in the LHS, or `None` if `atomic` is not present in `expr`.
+    Note that whether any of `k_i` depend on `atomic` or not is not taken into account.
 
     Raises:
         TypeError: If `expr` is not a vector expression or vector equation.
@@ -78,7 +76,7 @@ def express_atomic(
         expr = expr.lhs - expr.rhs
 
     if not isinstance(expr, VectorExpr):
-        raise TypeError("...")
+        raise TypeError("The input must be a vector expression.")
 
     combination = expr.as_symbol_combination()
     i = None
