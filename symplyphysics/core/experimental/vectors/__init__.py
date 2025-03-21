@@ -1,9 +1,12 @@
+# pylint: disable=too-many-lines
+
 from __future__ import annotations
 
-from typing import Any, Optional, TypeAlias, assert_never
+from typing import Any, Optional, TypeAlias, assert_never, Sequence, Self
 from collections import defaultdict
 
 from sympy import Atom, Basic, Expr, S, sympify, ask, Q, simplify
+from sympy.core import function as sym_fn
 from sympy.core.parameters import global_parameters
 from sympy.physics.units import Dimension
 from sympy.physics.units.systems.si import dimsys_SI
@@ -11,7 +14,7 @@ from sympy.printing.printer import Printer
 
 from symplyphysics.core.dimensions import collect_expression_and_dimension
 from symplyphysics.core.errors import UnitsError
-from symplyphysics.core.symbols.symbols import DimensionSymbol
+from symplyphysics.core.symbols.symbols import DimensionSymbol, next_name
 from symplyphysics.docs.miscellaneous import needs_mul_brackets
 from ..miscellaneous import sort_with_sign, Registry, cacheit
 
@@ -24,10 +27,12 @@ class _AtomicRegistry:
 
     _symbol_registry: Registry[VectorSymbol]
     _cross_registry: Registry[_VectorSymbolCross]
+    _function_registry: Registry[AppliedVectorFunction]
 
     def __init__(self) -> None:
         self._symbol_registry = Registry()
         self._cross_registry = Registry()
+        self._function_registry = Registry()
 
     def add(self, value: AtomicVectorExpr) -> None:
         if isinstance(value, VectorSymbol):
@@ -37,6 +42,9 @@ class _AtomicRegistry:
         if isinstance(value, _VectorSymbolCross):
             self._cross_registry.add(value)
             return
+
+        if isinstance(value, AppliedVectorFunction):
+            self._function_registry.add(value)
 
         assert_never(value)
 
@@ -49,6 +57,9 @@ class _AtomicRegistry:
         if isinstance(value, _VectorSymbolCross):
             return offset + self._cross_registry.get(value)
 
+        if isinstance(value, AppliedVectorFunction):
+            return offset + self._function_registry.get(value)
+
         assert_never(value)
 
     def _offset(self, value: AtomicVectorExpr) -> int:
@@ -58,6 +69,9 @@ class _AtomicRegistry:
         # `_VectorSymbolCross` should come after `VectorSymbol`
         if isinstance(value, _VectorSymbolCross):
             return len(self._symbol_registry)
+
+        if isinstance(value, AppliedVectorFunction):
+            return len(self._symbol_registry) + len(self._cross_registry)
 
         assert_never(value)
 
@@ -571,7 +585,11 @@ class VectorDot(Expr):  # type: ignore[misc]
         return result
 
     @classmethod
-    def from_symbols(cls, lhs: VectorSymbol, rhs: VectorSymbol) -> Expr:
+    def from_symbols(
+        cls,
+        lhs: VectorSymbol | AppliedVectorFunction,
+        rhs: VectorSymbol | AppliedVectorFunction,
+    ) -> Expr:
         sign, args = sort_with_sign((lhs, rhs), key=_atomic_registry.get)
 
         if sign == 0:
@@ -591,26 +609,22 @@ class VectorDot(Expr):  # type: ignore[misc]
         4. `dot(cross(a, b), cross(c, d)) = dot(a, b) * dot(c, d) - dot(b, c) * dot(a, d)`.
         """
 
-        if isinstance(lhs, VectorSymbol):
-            if isinstance(rhs, VectorSymbol):
-                # both are VectorSymbol
-                return cls.from_symbols(lhs, rhs)
+        if isinstance(lhs, _VectorSymbolCross):
+            if isinstance(rhs, _VectorSymbolCross):
+                a = lhs.lhs
+                b = lhs.rhs
+                c = rhs.lhs
+                d = rhs.rhs
 
-            # lhs is VectorSymbol, rhs is _VectorSymbolCross
-            return VectorMixedProduct.from_symbols(lhs, rhs.lhs, rhs.rhs)
+                return (cls.from_symbols(a, b) * cls.from_symbols(b, d) -
+                    cls.from_symbols(b, c) * cls.from_symbols(a, d))
 
-        if isinstance(rhs, VectorSymbol):
-            # lhs is _VectorSymbolCross, rhs is VectorSymbol
             return VectorMixedProduct.from_symbols(rhs, lhs.lhs, lhs.rhs)
 
-        # both are _VectorSymbolCross
-        a = lhs.lhs
-        b = lhs.rhs
-        c = rhs.lhs
-        d = rhs.rhs
+        if isinstance(rhs, _VectorSymbolCross):
+            return VectorMixedProduct.from_symbols(lhs, rhs.lhs, rhs.rhs)
 
-        return (cls.from_symbols(a, b) * cls.from_symbols(b, d) -
-            cls.from_symbols(b, c) * cls.from_symbols(a, d))
+        return cls.from_symbols(lhs, rhs)
 
 
 class VectorCross(VectorExpr):
@@ -764,11 +778,11 @@ class _VectorSymbolCross(VectorCross):
     """
 
     @property
-    def lhs(self) -> VectorSymbol:
+    def lhs(self) -> VectorSymbol | AppliedVectorFunction:
         return self.args[0]  # type: ignore[no-any-return]
 
     @property
-    def rhs(self) -> VectorSymbol:
+    def rhs(self) -> VectorSymbol | AppliedVectorFunction:
         return self.args[1]  # type: ignore[no-any-return]
 
     @cacheit
@@ -799,7 +813,11 @@ class _VectorSymbolCross(VectorCross):
         return ((result, S(sign)),)
 
     @classmethod
-    def from_symbols(cls, lhs: VectorSymbol, rhs: VectorSymbol) -> VectorExpr:
+    def from_symbols(
+        cls,
+        lhs: VectorSymbol | AppliedVectorFunction,
+        rhs: VectorSymbol | AppliedVectorFunction,
+    ) -> VectorExpr:
         sign, args = sort_with_sign((lhs, rhs), key=_atomic_registry.get)
 
         if sign == 0:
@@ -871,7 +889,7 @@ class VectorMixedProduct(Expr):  # type: ignore[misc]
         return f"mixed({p.doprint(a)}, {p.doprint(b)}, {p.doprint(c)})"
 
     @classmethod
-    def from_symbols(cls, *vectors: VectorSymbol) -> Expr:
+    def from_symbols(cls, *vectors: VectorSymbol | AppliedVectorFunction) -> Expr:
         sign, sorted_args = sort_with_sign(vectors, key=_atomic_registry.get)
 
         if sign == 0:
@@ -880,7 +898,111 @@ class VectorMixedProduct(Expr):  # type: ignore[misc]
         return sign * cls(*sorted_args, evaluate=False)
 
 
-AtomicVectorExpr: TypeAlias = VectorSymbol | _VectorSymbolCross
+class AppliedVectorFunction(sym_fn.Application, VectorExpr):  # type: ignore[misc]
+
+    @cacheit
+    def __new__(cls, *args: Any, **kwargs: Any) -> Self:
+        if cls is AppliedVectorFunction:
+            raise TypeError("Call `VectorFunction` instead to instantiate a new function.")
+
+        n = len(args)
+
+        if not cls._valid_nargs(n):
+            template = "{name} takes {qual} {args} argument{plural} ({given} given)"
+            nargs = min(cls.nargs)
+            message = template.format(
+                name=cls,
+                qual="exactly" if len(cls.nargs) == 1 else "at least",
+                args=nargs,
+                plural="s" * (nargs != 1),
+                given=n,
+            )
+            raise TypeError(message)
+
+        result = super().__new__(cls, *args, **kwargs)
+        return result  # type: ignore[no-any-return]
+
+    def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
+        return ((self, S.One),)
+
+
+class AppliedVectorUndef(AppliedVectorFunction):
+
+    def __new__(cls, *args: Any, **kwargs: Any) -> Self:
+        args = tuple(sympify(arg, strict=True) for arg in args)
+        undefineds = [
+            arg.name for arg in args if isinstance(arg, (VectorFunction, sym_fn.UndefinedFunction))
+        ]
+        if undefineds:
+            template = "Invalid argument: expecting an expression, not undefined function{plural}: {types}"
+            message = template.format(
+                plural="s" * (len(undefineds) > 1),
+                types=", ".join(undefineds),
+            )
+            raise TypeError(message)
+
+        return super().__new__(cls, *args, **kwargs)
+
+
+class UndefinedVectorFunction(sym_fn.FunctionClass):  # type: ignore[misc]
+    """The (meta)class of undefined vector functions."""
+
+    def __new__(
+        mcs,
+        name: str,
+        bases: Optional[Sequence[type]] = None,
+        __dict__: Optional[dict[str, Any]] = None,
+        **kwargs: Any,
+    ) -> Self:
+        bases = bases or (AppliedVectorUndef,)
+
+        if __dict__ is None:
+            __dict__ = {}
+        __dict__ |= kwargs
+        __dict__["_kwargs"] = kwargs
+        __dict__["__module__"] = None
+
+        obj = super().__new__(mcs, name, bases, __dict__)
+        obj.name = name
+        return obj  # type: ignore[no-any-return]
+
+
+class VectorFunction(DimensionSymbol, UndefinedVectorFunction):
+
+    def __new__(  # pylint: disable=signature-differs
+        mcs,
+        display_name: str,
+        *,
+        dimension: Dimension = Dimension(1),
+        display_latex: Optional[str] = None,
+        **kwargs: Any,
+    ) -> Self:
+        name = next_name("FUN")
+        return super().__new__(mcs, name, **kwargs)
+
+    def __init__(
+        cls,
+        display_name: str,
+        *,
+        dimension: Dimension = Dimension(1),
+        display_latex: Optional[str] = None,
+        **_kwargs: Any,
+    ) -> None:
+        # TODO: process code name and latex name as done in `VectorSymbol`
+        super().__init__(
+            display_name=display_name,
+            dimension=dimension,
+            display_latex=display_latex,
+        )
+
+    def __repr__(cls) -> str:
+        return str(cls.display_name)
+
+    def __call__(cls, *args: Any) -> AppliedVectorUndef:
+        return UndefinedVectorFunction.__call__(cls, *args)  # type: ignore[no-any-return]
+
+
+AtomicVectorExpr: TypeAlias = VectorSymbol | _VectorSymbolCross | AppliedVectorFunction
 
 __all__ = [
     "ZERO",
@@ -893,4 +1015,6 @@ __all__ = [
     "VectorNorm",
     "VectorScale",
     "VectorSymbol",
+    "AppliedVectorFunction",
+    "VectorFunction",
 ]
