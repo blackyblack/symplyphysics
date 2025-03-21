@@ -297,6 +297,9 @@ class VectorNorm(Expr):  # type: ignore[misc]
         if result is not None:
             return result
 
+        # TODO: add support for the following relation:
+        # for all vectors `a, b` and scalars `k`, `norm(a * k + b * k) = norm(a + b) * abs(k)`
+
         return self
 
     def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:

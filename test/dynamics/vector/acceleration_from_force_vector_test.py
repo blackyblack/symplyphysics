@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (
-    assert_equal_vectors,
-    units,
-    errors,
-    Quantity,
-    QuantityVector,
-)
+from sympy import Eq
+from symplyphysics import assert_equal_vectors, units, errors, Quantity, QuantityVector
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.core.experimental.vectors import VectorSymbol, VectorNorm as norm
+from symplyphysics.core.experimental.solvers import solve_for_scalar, solve_for_vector, vector_equals, apply
 from symplyphysics.laws.dynamics.vector import acceleration_from_force as newton_second_law
 
 Args = namedtuple("Args", ["m", "a", "f"])
@@ -62,3 +60,21 @@ def test_bad_force(test_args: Args) -> None:
         newton_second_law.calculate_acceleration(test_args.m, fb)
     with raises(TypeError):
         newton_second_law.calculate_acceleration(test_args.m, 100)
+
+
+# TODO: Remove once the law is fixed to account for the new vector functionality.
+def test_vector_symbols() -> None:
+    force = VectorSymbol("F", units.force)
+    acceleration = VectorSymbol("a", units.acceleration)
+    mass = newton_second_law.mass
+
+    force_law = Eq(force, acceleration * mass)
+
+    acceleration_law = solve_for_vector(force_law, acceleration)
+    assert vector_equals(acceleration_law.lhs, acceleration)
+    assert vector_equals(acceleration_law.rhs, force / mass)
+
+    mass_eqn = apply(force_law, norm)
+    mass_law = solve_for_scalar(mass_eqn, mass)[0]
+    assert expr_equals(mass_law.lhs, mass)
+    assert expr_equals(mass_law.rhs, norm(force) / norm(acceleration))

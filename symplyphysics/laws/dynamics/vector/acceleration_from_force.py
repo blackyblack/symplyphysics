@@ -9,13 +9,14 @@ from symplyphysics import (
     validate_output,
     symbols,
     clone_as_function,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
-    acceleration_is_speed_derivative as acceleration_def,
-    momentum_is_mass_times_speed as momentum_def,
+    acceleration_is_speed_derivative as _acceleration_def,
+    momentum_is_mass_times_speed as _momentum_def,
 )
-from symplyphysics.laws.dynamics.vector import force_is_derivative_of_momentum as force_momentum_law
+from symplyphysics.laws.dynamics.vector import force_is_derivative_of_momentum as _force_momentum_law
 
 # Description
 ## Newton's second law in vector form: a = 1/m * F
@@ -25,7 +26,7 @@ from symplyphysics.laws.dynamics.vector import force_is_derivative_of_momentum a
 ## a - acceleration vector,
 ## * - scalar multiplication (scale vector).
 
-mass = symbols.mass
+mass = clone_as_symbol(symbols.mass, positive=True)
 
 
 def acceleration_law(force_: Vector) -> Vector:
@@ -39,25 +40,25 @@ def force_law(acceleration_: Vector) -> Vector:
 # Derive this law from law of force and momentum
 # Condition: mass is constant
 
-time = force_momentum_law.time
+time = _force_momentum_law.time
 
 _momentum_x = clone_as_function(symbols.momentum, [time], subscript="x")
 _momentum_y = clone_as_function(symbols.momentum, [time], subscript="y")
 _momentum_z = clone_as_function(symbols.momentum, [time], subscript="z")
 _momentum_vec = Vector([_momentum_x(time), _momentum_y(time), _momentum_z(time)])
 
-_force_derived = force_momentum_law.force_law(_momentum_vec)
+_force_derived = _force_momentum_law.force_law(_momentum_vec)
 
-_momentum_def_sub = momentum_def.definition.subs(momentum_def.mass, mass)
-_velocity_from_momentum = solve(_momentum_def_sub, momentum_def.speed)[0]
+_momentum_def_sub = _momentum_def.definition.subs(_momentum_def.mass, mass)
+_velocity_from_momentum = solve(_momentum_def_sub, _momentum_def.speed)[0]
 _velocity_vec = Vector([
-    _velocity_from_momentum.subs(momentum_def.momentum, momentum_component)
+    _velocity_from_momentum.subs(_momentum_def.momentum, momentum_component)
     for momentum_component in _momentum_vec.components
 ])
 
-_acceleration_def_sub = acceleration_def.definition.rhs.subs(acceleration_def.time, time)
+_acceleration_def_sub = _acceleration_def.definition.rhs.subs(_acceleration_def.time, time)
 _acceleration_vec = Vector([
-    _acceleration_def_sub.subs(acceleration_def.speed(time), velocity_component)
+    _acceleration_def_sub.subs(_acceleration_def.speed(time), velocity_component)
     for velocity_component in _velocity_vec.components
 ])
 
