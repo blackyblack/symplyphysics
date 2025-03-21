@@ -28,6 +28,11 @@ def solve_for_scalar(f: Basic, symbol: Basic, **flags: Any) -> list[Eq]:
     """
     Solves `f` w.r.t. `symbol` such that the result is presented as a sequence of `Eq` rather than
     simple list of values or dict (which is what `sympy.solve` produces).
+    
+    Note that this would not work with vector equations. Instead, you can refer to
+    `solve_for_vector` if you need to express a vector given a linear combination of vectors, or
+    `apply` to reduce a vector equation to a scalar one, which can be then given as an input of
+    `solve_for_scalar`.
 
     Args:
         f: Equation to be solved.
@@ -65,7 +70,11 @@ def solve_for_vector(
     = sum(-k_i * v_i, i ≠ j)` if `reduce_factor = True`, or in the form `-k_j * v_j =
     sum(k_i * v_i, i ≠ j)` if `reduce_factor = False`.
 
-    Note that whether any of `k_i` depend on `atomic` or not is not taken into account.
+    Note that whether any of `k_i` depend on `atomic` or not is not taken into account, so it does
+    not truly "solve" w.r.t. `atomic` unless none of `k_i` depend on `atomic`, in which case the
+    result of `solve_for_vector` is indeed the solution of `expr` w.r.t. `atomic`. If some of
+    `{k_i}` do depend on `atomic`, though, a scalar-reducing operation, such as taking the dot
+    product of both sides of the equation with a known vector, might help find a solution.
 
     Raises:
         TypeError: If `expr` is not a vector expression or vector equation.
