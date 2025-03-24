@@ -77,7 +77,7 @@ def calculate_enthalpy_derivative(
         Point2D(temperature_after_, volume_after_),
         temperature,
     )
-    result = law.rhs.subs(volume(temperature, pressure), volume_).doit()
+    result = law.rhs.subs(volume(temperature, pressure), volume_).doit().simplify()
 
     # the result does not depend on temperature
     assert expr_equals(result.diff(temperature), 0)

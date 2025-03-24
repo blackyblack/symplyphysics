@@ -3,12 +3,12 @@ Symplyphysics code printer
 """
 
 from typing import Any
-from sympy import S, Expr, Mul, StrPrinter, E, Symbol as SymSymbol
+from sympy import S, Expr, Mul, StrPrinter, E
 from sympy.matrices.dense import DenseMatrix
 from sympy.simplify import fraction
 from sympy.printing.precedence import precedence
 from ..core.symbols.symbols import DimensionSymbol, Function, IndexedSymbol
-from .miscellaneous import needs_mul_brackets, needs_add_brackets
+from .miscellaneous import needs_mul_brackets, needs_add_brackets, process_function
 
 
 class SymbolCodePrinter(StrPrinter):  # type: ignore[misc]
@@ -245,13 +245,9 @@ class SymbolCodePrinter(StrPrinter):  # type: ignore[misc]
 def code_str(expr: Any, **settings: Any) -> str:
     printer = SymbolCodePrinter(settings)
 
-    if isinstance(expr, Function):
-        arguments = [
-            SymSymbol(arg.display_name) if isinstance(arg, Function) else arg
-            for arg in expr.arguments
-        ]
-        expr = expr(*arguments)
     if isinstance(expr, IndexedSymbol):
         expr = expr[expr.index]
+    if isinstance(expr, Function):
+        expr = process_function(expr)
 
     return str(printer.doprint(expr))

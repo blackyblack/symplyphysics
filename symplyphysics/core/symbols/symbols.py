@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Any, Optional, Sequence
 from sympy import S, Idx, MatAdd, MatMul, MatrixBase, Symbol as SymSymbol, Expr, Equality, IndexedBase, Matrix as SymMatrix
 from sympy.physics.units import Dimension
-from sympy.core.function import UndefinedFunction
+from sympy.core.function import UndefinedFunction, AppliedUndef
 from sympy.printing.printer import Printer
 from sympy.printing.pretty.pretty import PrettyPrinter
 from sympy.printing.pretty.stringpict import prettyForm
@@ -99,14 +99,14 @@ class IndexedSymbol(DimensionSymbol, IndexedBase):  # type: ignore[misc]  # pyli
 
 
 class Function(DimensionSymbol, UndefinedFunction):  # type: ignore[misc]
-    arguments: Sequence[Expr]
+    arguments: Optional[Sequence[Expr]]
 
     # NOTE: Self type cannot be used in a metaclass and 'mcs' is a metaclass here
     # NOTE: constructor returns not an object, but a class. Object is constructed
     #       when arguments of a function are applied.
     def __new__(mcs,
         display_symbol: Optional[str] = None,
-        arguments: Sequence[Expr] = (),
+        arguments: Optional[Sequence[Expr]] = None,
         _dimension: Dimension = Dimension(S.One),
         *,
         display_latex: Optional[str] = None,
@@ -116,14 +116,18 @@ class Function(DimensionSymbol, UndefinedFunction):  # type: ignore[misc]
 
     def __init__(cls,
         display_symbol: Optional[str] = None,
-        arguments: Sequence[Expr] = (),
+        arguments: Optional[Sequence[Expr]] = None,
         dimension: Dimension = Dimension(S.One),
         *,
         display_latex: Optional[str] = None,
-        **_options: Any) -> None:
+        **options: Any) -> None:
         display_name = display_symbol or str(cls.name)
         cls.arguments = arguments
-        super().__init__(display_name, dimension, display_latex=display_latex)
+        DimensionSymbol.__init__(cls, display_name, dimension, display_latex=display_latex)
+
+        if arguments is not None:
+            options["nargs"] = len(arguments)
+        UndefinedFunction.__init__(cls, **options)
 
     def __repr__(cls) -> str:  # pylint: disable=invalid-repr-returned
         return cls.display_name
@@ -231,7 +235,7 @@ def clone_as_symbol(source: Symbol | IndexedSymbol,
 
 def clone_as_function(
     source: Symbol | IndexedSymbol,
-    arguments: Sequence[Expr] = (),
+    arguments: Optional[Sequence[Expr]] = None,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
