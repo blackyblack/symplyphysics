@@ -12,3 +12,14 @@ def next_id(base: str = "") -> int:
     id_val = 1 if id_val is None else id_val + 1
     _ids[base] = id_val
     return id_val
+
+
+def last_id(base: str) -> int:
+    """
+    Returns last id defined for ``base``.
+
+    Raises:
+        KeyError: If ``base`` has not been registered yet.
+    """
+
+    return _ids[base]

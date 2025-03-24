@@ -15,6 +15,7 @@ from sympy.printing.printer import Printer
 from symplyphysics.core.dimensions import collect_expression_and_dimension
 from symplyphysics.core.errors import UnitsError
 from symplyphysics.core.symbols.symbols import DimensionSymbol, next_name
+from symplyphysics.core.symbols.id_generator import last_id
 from symplyphysics.docs.miscellaneous import needs_mul_brackets
 from ..miscellaneous import sort_with_sign, Registry, cacheit
 
@@ -150,6 +151,24 @@ class _VectorZero(VectorExpr, Atom):  # type: ignore[misc]
 ZERO = _VectorZero()
 
 
+def _process_vector_names(
+    code: Optional[str] = None,
+    latex: Optional[str] = None,
+    *,
+    base: str = "VEC",
+    i: Optional[int] = None,
+) -> tuple[str, str]:
+    if not code:
+        code = f"{base}{i}"
+        if not latex:
+            base = base[0].lower()
+            latex = f"\\mathbf{{{base}}}_{{{i}}}"
+    elif not latex:
+        latex = f"\\mathbf{{{code}}}"
+
+    return code, latex
+
+
 # NOTE: Instead of marking the `norm` of the `VectorSymbol` on the symbol itself, another
 #       possibility is to create a separate class for `UnitVector`s. This way, when we add support
 #       for vector components, we wouldn't need to check for the fact that the norm calculated
@@ -212,12 +231,7 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
     ):
         id_ = _atomic_registry.get(self)
 
-        if not display_symbol:
-            display_symbol = f"VEC{id_}"
-            if not display_latex:
-                display_latex = f"\\mathbf{{v}}_{{{id_}}}"
-        elif not display_latex:
-            display_latex = f"\\mathbf{{{display_symbol}}}"
+        display_symbol, display_latex = _process_vector_names(display_symbol, display_latex, i=id_)
 
         DimensionSymbol.__init__(
             self,
@@ -899,6 +913,7 @@ class VectorMixedProduct(Expr):  # type: ignore[misc]
 
 
 class AppliedVectorFunction(sym_fn.Application, VectorExpr):  # type: ignore[misc]
+    """This class represents the result of applying a vector-valued function to some arguments."""
 
     @cacheit
     def __new__(cls, *args: Any, **kwargs: Any) -> Self:
@@ -909,7 +924,8 @@ class AppliedVectorFunction(sym_fn.Application, VectorExpr):  # type: ignore[mis
 
         if not cls._valid_nargs(n):
             template = "{name} takes {qual} {args} argument{plural} ({given} given)"
-            nargs = min(cls.nargs)
+            arguments = getattr(cls, "arguments", None)
+            nargs = min(cls.nargs) if arguments is None else len(arguments)
             message = template.format(
                 name=cls,
                 qual="exactly" if len(cls.nargs) == 1 else "at least",
@@ -919,29 +935,21 @@ class AppliedVectorFunction(sym_fn.Application, VectorExpr):  # type: ignore[mis
             )
             raise TypeError(message)
 
+        args = tuple(sympify(arg, strict=True) for arg in args)
+        undefineds = [arg.name for arg in args if isinstance(arg, sym_fn.FunctionClass)]
+        if undefineds:
+            template = "Invalid argument: expecting an expression, not undefined function{plural}: {names}"
+            message = template.format(
+                plural="s" * (len(undefineds) > 1),
+                names=", ".join(undefineds),
+            )
+            raise TypeError(message)
+
         result = super().__new__(cls, *args, **kwargs)
         return result  # type: ignore[no-any-return]
 
     def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
         return ((self, S.One),)
-
-
-class AppliedVectorUndef(AppliedVectorFunction):
-
-    def __new__(cls, *args: Any, **kwargs: Any) -> Self:
-        args = tuple(sympify(arg, strict=True) for arg in args)
-        undefineds = [
-            arg.name for arg in args if isinstance(arg, (VectorFunction, sym_fn.UndefinedFunction))
-        ]
-        if undefineds:
-            template = "Invalid argument: expecting an expression, not undefined function{plural}: {types}"
-            message = template.format(
-                plural="s" * (len(undefineds) > 1),
-                types=", ".join(undefineds),
-            )
-            raise TypeError(message)
-
-        return super().__new__(cls, *args, **kwargs)
 
 
 class UndefinedVectorFunction(sym_fn.FunctionClass):  # type: ignore[misc]
@@ -954,7 +962,7 @@ class UndefinedVectorFunction(sym_fn.FunctionClass):  # type: ignore[misc]
         __dict__: Optional[dict[str, Any]] = None,
         **kwargs: Any,
     ) -> Self:
-        bases = bases or (AppliedVectorUndef,)
+        bases = bases or (AppliedVectorFunction,)
 
         if __dict__ is None:
             __dict__ = {}
@@ -968,38 +976,56 @@ class UndefinedVectorFunction(sym_fn.FunctionClass):  # type: ignore[misc]
 
 
 class VectorFunction(DimensionSymbol, UndefinedVectorFunction):
+    _arguments: Optional[tuple[Basic]]
+
+    @property
+    def arguments(cls) -> Optional[tuple[Basic]]:
+        return cls._arguments
 
     def __new__(  # pylint: disable=signature-differs
         mcs,
-        display_name: str,
+        display_name: Optional[str] = None,
+        arguments: Optional[tuple[Basic]] = None,
         *,
         dimension: Dimension = Dimension(1),
         display_latex: Optional[str] = None,
         **kwargs: Any,
     ) -> Self:
         name = next_name("FUN")
-        return super().__new__(mcs, name, **kwargs)
+        obj = UndefinedVectorFunction.__new__(mcs, name, **kwargs)
+
+        return obj
 
     def __init__(
         cls,
-        display_name: str,
+        display_name: Optional[str] = None,
+        arguments: Optional[tuple[Basic]] = None,
         *,
         dimension: Dimension = Dimension(1),
         display_latex: Optional[str] = None,
-        **_kwargs: Any,
+        **kwargs: Any,
     ) -> None:
-        # TODO: process code name and latex name as done in `VectorSymbol`
-        super().__init__(
+        cls._arguments = arguments
+
+        display_name, display_latex = _process_vector_names(
+            display_name,
+            display_latex,
+            base="FUN",
+            i=last_id("FUN"),
+        )
+        DimensionSymbol.__init__(
+            cls,
             display_name=display_name,
             dimension=dimension,
             display_latex=display_latex,
         )
 
+        if arguments is not None:
+            kwargs["nargs"] = len(arguments)
+        UndefinedVectorFunction.__init__(cls, **kwargs)
+
     def __repr__(cls) -> str:
         return str(cls.display_name)
-
-    def __call__(cls, *args: Any) -> AppliedVectorUndef:
-        return UndefinedVectorFunction.__call__(cls, *args)  # type: ignore[no-any-return]
 
 
 AtomicVectorExpr: TypeAlias = VectorSymbol | _VectorSymbolCross | AppliedVectorFunction
