@@ -4,12 +4,13 @@ Symplyphysics latex printer
 
 import re
 from typing import Any
-from sympy import E, S, Expr, Mod, Mul, Symbol as SymSymbol
+from sympy import E, S, Expr, Mod, Mul
 from sympy.matrices.dense import DenseMatrix
 from sympy.printing.latex import LatexPrinter, accepted_latex_functions
 from sympy.core.function import AppliedUndef
 from sympy.simplify import fraction
 from ..core.symbols.symbols import DimensionSymbol, Function, IndexedSymbol
+from .miscellaneous import process_function
 
 _between_two_numbers_p = (
     re.compile(r"[0-9][} ]*$"),  # search
@@ -32,7 +33,7 @@ def _discard_minus_sign(expr: Expr) -> tuple[Expr, bool]:
     return (Mul(*args, evaluate=False), sign)
 
 
-class SymbolLatexPrinter(LatexPrinter):   # type: ignore[misc]
+class SymbolLatexPrinter(LatexPrinter):  # type: ignore[misc]
     """
     A printer to convert Symplyphysics law expressions to latex
     """
@@ -327,13 +328,9 @@ class SymbolLatexPrinter(LatexPrinter):   # type: ignore[misc]
 def latex_str(expr: Any, **settings: Any) -> str:
     printer = SymbolLatexPrinter(settings)
 
-    if isinstance(expr, Function):
-        arguments = [
-            SymSymbol(arg.display_name) if isinstance(arg, Function) else arg
-            for arg in expr.arguments
-        ]
-        expr = expr(*arguments)
     if isinstance(expr, IndexedSymbol):
         expr = expr[expr.index]
+    if isinstance(expr, Function):
+        expr = process_function(expr)
 
     return str(printer.doprint(expr))

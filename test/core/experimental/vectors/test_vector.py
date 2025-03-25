@@ -1,6 +1,7 @@
 from pytest import raises
-from sympy import Basic, Symbol as SymSymbol
+from sympy import Basic, Symbol as SymSymbol, Function as SymFunction
 from symplyphysics import units, dimensionless, symbols, assert_equal, clone_as_symbol
+from symplyphysics.core.dimensions import dimsys_SI
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.errors import UnitsError
 from symplyphysics.core.experimental.vectors import (
@@ -12,6 +13,8 @@ from symplyphysics.core.experimental.vectors import (
     VectorCross as cross,
     VectorExpr,
     VectorMixedProduct,
+    VectorFunction,
+    AppliedVectorFunction,
 )
 
 
@@ -292,3 +295,89 @@ def test_vector_mixed() -> None:
     assert expr_equals(VectorMixedProduct(a, b, c), dot(a, cross(b, c)))
 
     assert expr_equals(VectorMixedProduct(a - b, b - c, c - a), 0)
+
+
+def test_vector_function() -> None:
+    a = SymSymbol("a")
+    v = VectorSymbol("v")
+
+    f = VectorFunction("f", arguments=(a,), dimension=units.length)
+    assert isinstance(f(a), AppliedVectorFunction)
+    assert isinstance(f(v), AppliedVectorFunction)
+    assert f(a) == f(a)
+    assert f(a) != f(v)
+    with raises(TypeError):
+        f()
+    with raises(TypeError):
+        f(a, v)
+    with raises(TypeError):
+        f(a, v, v, a)
+    assert f == f
+    assert f.arguments == (a,)
+    assert dimsys_SI.equivalent_dims(f.dimension, units.length)
+    assert f.display_name == "f"
+    assert f.display_latex == "\\mathbf{f}"
+
+    g = VectorFunction("g")
+    assert isinstance(g(), AppliedVectorFunction)
+    assert isinstance(g(a), AppliedVectorFunction)
+    assert isinstance(g(v), AppliedVectorFunction)
+    assert isinstance(g(a, a), AppliedVectorFunction)
+    assert isinstance(g(v, v), AppliedVectorFunction)
+    assert isinstance(g(a, v), AppliedVectorFunction)
+    assert isinstance(g(v, a), AppliedVectorFunction)
+    assert isinstance(g(a, a, f(a)), AppliedVectorFunction)
+    assert isinstance(g(a, v, a, v, v, v), AppliedVectorFunction)
+    assert g != f
+    assert g() == g()
+    assert g() != g(a)
+    assert g(a) == g(a)
+    assert g(a) != g(v)
+    assert g(a, v) == g(a, v)
+    assert g(a, a, a) == g(a, a, a)
+    assert g(a, v, a) != g(a, v, v)
+    assert g.arguments is None
+    assert dimsys_SI.is_dimensionless(g.dimension)
+
+    h = VectorFunction("h", nargs=3)
+    b = SymSymbol("b")
+    c = SymSymbol("c")
+    assert isinstance(h(a, b, c), AppliedVectorFunction)
+    assert isinstance(h(v, b, c), AppliedVectorFunction)
+    assert isinstance(h(v, v, c), AppliedVectorFunction)
+    assert isinstance(h(v, v, v), AppliedVectorFunction)
+    with raises(TypeError):
+        h()
+    with raises(TypeError):
+        h(v)
+    with raises(TypeError):
+        h(v, c)
+    with raises(TypeError):
+        h(a, b, c, v)
+
+    sigma = VectorFunction(
+        "sigma",
+        dimension=units.area,
+        display_latex="\\mathbf{\\sigma}",
+        nargs=1,
+    )
+    assert sigma.display_name == "sigma"
+    assert sigma.dimension == units.area
+    assert sigma.display_latex == "\\mathbf{\\sigma}"
+    assert dimsys_SI.is_dimensionless(h.dimension)
+
+    q = VectorFunction(dimension=units.current)
+    assert q.display_name.startswith("FUN")
+    assert dimsys_SI.equivalent_dims(q.dimension, units.current)
+    assert q.display_latex
+
+    # Arguments must be applied functions
+    with raises(ValueError):
+        q(q)
+
+    w = SymFunction("w")
+    with raises(ValueError):
+        q(w)
+
+    # Note that `sympy.Function` doesn't check for unapplied `VectorFunction` instances
+    _ = w(q)
