@@ -303,7 +303,6 @@ def test_vector_function() -> None:
 
     f = VectorFunction("f", arguments=(a,), dimension=units.length)
     assert isinstance(f(a), AppliedVectorFunction)
-    assert isinstance(f(a), AppliedVectorFunction)
     assert isinstance(f(v), AppliedVectorFunction)
     assert f(a) == f(a)
     assert f(a) != f(v)
