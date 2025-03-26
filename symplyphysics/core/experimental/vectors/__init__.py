@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Optional, TypeAlias, assert_never, Sequence, Self
+from typing import Any, Optional, TypeAlias, assert_never, Sequence, Self, Protocol, runtime_checkable
 from collections import defaultdict
 
 from sympy import Atom, Basic, Expr, S, sympify
@@ -229,6 +229,13 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
         return ((self, S.One),)
 
 
+@runtime_checkable
+class EvalNorm(Protocol):
+
+    def _eval_norm(self) -> Expr:
+        pass
+
+
 class VectorNorm(Expr):  # type: ignore[misc]
     """
     Class representing the Euclidean norm (see link 1, *Euclidean norm*) of a vector expression.
@@ -269,6 +276,9 @@ class VectorNorm(Expr):  # type: ignore[misc]
 
     @classmethod
     def from_vector(cls, vector: VectorExpr) -> Optional[Expr]:
+        if isinstance(vector, EvalNorm):
+            return vector._eval_norm()
+
         # Refer to property #3
         if isinstance(vector, _VectorZero):
             return S.Zero
