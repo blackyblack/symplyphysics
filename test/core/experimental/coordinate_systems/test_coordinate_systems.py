@@ -15,9 +15,10 @@ def test_base_init() -> None:
     x = Symbol("x", units.length)
     y = Symbol("y", units.length)
     z = Symbol("z", units.length)
-    i = VectorSymbol("i", norm=1)
-    j = VectorSymbol("j", norm=1)
-    k = VectorSymbol("k", norm=1)
+    # TODO: replace with BaseVector later
+    i = VectorSymbol("i")
+    j = VectorSymbol("j")
+    k = VectorSymbol("k")
 
     good_scalars = [x, y, z]
     good_vectors = [i, j, k]
@@ -64,9 +65,10 @@ def test_cartesian_system() -> None:
     x = Symbol("x", units.length)
     y = Symbol("y", units.length)
     z = Symbol("z", units.length)
-    i = VectorSymbol("i", norm=1)
-    j = VectorSymbol("j", norm=1)
-    k = VectorSymbol("k", norm=1)
+    # TODO: replace with BaseVector later
+    i = VectorSymbol("i")
+    j = VectorSymbol("j")
+    k = VectorSymbol("k")
 
     c = CartesianCoordinateSystem(base_scalars=[x, y, z], base_vectors=[i, j, k])
 
@@ -124,9 +126,10 @@ def test_cylindrical_system() -> None:
     rho = Symbol("rho", units.length)
     phi = Symbol("phi")
     z = Symbol("z", units.length)
-    e_rho = VectorSymbol("e_rho", norm=1)
-    e_phi = VectorSymbol("e_phi", norm=1)
-    e_z = VectorSymbol("e_z", norm=1)
+    # TODO: replace with BaseVector later
+    e_rho = VectorSymbol("e_rho")
+    e_phi = VectorSymbol("e_phi")
+    e_z = VectorSymbol("e_z")
 
     c = CylindricalCoordinateSystem(base_scalars=[rho, phi, z], base_vectors=[e_rho, e_phi, e_z])
 
@@ -184,9 +187,10 @@ def test_spherical_system() -> None:
     r = Symbol("r", units.length)
     theta = Symbol("theta", angle_type)
     phi = Symbol("phi")
-    e_rho = VectorSymbol("e_rho", norm=1)
-    e_theta = VectorSymbol("e_theta", norm=1)
-    e_phi = VectorSymbol("e_phi", norm=1)
+    # TODO: replace with BaseVector later
+    e_rho = VectorSymbol("e_rho")
+    e_theta = VectorSymbol("e_theta")
+    e_phi = VectorSymbol("e_phi")
 
     c = SphericalCoordinateSystem(
         base_scalars=[r, theta, phi],

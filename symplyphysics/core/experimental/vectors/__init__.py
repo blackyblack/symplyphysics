@@ -5,15 +5,12 @@ from __future__ import annotations
 from typing import Any, Optional, TypeAlias, assert_never, Sequence, Self
 from collections import defaultdict
 
-from sympy import Atom, Basic, Expr, S, sympify, ask, Q, simplify
+from sympy import Atom, Basic, Expr, S, sympify
 from sympy.core import function as sym_fn
 from sympy.core.parameters import global_parameters
 from sympy.physics.units import Dimension
-from sympy.physics.units.systems.si import dimsys_SI
 from sympy.printing.printer import Printer
 
-from symplyphysics.core.dimensions import collect_expression_and_dimension
-from symplyphysics.core.errors import UnitsError
 from symplyphysics.core.symbols.symbols import DimensionSymbol, next_name
 from symplyphysics.core.symbols.id_generator import last_id
 from symplyphysics.docs.miscellaneous import needs_mul_brackets
@@ -190,44 +187,27 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
     magnitude `1 N` is not a unit vector since its norm contains a dimensionful quantity `N`.
     """
 
-    _norm: Optional[Expr]
-
     is_symbol = True
 
     def __new__(
-        cls,
-        display_symbol: Optional[str] = None,
-        dimension: Dimension = Dimension(1),
-        *,
-        norm: Optional[Any] = None,
-        display_latex: Optional[str] = None,
+            cls,
+            display_symbol: Optional[str] = None,
+            dimension: Dimension = Dimension(1),
+            *,
+            display_latex: Optional[str] = None,
     ) -> VectorExpr:
-        if norm is not None:
-            norm = simplify(sympify(norm, strict=True))
-
-            if not isinstance(norm, Expr):
-                raise TypeError(f"Norm {norm} must be an Expr, got {type(norm).__name__}.")
-
-            if not ask(Q.nonnegative(norm)):  # pylint: disable=too-many-function-args
-                raise ValueError(f"Norm must be non-negative, got {norm}.")
-
-            if norm == 0:
-                return ZERO
-
         obj = super().__new__(cls)
-        obj._norm = norm
 
         _atomic_registry.add(obj)
 
         return obj  # type: ignore[no-any-return]
 
     def __init__(
-        self,
-        display_symbol: Optional[str] = None,
-        dimension: Dimension = Dimension(1),
-        *,
-        norm: Optional[Any] = None,
-        display_latex: Optional[str] = None,
+            self,
+            display_symbol: Optional[str] = None,
+            dimension: Dimension = Dimension(1),
+            *,
+            display_latex: Optional[str] = None,
     ):
         id_ = _atomic_registry.get(self)
 
@@ -241,16 +221,6 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
         )
         VectorExpr.__init__(self)
         Atom.__init__(self)
-
-        if norm is not None:
-            dim = getattr(self, "dimension")
-            norm_dim = collect_expression_and_dimension(norm)[1]
-            if not dimsys_SI.equivalent_dims(norm_dim, dim):
-                raise UnitsError(f"The norm must be {dim}, got {norm_dim}.")
-
-    @property
-    def norm(self) -> Optional[Expr]:
-        return self._norm
 
     def _hashable_content(self) -> tuple[Any, ...]:
         return (id(self),)
@@ -302,9 +272,6 @@ class VectorNorm(Expr):  # type: ignore[misc]
         # Refer to property #3
         if isinstance(vector, _VectorZero):
             return S.Zero
-
-        if isinstance(vector, VectorSymbol) and vector.norm is not None:
-            return vector.norm
 
         # Refer to property #2
         if isinstance(vector, VectorScale):

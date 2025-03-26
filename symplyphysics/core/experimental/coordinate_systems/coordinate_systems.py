@@ -31,10 +31,6 @@ def _check_base_vectors(base_vectors: Sequence[VectorSymbol]) -> None:
             dimensionless,
         )
 
-        norm = base_vector.norm
-        if norm != 1:
-            raise ValueError(f"Expected {base_vector} to be unit, but its norm is {norm}.")
-
     # Since all base_vectors are symbols and not expressions, we can check their linear
     # independence by simple equality
     base_vector_set = set(base_vectors)
@@ -140,9 +136,10 @@ class CartesianCoordinateSystem(BaseCoordinateSystem):
 
     @staticmethod
     def _generate_base_vectors() -> tuple[VectorSymbol, VectorSymbol, VectorSymbol]:
-        i = VectorSymbol("i", norm=1, display_latex="\\hat{\\mathbf{\\imath}}")
-        j = VectorSymbol("j", norm=1, display_latex="\\hat{\\mathbf{\\jmath}}")
-        k = VectorSymbol("k", norm=1, display_latex="\\hat{\\mathbf{k}}")
+        # TODO: replace with BaseVector later
+        i = VectorSymbol("i", display_latex="\\hat{\\mathbf{\\imath}}")
+        j = VectorSymbol("j", display_latex="\\hat{\\mathbf{\\jmath}}")
+        k = VectorSymbol("k", display_latex="\\hat{\\mathbf{k}}")
 
         return i, j, k
 
@@ -191,9 +188,10 @@ class CylindricalCoordinateSystem(BaseCoordinateSystem):
 
     @staticmethod
     def _generate_base_vectors() -> tuple[VectorSymbol, VectorSymbol, VectorSymbol]:
-        e_rho = VectorSymbol("e_rho", norm=1, display_latex="\\hat{\\mathbf{e}}_{\\rho}")
-        e_phi = VectorSymbol("e_phi", norm=1, display_latex="\\hat{\\mathbf{e}}_{\\varphi}")
-        e_z = VectorSymbol("e_z", norm=1, display_latex="\\hat{\\mathbf{e}}_z")
+        # TODO: replace with BaseVector later
+        e_rho = VectorSymbol("e_rho", display_latex="\\hat{\\mathbf{e}}_{\\rho}")
+        e_phi = VectorSymbol("e_phi", display_latex="\\hat{\\mathbf{e}}_{\\varphi}")
+        e_z = VectorSymbol("e_z", display_latex="\\hat{\\mathbf{e}}_z")
 
         return e_rho, e_phi, e_z
 
@@ -230,9 +228,10 @@ class SphericalCoordinateSystem(BaseCoordinateSystem):
 
     @staticmethod
     def _generate_base_vectors() -> tuple[VectorSymbol, VectorSymbol, VectorSymbol]:
-        e_r = VectorSymbol("e_r", norm=1, display_latex="\\hat{\\mathbf{e}}_r")
-        e_theta = VectorSymbol("e_theta", norm=1, display_latex="\\hat{\\mathbf{e}}_{\\theta}")
-        e_phi = VectorSymbol("e_phi", norm=1, display_latex="\\hat{\\mathbf{e}}_{\\varphi}")
+        # TODO: replace with BaseVector later
+        e_r = VectorSymbol("e_r", display_latex="\\hat{\\mathbf{e}}_r")
+        e_theta = VectorSymbol("e_theta", display_latex="\\hat{\\mathbf{e}}_{\\theta}")
+        e_phi = VectorSymbol("e_phi", display_latex="\\hat{\\mathbf{e}}_{\\varphi}")
 
         return e_r, e_theta, e_phi
 
