@@ -230,7 +230,7 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
 
 
 @runtime_checkable
-class EvalNorm(Protocol):
+class EvalNorm(Protocol):  # pylint: disable=too-few-public-methods
 
     def _eval_norm(self) -> Expr:
         pass
@@ -277,7 +277,7 @@ class VectorNorm(Expr):  # type: ignore[misc]
     @classmethod
     def from_vector(cls, vector: VectorExpr) -> Optional[Expr]:
         if isinstance(vector, EvalNorm):
-            return vector._eval_norm()
+            return vector._eval_norm()  # pylint: disable=protected-access
 
         # Refer to property #3
         if isinstance(vector, _VectorZero):
