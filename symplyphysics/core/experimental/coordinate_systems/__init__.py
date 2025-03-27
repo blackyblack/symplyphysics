@@ -3,6 +3,8 @@ from .coordinate_systems import (
     CartesianCoordinateSystem,
     CylindricalCoordinateSystem,
     SphericalCoordinateSystem,
+    BaseVectorSymbol,
+    BaseVectorFunction,
 )
 
 __all__ = [
@@ -11,4 +13,6 @@ __all__ = [
     "CartesianCoordinateSystem",
     "CylindricalCoordinateSystem",
     "SphericalCoordinateSystem",
+    "BaseVectorSymbol",
+    "BaseVectorFunction",
 ]

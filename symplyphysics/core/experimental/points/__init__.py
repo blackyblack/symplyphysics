@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Optional, Any
 from sympy import Basic, Expr, Atom, Symbol as SymSymbol, sympify
+from sympy.core.parameters import global_parameters
 from sympy.printing.printer import Printer
 
 from symplyphysics.core.symbols.id_generator import next_id
@@ -14,6 +15,52 @@ class BasePoint(Basic):  # type: ignore[misc]
     Base class for points. A point is an abstract geometrical entity that represents an exact
     position in physical (3D) space and that has no size.
     """
+
+
+class PointCoordinate(Expr):
+
+    @property
+    def point(self) -> BasePoint:
+        return self.args[0]
+
+    @property
+    def base_scalar(self) -> SymSymbol:
+        return self.args[1]
+
+    def __new__(cls, point: BasePoint, base_scalar: SymSymbol, **kwargs: Any) -> Expr:
+        evaluate = kwargs.get("evaluate", global_parameters.evaluate)
+
+        if evaluate:
+            return cls.from_arguments(point, base_scalar)
+
+        obj = super().__new__(cls)
+        obj._args = (point, base_scalar)
+        return obj
+
+    @classmethod
+    def from_arguments(cls, point: BasePoint, base_scalar: SymSymbol) -> Expr:
+        if isinstance(point, PointSymbol):
+            return cls(point, base_scalar, evaluate=False)
+
+        if isinstance(point, AppliedPoint):
+            return point[base_scalar]
+
+        raise TypeError(f"Unknown point type: {type(point).__name__}.")
+
+    def doit(self, *_hints: Any) -> Expr:
+        return self.from_arguments(self.point, self.base_scalar)
+
+    def _sympystr(self, p: Printer) -> str:
+        s_point = p.doprint(self.point)
+        s_base_scalar = p.doprint(self.base_scalar)
+
+        if isinstance(self.point, PointSymbol):
+            return f"{s_base_scalar}_{s_point}"
+
+        return f"{s_point}.{s_base_scalar}"
+
+    def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
+        pass
 
 
 class PointSymbol(BasePoint, Atom):  # type: ignore[misc]
@@ -67,6 +114,9 @@ class PointSymbol(BasePoint, Atom):  # type: ignore[misc]
     def _hashable_content(self) -> tuple[Any, ...]:
         return (id(self),)
 
+    def __getitem__(self, base_scalar: SymSymbol) -> Expr:
+        return PointCoordinate(self, base_scalar)
+
 
 def _prepare(coordinates: dict[SymSymbol, Any]) -> dict[SymSymbol, Expr]:
     return {scalar: sympify(coordinate, strict=True) for scalar, coordinate in coordinates.items()}
@@ -89,8 +139,8 @@ class AppliedPoint(BasePoint):
     def system(self) -> BaseCoordinateSystem:
         return self._system
 
-    def __getitem__(self, scalar: SymSymbol) -> Expr:
-        return self.coordinates[scalar]
+    def __getitem__(self, base_scalar: SymSymbol) -> Expr:
+        return self.coordinates[base_scalar]
 
     def __new__(
         cls,

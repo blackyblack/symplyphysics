@@ -965,7 +965,7 @@ class VectorFunction(DimensionSymbol, UndefinedVectorFunction):
     def __new__(  # pylint: disable=signature-differs
         mcs,
         display_name: Optional[str] = None,
-        arguments: Optional[tuple[Basic]] = None,
+        arguments: Optional[Sequence[Basic]] = None,
         *,
         dimension: Dimension = Dimension(1),
         display_latex: Optional[str] = None,
@@ -979,12 +979,14 @@ class VectorFunction(DimensionSymbol, UndefinedVectorFunction):
     def __init__(
         cls,
         display_name: Optional[str] = None,
-        arguments: Optional[tuple[Basic]] = None,
+        arguments: Optional[Sequence[Basic]] = None,
         *,
         dimension: Dimension = Dimension(1),
         display_latex: Optional[str] = None,
         **kwargs: Any,
     ) -> None:
+        if arguments is not None and not isinstance(arguments, tuple):
+            arguments = tuple(arguments)
         cls._arguments = arguments
 
         display_name, display_latex = _process_vector_names(
