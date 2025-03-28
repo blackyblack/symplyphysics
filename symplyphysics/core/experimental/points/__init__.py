@@ -1,13 +1,15 @@
 from __future__ import annotations
 
-from typing import Optional, Any
+from typing import Optional, Any, Iterable
 from sympy import Basic, Expr, Atom, Symbol as SymSymbol, sympify
 from sympy.core.parameters import global_parameters
 from sympy.printing.printer import Printer
 
 from symplyphysics.core.symbols.id_generator import next_id
+from symplyphysics.core.expr_comparisons import expr_equals
 
 from ..coordinate_systems import BaseCoordinateSystem
+from ..miscellaneous import cacheit
 
 
 class BasePoint(Basic):  # type: ignore[misc]
@@ -16,17 +18,21 @@ class BasePoint(Basic):  # type: ignore[misc]
     position in physical (3D) space and that has no size.
     """
 
+    def equals(self, other: BasePoint) -> bool:
+        raise NotImplementedError("Implement in child class.")
 
-class PointCoordinate(Expr):
+
+class PointCoordinate(Expr):  # type: ignore[misc]
 
     @property
     def point(self) -> BasePoint:
-        return self.args[0]
+        return self.args[0]  # type: ignore[no-any-return]
 
     @property
     def base_scalar(self) -> SymSymbol:
         return self.args[1]
 
+    @cacheit
     def __new__(cls, point: BasePoint, base_scalar: SymSymbol, **kwargs: Any) -> Expr:
         evaluate = kwargs.get("evaluate", global_parameters.evaluate)
 
@@ -47,7 +53,7 @@ class PointCoordinate(Expr):
 
         raise TypeError(f"Unknown point type: {type(point).__name__}.")
 
-    def doit(self, *_hints: Any) -> Expr:
+    def doit(self, **_hints: Any) -> Expr:
         return self.from_arguments(self.point, self.base_scalar)
 
     def _sympystr(self, p: Printer) -> str:
@@ -117,6 +123,9 @@ class PointSymbol(BasePoint, Atom):  # type: ignore[misc]
     def __getitem__(self, base_scalar: SymSymbol) -> Expr:
         return PointCoordinate(self, base_scalar)
 
+    def equals(self, other: BasePoint) -> bool:
+        return self == other
+
 
 def _prepare(coordinates: dict[SymSymbol, Any]) -> dict[SymSymbol, Expr]:
     return {scalar: sympify(coordinate, strict=True) for scalar, coordinate in coordinates.items()}
@@ -142,6 +151,15 @@ class AppliedPoint(BasePoint):
     def __getitem__(self, base_scalar: SymSymbol) -> Expr:
         return self.coordinates[base_scalar]
 
+    @classmethod
+    def from_iterable(
+        cls,
+        coordinates: Iterable[Any],
+        system: BaseCoordinateSystem,
+    ) -> AppliedPoint:
+        coordinates_map = dict(zip(system.base_scalars, coordinates, strict=True))
+        return cls(coordinates_map, system)
+
     def __new__(
         cls,
         coordinates: dict[SymSymbol, Expr],
@@ -156,8 +174,11 @@ class AppliedPoint(BasePoint):
     ):
         super().__init__()
 
-        if set(coordinates.keys()) != set(system.base_scalars):
-            raise ValueError("The point must have all coordinates defined.")
+        needed = set(system.base_scalars)
+        actual = set(coordinates.keys())
+
+        if actual != needed:
+            raise ValueError(f"The point must have {needed} defined, got {actual}.")
 
         self._coordinates = _prepare(coordinates)
         self._system = system
@@ -173,6 +194,19 @@ class AppliedPoint(BasePoint):
 
     def _hashable_content(self) -> tuple[Any, ...]:
         return (tuple(self.coordinates.items()),)
+
+    def equals(self, other: BasePoint) -> bool:
+        if not isinstance(other, AppliedPoint):
+            return False
+
+        for base_scalar, coordinate in self.coordinates.items():
+            if base_scalar not in other.coordinates:
+                return False
+
+            if not expr_equals(coordinate, other[base_scalar]):
+                return False
+
+        return True
 
 
 __all__ = [

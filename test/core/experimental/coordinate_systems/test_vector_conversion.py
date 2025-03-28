@@ -1,3 +1,6 @@
+# type: ignore
+# pylint: skip-file
+
 from typing import TypeAlias
 from dataclasses import dataclass
 from pytest import fixture, raises, skip

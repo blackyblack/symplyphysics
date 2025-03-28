@@ -11,7 +11,7 @@ from ..vectors import VectorSymbol, VectorFunction, AppliedVectorFunction, Vecto
 
 class BaseVectorSymbol(VectorSymbol):
 
-    def __new__(
+    def __new__( # pylint: disable=signature-differs
         cls,
         display_symbol: Optional[str] = None,
         *,
