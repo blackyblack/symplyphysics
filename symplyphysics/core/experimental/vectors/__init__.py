@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Optional, TypeAlias, assert_never, Sequence, Self, Protocol, runtime_checkable
+from typing import Any, Optional, TypeAlias, assert_never, Sequence, Self
 from collections import defaultdict
 
 from sympy import Atom, Basic, Expr, S, sympify
@@ -126,6 +126,9 @@ class VectorExpr(Basic):  # type: ignore[misc]
 
         raise NotImplementedError(f"Implement this method in {type(self).__name__}.")
 
+    def _eval_vector_norm(self) -> Optional[Expr]:
+        return None
+
 
 class _VectorZero(VectorExpr, Atom):  # type: ignore[misc]
     """
@@ -143,6 +146,10 @@ class _VectorZero(VectorExpr, Atom):  # type: ignore[misc]
 
     def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
         return ()
+
+    def _eval_vector_norm(self) -> Expr:
+        # Refer to property #3 in VectorNorm
+        return S.Zero
 
 
 ZERO = _VectorZero()
@@ -166,12 +173,6 @@ def _process_vector_names(
     return code, latex
 
 
-# NOTE: Instead of marking the `norm` of the `VectorSymbol` on the symbol itself, another
-#       possibility is to create a separate class for `UnitVector`s. This way, when we add support
-#       for vector components, we wouldn't need to check for the fact that the norm calculated
-#       using the supplied components equals the norm given at the instantiation of the symbol.
-#       But perhaps this simply gives us additional information about the vector and there's no
-#       need to worry.
 # TODO: Add support for axial vectors.
 class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
     """
@@ -229,13 +230,6 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
         return ((self, S.One),)
 
 
-@runtime_checkable
-class EvalNorm(Protocol):  # pylint: disable=too-few-public-methods
-
-    def _eval_norm(self) -> Expr:
-        pass
-
-
 class VectorNorm(Expr):  # type: ignore[misc]
     """
     Class representing the Euclidean norm (see link 1, *Euclidean norm*) of a vector expression.
@@ -276,18 +270,12 @@ class VectorNorm(Expr):  # type: ignore[misc]
 
     @classmethod
     def from_vector(cls, vector: VectorExpr) -> Optional[Expr]:
-        if isinstance(vector, EvalNorm):
-            return vector._eval_norm()  # pylint: disable=protected-access
+        result = vector._eval_vector_norm()  # pylint: disable=protected-access
+        if result is not None:
+            return result
 
-        # Refer to property #3
-        if isinstance(vector, _VectorZero):
-            return S.Zero
-
-        # Refer to property #2
-        if isinstance(vector, VectorScale):
-            return cls(vector.vector) * abs(vector.scale)
-
-        # NOTE: add case `norm(v * a + w * a) = norm(v + w) * abs(a)`
+        # TODO: add support for the following relation:
+        # for all vectors `a, b` and scalars `k`, `norm(a * k + b * k) = norm(a + b) * abs(k)`
 
         return None
 
@@ -301,9 +289,6 @@ class VectorNorm(Expr):  # type: ignore[misc]
 
         if result is not None:
             return result
-
-        # TODO: add support for the following relation:
-        # for all vectors `a, b` and scalars `k`, `norm(a * k + b * k) = norm(a + b) * abs(k)`
 
         return self
 
@@ -415,6 +400,10 @@ class VectorScale(VectorExpr):
             if s1 != 0:
                 result.append((v, s1))
         return tuple(result)
+
+    def _eval_vector_norm(self) -> Expr:
+        # Refer to property #2 in VectorNorm
+        return VectorNorm(self.vector) * abs(self.scale)
 
 
 class VectorAdd(VectorExpr):

@@ -11,7 +11,7 @@ from ..vectors import VectorSymbol, VectorFunction, AppliedVectorFunction, Vecto
 
 class BaseVectorSymbol(VectorSymbol):
 
-    def __new__( # pylint: disable=signature-differs
+    def __new__(  # pylint: disable=signature-differs
         cls,
         display_symbol: Optional[str] = None,
         *,
@@ -27,7 +27,7 @@ class BaseVectorSymbol(VectorSymbol):
     ) -> None:
         super().__init__(display_symbol, display_latex=display_latex)
 
-    def _eval_norm(self) -> Expr:
+    def _eval_vector_norm(self) -> Expr:
         return S.One
 
 
@@ -53,7 +53,7 @@ class BaseVectorFunction(VectorFunction):
     ):
         super().__init__(display_name, arguments, display_latex=display_latex, **kwargs)
 
-    def _eval_norm(cls) -> Expr:
+    def _eval_vector_norm(cls) -> Expr:
         return S.One
 
 
@@ -79,7 +79,8 @@ def _check_base_vectors(base_vectors: Sequence[VectorSymbol | VectorFunction]) -
             dimensionless,
         )
 
-        assert VectorNorm(base_vector) == 1
+        if not isinstance(base_vector, (BaseVectorSymbol, BaseVectorFunction)):
+            assert VectorNorm(base_vector) == 1
 
     # Since all base_vectors are symbols and not expressions, we can check their linear
     # independence by simple equality
@@ -289,10 +290,13 @@ class SphericalCoordinateSystem(BaseCoordinateSystem):
         return r, theta, phi
 
     @staticmethod
-    def _generate_base_vectors() -> tuple[BaseVectorFunction, BaseVectorFunction, BaseVectorFunction]:
+    def _generate_base_vectors(
+    ) -> tuple[BaseVectorFunction, BaseVectorFunction, BaseVectorFunction]:
         # TODO: replace with BaseVector later
         e_r = BaseVectorFunction("e_r", display_latex="\\hat{\\mathbf{e}}_r", nargs=1)
-        e_theta = BaseVectorFunction("e_theta", display_latex="\\hat{\\mathbf{e}}_{\\theta}", nargs=1)
+        e_theta = BaseVectorFunction("e_theta",
+            display_latex="\\hat{\\mathbf{e}}_{\\theta}",
+            nargs=1)
         e_phi = BaseVectorFunction("e_phi", display_latex="\\hat{\\mathbf{e}}_{\\varphi}", nargs=1)
 
         return e_r, e_theta, e_phi
