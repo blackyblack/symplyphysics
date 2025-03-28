@@ -13,7 +13,7 @@ from . import (
 VectorMapping: TypeAlias = Mapping[VectorExpr, VectorExpr]
 
 
-@dispatch(CartesianCoordinateSystem, CylindricalCoordinateSystem, Any, object)
+@dispatch(CartesianCoordinateSystem, CylindricalCoordinateSystem)
 # pylint: disable-next=function-redefined
 def express_base_vectors(
         old_system: CartesianCoordinateSystem,
