@@ -15,6 +15,7 @@ from symplyphysics.core.experimental.vectors import (
     VectorMixedProduct,
     VectorFunction,
     AppliedVectorFunction,
+    VectorDerivative as diff,
 )
 
 
@@ -381,3 +382,40 @@ def test_vector_function() -> None:
 
     # Note that `sympy.Function` doesn't check for unapplied `VectorFunction` instances
     _ = w(q)
+
+
+def test_vector_derivative() -> None:
+    x = SymSymbol("x")
+
+    v = VectorSymbol("v")
+    w = VectorSymbol("w")
+
+    f = VectorFunction("f")
+
+    # ZERO
+    assert vector_equals(diff(ZERO, (x, 1)), ZERO)
+    assert vector_equals(diff(ZERO, (x, 5)), ZERO)
+
+    # VectorSymbol
+    assert vector_equals(diff(v, (x, 1)), ZERO)
+
+    # VectorScale
+
+    assert vector_equals(
+        diff(v * x, (x, 1)),
+        v,
+    )
+
+    assert vector_equals(
+        diff(v * x + w * (1 - x), (x, 1)),
+        v - w,
+    )
+
+    # VectorFunction
+
+    assert vector_equals(
+        diff(f(x), (x, 1)),
+        diff(f(x), (x, 1), evaluate=False),
+    )
+
+    # TODO: finish test

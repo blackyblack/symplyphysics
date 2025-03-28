@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Any, Optional, TypeAlias, assert_never, Sequence, Self
 from collections import defaultdict
 
-from sympy import Atom, Basic, Expr, S, sympify, ask, Q, simplify
+from sympy import Atom, Basic, Expr, S, sympify, ask, Q, simplify, Derivative as SymDerivative
 from sympy.core import function as sym_fn
 from sympy.core.parameters import global_parameters
 from sympy.physics.units import Dimension
@@ -29,11 +29,13 @@ class _AtomicRegistry:
     _symbol_registry: Registry[VectorSymbol]
     _cross_registry: Registry[_VectorSymbolCross]
     _function_registry: Registry[AppliedVectorFunction]
+    _derivative_registry: Registry[VectorDerivative]
 
     def __init__(self) -> None:
         self._symbol_registry = Registry()
         self._cross_registry = Registry()
         self._function_registry = Registry()
+        self._derivative_registry = Registry()
 
     def add(self, value: AtomicVectorExpr) -> None:
         if isinstance(value, VectorSymbol):
@@ -46,6 +48,11 @@ class _AtomicRegistry:
 
         if isinstance(value, AppliedVectorFunction):
             self._function_registry.add(value)
+            return
+
+        if isinstance(value, VectorDerivative):
+            self._derivative_registry.add(value)
+            return
 
         assert_never(value)
 
@@ -61,6 +68,9 @@ class _AtomicRegistry:
         if isinstance(value, AppliedVectorFunction):
             return offset + self._function_registry.get(value)
 
+        if isinstance(value, VectorDerivative):
+            return offset + self._derivative_registry.get(value)
+
         assert_never(value)
 
     def _offset(self, value: AtomicVectorExpr) -> int:
@@ -73,6 +83,10 @@ class _AtomicRegistry:
 
         if isinstance(value, AppliedVectorFunction):
             return len(self._symbol_registry) + len(self._cross_registry)
+
+        if isinstance(value, VectorDerivative):
+            return (len(self._symbol_registry) + len(self._cross_registry) +
+                len(self._function_registry))
 
         assert_never(value)
 
@@ -129,6 +143,9 @@ class VectorExpr(Basic):  # type: ignore[misc]
 
         raise NotImplementedError(f"Implement this method in {type(self).__name__}.")
 
+    def _eval_vector_derivative(self, _symbol: Expr) -> Optional[VectorExpr]:
+        return None
+
 
 class _VectorZero(VectorExpr, Atom):  # type: ignore[misc]
     """
@@ -146,6 +163,9 @@ class _VectorZero(VectorExpr, Atom):  # type: ignore[misc]
 
     def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
         return ()
+
+    def _eval_vector_derivative(self, _symbol: Expr) -> VectorExpr:
+        return ZERO
 
 
 ZERO = _VectorZero()
@@ -258,6 +278,9 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
     def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
         return ((self, S.One),)
 
+    def _eval_vector_derivative(self, _symbol: Expr) -> VectorExpr:
+        return ZERO
+
 
 class VectorNorm(Expr):  # type: ignore[misc]
     """
@@ -335,6 +358,21 @@ class VectorNorm(Expr):  # type: ignore[misc]
 
     def _sympystr(self, p: Printer) -> str:
         return f"norm({p.doprint(self.argument)})"
+
+    def _eval_derivative(self, symbol: Expr) -> Expr:
+        done = self.doit()
+
+        if isinstance(done, VectorNorm):
+            # (d/dx)[norm(v(x))]
+            # = (d/dx)[sqrt(dot(v(x), v(x)))]
+            # = (d/dx)[dot(v(x), v(x))] / (2 * sqrt(v(x), v(x)))
+            # = (2 * dot(v(x), (d/dx)[v(x)])) / (2 * norm(v(x)))
+            # = dot(v(x), (d/dx)[v(x)]) / norm(v(x))
+
+            vector = done.argument
+            return VectorDot(vector, VectorDerivative(vector, (symbol, 1))) / done
+
+        return done.diff(symbol)
 
 
 class VectorScale(VectorExpr):
@@ -439,6 +477,15 @@ class VectorScale(VectorExpr):
                 result.append((v, s1))
         return tuple(result)
 
+    def _eval_vector_derivative(self, symbol: Expr) -> VectorExpr:
+        vector = self.vector
+        scale = self.scale
+
+        derived_vector = VectorDerivative(vector, (symbol, 1)) * scale
+        derived_scaled = vector * scale.diff(symbol)
+
+        return derived_vector + derived_scaled  # type: ignore[no-any-return]
+
 
 class VectorAdd(VectorExpr):
     """
@@ -519,6 +566,10 @@ class VectorAdd(VectorExpr):
 
     def as_symbol_combination(self) -> tuple[tuple[VectorSymbol, Expr], ...]:
         return self._as_symbol_combination(*self.addends)
+
+    def _eval_vector_derivative(self, symbol: Expr) -> VectorExpr:
+        derived_args = [VectorDerivative(arg, (symbol, 1)) for arg in self.args]
+        return VectorAdd(*derived_args)
 
 
 class VectorDot(Expr):  # type: ignore[misc]
@@ -642,6 +693,15 @@ class VectorDot(Expr):  # type: ignore[misc]
             return VectorMixedProduct.from_symbols(lhs, rhs.lhs, rhs.rhs)
 
         return cls.from_symbols(lhs, rhs)
+
+    def _eval_derivative(self, symbol: Expr) -> Expr:
+        lhs = self.lhs
+        rhs = self.rhs
+
+        derived_lhs = VectorDot(VectorDerivative(lhs, (symbol, 1)), rhs)
+        derived_rhs = VectorDot(lhs, VectorDerivative(rhs, (symbol, 1)))
+
+        return derived_lhs + derived_rhs
 
 
 class VectorCross(VectorExpr):
@@ -788,6 +848,14 @@ class VectorCross(VectorExpr):
         # Refer to formula #1
         return _VectorSymbolCross.from_symbols(lhs, rhs)
 
+    def _eval_vector_derivative(self, symbol: Expr) -> VectorExpr:
+        lhs = self.lhs
+        rhs = self.rhs
+
+        derived_lhs = VectorCross(VectorDerivative(lhs, (symbol, 1)), rhs)
+        derived_rhs = VectorCross(lhs, VectorDerivative(rhs, (symbol, 1)))
+        return derived_lhs + derived_rhs
+
 
 class _VectorSymbolCross(VectorCross):
     """
@@ -795,15 +863,20 @@ class _VectorSymbolCross(VectorCross):
     """
 
     @property
-    def lhs(self) -> VectorSymbol | AppliedVectorFunction:
+    def lhs(self) -> VectorSymbol | AppliedVectorFunction | VectorDerivative:
         return self.args[0]  # type: ignore[no-any-return]
 
     @property
-    def rhs(self) -> VectorSymbol | AppliedVectorFunction:
+    def rhs(self) -> VectorSymbol | AppliedVectorFunction | VectorDerivative:
         return self.args[1]  # type: ignore[no-any-return]
 
     @cacheit
-    def __new__(cls, lhs: VectorSymbol, rhs: VectorSymbol, **kwargs: Any) -> _VectorSymbolCross:
+    def __new__(
+        cls,
+        lhs: VectorSymbol | AppliedVectorFunction | VectorDerivative,
+        rhs: VectorSymbol | AppliedVectorFunction | VectorDerivative,
+        **kwargs: Any,
+    ) -> _VectorSymbolCross:
         evaluate = kwargs.get("evaluate", global_parameters.evaluate)
 
         if evaluate:
@@ -832,8 +905,8 @@ class _VectorSymbolCross(VectorCross):
     @classmethod
     def from_symbols(
         cls,
-        lhs: VectorSymbol | AppliedVectorFunction,
-        rhs: VectorSymbol | AppliedVectorFunction,
+        lhs: VectorSymbol | AppliedVectorFunction | VectorDerivative,
+        rhs: VectorSymbol | AppliedVectorFunction | VectorDerivative,
     ) -> VectorExpr:
         sign, args = sort_with_sign((lhs, rhs), key=_atomic_registry.get)
 
@@ -914,6 +987,9 @@ class VectorMixedProduct(Expr):  # type: ignore[misc]
 
         return sign * cls(*sorted_args, evaluate=False)
 
+    def _eval_derivative(self, symbol: Expr) -> Expr:
+        return self.doit().diff(symbol)
+
 
 class AppliedVectorFunction(sym_fn.Application, VectorExpr):  # type: ignore[misc]
     """This class represents the result of applying a vector-valued function to some arguments."""
@@ -953,6 +1029,30 @@ class AppliedVectorFunction(sym_fn.Application, VectorExpr):  # type: ignore[mis
 
     def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
         return ((self, S.One),)
+
+    def _eval_vector_derivative(self, symbol: Expr) -> VectorExpr:
+        derived_args = []
+
+        for arg in self.args:
+            if isinstance(arg, Expr):
+                if simplify(arg - symbol) != 0:
+                    raise NotImplementedError("VectorSubs has not been implemented yet.")
+
+                partial = VectorDerivative(self, (arg, 1), evaluate=False)
+
+                scale = arg.diff(symbol)
+                derived_args.append(partial * scale)
+            elif isinstance(arg, VectorExpr):
+                # Assuming `v` and `w` are vector-valued functions:
+                #   (d/dx)[v(w(x))] = jacobian[v](w(x)) * (d/dx)[w(x)]
+                # Here, `jacobian[v](w(x))` denotes the Jacobian matrix of `v` evaluated at `w(x)`.
+
+                raise NotImplementedError("Jacobian matrix has not been implemented yet.")
+            else:
+                raise TypeError(
+                    f"The argument must be `Expr` or `VectorExpr`, got {type(arg).__name__}.")
+
+        return VectorAdd(*derived_args)
 
 
 class UndefinedVectorFunction(sym_fn.FunctionClass):  # type: ignore[misc]
@@ -1031,7 +1131,65 @@ class VectorFunction(DimensionSymbol, UndefinedVectorFunction):
         return str(cls.display_name)
 
 
-AtomicVectorExpr: TypeAlias = VectorSymbol | _VectorSymbolCross | AppliedVectorFunction
+class VectorDerivative(VectorExpr):
+
+    @cacheit
+    def __new__(cls, vector: VectorExpr, *wrts: tuple[Expr, Any], **kwargs: Any) -> VectorExpr:
+        evaluate = kwargs.get("evaluate", global_parameters.evaluate)
+
+        if evaluate:
+            result = cls.from_arguments(vector, *wrts)
+            if result is not None:
+                return result
+
+        obj = super().__new__(cls)
+        obj._args = (vector,) + wrts
+
+        _atomic_registry.add(obj)
+        return obj  # type: ignore[no-any-return]
+
+    @classmethod
+    def from_arguments(cls, vector: VectorExpr, *wrts: tuple[Expr, Any]) -> Optional[VectorExpr]:
+        # Sort `wrts` using `sympy.Derivative` functionality
+        f = sym_fn.Function("f")
+        parameters = [wrt for wrt, _ in wrts]
+        applied = f(*parameters)  # pylint: disable=not-callable
+        _, *sorted_wrts = SymDerivative(applied, *wrts).args
+
+        result: Optional[VectorExpr] = vector
+        for wrt, n in sorted_wrts:
+            if result is None:
+                break
+
+            for _ in range(n):
+                if result is None:
+                    break
+
+                result = result._eval_vector_derivative(wrt)  # pylint: disable=protected-access
+
+        return result
+
+    def _eval_vector_derivative(self, symbol: Expr) -> VectorExpr:
+        vector, *wrts = self.args
+        wrts.append((symbol, 1))
+        return VectorDerivative(vector, *wrts)
+
+    def doit(self, **_hints: Any) -> VectorExpr:
+        result = self.from_arguments(*self.args)
+
+        if result is not None:
+            return result
+
+        return VectorDerivative(*self.args)
+
+    def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
+        # TODO: since `self` can contain an unevaluated derivative, re-evaluate it without making
+        # an infinite recursion loop
+
+        return ((self, S.One),)
+
+
+AtomicVectorExpr: TypeAlias = VectorSymbol | _VectorSymbolCross | AppliedVectorFunction | VectorDerivative
 
 __all__ = [
     "ZERO",
