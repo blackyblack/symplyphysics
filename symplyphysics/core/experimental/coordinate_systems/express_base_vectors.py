@@ -1,26 +1,29 @@
-from typing import TypeAlias, Mapping
+from typing import TypeAlias, Mapping, Sequence, Any
 from sympy import sqrt, sin, cos
 from sympy.multipledispatch import dispatch
 
-from ..vectors import VectorExpr, VectorSymbol
-from . import (
+from ..vectors import VectorExpr
+from .coordinate_systems import (
     BaseCoordinateSystem,
     CartesianCoordinateSystem,
     CylindricalCoordinateSystem,
     SphericalCoordinateSystem,
 )
 
-VectorMapping: TypeAlias = Mapping[VectorSymbol, VectorExpr]
+VectorMapping: TypeAlias = Mapping[VectorExpr, VectorExpr]
 
 
 @dispatch(CartesianCoordinateSystem, CylindricalCoordinateSystem)
 # pylint: disable-next=function-redefined
 def express_base_vectors(
-    old_system: CartesianCoordinateSystem,
-    new_system: CylindricalCoordinateSystem,
+        old_system: CartesianCoordinateSystem,
+        new_system: CylindricalCoordinateSystem,
+        *,
+        old_args: Sequence[Any] = (),
+        new_args: Sequence[Any] = (),
 ) -> VectorMapping:
-    i, j, k = old_system.base_vectors
-    e_rho, e_phi, e_z = new_system.base_vectors
+    i, j, k = old_system.base_vectors(*old_args)
+    e_rho, e_phi, e_z = new_system.base_vectors(*new_args)
 
     phi = new_system.phi
 
@@ -34,11 +37,14 @@ def express_base_vectors(
 @dispatch(CartesianCoordinateSystem, SphericalCoordinateSystem)  # type: ignore[no-redef]
 # pylint: disable-next=function-redefined
 def express_base_vectors(
-    old_system: CartesianCoordinateSystem,
-    new_system: SphericalCoordinateSystem,
+        old_system: CartesianCoordinateSystem,
+        new_system: SphericalCoordinateSystem,
+        *,
+        old_args: Sequence[Any] = (),
+        new_args: Sequence[Any] = (),
 ) -> VectorMapping:
-    i, j, k = old_system.base_vectors
-    e_r, e_theta, e_phi = new_system.base_vectors
+    i, j, k = old_system.base_vectors(*old_args)
+    e_r, e_theta, e_phi = new_system.base_vectors(*new_args)
 
     theta = new_system.theta
     phi = new_system.phi
@@ -53,11 +59,14 @@ def express_base_vectors(
 @dispatch(CylindricalCoordinateSystem, CartesianCoordinateSystem)  # type: ignore[no-redef]
 # pylint: disable-next=function-redefined
 def express_base_vectors(
-    old_system: CylindricalCoordinateSystem,
-    new_system: CartesianCoordinateSystem,
+        old_system: CylindricalCoordinateSystem,
+        new_system: CartesianCoordinateSystem,
+        *,
+        old_args: Sequence[Any] = (),
+        new_args: Sequence[Any] = (),
 ) -> VectorMapping:
-    e_rho, e_phi, e_z = old_system.base_vectors
-    i, j, k = new_system.base_vectors
+    e_rho, e_phi, e_z = old_system.base_vectors(*old_args)
+    i, j, k = new_system.base_vectors(*new_args)
 
     x, y, _ = new_system.base_scalars
 
@@ -73,11 +82,14 @@ def express_base_vectors(
 @dispatch(CylindricalCoordinateSystem, SphericalCoordinateSystem)  # type: ignore[no-redef]
 # pylint: disable-next=function-redefined
 def express_base_vectors(
-    old_system: CylindricalCoordinateSystem,
-    new_system: SphericalCoordinateSystem,
+        old_system: CylindricalCoordinateSystem,
+        new_system: SphericalCoordinateSystem,
+        *,
+        old_args: Sequence[Any] = (),
+        new_args: Sequence[Any] = (),
 ) -> VectorMapping:
-    e_rho, e_phi, e_z = old_system.base_vectors
-    e_r, e_theta, e_phi_ = new_system.base_vectors
+    e_rho, e_phi, e_z = old_system.base_vectors(*old_args)
+    e_r, e_theta, e_phi_ = new_system.base_vectors(*new_args)
 
     theta = new_system.theta
 
@@ -91,11 +103,14 @@ def express_base_vectors(
 @dispatch(SphericalCoordinateSystem, CartesianCoordinateSystem)  # type: ignore[no-redef]
 # pylint: disable-next=function-redefined
 def express_base_vectors(
-    old_system: SphericalCoordinateSystem,
-    new_system: CartesianCoordinateSystem,
+        old_system: SphericalCoordinateSystem,
+        new_system: CartesianCoordinateSystem,
+        *,
+        old_args: Sequence[Any] = (),
+        new_args: Sequence[Any] = (),
 ) -> VectorMapping:
-    e_r, e_theta, e_phi = old_system.base_vectors
-    i, j, k = new_system.base_vectors
+    e_r, e_theta, e_phi = old_system.base_vectors(*old_args)
+    i, j, k = new_system.base_vectors(*new_args)
 
     x, y, z = new_system.base_scalars
 
@@ -112,11 +127,14 @@ def express_base_vectors(
 @dispatch(SphericalCoordinateSystem, CylindricalCoordinateSystem)  # type: ignore[no-redef]
 # pylint: disable-next=function-redefined
 def express_base_vectors(
-    old_system: SphericalCoordinateSystem,
-    new_system: CylindricalCoordinateSystem,
+        old_system: SphericalCoordinateSystem,
+        new_system: CylindricalCoordinateSystem,
+        *,
+        old_args: Sequence[Any] = (),
+        new_args: Sequence[Any] = (),
 ) -> VectorMapping:
-    e_r, e_theta, e_phi = old_system.base_vectors
-    e_rho, e_phi_, e_z = new_system.base_vectors
+    e_r, e_theta, e_phi = old_system.base_vectors(*old_args)
+    e_rho, e_phi_, e_z = new_system.base_vectors(*new_args)
 
     rho = new_system.rho
     z = new_system.z
@@ -133,8 +151,11 @@ def express_base_vectors(
 @dispatch(BaseCoordinateSystem, BaseCoordinateSystem)  # type: ignore[no-redef]
 # pylint: disable-next=function-redefined
 def express_base_vectors(
-    old_system: BaseCoordinateSystem,
-    new_system: BaseCoordinateSystem,
+        old_system: BaseCoordinateSystem,
+        new_system: BaseCoordinateSystem,
+        *,
+        old_args: Sequence[Any] = (),
+        new_args: Sequence[Any] = (),
 ) -> VectorMapping:
     old_type = type(old_system)
     new_type = type(new_system)
@@ -145,8 +166,8 @@ def express_base_vectors(
     if old_system is new_system:
         return {}
 
-    o1, o2, o3 = old_system.base_vectors
-    n1, n2, n3 = new_system.base_vectors
+    o1, o2, o3 = old_system.base_vectors(*old_args)
+    n1, n2, n3 = new_system.base_vectors(*new_args)
 
     return {
         o1: n1,
