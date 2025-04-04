@@ -8,6 +8,9 @@ from symplyphysics.core.experimental.points import PointSymbol
 
 
 def test_convert_point_symbol() -> None:
+    # Points are independent of the choice of a coordinate system, although the coordinates of the
+    # points do change (which is tested in `.test_scalar_conversion.py`).
+
     p = PointSymbol("P")
 
     cart = CartesianCoordinateSystem()

@@ -6,55 +6,7 @@ from sympy import Basic, Expr, S, sin
 
 from symplyphysics import Symbol, angle_type, units
 from symplyphysics.core.dimensions import dimensionless, Dimension, assert_equivalent_dimension
-from ..vectors import VectorSymbol, VectorFunction, AppliedVectorFunction, VectorNorm
-
-
-class BaseVectorSymbol(VectorSymbol):
-
-    def __new__(  # pylint: disable=signature-differs
-        cls,
-        display_symbol: Optional[str] = None,
-        *,
-        display_latex: Optional[str] = None,
-    ) -> BaseVectorSymbol:
-        return super().__new__(cls, display_symbol, display_latex=display_latex)
-
-    def __init__(
-        self,
-        display_symbol: Optional[str] = None,
-        *,
-        display_latex: Optional[str] = None,
-    ) -> None:
-        super().__init__(display_symbol, display_latex=display_latex)
-
-    def _eval_vector_norm(self) -> Expr:
-        return S.One
-
-
-class BaseVectorFunction(VectorFunction):
-
-    def __new__(
-        mcs,
-        display_name: Optional[str] = None,
-        arguments: Optional[Sequence[Basic]] = None,
-        *,
-        display_latex: Optional[str] = None,
-        **kwargs: Any,
-    ) -> BaseVectorFunction:
-        return super().__new__(mcs, display_name, arguments, display_latex=display_latex, **kwargs)
-
-    def __init__(
-        cls,
-        display_name: Optional[str] = None,
-        arguments: Optional[Sequence[Any]] = None,
-        *,
-        display_latex: Optional[str] = None,
-        **kwargs: Any,
-    ):
-        super().__init__(display_name, arguments, display_latex=display_latex, **kwargs)
-
-    def _eval_vector_norm(cls) -> Expr:
-        return S.One
+from ..vectors import VectorSymbol, VectorFunction, AppliedVectorFunction
 
 
 def _check_base_scalars(
@@ -79,8 +31,7 @@ def _check_base_vectors(base_vectors: Sequence[VectorSymbol | VectorFunction]) -
             dimensionless,
         )
 
-        if not isinstance(base_vector, (BaseVectorSymbol, BaseVectorFunction)):
-            assert VectorNorm(base_vector) == 1
+        # TODO: add a check to see if `base_vector` has unit length
 
     # Since all base_vectors are symbols and not expressions, we can check their linear
     # independence by simple equality
@@ -102,7 +53,7 @@ class BaseCoordinateSystem(Basic, metaclass=ABCMeta):  # type: ignore[misc]
         cls,
         *,
         base_scalars: Optional[Sequence[Symbol]] = None,  # pylint: disable=unused-argument
-        base_vectors: Optional[Sequence[BaseVectorSymbol | BaseVectorFunction]] = None  # pylint: disable=unused-argument
+        base_vectors: Optional[Sequence[VectorSymbol | VectorFunction]] = None  # pylint: disable=unused-argument
     ) -> Self:
         return Basic.__new__(cls)  # type: ignore[no-any-return]
 
@@ -110,7 +61,7 @@ class BaseCoordinateSystem(Basic, metaclass=ABCMeta):  # type: ignore[misc]
         self,
         *,
         base_scalars: Optional[Sequence[Symbol]] = None,
-        base_vectors: Optional[Sequence[BaseVectorSymbol | BaseVectorFunction]] = None,
+        base_vectors: Optional[Sequence[VectorSymbol | VectorFunction]] = None,
     ) -> None:
         if base_scalars:
             s1, s2, s3 = base_scalars
@@ -143,9 +94,9 @@ class BaseCoordinateSystem(Basic, metaclass=ABCMeta):  # type: ignore[misc]
     @staticmethod
     @abstractmethod
     def _generate_base_vectors() -> tuple[
-        BaseVectorSymbol | BaseVectorFunction,
-        BaseVectorSymbol | BaseVectorFunction,
-        BaseVectorSymbol | BaseVectorFunction,
+        VectorSymbol | VectorFunction,
+        VectorSymbol | VectorFunction,
+        VectorSymbol | VectorFunction,
     ]:
         pass
 
@@ -157,14 +108,13 @@ class BaseCoordinateSystem(Basic, metaclass=ABCMeta):  # type: ignore[misc]
         self,
         *args: Any,
     ) -> tuple[
-            BaseVectorSymbol | AppliedVectorFunction,
-            BaseVectorSymbol | AppliedVectorFunction,
-            BaseVectorSymbol | AppliedVectorFunction,
+            VectorSymbol | AppliedVectorFunction,
+            VectorSymbol | AppliedVectorFunction,
+            VectorSymbol | AppliedVectorFunction,
     ]:
 
         def prepare(
-            base_vector: BaseVectorSymbol | BaseVectorFunction,
-        ) -> BaseVectorSymbol | AppliedVectorFunction:
+            base_vector: VectorSymbol | VectorFunction,) -> VectorSymbol | AppliedVectorFunction:
             if callable(base_vector):
                 return base_vector(*args)
 
@@ -201,9 +151,9 @@ class CartesianCoordinateSystem(BaseCoordinateSystem):
 
     @staticmethod
     def _generate_base_vectors() -> tuple[VectorSymbol, VectorSymbol, VectorSymbol]:
-        i = BaseVectorSymbol("i", display_latex="\\hat{\\mathbf{\\imath}}")
-        j = BaseVectorSymbol("j", display_latex="\\hat{\\mathbf{\\jmath}}")
-        k = BaseVectorSymbol("k", display_latex="\\hat{\\mathbf{k}}")
+        i = VectorSymbol("i", display_latex="\\hat{\\mathbf{\\imath}}")
+        j = VectorSymbol("j", display_latex="\\hat{\\mathbf{\\jmath}}")
+        k = VectorSymbol("k", display_latex="\\hat{\\mathbf{k}}")
 
         return i, j, k
 
@@ -220,15 +170,15 @@ class CartesianCoordinateSystem(BaseCoordinateSystem):
         return self.base_scalars[2]
 
     @property
-    def i(self) -> BaseVectorSymbol:
+    def i(self) -> VectorSymbol:
         return self.base_vectors()[0]
 
     @property
-    def j(self) -> BaseVectorSymbol:
+    def j(self) -> VectorSymbol:
         return self.base_vectors()[1]
 
     @property
-    def k(self) -> BaseVectorSymbol:
+    def k(self) -> VectorSymbol:
         return self.base_vectors()[2]
 
     @property
@@ -251,10 +201,10 @@ class CylindricalCoordinateSystem(BaseCoordinateSystem):
         return rho, phi, z
 
     @staticmethod
-    def _generate_base_vectors() -> tuple[BaseVectorFunction, BaseVectorFunction, BaseVectorSymbol]:
-        e_rho = BaseVectorFunction("e_rho", display_latex="\\hat{\\mathbf{e}}_{\\rho}", nargs=1)
-        e_phi = BaseVectorFunction("e_phi", display_latex="\\hat{\\mathbf{e}}_{\\varphi}", nargs=1)
-        e_z = BaseVectorSymbol("e_z", display_latex="\\hat{\\mathbf{e}}_z")
+    def _generate_base_vectors() -> tuple[VectorFunction, VectorFunction, VectorSymbol]:
+        e_rho = VectorFunction("e_rho", display_latex="\\hat{\\mathbf{e}}_{\\rho}", nargs=1)
+        e_phi = VectorFunction("e_phi", display_latex="\\hat{\\mathbf{e}}_{\\varphi}", nargs=1)
+        e_z = VectorSymbol("e_z", display_latex="\\hat{\\mathbf{e}}_z")
 
         return e_rho, e_phi, e_z
 
@@ -290,14 +240,11 @@ class SphericalCoordinateSystem(BaseCoordinateSystem):
         return r, theta, phi
 
     @staticmethod
-    def _generate_base_vectors(
-    ) -> tuple[BaseVectorFunction, BaseVectorFunction, BaseVectorFunction]:
+    def _generate_base_vectors() -> tuple[VectorFunction, VectorFunction, VectorFunction]:
         # TODO: replace with BaseVector later
-        e_r = BaseVectorFunction("e_r", display_latex="\\hat{\\mathbf{e}}_r", nargs=1)
-        e_theta = BaseVectorFunction("e_theta",
-            display_latex="\\hat{\\mathbf{e}}_{\\theta}",
-            nargs=1)
-        e_phi = BaseVectorFunction("e_phi", display_latex="\\hat{\\mathbf{e}}_{\\varphi}", nargs=1)
+        e_r = VectorFunction("e_r", display_latex="\\hat{\\mathbf{e}}_r", nargs=1)
+        e_theta = VectorFunction("e_theta", display_latex="\\hat{\\mathbf{e}}_{\\theta}", nargs=1)
+        e_phi = VectorFunction("e_phi", display_latex="\\hat{\\mathbf{e}}_{\\varphi}", nargs=1)
 
         return e_r, e_theta, e_phi
 

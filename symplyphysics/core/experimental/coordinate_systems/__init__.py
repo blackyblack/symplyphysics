@@ -5,8 +5,6 @@ from .coordinate_systems import (
     CartesianCoordinateSystem,
     CylindricalCoordinateSystem,
     SphericalCoordinateSystem,
-    BaseVectorSymbol,
-    BaseVectorFunction,
 )
 from .express_base_scalars import express_base_scalars
 from .express_base_vectors import express_base_vectors
@@ -18,8 +16,6 @@ __all__ = [
     "CartesianCoordinateSystem",
     "CylindricalCoordinateSystem",
     "SphericalCoordinateSystem",
-    "BaseVectorSymbol",
-    "BaseVectorFunction",
 
     # .convert
     "convert_point",

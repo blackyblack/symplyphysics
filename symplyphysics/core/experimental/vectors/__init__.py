@@ -274,6 +274,9 @@ class VectorNorm(Expr):  # type: ignore[misc]
         if result is not None:
             return result
 
+        if isinstance(vector, VectorScale):
+            return cls(vector.vector) * abs(vector.scale)
+
         # TODO: add support for the following relation:
         # for all vectors `a, b` and scalars `k`, `norm(a * k + b * k) = norm(a + b) * abs(k)`
 
@@ -283,7 +286,7 @@ class VectorNorm(Expr):  # type: ignore[misc]
         vector = self.argument
 
         if hints.get("deep", True):
-            vector = vector.doit()
+            vector = vector.doit(**hints)
 
         result = self.from_vector(vector)
 
