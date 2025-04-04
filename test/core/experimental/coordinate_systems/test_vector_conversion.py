@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from pytest import fixture, raises
-from sympy import S, pi, sqrt
+from sympy import pi, sqrt
 from symplyphysics.core.experimental.solvers import vector_equals
 from symplyphysics.core.experimental.vectors import VectorExpr, ZERO
 from symplyphysics.core.experimental.points import AppliedPoint
@@ -47,9 +47,9 @@ def test_args_fixture() -> Args:
 
     # These represent the same physical point `p` (which is different from `q`) in different
     # coordinate systems
-    p_cart = AppliedPoint({cart.x: S(-1), cart.y: S(0), cart.z: S(-1)}, cart)
-    p_cyl = AppliedPoint({cyl.rho: S(1), cyl.phi: pi, cyl.z: S(-1)}, cyl)
-    p_sph = AppliedPoint({sph.r: sqrt(2), sph.theta: 3 * pi / 4, sph.phi: pi}, sph)
+    p_cart = AppliedPoint([-1, 0, -1], cart)
+    p_cyl = AppliedPoint([1, pi, -1], cyl)
+    p_sph = AppliedPoint([sqrt(2), 3 * pi / 4, pi], sph)
 
     v_cart = cart.j + cart.k * 2
 
@@ -61,9 +61,9 @@ def test_args_fixture() -> Args:
 
     # These represent the same physical point `q` (which is different from `p`) in different
     # coordinate systems
-    q_cart = AppliedPoint({cart.x: S(1), cart.y: S(1), cart.z: S(1)}, cart)
-    q_cyl = AppliedPoint({cyl.rho: sqrt(2), cyl.phi: pi / 4, cyl.z: S(1)}, cyl)
-    q_sph = AppliedPoint({sph.r: sqrt(3), sph.theta: pi / 4, sph.phi: pi / 4}, sph)
+    q_cart = AppliedPoint([1, 1, 1], cart)
+    q_cyl = AppliedPoint([sqrt(2), pi / 4, 1], cyl)
+    q_sph = AppliedPoint([sqrt(3), pi / 4, pi / 4], sph)
 
     w_cart = cart.j + cart.k * 2
 
@@ -164,7 +164,7 @@ def test_cylindrical_to_cylindrical(test_args: Args) -> None:
 
     new_vector = convert_vector(test_args.v_cyl, test_args.p_cyl, new_cyl)
 
-    correct_point = AppliedPoint.from_iterable([1, pi, -1], new_cyl)
+    correct_point = AppliedPoint([1, pi, -1], new_cyl)
     _, e_phi, e_z = new_cyl.base_vectors(correct_point)
     correct_vector = -e_phi + e_z * 2
 
@@ -231,7 +231,7 @@ def test_spherical_to_spherical(test_args: Args) -> None:
 
     new_vector = convert_vector(test_args.v_sph, test_args.p_sph, new_sph)
 
-    new_point = AppliedPoint.from_iterable([sqrt(2), 3 * pi / 4, pi], new_sph)
+    new_point = AppliedPoint([sqrt(2), 3 * pi / 4, pi], new_sph)
     e_r, e_theta, e_phi = new_sph.base_vectors(new_point)
     correct_vector = e_r * -sqrt(2) - e_phi + e_theta * -sqrt(2)
 

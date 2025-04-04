@@ -51,7 +51,7 @@ def test_applied_point() -> None:
     cyl_sys = CylindricalCoordinateSystem()
     sph_sys = SphericalCoordinateSystem()
 
-    cart_pt = AppliedPoint({cart_sys.x: 0, cart_sys.y: -1, cart_sys.z: 4}, cart_sys)
+    cart_pt = AppliedPoint([0, -1, 4], cart_sys)
     assert all(isinstance(coordinate, Expr) for coordinate in cart_pt.coordinates.values())
     assert expr_equals(cart_pt[cart_sys.x], 0)
     assert expr_equals(cart_pt[cart_sys.y], -1)
@@ -61,9 +61,9 @@ def test_applied_point() -> None:
 
     # Not enough base scalars defined
     with raises(ValueError):
-        AppliedPoint({cart_sys.x: 4}, cart_sys)
+        AppliedPoint([4], cart_sys)
     with raises(ValueError):
-        AppliedPoint({cart_sys.y: 4, cart_sys.z: 5}, cart_sys)
+        AppliedPoint([4, 5], cart_sys)
 
     assert PointCoordinate(cart_pt, cart_sys.x) == 0
     assert PointCoordinate(cart_pt, cart_sys.y) == -1
@@ -77,7 +77,7 @@ def test_applied_point() -> None:
     with raises(KeyError):
         bad_coordinate.doit()
 
-    cyl_pt = AppliedPoint({cyl_sys.rho: 1, cyl_sys.phi: pi / 3, cyl_sys.z: -3}, cyl_sys)
+    cyl_pt = AppliedPoint([1, pi / 3, -3], cyl_sys)
     assert all(isinstance(coordinate, Expr) for coordinate in cyl_pt.coordinates.values())
     assert expr_equals(cyl_pt[cyl_sys.rho], 1)
     assert expr_equals(cyl_pt[cyl_sys.phi], pi / 3)
@@ -85,18 +85,10 @@ def test_applied_point() -> None:
     assert isinstance(cyl_pt, BasePoint)
     assert cyl_pt != cart_pt
 
-    # Wrong system used, no common base scalars
-    with raises(ValueError):
-        AppliedPoint({cyl_sys.rho: 1, cyl_sys.phi: pi / 3, cyl_sys.z: -3}, cart_sys)
-
-    sph_pt = AppliedPoint({sph_sys.r: 5, sph_sys.theta: pi / 2, sph_sys.phi: pi}, sph_sys)
+    sph_pt = AppliedPoint([5, pi / 2, pi], sph_sys)
     assert all(isinstance(coordinate, Expr) for coordinate in sph_pt.coordinates.values())
     assert expr_equals(sph_pt[sph_sys.r], 5)
     assert expr_equals(sph_pt[sph_sys.theta], pi / 2)
     assert expr_equals(sph_pt[sph_sys.phi], pi)
     assert isinstance(sph_pt, BasePoint)
     assert sph_pt not in (cart_pt, cyl_pt)
-
-    # Mixed scalars from different systems
-    with raises(ValueError):
-        AppliedPoint({sph_sys.r: 4, cyl_sys.z: 5}, sph_sys)

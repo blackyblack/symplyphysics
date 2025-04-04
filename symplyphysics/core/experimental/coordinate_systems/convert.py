@@ -16,9 +16,7 @@ def convert_point(point: _P, new_system: BaseCoordinateSystem) -> _P:
     if isinstance(point, AppliedPoint):
         # Point coordinates change contravariantly
         conversion = express_base_scalars(new_system, point.system)
-        new_coordinates = {
-            new_scalar: expr.subs(point.coordinates) for new_scalar, expr in conversion.items()
-        }
+        new_coordinates = [expr.subs(point.coordinates) for expr in conversion.values()]
         return AppliedPoint(new_coordinates, new_system)
 
     raise TypeError(f"Unknown point type {type(point).__name__}.")
@@ -32,7 +30,8 @@ def convert_vector(
     if isinstance(old_point, PointSymbol):
         return vector
 
-    assert isinstance(old_point, AppliedPoint)
+    if not isinstance(old_point, AppliedPoint):
+        raise TypeError(f"Unknown point type {type(old_point).__name__}.")
 
     new_point = convert_point(old_point, new_system)
 

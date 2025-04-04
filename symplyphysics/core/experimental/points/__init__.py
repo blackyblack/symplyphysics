@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional, Any, Iterable
+from typing import Optional, Any, Iterable, Sized
 from sympy import Basic, Expr, Atom, Symbol as SymSymbol, sympify
 from sympy.core.parameters import global_parameters
 from sympy.printing.printer import Printer
@@ -127,8 +127,11 @@ class PointSymbol(BasePoint, Atom):  # type: ignore[misc]
         return self == other
 
 
-def _prepare(coordinates: dict[SymSymbol, Any]) -> dict[SymSymbol, Expr]:
-    return {scalar: sympify(coordinate, strict=True) for scalar, coordinate in coordinates.items()}
+def _prepare(coordinates: Iterable[Any], system: BaseCoordinateSystem) -> dict[SymSymbol, Expr]:
+    return {
+        scalar: sympify(coordinate, strict=True)
+        for scalar, coordinate in zip(system.base_scalars, coordinates)
+    }
 
 
 class AppliedPoint(BasePoint):
@@ -151,36 +154,30 @@ class AppliedPoint(BasePoint):
     def __getitem__(self, base_scalar: SymSymbol) -> Expr:
         return self.coordinates[base_scalar]
 
-    @classmethod
-    def from_iterable(
-        cls,
-        coordinates: Iterable[Any],
-        system: BaseCoordinateSystem,
-    ) -> AppliedPoint:
-        coordinates_map = dict(zip(system.base_scalars, coordinates, strict=True))
-        return cls(coordinates_map, system)
-
     def __new__(
         cls,
-        coordinates: dict[SymSymbol, Expr],
+        coordinates: Iterable[Any],
         system: BaseCoordinateSystem,
     ) -> AppliedPoint:
         return super().__new__(cls)  # type: ignore[no-any-return]
 
     def __init__(
         self,
-        coordinates: dict[SymSymbol, Any],
+        coordinates: Iterable[Any],
         system: BaseCoordinateSystem,
     ):
         super().__init__()
 
-        needed = set(system.base_scalars)
-        actual = set(coordinates.keys())
+        if isinstance(coordinates, Sized):
+            n = len(coordinates)  # can't extract out of if-block, mypy complains otherwise
+        else:
+            coordinates = tuple(coordinates)
+            n = len(coordinates)
 
-        if actual != needed:
-            raise ValueError(f"The point must have {needed} defined, got {actual}.")
+        if n != 3:
+            raise ValueError(f"The point must have all 3 coordinates defined, got {n}.")
 
-        self._coordinates = _prepare(coordinates)
+        self._coordinates = _prepare(coordinates, system)
         self._system = system
 
     def _sympystr(self, p: Printer) -> str:
