@@ -1,5 +1,5 @@
 from pytest import raises
-from sympy import Symbol as SymSymbol, Function as SymFunction, S
+from sympy import Symbol as SymSymbol, Function as SymFunction, S, Basic
 from symplyphysics import units, dimensionless, symbols
 from symplyphysics.core.dimensions import dimsys_SI
 from symplyphysics.core.expr_comparisons import expr_equals
