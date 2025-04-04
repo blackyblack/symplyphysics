@@ -1,5 +1,3 @@
-# pylint: disable=cyclic-import
-
 from .coordinate_systems import (
     BaseCoordinateSystem,
     CartesianCoordinateSystem,
