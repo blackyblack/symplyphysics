@@ -1,9 +1,8 @@
 from pytest import raises
-from sympy import Basic, Symbol as SymSymbol, Function as SymFunction
-from symplyphysics import units, dimensionless, symbols, assert_equal, clone_as_symbol
+from sympy import Symbol as SymSymbol, Function as SymFunction
+from symplyphysics import units, dimensionless, symbols
 from symplyphysics.core.dimensions import dimsys_SI
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.errors import UnitsError
 from symplyphysics.core.experimental.vectors import (
     VectorSymbol,
     ZERO,
@@ -11,15 +10,11 @@ from symplyphysics.core.experimental.vectors import (
     VectorScale,
     VectorDot as dot,
     VectorCross as cross,
-    VectorExpr,
     VectorMixedProduct,
     VectorFunction,
     AppliedVectorFunction,
 )
-
-
-def vector_equals(lhs: VectorExpr, rhs: VectorExpr) -> bool:
-    return bool(norm(lhs - rhs) == 0)
+from symplyphysics.core.experimental.solvers import vector_equals
 
 
 def test_init() -> None:
@@ -31,55 +26,11 @@ def test_init() -> None:
     assert force.display_name == name
     assert force.display_latex == latex
     assert force.dimension == dim
-    assert force.norm is None
-    assert not force.is_zero
 
     dimensionless_force = VectorSymbol(name, display_latex=latex)
     assert dimensionless_force.display_name == name
     assert dimensionless_force.display_latex == latex
     assert dimensionless_force.dimension == dimensionless
-    assert force.norm is None
-    assert not force.is_zero
-
-    force_magnitude = clone_as_symbol(symbols.force, positive=True)
-    force_with_norm = VectorSymbol(name, dim, norm=force_magnitude, display_latex=latex)
-    assert force_with_norm.norm == force_magnitude
-    assert not force_with_norm.is_zero
-
-    # The norm should be explicitly non-negative; real and complex expressions in general are not supported.
-    with raises(ValueError):
-        VectorSymbol(name, dim, norm=symbols.force, display_latex=latex)
-
-    one_newton_force = VectorSymbol(name, dim, norm=1 * units.newton, display_latex=latex)
-    assert one_newton_force.norm is not None  # to satisfy mypy
-    assert_equal(one_newton_force.norm, 1 * units.newton)
-    assert not one_newton_force.is_zero
-
-    assert VectorSymbol("a", norm=0) is ZERO
-
-    # Correct dimension of norm
-    VectorSymbol("S", units.area, norm=1 * units.meter**2)
-    VectorSymbol("a", norm=3)
-
-    # Dimension of norm is different from dimension of vector
-    with raises(UnitsError):
-        VectorSymbol("S", units.area, norm=1)
-    with raises(UnitsError):
-        VectorSymbol("A", norm=1 * units.meter**2)
-
-    # If norm is a number, it cannot be negative
-    with raises(ValueError):
-        VectorSymbol("k", norm=-1)
-
-    # This also applies to more complex expressions
-    negative1 = SymSymbol("n_1", negative=True)
-    negative2 = SymSymbol("n_2", negative=True)
-    with raises(ValueError):
-        VectorSymbol("n", norm=negative1 + negative2)
-
-    # Norm must be an Expr
-    with raises(TypeError):
-        VectorSymbol("a", norm=Basic())
 
 
 def test_equality() -> None:
@@ -143,11 +94,6 @@ def test_vector_scaling() -> None:
 
 
 def test_vector_norm() -> None:
-    # VectorSymbol
-
-    displacement = VectorSymbol("s", units.length, norm=3 * units.meter)
-    assert_equal(norm(displacement), 3 * units.meter)
-
     # VectorScale
 
     force = VectorSymbol("F", units.force)
@@ -157,11 +103,6 @@ def test_vector_norm() -> None:
     assert expr_equals(norm(force * real_scale), norm(force) * abs(real_scale))
     assert expr_equals(norm(force * pos_scale), norm(force) * pos_scale)
     assert expr_equals(norm(-force), norm(force))
-
-    unit = VectorSymbol("a", norm=1)
-    assert expr_equals(norm(unit), 1)
-    assert expr_equals(norm(unit * real_scale), abs(real_scale))
-    assert expr_equals(norm(unit * pos_scale), pos_scale)
 
     # VectorAdd
 
@@ -175,7 +116,7 @@ def test_vector_norm() -> None:
 
     assert norm(force * real_scale).subs(real_scale, 3) == norm(force) * 3
 
-    assert norm(force).subs(force, unit) == norm(unit)
+    assert norm(force).subs(force, v1) == norm(v1)
 
 
 def test_vector_add() -> None:
@@ -297,7 +238,7 @@ def test_vector_mixed() -> None:
     assert expr_equals(VectorMixedProduct(a - b, b - c, c - a), 0)
 
 
-def test_vector_function() -> None:
+def test_vector_function() -> None:  # pylint: disable=too-many-statements
     a = SymSymbol("a")
     v = VectorSymbol("v")
 
@@ -312,7 +253,7 @@ def test_vector_function() -> None:
         f(a, v)
     with raises(TypeError):
         f(a, v, v, a)
-    assert f == f
+    assert f == f  # pylint: disable=comparison-with-itself
     assert f.arguments == (a,)
     assert dimsys_SI.equivalent_dims(f.dimension, units.length)
     assert f.display_name == "f"
@@ -380,4 +321,4 @@ def test_vector_function() -> None:
         q(w)
 
     # Note that `sympy.Function` doesn't check for unapplied `VectorFunction` instances
-    _ = w(q)
+    _ = w(q)  # pylint: disable=not-callable

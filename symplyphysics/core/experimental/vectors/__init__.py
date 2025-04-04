@@ -5,15 +5,12 @@ from __future__ import annotations
 from typing import Any, Optional, TypeAlias, assert_never, Sequence, Self
 from collections import defaultdict
 
-from sympy import Atom, Basic, Expr, S, sympify, ask, Q, simplify
+from sympy import Atom, Basic, Expr, S, sympify
 from sympy.core import function as sym_fn
 from sympy.core.parameters import global_parameters
 from sympy.physics.units import Dimension
-from sympy.physics.units.systems.si import dimsys_SI
 from sympy.printing.printer import Printer
 
-from symplyphysics.core.dimensions import collect_expression_and_dimension
-from symplyphysics.core.errors import UnitsError
 from symplyphysics.core.symbols.symbols import DimensionSymbol, next_name
 from symplyphysics.core.symbols.id_generator import last_id
 from symplyphysics.docs.miscellaneous import needs_mul_brackets
@@ -129,6 +126,9 @@ class VectorExpr(Basic):  # type: ignore[misc]
 
         raise NotImplementedError(f"Implement this method in {type(self).__name__}.")
 
+    def _eval_vector_norm(self) -> Optional[Expr]:
+        return None
+
 
 class _VectorZero(VectorExpr, Atom):  # type: ignore[misc]
     """
@@ -146,6 +146,10 @@ class _VectorZero(VectorExpr, Atom):  # type: ignore[misc]
 
     def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
         return ()
+
+    def _eval_vector_norm(self) -> Expr:
+        # Refer to property #3 in VectorNorm
+        return S.Zero
 
 
 ZERO = _VectorZero()
@@ -169,12 +173,6 @@ def _process_vector_names(
     return code, latex
 
 
-# NOTE: Instead of marking the `norm` of the `VectorSymbol` on the symbol itself, another
-#       possibility is to create a separate class for `UnitVector`s. This way, when we add support
-#       for vector components, we wouldn't need to check for the fact that the norm calculated
-#       using the supplied components equals the norm given at the instantiation of the symbol.
-#       But perhaps this simply gives us additional information about the vector and there's no
-#       need to worry.
 # TODO: Add support for axial vectors.
 class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
     """
@@ -190,44 +188,27 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
     magnitude `1 N` is not a unit vector since its norm contains a dimensionful quantity `N`.
     """
 
-    _norm: Optional[Expr]
-
     is_symbol = True
 
     def __new__(
-        cls,
-        display_symbol: Optional[str] = None,
-        dimension: Dimension = Dimension(1),
-        *,
-        norm: Optional[Any] = None,
-        display_latex: Optional[str] = None,
+            cls,
+            display_symbol: Optional[str] = None,
+            dimension: Dimension = Dimension(1),
+            *,
+            display_latex: Optional[str] = None,
     ) -> VectorExpr:
-        if norm is not None:
-            norm = simplify(sympify(norm, strict=True))
-
-            if not isinstance(norm, Expr):
-                raise TypeError(f"Norm {norm} must be an Expr, got {type(norm).__name__}.")
-
-            if not ask(Q.nonnegative(norm)):  # pylint: disable=too-many-function-args
-                raise ValueError(f"Norm must be non-negative, got {norm}.")
-
-            if norm == 0:
-                return ZERO
-
         obj = super().__new__(cls)
-        obj._norm = norm
 
         _atomic_registry.add(obj)
 
         return obj  # type: ignore[no-any-return]
 
     def __init__(
-        self,
-        display_symbol: Optional[str] = None,
-        dimension: Dimension = Dimension(1),
-        *,
-        norm: Optional[Any] = None,
-        display_latex: Optional[str] = None,
+            self,
+            display_symbol: Optional[str] = None,
+            dimension: Dimension = Dimension(1),
+            *,
+            display_latex: Optional[str] = None,
     ):
         id_ = _atomic_registry.get(self)
 
@@ -241,16 +222,6 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
         )
         VectorExpr.__init__(self)
         Atom.__init__(self)
-
-        if norm is not None:
-            dim = getattr(self, "dimension")
-            norm_dim = collect_expression_and_dimension(norm)[1]
-            if not dimsys_SI.equivalent_dims(norm_dim, dim):
-                raise UnitsError(f"The norm must be {dim}, got {norm_dim}.")
-
-    @property
-    def norm(self) -> Optional[Expr]:
-        return self._norm
 
     def _hashable_content(self) -> tuple[Any, ...]:
         return (id(self),)
@@ -299,18 +270,15 @@ class VectorNorm(Expr):  # type: ignore[misc]
 
     @classmethod
     def from_vector(cls, vector: VectorExpr) -> Optional[Expr]:
-        # Refer to property #3
-        if isinstance(vector, _VectorZero):
-            return S.Zero
+        result = vector._eval_vector_norm()  # pylint: disable=protected-access
+        if result is not None:
+            return result
 
-        if isinstance(vector, VectorSymbol) and vector.norm is not None:
-            return vector.norm
-
-        # Refer to property #2
         if isinstance(vector, VectorScale):
             return cls(vector.vector) * abs(vector.scale)
 
-        # NOTE: add case `norm(v * a + w * a) = norm(v + w) * abs(a)`
+        # TODO: add support for the following relation:
+        # for all vectors `a, b` and scalars `k`, `norm(a * k + b * k) = norm(a + b) * abs(k)`
 
         return None
 
@@ -318,15 +286,12 @@ class VectorNorm(Expr):  # type: ignore[misc]
         vector = self.argument
 
         if hints.get("deep", True):
-            vector = vector.doit()
+            vector = vector.doit(**hints)
 
         result = self.from_vector(vector)
 
         if result is not None:
             return result
-
-        # TODO: add support for the following relation:
-        # for all vectors `a, b` and scalars `k`, `norm(a * k + b * k) = norm(a + b) * abs(k)`
 
         return self
 
@@ -438,6 +403,10 @@ class VectorScale(VectorExpr):
             if s1 != 0:
                 result.append((v, s1))
         return tuple(result)
+
+    def _eval_vector_norm(self) -> Expr:
+        # Refer to property #2 in VectorNorm
+        return VectorNorm(self.vector) * abs(self.scale)
 
 
 class VectorAdd(VectorExpr):
@@ -988,7 +957,7 @@ class VectorFunction(DimensionSymbol, UndefinedVectorFunction):
     def __new__(  # pylint: disable=signature-differs
         mcs,
         display_name: Optional[str] = None,
-        arguments: Optional[tuple[Basic]] = None,
+        arguments: Optional[Sequence[Basic]] = None,
         *,
         dimension: Dimension = Dimension(1),
         display_latex: Optional[str] = None,
@@ -1002,12 +971,14 @@ class VectorFunction(DimensionSymbol, UndefinedVectorFunction):
     def __init__(
         cls,
         display_name: Optional[str] = None,
-        arguments: Optional[tuple[Basic]] = None,
+        arguments: Optional[Sequence[Basic]] = None,
         *,
         dimension: Dimension = Dimension(1),
         display_latex: Optional[str] = None,
         **kwargs: Any,
     ) -> None:
+        if arguments is not None and not isinstance(arguments, tuple):
+            arguments = tuple(arguments)
         cls._arguments = arguments
 
         display_name, display_latex = _process_vector_names(

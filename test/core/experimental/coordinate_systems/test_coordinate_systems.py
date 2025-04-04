@@ -3,21 +3,22 @@ from sympy import sin
 from symplyphysics import Symbol, units, angle_type
 from symplyphysics.core.errors import UnitsError
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.experimental.vectors import VectorSymbol
+from symplyphysics.core.experimental.vectors import VectorSymbol, VectorFunction
 from symplyphysics.core.experimental.coordinate_systems import (
     CartesianCoordinateSystem,
     CylindricalCoordinateSystem,
     SphericalCoordinateSystem,
 )
+from symplyphysics.core.experimental.points import AppliedPoint
 
 
 def test_base_init() -> None:
     x = Symbol("x", units.length)
     y = Symbol("y", units.length)
     z = Symbol("z", units.length)
-    i = VectorSymbol("i", norm=1)
-    j = VectorSymbol("j", norm=1)
-    k = VectorSymbol("k", norm=1)
+    i = VectorSymbol("i")
+    j = VectorSymbol("j")
+    k = VectorSymbol("k")
 
     good_scalars = [x, y, z]
     good_vectors = [i, j, k]
@@ -49,10 +50,10 @@ def test_cartesian_system() -> None:
     assert c.y == c.base_scalars[1]
     assert c.z == c.base_scalars[2]
 
-    assert len(c.base_vectors) == 3
-    assert c.i == c.base_vectors[0]
-    assert c.j == c.base_vectors[1]
-    assert c.k == c.base_vectors[2]
+    assert len(c.base_vectors()) == 3
+    assert c.i, c.base_vectors()[0]
+    assert c.j == c.base_vectors()[1]
+    assert c.k == c.base_vectors()[2]
 
     assert len(c.lame_coefficients) == 3
     assert all(h == 1 for h in c.lame_coefficients)
@@ -64,11 +65,14 @@ def test_cartesian_system() -> None:
     x = Symbol("x", units.length)
     y = Symbol("y", units.length)
     z = Symbol("z", units.length)
-    i = VectorSymbol("i", norm=1)
-    j = VectorSymbol("j", norm=1)
-    k = VectorSymbol("k", norm=1)
+    i = VectorSymbol("i")
+    j = VectorSymbol("j")
+    k = VectorSymbol("k")
 
-    c = CartesianCoordinateSystem(base_scalars=[x, y, z], base_vectors=[i, j, k])
+    c = CartesianCoordinateSystem(
+        base_scalars=[x, y, z],
+        base_vectors=[i, j, k],
+    )
 
     assert c.x == x
     assert c.y == y
@@ -101,6 +105,9 @@ def test_cartesian_system() -> None:
 
 
 def test_cylindrical_system() -> None:
+    k = CartesianCoordinateSystem()
+    p = AppliedPoint(k.base_scalars, k)
+
     # __init__ without arguments
 
     c = CylindricalCoordinateSystem()
@@ -110,7 +117,7 @@ def test_cylindrical_system() -> None:
     assert c.phi == c.base_scalars[1]
     assert c.z == c.base_scalars[2]
 
-    assert len(c.base_vectors) == 3
+    assert len(c.base_vectors(p)) == 3
 
     assert len(c.lame_coefficients) == 3
     assert c.lame_coefficients[0] == 1
@@ -124,18 +131,21 @@ def test_cylindrical_system() -> None:
     rho = Symbol("rho", units.length)
     phi = Symbol("phi")
     z = Symbol("z", units.length)
-    e_rho = VectorSymbol("e_rho", norm=1)
-    e_phi = VectorSymbol("e_phi", norm=1)
-    e_z = VectorSymbol("e_z", norm=1)
+    e_rho = VectorFunction("e_rho", arguments=(p,))
+    e_phi = VectorFunction("e_phi", arguments=(p,))
+    e_z = VectorFunction("e_z", arguments=(p,))
 
-    c = CylindricalCoordinateSystem(base_scalars=[rho, phi, z], base_vectors=[e_rho, e_phi, e_z])
+    c = CylindricalCoordinateSystem(
+        base_scalars=[rho, phi, z],
+        base_vectors=[e_rho, e_phi, e_z],
+    )
 
     assert c.rho == rho
     assert c.phi == phi
     assert c.z == z
-    assert c.base_vectors[0] == e_rho
-    assert c.base_vectors[1] == e_phi
-    assert c.base_vectors[2] == e_z
+    assert c.base_vectors(p)[0] == e_rho(p)
+    assert c.base_vectors(p)[1] == e_phi(p)
+    assert c.base_vectors(p)[2] == e_z(p)
 
     # errors
 
@@ -161,6 +171,9 @@ def test_cylindrical_system() -> None:
 
 
 def test_spherical_system() -> None:
+    k = CartesianCoordinateSystem()
+    p = AppliedPoint(k.base_scalars, k)
+
     # __init__ without arguments
 
     c = SphericalCoordinateSystem()
@@ -170,7 +183,7 @@ def test_spherical_system() -> None:
     assert c.theta == c.base_scalars[1]
     assert c.phi == c.base_scalars[2]
 
-    assert len(c.base_vectors) == 3
+    assert len(c.base_vectors(p)) == 3
 
     assert len(c.lame_coefficients) == 3
     assert c.lame_coefficients[0] == 1
@@ -184,9 +197,9 @@ def test_spherical_system() -> None:
     r = Symbol("r", units.length)
     theta = Symbol("theta", angle_type)
     phi = Symbol("phi")
-    e_rho = VectorSymbol("e_rho", norm=1)
-    e_theta = VectorSymbol("e_theta", norm=1)
-    e_phi = VectorSymbol("e_phi", norm=1)
+    e_rho = VectorFunction("e_rho", arguments=(p,))
+    e_theta = VectorFunction("e_theta", arguments=(p,))
+    e_phi = VectorFunction("e_phi", arguments=(p,))
 
     c = SphericalCoordinateSystem(
         base_scalars=[r, theta, phi],
@@ -196,9 +209,9 @@ def test_spherical_system() -> None:
     assert c.r == r
     assert c.theta == theta
     assert c.phi == phi
-    assert c.base_vectors[0] == e_rho
-    assert c.base_vectors[1] == e_theta
-    assert c.base_vectors[2] == e_phi
+    assert c.base_vectors(p)[0] == e_rho(p)
+    assert c.base_vectors(p)[1] == e_theta(p)
+    assert c.base_vectors(p)[2] == e_phi(p)
 
     # errors
 

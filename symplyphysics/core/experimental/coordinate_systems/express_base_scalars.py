@@ -2,7 +2,7 @@ from typing import TypeAlias, Mapping
 from sympy import Expr, atan2, cos, sin, sqrt, Symbol as SymSymbol
 from sympy.multipledispatch import dispatch
 
-from . import (
+from .coordinate_systems import (
     BaseCoordinateSystem,
     CartesianCoordinateSystem,
     CylindricalCoordinateSystem,
