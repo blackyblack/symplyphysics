@@ -8,9 +8,9 @@ from symplyphysics.core.experimental.coordinate_systems import (
     CartesianCoordinateSystem,
     CylindricalCoordinateSystem,
     SphericalCoordinateSystem,
+    express_base_vectors,
+    convert_vector,
 )
-from symplyphysics.core.experimental.coordinate_systems.express_base_vectors import express_base_vectors
-from symplyphysics.core.experimental.coordinate_systems.convert_vector import convert_vector
 
 
 @dataclass(frozen=True)

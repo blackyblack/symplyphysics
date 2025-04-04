@@ -2,8 +2,8 @@ from symplyphysics.core.experimental.coordinate_systems import (
     CartesianCoordinateSystem,
     CylindricalCoordinateSystem,
     SphericalCoordinateSystem,
+    convert_point,
 )
-from symplyphysics.core.experimental.coordinate_systems.convert_point import convert_point
 from symplyphysics.core.experimental.points import PointSymbol
 
 

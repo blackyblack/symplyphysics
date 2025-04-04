@@ -6,9 +6,9 @@ from symplyphysics.core.experimental.coordinate_systems import (
     CartesianCoordinateSystem,
     CylindricalCoordinateSystem,
     SphericalCoordinateSystem,
+    express_base_scalars,
+    convert_point,
 )
-from symplyphysics.core.experimental.coordinate_systems.express_base_scalars import express_base_scalars
-from symplyphysics.core.experimental.coordinate_systems.convert_point import convert_point
 
 
 @dataclass

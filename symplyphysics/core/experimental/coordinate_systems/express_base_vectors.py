@@ -3,7 +3,7 @@ from sympy import sqrt, sin, cos
 from sympy.multipledispatch import dispatch
 
 from ..vectors import VectorExpr
-from . import (
+from .coordinate_systems import (
     BaseCoordinateSystem,
     CartesianCoordinateSystem,
     CylindricalCoordinateSystem,
