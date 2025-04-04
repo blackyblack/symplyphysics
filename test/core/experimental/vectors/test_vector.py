@@ -1,5 +1,5 @@
 from pytest import raises
-from sympy import Symbol as SymSymbol, Function as SymFunction
+from sympy import Symbol as SymSymbol, Function as SymFunction, S, Basic
 from symplyphysics import units, dimensionless, symbols
 from symplyphysics.core.dimensions import dimsys_SI
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -13,6 +13,7 @@ from symplyphysics.core.experimental.vectors import (
     VectorMixedProduct,
     VectorFunction,
     AppliedVectorFunction,
+    VectorDerivative as diff,
 )
 from symplyphysics.core.experimental.solvers import vector_equals
 
@@ -322,3 +323,106 @@ def test_vector_function() -> None:  # pylint: disable=too-many-statements
 
     # Note that `sympy.Function` doesn't check for unapplied `VectorFunction` instances
     _ = w(q)  # pylint: disable=not-callable
+
+
+def test_vector_derivative() -> None:
+    x = SymSymbol("x")
+    y = SymSymbol("y")
+
+    v = VectorSymbol("v")
+    w = VectorSymbol("w")
+
+    f = VectorFunction("f")
+    g = SymFunction("g")
+    h = VectorFunction("h", nargs=1)
+
+    # ZERO
+    assert vector_equals(diff(ZERO, x), ZERO)
+
+    # VectorSymbol
+    assert vector_equals(diff(v, x), ZERO)
+
+    # VectorScale
+
+    assert vector_equals(
+        diff(v * x, x),
+        v,
+    )
+
+    assert vector_equals(
+        diff(v * x + w * (1 - x), x),
+        v - w,
+    )
+
+    # VectorFunction
+
+    assert vector_equals(
+        diff(f(), x),
+        ZERO,
+    )
+
+    assert vector_equals(
+        diff(f(x), x),
+        diff(f(x), x, evaluate=False),
+    )
+
+    assert vector_equals(
+        diff(f(y), x),
+        ZERO,
+    )
+
+    assert vector_equals(
+        diff(f(x, y), x),
+        diff(f(x, y), x, evaluate=False),
+    )
+
+    assert vector_equals(
+        diff(f(x, y), x),
+        diff(f(x, y), x, evaluate=False),
+    )
+
+    assert vector_equals(
+        diff(f(x) * x, x),
+        f(x) + diff(f(x), x) * x,
+    )
+
+    assert vector_equals(
+        diff(f(x) + h(x), x),
+        diff(f(x), x) + diff(h(x), x),
+    )
+
+    # Requires a vector analogue of `sympy.Subs`
+    with raises(NotImplementedError):
+        # should evaluate to `Subs(diff(f(y), y), y, diff(g(x), x))`
+        diff(f(g(x)), x)  # pylint: disable=not-callable
+
+    with raises(NotImplementedError):
+        diff(f(x, x), x)
+
+    with raises(NotImplementedError):
+        # should evaluate to `dot(Jacobian(f)(h), diff(h(x)))`
+        diff(f(h(x)), x)
+
+    # first argument is not a vector
+    with raises(TypeError):
+        diff(Basic(), x)
+
+    # function argument is not a vector
+    with raises(TypeError):
+        diff(f(Basic()), x)
+
+    # first argument is not a vector
+    with raises(TypeError):
+        diff(S.One, x)
+
+    # differentiation symbol is a constant
+    with raises(ValueError):
+        diff(f(x), 1)
+
+    # differentiation symbol is not an expression
+    with raises(TypeError):
+        diff(f(x), Basic())
+
+    # differentiation symbol is not an expression, but is sympify-able
+    with raises(ValueError):
+        diff(f(x), "x")
