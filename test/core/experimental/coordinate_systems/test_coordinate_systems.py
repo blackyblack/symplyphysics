@@ -4,12 +4,12 @@ from symplyphysics import Symbol, units, angle_type
 from symplyphysics.core.errors import UnitsError
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.experimental.vectors import VectorSymbol, VectorFunction
-from symplyphysics.core.experimental.points import PointSymbol
 from symplyphysics.core.experimental.coordinate_systems import (
     CartesianCoordinateSystem,
     CylindricalCoordinateSystem,
     SphericalCoordinateSystem,
 )
+from symplyphysics.core.experimental.points import AppliedPoint
 
 
 def test_base_init() -> None:
@@ -105,7 +105,8 @@ def test_cartesian_system() -> None:
 
 
 def test_cylindrical_system() -> None:
-    p = PointSymbol("P")
+    k = CartesianCoordinateSystem()
+    p = AppliedPoint(k.base_scalars, k)
 
     # __init__ without arguments
 
@@ -170,7 +171,8 @@ def test_cylindrical_system() -> None:
 
 
 def test_spherical_system() -> None:
-    p = PointSymbol("P")
+    k = CartesianCoordinateSystem()
+    p = AppliedPoint(k.base_scalars, k)
 
     # __init__ without arguments
 
