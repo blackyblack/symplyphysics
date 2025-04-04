@@ -1,5 +1,5 @@
 from pytest import raises
-from sympy import Basic, Symbol as SymSymbol, Function as SymFunction
+from sympy import Basic, Symbol as SymSymbol, Function as SymFunction, S
 from symplyphysics import units, dimensionless, symbols, assert_equal, clone_as_symbol
 from symplyphysics.core.dimensions import dimsys_SI
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -11,16 +11,12 @@ from symplyphysics.core.experimental.vectors import (
     VectorScale,
     VectorDot as dot,
     VectorCross as cross,
-    VectorExpr,
     VectorMixedProduct,
     VectorFunction,
     AppliedVectorFunction,
     VectorDerivative as diff,
 )
-
-
-def vector_equals(lhs: VectorExpr, rhs: VectorExpr) -> bool:
-    return bool(norm(lhs - rhs) == 0)
+from symplyphysics.core.experimental.solvers import vector_equals
 
 
 def test_init() -> None:
@@ -298,7 +294,7 @@ def test_vector_mixed() -> None:
     assert expr_equals(VectorMixedProduct(a - b, b - c, c - a), 0)
 
 
-def test_vector_function() -> None:
+def test_vector_function() -> None:  # pylint: disable=too-many-statements
     a = SymSymbol("a")
     v = VectorSymbol("v")
 
@@ -313,7 +309,7 @@ def test_vector_function() -> None:
         f(a, v)
     with raises(TypeError):
         f(a, v, v, a)
-    assert f == f
+    assert f == f  # pylint: disable=comparison-with-itself
     assert f.arguments == (a,)
     assert dimsys_SI.equivalent_dims(f.dimension, units.length)
     assert f.display_name == "f"
@@ -381,41 +377,107 @@ def test_vector_function() -> None:
         q(w)
 
     # Note that `sympy.Function` doesn't check for unapplied `VectorFunction` instances
-    _ = w(q)
+    _ = w(q)  # pylint: disable=not-callable
 
 
 def test_vector_derivative() -> None:
     x = SymSymbol("x")
+    y = SymSymbol("y")
 
     v = VectorSymbol("v")
     w = VectorSymbol("w")
 
     f = VectorFunction("f")
+    g = SymFunction("g")
+    h = VectorFunction("h", nargs=1)
 
     # ZERO
-    assert vector_equals(diff(ZERO, (x, 1)), ZERO)
-    assert vector_equals(diff(ZERO, (x, 5)), ZERO)
+    assert vector_equals(diff(ZERO, x), ZERO)
 
     # VectorSymbol
-    assert vector_equals(diff(v, (x, 1)), ZERO)
+    assert vector_equals(diff(v, x), ZERO)
 
     # VectorScale
 
     assert vector_equals(
-        diff(v * x, (x, 1)),
+        diff(v * x, x),
         v,
     )
 
     assert vector_equals(
-        diff(v * x + w * (1 - x), (x, 1)),
+        diff(v * x + w * (1 - x), x),
         v - w,
     )
 
     # VectorFunction
 
     assert vector_equals(
-        diff(f(x), (x, 1)),
-        diff(f(x), (x, 1), evaluate=False),
+        diff(f(), x),
+        ZERO,
     )
 
-    # TODO: finish test
+    assert vector_equals(
+        diff(f(x), x),
+        diff(f(x), x, evaluate=False),
+    )
+
+    assert vector_equals(
+        diff(f(y), x),
+        ZERO,
+    )
+
+    assert vector_equals(
+        diff(f(x, y), x),
+        diff(f(x, y), x, evaluate=False),
+    )
+
+    assert vector_equals(
+        diff(f(x, y), x),
+        diff(f(x, y), x, evaluate=False),
+    )
+
+    assert vector_equals(
+        diff(f(x) * x, x),
+        f(x) + diff(f(x), x) * x,
+    )
+
+    assert vector_equals(
+        diff(f(x) + h(x), x),
+        diff(f(x), x) + diff(h(x), x),
+    )
+
+    # Requires a vector analogue of `sympy.Subs`
+    with raises(NotImplementedError):
+        # should evaluate to `Subs(diff(f(y), y), y, diff(g(x), x))`
+        diff(f(g(x)), x)  # pylint: disable=not-callable
+
+    with raises(NotImplementedError):
+        diff(f(x, x), x)
+
+    with raises(NotImplementedError):
+        # should evaluate to `dot(Jacobian(f)(h), diff(h(x)))`
+        diff(f(h(x)), x)
+
+    # first argument is not a vector
+    with raises(TypeError):
+        diff(Basic(), x)
+
+    # function argument is not a vector
+    with raises(TypeError):
+        diff(f(Basic()), x)
+
+    # first argument is not a vector
+    with raises(TypeError):
+        diff(S.One, x)
+
+    # differentiation symbol is a constant
+    with raises(ValueError):
+        diff(f(x), 1)
+
+    # differentiation symbol is not an expression
+    with raises(TypeError):
+        diff(f(x), Basic())
+
+    # differentiation symbol is not an expression, but is sympify-able
+    with raises(ValueError):
+        diff(f(x), "x")

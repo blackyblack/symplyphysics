@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Any, Optional, TypeAlias, assert_never, Sequence, Self
 from collections import defaultdict
 
-from sympy import Atom, Basic, Expr, S, sympify, ask, Q, simplify, Derivative as SymDerivative
+from sympy import Atom, Basic, Expr, S, sympify, ask, Q, simplify
 from sympy.core import function as sym_fn
 from sympy.core.parameters import global_parameters
 from sympy.physics.units import Dimension
@@ -370,7 +370,7 @@ class VectorNorm(Expr):  # type: ignore[misc]
             # = dot(v(x), (d/dx)[v(x)]) / norm(v(x))
 
             vector = done.argument
-            return VectorDot(vector, VectorDerivative(vector, (symbol, 1))) / done
+            return VectorDot(vector, VectorDerivative(vector, symbol)) / done
 
         return done.diff(symbol)
 
@@ -481,7 +481,7 @@ class VectorScale(VectorExpr):
         vector = self.vector
         scale = self.scale
 
-        derived_vector = VectorDerivative(vector, (symbol, 1)) * scale
+        derived_vector = VectorDerivative(vector, symbol) * scale
         derived_scaled = vector * scale.diff(symbol)
 
         return derived_vector + derived_scaled  # type: ignore[no-any-return]
@@ -568,7 +568,7 @@ class VectorAdd(VectorExpr):
         return self._as_symbol_combination(*self.addends)
 
     def _eval_vector_derivative(self, symbol: Expr) -> VectorExpr:
-        derived_args = [VectorDerivative(arg, (symbol, 1)) for arg in self.args]
+        derived_args = [VectorDerivative(arg, symbol) for arg in self.args]
         return VectorAdd(*derived_args)
 
 
@@ -698,8 +698,8 @@ class VectorDot(Expr):  # type: ignore[misc]
         lhs = self.lhs
         rhs = self.rhs
 
-        derived_lhs = VectorDot(VectorDerivative(lhs, (symbol, 1)), rhs)
-        derived_rhs = VectorDot(lhs, VectorDerivative(rhs, (symbol, 1)))
+        derived_lhs = VectorDot(VectorDerivative(lhs, symbol), rhs)
+        derived_rhs = VectorDot(lhs, VectorDerivative(rhs, symbol))
 
         return derived_lhs + derived_rhs
 
@@ -852,8 +852,8 @@ class VectorCross(VectorExpr):
         lhs = self.lhs
         rhs = self.rhs
 
-        derived_lhs = VectorCross(VectorDerivative(lhs, (symbol, 1)), rhs)
-        derived_rhs = VectorCross(lhs, VectorDerivative(rhs, (symbol, 1)))
+        derived_lhs = VectorCross(VectorDerivative(lhs, symbol), rhs)
+        derived_rhs = VectorCross(lhs, VectorDerivative(rhs, symbol))
         return derived_lhs + derived_rhs
 
 
@@ -1031,16 +1031,27 @@ class AppliedVectorFunction(sym_fn.Application, VectorExpr):  # type: ignore[mis
         return ((self, S.One),)
 
     def _eval_vector_derivative(self, symbol: Expr) -> VectorExpr:
+        # For now, the derivative of a function application is only implemented when no more than
+        # one argument of the function is equal to `symbol`. All other cases require a vector
+        # alternative of `sympy.Subs` or a Jacobian matrix.
+
         derived_args = []
+
+        found = False
 
         for arg in self.args:
             if isinstance(arg, Expr):
-                if simplify(arg - symbol) != 0:
+                scale = arg.diff(symbol)
+
+                if scale == 0:
+                    continue
+
+                if scale != 1 or found:
                     raise NotImplementedError("VectorSubs has not been implemented yet.")
 
-                partial = VectorDerivative(self, (arg, 1), evaluate=False)
+                found = True
 
-                scale = arg.diff(symbol)
+                partial = VectorDerivative(self, arg, evaluate=False)
                 derived_args.append(partial * scale)
             elif isinstance(arg, VectorExpr):
                 # Assuming `v` and `w` are vector-valued functions:
@@ -1051,6 +1062,9 @@ class AppliedVectorFunction(sym_fn.Application, VectorExpr):  # type: ignore[mis
             else:
                 raise TypeError(
                     f"The argument must be `Expr` or `VectorExpr`, got {type(arg).__name__}.")
+
+        if not found:
+            return ZERO
 
         return VectorAdd(*derived_args)
 
@@ -1134,52 +1148,49 @@ class VectorFunction(DimensionSymbol, UndefinedVectorFunction):
 class VectorDerivative(VectorExpr):
 
     @cacheit
-    def __new__(cls, vector: VectorExpr, *wrts: tuple[Expr, Any], **kwargs: Any) -> VectorExpr:
+    def __new__(cls, vector: VectorExpr, symbol: Expr, **kwargs: Any) -> VectorExpr:
+        if not isinstance(vector, VectorExpr):
+            raise TypeError("VectorDerivative only accepts a vector expression.")
+
+        symbol = sympify(symbol, strict=True)
+
+        if not isinstance(symbol, Expr):
+            raise TypeError(
+                f"VectorDerivative only accepts a single differentiation symbol, got {type(symbol).__name__}."
+            )
+
+        # Check that `symbol` is not a number since differentiation is only defined for
+        # non-constant expressions
+
+        is_number = True
+
+        try:
+            _ = complex(symbol)
+        except TypeError:
+            is_number = False
+
+        if is_number:
+            raise ValueError("The differentiation symbol must not be a number.")
+
         evaluate = kwargs.get("evaluate", global_parameters.evaluate)
 
         if evaluate:
-            result = cls.from_arguments(vector, *wrts)
+            result = vector._eval_vector_derivative(symbol)
             if result is not None:
                 return result
 
         obj = super().__new__(cls)
-        obj._args = (vector,) + wrts
+        obj._args = (vector, symbol)
 
         _atomic_registry.add(obj)
         return obj  # type: ignore[no-any-return]
 
-    @classmethod
-    def from_arguments(cls, vector: VectorExpr, *wrts: tuple[Expr, Any]) -> Optional[VectorExpr]:
-        # Sort `wrts` using `sympy.Derivative` functionality
-        f = sym_fn.Function("f")
-        parameters = [wrt for wrt, _ in wrts]
-        applied = f(*parameters)  # pylint: disable=not-callable
-        _, *sorted_wrts = SymDerivative(applied, *wrts).args
-
-        result: Optional[VectorExpr] = vector
-        for wrt, n in sorted_wrts:
-            if result is None:
-                break
-
-            for _ in range(n):
-                if result is None:
-                    break
-
-                result = result._eval_vector_derivative(wrt)  # pylint: disable=protected-access
-
-        return result
-
     def _eval_vector_derivative(self, symbol: Expr) -> VectorExpr:
-        vector, *wrts = self.args
-        wrts.append((symbol, 1))
-        return VectorDerivative(vector, *wrts)
+        # TODO: probably check for inner derivatives
+
+        return self.func(self, symbol)  # type: ignore[no-any-return]
 
     def doit(self, **_hints: Any) -> VectorExpr:
-        result = self.from_arguments(*self.args)
-
-        if result is not None:
-            return result
-
         return VectorDerivative(*self.args)
 
     def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
