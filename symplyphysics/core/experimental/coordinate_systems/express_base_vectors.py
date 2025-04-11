@@ -1,8 +1,7 @@
 from typing import TypeAlias, Mapping, Sequence, Any
-from sympy import sqrt, sin, cos
+from sympy import sqrt, sin, cos, Expr
 from sympy.multipledispatch import dispatch
 
-from ..vectors import VectorExpr
 from .coordinate_systems import (
     BaseCoordinateSystem,
     CartesianCoordinateSystem,
@@ -10,7 +9,7 @@ from .coordinate_systems import (
     SphericalCoordinateSystem,
 )
 
-VectorMapping: TypeAlias = Mapping[VectorExpr, VectorExpr]
+VectorMapping: TypeAlias = Mapping[Expr, Expr]
 
 
 @dispatch(CartesianCoordinateSystem, CylindricalCoordinateSystem)

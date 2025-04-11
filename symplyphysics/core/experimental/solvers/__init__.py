@@ -1,15 +1,19 @@
 from typing import Callable, Any
-from sympy import Basic, S, Eq, sympify, solve as sym_solve
-from ..vectors import VectorExpr, VectorSymbol, VectorNorm as norm, VectorAdd
+from sympy import Basic, S, Eq, sympify, solve as sym_solve, Add, Expr
+from ..vectors import (
+    VectorSymbol,
+    VectorNorm as norm,
+    is_vector_expr,
+    into_terms,
+    split_factor,
+)
 
 
-def apply(eqn: Basic, f: Callable[[Basic], Basic], *, zero: Basic = S.Zero) -> Eq:
+def apply(eqn: Basic, f: Callable[[Basic], Basic]) -> Eq:
     """
     Applies `f` to both sides of the equation `eqn`, if it is an equality, else treats `eqn` as the
     left-hand side and `zero` as the right-hand side and applies `f` to them. Returns an equation
     object.
-
-    Note that if `eqn` is neither `Eq` nor `Expr`, the `zero` should be specified to avoid errors.
     """
 
     eqn = sympify(eqn, strict=True)
@@ -19,7 +23,7 @@ def apply(eqn: Basic, f: Callable[[Basic], Basic], *, zero: Basic = S.Zero) -> E
         rhs = eqn.rhs
     else:
         lhs = eqn
-        rhs = zero
+        rhs = S.Zero
 
     return Eq(f(lhs), f(rhs), evaluate=False)
 
@@ -48,15 +52,15 @@ def solve_for_scalar(f: Basic, symbol: Basic, **flags: Any) -> list[Eq]:
     return [Eq(lhs, rhs) for lhs, rhs in solution.items()]
 
 
-def vector_equals(lhs: VectorExpr, rhs: VectorExpr) -> bool:
+def vector_equals(lhs: Expr, rhs: Expr) -> bool:
     """Checks the equality of two vector expressions."""
 
-    diff = lhs - rhs
+    diff = (lhs - rhs).simplify()
     return bool(norm(diff) == 0)
 
 
 def solve_for_vector(
-    expr: Eq | VectorExpr,
+    expr: Eq | Expr,
     atomic: VectorSymbol,
     reduce_factor: bool = True,
 ) -> Eq:
@@ -84,10 +88,10 @@ def solve_for_vector(
     if isinstance(expr, Eq):
         expr = expr.lhs - expr.rhs
 
-    if not isinstance(expr, VectorExpr):
-        raise TypeError("The input must be a vector expression.")
+    if not is_vector_expr(expr):
+        raise TypeError(f"Expected '{expr}' to be a vector.")
 
-    combination = expr.as_symbol_combination()
+    combination = tuple(split_factor(term) for term in into_terms(expr))
     i = None
 
     for j, (v, _) in enumerate(combination):
@@ -102,8 +106,8 @@ def solve_for_vector(
     scale = combination[i][1]
 
     if reduce_factor:
-        rhs = VectorAdd(*(v * (-1 * s / scale) for v, s in combination_rhs))
+        rhs = Add(*(v * (-1 * s / scale) for v, s in combination_rhs))
         return Eq(atomic, rhs)
 
-    rhs = VectorAdd(*(v * s for v, s in combination_rhs))
+    rhs = Add(*(v * s for v, s in combination_rhs))
     return Eq(atomic * (-1 * scale), rhs)
