@@ -896,7 +896,7 @@ class VectorDerivative(SymDerivative, VectorExpr):  # type: ignore[misc]
 
 
 def vector_diff(expr: Expr, *variables: Expr, **kwargs: Any) -> Expr:
-    """Evalute the derivative of `expr` with respect to `variables`."""
+    """Evaluate the derivative of `expr` with respect to `variables`."""
 
     return VectorDerivative(
         expr,
