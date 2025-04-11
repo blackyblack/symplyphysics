@@ -1,5 +1,6 @@
+from sympy import Expr
+
 from ..points import AppliedPoint
-from ..vectors import VectorExpr
 from .coordinate_systems import BaseCoordinateSystem
 from .express_base_scalars import express_base_scalars
 from .express_base_vectors import express_base_vectors
@@ -13,10 +14,10 @@ def convert_point(point: AppliedPoint, new_system: BaseCoordinateSystem) -> Appl
 
 
 def convert_vector(
-    vector: VectorExpr,
+    vector: Expr,
     old_point: AppliedPoint,
     new_system: BaseCoordinateSystem,
-) -> VectorExpr:
+) -> Expr:
     new_point = convert_point(old_point, new_system)
 
     conversion = express_base_vectors(

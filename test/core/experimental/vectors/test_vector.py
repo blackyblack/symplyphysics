@@ -1,21 +1,102 @@
+from collections import defaultdict
 from pytest import raises
-from sympy import Symbol as SymSymbol, Function as SymFunction, S, Basic
+from sympy import Symbol as SymSymbol, Function as SymFunction, S, Basic, Mul, Expr
 from symplyphysics import units, dimensionless, symbols
 from symplyphysics.core.dimensions import dimsys_SI
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.experimental.vectors import (
+    is_vector_expr,
+    into_terms,
+    split_factor,
     VectorSymbol,
-    ZERO,
     VectorNorm as norm,
-    VectorScale,
     VectorDot as dot,
     VectorCross as cross,
     VectorMixedProduct,
     VectorFunction,
     AppliedVectorFunction,
-    VectorDerivative as diff,
+    vector_diff,
 )
 from symplyphysics.core.experimental.solvers import vector_equals
+
+
+def test_is_vector_expr() -> None:
+    assert is_vector_expr(0)
+    assert is_vector_expr(S.Zero)
+    assert not is_vector_expr(1)
+    assert not is_vector_expr(S(-5))
+
+    x = SymSymbol("x")
+    y = SymSymbol("y")
+    v = VectorSymbol("v")
+    w = VectorSymbol("w")
+
+    assert not is_vector_expr(x)
+    assert is_vector_expr(v)
+
+    assert not is_vector_expr(x + y)
+    assert not is_vector_expr(x + v)
+    assert is_vector_expr(v + w)
+
+    assert not is_vector_expr(x * y)
+    assert is_vector_expr(v * x)
+    assert is_vector_expr((v + w) * x)
+
+    u = VectorFunction("u", nargs=1)
+    assert is_vector_expr(u(x))
+    assert is_vector_expr(u(v))
+
+
+def as_combination(expr: Expr) -> dict[Expr, Expr]:
+    combination: dict[Expr, Expr] = defaultdict(lambda: S.Zero)
+
+    for term in into_terms(expr):
+        vector, factor = split_factor(term)
+
+        combination[vector] += factor
+
+    return combination
+
+
+def check_combination(expr: Expr, combination: dict[Expr, Expr]) -> bool:
+    expr_combination = as_combination(expr)
+
+    if set(expr_combination.keys()) != set(combination.keys()):
+        return False
+
+    return all(
+        expr_equals(expr_combination[vector], factor) for vector, factor in combination.items())
+
+
+def test_combination() -> None:
+    assert check_combination(0, {})
+
+    x = SymSymbol("x")
+    y = SymSymbol("y")
+    v = VectorSymbol("v")
+    w = VectorSymbol("w")
+
+    assert check_combination(v, {v: 1})
+    assert check_combination(x * v, {v: x})
+    assert check_combination(v + w + 0, {v: 1, w: 1})
+    assert check_combination(x * v + y * w, {v: x, w: y})
+
+    u = VectorFunction("u", nargs=1)
+
+    expr = (v + w * 2 + u(x) / x) * (x + y)
+    assert check_combination(expr, {v: x + y, w: 2 * (x + y), u(x): (x + y) / x})
+
+    with raises(ValueError):
+        tuple(into_terms(1))
+
+    with raises(ValueError):
+        tuple(into_terms(x))
+
+    with raises(ValueError):
+        tuple(into_terms(x + v))
+
+    with raises(ValueError):
+        tuple(into_terms(x * v + 1))
 
 
 def test_init() -> None:
@@ -40,18 +121,12 @@ def test_equality() -> None:
     assert a != b
     assert a == a  # pylint: disable=comparison-with-itself
     assert b == b  # pylint: disable=comparison-with-itself
-    assert a != ZERO
-    assert b != ZERO
+    assert a != 0
+    assert b != 0
 
     c1 = VectorSymbol("c")
     c2 = VectorSymbol("c")
     assert c1 != c2
-
-    assert ZERO == ZERO  # pylint: disable=comparison-with-itself
-
-
-def test_zero_vector() -> None:
-    assert norm(ZERO) == 0
 
 
 def test_vector_scaling() -> None:
@@ -59,27 +134,28 @@ def test_vector_scaling() -> None:
     scale = SymSymbol("k", real=True)
 
     scaled_force = force * scale
-    assert isinstance(scaled_force, VectorScale)
-    assert scaled_force.vector == force
-    assert scaled_force.scale == scale
+    assert isinstance(scaled_force, Mul)
+    vector1, scale1 = split_factor(scaled_force)
+    assert vector1 == force
+    assert scale1 == scale
 
     doubly_scaled_force = force * scale * scale
-    assert isinstance(doubly_scaled_force, VectorScale)
-    assert doubly_scaled_force.vector == force
-    assert expr_equals(doubly_scaled_force.scale, scale**2)
+    assert isinstance(doubly_scaled_force, Mul)
+    vector2, scale2 = split_factor(doubly_scaled_force)
+    assert vector2 == force
+    assert expr_equals(scale2, scale**2)
 
-    scaled_zero = ZERO * scale
-    assert scaled_zero == ZERO
+    scaled_zero = 0 * scale
+    assert scaled_zero == 0
 
     scaled_by_zero = force * 0
-    assert scaled_by_zero == ZERO
-
-    assert ZERO * 0 == ZERO
+    assert scaled_by_zero == 0
 
     negated_force = -force
-    assert isinstance(negated_force, VectorScale)
-    assert negated_force.vector == force  # pylint: disable=no-member
-    assert negated_force.scale == -1  # pylint: disable=no-member
+    assert isinstance(negated_force, Mul)
+    vector3, scale3 = split_factor(negated_force)
+    assert vector3 == force
+    assert scale3 == -1
 
     positive_force = +force
     assert positive_force == force
@@ -109,9 +185,9 @@ def test_vector_norm() -> None:
 
     v1 = VectorSymbol("v_1")
     v2 = VectorSymbol("v_2")
-    assert norm(v1 + v2).args[0] == v1 + v2
-    assert norm(v1 + v1) == norm(v1) * 2
-    assert norm(ZERO - v2) == norm(v2)
+    assert expr_equals(norm(v1 + v2), norm(v1 + v2, evaluate=False))
+    assert expr_equals(norm(v1 + v1), norm(v1) * 2)
+    assert expr_equals(norm(0 - v2), norm(v2))
 
     # .subs
 
@@ -125,21 +201,21 @@ def test_vector_add() -> None:
     force_2 = VectorSymbol("F_2", units.force)
     force_3 = VectorSymbol("F_3", units.force)
 
-    assert ZERO + ZERO == ZERO
-    assert force_1 + ZERO == force_1
-    assert ZERO + force_1 == force_1
+    assert force_1 + 0 == force_1
+    assert 0 + force_1 == force_1
 
     sum_12 = force_1 + force_2
     assert set(sum_12.args) == {force_1, force_2}
-    assert sum_12 + ZERO == sum_12
-    assert ZERO + sum_12 == sum_12
+    assert vector_equals(sum_12 + 0, sum_12)
+    assert vector_equals(sum_12, sum_12)
+    assert sum_12 - sum_12 == 0
 
     sum_123 = force_1 + force_2 + force_3
     assert set(sum_123.args) == {force_1, force_2, force_3}
     assert sum_123 + sum_123 == sum_123 * 2
 
     assert force_1 + force_2 - force_1 == force_2
-    assert force_1 + force_2 - force_2 - force_1 == ZERO
+    assert force_1 + force_2 - force_2 - force_1 == 0
     assert force_1 + force_1 == force_1 * 2
     assert force_1 - force_2 + (force_1 + force_3) * 2 == force_1 * 3 - force_2 + force_3 * 2
 
@@ -161,18 +237,18 @@ def test_vector_dot() -> None:
     v1 = VectorSymbol("v_1", units.velocity)
     v2 = VectorSymbol("v_2", units.velocity)
 
-    assert expr_equals(dot(ZERO, ZERO), 0)
+    assert expr_equals(dot(0, 0), 0)
 
     assert expr_equals(dot(f1, f1), norm(f1)**2)
     assert expr_equals(dot(f1, f2), dot(f1, f2))
-    assert expr_equals(dot(ZERO, f1), 0)
-    assert expr_equals(dot(f1, ZERO), 0)
+    assert expr_equals(dot(0, f1), 0)
+    assert expr_equals(dot(f1, 0), 0)
 
     assert expr_equals(dot(f1 + f2, f1), norm(f1)**2 + dot(f1, f2))
     assert expr_equals(dot(f1 + f2, f2 + f1), norm(f1)**2 + 2 * dot(f1, f2) + norm(f2)**2)
     assert expr_equals(dot(f1 + f2, f1 - f2), norm(f1)**2 - norm(f2)**2)
-    assert expr_equals(dot(f1 + f2, ZERO), 0)
-    assert expr_equals(dot(ZERO, f1 + f2), 0)
+    assert expr_equals(dot(f1 + f2, 0), 0)
+    assert expr_equals(dot(0, f1 + f2), 0)
 
     assert expr_equals(
         dot(f1 + f2 * 2, -v1 + v2),
@@ -186,21 +262,21 @@ def test_vector_cross() -> None:
     v1 = VectorSymbol("v_1", units.velocity)
     v2 = VectorSymbol("v_2", units.velocity)
 
-    assert vector_equals(cross(f1, f1), ZERO)
-    assert not vector_equals(cross(f1, f2), ZERO)
-    assert vector_equals(cross(ZERO, ZERO), ZERO)
-    assert vector_equals(cross(ZERO, f1), ZERO)
-    assert vector_equals(cross(f1, ZERO), ZERO)
+    assert vector_equals(cross(f1, f1), 0)
+    assert not vector_equals(cross(f1, f2), 0)
+    assert vector_equals(cross(0, 0), 0)
+    assert vector_equals(cross(0, f1), 0)
+    assert vector_equals(cross(f1, 0), 0)
 
     assert vector_equals(cross(f1, f2), cross(f1, f2))
     assert vector_equals(cross(f1, f2), -cross(f2, f1))
 
     assert vector_equals(cross(f1, f1 + f2), cross(f1, f2))
-    assert vector_equals(cross(f1 + f2, f1 + f2), ZERO)
+    assert vector_equals(cross(f1 + f2, f1 + f2), 0)
 
     assert vector_equals(
         cross(f1 + f2 * 2, -v1 + v2),
-        -cross(f1, v1) + cross(f1, v2) + cross(f2, v1) * (-2) + cross(f2, v2) * 2,
+        -cross(f1, v1) + cross(f1, v2) - 2 * cross(f2, v1) + 2 * cross(f2, v2),
     )
 
 
@@ -226,13 +302,13 @@ def test_vector_mixed() -> None:
     assert expr_equals(VectorMixedProduct(a, b + c, b + c), 0)
     assert expr_equals(VectorMixedProduct(a + c, b, a + c), 0)
 
-    assert expr_equals(VectorMixedProduct(ZERO, b, c), 0)
-    assert expr_equals(VectorMixedProduct(ZERO, ZERO, c), 0)
-    assert expr_equals(VectorMixedProduct(a, ZERO, c), 0)
-    assert expr_equals(VectorMixedProduct(a, ZERO, ZERO), 0)
-    assert expr_equals(VectorMixedProduct(ZERO, ZERO, ZERO), 0)
-    assert expr_equals(VectorMixedProduct(ZERO, b, ZERO), 0)
-    assert expr_equals(VectorMixedProduct(a, b, ZERO), 0)
+    assert expr_equals(VectorMixedProduct(0, b, c), 0)
+    assert expr_equals(VectorMixedProduct(0, 0, c), 0)
+    assert expr_equals(VectorMixedProduct(a, 0, c), 0)
+    assert expr_equals(VectorMixedProduct(a, 0, 0), 0)
+    assert expr_equals(VectorMixedProduct(0, 0, 0), 0)
+    assert expr_equals(VectorMixedProduct(0, b, 0), 0)
+    assert expr_equals(VectorMixedProduct(a, b, 0), 0)
 
     assert expr_equals(VectorMixedProduct(a, b, c), dot(a, cross(b, c)))
 
@@ -336,93 +412,89 @@ def test_vector_derivative() -> None:
     g = SymFunction("g")
     h = VectorFunction("h", nargs=1)
 
-    # ZERO
-    assert vector_equals(diff(ZERO, x), ZERO)
+    # 0
+    assert vector_equals(vector_diff(0, x), 0)
 
     # VectorSymbol
-    assert vector_equals(diff(v, x), ZERO)
+    assert vector_equals(vector_diff(v, x), 0)
 
     # VectorScale
 
     assert vector_equals(
-        diff(v * x, x),
+        vector_diff(v * x, x),
         v,
     )
 
     assert vector_equals(
-        diff(v * x + w * (1 - x), x),
+        vector_diff(v * x + w * (1 - x), x),
         v - w,
     )
 
     # VectorFunction
 
     assert vector_equals(
-        diff(f(), x),
-        ZERO,
+        vector_diff(f(), x),
+        0,
     )
 
     assert vector_equals(
-        diff(f(x), x),
-        diff(f(x), x, evaluate=False),
+        vector_diff(f(x), x),
+        vector_diff(f(x), x, evaluate=False),
     )
 
     assert vector_equals(
-        diff(f(y), x),
-        ZERO,
+        vector_diff(f(y), x),
+        0,
     )
 
     assert vector_equals(
-        diff(f(x, y), x),
-        diff(f(x, y), x, evaluate=False),
+        vector_diff(f(x, y), x),
+        vector_diff(f(x, y), x, evaluate=False),
     )
 
     assert vector_equals(
-        diff(f(x, y), x),
-        diff(f(x, y), x, evaluate=False),
+        vector_diff(f(x, y), x),
+        vector_diff(f(x, y), x, evaluate=False),
     )
 
     assert vector_equals(
-        diff(f(x) * x, x),
-        f(x) + diff(f(x), x) * x,
+        vector_diff(f(x) * x, x),
+        f(x) + vector_diff(f(x), x) * x,
     )
 
     assert vector_equals(
-        diff(f(x) + h(x), x),
-        diff(f(x), x) + diff(h(x), x),
+        vector_diff(f(x) + h(x), x),
+        vector_diff(f(x), x) + vector_diff(h(x), x),
     )
 
     # Requires a vector analogue of `sympy.Subs`
     with raises(NotImplementedError):
-        # should evaluate to `Subs(diff(f(y), y), y, diff(g(x), x))`
-        diff(f(g(x)), x)  # pylint: disable=not-callable
+        # should evaluate to `Subs(vector_diff(f(y), y), y, vector_diff(g(x), x))`
+        vector_diff(f(g(x)), x)  # pylint: disable=not-callable
 
     with raises(NotImplementedError):
-        diff(f(x, x), x)
+        vector_diff(f(x, x), x)
 
     with raises(NotImplementedError):
-        # should evaluate to `dot(Jacobian(f)(h), diff(h(x)))`
-        diff(f(h(x)), x)
+        # should evaluate to `dot(Jacobian(f)(h), vector_diff(h(x)))`
+        vector_diff(f(h(x)), x)
 
     # first argument is not a vector
-    with raises(TypeError):
-        diff(Basic(), x)
-
-    # function argument is not a vector
-    with raises(TypeError):
-        diff(f(Basic()), x)
+    with raises(ValueError):
+        vector_diff(Basic(), x)
 
     # first argument is not a vector
-    with raises(TypeError):
-        diff(S.One, x)
+    with raises(ValueError):
+        vector_diff(S.One, x)
 
     # differentiation symbol is a constant
     with raises(ValueError):
-        diff(f(x), 1)
+        vector_diff(f(x), 1)
 
     # differentiation symbol is not an expression
     with raises(TypeError):
-        diff(f(x), Basic())
+        vector_diff(f(x), Basic())
 
     # differentiation symbol is not an expression, but is sympify-able
     with raises(ValueError):
-        diff(f(x), "x")
+        vector_diff(f(x), "x")

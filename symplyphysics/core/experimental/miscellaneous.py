@@ -1,5 +1,5 @@
-from typing import TypeVar, Iterable, Callable, Any, Optional, Generic
-from sympy import cacheit as sym_cacheit
+from typing import TypeVar, Iterable, Callable, Any, Optional, Sequence, Generator
+from sympy import cacheit as sym_cacheit, Expr, sympify
 from sympy.combinatorics.permutations import Permutation
 
 _T = TypeVar("_T")
@@ -34,47 +34,21 @@ def sort_with_sign(
     return sign, new_it
 
 
-class Registry(Generic[_T]):
-    """
-    A registry contains a mapping of the given elements to integers in the order of their addition
-    into the registry.
-    """
-
-    _index: int
-    _mapping: dict[_T, int]
-
-    def __init__(self) -> None:
-        self._index = 0
-        self._mapping = {}
-
-    def add(self, value: _T) -> None:
-        """Registers `value` in `self` unless it is already included in the registry."""
-
-        if value in self._mapping:
-            return
-
-        self._index += 1
-        self._mapping[value] = self._index
-
-    def get(self, value: _T) -> int:
-        """
-        Gets the index of `value`. Does not check if the value is absent in the registry, which
-        would raise a `KeyError`.
-        """
-
-        return self._mapping[value]
-
-    def __len__(self) -> int:
-        """Returns the number of elements registered."""
-
-        return self._index
-
-
-_T_co = TypeVar("_T_co", covariant=True)
-_F = TypeVar("_F", bound=Callable[..., _T_co])
-
-
-def cacheit(f: _F) -> _F:
+def cacheit(f: _T) -> _T:
     """A typed version of `sympy.cacheit`."""
 
     return sym_cacheit(f)  # type: ignore[no-any-return]
+
+
+def select_by_indices(items: Sequence[_T], indices: Iterable[int]) -> Generator[_T, None, None]:
+    for index in indices:
+        yield items[index]
+
+
+def sympify_expr(value: Any) -> Expr:
+    result = sympify(value, strict=True)
+
+    if not isinstance(result, Expr):
+        raise TypeError(f"Expected '{result}' to be Expr.")
+
+    return result

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from pytest import fixture, raises
 from sympy import pi, sqrt
 from symplyphysics.core.experimental.solvers import vector_equals
-from symplyphysics.core.experimental.vectors import VectorExpr, ZERO
+from symplyphysics.core.experimental.vectors import VectorExpr
 from symplyphysics.core.experimental.points import AppliedPoint
 from symplyphysics.core.experimental.coordinate_systems import (
     CartesianCoordinateSystem,
@@ -111,7 +111,7 @@ def test_cartesian_to_cartesian(test_args: Args) -> None:
     assert not vector_equals(new_vector, test_args.v_cyl)
     assert not vector_equals(new_vector, test_args.v_sph)
 
-    assert not vector_equals(new_vector, ZERO)
+    assert not vector_equals(new_vector, 0)
 
 
 def test_cartesian_to_cylindrical(test_args: Args) -> None:
@@ -126,7 +126,7 @@ def test_cartesian_to_cylindrical(test_args: Args) -> None:
     assert not vector_equals(new_vector, test_args.v_cart)
     assert not vector_equals(new_vector, test_args.v_sph)
 
-    assert not vector_equals(new_vector, ZERO)
+    assert not vector_equals(new_vector, 0)
 
 
 def test_cartesian_to_spherical(test_args: Args) -> None:
@@ -141,7 +141,7 @@ def test_cartesian_to_spherical(test_args: Args) -> None:
     assert not vector_equals(new_vector, test_args.v_cart)
     assert not vector_equals(new_vector, test_args.v_cyl)
 
-    assert not vector_equals(new_vector, ZERO)
+    assert not vector_equals(new_vector, 0)
 
 
 def test_cylindrical_to_cartesian(test_args: Args) -> None:
@@ -156,7 +156,7 @@ def test_cylindrical_to_cartesian(test_args: Args) -> None:
     assert not vector_equals(new_vector, test_args.v_cyl)
     assert not vector_equals(new_vector, test_args.v_sph)
 
-    assert not vector_equals(new_vector, ZERO)
+    assert not vector_equals(new_vector, 0)
 
 
 def test_cylindrical_to_cylindrical(test_args: Args) -> None:
@@ -178,7 +178,7 @@ def test_cylindrical_to_cylindrical(test_args: Args) -> None:
     assert not vector_equals(new_vector, test_args.v_cart)
     assert not vector_equals(new_vector, test_args.v_sph)
 
-    assert not vector_equals(new_vector, ZERO)
+    assert not vector_equals(new_vector, 0)
 
 
 def test_cylindrical_to_spherical(test_args: Args) -> None:
@@ -193,7 +193,7 @@ def test_cylindrical_to_spherical(test_args: Args) -> None:
     assert not vector_equals(new_vector, test_args.v_cart)
     assert not vector_equals(new_vector, test_args.v_cyl)
 
-    assert not vector_equals(new_vector, ZERO)
+    assert not vector_equals(new_vector, 0)
 
 
 def test_spherical_to_cartesian(test_args: Args) -> None:
@@ -208,7 +208,7 @@ def test_spherical_to_cartesian(test_args: Args) -> None:
     assert not vector_equals(new_vector, test_args.v_cyl)
     assert not vector_equals(new_vector, test_args.v_sph)
 
-    assert not vector_equals(new_vector, ZERO)
+    assert not vector_equals(new_vector, 0)
 
 
 def test_spherical_to_cylindrical(test_args: Args) -> None:
@@ -223,7 +223,7 @@ def test_spherical_to_cylindrical(test_args: Args) -> None:
     assert not vector_equals(new_vector, test_args.v_cart)
     assert not vector_equals(new_vector, test_args.v_sph)
 
-    assert not vector_equals(new_vector, ZERO)
+    assert not vector_equals(new_vector, 0)
 
 
 def test_spherical_to_spherical(test_args: Args) -> None:
@@ -245,7 +245,7 @@ def test_spherical_to_spherical(test_args: Args) -> None:
     assert not vector_equals(new_vector, test_args.v_cart)
     assert not vector_equals(new_vector, test_args.v_cyl)
 
-    assert not vector_equals(new_vector, ZERO)
+    assert not vector_equals(new_vector, 0)
 
 
 def test_unregistered_coordinate_system(test_args: Args) -> None:
