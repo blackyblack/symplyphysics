@@ -2,7 +2,7 @@ from pytest import raises
 from sympy import Eq, evaluate
 from symplyphysics import Symbol
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.experimental.vectors import VectorSymbol, VectorNorm as norm, ZERO
+from symplyphysics.core.experimental.vectors import VectorSymbol, VectorNorm as norm
 from symplyphysics.core.experimental.solvers import apply, solve_for_vector, vector_equals
 
 
@@ -27,13 +27,9 @@ def test_apply() -> None:
     assert expr_equals(applied_eqn.rhs, 1)
 
     eqn = a - b * x
-    applied_eqn = apply(eqn, lambda side: side + a, zero=ZERO)
+    applied_eqn = apply(eqn, lambda side: side + a)
     assert vector_equals(applied_eqn.lhs, a * 2 - b * x)
     assert vector_equals(applied_eqn.rhs, a)
-
-    # Can't add a scalar `0` with a vector
-    with raises(TypeError):
-        apply(eqn, lambda side: side + a)
 
 
 def test_vector_equals() -> None:
@@ -53,7 +49,7 @@ def test_vector_equals() -> None:
 
     with evaluate(False):
         lhs = a + b * 3 - a * 2 + a - b - b - b
-    assert vector_equals(lhs, ZERO)
+    assert vector_equals(lhs, 0)
 
 
 def test_express_atomic() -> None:

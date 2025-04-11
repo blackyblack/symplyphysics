@@ -2,177 +2,211 @@
 
 from __future__ import annotations
 
-from typing import Any, Optional, TypeAlias, assert_never, Sequence, Self
+from typing import Any, Optional, Sequence, Self, Callable
 from collections import defaultdict
+from itertools import product as py_product
 
-from sympy import Atom, Basic, Expr, S, sympify
+from sympy import Basic, Expr, S, Mul as SymMul, Add as SymAdd, Derivative as SymDerivative, fraction, sympify as _sympify
 from sympy.core import function as sym_fn
 from sympy.core.parameters import global_parameters
 from sympy.physics.units import Dimension
 from sympy.printing.printer import Printer
 
+from symplyphysics import Symbol
 from symplyphysics.core.symbols.symbols import DimensionSymbol, next_name
-from symplyphysics.core.symbols.id_generator import last_id
-from symplyphysics.docs.miscellaneous import needs_mul_brackets
-from ..miscellaneous import sort_with_sign, Registry, cacheit
+from symplyphysics.core.symbols.id_generator import last_id, next_id
+from ..miscellaneous import sort_with_sign, cacheit, sympify_expr
 
 
-class _AtomicRegistry:
+def _check_vector(value: Any) -> Expr:
     """
-    Helper class that associates all `AtomicVectorExpr` with a number. This is needed to order
-    the arguments in such operations as `VectorDot` or `VectorCross`.
-    """
-
-    _symbol_registry: Registry[VectorSymbol]
-    _cross_registry: Registry[_VectorSymbolCross]
-    _function_registry: Registry[AppliedVectorFunction]
-    _derivative_registry: Registry[VectorDerivative]
-
-    def __init__(self) -> None:
-        self._symbol_registry = Registry()
-        self._cross_registry = Registry()
-        self._function_registry = Registry()
-        self._derivative_registry = Registry()
-
-    def add(self, value: AtomicVectorExpr) -> None:
-        if isinstance(value, VectorSymbol):
-            self._symbol_registry.add(value)
-            return
-
-        if isinstance(value, _VectorSymbolCross):
-            self._cross_registry.add(value)
-            return
-
-        if isinstance(value, AppliedVectorFunction):
-            self._function_registry.add(value)
-            return
-
-        if isinstance(value, VectorDerivative):
-            self._derivative_registry.add(value)
-            return
-
-        assert_never(value)
-
-    def get(self, value: AtomicVectorExpr) -> int:
-        offset = self._offset(value)
-
-        if isinstance(value, VectorSymbol):
-            return offset + self._symbol_registry.get(value)
-
-        if isinstance(value, _VectorSymbolCross):
-            return offset + self._cross_registry.get(value)
-
-        if isinstance(value, AppliedVectorFunction):
-            return offset + self._function_registry.get(value)
-
-        if isinstance(value, VectorDerivative):
-            return offset + self._derivative_registry.get(value)
-
-        assert_never(value)
-
-    def _offset(self, value: AtomicVectorExpr) -> int:
-        if isinstance(value, VectorSymbol):
-            return 0
-
-        # `_VectorSymbolCross` should come after `VectorSymbol`
-        if isinstance(value, _VectorSymbolCross):
-            return len(self._symbol_registry)
-
-        if isinstance(value, AppliedVectorFunction):
-            return len(self._symbol_registry) + len(self._cross_registry)
-
-        if isinstance(value, VectorDerivative):
-            return (len(self._symbol_registry) + len(self._cross_registry) +
-                len(self._function_registry))
-
-        assert_never(value)
-
-
-_atomic_registry = _AtomicRegistry()
-
-
-class VectorExpr(Basic):  # type: ignore[misc]
-    """
-    Base class for all vector expressions.
+    Raises error if `value` is not a vector expression. Converts the input into an `Expr` if
+    needed.
     """
 
-    def doit(self, **_hints: Any) -> VectorExpr:
-        return self
+    if not is_vector_expr(value):
+        raise ValueError(f"Expected '{value}' to be a vector.")
 
-    def __add__(self, other: VectorExpr) -> VectorExpr:
-        return VectorAdd(self, other)
+    return sympify_expr(value)
 
-    def __sub__(self, other: VectorExpr) -> VectorExpr:
-        # Refer to the consequence in VectorAdd
-        return VectorAdd(self, -other)
 
-    def __mul__(self, other: Any) -> VectorExpr:
-        return VectorScale(self, other)
+@cacheit
+def is_vector_expr(value: Any) -> bool:  # pylint: disable=too-many-return-statements
+    """
+    Checks if `value` is a vector expression, for which `value` must either be `0` or a linear
+    combination of other vector expressions, i.e. it can at most be a sum of vectors multiplied
+    by scalars.
+    """
 
-    def __neg__(self) -> VectorExpr:
-        # Refer to consequence #4 in VectorScale
-        return VectorScale(self, -1)
+    if value == 0:
+        return True
 
-    def __pos__(self) -> VectorExpr:
-        return self
+    if isinstance(value, VectorExpr):
+        return True
 
-    def __truediv__(self, other: Any) -> VectorExpr:
-        # NOTE: probably need to check if `other` is not `0` to return a special "NaN" vector
+    if isinstance(value, SymAdd):
+        return all(is_vector_expr(arg) for arg in value.args)
 
-        return VectorScale(self, 1 / other)
+    if isinstance(value, SymMul):
+        _, denominator = fraction(value)
 
-    def subs(self, *args: Any, **kwargs: Any) -> VectorExpr:
-        return Basic.subs(self, *args, **kwargs)  # type: ignore[no-any-return]
+        if is_vector_expr(denominator):
+            return False
 
-    def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
-        """
-        Express `self` as a linear combination of `AtomicVectorExpr`. Each term is represented by a
-        `(AtomicVectorExpr, Expr)` tuple, and each vector must appear in the combination only once.
+        n_vectors = 0
+        has_zero = False
 
-        Examples:
-        =========
+        for arg in value.args:
+            if arg == 0:
+                has_zero = True
+                continue
 
-        >>> from symplyphysics.core.experimental.coordinate_systems import CartesianCoordinateSystem
-        >>> c = CartesianCoordinateSystem()
-        >>> VectorAdd(c.i, VectorScale(c.j / S(2), S(4)), ZERO, -c.i * 2).as_symbol_combination()
-        ((i, -1), (j, 2))
-        """
+            if is_vector_expr(arg):
+                n_vectors += 1
+                continue
 
-        raise NotImplementedError(f"Implement this method in {type(self).__name__}.")
+        match n_vectors:
+            case 0:
+                return has_zero
+            case 1:
+                return True
+            case _:
+                raise ValueError("A vector can only be multiplied by a scalar.")
 
-    def _eval_vector_derivative(self, _symbol: Expr) -> Optional[VectorExpr]:
-        return None
+    return False
+
+
+def is_atomic_vector(value: Any) -> bool:
+    """
+    Checks if `value` represents an atomic vector, in the sense that it is irreducible and does
+    not represent any vector operation, such as `VectorCross`.
+    """
+
+    return isinstance(value, (VectorSymbol, AppliedVectorFunction))
+
+
+@cacheit
+def split_factor(value: Any) -> tuple[Expr, Expr]:
+    """
+    If `value` is a product of a vector and a scalar, returns the vector and the scalar. Otherwise
+    returns `value` and `1`.
+
+    Raises an error if `value` isn't a vector expression.
+    """
+
+    expr = _check_vector(value)
+
+    if not isinstance(expr, SymMul):
+        return expr, S.One
+
+    for i, arg in enumerate(expr.args):
+        if is_vector_expr(arg):
+            factor = SymMul(*(arg for j, arg in enumerate(expr.args) if j != i))
+            return arg, factor
+
+    raise ValueError("The execution should not get here.")
+
+
+@cacheit
+def into_terms(value: Any) -> tuple[Expr, ...]:
+    """
+    Returns a tuple consisting of the terms which, when when added up, would give `value` again.
+
+    Raises an error if `value` isn't a vector expression.
+    """
+
+    expr = _check_vector(value).expand()
+
+    if expr == 0:
+        return ()
+
+    if isinstance(expr, SymAdd):
+        return expr.args  # type: ignore[no-any-return]
+
+    return (expr,)
+
+
+def _ordered_mul(
+    *values: Expr,
+    key: Optional[Callable[[Expr], Any]] = None,
+) -> dict[int, dict[tuple[Expr, ...], Expr]]:
+    """
+    Multiplies the vectors in `values` together ensuring that the order of multiplication is
+    preserved. Returns the mapping of the permutation sign to the mapping of the (sorted) vector
+    tuple to its factor.
+    
+    In other words, if given two vectors `v = sum(a_i * v_i, i)` and `w = sum(b_j * w_j, j)`, the
+    result of their multiplication is `v * w = sum(a_i * b_j * v_i * w_j, i, j)`. The
+    aforementioned tuple is the pair `(v_i, w_j)`, which is sorted and the sign of the permutation
+    obtained as a result of sorting is taken into account. If `v_i = w_j`, the sign is `0`. The
+    same considerations can be applied for more than two vectors.
+
+    Raises an error if any value in `values` isn't a vector expression.
+    """
+
+    exprs = tuple(_check_vector(arg) for arg in values)
+
+    match len(exprs):
+        case 0:
+            return S.Zero
+        case 1:
+            return exprs[0]
+
+    key = key or id
+
+    mapping: dict[int, dict[tuple[Expr, ...],
+        Expr]] = defaultdict(lambda: defaultdict(lambda: S.Zero))
+
+    for terms in py_product(*(into_terms(expr) for expr in exprs)):
+        vectors: list[Expr] = []
+        factors: list[Expr] = []
+        has_zero = False
+
+        for term in terms:
+            if term == 0:
+                has_zero = True
+                break
+
+            vector, factor = split_factor(term)
+            vectors.append(vector)
+            factors.append(factor)
+
+        if has_zero:
+            continue
+
+        sign, sorted_vectors = sort_with_sign(vectors, key=key)
+        factor = SymMul(*factors)
+
+        mapping[sign][tuple(sorted_vectors)] += factor
+
+    # Remove tuples corresponding to a factor of zero
+    for sign, tuple_to_factor in mapping.items():
+        mapping[sign] = {
+            vectors: factor for vectors, factor in tuple_to_factor.items() if factor != 0
+        }
+
+    return mapping
+
+
+class VectorExpr(Expr):  # type: ignore[misc]
+    """
+    Base class for vector expressions, excluding their sum and scalar multiplication, which are
+    covered by `sympy.Add` and `sympy.Mul` respectively.
+    """
+
+    def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
+        pass
 
     def _eval_vector_norm(self) -> Optional[Expr]:
         return None
 
+    @classmethod
+    def _eval_vector_dot(cls, lhs: Expr, rhs: Expr) -> Optional[Expr]:  # pylint: disable=unused-argument
+        return None
 
-class _VectorZero(VectorExpr, Atom):  # type: ignore[misc]
-    """
-    Class expressing the notion of a zero vector. This class isn't intended to be instantiated
-    except for the constant `ZERO` since under the `definition of vector spaces
-    <https://en.wikipedia.org/wiki/Vector_space#Definition_and_basic_properties>` there can only
-    be one zero.
-
-    Note that the zero vector can be considered having arbitrary (physical) dimension as it can be
-    added to all vectors.
-    """
-
-    def _sympystr(self, _p: Printer) -> str:
-        return "0"
-
-    def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
-        return ()
-
-    def _eval_vector_derivative(self, _symbol: Expr) -> VectorExpr:
-        return ZERO
-
-    def _eval_vector_norm(self) -> Expr:
-        # Refer to property #3 in VectorNorm
-        return S.Zero
-
-
-ZERO = _VectorZero()
+    @classmethod
+    def _eval_vector_cross(cls, lhs: Expr, rhs: Expr) -> Optional[Expr]:  # pylint: disable=unused-argument
+        return None
 
 
 def _process_vector_names(
@@ -194,21 +228,13 @@ def _process_vector_names(
 
 
 # TODO: Add support for axial vectors.
-class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
+class VectorSymbol(Symbol, VectorExpr):  # pylint: disable=too-many-ancestors
     """
     Class representing a symbolic vector.
 
     The ``display_symbol``, ``display_latex``, and ``dimension`` parameters are used to instantiate
     the ``DimensionSymbol`` class.
-
-    The ``norm`` parameter represents the **norm**, in other words **length** or **magnitude**, of
-    the vector. It can be a number, an expression, a quantity, or a symbol, but its dimension must
-    match the ``dimension`` of the vector symbol. Note that only ``dimensionless`` vectors with
-    ``norm=1`` can be considered as **unit vectors**. As a counterexample, a force vector of
-    magnitude `1 N` is not a unit vector since its norm contains a dimensionful quantity `N`.
     """
-
-    is_symbol = True
 
     def __new__(
             cls,
@@ -217,11 +243,7 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
             *,
             display_latex: Optional[str] = None,
     ) -> VectorExpr:
-        obj = super().__new__(cls)
-
-        _atomic_registry.add(obj)
-
-        return obj  # type: ignore[no-any-return]
+        return super().__new__(cls)
 
     def __init__(
             self,
@@ -230,27 +252,23 @@ class VectorSymbol(DimensionSymbol, VectorExpr, Atom):  # type: ignore[misc]
             *,
             display_latex: Optional[str] = None,
     ):
-        id_ = _atomic_registry.get(self)
+        id_ = next_id("VEC")
 
         display_symbol, display_latex = _process_vector_names(display_symbol, display_latex, i=id_)
 
-        DimensionSymbol.__init__(
+        Symbol.__init__(
             self,
-            display_name=display_symbol,
+            display_symbol=display_symbol,
             dimension=dimension,
             display_latex=display_latex,
         )
         VectorExpr.__init__(self)
-        Atom.__init__(self)
 
     def _hashable_content(self) -> tuple[Any, ...]:
         return (id(self),)
 
-    def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
-        return ((self, S.One),)
-
-    def _eval_vector_derivative(self, _symbol: Expr) -> VectorExpr:
-        return ZERO
+    def _eval_derivative(self, _wrt: Expr) -> Expr:
+        return S.Zero
 
 
 class VectorNorm(Expr):  # type: ignore[misc]
@@ -273,272 +291,67 @@ class VectorNorm(Expr):  # type: ignore[misc]
     """
 
     is_nonnegative = True
-
-    @property
-    def argument(self) -> VectorExpr:
-        return self.args[0]  # type: ignore[no-any-return]
+    is_negative = False
+    is_real = True
+    is_commutative = True
 
     @cacheit
-    def __new__(cls, vector: VectorExpr, **kwargs: Any) -> Expr:
-        evaluate = kwargs.get("evaluate", global_parameters.evaluate)
+    def __new__(cls, value: Any, *, evaluate: Optional[bool] = None) -> Expr:
+        vector = _check_vector(value)
 
-        if evaluate:
-            obj = cls.from_vector(vector)
-            if obj is not None:
-                return obj
+        if evaluate is None:
+            evaluate = global_parameters.evaluate
 
-        obj = super().__new__(cls)
-        obj._args = (vector,)
-        return obj
+        if not evaluate:
+            obj = super().__new__(cls)
+            obj._args = (vector,)
+            return obj
 
-    @classmethod
-    def from_vector(cls, vector: VectorExpr) -> Optional[Expr]:
-        result = vector._eval_vector_norm()  # pylint: disable=protected-access
-        if result is not None:
-            return result
+        if vector == 0:
+            return S.Zero
 
-        if isinstance(vector, VectorScale):
-            return cls(vector.vector) * abs(vector.scale)
+        vector = vector.doit()
 
-        # TODO: add support for the following relation:
-        # for all vectors `a, b` and scalars `k`, `norm(a * k + b * k) = norm(a + b) * abs(k)`
+        if isinstance(vector, VectorExpr):
+            norm = vector._eval_vector_norm()
 
-        return None
+            if norm is not None:
+                return norm
 
-    def doit(self, **hints: Any) -> Expr:
-        vector = self.argument
+        # Assuming `a` is a scalar and `v, w` are vectors, converts
+        # `a * v + a * w` to `a * (v + w)` if possible
+        if isinstance(vector, SymAdd):
+            vector = vector.together()
 
-        if hints.get("deep", True):
-            vector = vector.doit(**hints)
+        # The above simplification isn't possible
+        if not isinstance(vector, SymMul):
+            return cls(vector, evaluate=False)
 
-        result = self.from_vector(vector)
+        # Also handles the case when `vector` is simply another vector multiplied by a scalar
+        vector, factor = split_factor(vector)
 
-        if result is not None:
-            return result
-
-        return self
+        return cls(vector, evaluate=False) * abs(factor)
 
     def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
         pass
 
     def _sympystr(self, p: Printer) -> str:
-        return f"norm({p.doprint(self.argument)})"
+        return f"norm({p.doprint(self.args[0])})"
 
     def _eval_derivative(self, symbol: Expr) -> Expr:
         done = self.doit()
 
-        if isinstance(done, VectorNorm):
-            # (d/dx)[norm(v(x))]
-            # = (d/dx)[sqrt(dot(v(x), v(x)))]
-            # = (d/dx)[dot(v(x), v(x))] / (2 * sqrt(v(x), v(x)))
-            # = (2 * dot(v(x), (d/dx)[v(x)])) / (2 * norm(v(x)))
-            # = dot(v(x), (d/dx)[v(x)]) / norm(v(x))
+        if not isinstance(done, VectorNorm):
+            return done.diff(symbol)
 
-            vector = done.argument
-            return VectorDot(vector, VectorDerivative(vector, symbol)) / done
+        # (d/dx)[norm(v(x))]
+        # = (d/dx)[sqrt(dot(v(x), v(x)))]
+        # = (d/dx)[dot(v(x), v(x))] / (2 * sqrt(v(x), v(x)))
+        # = (2 * dot(v(x), (d/dx)[v(x)])) / (2 * norm(v(x)))
+        # = dot(v(x), (d/dx)[v(x)]) / norm(v(x))
 
-        return done.diff(symbol)
-
-
-class VectorScale(VectorExpr):
-    """
-    Class representing the notion of scalar multiplication as a property of vectors.
-
-    This operation has the following **properties**:
-
-    1. Field and vector multiplications are compatible: for all scalars `k, l` and vectors `a`,
-       `k * (s * a) = (k * s) * a`.
-
-    2. Identity element exists: for all vectors `a`, `1 * a = 1`.
-
-    3. Distributivity of scalar multiplication w.r.t. vector addition: for all scalars `k` and
-       vectors `a, b`, `k * (a + b) = k * a + k * b`.
-
-    The last property, distributivity of scalar multiplication w.r.t. field addition, is not
-    represented within the functionality of `VectorScale`.
-
-    As a **consequence** of the properties of the vector field, one has
-
-    1. For all vectors `a`, `0 * k = 0`.
-
-    2. For all scalars `k`, `k * 0 = 0` where `0` is the zero vector.
-
-    3. For all scalars `k` and vectors `a`, `k * a = 0` implies `k = 0` or `a = 0`.
-
-    4. For all vectors `a`, `(-1) * a = -a` where `-a` is the additive inverse of `a`.
-
-    **Links:**
-
-    1. `Wikipedia <https://en.wikipedia.org/wiki/Vector_space#Definition_and_basic_properties>`__.
-    """
-
-    @property
-    def vector(self) -> VectorExpr:
-        return self.args[0]  # type: ignore[no-any-return]
-
-    @property
-    def scale(self) -> Expr:
-        return self.args[1]
-
-    @cacheit
-    def __new__(cls, vector: VectorExpr, scale: Any, **kwargs: Any) -> VectorScale:
-        evaluate = kwargs.get("evaluate", global_parameters.evaluate)
-
-        if evaluate:
-            return cls.from_arguments(vector, scale)
-
-        obj = super().__new__(cls)
-        obj._args = (vector, scale)
-        return obj  # type: ignore[no-any-return]
-
-    @classmethod
-    def from_arguments(cls, vector: VectorExpr, scale: Any) -> VectorExpr:
-        scale = sympify(scale, strict=True)
-        if not isinstance(scale, Expr):
-            raise TypeError(f"Scale {scale} must be an Expr, got {type(scale).__name__}.")
-
-        combination = [(v, s * scale) for v, s in vector.as_symbol_combination()]
-
-        match combination:
-            case ():
-                # Refer to consequence #2
-                return ZERO
-            case ((v, s),):
-                # Refer to property #2
-                if s == 1:
-                    return v
-
-                # Refer to consequence #1
-                if s == 0:
-                    return ZERO
-
-                return cls(v, s, evaluate=False)
-            case _:
-                # Refer to property #3
-                return VectorAdd(
-                    *(cls(v, s, evaluate=False) for v, s in combination),
-                    evaluate=False,
-                )
-
-    def doit(self, **_hints: Any) -> VectorExpr:
-        return self.from_arguments(self.vector, self.scale)
-
-    def _sympystr(self, p: Printer) -> str:
-        vector, value = self.args
-
-        if needs_mul_brackets(value, last=True):
-            return f"{p.doprint(vector)}*({p.doprint(value)})"
-
-        return f"{p.doprint(vector)}*{p.doprint(value)}"
-
-    def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
-        scale = self.scale
-        vector = self.vector
-
-        result: list[tuple[AtomicVectorExpr, Expr]] = []
-        for v, s0 in vector.as_symbol_combination():
-            s1 = s0 * scale
-            if s1 != 0:
-                result.append((v, s1))
-        return tuple(result)
-
-    def _eval_vector_derivative(self, symbol: Expr) -> VectorExpr:
-        vector = self.vector
-        scale = self.scale
-
-        derived_vector = VectorDerivative(vector, symbol) * scale
-        derived_scaled = vector * scale.diff(symbol)
-
-        return derived_vector + derived_scaled  # type: ignore[no-any-return]
-
-    def _eval_vector_norm(self) -> Expr:
-        # Refer to property #2 in VectorNorm
-        return VectorNorm(self.vector) * abs(self.scale)
-
-
-class VectorAdd(VectorExpr):
-    """
-    Class representing the notion of vector *addition* as a property of vectors.
-
-    Note that the addends must have the same (physical) dimension to be added together.
-
-    This operation has the following properties:
-
-    1. **Associativity**: for all vectors `a, b, c`, `a + (b + c) = (a + b) + c`.
-
-    2. **Commutativity**: for all vectors `a, b`, `a + b = b + a`.
-
-    3. Existence of **identity vector** `0`: for all vectors `a`, `a + 0 = a`.
-
-    4. Existence of **inverse vector**: for all vectors `a`, there exists a vector `-a` s.t.
-    `a + (-a) = 0`.
-
-    As a **consequence**, the *subtraction* of two vectors can be defined as such: for all vectors
-    `a, b`, `a - b = a + (-b)`.
-
-    **Links:**
-
-    1. `Wikipedia <https://en.wikipedia.org/wiki/Vector_space#Definition_and_basic_properties>`__.
-    """
-
-    @property
-    def addends(self) -> tuple[VectorExpr]:
-        return self.args  # type: ignore[no-any-return]
-
-    @cacheit
-    def __new__(cls, *vectors: VectorExpr, **kwargs: Any) -> VectorExpr:
-        # NOTE: add dimension check for the arguments?
-
-        evaluate = kwargs.get("evaluate", global_parameters.evaluate)
-
-        if evaluate:
-            for vector in vectors:
-                if not isinstance(vector, VectorExpr):
-                    raise TypeError(f"All addends must be VectorExpr, got {type(vector).__name__}")
-
-            return cls.from_vectors(*vectors)
-
-        obj = super().__new__(cls)
-        obj._args = vectors
-        return obj  # type: ignore[no-any-return]
-
-    @classmethod
-    def from_vectors(cls, *vectors: VectorExpr) -> VectorExpr:
-        if not vectors:
-            return ZERO
-
-        combination = cls._as_symbol_combination(*vectors)
-
-        match combination:
-            case ():
-                return ZERO
-            case ((v, s),):
-                return v * s  # type: ignore[no-any-return]
-            case _:
-                return cls(*(v * s for v, s in combination), evaluate=False)
-
-    def doit(self, **_hints: Any) -> VectorExpr:
-        return self.from_vectors(*self.addends)
-
-    def _sympystr(self, p: Printer) -> str:
-        return " + ".join(map(p.doprint, self.args))
-
-    @staticmethod
-    def _as_symbol_combination(*addends: VectorExpr) -> tuple[tuple[VectorExpr, Expr], ...]:
-        mapping: dict[AtomicVectorExpr, Expr] = defaultdict(lambda: S.Zero)
-
-        for addend in addends:
-            for v, s in addend.as_symbol_combination():
-                mapping[v] += s
-
-        return tuple((v, s) for v, s in mapping.items() if s != 0)
-
-    def as_symbol_combination(self) -> tuple[tuple[VectorSymbol, Expr], ...]:
-        return self._as_symbol_combination(*self.addends)
-
-    def _eval_vector_derivative(self, symbol: Expr) -> VectorExpr:
-        derived_args = [VectorDerivative(arg, symbol) for arg in self.args]
-        return VectorAdd(*derived_args)
+        vector: Expr = done.args[0]
+        return VectorDot(vector, vector.diff(symbol)) / done
 
 
 class VectorDot(Expr):  # type: ignore[misc]
@@ -589,18 +402,57 @@ class VectorDot(Expr):  # type: ignore[misc]
         return self.args[1]  # type: ignore[no-any-return]
 
     @cacheit
-    def __new__(cls, lhs: VectorExpr, rhs: VectorExpr, **kwargs: Any) -> Expr:
-        evaluate = kwargs.get("evaluate", global_parameters.evaluate)
+    def __new__(cls, *values: Any, evaluate: Optional[bool] = None) -> Expr:
+        if len(values) != 2:
+            raise ValueError(f"{cls.__name__} accepts two positional arguments.")
 
-        if evaluate:
-            return cls.from_vectors(lhs, rhs)
+        lhs, rhs = map(_check_vector, values)
 
-        obj = super().__new__(cls)
-        obj._args = (lhs, rhs)
-        return obj
+        if evaluate is None:
+            evaluate = global_parameters.evaluate
 
-    def doit(self, **_hints: Any) -> Expr:
-        return self.from_vectors(self.lhs, self.rhs)
+        if not evaluate:
+            obj = super().__new__(cls)
+            obj._args = (lhs, rhs)
+            return obj
+
+        lhs, rhs = lhs.doit(), rhs.doit()
+
+        if isinstance(lhs, VectorExpr):
+            result = lhs._eval_vector_dot(lhs, rhs)
+
+            if result is not None:
+                return result
+
+        if isinstance(rhs, VectorExpr):
+            result = rhs._eval_vector_dot(lhs, rhs)
+
+            if result is not None:
+                return result
+
+        sign_to_mapping = _ordered_mul(lhs, rhs)
+        result = S.Zero
+
+        for sign, tuple_to_factor in sign_to_mapping.items():
+            # Vector is multiplied by itself, reduce product to norm squared
+            if sign == 0:
+                for (v, _), factor in tuple_to_factor.items():
+                    dot = VectorNorm(v)**2
+                    result += dot * factor
+
+                continue
+
+            # The dot product is commutative, i.e. the sign of the permutation of the symbols doesn't
+            # matter
+            for (v, w), factor in tuple_to_factor.items():
+                if is_atomic_vector(v) and is_atomic_vector(w):
+                    dot = cls(v, w, evaluate=False)
+                else:
+                    dot = cls(v, w)
+
+                result += dot * factor
+
+        return result
 
     def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
         pass
@@ -608,67 +460,12 @@ class VectorDot(Expr):  # type: ignore[misc]
     def _sympystr(self, p: Printer) -> str:
         return f"dot({p.doprint(self.lhs)}, {p.doprint(self.rhs)})"
 
-    @classmethod
-    def from_vectors(cls, lhs: VectorExpr, rhs: VectorExpr) -> Expr:
-        if isinstance(lhs, AtomicVectorExpr) and isinstance(rhs, AtomicVectorExpr):
-            return cls.from_atomic(lhs, rhs)
-
-        result = S.Zero
-
-        for lhs_v, lhs_s in lhs.as_symbol_combination():
-            for rhs_v, rhs_s in rhs.as_symbol_combination():
-                result += cls.from_atomic(lhs_v, rhs_v) * lhs_s * rhs_s
-
-        return result
-
-    @classmethod
-    def from_symbols(
-        cls,
-        lhs: VectorSymbol | AppliedVectorFunction,
-        rhs: VectorSymbol | AppliedVectorFunction,
-    ) -> Expr:
-        sign, args = sort_with_sign((lhs, rhs), key=_atomic_registry.get)
-
-        if sign == 0:
-            return VectorNorm(lhs)**2
-
-        return cls(*args, evaluate=False)
-
-    @classmethod
-    def from_atomic(cls, lhs: AtomicVectorExpr, rhs: AtomicVectorExpr) -> Expr:
-        """
-        1. `dot(v, w)` is left unchanged unless `v = w`, in which case `dot(v, v) = norm(v)**2`.
-
-        2. `dot(v, cross(c, d)) = mixed(v, c, d)`.
-
-        3. `dot(cross(a, b), w) = mixed(w, a, b)`.
-
-        4. `dot(cross(a, b), cross(c, d)) = dot(a, b) * dot(c, d) - dot(b, c) * dot(a, d)`.
-        """
-
-        if isinstance(lhs, _VectorSymbolCross):
-            if isinstance(rhs, _VectorSymbolCross):
-                a = lhs.lhs
-                b = lhs.rhs
-                c = rhs.lhs
-                d = rhs.rhs
-
-                return (cls.from_symbols(a, b) * cls.from_symbols(b, d) -
-                    cls.from_symbols(b, c) * cls.from_symbols(a, d))
-
-            return VectorMixedProduct.from_symbols(rhs, lhs.lhs, lhs.rhs)
-
-        if isinstance(rhs, _VectorSymbolCross):
-            return VectorMixedProduct.from_symbols(lhs, rhs.lhs, rhs.rhs)
-
-        return cls.from_symbols(lhs, rhs)
-
-    def _eval_derivative(self, symbol: Expr) -> Expr:
+    def _eval_derivative(self, wrt: Expr) -> Expr:
         lhs = self.lhs
         rhs = self.rhs
 
-        derived_lhs = VectorDot(VectorDerivative(lhs, symbol), rhs)
-        derived_rhs = VectorDot(lhs, VectorDerivative(rhs, symbol))
+        derived_lhs = VectorDot(lhs.diff(wrt), rhs)
+        derived_rhs = VectorDot(lhs, rhs.diff(wrt))
 
         return derived_lhs + derived_rhs
 
@@ -714,175 +511,113 @@ class VectorCross(VectorExpr):
     reversed.
     """
 
-    @property
-    def lhs(self) -> VectorExpr:
-        return self.args[0]  # type: ignore[no-any-return]
-
-    @property
-    def rhs(self) -> VectorExpr:
-        return self.args[1]  # type: ignore[no-any-return]
-
     @cacheit
-    def __new__(cls, lhs: VectorExpr, rhs: VectorExpr, **kwargs: Any) -> VectorExpr:
-        evaluate = kwargs.get("evaluate", global_parameters.evaluate)
+    def __new__(cls, *values: Any, evaluate: Optional[bool] = None) -> VectorExpr:
+        if len(values) != 2:
+            raise ValueError(f"{cls.__name__} accepts two positional arguments.")
 
-        if evaluate:
-            return cls.from_vectors(lhs, rhs)
+        lhs, rhs = map(_check_vector, values)
 
-        obj = super().__new__(cls)
-        obj._args = (lhs, rhs)
-        return obj  # type: ignore[no-any-return]
+        if evaluate is None:
+            evaluate = global_parameters.evaluate
 
-    @classmethod
-    def from_vectors(cls, lhs: VectorExpr, rhs: VectorExpr) -> VectorExpr:
-        if isinstance(lhs, VectorSymbol) and isinstance(rhs, VectorSymbol):
-            return _VectorSymbolCross(lhs, rhs)
+        if not evaluate:
+            obj = super().__new__(cls)
+            obj._args = (lhs, rhs)
+            return obj  # type: ignore[no-any-return]
 
-        combination = cls._as_symbol_combination(lhs, rhs)
+        lhs, rhs = lhs.doit(), rhs.doit()
 
-        return VectorAdd(
-            *(VectorScale(v, s, evaluate=False) for v, s in combination),
-            evaluate=False,
-        )
+        if isinstance(lhs, VectorExpr):
+            result = lhs._eval_vector_cross(lhs, rhs)
 
-    def doit(self, **_hints: Any) -> VectorExpr:
-        return self.from_vectors(self.lhs, self.rhs)
+            if result is not None:
+                return result  # type: ignore[no-any-return]
 
-    @classmethod
-    def _as_symbol_combination(
-        cls,
-        lhs: VectorExpr,
-        rhs: VectorExpr,
-    ) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
-        mapping: dict[AtomicVectorExpr, Expr] = defaultdict(lambda: S.Zero)
+        if isinstance(rhs, VectorExpr):
+            result = rhs._eval_vector_cross(lhs, rhs)
 
-        for lhs_v, lhs_s in lhs.as_symbol_combination():
-            for rhs_v, rhs_s in rhs.as_symbol_combination():
-                new_factor = lhs_s * rhs_s
+            if result is not None:
+                return result  # type: ignore[no-any-return]
 
-                for v, s in cls.from_atomic(lhs_v, rhs_v).as_symbol_combination():
-                    mapping[v] += s * new_factor
+        result = S.Zero
+        sign_to_mapping = _ordered_mul(lhs, rhs)
 
-        return tuple((v, s) for v, s in mapping.items() if s != 0)
+        for sign, tuple_to_factor in sign_to_mapping.items():
+            # Cross product is zero when arguments are equal
+            if sign == 0:
+                continue
 
-    def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
-        return self._as_symbol_combination(self.lhs, self.rhs)
+            # Note that `vectors` is already sorted
+            for vectors, factor in tuple_to_factor.items():
+                v, w = vectors
+
+                if is_atomic_vector(v) and is_atomic_vector(w):
+                    cross = cls(v, w, evaluate=False)
+                else:
+                    cross = cls(v, w)
+
+                result += cross * factor * sign
+
+        return result  # type: ignore[no-any-return]
 
     def _sympystr(self, p: Printer) -> str:
-        return f"cross({p.doprint(self.lhs)}, {p.doprint(self.rhs)})"
+        lhs, rhs = self.args
+        return f"cross({p.doprint(lhs)}, {p.doprint(rhs)})"
 
     @classmethod
-    def from_atomic(cls, lhs: AtomicVectorExpr, rhs: AtomicVectorExpr) -> VectorExpr:
-        """
-        1. `cross(v, w)` is left unchanged.
+    def _eval_vector_dot(cls, lhs: Expr, rhs: Expr) -> Optional[Expr]:
+        lhs_is_cross = isinstance(lhs, VectorCross)
+        rhs_is_cross = isinstance(rhs, VectorCross)
 
-        2. `cross(v, cross(c, d)) = c * dot(v, d) - d * dot(v, c)`, referred to as the
-            Lagrange's formula.
-
-        3. `cross(cross(a, b), w) = b * dot(w, a) - a * dot(w, b)` due to anticommutativity of
-            the cross product.
-
-        4. `cross(cross(a, b), cross(c, d)) = c * mixed(d, a, b) - d * mixed(c, a, b)` from the
-            Lagrange's formula.
-
-        **Links:**
-
-        1. `Lagrange's formula <https://en.wikipedia.org/wiki/Triple_product#Vector_triple_product>`__.
-        """
-
-        if isinstance(lhs, _VectorSymbolCross):
-            a = lhs.lhs
-            b = lhs.rhs
-
-            if isinstance(rhs, _VectorSymbolCross):
-                c = rhs.lhs
-                d = rhs.rhs
-
-                # Refer to formula #4
-                return (  # type: ignore[no-any-return]
-                    c * VectorMixedProduct.from_symbols(d, a, b) -
-                    d * VectorMixedProduct.from_symbols(c, a, b))
-
-            # Refer to formula #3
-            return (  # type: ignore[no-any-return]
-                b * VectorDot.from_atomic(rhs, a) - a * VectorDot.from_atomic(rhs, b))
-
-        if isinstance(rhs, _VectorSymbolCross):
+        if lhs_is_cross and rhs_is_cross:
+            a, b = lhs.args
             c, d = rhs.args
 
-            # Refer to formula #2
-            return (  # type: ignore[no-any-return]
-                c * VectorDot.from_atomic(lhs, d) - d * VectorDot.from_atomic(lhs, c))
+            return VectorDot(a, b) * VectorDot(c, d) - VectorDot(b, c) * VectorDot(a, d)
 
-        # Refer to formula #1
-        return _VectorSymbolCross.from_symbols(lhs, rhs)
+        if lhs_is_cross and not rhs_is_cross:
+            a, b = lhs.args
 
-    def _eval_vector_derivative(self, symbol: Expr) -> VectorExpr:
-        lhs = self.lhs
-        rhs = self.rhs
+            return VectorMixedProduct(rhs, a, b)
 
-        derived_lhs = VectorCross(VectorDerivative(lhs, symbol), rhs)
-        derived_rhs = VectorCross(lhs, VectorDerivative(rhs, symbol))
-        return derived_lhs + derived_rhs
+        if not lhs_is_cross and rhs_is_cross:
+            c, d = rhs.args
 
+            return VectorMixedProduct(lhs, c, d)
 
-class _VectorSymbolCross(VectorCross):
-    """
-    A helper class for the cross product between two symbolic vectors.
-    """
-
-    @property
-    def lhs(self) -> VectorSymbol | AppliedVectorFunction | VectorDerivative:
-        return self.args[0]  # type: ignore[no-any-return]
-
-    @property
-    def rhs(self) -> VectorSymbol | AppliedVectorFunction | VectorDerivative:
-        return self.args[1]  # type: ignore[no-any-return]
-
-    @cacheit
-    def __new__(
-        cls,
-        lhs: VectorSymbol | AppliedVectorFunction | VectorDerivative,
-        rhs: VectorSymbol | AppliedVectorFunction | VectorDerivative,
-        **kwargs: Any,
-    ) -> _VectorSymbolCross:
-        evaluate = kwargs.get("evaluate", global_parameters.evaluate)
-
-        if evaluate:
-            return cls.from_symbols(lhs, rhs)
-
-        obj = super().__new__(cls, lhs, rhs, evaluate=False)
-        _atomic_registry.add(obj)
-        return obj
-
-    def doit(self, **_hints: Any) -> VectorExpr:
-        return self.from_symbols(self.lhs, self.rhs)
-
-    def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
-        sign, args = sort_with_sign((self.lhs, self.rhs), key=_atomic_registry.get)
-
-        if sign == 0:
-            return ()
-
-        if sign == -1:
-            result = type(self)(*args, evaluate=False)
-        else:
-            result = self
-
-        return ((result, S(sign)),)
+        return None
 
     @classmethod
-    def from_symbols(
-        cls,
-        lhs: VectorSymbol | AppliedVectorFunction | VectorDerivative,
-        rhs: VectorSymbol | AppliedVectorFunction | VectorDerivative,
-    ) -> VectorExpr:
-        sign, args = sort_with_sign((lhs, rhs), key=_atomic_registry.get)
+    def _eval_vector_cross(cls, lhs: Expr, rhs: Expr) -> Optional[Expr]:
+        lhs_is_cross = isinstance(lhs, VectorCross)
+        rhs_is_cross = isinstance(rhs, VectorCross)
 
-        if sign == 0:
-            return ZERO
+        if lhs_is_cross and rhs_is_cross:
+            a, b = lhs.args
+            c, d = rhs.args
 
-        return cls(*args, evaluate=False) * sign
+            return c * VectorMixedProduct(d, a, b) - d * VectorMixedProduct(c, a, b)
+
+        if lhs_is_cross and not rhs_is_cross:
+            a, b = lhs.args
+
+            return b * VectorDot(rhs, a) - a * VectorDot(rhs, b)
+
+        if not lhs_is_cross and rhs_is_cross:
+            c, d = rhs.args
+
+            return c * VectorDot(lhs, d) - d * VectorDot(lhs, c)
+
+        return None
+
+    def _eval_derivative(self, wrt: Expr) -> VectorExpr:
+        lhs, rhs = self.args
+
+        derived_lhs = VectorCross(lhs.diff(wrt), rhs)
+        derived_rhs = VectorCross(lhs, rhs.diff(wrt))
+
+        return derived_lhs + derived_rhs  # type: ignore[no-any-return]
 
 
 class VectorMixedProduct(Expr):  # type: ignore[misc]
@@ -911,34 +646,42 @@ class VectorMixedProduct(Expr):  # type: ignore[misc]
 
     is_real = True
 
-    @property
-    def vectors(self) -> tuple[VectorExpr, VectorExpr, VectorExpr]:
-        a, b, c = self.args
-        return a, b, c
-
     @cacheit
-    def __new__(cls, *vectors: VectorExpr, **kwargs: Any) -> Expr:
-        a, b, c = vectors
+    def __new__(cls, *values: Expr, evaluate: Optional[bool] = None) -> Expr:
+        if len(values) != 3:
+            raise ValueError(f"{cls.__name__} requires three positional arguments.")
 
-        evaluate = kwargs.get("evaluate", global_parameters.evaluate)
+        a, b, c = map(_check_vector, values)
 
-        if evaluate:
-            return cls.from_vectors(*vectors)
+        if evaluate is None:
+            evaluate = global_parameters.evaluate
 
-        obj = super().__new__(cls)
-        obj._args = (a, b, c)
-        return obj
+        if not evaluate:
+            obj = super().__new__(cls)
+            obj._args = (a, b, c)
+            return obj
 
-    @classmethod
-    def from_vectors(cls, *vectors: VectorExpr) -> Expr:
-        if all(isinstance(v, VectorSymbol) for v in vectors):
-            return cls.from_symbols(*vectors)
+        a, b, c = a.doit(), b.doit(), c.doit()
 
-        a, b, c = vectors
-        return VectorDot(a, VectorCross(b, c))
+        sign_to_mapping = _ordered_mul(a, b, c)
+        result = S.Zero
 
-    def doit(self, **_hints: Any) -> Expr:
-        return self.from_vectors(*self.vectors)
+        for sign, tuple_to_factor in sign_to_mapping.items():
+            # Mixed product is zero if some arguments are equal to one another
+            if sign == 0:
+                continue
+
+            for vectors, factor in tuple_to_factor.items():
+                if all(is_atomic_vector(vector) for vector in vectors):
+                    mixed = cls(*vectors, evaluate=False)
+                else:
+                    u, v, w = vectors
+
+                    mixed = VectorDot(u, VectorCross(v, w))
+
+                result += mixed * factor * sign
+
+        return result
 
     def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
         pass
@@ -947,17 +690,9 @@ class VectorMixedProduct(Expr):  # type: ignore[misc]
         a, b, c = self.args
         return f"mixed({p.doprint(a)}, {p.doprint(b)}, {p.doprint(c)})"
 
-    @classmethod
-    def from_symbols(cls, *vectors: VectorSymbol | AppliedVectorFunction) -> Expr:
-        sign, sorted_args = sort_with_sign(vectors, key=_atomic_registry.get)
-
-        if sign == 0:
-            return S.Zero
-
-        return sign * cls(*sorted_args, evaluate=False)
-
-    def _eval_derivative(self, symbol: Expr) -> Expr:
-        return self.doit().diff(symbol)
+    def _eval_derivative(self, wrt: Expr) -> Expr:
+        a, b, c = self.args
+        return VectorDot(a, VectorCross(b, c)).diff(wrt)
 
 
 class AppliedVectorFunction(sym_fn.Application, VectorExpr):  # type: ignore[misc]
@@ -983,7 +718,7 @@ class AppliedVectorFunction(sym_fn.Application, VectorExpr):  # type: ignore[mis
             )
             raise TypeError(message)
 
-        args = tuple(sympify(arg, strict=True) for arg in args)
+        args = tuple(_sympify(arg, strict=True) for arg in args)
         undefineds = [arg.name for arg in args if isinstance(arg, sym_fn.FunctionClass)]
         if undefineds:
             template = "Invalid argument: expecting an expression, not undefined function{plural}: {names}"
@@ -996,10 +731,7 @@ class AppliedVectorFunction(sym_fn.Application, VectorExpr):  # type: ignore[mis
         result = super().__new__(cls, *args, **kwargs)
         return result  # type: ignore[no-any-return]
 
-    def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
-        return ((self, S.One),)
-
-    def _eval_vector_derivative(self, symbol: Expr) -> VectorExpr:
+    def _eval_derivative(self, wrt: Expr) -> VectorExpr:
         # For now, the derivative of a function application is only implemented when no more than
         # one argument of the function is equal to `symbol`. All other cases require a vector
         # alternative of `sympy.Subs` or a Jacobian matrix.
@@ -1009,33 +741,30 @@ class AppliedVectorFunction(sym_fn.Application, VectorExpr):  # type: ignore[mis
         found = False
 
         for arg in self.args:
-            if isinstance(arg, Expr):
-                scale = arg.diff(symbol)
-
-                if scale == 0:
-                    continue
-
-                if scale != 1 or found:
-                    raise NotImplementedError("VectorSubs has not been implemented yet.")
-
-                found = True
-
-                partial = VectorDerivative(self, arg, evaluate=False)
-                derived_args.append(partial * scale)
-            elif isinstance(arg, VectorExpr):
+            if is_vector_expr(arg) and arg != 0:
                 # Assuming `v` and `w` are vector-valued functions:
                 #   (d/dx)[v(w(x))] = jacobian[v](w(x)) * (d/dx)[w(x)]
                 # Here, `jacobian[v](w(x))` denotes the Jacobian matrix of `v` evaluated at `w(x)`.
 
                 raise NotImplementedError("Jacobian matrix has not been implemented yet.")
-            else:
-                raise TypeError(
-                    f"The argument must be `Expr` or `VectorExpr`, got {type(arg).__name__}.")
+
+            scale = arg.diff(wrt)
+
+            if scale == 0:
+                continue
+
+            if scale != 1 or found:
+                raise NotImplementedError("VectorSubs has not been implemented yet.")
+
+            found = True
+
+            partial = VectorDerivative(self, arg)
+            derived_args.append(partial * scale)
 
         if not found:
-            return ZERO
+            return S.Zero  # type: ignore[no-any-return]
 
-        return VectorAdd(*derived_args)
+        return SymAdd(*derived_args)  # type: ignore[no-any-return]
 
 
 class UndefinedVectorFunction(sym_fn.FunctionClass):  # type: ignore[misc]
@@ -1116,74 +845,42 @@ class VectorFunction(DimensionSymbol, UndefinedVectorFunction):
         return str(cls.display_name)
 
 
-class VectorDerivative(VectorExpr):
+class VectorDerivative(SymDerivative, VectorExpr):  # type: ignore[misc]
 
-    @cacheit
-    def __new__(cls, vector: VectorExpr, symbol: Expr, **kwargs: Any) -> VectorExpr:
-        if not isinstance(vector, VectorExpr):
-            raise TypeError("VectorDerivative only accepts a vector expression.")
+    def __new__(cls, expr: Expr, *variables: Expr, **kwargs: Any) -> Expr:
+        expr = _check_vector(expr)
 
-        symbol = sympify(symbol, strict=True)
+        kwargs.setdefault("evaluate", False)
+        derivative = super().__new__(cls, expr, *variables, **kwargs)
 
-        if not isinstance(symbol, Expr):
-            raise TypeError(
-                f"VectorDerivative only accepts a single differentiation symbol, got {type(symbol).__name__}."
-            )
+        if not isinstance(derivative, SymDerivative):
+            return derivative
 
-        # Check that `symbol` is not a number since differentiation is only defined for
-        # non-constant expressions
+        for symbol, _ in derivative.args[1:]:
+            if is_vector_expr(symbol):
+                raise ValueError(f"Unable to differentiate with respect to vector: {symbol}")
 
-        is_number = True
-
-        try:
-            _ = complex(symbol)
-        except TypeError:
-            is_number = False
-
-        if is_number:
-            raise ValueError("The differentiation symbol must not be a number.")
-
-        evaluate = kwargs.get("evaluate", global_parameters.evaluate)
-
-        if evaluate:
-            result = vector._eval_vector_derivative(symbol)
-            if result is not None:
-                return result
-
-        obj = super().__new__(cls)
-        obj._args = (vector, symbol)
-
-        _atomic_registry.add(obj)
-        return obj  # type: ignore[no-any-return]
-
-    def _eval_vector_derivative(self, symbol: Expr) -> VectorExpr:
-        # TODO: probably check for inner derivatives
-
-        return self.func(self, symbol)  # type: ignore[no-any-return]
-
-    def doit(self, **_hints: Any) -> VectorExpr:
-        return VectorDerivative(*self.args)
-
-    def as_symbol_combination(self) -> tuple[tuple[AtomicVectorExpr, Expr], ...]:
-        # TODO: since `self` can contain an unevaluated derivative, re-evaluate it without making
-        # an infinite recursion loop
-
-        return ((self, S.One),)
+        return derivative
 
 
-AtomicVectorExpr: TypeAlias = VectorSymbol | _VectorSymbolCross | AppliedVectorFunction | VectorDerivative
+def vector_diff(expr: Expr, *variables: Expr, **kwargs: Any) -> Expr:
+    """Evalute the derivative of `expr` with respect to `variables`."""
+
+    return VectorDerivative(
+        expr,
+        *(sympify_expr(variable) for variable in variables),
+        **kwargs,
+    ).doit()
+
 
 __all__ = [
-    "ZERO",
-    "AtomicVectorExpr",
-    "VectorAdd",
+    "AppliedVectorFunction",
     "VectorCross",
     "VectorDot",
     "VectorExpr",
+    "VectorFunction",
     "VectorMixedProduct",
     "VectorNorm",
-    "VectorScale",
     "VectorSymbol",
-    "AppliedVectorFunction",
-    "VectorFunction",
+    "VectorDerivative",
 ]
