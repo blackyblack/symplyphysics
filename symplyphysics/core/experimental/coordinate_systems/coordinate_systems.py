@@ -3,10 +3,11 @@ from __future__ import annotations
 from abc import ABCMeta, abstractmethod
 from typing import Any, Optional, Sequence, Self
 from sympy import Basic, Expr, S, sin
+from sympy.combinatorics.permutations import Permutation
 
 from symplyphysics import Symbol, angle_type, units
 from symplyphysics.core.dimensions import dimensionless, Dimension, assert_equivalent_dimension
-from ..vectors import VectorSymbol, VectorFunction, AppliedVectorFunction
+from ..vectors import VectorSymbol, VectorFunction, AppliedVectorFunction, VectorNorm, VectorDot, VectorCross
 
 
 def _check_base_scalars(
@@ -133,6 +134,43 @@ class BaseCoordinateSystem(Basic, metaclass=ABCMeta):  # type: ignore[misc]
     def jacobian(self) -> Expr:
         h1, h2, h3 = self.lame_coefficients
         return h1 * h2 * h3
+
+    def expr_simplify(self, expr: Expr, *args: Expr) -> Expr:
+        """
+        Simplifies the norm, dot and cross products of the base vectors of `self` in `expr`.
+
+        `*args` is used to instantiate base vectors that are not coordinate-independent.
+        """
+
+        vs = self.base_vectors(*args)
+
+        expr = expr.simplify()
+
+        for i, v_i in enumerate(vs):
+            expr = expr.subs(VectorNorm(v_i), 1)
+
+            for j, v_j in enumerate(vs):
+                if i == j:
+                    dot = 1
+                    cross = 0
+                else:
+                    dot = 0
+
+                    ijk = {0, 1, 2}
+                    ijk.remove(i)
+                    ijk.remove(j)
+                    (k,) = ijk
+
+                    sign = Permutation((i, j, k)).signature()
+
+                    cross = sign * vs[k]
+
+                expr = expr.subs({
+                    VectorDot(v_i, v_j, evaluate=False): dot,
+                    VectorCross(v_i, v_j, evaluate=False): cross,
+                })
+
+        return expr
 
 
 class CartesianCoordinateSystem(BaseCoordinateSystem):
