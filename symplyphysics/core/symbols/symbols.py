@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Any, Optional, Sequence
 from sympy import S, Idx, MatAdd, MatMul, MatrixBase, Symbol as SymSymbol, Expr, Equality, IndexedBase, Matrix as SymMatrix
 from sympy.physics.units import Dimension
-from sympy.core.function import UndefinedFunction, AppliedUndef
+from sympy.core.function import UndefinedFunction
 from sympy.printing.printer import Printer
 from sympy.printing.pretty.pretty import PrettyPrinter
 from sympy.printing.pretty.stringpict import prettyForm
