@@ -147,11 +147,8 @@ def _ordered_mul(
 
     exprs = tuple(_check_vector(arg) for arg in values)
 
-    match len(exprs):
-        case 0:
-            return S.Zero
-        case 1:
-            return exprs[0]
+    if len(values) < 2:
+        raise ValueError(f"Expected to multiply at least two vectors, got {len(values)}")
 
     key = key or id
 
@@ -268,10 +265,10 @@ class VectorSymbol(Symbol, VectorExpr):  # pylint: disable=too-many-ancestors
     def _hashable_content(self) -> tuple[Any, ...]:
         return (id(self),)
 
-    def _eval_derivative(self, symbol: Expr) -> Expr:
+    def _eval_derivative(self, s: Expr) -> Expr:
         # Needed for `sympy.solve` to work
-        if is_vector_expr(symbol):
-            return SymDerivative(self, symbol, evaluate=False)
+        if is_vector_expr(s):
+            return SymDerivative(self, s, evaluate=False)
 
         return S.Zero
 
@@ -411,6 +408,7 @@ class VectorDot(Expr):  # type: ignore[misc]
         return self.args[1]  # type: ignore[no-any-return]
 
     @cacheit
+    # pylint: disable-next=too-many-branches
     def __new__(cls, *values: Any, evaluate: Optional[bool] = None) -> Expr:
         if len(values) != 2:
             raise ValueError(f"{cls.__name__} accepts two positional arguments.")
@@ -624,7 +622,7 @@ class VectorCross(VectorExpr):
 
         return None
 
-    def _eval_derivative(self, symbol: Expr) -> VectorExpr:
+    def _eval_derivative(self, symbol: Expr) -> Expr:
         # Needed for `sympy.solve` to work
         if is_vector_expr(symbol):
             return SymDerivative(self, symbol, evaluate=False)
@@ -634,7 +632,7 @@ class VectorCross(VectorExpr):
         derived_lhs = VectorCross(lhs.diff(symbol), rhs)
         derived_rhs = VectorCross(lhs, rhs.diff(symbol))
 
-        return derived_lhs + derived_rhs  # type: ignore[no-any-return]
+        return derived_lhs + derived_rhs
 
 
 class VectorMixedProduct(Expr):  # type: ignore[misc]
@@ -752,7 +750,7 @@ class AppliedVectorFunction(sym_fn.Application, VectorExpr):  # type: ignore[mis
         result = super().__new__(cls, *args, **kwargs)
         return result  # type: ignore[no-any-return]
 
-    def _eval_derivative(self, symbol: Expr) -> VectorExpr:
+    def _eval_derivative(self, symbol: Expr) -> Expr:
         # For now, the derivative of a function application is only implemented when no more than
         # one argument of the function is equal to `symbol`. All other cases require a vector
         # alternative of `sympy.Subs` or a Jacobian matrix.
@@ -787,9 +785,9 @@ class AppliedVectorFunction(sym_fn.Application, VectorExpr):  # type: ignore[mis
             derived_args.append(partial * scale)
 
         if not found:
-            return S.Zero  # type: ignore[no-any-return]
+            return S.Zero
 
-        return SymAdd(*derived_args)  # type: ignore[no-any-return]
+        return SymAdd(*derived_args)
 
 
 class UndefinedVectorFunction(sym_fn.FunctionClass):  # type: ignore[misc]
@@ -887,12 +885,12 @@ class VectorDerivative(SymDerivative, VectorExpr):  # type: ignore[misc]
 
         return derivative
 
-    def _eval_derivative(self, symbol: Expr) -> Expr:
+    def _eval_derivative(self, v: Expr) -> Expr:
         # Needed for `sympy.solve` to work
-        if is_vector_expr(symbol):
-            return SymDerivative(self, symbol, evaluate=False)
+        if is_vector_expr(v):
+            return SymDerivative(self, v, evaluate=False)
 
-        return super().diff(symbol)
+        return super().diff(v)
 
 
 def vector_diff(expr: Expr, *variables: Expr, **kwargs: Any) -> Expr:

@@ -49,10 +49,10 @@ def test_pow() -> None:
     assert dimsys_SI.equivalent_dims(dim, units.current**n)
 
     expr = symbols.current**(2 * n)
-    collect_expression_and_dimension(expr)[1]
+    _ = collect_expression_and_dimension(expr)[1]
 
     expr = (symbols.acceleration * symbols.mass)**(2 * symbols.time * symbols.temporal_frequency)
-    collect_expression_and_dimension(expr)[1]
+    _ = collect_expression_and_dimension(expr)[1]
 
     bad_expr = symbols.mass**symbols.amount_of_substance
     with raises(ValueError):
@@ -70,7 +70,7 @@ def test_add() -> None:
 
     expr = first_mass + second_mass + symbols.time
     with raises(ValueError):
-        collect_expression_and_dimension(expr)[1]
+        _ = collect_expression_and_dimension(expr)[1]
 
 
 def test_abs() -> None:
@@ -85,7 +85,7 @@ def test_abs() -> None:
     # the error propagates from the argument
     expr = abs(symbols.time + symbols.length)
     with raises(ValueError):
-        collect_expression_and_dimension(expr)[1]
+        _ = collect_expression_and_dimension(expr)[1]
 
 
 def test_min() -> None:
@@ -99,7 +99,7 @@ def test_min() -> None:
 
     expr = Min(first_mass, second_mass, symbols.time)
     with raises(ValueError):
-        collect_expression_and_dimension(expr)[1]
+        _ = collect_expression_and_dimension(expr)[1]
 
 
 def test_derivative() -> None:
