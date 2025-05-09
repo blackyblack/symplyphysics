@@ -79,6 +79,9 @@ def test_cylindrical_coordinate_vector(test_args: Args) -> None:
     v3 = cross(v1, v2)
     assert v3 == CoordinateVector([-1, 4, -3], test_args.cyl)
 
+    # FIXME: `sympy.Derivative` requires that the differentiated expression contain the
+    # differentiation symbol, but `CoordinateVector`s depend on it in general, therefore a fix
+    # within `vector_diff` is required.
     _, phi_f, _ = test_args.cyl.base_scalar_functions
     g = sym_symbols("g", cls=SymFunction)
     t = test_args.t
@@ -108,6 +111,9 @@ def test_spherical_coordinate_vector(test_args: Args) -> None:
     v3 = cross(v1, v2)
     assert v3 == CoordinateVector([-1, 4, -3], test_args.sph)
 
+    # FIXME: `sympy.Derivative` requires that the differentiated expression contain the
+    # differentiation symbol, but `CoordinateVector`s depend on it in general, therefore a fix
+    # within `vector_diff` is required.
     _, theta_f, phi_f = test_args.sph.base_scalar_functions
     g = sym_symbols("g", cls=SymFunction)
     t = test_args.t
