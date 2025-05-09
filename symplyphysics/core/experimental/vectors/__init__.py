@@ -83,7 +83,8 @@ def is_atomic_vector(value: Any) -> bool:
     not represent any vector operation, such as `VectorCross`.
     """
 
-    return isinstance(value, (VectorSymbol, AppliedVectorFunction))
+    return getattr(value, "is_atomic_vector", None) or isinstance(value,
+        (VectorSymbol, AppliedVectorFunction))
 
 
 @cacheit
