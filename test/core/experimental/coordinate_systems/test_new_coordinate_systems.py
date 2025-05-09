@@ -205,8 +205,11 @@ def test_parabolic_system() -> None:
                 Symbol("z", units.length, real=True),
             )
 
-        def cartesian_transform(self, base_scalars: Sequence[Expr] = None) -> Sequence[Expr]:
-            sigma, tau, z = base_scalars
+        def cartesian_transform(
+            self,
+            base_scalars: Optional[Sequence[Expr]] = None,
+        ) -> Sequence[Expr]:
+            sigma, tau, z = base_scalars or self.base_scalars
 
             x = sigma * tau
             y = (tau**2 - sigma**2) / 2
