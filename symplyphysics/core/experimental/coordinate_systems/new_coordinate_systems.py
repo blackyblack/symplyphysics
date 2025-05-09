@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Optional, Sequence
 from functools import partial
 from sympy import (Expr, sqrt, Matrix, true, sin, cos, tan, Q, simplify, atan2, Symbol as SymSymbol,
@@ -44,7 +46,7 @@ class BaseCoordinateSystem(Basic):  # type: ignore[misc]
         cls,
         base_scalars: Optional[tuple[Symbol, Symbol, Symbol]] = None,
         base_scalar_functions: Optional[tuple[Function, Function, Function]] = None,
-    ) -> Basic:
+    ) -> BaseCoordinateSystem:
         obj = super().__new__(cls)
 
         if not base_scalars:
@@ -100,7 +102,7 @@ class BaseCoordinateSystem(Basic):  # type: ignore[misc]
 
         obj._diff_base_vector_matrix = ImmutableMatrix(simplify(diff_matrix * inv_matrix))
 
-        return obj
+        return obj  # type: ignore[no-any-return]
 
     def generate_base_scalars(self) -> tuple[Symbol, Symbol, Symbol]:
         raise NotImplementedError
