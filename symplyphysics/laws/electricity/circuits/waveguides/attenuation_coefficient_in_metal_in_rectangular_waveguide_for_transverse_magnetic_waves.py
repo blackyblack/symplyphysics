@@ -104,7 +104,6 @@ law = Eq(
 def calculate_attenuation_coefficient(surface_resistance_: Quantity, first_index_: float,
     second_index_: float, width_: Quantity, height_: Quantity, resistance_of_medium_: Quantity,
     signal_wavelength_: Quantity, critical_wavelength_: Quantity) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
     result_expr = solve(law, attenuation_coefficient, dict=True)[0][attenuation_coefficient]
     result_expr = result_expr.subs({
         surface_resistance: surface_resistance_,

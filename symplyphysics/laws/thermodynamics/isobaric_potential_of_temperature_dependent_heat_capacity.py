@@ -107,7 +107,6 @@ law = Eq(
 def calculate_isobaric_potential(thermal_effect_: Quantity, entropy_: Quantity,
     temperature_: Quantity, coefficient_capacity_1_: Quantity, coefficient_capacity_2_: Quantity,
     coefficient_capacity_3_: Quantity) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
     result_expr = solve(law, molar_gibbs_energy_change, dict=True)[0][molar_gibbs_energy_change]
     result_expr = result_expr.subs({
         molar_enthalpy_change: thermal_effect_,

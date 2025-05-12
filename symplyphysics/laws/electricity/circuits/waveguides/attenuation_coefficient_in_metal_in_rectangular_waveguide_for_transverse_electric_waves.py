@@ -109,7 +109,6 @@ law = Eq(attenuation_coefficient,
 def calculate_attenuation_coefficient(surface_resistance_: Quantity, first_index_: float,
     second_index_: float, width_: Quantity, height_: Quantity, resistance_of_medium_: Quantity,
     signal_wavelength_: Quantity, critical_wavelength_: Quantity) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
     if second_index_ < 1:
         raise ValueError("The second index must be greater than or equal to 1")
     result_expr = solve(law, attenuation_coefficient, dict=True)[0][attenuation_coefficient]

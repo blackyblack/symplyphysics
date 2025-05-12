@@ -86,7 +86,6 @@ def calculate_voltage_of_equivalent_diode(voltage_of_first_grid_: Quantity,
     coefficient_direct_permeability_of_first_grid_: float,
     coefficient_direct_permeability_of_second_grid_: float, distance_to_anode_: Quantity,
     first_grid_distance_: Quantity) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
     if distance_to_anode_.scale_factor <= first_grid_distance_.scale_factor:
         raise ValueError(
             "The distance to the anode should be greater than the distance to the grid.")

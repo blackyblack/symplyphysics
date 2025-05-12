@@ -94,7 +94,6 @@ law = Eq(attenuation_coefficient,
 def calculate_attenuation_coefficient(surface_resistance_: Quantity, wave_resistance_: Quantity,
     thickness_of_substrate_: Quantity, effective_width_: Quantity, strip_thickness_: Quantity,
     width_: Quantity) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
     if thickness_of_substrate_.scale_factor < effective_width_.scale_factor:
         raise ValueError(
             "The thickness of substrate must be greater than or equal to the effective width")

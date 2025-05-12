@@ -101,7 +101,6 @@ def calculate_gibbs_energy_change(
     chemical_potential_: Quantity,
     particle_count_change_: int,
 ) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
     result = law.rhs.subs({
         entropy: entropy_,
         temperature_change: temperature_change_,

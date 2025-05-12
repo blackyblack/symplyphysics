@@ -166,7 +166,6 @@ def calculate_enthalpy_change(
     chemical_potential_: Quantity,
     particle_count_change_: int,
 ) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
     result = law.rhs.subs({
         temperature: temperature_,
         entropy_change: entropy_change_,

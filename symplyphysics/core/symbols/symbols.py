@@ -60,6 +60,10 @@ class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
         display_name = display_symbol or str(self.name)
         super().__init__(display_name, dimension, display_latex=display_latex)
 
+    # HACK: fix for pylint false positive on unary minus or plus
+    def __neg__(self) -> Symbol:  # pylint: disable=useless-parent-delegation
+        return super().__neg__()
+
 
 # This is default index for indexed parameters, e.g. for using in IndexedSum
 global_index = Idx("i")
@@ -170,7 +174,6 @@ class SymbolPrinter(PrettyPrinter):
         func_name: Optional[str] = None,
         left: str = "(",
         right: str = ")") -> prettyForm:
-        # pylint: disable=too-many-arguments, too-many-positional-arguments
         # optional argument func_name for supplying custom names
         # works only for applied functions
         func_name = e.func.display_name if isinstance(e.func, Function) else func_name

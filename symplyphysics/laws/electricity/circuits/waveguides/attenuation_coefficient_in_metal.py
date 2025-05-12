@@ -94,7 +94,6 @@ law = Eq(
 def calculate_attenuation_coefficient(relative_permittivity_: float, relative_permeability_: float,
     surface_resistance_outer_: Quantity, inner_surface_resistance_: Quantity,
     outer_diameter_: Quantity, inner_diameter_: Quantity) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
     if outer_diameter_.scale_factor <= inner_diameter_.scale_factor:
         raise ValueError("The outer diameter must be greater than the inner diameter")
     result_expr = solve(law, attenuation_coefficient, dict=True)[0][attenuation_coefficient]
