@@ -40,7 +40,7 @@ class DimensionSymbol:
         return str(p.doprint(self.display_name))
 
 
-class Symbol(DimensionSymbol, SymSymbol):  # type: ignore[misc]  # pylint: disable=too-many-ancestors
+class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
 
     def __new__(cls,
         display_symbol: Optional[str] = None,
@@ -49,7 +49,7 @@ class Symbol(DimensionSymbol, SymSymbol):  # type: ignore[misc]  # pylint: disab
         display_latex: Optional[str] = None,
         **assumptions: Any) -> Symbol:
         obj = SymSymbol.__new__(cls, next_name("SYM"), **assumptions)
-        return obj  # type: ignore[no-any-return]
+        return obj
 
     def __init__(self,
         display_symbol: Optional[str] = None,
@@ -65,7 +65,7 @@ class Symbol(DimensionSymbol, SymSymbol):  # type: ignore[misc]  # pylint: disab
 global_index = Idx("i")
 
 
-class IndexedSymbol(DimensionSymbol, IndexedBase):  # type: ignore[misc]  # pylint: disable=too-many-ancestors
+class IndexedSymbol(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-ancestors
     index: Idx
 
     def __new__(cls,
@@ -81,7 +81,7 @@ class IndexedSymbol(DimensionSymbol, IndexedBase):  # type: ignore[misc]  # pyli
             obj = IndexedBase.__new__(cls, name_or_symbol, **assumptions)
         else:
             obj = IndexedBase.__new__(cls, next_name("SYM"), **assumptions)
-        return obj  # type: ignore[no-any-return]
+        return obj
 
     def __init__(self,
         name_or_symbol: Optional[str | SymSymbol] = None,
@@ -98,7 +98,7 @@ class IndexedSymbol(DimensionSymbol, IndexedBase):  # type: ignore[misc]  # pyli
         pass
 
 
-class Function(DimensionSymbol, UndefinedFunction):  # type: ignore[misc]
+class Function(DimensionSymbol, UndefinedFunction):
     arguments: Optional[Sequence[Expr]]
 
     # NOTE: Self type cannot be used in a metaclass and 'mcs' is a metaclass here
@@ -112,7 +112,7 @@ class Function(DimensionSymbol, UndefinedFunction):  # type: ignore[misc]
         display_latex: Optional[str] = None,
         **options: Any) -> Function:
         obj = UndefinedFunction.__new__(mcs, next_name("FUN"), **options)
-        return obj  # type: ignore[no-any-return]
+        return obj
 
     def __init__(cls,
         display_symbol: Optional[str] = None,
@@ -133,7 +133,7 @@ class Function(DimensionSymbol, UndefinedFunction):  # type: ignore[misc]
         return cls.display_name
 
 
-class Matrix(SymMatrix):  # type: ignore[misc]  # pylint: disable=too-many-ancestors
+class Matrix(SymMatrix):  # pylint: disable=too-many-ancestors
 
     def __mul__(self: MatrixBase, other: MatrixBase) -> Expr:
         return MatMul(self, other)
@@ -147,7 +147,7 @@ class Matrix(SymMatrix):  # type: ignore[misc]  # pylint: disable=too-many-ances
 # to user friendly names.
 
 
-class SymbolPrinter(PrettyPrinter):  # type: ignore[misc]
+class SymbolPrinter(PrettyPrinter):
 
     def __init__(self, **settings: Any) -> None:
         super().__init__(settings)
@@ -196,7 +196,7 @@ def print_expression(expr: Expr | Equality | Sequence[Expr | Equality]) -> str:
     use_unicode = pprinter.is_unicode()
     uflag = pretty_use_unicode(use_unicode)
     try:
-        return pprinter.doprint(expr)  # type: ignore[no-any-return]
+        return str(pprinter.doprint(expr))
     finally:
         pretty_use_unicode(uflag)
 

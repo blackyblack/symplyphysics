@@ -46,7 +46,8 @@ froude_number = symbols.froude_number
 :symbols:`froude_number`.
 """
 
-law = Eq(froude_number, flow_speed / sqrt(quantities.acceleration_due_to_gravity * characteristic_length))
+law = Eq(froude_number,
+    flow_speed / sqrt(quantities.acceleration_due_to_gravity * characteristic_length))
 """
 :laws:symbol::
 

@@ -34,7 +34,8 @@ coupler_count = symbols.positive_number
 Number of couplers in the cascade. See :symbols:`positive_number`.
 """
 
-law = Eq(coupler_attenuation, 20 * log(sin(coupler_count * asin(10**(cascade_attenuation / 20))), 10))
+law = Eq(coupler_attenuation,
+    20 * log(sin(coupler_count * asin(10**(cascade_attenuation / 20))), 10))
 """
 :laws:symbol::
 
@@ -42,8 +43,7 @@ law = Eq(coupler_attenuation, 20 * log(sin(coupler_count * asin(10**(cascade_att
 """
 
 
-@validate_input(attenuation_of_cascade_=cascade_attenuation,
-    number_of_couplers_=coupler_count)
+@validate_input(attenuation_of_cascade_=cascade_attenuation, number_of_couplers_=coupler_count)
 @validate_output(coupler_attenuation)
 def calculate_attenuation_of_coupler(attenuation_of_cascade_: float,
     number_of_couplers_: float) -> float:

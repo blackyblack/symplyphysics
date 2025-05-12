@@ -50,8 +50,7 @@ law = Eq(
 """
 
 
-@validate_input(electrode_area_=electrode_area,
-    distance_between_electrodes_=electrode_distance)
+@validate_input(electrode_area_=electrode_area, distance_between_electrodes_=electrode_distance)
 @validate_output(diode_constant)
 def calculate_diode_constant(electrode_area_: Quantity,
     distance_between_electrodes_: Quantity) -> Quantity:

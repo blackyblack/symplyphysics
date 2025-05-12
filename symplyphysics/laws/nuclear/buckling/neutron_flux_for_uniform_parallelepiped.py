@@ -69,7 +69,8 @@ assert height_constant == neutron_flux_for_uniform_slab.axial_constant.subs(
 
 law = Eq(
     neutron_flux,
-    dimension_factor * cos(width_constant * x) * cos(length_constant * y) * cos(height_constant * z))
+    dimension_factor * cos(width_constant * x) * cos(length_constant * y) *
+    cos(height_constant * z))
 """
 :laws:symbol::
 
@@ -103,6 +104,5 @@ _solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
 
 # check with the derived law: Bg^2 = width_constant**2 + length_constant**2 + height_constant**2
 assert _solved.rhs == (width_constant**2 + length_constant**2 + height_constant**2)
-
 
 # There is no calculate() method. Neutron flux is usually being used internally to pass to other laws.

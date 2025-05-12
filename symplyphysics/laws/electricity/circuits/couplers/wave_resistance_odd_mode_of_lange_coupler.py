@@ -28,7 +28,9 @@ from symplyphysics import (
     Symbol,
 )
 
-odd_mode_wave_impedance = clone_as_symbol(symbols.wave_impedance, display_symbol="eta_o", display_latex="\\eta_\\text{o}")
+odd_mode_wave_impedance = clone_as_symbol(symbols.wave_impedance,
+    display_symbol="eta_o",
+    display_latex="\\eta_\\text{o}")
 """
 :symbols:`wave_impedance` of the odd mode.
 """
@@ -51,9 +53,10 @@ Number of segments in Lange coupler. See :symbols:`positive_number`.
 # the following block prevents the re-ordering of terms for the code printer
 with evaluate(False):
     _first_expression = surge_impedance * sqrt((1 - coupling_factor) / (1 + coupling_factor))
-    _second_expression = sqrt(coupling_factor**2 + (1 - coupling_factor**2) * (segment_count - 1)**2)
-    _third_expression = (segment_count - 1) * (1 + _second_expression) / (coupling_factor + _second_expression +
-        (segment_count - 1) * (1 - coupling_factor))
+    _second_expression = sqrt(coupling_factor**2 + (1 - coupling_factor**2) *
+        (segment_count - 1)**2)
+    _third_expression = (segment_count - 1) * (1 + _second_expression) / (coupling_factor +
+        _second_expression + (segment_count - 1) * (1 - coupling_factor))
 
 law = Eq(odd_mode_wave_impedance, _first_expression * _third_expression)
 """

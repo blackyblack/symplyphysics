@@ -49,7 +49,9 @@ substrate_thickness = symbols.thickness
 :symbols:`thickness` of the substrate.
 """
 
-effective_width = clone_as_symbol(symbols.length, display_symbol="w_eff", display_latex="w_\\text{eff}")
+effective_width = clone_as_symbol(symbols.length,
+    display_symbol="w_eff",
+    display_latex="w_\\text{eff}")
 """
 Effective width (see :symbols:`length`) of the microstrip line. See :ref:`Effective width of microstrip line <effective_width_microstrip_line_def>`.
 """
@@ -60,7 +62,8 @@ with evaluate(False):
     _second_expression = 0.667 * log(effective_width / substrate_thickness + 1.444)
     _third_expression = _first_expression + _second_expression
 
-law = Eq(surge_impedance, (quantities.vacuum_impedance / sqrt(effective_permittivity)) * (1 /_third_expression))
+law = Eq(surge_impedance,
+    (quantities.vacuum_impedance / sqrt(effective_permittivity)) * (1 / _third_expression))
 """
 :laws:symbol::
 

@@ -33,7 +33,7 @@ def _discard_minus_sign(expr: Expr) -> tuple[Expr, bool]:
     return (Mul(*args, evaluate=False), sign)
 
 
-class SymbolLatexPrinter(LatexPrinter):  # type: ignore[misc]
+class SymbolLatexPrinter(LatexPrinter):
     """
     A printer to convert Symplyphysics law expressions to latex
     """

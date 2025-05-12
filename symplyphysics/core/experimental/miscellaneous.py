@@ -37,7 +37,7 @@ def sort_with_sign(
 def cacheit(f: _T) -> _T:
     """A typed version of `sympy.cacheit`."""
 
-    return sym_cacheit(f)  # type: ignore[no-any-return]
+    return sym_cacheit(f)
 
 
 def select_by_indices(items: Sequence[_T], indices: Iterable[int]) -> Generator[_T, None, None]:

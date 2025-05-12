@@ -76,10 +76,8 @@ _scattering_matrix = Matrix([
     [forward_voltage_gain, output_voltage_reflection_coefficient],
 ])
 
-law = Eq(
-    Matrix([input_reflected_power_wave, output_reflected_power_wave]),
-    _scattering_matrix * Matrix([input_incident_power_wave, output_incident_power_wave])
-)
+law = Eq(Matrix([input_reflected_power_wave, output_reflected_power_wave]),
+    _scattering_matrix * Matrix([input_incident_power_wave, output_incident_power_wave]))
 """
 :laws:symbol::
 

@@ -31,7 +31,9 @@ resonator_resistance = clone_as_symbol(symbols.electrical_resistance, subscript=
 :symbols:`electrical_resistance` of the resonator.
 """
 
-load_resistance = clone_as_symbol(symbols.electrical_resistance, display_symbol="R_L", display_latex="R_\\text{L}")
+load_resistance = clone_as_symbol(symbols.electrical_resistance,
+    display_symbol="R_L",
+    display_latex="R_\\text{L}")
 """
 :symbols:`electrical_resistance` of the resonator.
 """

@@ -65,8 +65,7 @@ _acceleration_derived = solve(_centripetal_law_applied,
 _acceleration_law_applied = acceleration_law.law.subs({
     symbols.acceleration: _acceleration_derived,
 })
-_force_derived = solve(_acceleration_law_applied, symbols.force,
-    dict=True)[0][symbols.force]
+_force_derived = solve(_acceleration_law_applied, symbols.force, dict=True)[0][symbols.force]
 
 # Let's write down Newton's second law: ma = F. F is, in this case, the force of gravity. And in the general case,
 # when a body moves along a circle with a constant speed in modulus, its acceleration is equal to the centripetal

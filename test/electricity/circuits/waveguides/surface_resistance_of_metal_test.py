@@ -37,8 +37,8 @@ def test_bad_absolute_permeability(test_args: Args) -> None:
         resistance_law.calculate_surface_resistance(bad_absolute_permeability,
             test_args.angular_frequency, test_args.specific_conductivity)
     with raises(TypeError):
-        resistance_law.calculate_surface_resistance(100,
-            test_args.angular_frequency, test_args.specific_conductivity)
+        resistance_law.calculate_surface_resistance(100, test_args.angular_frequency,
+            test_args.specific_conductivity)
 
 
 def test_bad_angular_frequency(test_args: Args) -> None:

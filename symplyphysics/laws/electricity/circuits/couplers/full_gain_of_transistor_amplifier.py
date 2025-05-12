@@ -23,17 +23,23 @@ total_gain = clone_as_symbol(symbols.circuit_gain)
 Total gain of the transistor amplifier. See :symbols:`circuit_gain`.
 """
 
-input_circuit_gain = clone_as_symbol(symbols.circuit_gain, display_symbol="gain_i", display_latex="\\text{gain}_\\text{i}")
+input_circuit_gain = clone_as_symbol(symbols.circuit_gain,
+    display_symbol="gain_i",
+    display_latex="\\text{gain}_\\text{i}")
 """
 Input matching :symbols:`circuit_gain`.
 """
 
-transistor_gain = clone_as_symbol(symbols.circuit_gain, display_symbol="gain_t", display_latex="\\text{gain}_\\text{t}")
+transistor_gain = clone_as_symbol(symbols.circuit_gain,
+    display_symbol="gain_t",
+    display_latex="\\text{gain}_\\text{t}")
 """
 Transistor gain. See :symbols:`circuit_gain`.
 """
 
-output_circuit_gain = clone_as_symbol(symbols.circuit_gain, display_symbol="gain_o", display_latex="\\text{gain}_\\text{o}")
+output_circuit_gain = clone_as_symbol(symbols.circuit_gain,
+    display_symbol="gain_o",
+    display_latex="\\text{gain}_\\text{o}")
 """
 Output matching :symbols:`circuit_gain`.
 """

@@ -10,8 +10,7 @@ from symplyphysics.laws.electricity.circuits.transmission_lines import transmiss
 ## Then the values of A, B, C, D parameters are equal, respectively: -1.265 - 2.365 * I,
 ## -59.2 - 126.5 * I ohm, -23.7 - 50.6 * I millisiemens, -1.265 - 2.365 * I.
 
-Args = namedtuple("Args",
-    ["characteristic_resistance", "line_length", "constant_propagation"])
+Args = namedtuple("Args", ["characteristic_resistance", "line_length", "constant_propagation"])
 
 
 @fixture(name="test_args")

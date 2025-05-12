@@ -51,7 +51,9 @@ radius = symbols.radius
 :symbols:`radius` of the pipe.
 """
 
-pressure_difference = clone_as_symbol(symbols.pressure, display_symbol="Delta(p)", display_latex="\\Delta p")
+pressure_difference = clone_as_symbol(symbols.pressure,
+    display_symbol="Delta(p)",
+    display_latex="\\Delta p")
 """
 Difference in :symbols:`pressure` between the two ends of the pipe.
 """

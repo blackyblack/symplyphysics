@@ -67,8 +67,7 @@ law = Eq(
 def calculate_low_pass_chebyshev_filter_order(bandwidth_distortion_: float,
     band_stop_distortion_: float, band_stop_frequency_: Quantity,
     cutoff_frequency_: Quantity) -> int:
-    result_expr = solve(law, filter_order,
-        dict=True)[0][filter_order]
+    result_expr = solve(law, filter_order, dict=True)[0][filter_order]
     result_expr = result_expr.subs({
         bandwidth_distortion: bandwidth_distortion_,
         band_stop_distortion: band_stop_distortion_,

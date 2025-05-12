@@ -31,7 +31,9 @@ temperature = symbols.temperature
 :symbols:`temperature` of the van der Waals fluid.
 """
 
-critical_temperature = clone_as_symbol(symbols.temperature, display_symbol="T_c", display_latex="T_\\text{c}")
+critical_temperature = clone_as_symbol(symbols.temperature,
+    display_symbol="T_c",
+    display_latex="T_\\text{c}")
 """
 See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.critical_temperature`
 and :symbols:`temperature`.

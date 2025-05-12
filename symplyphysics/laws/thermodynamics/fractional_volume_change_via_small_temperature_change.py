@@ -39,12 +39,15 @@ fractional_volume_change = clone_as_symbol(symbols.fractional_change, subscript=
 Change in the body's :symbols:`volume` divided by its initial volume. See :symbols:`fractional_change`.
 """
 
-volumetric_expansion_coefficient = clone_as_symbol(symbols.thermal_expansion_coefficient, subscript="V")
+volumetric_expansion_coefficient = clone_as_symbol(symbols.thermal_expansion_coefficient,
+    subscript="V")
 """
 Volumetric :symbols:`thermal_expansion_coefficient`.
 """
 
-temperature_change = clone_as_symbol(symbols.temperature, display_symbol="Delta(T)", display_latex="\\Delta T")
+temperature_change = clone_as_symbol(symbols.temperature,
+    display_symbol="Delta(T)",
+    display_latex="\\Delta T")
 """
 Change in body's :symbols:`temperature`.
 """

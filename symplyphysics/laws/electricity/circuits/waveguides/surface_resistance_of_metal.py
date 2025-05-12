@@ -43,10 +43,7 @@ Specific conductance of the conductor, i.e. :symbols:`electrical_conductance` pe
 :symbols:`length`.
 """
 
-law = Eq(
-    resistance,
-    sqrt(angular_frequency * absolute_permeability /
-    (2 * specific_conductance)))
+law = Eq(resistance, sqrt(angular_frequency * absolute_permeability / (2 * specific_conductance)))
 """
 :laws:symbol::
 

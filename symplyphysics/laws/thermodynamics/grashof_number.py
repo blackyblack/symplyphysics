@@ -31,7 +31,8 @@ grashof_number = symbols.grashof_number
 :symbols:`grashof_number` of the fluid.
 """
 
-volumetric_expansion_coefficient = clone_as_symbol(symbols.thermal_expansion_coefficient, subscript="V")
+volumetric_expansion_coefficient = clone_as_symbol(symbols.thermal_expansion_coefficient,
+    subscript="V")
 r"""
 Volumetric (see :symbols:`volume`) :symbols:`thermal_expansion_coefficient` of the body.
 """

@@ -70,7 +70,9 @@ chemical_potential = symbols.chemical_potential
 :symbols:`chemical_potential` of the system.
 """
 
-particle_count_change = clone_as_symbol(symbols.particle_count, display_symbol="dN", display_latex="dN")
+particle_count_change = clone_as_symbol(symbols.particle_count,
+    display_symbol="dN",
+    display_latex="dN")
 """
 Infinitesimal change in the :symbols:`particle_count` of the system.
 """

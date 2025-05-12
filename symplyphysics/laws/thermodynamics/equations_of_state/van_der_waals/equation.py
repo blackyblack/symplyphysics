@@ -20,8 +20,7 @@ into account the main characteristics of a gas with intermolecular interaction.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (symbols, Quantity, validate_input, validate_output,
-    quantities)
+from symplyphysics import (symbols, Quantity, validate_input, validate_output, quantities)
 
 pressure = symbols.pressure
 """

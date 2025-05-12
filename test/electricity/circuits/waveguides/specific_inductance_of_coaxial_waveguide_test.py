@@ -34,8 +34,8 @@ def test_bad_absolute_permeability(test_args: Args) -> None:
         inductance_law.calculate_specific_inductance(bad_absolute_permeability,
             test_args.outer_radius, test_args.inner_radius)
     with raises(TypeError):
-        inductance_law.calculate_specific_inductance(100,
-            test_args.outer_radius, test_args.inner_radius)
+        inductance_law.calculate_specific_inductance(100, test_args.outer_radius,
+            test_args.inner_radius)
 
 
 def test_bad_radius(test_args: Args) -> None:

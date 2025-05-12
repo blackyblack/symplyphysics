@@ -31,7 +31,9 @@ quality_factor = symbols.quality_factor
 :symbols:`quality_factor` of the oscillator.
 """
 
-resonant_frequency = clone_as_symbol(symbols.temporal_frequency, display_symbol="f_r", display_latex="f_\\text{r}")
+resonant_frequency = clone_as_symbol(symbols.temporal_frequency,
+    display_symbol="f_r",
+    display_latex="f_\\text{r}")
 """
 Oscillator's resonant :symbols:`temporal_frequency`.
 """

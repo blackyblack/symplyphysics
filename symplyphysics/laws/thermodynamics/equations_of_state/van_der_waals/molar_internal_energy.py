@@ -25,7 +25,9 @@ from symplyphysics import (
     clone_as_function,
 )
 
-molar_internal_energy = Symbol("u_m", units.energy / units.amount_of_substance, display_latex="u_\\text{m}")
+molar_internal_energy = Symbol("u_m",
+    units.energy / units.amount_of_substance,
+    display_latex="u_\\text{m}")
 """
 :symbols:`internal_energy` of the van der Waals fluid per unit :symbols:`amount_of_substance`.
 """
@@ -35,7 +37,9 @@ temperature = symbols.temperature
 :symbols:`temperature` of the van der Waals fluid.
 """
 
-isochoric_molar_heat_capacity = clone_as_function(symbols.molar_heat_capacity, [temperature], display_symbol="c_Vm", display_latex="c_{V, \\text{m}}")
+isochoric_molar_heat_capacity = clone_as_function(symbols.molar_heat_capacity, [temperature],
+    display_symbol="c_Vm",
+    display_latex="c_{V, \\text{m}}")
 """
 :symbols:`molar_heat_capacity` at constant :symbols:`volume` as a function of :attr:`~temperature`.
 """

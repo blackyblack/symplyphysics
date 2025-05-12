@@ -34,6 +34,7 @@ geometric_buckling = symbols.geometric_buckling
 :symbols:`geometric_buckling`.
 """
 
+# pylint: disable-next=invalid-name
 neutron_flux_laplacian = Function("Laplace(Phi)", [position],
     1 / (units.length**4 * units.time),
     display_latex="\\nabla^{2} \\Phi")

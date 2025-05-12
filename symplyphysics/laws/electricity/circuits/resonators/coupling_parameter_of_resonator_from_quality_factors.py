@@ -31,7 +31,9 @@ resonator_quality_factor = clone_as_symbol(symbols.quality_factor, subscript="0"
 :symbols:`quality_factor` of the resonator.
 """
 
-external_circuit_quality_factor = clone_as_symbol(symbols.quality_factor, display_symbol="Q_e", display_latex="Q_\\text{e}")
+external_circuit_quality_factor = clone_as_symbol(symbols.quality_factor,
+    display_symbol="Q_e",
+    display_latex="Q_\\text{e}")
 """
 :symbols:`quality_factor` of the external circuit.
 """

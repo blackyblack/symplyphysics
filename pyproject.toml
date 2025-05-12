@@ -39,7 +39,7 @@ testpaths = [
 ]
 
 [tool.pylint]
-ignored-modules = ["sympy"]
+ignored-modules = []
 
 [tool.pylint.master]
 fail-under = "9.8"

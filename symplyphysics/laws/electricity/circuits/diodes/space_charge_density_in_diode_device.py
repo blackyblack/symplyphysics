@@ -46,8 +46,7 @@ law = Eq(charge_density,
 """
 
 
-@validate_input(voltage_on_grid_=grid_voltage,
-    distance_between_cathode_and_grid_=distance)
+@validate_input(voltage_on_grid_=grid_voltage, distance_between_cathode_and_grid_=distance)
 @validate_output(charge_density)
 def calculate_space_charge_density(voltage_on_grid_: Quantity,
     distance_between_cathode_and_grid_: Quantity) -> Quantity:

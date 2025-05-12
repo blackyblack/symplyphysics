@@ -25,7 +25,9 @@ reflection_coefficient = symbols.reflection_coefficient
 :symbols:`reflection_coefficient`.
 """
 
-load_impedance = clone_as_symbol(symbols.electrical_impedance, display_symbol="Z_L", display_latex="Z_\\text{L}")
+load_impedance = clone_as_symbol(symbols.electrical_impedance,
+    display_symbol="Z_L",
+    display_latex="Z_\\text{L}")
 """
 Load :symbols:`electrical_impedance`.
 """

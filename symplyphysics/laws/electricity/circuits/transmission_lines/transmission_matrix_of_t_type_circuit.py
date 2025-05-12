@@ -74,18 +74,20 @@ Third :symbols:`electrical_impedance`.
 """
 
 law = Eq(
-    Matrix([[voltage_voltage_parameter, voltage_current_parameter], [current_voltage_parameter, current_current_parameter]]),
-    Matrix([[
-        1 + first_impedance / third_impedance, first_impedance + second_impedance + first_impedance * second_impedance / third_impedance],
-        [1 / third_impedance, 1 + second_impedance / third_impedance],
-    ])
-)
+    Matrix([[voltage_voltage_parameter, voltage_current_parameter],
+    [current_voltage_parameter, current_current_parameter]]),
+    Matrix([
+    [
+    1 + first_impedance / third_impedance,
+    first_impedance + second_impedance + first_impedance * second_impedance / third_impedance
+    ],
+    [1 / third_impedance, 1 + second_impedance / third_impedance],
+    ]))
 """
 :laws:symbol::
 
 :laws:latex::
 """
-
 
 # This law might be derived via "transmission_matrix_for_a_series_load_in_line" law and
 # "transmission_matrix_for_a_parallel_load_in_line" law.

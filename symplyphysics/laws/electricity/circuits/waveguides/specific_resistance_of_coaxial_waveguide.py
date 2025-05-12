@@ -54,8 +54,7 @@ inner_radius = clone_as_symbol(symbols.radius, display_symbol="r_i", display_lat
 :symbols:`radius` of the inner conductor.
 """
 
-law = Eq(specific_resistance,
-    (1 / (2 * pi)) * sqrt(angular_frequency * absolute_permeability /
+law = Eq(specific_resistance, (1 / (2 * pi)) * sqrt(angular_frequency * absolute_permeability /
     (2 * specific_conductance)) * (1 / inner_radius - 1 / outer_radius))
 """
 :laws:symbol::

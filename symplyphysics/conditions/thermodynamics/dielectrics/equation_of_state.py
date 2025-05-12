@@ -35,6 +35,7 @@ density = symbols.density
 :symbols:`density` of the medium.
 """
 
+# pylint: disable-next=invalid-name
 state_function = Function(
     "f",
     [electric_field_strength, temperature, density],
@@ -45,6 +46,7 @@ The function that describes the relationship between :attr:`~electric_displaceme
 :attr:`~electric_field_strength`, :attr:`~temperature` and :attr:`~density`.
 """
 
+# pylint: disable-next=too-many-function-args
 condition = Eq(electric_displacement, state_function(electric_field_strength, temperature, density))
 """
 :laws:symbol::

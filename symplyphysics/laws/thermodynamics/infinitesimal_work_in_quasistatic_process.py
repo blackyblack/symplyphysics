@@ -26,7 +26,9 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-work_done_by_system = clone_as_symbol(symbols.work, display_symbol="delta(W)", display_latex="\\delta W")
+work_done_by_system = clone_as_symbol(symbols.work,
+    display_symbol="delta(W)",
+    display_latex="\\delta W")
 """
 Infinitesimal increment of :symbols:`work` done *by* the system.
 """

@@ -123,7 +123,9 @@ absorption in fuel causes fission.
 #. `Wikipedia, see list under the table <https://en.wikipedia.org/wiki/Six_factor_formula#>`__.
 """
 
-thermal_absorption_fission_probability = Symbol("P_TAF", dimensionless, display_latex="P_\\text{TAF}")
+thermal_absorption_fission_probability = Symbol("P_TAF",
+    dimensionless,
+    display_latex="P_\\text{TAF}")
 """
 **Thermal absorption fission probability** is the probability that a thermal neutron
 absorption in fuel causes fission.

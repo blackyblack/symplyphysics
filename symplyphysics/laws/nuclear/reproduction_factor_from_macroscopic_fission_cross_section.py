@@ -20,7 +20,9 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-neutrons_per_fission = clone_as_symbol(symbols.particle_count, display_symbol="nu", display_latex="\\nu")
+neutrons_per_fission = clone_as_symbol(symbols.particle_count,
+    display_symbol="nu",
+    display_latex="\\nu")
 """
 Average number of neutrons produced per fission. See :symbols:`particle_count`.
 """
@@ -49,8 +51,8 @@ Neutron :symbols:`reproduction_factor`.
 """
 
 law = Eq(
-    reproduction_factor, neutrons_per_fission * macroscopic_fission_cross_section /
-    macroscopic_absorption_cross_section)
+    reproduction_factor,
+    neutrons_per_fission * macroscopic_fission_cross_section / macroscopic_absorption_cross_section)
 """
 :laws:symbol::
 
@@ -72,8 +74,7 @@ def calculate_reproduction_factor(neutrons_per_fission_: float,
             f"macroscopic_fuel_absorption_cross_section_ ({macroscopic_fuel_absorption_cross_section_.scale_factor})"
         )
 
-    result_factor_expr = solve(law, reproduction_factor,
-        dict=True)[0][reproduction_factor]
+    result_factor_expr = solve(law, reproduction_factor, dict=True)[0][reproduction_factor]
     result_expr = result_factor_expr.subs({
         neutrons_per_fission: neutrons_per_fission_,
         macroscopic_fission_cross_section: macroscopic_fuel_fission_cross_section_,

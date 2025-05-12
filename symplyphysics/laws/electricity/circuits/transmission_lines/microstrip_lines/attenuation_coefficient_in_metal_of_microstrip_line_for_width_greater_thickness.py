@@ -31,7 +31,9 @@ attenuation_coefficient = symbols.attenuation_coefficient
 :symbols:`attenuation_coefficient` of the metal of the microstrip line.
 """
 
-surface_resistance = clone_as_symbol(symbols.electrical_resistance, display_symbol="R_s", display_latex="R_\\text{s}")
+surface_resistance = clone_as_symbol(symbols.electrical_resistance,
+    display_symbol="R_s",
+    display_latex="R_\\text{s}")
 """
 :symbols:`electrical_resistance` of the surface of the metal strip.
 """
@@ -46,7 +48,9 @@ substrate_thickness = symbols.thickness
 :symbols:`thickness` of the substrate.
 """
 
-effective_width = clone_as_symbol(symbols.length, display_symbol="w_eff", display_latex="w_\\text{eff}")
+effective_width = clone_as_symbol(symbols.length,
+    display_symbol="w_eff",
+    display_latex="w_\\text{eff}")
 """
 Effective width (see :symbols:`length`) of the microstrip line. See :ref:`Effective width of microstrip line <effective_width_microstrip_line_def>`.
 """
@@ -56,7 +60,9 @@ thickness = clone_as_symbol(symbols.thickness, display_symbol="t", display_latex
 :symbols:`thickness` of the strip of the microstrip line.
 """
 
-effective_permittivity = clone_as_symbol(symbols.relative_permittivity, display_symbol="epsilon_eff", display_latex="\\varepsilon_\\text{eff}")
+effective_permittivity = clone_as_symbol(symbols.relative_permittivity,
+    display_symbol="epsilon_eff",
+    display_latex="\\varepsilon_\\text{eff}")
 """
 Effective :symbols:`relative_permittivity` of the microstrip line. See :ref:`Effective permittivity of microstrip line <effective_permittivity_microstrip_line_def>`.
 """
@@ -70,11 +76,13 @@ Constant equal to :math:`6.1 \\cdot 10^{-5} \\, \\Omega^{-2}` (:code:`6.1e-5 Ohm
 with evaluate(False):
     _relative_width = effective_width / substrate_thickness
     expression_2 = constant * surface_resistance * surge_impedance * effective_permittivity / substrate_thickness
-    expression_3 = 1 + (1 / _relative_width) * (1 - (1.25 / pi) * (thickness / substrate_thickness) + (1.25 / pi) * log(2 * substrate_thickness / thickness))
+    expression_3 = 1 + (1 / _relative_width) * (1 - (1.25 / pi) *
+        (thickness / substrate_thickness) + (1.25 / pi) * log(2 * substrate_thickness / thickness))
 
 law = Eq(
     attenuation_coefficient,
-    expression_2 * (_relative_width + 0.667 * _relative_width / (_relative_width + 1.444)) * expression_3)
+    expression_2 * (_relative_width + 0.667 * _relative_width / (_relative_width + 1.444)) *
+    expression_3)
 """
 :laws:symbol::
 

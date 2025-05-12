@@ -11,7 +11,7 @@ from ..core.symbols.symbols import DimensionSymbol, Function, IndexedSymbol
 from .miscellaneous import needs_mul_brackets, needs_add_brackets, process_function
 
 
-class SymbolCodePrinter(StrPrinter):  # type: ignore[misc]
+class SymbolCodePrinter(StrPrinter):  # pylint: disable=too-few-public-methods
     """
     A printer to convert Symplyphysics law expressions to symbols
     """

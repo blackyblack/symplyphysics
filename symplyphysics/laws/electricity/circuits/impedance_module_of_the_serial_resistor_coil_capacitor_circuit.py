@@ -11,7 +11,8 @@ in series. Then you can find the impedance module of such a circuit.
 """
 
 from sympy import (Eq, solve, sqrt, Idx, expand)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, global_index, symbols, clone_as_symbol)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, global_index,
+    symbols, clone_as_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity.circuits import capacitor_impedance_from_capacitive_reactance as capacitor_impedance_law
 from symplyphysics.laws.electricity.circuits import coil_impedance_from_inductive_reactance as coil_impedance_law
@@ -27,12 +28,18 @@ resistor_resistance = clone_as_symbol(symbols.electrical_resistance, real=True)
 :symbols:`electrical_resistance` of the resistor.
 """
 
-capacitor_reactance = clone_as_symbol(symbols.electrical_reactance, display_symbol="X_C", display_latex="X_\\text{C}", real=True)
+capacitor_reactance = clone_as_symbol(symbols.electrical_reactance,
+    display_symbol="X_C",
+    display_latex="X_\\text{C}",
+    real=True)
 """
 :symbols:`electrical_reactance` of the capacitor.
 """
 
-coil_reactance = clone_as_symbol(symbols.electrical_reactance, display_symbol="X_L", display_latex="X_\\text{L}", real=True)
+coil_reactance = clone_as_symbol(symbols.electrical_reactance,
+    display_symbol="X_L",
+    display_latex="X_\\text{L}",
+    real=True)
 """
 :symbols:`electrical_reactance` of the coil.
 """
@@ -58,8 +65,7 @@ _capacitive_impedance_derived = solve(_impedance_law_applied_1,
 _impedance_law_applied_2 = coil_impedance_law.law.subs({
     coil_impedance_law.reactance: coil_reactance,
 })
-_coil_impedance_derived = solve(_impedance_law_applied_2,
-    coil_impedance_law.impedance,
+_coil_impedance_derived = solve(_impedance_law_applied_2, coil_impedance_law.impedance,
     dict=True)[0][coil_impedance_law.impedance]
 
 _local_index = Idx("index_local", (1, 3))
