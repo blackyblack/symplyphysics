@@ -89,9 +89,7 @@ assert expr_equals(law.rhs, _pressure_equation.rhs)
 assert expr_equals(law.lhs, _pressure_equation.lhs)
 
 
-@validate_input(input_force_=input_force,
-    input_area_=input_area,
-    output_forces_area_=output_area)
+@validate_input(input_force_=input_force, input_area_=input_area, output_forces_area_=output_area)
 @validate_output(output_force)
 def calculate_output_force(input_force_: Quantity, input_area_: Quantity,
     output_forces_area_: Quantity) -> Quantity:

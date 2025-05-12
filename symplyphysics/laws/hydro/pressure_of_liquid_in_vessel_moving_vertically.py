@@ -48,7 +48,8 @@ height = symbols.height
 :symbols:`height` of the liquid column.
 """
 
-law = Eq(pressure, density * sqrt((quantities.acceleration_due_to_gravity + acceleration)**2) * height)
+law = Eq(pressure,
+    density * sqrt((quantities.acceleration_due_to_gravity + acceleration)**2) * height)
 """
 :laws:symbol::
 

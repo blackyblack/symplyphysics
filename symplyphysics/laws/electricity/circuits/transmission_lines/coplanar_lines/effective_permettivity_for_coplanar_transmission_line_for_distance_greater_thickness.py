@@ -29,7 +29,9 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-effective_permittivity = clone_as_symbol(symbols.relative_permittivity, display_symbol="epsilon_eff", display_latex="\\varepsilon_\\text{eff}")
+effective_permittivity = clone_as_symbol(symbols.relative_permittivity,
+    display_symbol="epsilon_eff",
+    display_latex="\\varepsilon_\\text{eff}")
 """
 Effective :symbols:`relative_permittivity` of the coplanar line. See :ref:`Effective permittivity of coplanar line <effective_permittivity_coplanar_line_def>`.
 """
@@ -57,10 +59,8 @@ Width (see :symbols:`length`) of the central electrode of the coplanar line.
 # the following block prevents the re-ordering of terms for the code printer
 with evaluate(False):
     _first_expression = (relative_permittivity - 1) / 2
-    _second_expression = (
-        sinh(pi * central_electrode_width / (4 * substrate_thickness))
-        / sinh(pi * electrode_distance / (4 * substrate_thickness))
-    )
+    _second_expression = (sinh(pi * central_electrode_width / (4 * substrate_thickness)) /
+        sinh(pi * electrode_distance / (4 * substrate_thickness)))
     _third_expression = root(1 - _second_expression**2, 4)
     _fourth_expression = log(2 * (1 + _third_expression) / (1 - _third_expression))
     _fifth_expression = root(1 - (central_electrode_width / electrode_distance)**2, 4)

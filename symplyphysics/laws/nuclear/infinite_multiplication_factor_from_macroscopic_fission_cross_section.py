@@ -19,17 +19,23 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-neutrons_per_fission = clone_as_symbol(symbols.particle_count, display_symbol="nu", display_latex="\\nu")
+neutrons_per_fission = clone_as_symbol(symbols.particle_count,
+    display_symbol="nu",
+    display_latex="\\nu")
 """
 Average number of neutrons produced per fission. See :symbols:`particle_count`.
 """
 
-macroscopic_fission_cross_section = clone_as_symbol(symbols.macroscopic_cross_section, display_symbol="Sigma_f", display_latex="\\Sigma_text{f}")
+macroscopic_fission_cross_section = clone_as_symbol(symbols.macroscopic_cross_section,
+    display_symbol="Sigma_f",
+    display_latex="\\Sigma_text{f}")
 """
 :symbols:`macroscopic_cross_section` of fission.
 """
 
-macroscopic_absorption_cross_section = clone_as_symbol(symbols.macroscopic_cross_section, display_symbol="Sigma_a", display_latex="\\Sigma_\\text{a}")
+macroscopic_absorption_cross_section = clone_as_symbol(symbols.macroscopic_cross_section,
+    display_symbol="Sigma_a",
+    display_latex="\\Sigma_\\text{a}")
 """
 :symbols:`macroscopic_cross_section` of absorption.
 """

@@ -122,7 +122,7 @@ def into_terms(value: Any) -> tuple[Expr, ...]:
         return ()
 
     if isinstance(expr, SymAdd):
-        return expr.args  # type: ignore[no-any-return]
+        return expr.args
 
     return (expr,)
 
@@ -186,7 +186,7 @@ def _ordered_mul(
     return mapping
 
 
-class VectorExpr(Expr):  # type: ignore[misc]
+class VectorExpr(Expr):  # pylint: disable=too-few-public-methods
     """
     Base class for vector expressions, excluding their sum and scalar multiplication, which are
     covered by `sympy.Add` and `sympy.Mul` respectively.
@@ -199,11 +199,11 @@ class VectorExpr(Expr):  # type: ignore[misc]
         return None
 
     @classmethod
-    def _eval_vector_dot(cls, lhs: Expr, rhs: Expr) -> Optional[Expr]:  # pylint: disable=unused-argument
+    def _eval_vector_dot(cls, _lhs: Expr, _rhs: Expr) -> Optional[Expr]:
         return None
 
     @classmethod
-    def _eval_vector_cross(cls, lhs: Expr, rhs: Expr) -> Optional[Expr]:  # pylint: disable=unused-argument
+    def _eval_vector_cross(cls, _lhs: Expr, _rhs: Expr) -> Optional[Expr]:
         return None
 
 
@@ -241,7 +241,7 @@ class VectorSymbol(Symbol, VectorExpr):  # pylint: disable=too-many-ancestors
             *,
             display_latex: Optional[str] = None,
     ) -> VectorExpr:
-        return super().__new__(cls)
+        return super().__new__(cls)  # pylint: disable=no-value-for-parameter
 
     def __init__(
             self,
@@ -273,7 +273,7 @@ class VectorSymbol(Symbol, VectorExpr):  # pylint: disable=too-many-ancestors
         return S.Zero
 
 
-class VectorNorm(Expr):  # type: ignore[misc]
+class VectorNorm(Expr):  # pylint: disable=too-few-public-methods
     """
     Class representing the Euclidean norm (see link 1, *Euclidean norm*) of a vector expression.
 
@@ -305,7 +305,7 @@ class VectorNorm(Expr):  # type: ignore[misc]
             evaluate = global_parameters.evaluate
 
         if not evaluate:
-            obj = super().__new__(cls)
+            obj = super().__new__(cls)  # pylint: disable=no-value-for-parameter
             obj._args = (vector,)
             return obj
 
@@ -360,7 +360,7 @@ class VectorNorm(Expr):  # type: ignore[misc]
         return VectorDot(vector, vector.diff(symbol)) / done
 
 
-class VectorDot(Expr):  # type: ignore[misc]
+class VectorDot(Expr):
     """
     The **dot product**, or **scalar product**, is a binary operation that takes two vectors and
     returns a single number.
@@ -401,11 +401,11 @@ class VectorDot(Expr):  # type: ignore[misc]
 
     @property
     def lhs(self) -> VectorExpr:
-        return self.args[0]  # type: ignore[no-any-return]
+        return self.args[0]
 
     @property
     def rhs(self) -> VectorExpr:
-        return self.args[1]  # type: ignore[no-any-return]
+        return self.args[1]
 
     @cacheit
     # pylint: disable-next=too-many-branches
@@ -419,7 +419,7 @@ class VectorDot(Expr):  # type: ignore[misc]
             evaluate = global_parameters.evaluate
 
         if not evaluate:
-            obj = super().__new__(cls)
+            obj = super().__new__(cls)  # pylint: disable=no-value-for-parameter
             obj._args = (lhs, rhs)
             return obj
 
@@ -481,7 +481,7 @@ class VectorDot(Expr):  # type: ignore[misc]
         return derived_lhs + derived_rhs
 
 
-class VectorCross(VectorExpr):
+class VectorCross(VectorExpr):  # pylint: disable=too-few-public-methods
     """
     The **cross product**, or **vector product**, is a binary operation that takes two vectors and
     returns another vector. The cross product is only defined in a *3-dimensional space* (although
@@ -533,9 +533,9 @@ class VectorCross(VectorExpr):
             evaluate = global_parameters.evaluate
 
         if not evaluate:
-            obj = super().__new__(cls)
+            obj = super().__new__(cls)  # pylint: disable=no-value-for-parameter
             obj._args = (lhs, rhs)
-            return obj  # type: ignore[no-any-return]
+            return obj
 
         lhs, rhs = lhs.doit(), rhs.doit()
 
@@ -543,13 +543,13 @@ class VectorCross(VectorExpr):
             result = lhs._eval_vector_cross(lhs, rhs)
 
             if result is not None:
-                return result  # type: ignore[no-any-return]
+                return result
 
         if isinstance(rhs, VectorExpr):
             result = rhs._eval_vector_cross(lhs, rhs)
 
             if result is not None:
-                return result  # type: ignore[no-any-return]
+                return result
 
         result = S.Zero
         sign_to_mapping = _ordered_mul(lhs, rhs)
@@ -570,7 +570,7 @@ class VectorCross(VectorExpr):
 
                 result += cross * factor * sign
 
-        return result  # type: ignore[no-any-return]
+        return result
 
     def _sympystr(self, p: Printer) -> str:
         lhs, rhs = self.args
@@ -635,7 +635,7 @@ class VectorCross(VectorExpr):
         return derived_lhs + derived_rhs
 
 
-class VectorMixedProduct(Expr):  # type: ignore[misc]
+class VectorMixedProduct(Expr):  # pylint: disable=too-few-public-methods
     """
     The **scalar triple product**, or **mixed product**, is defined as the dot product of one
     vector with the cross product with the other two.
@@ -672,7 +672,7 @@ class VectorMixedProduct(Expr):  # type: ignore[misc]
             evaluate = global_parameters.evaluate
 
         if not evaluate:
-            obj = super().__new__(cls)
+            obj = super().__new__(cls)  # pylint: disable=no-value-for-parameter
             obj._args = (a, b, c)
             return obj
 
@@ -714,7 +714,7 @@ class VectorMixedProduct(Expr):  # type: ignore[misc]
         return VectorDot(a, VectorCross(b, c)).diff(symbol)
 
 
-class AppliedVectorFunction(sym_fn.Application, VectorExpr):  # type: ignore[misc]
+class AppliedVectorFunction(sym_fn.Application, VectorExpr):
     """This class represents the result of applying a vector-valued function to some arguments."""
 
     @cacheit
@@ -748,7 +748,7 @@ class AppliedVectorFunction(sym_fn.Application, VectorExpr):  # type: ignore[mis
             raise TypeError(message)
 
         result = super().__new__(cls, *args, **kwargs)
-        return result  # type: ignore[no-any-return]
+        return result
 
     def _eval_derivative(self, symbol: Expr) -> Expr:
         # For now, the derivative of a function application is only implemented when no more than
@@ -790,7 +790,7 @@ class AppliedVectorFunction(sym_fn.Application, VectorExpr):  # type: ignore[mis
         return SymAdd(*derived_args)
 
 
-class UndefinedVectorFunction(sym_fn.FunctionClass):  # type: ignore[misc]
+class UndefinedVectorFunction(sym_fn.FunctionClass):
     """The (meta)class of undefined vector functions."""
 
     def __new__(
@@ -810,7 +810,7 @@ class UndefinedVectorFunction(sym_fn.FunctionClass):  # type: ignore[misc]
 
         obj = super().__new__(mcs, name, bases, __dict__)
         obj.name = name
-        return obj  # type: ignore[no-any-return]
+        return obj
 
 
 class VectorFunction(DimensionSymbol, UndefinedVectorFunction):
@@ -868,7 +868,7 @@ class VectorFunction(DimensionSymbol, UndefinedVectorFunction):
         return str(cls.display_name)
 
 
-class VectorDerivative(SymDerivative, VectorExpr):  # type: ignore[misc]
+class VectorDerivative(SymDerivative, VectorExpr):  # pylint: disable=too-few-public-methods
 
     def __new__(cls, expr: Expr, *variables: Expr, **kwargs: Any) -> Expr:
         expr = _check_vector(expr)

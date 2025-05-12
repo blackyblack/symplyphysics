@@ -74,8 +74,9 @@ circuit at the output.
 
 law = Eq(
     Matrix([input_voltage, input_current]),
-    Matrix([[voltage_voltage_parameter, voltage_current_parameter], [current_voltage_parameter, current_current_parameter]])
-    * Matrix([output_voltage, output_current]))
+    Matrix([[voltage_voltage_parameter, voltage_current_parameter],
+    [current_voltage_parameter, current_current_parameter]]) *
+    Matrix([output_voltage, output_current]))
 """
 :laws:symbol::
 

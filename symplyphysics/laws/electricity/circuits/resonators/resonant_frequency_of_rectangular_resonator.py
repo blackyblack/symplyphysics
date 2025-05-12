@@ -25,7 +25,9 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-resonant_frequency = clone_as_symbol(symbols.temporal_frequency, display_symbol="f_r", display_latex="f_\\text{r}")
+resonant_frequency = clone_as_symbol(symbols.temporal_frequency,
+    display_symbol="f_r",
+    display_latex="f_\\text{r}")
 """
 Resonant :symbols:`temporal_frequency` of the resonator.
 """
@@ -75,10 +77,9 @@ relative_permeability = symbols.relative_permeability
 :symbols:`relative_permeability` of the medium filling the resonator.
 """
 
-law = Eq(
-    resonant_frequency,
-    (quantities.speed_of_light / (2 * sqrt(relative_permittivity * relative_permeability)))
-    * sqrt((first_index / width)**2 + (second_index / height)**2 + (third_index / length)**2))
+law = Eq(resonant_frequency,
+    (quantities.speed_of_light / (2 * sqrt(relative_permittivity * relative_permeability))) *
+    sqrt((first_index / width)**2 + (second_index / height)**2 + (third_index / length)**2))
 """
 :laws:symbol::
 

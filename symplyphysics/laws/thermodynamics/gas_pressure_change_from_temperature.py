@@ -25,7 +25,9 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import pressure_and_temperature_in_isochoric_process as isochoric_law
 
-pressure_change = clone_as_symbol(symbols.pressure, display_symbol="Delta(p)", display_latex="\\Delta p")
+pressure_change = clone_as_symbol(symbols.pressure,
+    display_symbol="Delta(p)",
+    display_latex="\\Delta p")
 """
 Finite change in :symbols:`pressure` inside the gas.
 """

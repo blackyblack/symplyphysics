@@ -13,7 +13,7 @@ from ..dimensions.collect_quantity import collect_quantity_factor_and_dimension
 from ..dimensions.dimensions import dimension_to_si_unit  # to avoid cyclic import
 
 
-class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: disable=too-many-ancestors
+class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancestors
 
     # pylint: disable-next=signature-differs
     def __new__(cls,
@@ -29,7 +29,7 @@ class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: d
         display_latex = display_latex or display_symbol
         obj = SymQuantity.__new__(cls, name, None, display_latex, None, None, None, False,
             **assumptions)
-        return obj  # type: ignore[no-any-return]
+        return obj
 
     def __init__(self,
         expr: SupportsFloat = S.One,
@@ -93,7 +93,7 @@ class Quantity(DimensionSymbol, SymQuantity):  # type: ignore[misc]  # pylint: d
 
 
 # Allows for some SymPy comparisons, eg Piecewise function
-@dispatch(Quantity, Quantity)  # type: ignore[misc]
+@dispatch(Quantity, Quantity)
 def _eval_is_ge(lhs: Quantity, rhs: Quantity) -> bool:
     return scale_factor(lhs) >= scale_factor(rhs)
 

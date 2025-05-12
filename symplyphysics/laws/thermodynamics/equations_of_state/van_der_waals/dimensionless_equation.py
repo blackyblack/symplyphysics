@@ -19,7 +19,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
     convert_to_float,
-
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import (

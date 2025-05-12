@@ -33,17 +33,21 @@ anode_voltage = clone_as_symbol(symbols.voltage, display_symbol="U_a", display_l
 :symbols:`voltage` between the cathode and the anode.
 """
 
-first_grid_direct_permeability_coefficient = clone_as_symbol(symbols.direct_permeability_coefficient, subscript="1")
+first_grid_direct_permeability_coefficient = clone_as_symbol(
+    symbols.direct_permeability_coefficient, subscript="1")
 """
 :symbols:`direct_permeability_coefficient` of the first grid.
 """
 
-second_grid_direct_permeability_coefficient = clone_as_symbol(symbols.direct_permeability_coefficient, subscript="2")
+second_grid_direct_permeability_coefficient = clone_as_symbol(
+    symbols.direct_permeability_coefficient, subscript="2")
 """
 :symbols:`direct_permeability_coefficient` of the second grid.
 """
 
-anode_distance = clone_as_symbol(symbols.euclidean_distance, display_symbol="d_a", display_latex="d_\\text{a}")
+anode_distance = clone_as_symbol(symbols.euclidean_distance,
+    display_symbol="d_a",
+    display_latex="d_\\text{a}")
 """
 :symbols:`euclidean_distance` between the cathode and the anode.
 """
@@ -53,13 +57,13 @@ first_grid_distance = clone_as_symbol(symbols.euclidean_distance, subscript="1")
 :symbols:`euclidean_distance` between the cathode and the first grid.
 """
 
-_first_expression = (
-    first_grid_voltage
-    + first_grid_direct_permeability_coefficient * second_grid_voltage
-    + first_grid_direct_permeability_coefficient * second_grid_direct_permeability_coefficient * anode_voltage
-)
+_first_expression = (first_grid_voltage +
+    first_grid_direct_permeability_coefficient * second_grid_voltage +
+    first_grid_direct_permeability_coefficient * second_grid_direct_permeability_coefficient *
+    anode_voltage)
 
-_second_expression = 1 + ((anode_distance / first_grid_distance)**Rational(4, 3)) * first_grid_direct_permeability_coefficient
+_second_expression = 1 + ((anode_distance / first_grid_distance)**Rational(4,
+    3)) * first_grid_direct_permeability_coefficient
 
 law = Eq(equivalent_diode_voltage, _first_expression / _second_expression)
 """
@@ -82,7 +86,6 @@ def calculate_voltage_of_equivalent_diode(voltage_of_first_grid_: Quantity,
     coefficient_direct_permeability_of_first_grid_: float,
     coefficient_direct_permeability_of_second_grid_: float, distance_to_anode_: Quantity,
     first_grid_distance_: Quantity) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
     if distance_to_anode_.scale_factor <= first_grid_distance_.scale_factor:
         raise ValueError(
             "The distance to the anode should be greater than the distance to the grid.")

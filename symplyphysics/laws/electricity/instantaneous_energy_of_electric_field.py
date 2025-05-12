@@ -26,7 +26,9 @@ inductance = symbols.inductance
 :symbols:`inductance` of the coil.
 """
 
-current_amplitude = clone_as_symbol(symbols.current, display_symbol="I_max", display_latex="I_\\text{max}")
+current_amplitude = clone_as_symbol(symbols.current,
+    display_symbol="I_max",
+    display_latex="I_\\text{max}")
 """
 :symbols:`current` amplitude.
 """
@@ -46,7 +48,8 @@ initial_phase = symbols.phase_shift
 Initial :symbols:`phase_shift` of the oscillations.
 """
 
-law = Eq(energy, (inductance * current_amplitude**2 / 2) * cos(angular_frequency * time + initial_phase)**2)
+law = Eq(energy,
+    (inductance * current_amplitude**2 / 2) * cos(angular_frequency * time + initial_phase)**2)
 """
 :laws:symbol::
 

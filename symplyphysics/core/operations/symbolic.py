@@ -4,7 +4,7 @@ from sympy import Expr, Symbol as SymSymbol
 from ..dimensions import Dimension, collect_expression_and_dimension
 
 
-class Symbolic(SymSymbol):  # type: ignore[misc]  # pylint: disable=too-many-ancestors
+class Symbolic(SymSymbol):  # pylint: disable=too-many-ancestors,too-few-public-methods
     """
     This class is intended to be subclassed for custom code printing.
     """
@@ -42,7 +42,7 @@ class Symbolic(SymSymbol):  # type: ignore[misc]  # pylint: disable=too-many-anc
         display_name = f"{cls_name}({inner})"
 
         obj = super().__new__(cls, display_name, **assumptions)
-        return obj  # type: ignore[no-any-return]
+        return obj
 
     def __init__(
         self,
@@ -57,7 +57,7 @@ class Symbolic(SymSymbol):  # type: ignore[misc]  # pylint: disable=too-many-anc
         self.wrap_latex = wrap_latex
 
 
-class Average(Symbolic):  # pylint: disable=too-many-ancestors
+class Average(Symbolic):  # pylint: disable=too-many-ancestors,too-few-public-methods
     """
     Represents the average value of the argument :math:`x`.
 
@@ -73,7 +73,7 @@ class Average(Symbolic):  # pylint: disable=too-many-ancestors
     """
 
 
-class FiniteDifference(Symbolic):  # pylint: disable=too-many-ancestors
+class FiniteDifference(Symbolic):  # pylint: disable=too-many-ancestors,too-few-public-methods
     """
     Represents the finite difference of the argument :math:`x`, e.g.
     :math:`\\Delta x = x_2 - x_1`.
@@ -90,7 +90,7 @@ class FiniteDifference(Symbolic):  # pylint: disable=too-many-ancestors
     """
 
 
-class ExactDifferential(Symbolic):  # pylint: disable=too-many-ancestors
+class ExactDifferential(Symbolic):  # pylint: disable=too-many-ancestors,too-few-public-methods
     """
     A differential is said to be **exact** (or **perfect**) if it is equal to the
     general differential :math:`d \\Gamma` for some differentiable function
@@ -109,7 +109,7 @@ class ExactDifferential(Symbolic):  # pylint: disable=too-many-ancestors
     """
 
 
-class InexactDifferential(Symbolic):  # pylint: disable=too-many-ancestors
+class InexactDifferential(Symbolic):  # pylint: disable=too-many-ancestors,too-few-public-methods
     """
     A differential is said to be **inexact** (or **imperfect**) when its integral is
     path dependent.

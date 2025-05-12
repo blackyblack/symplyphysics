@@ -64,8 +64,8 @@ magnetic_field_strength = symbols.magnetic_field_strength
 """
 
 law = Eq(
-    maximum_electric_field_strength, 2 * quantities.vacuum_impedance * width * magnetic_field_strength /
-    (wavelength * sqrt(relative_permittivity)))
+    maximum_electric_field_strength, 2 * quantities.vacuum_impedance * width *
+    magnetic_field_strength / (wavelength * sqrt(relative_permittivity)))
 """
 :laws:symbol::
 

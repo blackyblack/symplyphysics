@@ -28,12 +28,16 @@ standing_wave_ratio = symbols.standing_wave_ratio
 :symbols:`standing_wave_ratio`.
 """
 
-maximum_voltage_module = clone_as_symbol(symbols.voltage, display_symbol="min(abs(V))", display_latex="\\min{|V|}")
+maximum_voltage_module = clone_as_symbol(symbols.voltage,
+    display_symbol="min(abs(V))",
+    display_latex="\\min{|V|}")
 """
 Minimum absolute value of :symbols:`voltage` in the transmission line.
 """
 
-minimum_voltage_module = clone_as_symbol(symbols.voltage, display_symbol="max(abs(V))", display_latex="\\max{|V|}")
+minimum_voltage_module = clone_as_symbol(symbols.voltage,
+    display_symbol="max(abs(V))",
+    display_latex="\\max{|V|}")
 """
 Maximum absolute value of :symbols:`voltage` in the transmission line.
 """

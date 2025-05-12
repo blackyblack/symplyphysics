@@ -69,10 +69,12 @@ propagation_constant = symbols.propagation_constant
 _expression = propagation_constant * length
 
 law = Eq(
-    Matrix([[voltage_voltage_parameter, voltage_current_parameter], [current_voltage_parameter, current_current_parameter]]),
+    Matrix([[voltage_voltage_parameter, voltage_current_parameter],
+    [current_voltage_parameter, current_current_parameter]]),
     Matrix([
-        [cosh(_expression), surge_impedance * sinh(_expression)],
-        [(1 / surge_impedance) * sinh(_expression), cosh(_expression)],
+    [cosh(_expression), surge_impedance * sinh(_expression)],
+    [(1 / surge_impedance) * sinh(_expression),
+    cosh(_expression)],
     ]),
 )
 """

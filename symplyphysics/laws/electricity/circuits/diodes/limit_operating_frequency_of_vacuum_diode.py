@@ -34,8 +34,7 @@ voltage = symbols.voltage
 :symbols:`voltage` between cathode and anode.
 """
 
-law = Eq(
-    limit_frequency,
+law = Eq(limit_frequency,
     sqrt(2 * elementary_charge * voltage / electron_rest_mass) / (6 * distance))
 """
 :laws:symbol::

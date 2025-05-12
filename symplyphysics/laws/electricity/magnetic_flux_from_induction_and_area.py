@@ -44,5 +44,9 @@ law = Eq(magnetic_flux, magnetic_flux_density * area * cos(angle))
 @validate_output(magnetic_flux)
 def calculate_flux(induction_: Quantity, area_: Quantity, angle_: Quantity | float) -> Quantity:
     result_flux_expr = solve(law, magnetic_flux, dict=True)[0][magnetic_flux]
-    result_expr = result_flux_expr.subs({magnetic_flux_density: induction_, area: area_, angle: angle_})
+    result_expr = result_flux_expr.subs({
+        magnetic_flux_density: induction_,
+        area: area_,
+        angle: angle_
+    })
     return Quantity(result_expr)

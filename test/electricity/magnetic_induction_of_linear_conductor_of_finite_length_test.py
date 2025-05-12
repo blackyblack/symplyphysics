@@ -47,8 +47,8 @@ def test_bad_absolute_permeability(test_args: Args) -> None:
         induction_law.calculate_induction(absolute_permeability, test_args.current,
             test_args.first_angle, test_args.second_angle, test_args.distance)
     with raises(TypeError):
-        induction_law.calculate_induction(100, test_args.current,
-            test_args.first_angle, test_args.second_angle, test_args.distance)
+        induction_law.calculate_induction(100, test_args.current, test_args.first_angle,
+            test_args.second_angle, test_args.distance)
 
 
 def test_bad_current(test_args: Args) -> None:

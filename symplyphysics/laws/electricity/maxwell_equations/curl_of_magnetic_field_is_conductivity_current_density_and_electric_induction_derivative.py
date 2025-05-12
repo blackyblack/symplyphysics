@@ -1,6 +1,6 @@
 from sympy import diff
-from symplyphysics import (QuantityVector, add_cartesian_vectors, scale_vector, units,
-    Quantity, validate_input, validate_output, symbols)
+from symplyphysics import (QuantityVector, add_cartesian_vectors, scale_vector, units, Quantity,
+    validate_input, validate_output, symbols)
 from symplyphysics.core.fields.operators import curl_operator
 from symplyphysics.core.fields.vector_field import VectorField
 from symplyphysics.core.dimensions import assert_equivalent_dimension

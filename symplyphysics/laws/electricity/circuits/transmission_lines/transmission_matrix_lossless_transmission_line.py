@@ -72,8 +72,10 @@ with evaluate(False):
     _phase = phase_constant * length
 
 law = Eq(
-    Matrix([[voltage_voltage_parameter, voltage_current_parameter], [current_voltage_parameter, current_current_parameter]]),
-    Matrix([[cos(_phase), I * surge_impedance * sin(_phase)], [I * (1 / surge_impedance) * sin(_phase), cos(_phase)]]))
+    Matrix([[voltage_voltage_parameter, voltage_current_parameter],
+    [current_voltage_parameter, current_current_parameter]]),
+    Matrix([[cos(_phase), I * surge_impedance * sin(_phase)],
+    [I * (1 / surge_impedance) * sin(_phase), cos(_phase)]]))
 """
 :laws:symbol::
 

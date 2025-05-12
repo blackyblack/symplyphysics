@@ -48,9 +48,8 @@ doping_coefficient = Symbol("y", dimensionless)
 Doping coefficient.
 """
 
-law = Eq(
-    capacitance, capacitance_without_bias_voltage /
-    (1 - voltage / material_parameter)**doping_coefficient)
+law = Eq(capacitance,
+    capacitance_without_bias_voltage / (1 - voltage / material_parameter)**doping_coefficient)
 """
 :laws:symbol::
 
@@ -58,8 +57,7 @@ law = Eq(
 """
 
 
-@validate_input(
-    junction_capacitance_without_bias_voltage_=capacitance_without_bias_voltage,
+@validate_input(junction_capacitance_without_bias_voltage_=capacitance_without_bias_voltage,
     voltage_=voltage,
     material_parameter_=material_parameter,
     doping_coefficient_=doping_coefficient)

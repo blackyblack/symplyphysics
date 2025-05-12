@@ -43,25 +43,33 @@ output_current = clone_as_symbol(symbols.current, display_symbol="I_o", display_
 Output :symbols:`current`.
 """
 
-input_input_impedance = clone_as_symbol(symbols.electrical_impedance, display_symbol="Z_ii", display_latex="Z_\\text{ii}")
+input_input_impedance = clone_as_symbol(symbols.electrical_impedance,
+    display_symbol="Z_ii",
+    display_latex="Z_\\text{ii}")
 """
 Ratio of :attr:`~input_voltage` to :attr:`~input_current` at idle at the output. See
 :symbols:`electrical_impedance`.
 """
 
-input_output_impedance = clone_as_symbol(symbols.electrical_impedance, display_symbol="Z_io", display_latex="Z_\\text{io}")
+input_output_impedance = clone_as_symbol(symbols.electrical_impedance,
+    display_symbol="Z_io",
+    display_latex="Z_\\text{io}")
 """
 Ratio of :attr:`~input_voltage` to :attr:`~output_current` at idle at the output. See
 :symbols:`electrical_impedance`.
 """
 
-output_input_impedance = clone_as_symbol(symbols.electrical_impedance, display_symbol="Z_oi", display_latex="Z_\\text{oi}")
+output_input_impedance = clone_as_symbol(symbols.electrical_impedance,
+    display_symbol="Z_oi",
+    display_latex="Z_\\text{oi}")
 """
 Ratio of :attr:`~output_voltage` to :attr:`~input_current` at idle at the output. See
 :symbols:`electrical_impedance`.
 """
 
-output_output_impedance = clone_as_symbol(symbols.electrical_impedance, display_symbol="Z_oo", display_latex="Z_\\text{oo}")
+output_output_impedance = clone_as_symbol(symbols.electrical_impedance,
+    display_symbol="Z_oo",
+    display_latex="Z_\\text{oo}")
 """
 Ratio of :attr:`~output_voltage` to :attr:`~output_current` at idle at the output. See
 :symbols:`electrical_impedance`.

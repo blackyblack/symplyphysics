@@ -3,7 +3,7 @@ from typing import Any
 from sympy import Expr, Basic, Idx, Sum
 
 
-class IndexedSum(Expr):  # type: ignore[misc]
+class IndexedSum(Expr):
     """
     Represents unevaluated Sum for expression with indexed variables.
 
@@ -16,7 +16,7 @@ class IndexedSum(Expr):  # type: ignore[misc]
             raise ValueError("Only one index is supported for Sum")
         arglist.extend(index_base)
         obj._args = tuple(arglist)
-        return obj  # type: ignore[no-any-return]
+        return obj
 
     def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
         pass

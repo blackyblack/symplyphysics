@@ -18,7 +18,10 @@ def test_args_fixture() -> Args:
     turncount = 100
     turn_area = Quantity(0.002 * (units.meter)**2)
     length = Quantity(5 * prefixes.milli * units.meter)
-    return Args(absolute_permeability=absolute_permeability, turncount=turncount, turn_area=turn_area, length=length)
+    return Args(absolute_permeability=absolute_permeability,
+        turncount=turncount,
+        turn_area=turn_area,
+        length=length)
 
 
 def test_basic_inductance(test_args: Args) -> None:
@@ -33,8 +36,8 @@ def test_bad_absolute_permeability(test_args: Args) -> None:
         coil_law.calculate_inductance(bad_absolute_permeability, test_args.turncount,
             test_args.turn_area, test_args.length)
     with raises(TypeError):
-        coil_law.calculate_inductance(100, test_args.turncount,
-            test_args.turn_area, test_args.length)
+        coil_law.calculate_inductance(100, test_args.turncount, test_args.turn_area,
+            test_args.length)
 
 
 def test_bad_area(test_args: Args) -> None:

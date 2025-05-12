@@ -45,7 +45,8 @@ Constant equal to :math:`2 \\cdot 10^{-4} \\, \\frac{\\text{H}}{\\text{m}}` (:co
 
 law = Eq(
     inductance,
-    specific_inductance_constant * length * (log(length / (width + thickness)) + 1.193 + 0.2235 / (length / (width + thickness))))
+    specific_inductance_constant * length * (log(length / (width + thickness)) + 1.193 + 0.2235 /
+    (length / (width + thickness))))
 """
 :laws:symbol::
 
@@ -53,16 +54,10 @@ law = Eq(
 """
 
 
-@validate_input(thickness_=thickness,
-    strip_length_=length,
-    width_=width)
+@validate_input(thickness_=thickness, strip_length_=length, width_=width)
 @validate_output(inductance)
 def calculate_inductance(thickness_: Quantity, strip_length_: Quantity,
     width_: Quantity) -> Quantity:
     result_expr = solve(law, inductance, dict=True)[0][inductance]
-    result_expr = result_expr.subs({
-        thickness: thickness_,
-        length: strip_length_,
-        width: width_
-    })
+    result_expr = result_expr.subs({thickness: thickness_, length: strip_length_, width: width_})
     return Quantity(result_expr)

@@ -48,8 +48,7 @@ length = symbols.length
 :symbols:`length` of the coil.
 """
 
-law = Eq(inductance,
-    absolute_permeability * turn_count**2 * cross_sectional_area / length)
+law = Eq(inductance, absolute_permeability * turn_count**2 * cross_sectional_area / length)
 """
 :laws:symbol::
 
@@ -57,7 +56,9 @@ law = Eq(inductance,
 """
 
 
-@validate_input(magnetic_permeability_=absolute_permeability, turn_area_=cross_sectional_area, coil_length_=length)
+@validate_input(magnetic_permeability_=absolute_permeability,
+    turn_area_=cross_sectional_area,
+    coil_length_=length)
 @validate_output(inductance)
 def calculate_inductance(magnetic_permeability_: Quantity, number_of_turns_: float,
     turn_area_: Quantity, coil_length_: Quantity) -> Quantity:

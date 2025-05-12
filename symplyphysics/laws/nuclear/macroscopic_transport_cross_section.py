@@ -22,7 +22,9 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-macroscopic_scattering_cross_section = clone_as_symbol(symbols.macroscopic_cross_section, display_symbol="Sigma_s", display_latex="\\sigma_\\text{s}")
+macroscopic_scattering_cross_section = clone_as_symbol(symbols.macroscopic_cross_section,
+    display_symbol="Sigma_s",
+    display_latex="\\sigma_\\text{s}")
 """
 :symbols:`macroscopic_cross_section` of scattering.
 """
@@ -33,7 +35,9 @@ Average of the cosine of the angle at which neutrons are scattered in the medium
 lab system.
 """
 
-macroscopic_transport_cross_section = clone_as_symbol(symbols.macroscopic_cross_section, display_symbol="Sigma_tr", display_latex="\\Sigma_\\text{tr}")
+macroscopic_transport_cross_section = clone_as_symbol(symbols.macroscopic_cross_section,
+    display_symbol="Sigma_tr",
+    display_latex="\\Sigma_\\text{tr}")
 """
 :symbols:`macroscopic_cross_section` of neutron transport (i.e. the movement of neutrons
 through the material).

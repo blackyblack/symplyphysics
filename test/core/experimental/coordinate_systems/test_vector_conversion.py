@@ -81,13 +81,13 @@ def test_args_fixture() -> Args:
         p_cyl=p_cyl,
         p_sph=p_sph,
         v_cart=v_cart,
-        v_cyl=v_cyl,
+        v_cyl=v_cyl, # type: ignore[arg-type]
         v_sph=v_sph,
         q_cart=q_cart,
         q_cyl=q_cyl,
         q_sph=q_sph,
         w_cart=w_cart,
-        w_cyl=w_cyl,
+        w_cyl=w_cyl, # type: ignore[arg-type]
         w_sph=w_sph,
     )
 

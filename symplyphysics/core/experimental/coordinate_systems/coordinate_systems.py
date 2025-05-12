@@ -41,7 +41,7 @@ def _check_base_vectors(base_vectors: Sequence[VectorSymbol | VectorFunction]) -
         raise ValueError(f"Expected 3 base vectors, got {base_vector_set}.")
 
 
-class BaseCoordinateSystem(Basic, metaclass=ABCMeta):  # type: ignore[misc]
+class BaseCoordinateSystem(Basic, metaclass=ABCMeta):
     """
     Base class for coordinate systems.
 
@@ -50,13 +50,11 @@ class BaseCoordinateSystem(Basic, metaclass=ABCMeta):  # type: ignore[misc]
     which simplifies the calculations. The opposite is called **skew** coordinates.
     """
 
-    def __new__(
-        cls,
+    def __new__(cls,
         *,
-        base_scalars: Optional[Sequence[Symbol]] = None,  # pylint: disable=unused-argument
-        base_vectors: Optional[Sequence[VectorSymbol | VectorFunction]] = None  # pylint: disable=unused-argument
-    ) -> Self:
-        return Basic.__new__(cls)  # type: ignore[no-any-return]
+        base_scalars: Optional[Sequence[Symbol]] = None,
+        base_vectors: Optional[Sequence[VectorSymbol | VectorFunction]] = None) -> Self:
+        return Basic.__new__(cls)
 
     def __init__(
         self,
@@ -103,7 +101,7 @@ class BaseCoordinateSystem(Basic, metaclass=ABCMeta):  # type: ignore[misc]
 
     @property
     def base_scalars(self) -> tuple[Symbol, Symbol, Symbol]:
-        return self.args[0]  # type: ignore[no-any-return]
+        return self.args[0]
 
     def base_vectors(
         self,

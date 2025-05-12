@@ -21,17 +21,23 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_macroscopic_fission_cross_section_diffusion_coefficient as buckling_law
 
-neutrons_per_fission = clone_as_symbol(symbols.particle_count, display_symbol="nu", display_latex="\\nu")
+neutrons_per_fission = clone_as_symbol(symbols.particle_count,
+    display_symbol="nu",
+    display_latex="\\nu")
 """
 The average number of neutrons produced per fission. See :symbols:`particle_count`.
 """
 
-macroscopic_fission_cross_section = clone_as_symbol(symbols.macroscopic_cross_section, display_symbol="Sigma_f", display_latex="\\Sigma_\\text{f}")
+macroscopic_fission_cross_section = clone_as_symbol(symbols.macroscopic_cross_section,
+    display_symbol="Sigma_f",
+    display_latex="\\Sigma_\\text{f}")
 """
 :symbols:`macroscopic_cross_section` of fission.
 """
 
-macroscopic_absorption_cross_section = clone_as_symbol(symbols.macroscopic_cross_section, display_symbol="Sigma_a", display_latex="\\Sigma_\\text{a}")
+macroscopic_absorption_cross_section = clone_as_symbol(symbols.macroscopic_cross_section,
+    display_symbol="Sigma_a",
+    display_latex="\\Sigma_\\text{a}")
 """
 :symbols:`macroscopic_cross_section` of absorption.
 """
@@ -81,8 +87,7 @@ assert expr_equals(law.rhs, _derived_material_buckling_squared)
 @validate_output(material_buckling)
 def calculate_buckling(neutrons_per_fission_: float, macroscopic_fission_cross_section_: Quantity,
     macroscopic_absorption_cross_section_: Quantity, diffusion_coefficient_: Quantity) -> Quantity:
-    result_buckling_expr = solve(law, material_buckling,
-        dict=True)[0][material_buckling]
+    result_buckling_expr = solve(law, material_buckling, dict=True)[0][material_buckling]
     result_expr = result_buckling_expr.subs({
         neutrons_per_fission: neutrons_per_fission_,
         macroscopic_fission_cross_section: macroscopic_fission_cross_section_,

@@ -23,12 +23,16 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-inner_pressure = clone_as_symbol(symbols.pressure, display_symbol="p_inner", display_latex="p_\\text{inner}")
+inner_pressure = clone_as_symbol(symbols.pressure,
+    display_symbol="p_inner",
+    display_latex="p_\\text{inner}")
 """
 Inner :symbols:`pressure` of the fluid.
 """
 
-static_pressure = clone_as_symbol(symbols.pressure, display_symbol="p_static", display_latex="p_\\text{static}")
+static_pressure = clone_as_symbol(symbols.pressure,
+    display_symbol="p_static",
+    display_latex="p_\\text{static}")
 """
 Static :symbols:`pressure` of the fluid.
 """

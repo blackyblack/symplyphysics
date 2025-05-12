@@ -68,7 +68,8 @@ Ratio of output :symbols:`current` to output :symbols:`voltage` at idle at the i
 
 law = Eq(
     Matrix([input_voltage, output_current]),
-    Matrix([[input_input_parameter, input_output_parameter], [output_input_parameter, output_output_parameter]]) * Matrix([input_current, output_voltage]))
+    Matrix([[input_input_parameter, input_output_parameter],
+    [output_input_parameter, output_output_parameter]]) * Matrix([input_current, output_voltage]))
 """
 :laws:symbol::
 

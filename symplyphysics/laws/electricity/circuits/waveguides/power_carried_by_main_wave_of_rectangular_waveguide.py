@@ -51,8 +51,8 @@ Amplitude of :symbols:`electric_field_strength` in the waveguide.
 
 law = Eq(
     power,
-    width * height * sqrt(1 - (wavelength / (2 * width))**2) *
-    electric_field_strength**2 / (4 * material_resistance))
+    width * height * sqrt(1 - (wavelength / (2 * width))**2) * electric_field_strength**2 /
+    (4 * material_resistance))
 """
 :laws:symbol::
 
@@ -66,9 +66,8 @@ law = Eq(
     material_resistance_=material_resistance,
     electric_intensity_=electric_field_strength)
 @validate_output(power)
-def calculate_waveguide_power(width_: Quantity, waveguide_height_: Quantity,
-    wavelength_: Quantity, material_resistance_: Quantity,
-    electric_intensity_: Quantity) -> Quantity:
+def calculate_waveguide_power(width_: Quantity, waveguide_height_: Quantity, wavelength_: Quantity,
+    material_resistance_: Quantity, electric_intensity_: Quantity) -> Quantity:
     result_expr = solve(law, power, dict=True)[0][power]
     result_expr = result_expr.subs({
         width: width_,

@@ -36,7 +36,9 @@ volume = symbols.volume
 :symbols:`volume` of the coil.
 """
 
-law = Eq(energy, quantities.vacuum_permeability * relative_permeability * magnetic_field_strength**2 * volume / 2)
+law = Eq(
+    energy, quantities.vacuum_permeability * relative_permeability * magnetic_field_strength**2 *
+    volume / 2)
 """
 :laws:symbol::
 
@@ -44,7 +46,9 @@ law = Eq(energy, quantities.vacuum_permeability * relative_permeability * magnet
 """
 
 
-@validate_input(relative_permeability_=relative_permeability, intensity_=magnetic_field_strength, volume_=volume)
+@validate_input(relative_permeability_=relative_permeability,
+    intensity_=magnetic_field_strength,
+    volume_=volume)
 @validate_output(energy)
 def calculate_energy(relative_permeability_: float, intensity_: Quantity,
     volume_: Quantity) -> Quantity:

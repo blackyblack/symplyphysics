@@ -26,8 +26,7 @@ reflection_coefficient = symbols.reflection_coefficient
 :symbols:`reflection_coefficient`.
 """
 
-law = Eq(standing_wave_ratio,
-    (1 + abs(reflection_coefficient)) / (1 - abs(reflection_coefficient)))
+law = Eq(standing_wave_ratio, (1 + abs(reflection_coefficient)) / (1 - abs(reflection_coefficient)))
 """
 :laws:symbol::
 

@@ -25,7 +25,9 @@ surge_impedance = symbols.surge_impedance
 into account.
 """
 
-independent_surge_impedance = clone_as_symbol(symbols.surge_impedance, display_symbol="Z_S0", display_latex="Z_{\\text{S}, 0}")
+independent_surge_impedance = clone_as_symbol(symbols.surge_impedance,
+    display_symbol="Z_S0",
+    display_latex="Z_{\\text{S}, 0}")
 """
 :symbols:`surge_impedance` of the microstrip line when frequency dependence is omitted.
 """

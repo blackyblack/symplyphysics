@@ -43,8 +43,7 @@ inner_radius = clone_as_symbol(symbols.radius, display_symbol="r_i", display_lat
 :symbols:`radius` of the inner conductor.
 """
 
-law = Eq(specific_capacitance,
-    (2 * pi * absolute_permittivity) / ln(outer_radius / inner_radius))
+law = Eq(specific_capacitance, (2 * pi * absolute_permittivity) / ln(outer_radius / inner_radius))
 """
 :laws:symbol::
 
