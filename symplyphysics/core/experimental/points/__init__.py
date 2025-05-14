@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-from typing import Any, Iterable, Sized
+from collections.abc import Sized
+from typing import Any, Iterable
 from sympy import Expr, Symbol as SymSymbol, Atom
 from sympy.printing.printer import Printer
 
 from symplyphysics.core.expr_comparisons import expr_equals
 
-from ..coordinate_systems.coordinate_systems import BaseCoordinateSystem
+from ..coordinate_systems.new_coordinate_systems import BaseCoordinateSystem
 from ..miscellaneous import sympify_expr
 
 
@@ -17,7 +18,7 @@ def _prepare(coordinates: Iterable[Any], system: BaseCoordinateSystem) -> dict[S
     }
 
 
-class AppliedPoint(Atom):  # type: ignore[misc]
+class AppliedPoint(Atom):
     """
     An `AppliedPoint` corresponds to a point in (3D) space whose coordinates are defined within a
     certain coordinate system.
@@ -44,7 +45,7 @@ class AppliedPoint(Atom):  # type: ignore[misc]
         coordinates: Iterable[Any],
         system: BaseCoordinateSystem,
     ) -> AppliedPoint:
-        return super().__new__(cls)  # type: ignore[no-any-return]
+        return super().__new__(cls)  # pylint: disable=no-value-for-parameter
 
     def __init__(
         self,

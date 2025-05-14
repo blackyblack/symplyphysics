@@ -41,8 +41,8 @@ def test_bad_absolute_permeability(test_args: Args) -> None:
         force_law.calculate_force(bad_absolute_permeability, test_args.first_wire_current,
             test_args.second_wire_current, test_args.length, test_args.distance)
     with raises(TypeError):
-        force_law.calculate_force(100, test_args.first_wire_current,
-            test_args.second_wire_current, test_args.length, test_args.distance)
+        force_law.calculate_force(100, test_args.first_wire_current, test_args.second_wire_current,
+            test_args.length, test_args.distance)
 
 
 def test_bad_wire_current(test_args: Args) -> None:

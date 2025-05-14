@@ -24,18 +24,21 @@ standing_wave_ratio = symbols.standing_wave_ratio
 :symbols:`standing_wave_ratio`.
 """
 
-incident_power = clone_as_symbol(symbols.power, display_symbol="P_incident", display_latex="P_\\text{incident}")
+incident_power = clone_as_symbol(symbols.power,
+    display_symbol="P_incident",
+    display_latex="P_\\text{incident}")
 """
 Incident :symbols:`power`.
 """
 
-average_power = clone_as_symbol(symbols.power, display_symbol="avg(P)", display_latex="\\langle P \\rangle")
+average_power = clone_as_symbol(symbols.power,
+    display_symbol="avg(P)",
+    display_latex="\\langle P \\rangle")
 """
 Average :symbols:`power` delivered to the load.
 """
 
-law = Eq(average_power / incident_power,
-    4 * standing_wave_ratio / (standing_wave_ratio + 1)**2)
+law = Eq(average_power / incident_power, 4 * standing_wave_ratio / (standing_wave_ratio + 1)**2)
 """
 :laws:symbol::
 

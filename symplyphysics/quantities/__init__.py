@@ -299,7 +299,6 @@ A common appoximation of its value is :math:`120 \\pi \\, \\Omega`.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Impedance_of_free_space>`__.
 """
 
-
 __all__ = [
     "standard_conditions_temperature",
     "standard_laboratory_temperature",

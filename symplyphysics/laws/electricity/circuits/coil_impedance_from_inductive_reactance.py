@@ -10,12 +10,7 @@ the real part of coil impedance is zero.
 """
 
 from sympy import (I, Eq, solve)
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    symbols
-)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols)
 
 impedance = symbols.electrical_impedance
 """

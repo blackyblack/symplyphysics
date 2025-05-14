@@ -42,7 +42,8 @@ medium_density = symbols.density
 :symbols:`density` of the medium.
 """
 
-medium_specific_isobaric_heat_capacity = Symbol("c_p", units.energy / (units.temperature * units.mass))
+medium_specific_isobaric_heat_capacity = Symbol("c_p",
+    units.energy / (units.temperature * units.mass))
 """
 :symbols:`heat_capacity` of the medium at constant :symbols:`pressure` per unit :symbols:`mass`.
 """
@@ -52,7 +53,9 @@ thermal_conductivity = clone_as_function(symbols.thermal_conductivity, [position
 :symbols:`thermal_conductivity` of the medium as a function of :attr:`~position`.
 """
 
-heat_source_density = clone_as_function(symbols.energy_density, [position, time], display_symbol="q", display_latex="q")
+heat_source_density = clone_as_function(symbols.energy_density, [position, time],
+    display_symbol="q",
+    display_latex="q")
 """
 Density of the rate of heat production by external sources as a function of
 :attr:`~position` and :attr:`~time`. See :symbols:`energy_density`.

@@ -27,12 +27,16 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-even_mode_wave_impedance = clone_as_symbol(symbols.wave_impedance, display_symbol="eta_e", display_latex="\\eta_\\text{e}")
+even_mode_wave_impedance = clone_as_symbol(symbols.wave_impedance,
+    display_symbol="eta_e",
+    display_latex="\\eta_\\text{e}")
 """
 :symbols:`wave_impedance` of the even mode.
 """
 
-odd_mode_wave_impedance = clone_as_symbol(symbols.wave_impedance, display_symbol="eta_o", display_latex="\\eta_\\text{o}")
+odd_mode_wave_impedance = clone_as_symbol(symbols.wave_impedance,
+    display_symbol="eta_o",
+    display_latex="\\eta_\\text{o}")
 """
 :symbols:`wave_impedance` of the odd mode.
 """

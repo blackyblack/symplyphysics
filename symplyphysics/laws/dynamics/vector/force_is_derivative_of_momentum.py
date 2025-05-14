@@ -44,7 +44,5 @@ def calculate_force(
         add_cartesian_vectors(momentum_after_.to_base_vector(),
         scale_vector(-1, momentum_before_.to_base_vector())))
     result_force_vector = force_law(momentum_function)
-    result_force_components = [
-        component.doit() for component in result_force_vector.components
-    ]
+    result_force_components = [component.doit() for component in result_force_vector.components]
     return QuantityVector(result_force_components, momentum_before_.coordinate_system)

@@ -85,8 +85,7 @@ assert expr_equals(law.rhs, _derived_geometric_buckling_squared)
 @validate_output(geometric_buckling)
 def calculate_geometric_buckling_squared(infinite_multiplication_factor_: float,
     effective_multiplication_factor_: float, diffusion_area_: Quantity) -> Quantity:
-    result_buckling_expr = solve(law, geometric_buckling,
-        dict=True)[0][geometric_buckling]
+    result_buckling_expr = solve(law, geometric_buckling, dict=True)[0][geometric_buckling]
     result_expr = result_buckling_expr.subs({
         infinite_multiplication_factor: infinite_multiplication_factor_,
         effective_multiplication_factor: effective_multiplication_factor_,

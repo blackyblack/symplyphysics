@@ -45,14 +45,17 @@ substrate_thickness = symbols.thickness
 :symbols:`thickness` of the substrate.
 """
 
-effective_width = clone_as_symbol(symbols.length, display_symbol="w_eff", display_latex="w_\\text{eff}")
+effective_width = clone_as_symbol(symbols.length,
+    display_symbol="w_eff",
+    display_latex="w_\\text{eff}")
 """
 Effective width (see :symbols:`length`) of the microstrip line. See :ref:`Effective width of microstrip line <effective_width_microstrip_line_def>`.
 """
 
 # the following block prevents the re-ordering of terms for the code printer
 with evaluate(False):
-    _expression = log(8 * substrate_thickness / effective_width + effective_width / (4 * substrate_thickness))
+    _expression = log(8 * substrate_thickness / effective_width + effective_width /
+        (4 * substrate_thickness))
     _resistance_constant = Quantity(60 * units.ohm, display_symbol="Z_0")
 
 law = Eq(surge_impedance, (_resistance_constant / sqrt(effective_permittivity)) * _expression)

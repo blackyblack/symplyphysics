@@ -50,10 +50,8 @@ def test_bad_absolute_permittivity(test_args: Args) -> None:
             test_args.absolute_permeability, test_args.angular_frequency,
             test_args.tangent_dielectric_loss_angle)
     with raises(TypeError):
-        coefficient_law.calculate_attenuation_coefficient(100,
-            test_args.absolute_permeability, test_args.angular_frequency,
-            test_args.tangent_dielectric_loss_angle)
-
+        coefficient_law.calculate_attenuation_coefficient(100, test_args.absolute_permeability,
+            test_args.angular_frequency, test_args.tangent_dielectric_loss_angle)
 
 
 def test_bad_absolute_permeability(test_args: Args) -> None:
@@ -63,9 +61,8 @@ def test_bad_absolute_permeability(test_args: Args) -> None:
             test_args.absolute_permeability, test_args.angular_frequency,
             test_args.tangent_dielectric_loss_angle)
     with raises(TypeError):
-        coefficient_law.calculate_attenuation_coefficient(100,
-            test_args.absolute_permeability, test_args.angular_frequency,
-            test_args.tangent_dielectric_loss_angle)
+        coefficient_law.calculate_attenuation_coefficient(100, test_args.absolute_permeability,
+            test_args.angular_frequency, test_args.tangent_dielectric_loss_angle)
 
 
 def test_bad_angular_frequency(test_args: Args) -> None:

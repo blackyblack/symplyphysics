@@ -27,7 +27,9 @@ relative_bandwidth = Symbol("b", dimensionless)
 Relative operating bandwidth is the ratio of the bandwidth to the center frequency.
 """
 
-load_resistance = clone_as_symbol(symbols.electrical_resistance, display_symbol="R_L", display_latex="R_\\text{L}")
+load_resistance = clone_as_symbol(symbols.electrical_resistance,
+    display_symbol="R_L",
+    display_latex="R_\\text{L}")
 """
 :symbols:`electrical_resistance` of the load.
 """
@@ -43,8 +45,8 @@ reflection_coefficient = symbols.reflection_coefficient
 """
 
 law = Eq(
-    relative_bandwidth, 2 -
-    (4 / pi) * acos(2 * reflection_coefficient * sqrt(load_resistance * surge_impedance) /
+    relative_bandwidth,
+    2 - (4 / pi) * acos(2 * reflection_coefficient * sqrt(load_resistance * surge_impedance) /
     (sqrt(1 - reflection_coefficient**2) * abs(load_resistance - surge_impedance))))
 """
 :laws:symbol::

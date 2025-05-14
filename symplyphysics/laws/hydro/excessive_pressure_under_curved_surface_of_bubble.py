@@ -19,7 +19,9 @@ from symplyphysics import Quantity, validate_input, validate_output, symbols, cl
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import laplace_pressure_of_spherical_shapes as laplace_law
 
-pressure_difference = clone_as_symbol(symbols.pressure, display_symbol="Delta(p)", display_latex="\\Delta p")
+pressure_difference = clone_as_symbol(symbols.pressure,
+    display_symbol="Delta(p)",
+    display_latex="\\Delta p")
 """
 :symbols:`pressure` difference between the surfaces of the bubble.
 """
@@ -60,8 +62,7 @@ _pressure_derived = solve(_laplace_law_applied, laplace_law.laplace_pressure,
 assert expr_equals(2 * _pressure_derived, law.rhs)
 
 
-@validate_input(surface_tension_of_the_liquid_=surface_tension,
-    radius_of_bubble_=radius)
+@validate_input(surface_tension_of_the_liquid_=surface_tension, radius_of_bubble_=radius)
 @validate_output(pressure_difference)
 def calculate_excessive_pressure(surface_tension_of_the_liquid_: Quantity,
     radius_of_bubble_: Quantity) -> Quantity:

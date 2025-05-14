@@ -55,6 +55,7 @@ law = Eq(filter_function, band_stop_distortion / bandwidth_distortion)
 :laws:latex::
 """
 
+
 @validate_input(band_stop_frequency_=band_stop_frequency,
     bandwidth_distortion_=bandwidth_distortion,
     band_stop_distortion_=band_stop_distortion)

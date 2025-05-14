@@ -19,7 +19,9 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-critical_molar_volume = clone_as_symbol(symbols.molar_volume, display_symbol="v_cm", display_latex="v_{\\text{c},\\text{m}}")
+critical_molar_volume = clone_as_symbol(symbols.molar_volume,
+    display_symbol="v_cm",
+    display_latex="v_{\\text{c},\\text{m}}")
 """
 Critical :symbols:`molar_volume` of the van der Waals fluid.
 """

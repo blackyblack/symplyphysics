@@ -12,13 +12,8 @@ the losses in the dielectric.
 """
 
 from sympy import Eq, solve
-from symplyphysics import (
-    convert_to_float,
-    validate_input,
-    validate_output,
-    symbols,
-    clone_as_symbol
-)
+from symplyphysics import (convert_to_float, validate_input, validate_output, symbols,
+    clone_as_symbol)
 
 filled_quality_factor = clone_as_symbol(symbols.quality_factor, subscript="1")
 """

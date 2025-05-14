@@ -24,7 +24,9 @@ diffusion_coefficient = symbols.neutron_diffusion_coefficient
 :symbols:`neutron_diffusion_coefficient`.
 """
 
-macroscopic_absorption_cross_section = clone_as_symbol(symbols.macroscopic_cross_section, display_symbol="Sigma_a", display_latex="\\Sigma_\\text{a}")
+macroscopic_absorption_cross_section = clone_as_symbol(symbols.macroscopic_cross_section,
+    display_symbol="Sigma_a",
+    display_latex="\\Sigma_\\text{a}")
 """
 :symbols:`macroscopic_cross_section` of absorption.
 """

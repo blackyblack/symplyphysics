@@ -40,11 +40,8 @@ loss_tangent = symbols.dielectric_loss_tangent
 :symbols:`dielectric_loss_tangent`.
 """
 
-law = Eq(
-    attenuation_coefficient,
-    angular_frequency *
-    sqrt(absolute_permittivity * absolute_permeability) *
-    loss_tangent / 2)
+law = Eq(attenuation_coefficient,
+    angular_frequency * sqrt(absolute_permittivity * absolute_permeability) * loss_tangent / 2)
 """
 :laws:symbol::
 
@@ -57,8 +54,9 @@ law = Eq(
     angular_frequency_=angular_frequency,
     tangent_dielectric_loss_angle_=loss_tangent)
 @validate_output(attenuation_coefficient)
-def calculate_attenuation_coefficient(absolute_permittivity_: Quantity, absolute_permeability_: Quantity,
-    angular_frequency_: Quantity, tangent_dielectric_loss_angle_: float) -> Quantity:
+def calculate_attenuation_coefficient(absolute_permittivity_: Quantity,
+    absolute_permeability_: Quantity, angular_frequency_: Quantity,
+    tangent_dielectric_loss_angle_: float) -> Quantity:
     result_velocity_expr = solve(law, attenuation_coefficient,
         dict=True)[0][attenuation_coefficient]
     result_expr = result_velocity_expr.subs({

@@ -66,11 +66,13 @@ omitted. See :ref:`Effective permittivity of microstrip line <effective_permitti
 
 # the following block prevents the re-ordering of terms for the code printer
 with evaluate(False):
-    _first_expression = (4 / (quantities.speed_of_light * 2)) * substrate_thickness * sqrt(relative_permittivity - 1)
+    _first_expression = (4 /
+        (quantities.speed_of_light * 2)) * substrate_thickness * sqrt(relative_permittivity - 1)
     _second_expression = (1 + 2 * log(1 + width / substrate_thickness))**2
     _third_expression = _first_expression * _second_expression
     _fourth_expression = sqrt(relative_permittivity) - sqrt(independent_effective_permittivity)
-    _fifth_expression = _fourth_expression / (1 + 4 * (_third_expression * frequency)**Rational(-3, 2))
+    _fifth_expression = _fourth_expression / (1 + 4 *
+        (_third_expression * frequency)**Rational(-3, 2))
 
 law = Eq(
     effective_permittivity,

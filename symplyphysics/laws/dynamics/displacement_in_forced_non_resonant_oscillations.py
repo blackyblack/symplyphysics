@@ -130,7 +130,6 @@ def calculate_driven_displacement(
     driving_phase_lag_: Quantity | float,
     time_: Quantity,
 ) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
     result = law.rhs.subs({
         mass: oscillator_mass_,
         natural_angular_frequency: natural_angular_frequency_,

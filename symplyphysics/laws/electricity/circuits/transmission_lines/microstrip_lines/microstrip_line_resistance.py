@@ -38,14 +38,17 @@ thickness = clone_as_symbol(symbols.thickness, display_symbol="t", display_latex
 :symbols:`thickness` of the microstrip.
 """
 
-surface_resistance = clone_as_symbol(symbols.electrical_resistance, display_symbol="R_s", display_latex="R_\\text{s}")
+surface_resistance = clone_as_symbol(symbols.electrical_resistance,
+    display_symbol="R_s",
+    display_latex="R_\\text{s}")
 """
 :symbols:`electrical_resistance` of the surface of the microstrip.
 """
 
 law = Eq(
     resistance,
-    (1.4 + 0.217 * log(width / (5 * thickness))) * (surface_resistance * length / (2 * (width + thickness))),
+    (1.4 + 0.217 * log(width / (5 * thickness))) * (surface_resistance * length / (2 *
+    (width + thickness))),
 )
 """
 :laws:symbol::

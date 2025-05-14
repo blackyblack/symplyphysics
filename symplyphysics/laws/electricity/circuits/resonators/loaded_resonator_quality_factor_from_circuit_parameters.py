@@ -41,13 +41,15 @@ angular_frequency = symbols.angular_frequency
 :symbols:`angular_frequency` of the current.
 """
 
-load_resistance = clone_as_symbol(symbols.electrical_resistance, display_symbol="R_L", display_latex="R_\\text{L}")
+load_resistance = clone_as_symbol(symbols.electrical_resistance,
+    display_symbol="R_L",
+    display_latex="R_\\text{L}")
 """
 :symbols:`electrical_resistance` of the load.
 """
 
-law = Eq(loaded_quality_factor, (load_resistance * resistance) /
-    (angular_frequency * inductance * (load_resistance + resistance)))
+law = Eq(loaded_quality_factor, (load_resistance * resistance) / (angular_frequency * inductance *
+    (load_resistance + resistance)))
 """
 :laws:symbol::
 
@@ -62,8 +64,7 @@ law = Eq(loaded_quality_factor, (load_resistance * resistance) /
 @validate_output(loaded_quality_factor)
 def calculate_quality_factor(resistance_: Quantity, inductance_: Quantity, frequency_: Quantity,
     load_resistance_: Quantity) -> float:
-    result_expr = solve(law, loaded_quality_factor,
-        dict=True)[0][loaded_quality_factor]
+    result_expr = solve(law, loaded_quality_factor, dict=True)[0][loaded_quality_factor]
     result_expr = result_expr.subs({
         resistance: resistance_,
         inductance: inductance_,

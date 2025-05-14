@@ -43,25 +43,33 @@ output_current = clone_as_symbol(symbols.current, display_symbol="I_o", display_
 Output :symbols:`current`.
 """
 
-input_input_admittance = clone_as_symbol(symbols.admittance, display_symbol="Y_ii", display_latex="Y_\\text{ii}")
+input_input_admittance = clone_as_symbol(symbols.admittance,
+    display_symbol="Y_ii",
+    display_latex="Y_\\text{ii}")
 """
 Ratio of :attr:`~input_current` to :attr:`~input_voltage` in case of a short circuit at
 the output. See :symbols:`admittance`.
 """
 
-input_output_admittance = clone_as_symbol(symbols.admittance, display_symbol="Y_io", display_latex="Y_\\text{io}")
+input_output_admittance = clone_as_symbol(symbols.admittance,
+    display_symbol="Y_io",
+    display_latex="Y_\\text{io}")
 """
 Ratio of :attr:`~input_current` to :attr:`~output_voltage` in case of a short circuit at
 the output. See :symbols:`admittance`.
 """
 
-output_input_admittance = clone_as_symbol(symbols.admittance, display_symbol="Y_oi", display_latex="Y_\\text{oi}")
+output_input_admittance = clone_as_symbol(symbols.admittance,
+    display_symbol="Y_oi",
+    display_latex="Y_\\text{oi}")
 """
 Ratio of :attr:`~output_current` to :attr:`~input_voltage` in case of a short circuit at
 the output. See :symbols:`admittance`.
 """
 
-output_output_admittance = clone_as_symbol(symbols.admittance, display_symbol="Y_oo", display_latex="Y_\\text{oo}")
+output_output_admittance = clone_as_symbol(symbols.admittance,
+    display_symbol="Y_oo",
+    display_latex="Y_\\text{oo}")
 """
 Ratio of :attr:`~output_current` to :attr:`~output_voltage` in case of a short circuit
 at the output. See :symbols:`admittance`.
@@ -69,8 +77,8 @@ at the output. See :symbols:`admittance`.
 
 law = Eq(
     Matrix([input_current, output_current]),
-    Matrix([[input_input_admittance, input_output_admittance], [output_input_admittance, output_output_admittance]])
-    * Matrix([input_voltage, output_voltage]))
+    Matrix([[input_input_admittance, input_output_admittance],
+    [output_input_admittance, output_output_admittance]]) * Matrix([input_voltage, output_voltage]))
 """
 :laws:symbol::
 

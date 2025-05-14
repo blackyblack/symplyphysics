@@ -60,10 +60,10 @@ Ratio of the :symbols:`power` at the outputs of the divider.
 law = Eq(
     Matrix([first_impedance, second_impedance, third_impedance, fourth_impedance]),
     transmission_line_impedance * Matrix([
-        sqrt(power_ratio * (1 + power_ratio**2)),
-        sqrt((1 + power_ratio**2) / power_ratio**3),
-        sqrt(power_ratio),
-        1 / sqrt(power_ratio),
+    sqrt(power_ratio * (1 + power_ratio**2)),
+    sqrt((1 + power_ratio**2) / power_ratio**3),
+    sqrt(power_ratio),
+    1 / sqrt(power_ratio),
     ]))
 """
 :laws:symbol::
@@ -72,8 +72,7 @@ law = Eq(
 """
 
 
-@validate_input(characteristic_resistance_=transmission_line_impedance,
-    ratio_of_power_=power_ratio)
+@validate_input(characteristic_resistance_=transmission_line_impedance, ratio_of_power_=power_ratio)
 @validate_output(units.impedance)
 def calculate_impedances(characteristic_resistance_: Quantity,
     ratio_of_power_: float) -> tuple[Quantity, Quantity, Quantity, Quantity]:

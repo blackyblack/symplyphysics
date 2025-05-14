@@ -59,8 +59,5 @@ assert _geometric_buckling_cylinder_solved.evalf(7) == law.rhs.evalf(7)
 def calculate_geometric_buckling_squared(cylinder_radius_: Quantity,
     cylinder_height_: Quantity) -> Quantity:
     solved = solve(law, geometric_buckling, dict=True)[0][geometric_buckling]
-    result_expr = solved.subs({
-        radius: cylinder_radius_,
-        height: cylinder_height_
-    })
+    result_expr = solved.subs({radius: cylinder_radius_, height: cylinder_height_})
     return Quantity(result_expr)

@@ -15,14 +15,17 @@ of the gas and the average kinetic energy of gas particles.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (Quantity, validate_input, validate_output, quantities, symbols, clone_as_symbol)
+from symplyphysics import (Quantity, validate_input, validate_output, quantities, symbols,
+    clone_as_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as ideal_gas_law
 from symplyphysics.laws.thermodynamics import average_kinetic_energy_of_ideal_gas_from_temperature as kinetic_energy
 from symplyphysics.laws.chemistry import avogadro_constant_is_particle_count_over_amount_of_substance as avogadro_number
 from symplyphysics.definitions import number_density_is_number_of_objects_per_unit_volume as number_density_def
 
-average_kinetic_energy = clone_as_symbol(symbols.kinetic_energy, display_symbol="avg(K)", display_latex="\\langle K \\rangle")
+average_kinetic_energy = clone_as_symbol(symbols.kinetic_energy,
+    display_symbol="avg(K)",
+    display_latex="\\langle K \\rangle")
 r"""
 Average :symbols:`kinetic_energy` of gas particles.
 """

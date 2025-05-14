@@ -43,8 +43,7 @@ loss_tangent = symbols.dielectric_loss_tangent
 :symbols:`dielectric_loss_tangent`.
 """
 
-law = Eq(specific_conductance,
-    angular_frequency * specific_capacitance * loss_tangent)
+law = Eq(specific_conductance, angular_frequency * specific_capacitance * loss_tangent)
 """
 :laws:symbol::
 

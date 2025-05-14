@@ -32,7 +32,9 @@ attenuation_coefficient = symbols.attenuation_coefficient
 :symbols:`attenuation_coefficient` the metal in the microstrip.
 """
 
-surface_resistance = clone_as_symbol(symbols.electrical_resistance, display_symbol="R_s", display_latex="R_\\text{s}")
+surface_resistance = clone_as_symbol(symbols.electrical_resistance,
+    display_symbol="R_s",
+    display_latex="R_\\text{s}")
 """
 :symbols:`electrical_resistance` of the surface of the microstrip metal.
 """
@@ -42,7 +44,9 @@ surge_impedance = symbols.surge_impedance
 :symbols:`surge_impedance` of the microstrip line.
 """
 
-effective_width = clone_as_symbol(symbols.length, display_symbol="w_eff", display_latex="w_\\text{eff}")
+effective_width = clone_as_symbol(symbols.length,
+    display_symbol="w_eff",
+    display_latex="w_\\text{eff}")
 """
 Effective width (see :symbols:`length`) of the microstrip line. See :ref:`Effective width of microstrip line <effective_width_microstrip_line_def>`.
 """
@@ -66,9 +70,11 @@ substrate_thickness = symbols.thickness
 with evaluate(False):
     _first_expression = (effective_width / substrate_thickness)**2
     _second_expression = 1.38 * surface_resistance / (substrate_thickness * surge_impedance)
-    _third_expression = 1 + (substrate_thickness / effective_width) * (1 + (1.25 / pi) * (thickness / width) + (1.25 / pi) * log(4 * pi * width / thickness))
+    _third_expression = 1 + (substrate_thickness / effective_width) * (1 + (1.25 / pi) *
+        (thickness / width) + (1.25 / pi) * log(4 * pi * width / thickness))
 
-law = Eq(attenuation_coefficient,
+law = Eq(
+    attenuation_coefficient,
     _second_expression * ((32 - _first_expression) / (32 + _first_expression)) * _third_expression)
 """
 :laws:symbol::
@@ -87,7 +93,6 @@ law = Eq(attenuation_coefficient,
 def calculate_attenuation_coefficient(surface_resistance_: Quantity, wave_resistance_: Quantity,
     thickness_of_substrate_: Quantity, effective_width_: Quantity, strip_thickness_: Quantity,
     width_: Quantity) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
     if thickness_of_substrate_.scale_factor < effective_width_.scale_factor * 2 * pi:
         raise ValueError(
             "The thickness of substrate must be greater than or equal to the effective width * 2 * pi"

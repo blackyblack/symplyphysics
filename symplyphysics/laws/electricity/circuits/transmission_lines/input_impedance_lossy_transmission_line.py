@@ -19,12 +19,16 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-input_impedance = clone_as_symbol(symbols.electrical_impedance, display_symbol="Z_in", display_latex="Z_\\text{in}")
+input_impedance = clone_as_symbol(symbols.electrical_impedance,
+    display_symbol="Z_in",
+    display_latex="Z_\\text{in}")
 """
 Input :symbols:`electrical_impedance` of the transmission line.
 """
 
-load_impedance = clone_as_symbol(symbols.electrical_impedance, display_symbol="Z_L", display_latex="Z_\\text{L}")
+load_impedance = clone_as_symbol(symbols.electrical_impedance,
+    display_symbol="Z_L",
+    display_latex="Z_\\text{L}")
 """
 Load :symbols:`electrical_impedance`.
 """
@@ -49,8 +53,8 @@ with evaluate(False):
     _expression = propagation_constant * length
 
 law = Eq(input_impedance,
-    (cosh(_expression) * load_impedance + surge_impedance * sinh(_expression))
-    / (load_impedance * sinh(_expression) / surge_impedance + cosh(_expression)))
+    (cosh(_expression) * load_impedance + surge_impedance * sinh(_expression)) /
+    (load_impedance * sinh(_expression) / surge_impedance + cosh(_expression)))
 """
 :laws:symbol::
 

@@ -56,10 +56,10 @@ Ratio of the power at the outputs of the coupler.
 law = Eq(
     Matrix([first_admittance, second_admittance, third_admittance, fourth_admittance]),
     transmission_line_admittance * Matrix([
-        1 / sqrt(power_ratio),
-        sqrt((power_ratio + 1) / power_ratio),
-        sqrt((power_ratio + 1) / power_ratio),
-        1 / sqrt(power_ratio),
+    1 / sqrt(power_ratio),
+    sqrt((power_ratio + 1) / power_ratio),
+    sqrt((power_ratio + 1) / power_ratio),
+    1 / sqrt(power_ratio),
     ]))
 r"""
 :laws:symbol::
@@ -74,8 +74,7 @@ r"""
 def calculate_conductivities(
         transmission_line_admittance_: Quantity,
         ratio_of_power_: float) -> tuple[Quantity, Quantity, Quantity, Quantity]:
-    result = solve(law,
-        [first_admittance, second_admittance, third_admittance, fourth_admittance],
+    result = solve(law, [first_admittance, second_admittance, third_admittance, fourth_admittance],
         dict=True)[0]
     result_y1 = result[first_admittance]
     result_y2 = result[second_admittance]

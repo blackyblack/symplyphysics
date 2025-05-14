@@ -20,8 +20,8 @@ and inversely proportional to the mass of the gas.
 """
 
 from sympy import (Eq, solve, S, stats, Interval)
-from symplyphysics import (Quantity, validate_input, validate_output, symbols,
-    clone_as_symbol, quantities)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, clone_as_symbol,
+    quantities)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
 from symplyphysics.core.operations.symbolic import Average

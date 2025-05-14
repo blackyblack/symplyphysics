@@ -40,8 +40,9 @@ infinite_multiplication_factor = symbols.infinite_multiplication_factor
 :symbols:`infinite_multiplication_factor`.
 """
 
-law = Eq(infinite_multiplication_factor,
-    thermal_fission_factor * fast_fission_factor * resonance_escape_probability * thermal_utilization_factor)
+law = Eq(
+    infinite_multiplication_factor, thermal_fission_factor * fast_fission_factor *
+    resonance_escape_probability * thermal_utilization_factor)
 """
 :laws:symbol::
 

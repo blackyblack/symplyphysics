@@ -35,18 +35,24 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-internal_energy_change = clone_as_symbol(symbols.internal_energy, display_symbol="dU", display_latex="dU")
+internal_energy_change = clone_as_symbol(symbols.internal_energy,
+    display_symbol="dU",
+    display_latex="dU")
 """
 Infinitesimal change in :symbols:`internal_energy` of the system.
 """
 
-heat_supplied_to_system = clone_as_symbol(symbols.heat, display_symbol="delta(Q)", display_latex="\\delta Q")
+heat_supplied_to_system = clone_as_symbol(symbols.heat,
+    display_symbol="delta(Q)",
+    display_latex="\\delta Q")
 r"""
 Infinitesimal amount of :symbols:`heat` supplied to the system during its interaction
 with the environment.
 """
 
-work_done_by_system = clone_as_symbol(symbols.work, display_symbol="delta(W)", display_latex="\\delta W")
+work_done_by_system = clone_as_symbol(symbols.work,
+    display_symbol="delta(W)",
+    display_latex="\\delta W")
 """
 Infinitesimal :symbols:`work` done by the system on its environment.
 """

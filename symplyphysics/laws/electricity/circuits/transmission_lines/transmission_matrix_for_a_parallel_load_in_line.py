@@ -53,7 +53,9 @@ Ratio of input :symbols:`current` to output :symbols:`current` in case of a shor
 circuit at the output.
 """
 
-load_impedance = clone_as_symbol(symbols.electrical_impedance, display_symbol="Z_L", display_latex="Z_\\text{L}")
+load_impedance = clone_as_symbol(symbols.electrical_impedance,
+    display_symbol="Z_L",
+    display_latex="Z_\\text{L}")
 """
 Load :symbols:`electrical_impedance`.
 """

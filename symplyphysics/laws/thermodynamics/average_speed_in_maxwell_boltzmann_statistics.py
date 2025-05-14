@@ -30,7 +30,9 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
 
-average_speed = clone_as_symbol(symbols.speed, display_symbol="avg(v)", display_latex="\\langle v \\rangle")
+average_speed = clone_as_symbol(symbols.speed,
+    display_symbol="avg(v)",
+    display_latex="\\langle v \\rangle")
 """
 Average molecular :symbols:`speed`.
 """

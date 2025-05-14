@@ -57,8 +57,7 @@ Perpendicular :symbols:`euclidean_distance` to the conductor.
 
 law = Eq(
     magnetic_flux_density,
-    absolute_permeability * current * (cos(first_angle) + cos(second_angle)) /
-    (4 * pi * distance))
+    absolute_permeability * current * (cos(first_angle) + cos(second_angle)) / (4 * pi * distance))
 """
 :laws:symbol::
 

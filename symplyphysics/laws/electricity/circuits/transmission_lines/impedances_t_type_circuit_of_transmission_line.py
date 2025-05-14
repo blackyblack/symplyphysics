@@ -60,9 +60,9 @@ _expression = propagation_constant * length
 law = Eq(
     Matrix([first_impedance, second_impedance, third_impedance]),
     surge_impedance * Matrix([
-        tanh(S.Half * _expression),
-        tanh(S.Half * _expression),
-        1 / sinh(_expression),
+    tanh(S.Half * _expression),
+    tanh(S.Half * _expression),
+    1 / sinh(_expression),
     ]))
 """
 :laws:symbol::
