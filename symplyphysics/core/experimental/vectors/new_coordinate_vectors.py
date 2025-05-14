@@ -30,6 +30,8 @@ class CoordinateVector(VectorExpr):
         return self.components, self.system
 
     def __init__(self, components: Sequence[Expr], system: BaseCoordinateSystem) -> None:
+        super().__init__()
+
         if isinstance(components, DenseMatrix):
             if 1 not in components.shape:
                 rows, cols = components.shape
