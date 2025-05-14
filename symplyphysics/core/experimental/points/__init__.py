@@ -7,7 +7,7 @@ from sympy.printing.printer import Printer
 
 from symplyphysics.core.expr_comparisons import expr_equals
 
-from ..coordinate_systems.coordinate_systems import BaseCoordinateSystem
+from ..coordinate_systems.new_coordinate_systems import BaseCoordinateSystem
 from ..miscellaneous import sympify_expr
 
 
