@@ -11,7 +11,10 @@ from symplyphysics.laws.electricity.circuits.transmission_lines import input_imp
 ## Then the input impedance is equal to 49.33 - 0.879 * I ohm.
 
 Args = namedtuple("Args", [
-    "characteristic_resistance", "load_resistance", "constant_propagation", "line_length",
+    "characteristic_resistance",
+    "load_resistance",
+    "constant_propagation",
+    "line_length",
 ])
 
 

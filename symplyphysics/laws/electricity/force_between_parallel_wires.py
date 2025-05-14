@@ -54,9 +54,8 @@ distance = symbols.euclidean_distance
 Perpendicular :symbols:`euclidean_distance` between the wires.
 """
 
-law = Eq(
-    force, absolute_permeability * first_current *
-    second_current * length / (2 * pi * distance))
+law = Eq(force,
+    absolute_permeability * first_current * second_current * length / (2 * pi * distance))
 """
 :laws:symbol::
 

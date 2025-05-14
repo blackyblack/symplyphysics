@@ -40,7 +40,9 @@ absolute_permeability = symbols.absolute_permeability
 :symbols:`absolute_permeability` of the resonator walls.
 """
 
-surface_resistance = clone_as_symbol(symbols.electrical_resistance, display_symbol="R_s", display_latex="R_\\text{s}")
+surface_resistance = clone_as_symbol(symbols.electrical_resistance,
+    display_symbol="R_s",
+    display_latex="R_\\text{s}")
 """
 :symbols:`electrical_resistance` of the resonator walls.
 """
@@ -64,9 +66,9 @@ propagation and to :attr:`~width`.
 
 law = Eq(
     quality_factor,
-    angular_frequency * absolute_permeability * height *
-    width * length * (width**2 + length**2) /
-    (2 * surface_resistance * (width**3 * (length + 2 * height) + length**3 * (width + 2 * height))))
+    angular_frequency * absolute_permeability * height * width * length * (width**2 + length**2) /
+    (2 * surface_resistance * (width**3 * (length + 2 * height) + length**3 *
+    (width + 2 * height))))
 """
 :laws:symbol::
 

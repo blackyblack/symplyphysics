@@ -21,16 +21,8 @@ transmission matrix of this line.
 """
 
 from sympy import Eq, solve, Matrix
-from symplyphysics import (
-    units,
-    Quantity,
-    validate_input,
-    dimensionless,
-    convert_to_float,
-    symbols,
-    clone_as_symbol,
-    Symbol
-)
+from symplyphysics import (units, Quantity, validate_input, dimensionless, convert_to_float,
+    symbols, clone_as_symbol, Symbol)
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity.circuits.transmission_lines import transmission_matrix_for_a_series_load_in_line as series_law
@@ -74,9 +66,11 @@ Third :symbols:`electrical_impedance`.
 """
 
 law = Eq(
-    Matrix([[voltage_voltage_parameter, voltage_current_parameter], [current_voltage_parameter, current_current_parameter]]),
+    Matrix([[voltage_voltage_parameter, voltage_current_parameter],
+    [current_voltage_parameter, current_current_parameter]]),
     Matrix([[1 + third_impedance / second_impedance, third_impedance],
-    [(1 / first_impedance) + (1 / second_impedance) + third_impedance / (first_impedance * second_impedance), 1 + third_impedance / first_impedance]]))
+    [(1 / first_impedance) + (1 / second_impedance) + third_impedance /
+    (first_impedance * second_impedance), 1 + third_impedance / first_impedance]]))
 """
 :laws:symbol::
 

@@ -34,8 +34,8 @@ def test_bad_absolute_permittivity(test_args: Args) -> None:
         capacitance_law.calculate_specific_capacitance(bad_absolute_permittivity,
             test_args.outer_radius, test_args.inner_radius)
     with raises(TypeError):
-        capacitance_law.calculate_specific_capacitance(100,
-            test_args.outer_radius, test_args.inner_radius)
+        capacitance_law.calculate_specific_capacitance(100, test_args.outer_radius,
+            test_args.inner_radius)
 
 
 def test_bad_radius(test_args: Args) -> None:

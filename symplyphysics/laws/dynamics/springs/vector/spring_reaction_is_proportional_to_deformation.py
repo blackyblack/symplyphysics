@@ -1,5 +1,5 @@
-from symplyphysics import (Vector, QuantityVector, scale_vector, units, Quantity,
-    validate_input, validate_output, symbols)
+from symplyphysics import (Vector, QuantityVector, scale_vector, units, Quantity, validate_input,
+    validate_output, symbols)
 
 # Description
 ## Deformed spring is about to return back to it's undeformed state and responds with some force. Law is:

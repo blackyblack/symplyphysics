@@ -195,8 +195,6 @@ def print_law(title: str, description: str, members: Sequence[MemberWithDoc],
 
 # TODO: split to smaller functions
 
-
-# pylint: disable-next=too-many-arguments, too-many-positional-arguments
 def print_package(title: str, description: str, members: Sequence[MemberWithDoc],
     functions: Sequence[FunctionWithDoc], doc_name: str, laws: Sequence[str],
     packages: Sequence[str]) -> str:

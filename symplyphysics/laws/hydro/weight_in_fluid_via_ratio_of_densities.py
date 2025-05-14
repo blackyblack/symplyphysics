@@ -34,12 +34,16 @@ weight_in_vacuum = clone_as_symbol(symbols.force,
 Weight of the body in vacuum, i.e. its true weight. See :symbols:`force`.
 """
 
-fluid_density = clone_as_symbol(symbols.density, display_symbol="rho_fl", display_latex="\\rho_\\text{fl}")
+fluid_density = clone_as_symbol(symbols.density,
+    display_symbol="rho_fl",
+    display_latex="\\rho_\\text{fl}")
 """
 :symbols:`density` of the fluid.
 """
 
-body_density = clone_as_symbol(symbols.density, display_symbol="rho_b", display_latex="\\rho_\\text{b}")
+body_density = clone_as_symbol(symbols.density,
+    display_symbol="rho_b",
+    display_latex="\\rho_\\text{b}")
 """
 :symbols:`density` of the body.
 """

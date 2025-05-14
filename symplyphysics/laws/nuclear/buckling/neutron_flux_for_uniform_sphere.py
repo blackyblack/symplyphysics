@@ -41,7 +41,8 @@ neutron_flux = symbols.neutron_flux
 # See: [geometric buckling for uniform sphere](geometric_buckling_for_uniform_sphere.py)
 radial_constant = pi / radius
 
-law = Eq(neutron_flux, dimension_factor * (sin(radial_constant * radial_distance) / radial_distance))
+law = Eq(neutron_flux,
+    dimension_factor * (sin(radial_constant * radial_distance) / radial_distance))
 """
 :laws:symbol::
 

@@ -57,10 +57,13 @@ substrate_thickness = symbols.thickness
 with evaluate(False):
     _first_expression = (1 + relative_permittivity) / 2
     _second_expression = (relative_permittivity - 1) / 2
-    _third_expression = (1 + 12 * substrate_thickness / width)**Rational(-1, 2) + 0.04 * (1 - width / substrate_thickness)**2
-    _fourth_expression = ((relative_permittivity - 1) / 4.6) * (thickness / substrate_thickness) * sqrt(substrate_thickness / width)
+    _third_expression = (1 + 12 * substrate_thickness / width)**Rational(-1,
+        2) + 0.04 * (1 - width / substrate_thickness)**2
+    _fourth_expression = ((relative_permittivity - 1) / 4.6) * (thickness /
+        substrate_thickness) * sqrt(substrate_thickness / width)
 
-law = Eq(effective_permittivity, _first_expression + _second_expression * _third_expression - _fourth_expression)
+law = Eq(effective_permittivity,
+    _first_expression + _second_expression * _third_expression - _fourth_expression)
 """
 :laws:symbol::
 

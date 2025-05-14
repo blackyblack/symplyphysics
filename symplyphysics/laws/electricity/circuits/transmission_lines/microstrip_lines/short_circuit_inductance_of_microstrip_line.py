@@ -35,7 +35,8 @@ radius = symbols.radius
 with evaluate(False):
     _constant = quantities.vacuum_permeability / (2 * pi)
     _first_expression = sqrt(radius**2 + substrate_thickness**2)
-    _second_expression = substrate_thickness * log((substrate_thickness + _first_expression) / radius)
+    _second_expression = substrate_thickness * log(
+        (substrate_thickness + _first_expression) / radius)
     _third_expression = 1.5 * (radius - _first_expression)
 
 law = Eq(inductance, _constant * (_second_expression + _third_expression))

@@ -25,12 +25,16 @@ reflection_coefficient = symbols.reflection_coefficient
 Complex-valued :symbols:`reflection_coefficient`.
 """
 
-incident_power = clone_as_symbol(symbols.power, display_symbol="P_incident", display_latex="P_\\text{incident}")
+incident_power = clone_as_symbol(symbols.power,
+    display_symbol="P_incident",
+    display_latex="P_\\text{incident}")
 """
 Incident :symbols:`power`.
 """
 
-average_power = clone_as_symbol(symbols.power, display_symbol="avg(P)", display_latex="\\langle P \\rangle")
+average_power = clone_as_symbol(symbols.power,
+    display_symbol="avg(P)",
+    display_latex="\\langle P \\rangle")
 """
 Average :symbols:`power` delivered to the load.
 """

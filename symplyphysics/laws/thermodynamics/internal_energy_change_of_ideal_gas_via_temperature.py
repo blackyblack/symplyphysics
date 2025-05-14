@@ -23,7 +23,9 @@ from symplyphysics import (
     validate_output,
 )
 
-internal_energy_change = clone_as_symbol(symbols.internal_energy, display_symbol="dU", display_latex="dU")
+internal_energy_change = clone_as_symbol(symbols.internal_energy,
+    display_symbol="dU",
+    display_latex="dU")
 """
 Infinitesimal change in :symbols:`internal_energy` of the system.
 """

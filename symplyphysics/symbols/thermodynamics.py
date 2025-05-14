@@ -27,8 +27,7 @@ heat_capacity = Symbol("C", units.energy / units.temperature)
 supplied to an object to produce a unit change in its temperature.
 """
 
-molar_heat_capacity = Symbol("c_m",
-    units.energy / (units.temperature * units.amount_of_substance))
+molar_heat_capacity = Symbol("c_m", units.energy / (units.temperature * units.amount_of_substance))
 """
 **Molar heat capacity** is defined as the heat capacity per unit amount of substance.
 """
@@ -218,8 +217,7 @@ capacity at constant pressure.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Thermal_diffusivity>`__.
 """
 
-attractive_forces_parameter = Symbol(
-    "a",
+attractive_forces_parameter = Symbol("a",
     units.pressure * (units.volume / units.amount_of_substance)**2)
 """
 Parameter specific to each individual substance, usually attributed to the magnitude of

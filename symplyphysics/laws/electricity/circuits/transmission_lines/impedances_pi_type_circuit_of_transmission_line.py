@@ -60,9 +60,9 @@ _expression = propagation_constant * length
 law = Eq(
     Matrix([first_impedance, second_impedance, third_impedance]),
     surge_impedance * Matrix([
-        coth(S.Half * _expression),
-        coth(S.Half * _expression),
-        sinh(_expression),
+    coth(S.Half * _expression),
+    coth(S.Half * _expression),
+    sinh(_expression),
     ]))
 """
 :laws:symbol::
@@ -120,7 +120,8 @@ _matrix_circuit_law_solved = _matrix_circuit_law_solved.subs(
 assert expr_equals(_matrix_circuit_law_solved.lhs[0], _matrix_circuit_law_solved.rhs[0])
 assert expr_equals(_matrix_circuit_law_solved.lhs[1], _matrix_circuit_law_solved.rhs[1])
 # the usual `expand` fails here with hyperbolic functions
-assert expr_equals(expand_trig(_matrix_circuit_law_solved.lhs[2] - _matrix_circuit_law_solved.rhs[2]), 0)
+assert expr_equals(
+    expand_trig(_matrix_circuit_law_solved.lhs[2] - _matrix_circuit_law_solved.rhs[2]), 0)
 
 
 @validate_input(characteristic_resistance_=surge_impedance,

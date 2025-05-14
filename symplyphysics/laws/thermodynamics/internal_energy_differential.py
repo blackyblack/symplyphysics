@@ -41,7 +41,9 @@ from symplyphysics.laws.thermodynamics import (
     internal_energy_change_via_heat_and_work as first_law,
 )
 
-internal_energy_change = clone_as_symbol(symbols.internal_energy, display_symbol="dU", display_latex="dU")
+internal_energy_change = clone_as_symbol(symbols.internal_energy,
+    display_symbol="dU",
+    display_latex="dU")
 """
 Infinitesimal change in :symbols:`internal_energy` of the system.
 """
@@ -71,7 +73,9 @@ chemical_potential = symbols.chemical_potential
 :symbols:`chemical_potential` of the system.
 """
 
-particle_count_change = clone_as_symbol(symbols.particle_count, display_symbol="dN", display_latex="dN")
+particle_count_change = clone_as_symbol(symbols.particle_count,
+    display_symbol="dN",
+    display_latex="dN")
 """
 Infinitesimal change in the number of particles in the system.
 """
@@ -127,7 +131,6 @@ def calculate_internal_energy_change(
     chemical_potential_: Quantity,
     particle_count_change_: int,
 ) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
     result = law.rhs.subs({
         temperature: temperature_,
         entropy_change: entropy_change_,

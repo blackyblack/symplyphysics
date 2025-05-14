@@ -11,10 +11,10 @@ from .collect_quantity import collect_quantity_factor_and_dimension
 from .miscellaneous import is_any_dimension, is_number
 
 
-class AnyDimension(Dimension):  # type: ignore[misc]
+class AnyDimension(Dimension):
     # pylint: disable-next=signature-differs
     def __new__(cls) -> AnyDimension:
-        return super().__new__(cls, "any_dimension")  # type: ignore[no-any-return]
+        return super().__new__(cls, "any_dimension")
 
     def _eval_nseries(self, _x: Any, _n: Any, _logx: Any, _cdir: Any) -> Any:
         pass

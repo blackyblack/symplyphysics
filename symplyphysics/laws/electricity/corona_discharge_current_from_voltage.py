@@ -46,10 +46,7 @@ discharge_voltage = clone_as_symbol(symbols.voltage, subscript="0")
 :symbols:`voltage` at which the corona discharge occurs.
 """
 
-law = Eq(
-    current,
-    experimental_coefficient * mobility * voltage *
-    (voltage - discharge_voltage))
+law = Eq(current, experimental_coefficient * mobility * voltage * (voltage - discharge_voltage))
 """
 :laws:symbol::
 

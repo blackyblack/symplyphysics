@@ -39,22 +39,30 @@ relative_permeability = symbols.relative_permeability
 :symbols:`relative_permeability` of the insulator.
 """
 
-outer_surface_resistance = clone_as_symbol(symbols.electrical_resistance, display_symbol="R_o", display_latex="R_\\text{o}")
+outer_surface_resistance = clone_as_symbol(symbols.electrical_resistance,
+    display_symbol="R_o",
+    display_latex="R_\\text{o}")
 """
 Surface :symbols:`electrical_resistance` of the outer conductor.
 """
 
-inner_surface_resistance = clone_as_symbol(symbols.electrical_resistance, display_symbol="R_i", display_latex="R_\\text{i}")
+inner_surface_resistance = clone_as_symbol(symbols.electrical_resistance,
+    display_symbol="R_i",
+    display_latex="R_\\text{i}")
 """
 Surface :symbols:`electrical_resistance` of the inner conductor.
 """
 
-outer_diameter = clone_as_symbol(symbols.diameter, display_symbol="d_o", display_latex="d_\\text{o}")
+outer_diameter = clone_as_symbol(symbols.diameter,
+    display_symbol="d_o",
+    display_latex="d_\\text{o}")
 """
 :symbols:`diameter` of the outer conductor.
 """
 
-inner_diameter = clone_as_symbol(symbols.diameter, display_symbol="d_i", display_latex="d_\\text{i}")
+inner_diameter = clone_as_symbol(symbols.diameter,
+    display_symbol="d_i",
+    display_latex="d_\\text{i}")
 """
 :symbols:`diameter` of the inner conductor.
 """
@@ -86,7 +94,6 @@ law = Eq(
 def calculate_attenuation_coefficient(relative_permittivity_: float, relative_permeability_: float,
     surface_resistance_outer_: Quantity, inner_surface_resistance_: Quantity,
     outer_diameter_: Quantity, inner_diameter_: Quantity) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
     if outer_diameter_.scale_factor <= inner_diameter_.scale_factor:
         raise ValueError("The outer diameter must be greater than the inner diameter")
     result_expr = solve(law, attenuation_coefficient, dict=True)[0][attenuation_coefficient]

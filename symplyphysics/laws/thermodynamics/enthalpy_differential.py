@@ -70,7 +70,9 @@ chemical_potential = symbols.chemical_potential
 :symbols:`chemical_potential` of the system.
 """
 
-particle_count_change = clone_as_symbol(symbols.particle_count, display_symbol="dN", display_latex="dN")
+particle_count_change = clone_as_symbol(symbols.particle_count,
+    display_symbol="dN",
+    display_latex="dN")
 """
 Infinitesimal change in the :symbols:`particle_count` of the system.
 """
@@ -164,7 +166,6 @@ def calculate_enthalpy_change(
     chemical_potential_: Quantity,
     particle_count_change_: int,
 ) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
     result = law.rhs.subs({
         temperature: temperature_,
         entropy_change: entropy_change_,

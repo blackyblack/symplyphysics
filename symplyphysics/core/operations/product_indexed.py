@@ -3,7 +3,7 @@ from typing import Any
 from sympy import Expr, Basic, Idx, Product
 
 
-class IndexedProduct(Expr):  # type: ignore[misc]
+class IndexedProduct(Expr):
     """
     Represents unevaluated product for expression with indexed variables.
 
@@ -16,7 +16,7 @@ class IndexedProduct(Expr):  # type: ignore[misc]
             raise ValueError("Only one index is supported for Product")
         arglist.extend(index_base)
         obj._args = tuple(arglist)
-        return obj  # type: ignore[no-any-return]
+        return obj
 
     def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
         pass

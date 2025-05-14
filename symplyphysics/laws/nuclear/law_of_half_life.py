@@ -49,8 +49,7 @@ law = Eq(final_quantity, initial_quantity * 2**(-1 * time / half_life))
 """
 
 
-@validate_input(half_life_=half_life,
-    decay_time_=time)
+@validate_input(half_life_=half_life, decay_time_=time)
 def calculate_number_of_cores(number_of_cores_initial_: int, half_life_: Quantity,
     decay_time_: Quantity) -> int:
     if number_of_cores_initial_ < 0:

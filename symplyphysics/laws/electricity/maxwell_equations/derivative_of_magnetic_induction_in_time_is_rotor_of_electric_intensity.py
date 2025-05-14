@@ -1,4 +1,5 @@
-from symplyphysics import (units, Quantity, QuantityVector, validate_input, validate_output, symbols)
+from symplyphysics import (units, Quantity, QuantityVector, validate_input, validate_output,
+    symbols)
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 from symplyphysics.core.fields.operators import curl_operator
 from symplyphysics.core.fields.vector_field import VectorField

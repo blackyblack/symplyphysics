@@ -40,7 +40,9 @@ from symplyphysics.laws.thermodynamics import (
     internal_energy_differential,
 )
 
-free_energy_change = clone_as_symbol(symbols.helmholtz_free_energy, display_symbol="dF", display_latex="dF")
+free_energy_change = clone_as_symbol(symbols.helmholtz_free_energy,
+    display_symbol="dF",
+    display_latex="dF")
 """
 Infinitesimal change in :symbols:`helmholtz_free_energy` of the system.
 """
@@ -70,7 +72,9 @@ chemical_potential = symbols.chemical_potential
 :symbols:`chemical_potential` of the system.
 """
 
-particle_count_change = clone_as_symbol(symbols.particle_count, display_symbol="dN", display_latex="dN")
+particle_count_change = clone_as_symbol(symbols.particle_count,
+    display_symbol="dN",
+    display_latex="dN")
 """
 Infinitesimal change in the :symbols:`particle_count` of the system.
 """
@@ -162,7 +166,6 @@ def calculate_free_energy_change(
     chemical_potential_: Quantity,
     particle_count_change_: int,
 ) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
     result = law.rhs.subs({
         entropy: entropy_,
         temperature_change: temperature_change_,

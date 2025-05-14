@@ -40,7 +40,8 @@ relative_permittivity = symbols.relative_permittivity
 Effective :symbols:`relative_permittivity` of the resonator.
 """
 
-law = Eq(frequency, interference_order * quantities.speed_of_light / (length * sqrt(relative_permittivity)))
+law = Eq(frequency,
+    interference_order * quantities.speed_of_light / (length * sqrt(relative_permittivity)))
 """
 :laws:symbol::
 

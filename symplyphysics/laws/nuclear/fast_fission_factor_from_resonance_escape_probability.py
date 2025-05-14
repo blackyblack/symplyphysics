@@ -36,12 +36,16 @@ fast_utilization = symbols.fast_utilization
 :symbols:`fast_utilization`.
 """
 
-fast_neutrons_per_fission = clone_as_symbol(symbols.particle_count, display_symbol="nu_f", display_latex="\\nu_\\text{f}")
+fast_neutrons_per_fission = clone_as_symbol(symbols.particle_count,
+    display_symbol="nu_f",
+    display_latex="\\nu_\\text{f}")
 """
 Number of fast neutrons produced per fission. See :symbols:`particle_count`.
 """
 
-thermal_neutrons_per_fission = clone_as_symbol(symbols.particle_count, display_symbol="nu_t", display_latex="\\nu_\\text{t}")
+thermal_neutrons_per_fission = clone_as_symbol(symbols.particle_count,
+    display_symbol="nu_t",
+    display_latex="\\nu_\\text{t}")
 """
 Number of thermal neutrons produced per fission. See :symbols:`particle_count`.
 """
@@ -63,11 +67,14 @@ thermal_non_leakage_probability = symbols.thermal_non_leakage_probability
 
 _first_ratio = (1 - resonance_escape_probability) / resonance_escape_probability
 _second_ratio = (
-    (fast_utilization * fast_neutrons_per_fission * fast_absorption_fission_probability)
-    / (thermal_utilization_factor * thermal_neutrons_per_fission * thermal_absorption_fission_probability * thermal_non_leakage_probability)
-)
+    (fast_utilization * fast_neutrons_per_fission * fast_absorption_fission_probability) /
+    (thermal_utilization_factor * thermal_neutrons_per_fission *
+    thermal_absorption_fission_probability * thermal_non_leakage_probability))
 
-law = Eq(fast_fission_factor, 1 + _first_ratio * _second_ratio,)
+law = Eq(
+    fast_fission_factor,
+    1 + _first_ratio * _second_ratio,
+)
 """
 :laws:symbol::
 

@@ -35,17 +35,23 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-standard_molar_gibbs_energy_change = Symbol("Delta(G_m)", units.energy / units.amount_of_substance, display_latex="\\Delta G_\\text{m}")
+standard_molar_gibbs_energy_change = Symbol("Delta(G_m)",
+    units.energy / units.amount_of_substance,
+    display_latex="\\Delta G_\\text{m}")
 """
 Standard change of :symbols:`gibbs_energy` per unit :symbols:`amount_of_substance`.
 """
 
-standard_molar_enthalpy_change = Symbol("Delta(H_m)", units.energy / units.amount_of_substance, display_latex="\\Delta H_\\text{m}")
+standard_molar_enthalpy_change = Symbol("Delta(H_m)",
+    units.energy / units.amount_of_substance,
+    display_latex="\\Delta H_\\text{m}")
 """
 Standard change of :symbols:`enthalpy` per unit :symbols:`amount_of_substance`.
 """
 
-standard_molar_entropy_change = Symbol("Delta(S_m)", units.energy / units.amount_of_substance / units.temperature, display_latex="\\Delta S_\\text{m}")
+standard_molar_entropy_change = Symbol("Delta(S_m)",
+    units.energy / units.amount_of_substance / units.temperature,
+    display_latex="\\Delta S_\\text{m}")
 """
 Standard change of :symbols:`entropy` per unit :symbols:`amount_of_substance`.
 """
@@ -55,14 +61,17 @@ temperature = symbols.temperature
 :symbols:`temperature`.
 """
 
-standard_molar_heat_capacity_change = clone_as_symbol(symbols.molar_heat_capacity, display_symbol="Delta(c_m)", display_latex="\\Delta c_\\text{m}")
+standard_molar_heat_capacity_change = clone_as_symbol(symbols.molar_heat_capacity,
+    display_symbol="Delta(c_m)",
+    display_latex="\\Delta c_\\text{m}")
 """
 Standard change of :symbols:`molar_heat_capacity`.
 """
 
 law = Eq(
-    standard_molar_gibbs_energy_change, standard_molar_enthalpy_change -
-    temperature * standard_molar_entropy_change - standard_molar_heat_capacity_change * temperature *
+    standard_molar_gibbs_energy_change,
+    standard_molar_enthalpy_change - temperature * standard_molar_entropy_change -
+    standard_molar_heat_capacity_change * temperature *
     (log(temperature / quantities.standard_laboratory_temperature) +
     (quantities.standard_laboratory_temperature / temperature) - 1))
 """

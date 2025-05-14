@@ -28,7 +28,9 @@ time = symbols.time
 :symbols:`time`.
 """
 
-inner_pressure = clone_as_function(symbols.pressure, [time], display_symbol="p_inner", display_latex="p_\\text{inner}")
+inner_pressure = clone_as_function(symbols.pressure, [time],
+    display_symbol="p_inner",
+    display_latex="p_\\text{inner}")
 """
 Inner pressure of the fluid at a chosen point in space as a function of :attr:`~time`.
 See :ref:`Inner pressure is sum of pressures`.

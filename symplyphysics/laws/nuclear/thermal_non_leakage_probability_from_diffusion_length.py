@@ -22,7 +22,9 @@ from symplyphysics import (
 )
 from symplyphysics.core.symbols.probability import Probability
 
-thermal_diffusion_area = clone_as_symbol(symbols.neutron_diffusion_area, display_symbol="L_th^2", display_latex="L_\\text{th}^2")
+thermal_diffusion_area = clone_as_symbol(symbols.neutron_diffusion_area,
+    display_symbol="L_th^2",
+    display_latex="L_\\text{th}^2")
 """
 Thermal :symbols:`neutron_diffusion_area`.
 """

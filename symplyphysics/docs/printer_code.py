@@ -2,7 +2,7 @@
 Symplyphysics code printer
 """
 
-from typing import Any
+from typing import Any, Iterable
 from sympy import S, Expr, Mul, StrPrinter, E
 from sympy.matrices.dense import DenseMatrix
 from sympy.simplify import fraction
@@ -11,7 +11,7 @@ from ..core.symbols.symbols import DimensionSymbol, Function, IndexedSymbol
 from .miscellaneous import needs_mul_brackets, needs_add_brackets, process_function
 
 
-class SymbolCodePrinter(StrPrinter):  # type: ignore[misc]
+class SymbolCodePrinter(StrPrinter):  # pylint: disable=too-few-public-methods
     """
     A printer to convert Symplyphysics law expressions to symbols
     """
@@ -179,7 +179,8 @@ class SymbolCodePrinter(StrPrinter):  # type: ignore[misc]
             sdenom = convert_args(d_n)
             mul_in_denom = False
             if d_n.is_Mul:
-                denom_args = [a for a in d_n.args if a != S.One]
+                iter_args = d_n.args if isinstance(d_n.args, Iterable) else [d_n.args]
+                denom_args = [a for a in iter_args if a != S.One]
                 mul_in_denom = len(denom_args) > 1
             sdenom_str = (f"({sdenom})"
                 if needs_mul_brackets(d_n, first=False, last=True) or mul_in_denom else sdenom)

@@ -25,13 +25,7 @@ to the tube's diameter.
 """
 
 from sympy import Eq, solve, cos
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    symbols,
-    quantities
-)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, quantities)
 
 height = symbols.height
 """
@@ -59,8 +53,8 @@ radius = symbols.radius
 """
 
 law = Eq(
-    height, 2 * surface_tension * cos(angle) /
-    (density * radius * quantities.acceleration_due_to_gravity))
+    height,
+    2 * surface_tension * cos(angle) / (density * radius * quantities.acceleration_due_to_gravity))
 """
 :laws:symbol::
 

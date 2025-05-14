@@ -36,17 +36,23 @@ from symplyphysics import (
     validate_output,
 )
 
-molar_gibbs_energy_change = Symbol("Delta(G_m)", units.energy / units.amount_of_substance, display_latex="\\Delta G_\\text{m}")
+molar_gibbs_energy_change = Symbol("Delta(G_m)",
+    units.energy / units.amount_of_substance,
+    display_latex="\\Delta G_\\text{m}")
 """
 :symbols:`gibbs_energy` change, or isobaric potential, per unit :symbols:`amount_of_substance`.
 """
 
-molar_enthalpy_change = Symbol("Delta(H_m)", units.energy / units.amount_of_substance, display_latex="\\Delta H_\\text{m}")
+molar_enthalpy_change = Symbol("Delta(H_m)",
+    units.energy / units.amount_of_substance,
+    display_latex="\\Delta H_\\text{m}")
 """
 :symbols:`enthalpy` change, or thermal effect, per unit :symbols:`amount_of_substance`.
 """
 
-molar_entropy = Symbol("S_m", units.energy / units.amount_of_substance / units.temperature, display_latex="S_\\text{m}")
+molar_entropy = Symbol("S_m",
+    units.energy / units.amount_of_substance / units.temperature,
+    display_latex="S_\\text{m}")
 """
 :symbols:`entropy` per unit :symbols:`amount_of_substance`.
 """
@@ -56,17 +62,20 @@ temperature = symbols.temperature
 :symbols:`temperature`.
 """
 
-first_capacity_coefficient = Symbol("a", units.energy / units.amount_of_substance / units.temperature)
+first_capacity_coefficient = Symbol("a",
+    units.energy / units.amount_of_substance / units.temperature)
 """
 First tabular coefficient of heat capacity.
 """
 
-second_capacity_coefficient = Symbol("b", units.energy / units.amount_of_substance / units.temperature**2)
+second_capacity_coefficient = Symbol(
+    "b", units.energy / units.amount_of_substance / units.temperature**2)
 """
 Second tabular coefficient of heat capacity.
 """
 
-third_capacity_coefficient = Symbol("c", units.energy * units.temperature / units.amount_of_substance)
+third_capacity_coefficient = Symbol("c",
+    units.energy * units.temperature / units.amount_of_substance)
 """
 Third tabular coefficient of heat capacity.
 """
@@ -96,9 +105,8 @@ law = Eq(
 )
 @validate_output(molar_gibbs_energy_change)
 def calculate_isobaric_potential(thermal_effect_: Quantity, entropy_: Quantity,
-    temperature_: Quantity, coefficient_capacity_1_: Quantity,
-    coefficient_capacity_2_: Quantity, coefficient_capacity_3_: Quantity) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
+    temperature_: Quantity, coefficient_capacity_1_: Quantity, coefficient_capacity_2_: Quantity,
+    coefficient_capacity_3_: Quantity) -> Quantity:
     result_expr = solve(law, molar_gibbs_energy_change, dict=True)[0][molar_gibbs_energy_change]
     result_expr = result_expr.subs({
         molar_enthalpy_change: thermal_effect_,

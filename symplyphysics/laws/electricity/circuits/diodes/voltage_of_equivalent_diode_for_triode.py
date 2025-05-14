@@ -18,12 +18,16 @@ equivalent_diode_voltage = symbols.voltage
 :symbols:`voltage` between the cathode and anode of an equivalent diode for a triode.
 """
 
-anode_distance = clone_as_symbol(symbols.euclidean_distance, display_symbol="d_a", display_latex="d_\\text{a}")
+anode_distance = clone_as_symbol(symbols.euclidean_distance,
+    display_symbol="d_a",
+    display_latex="d_\\text{a}")
 """
 :symbols:`euclidean_distance` between the cathode and the anode.
 """
 
-grid_distance = clone_as_symbol(symbols.euclidean_distance, display_symbol="d_g", display_latex="d_\\text{g}")
+grid_distance = clone_as_symbol(symbols.euclidean_distance,
+    display_symbol="d_g",
+    display_latex="d_\\text{g}")
 """
 :symbols:`euclidean_distance` between the cathode and the grid.
 """

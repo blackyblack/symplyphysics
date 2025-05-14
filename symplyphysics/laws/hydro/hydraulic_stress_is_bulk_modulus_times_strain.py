@@ -24,7 +24,9 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-bulk_stress = clone_as_symbol(symbols.pressure, display_symbol="Delta(p)", display_latex="\\Delta p")
+bulk_stress = clone_as_symbol(symbols.pressure,
+    display_symbol="Delta(p)",
+    display_latex="\\Delta p")
 """
 Bulk stress. See :symbols:`pressure`.
 """

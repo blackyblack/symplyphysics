@@ -29,8 +29,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_input_impedance(test_args: Args) -> None:
-    result = impedance_law.calculate_input_impedance(test_args.resistance, test_args.angular_frequency,
-        test_args.capacitance)
+    result = impedance_law.calculate_input_impedance(test_args.resistance,
+        test_args.angular_frequency, test_args.capacitance)
     assert_equal(result, (3.27 - 10.96 * I) * units.ohm)
 
 
@@ -40,7 +40,8 @@ def test_bad_resistance(test_args: Args) -> None:
         impedance_law.calculate_input_impedance(resistance, test_args.angular_frequency,
             test_args.capacitance)
     with raises(TypeError):
-        impedance_law.calculate_input_impedance(100, test_args.angular_frequency, test_args.capacitance)
+        impedance_law.calculate_input_impedance(100, test_args.angular_frequency,
+            test_args.capacitance)
 
 
 def test_bad_angular_frequency(test_args: Args) -> None:
@@ -58,4 +59,5 @@ def test_bad_capacitance(test_args: Args) -> None:
         impedance_law.calculate_input_impedance(test_args.resistance, test_args.angular_frequency,
             capacitance)
     with raises(TypeError):
-        impedance_law.calculate_input_impedance(test_args.resistance, test_args.angular_frequency, 100)
+        impedance_law.calculate_input_impedance(test_args.resistance, test_args.angular_frequency,
+            100)

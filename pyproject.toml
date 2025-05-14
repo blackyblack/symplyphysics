@@ -38,6 +38,9 @@ testpaths = [
     "test",
 ]
 
+[tool.pylint]
+ignored-modules = ["sympy"]
+
 [tool.pylint.master]
 fail-under = "9.8"
 
@@ -52,6 +55,8 @@ disable = [
   "line-too-long",
   "similarities",
   "too-many-locals",
+  "too-many-arguments", 
+  "too-many-positional-arguments",
   "fixme"
 ]
 

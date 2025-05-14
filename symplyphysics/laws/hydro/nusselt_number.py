@@ -15,13 +15,7 @@ flow, characteristic length of the system, and thermal conductivity of the fluid
 """
 
 from sympy import Eq, solve
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    convert_to_float,
-    symbols
-)
+from symplyphysics import (Quantity, validate_input, validate_output, convert_to_float, symbols)
 
 heat_transfer_coefficient = symbols.heat_transfer_coefficient
 """

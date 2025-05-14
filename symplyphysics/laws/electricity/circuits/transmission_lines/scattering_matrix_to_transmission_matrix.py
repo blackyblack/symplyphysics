@@ -20,15 +20,8 @@ parameters of the transmission matrix.
 """
 
 from sympy import Eq, solve, Matrix, evaluate
-from symplyphysics import (
-    units,
-    Quantity,
-    validate_input,
-    dimensionless,
-    convert_to_float,
-    symbols,
-    Symbol
-)
+from symplyphysics import (units, Quantity, validate_input, dimensionless, convert_to_float,
+    symbols, Symbol)
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
 voltage_voltage_parameter = Symbol("A", dimensionless)
@@ -78,19 +71,22 @@ Output port :symbols:`voltage` :symbols:`reflection_coefficient`.
 
 # the following block prevents the re-ordering of terms for the code printer
 with evaluate(False):
-    _expression_A = ((1 + input_voltage_reflection_coefficient) * (1 - output_voltage_reflection_coefficient) +
+    _expression_A = ((1 + input_voltage_reflection_coefficient) *
+        (1 - output_voltage_reflection_coefficient) +
         reverse_voltage_gain * forward_voltage_gain) / (2 * forward_voltage_gain)
     _expression_B = surge_impedance * ((1 + input_voltage_reflection_coefficient) *
-        (1 + output_voltage_reflection_coefficient) - reverse_voltage_gain * forward_voltage_gain) / (2 *
-        forward_voltage_gain)
+        (1 + output_voltage_reflection_coefficient) -
+        reverse_voltage_gain * forward_voltage_gain) / (2 * forward_voltage_gain)
     _expression_C = (1 / surge_impedance) * ((1 - input_voltage_reflection_coefficient) *
-        (1 - output_voltage_reflection_coefficient) - reverse_voltage_gain * forward_voltage_gain) / (2 *
-        forward_voltage_gain)
-    _expression_D = ((1 - input_voltage_reflection_coefficient) * (1 + output_voltage_reflection_coefficient) +
+        (1 - output_voltage_reflection_coefficient) -
+        reverse_voltage_gain * forward_voltage_gain) / (2 * forward_voltage_gain)
+    _expression_D = ((1 - input_voltage_reflection_coefficient) *
+        (1 + output_voltage_reflection_coefficient) +
         reverse_voltage_gain * forward_voltage_gain) / (2 * forward_voltage_gain)
 
 law = Eq(
-    Matrix([[voltage_voltage_parameter, voltage_current_parameter], [current_voltage_parameter, current_current_parameter]]),
+    Matrix([[voltage_voltage_parameter, voltage_current_parameter],
+    [current_voltage_parameter, current_current_parameter]]),
     Matrix([[_expression_A, _expression_B], [_expression_C, _expression_D]]),
 )
 """

@@ -10,8 +10,8 @@ from symplyphysics.laws.thermodynamics import isobaric_potential_of_temperature_
 ## https://studfile.net/preview/5797036/page:4/
 
 Args = namedtuple("Args", [
-    "thermal_effect", "entropy", "temperature", "coefficient_capacity_1",
-    "coefficient_capacity_2", "coefficient_capacity_3"
+    "thermal_effect", "entropy", "temperature", "coefficient_capacity_1", "coefficient_capacity_2",
+    "coefficient_capacity_3"
 ])
 
 

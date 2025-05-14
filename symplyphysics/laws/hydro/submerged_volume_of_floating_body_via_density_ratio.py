@@ -30,7 +30,9 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-submerged_volume = clone_as_symbol(symbols.volume, display_symbol="V_fl", display_latex="V_\\text{fl}")
+submerged_volume = clone_as_symbol(symbols.volume,
+    display_symbol="V_fl",
+    display_latex="V_\\text{fl}")
 """
 :symbols:`volume` submerged in the fluid, which is equal to the volume of the displaced
 fluid.
@@ -46,7 +48,9 @@ body_density = symbols.density
 :symbols:`density` of the body.
 """
 
-fluid_density = clone_as_symbol(symbols.density, display_symbol="rho_fl", display_latex="\\rho_\\text{fl}")
+fluid_density = clone_as_symbol(symbols.density,
+    display_symbol="rho_fl",
+    display_latex="\\rho_\\text{fl}")
 """
 :symbols:`density` of the fluid.
 """

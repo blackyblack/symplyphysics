@@ -81,7 +81,6 @@ def calculate_internal_energy(
     chemical_potential_: Quantity,
     particle_count_: int,
 ) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
     result = law.rhs.subs({
         temperature: temperature_,
         entropy: entropy_,

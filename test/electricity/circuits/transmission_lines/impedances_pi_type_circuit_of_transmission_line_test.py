@@ -10,8 +10,7 @@ from symplyphysics.laws.electricity.circuits.transmission_lines import impedance
 ## Then the impedances Z1, Z2, Z3 are equal, respectively: (40.38 + 13.65 * I) ohm,
 ## (40.38 + 13.65 * I) ohm, (-59.2 - 126.46 * I) ohm.
 
-Args = namedtuple("Args",
-    ["characteristic_resistance", "line_length", "constant_propagation"])
+Args = namedtuple("Args", ["characteristic_resistance", "line_length", "constant_propagation"])
 
 
 @fixture(name="test_args")

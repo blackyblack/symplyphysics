@@ -29,7 +29,9 @@ attenuation_coefficient = symbols.attenuation_coefficient
 :symbols:`attenuation_coefficient` in metal.
 """
 
-surface_resistance = clone_as_symbol(symbols.electrical_resistance, display_symbol="R_s", display_latex="R_\\text{s}")
+surface_resistance = clone_as_symbol(symbols.electrical_resistance,
+    display_symbol="R_s",
+    display_latex="R_\\text{s}")
 """
 :symbols:`electrical_resistance` of the surface.
 """
@@ -66,7 +68,9 @@ wavelength = symbols.wavelength
 :symbols:`wavelength` of the signal.
 """
 
-critical_wavelength = clone_as_symbol(symbols.wavelength, display_symbol="lambda_c", display_latex="\\lambda_\\text{c}")
+critical_wavelength = clone_as_symbol(symbols.wavelength,
+    display_symbol="lambda_c",
+    display_latex="\\lambda_\\text{c}")
 """
 Critical :symbols:`wavelength` of the system. See :ref:`Critical wavelength of waveguide <critical_wavelength_waveguide_def>`.
 """
@@ -77,12 +81,9 @@ _reduced_wavelength = wavelength / (2 * critical_wavelength)
 
 law = Eq(
     attenuation_coefficient,
-    (2 * _reduced_resistance * (second_index**2 * _reduced_dimension**3 + first_index**2))
-    / (
-        width
-        * sqrt(1 - _reduced_wavelength**2)
-        * (second_index**2 * _reduced_dimension**2 + first_index**2)
-    ),
+    (2 * _reduced_resistance * (second_index**2 * _reduced_dimension**3 + first_index**2)) /
+    (width * sqrt(1 - _reduced_wavelength**2) *
+    (second_index**2 * _reduced_dimension**2 + first_index**2)),
 )
 """
 :laws:symbol::
@@ -103,7 +104,6 @@ law = Eq(
 def calculate_attenuation_coefficient(surface_resistance_: Quantity, first_index_: float,
     second_index_: float, width_: Quantity, height_: Quantity, resistance_of_medium_: Quantity,
     signal_wavelength_: Quantity, critical_wavelength_: Quantity) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
     result_expr = solve(law, attenuation_coefficient, dict=True)[0][attenuation_coefficient]
     result_expr = result_expr.subs({
         surface_resistance: surface_resistance_,
