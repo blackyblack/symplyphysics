@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from typing import Optional, Sequence
-from functools import partial
 from sympy import (Expr, sqrt, Matrix, true, sin, cos, tan, Q, simplify, atan2, Symbol as SymSymbol,
     S, ImmutableMatrix, Basic)
 from sympy.logic.boolalg import Boolean
@@ -64,20 +63,7 @@ class BaseCoordinateSystem(Basic):  # type: ignore[misc]
             [x.diff(c), y.diff(c), z.diff(c)],
         ])
 
-        try:
-            obj._lame_coefficients = obj.generate_lame_coefficients()
-        except NotImplementedError:
-            assumption = obj.assumption(base_scalars)
-
-            lame_coefficients = []
-
-            for i_row in range(3):
-                row = obj._cartesian_derivative_matrix.row(i_row)
-                lame_coefficient = sqrt(sum(elem**2 for elem in row)).refine(assumption).simplify()
-                lame_coefficients.append(lame_coefficient)
-
-            h1, h2, h3 = lame_coefficients
-            obj._lame_coefficients = h1, h2, h3
+        obj._lame_coefficients = obj.generate_lame_coefficients()
 
         obj._base_vector_matrix = ImmutableMatrix([
             simplify(obj._cartesian_derivative_matrix.row(i_row) / obj._lame_coefficients[i_row])
@@ -127,6 +113,11 @@ class BaseCoordinateSystem(Basic):  # type: ignore[misc]
         raise NotImplementedError
 
     def assumption(self, base_scalars: Optional[Sequence[Expr]] = None) -> Boolean:  # pylint: disable=unused-argument
+        """
+        Assumption(s) about base scalars in the coordinate system. For example, in spherical
+        coordinates `r ≥ 0` and `sin(θ) ≥ 0` where `r` is the radius and `θ` is the polar angle.
+        """
+
         return true
 
     def base_scalar_subs(self, base_scalars: Optional[Sequence[Expr]] = None) -> dict[Symbol, Expr]:
@@ -151,7 +142,18 @@ class BaseCoordinateSystem(Basic):  # type: ignore[misc]
         return simplify(matrix)
 
     def generate_lame_coefficients(self) -> tuple[Expr, Expr, Expr]:
-        raise NotImplementedError
+        assumption = self.assumption(self.base_scalars)
+
+        lame_coefficients = []
+
+        for i_row in range(3):
+            row = self._cartesian_derivative_matrix.row(i_row)
+            lame_coefficient = sqrt(sum(elem**2 for elem in row)).refine(assumption).simplify()
+            lame_coefficients.append(lame_coefficient)
+
+        h1, h2, h3 = lame_coefficients
+
+        return h1, h2, h3
 
     def lame_coefficients(self, base_scalars: Optional[Sequence[Expr]] = None) -> Sequence[Expr]:
         """
@@ -160,11 +162,9 @@ class BaseCoordinateSystem(Basic):  # type: ignore[misc]
         """
 
         subs = self.base_scalar_subs(base_scalars)
-        assumption = self.assumption(base_scalars)
 
         return tuple(
-            lame_coefficient.subs(subs).refine(assumption).simplify()
-            for lame_coefficient in self._lame_coefficients)
+            lame_coefficient.subs(subs).simplify() for lame_coefficient in self._lame_coefficients)
 
     def base_vector_matrix(
         self,
@@ -217,11 +217,8 @@ class BaseCoordinateSystem(Basic):  # type: ignore[misc]
             for i_col in range(diff_matrix.cols):
                 elem = diff_matrix[i_row, i_col]
 
-                def const(expr: Expr, _: object) -> Expr:
-                    return expr
-
                 for func_base_scalar, base_scalar in zip(self._base_scalar_functions, base_scalars):
-                    elem = elem.replace(func_base_scalar, partial(const, base_scalar))
+                    elem = elem.replace(func_base_scalar, lambda _: base_scalar)  # pylint: disable=cell-var-from-loop
 
                 matrix[i_row, i_col] = elem
 
@@ -251,12 +248,6 @@ class CartesianCoordinateSystem(BaseCoordinateSystem):
         _base_scalars: Optional[Sequence[Expr]] = None,
     ) -> Matrix:
         return Matrix.eye(3)
-
-    def lame_coefficients(
-        self,
-        _base_scalars: Optional[Sequence[Expr]] = None,
-    ) -> Sequence[Expr]:
-        return self._lame_coefficients
 
     def base_vector_matrix(
         self,
