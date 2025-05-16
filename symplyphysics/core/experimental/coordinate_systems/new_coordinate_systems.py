@@ -46,7 +46,7 @@ class BaseCoordinateSystem(Basic):  # type: ignore[misc]
         base_scalars: Optional[tuple[Symbol, Symbol, Symbol]] = None,
         base_scalar_functions: Optional[tuple[Function, Function, Function]] = None,
     ) -> BaseCoordinateSystem:
-        obj = super().__new__(cls)
+        obj = super().__new__(cls)  # pylint: disable=no-value-for-parameter
 
         if not base_scalars:
             base_scalars = obj.generate_base_scalars()

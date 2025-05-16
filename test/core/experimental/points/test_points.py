@@ -6,7 +6,7 @@ from symplyphysics.core.experimental.coordinate_systems.new_coordinate_systems i
     CylindricalCoordinateSystem,
     SphericalCoordinateSystem,
 )
-from symplyphysics.core.experimental.points import AppliedPoint
+from symplyphysics.core.experimental.vectors.new_coordinate_vectors import AppliedPoint
 
 
 def test_applied_point() -> None:

@@ -157,7 +157,7 @@ def test_vector_scaling() -> None:
     assert vector3 == force
     assert scale3 == -1
 
-    positive_force = +force
+    positive_force = +1 * force
     assert positive_force == force
 
     # .subs
@@ -252,7 +252,7 @@ def test_vector_dot() -> None:
 
     assert expr_equals(
         dot(f1 + f2 * 2, -v1 + v2),
-        -dot(f1, v1) - 2 * dot(f2, v1) + dot(f1, v2) + 2 * dot(f2, v2),
+        -1 * dot(f1, v1) - 2 * dot(f2, v1) + dot(f1, v2) + 2 * dot(f2, v2),
     )
 
 
@@ -269,14 +269,14 @@ def test_vector_cross() -> None:
     assert vector_equals(cross(f1, 0), 0)
 
     assert vector_equals(cross(f1, f2), cross(f1, f2))
-    assert vector_equals(cross(f1, f2), -cross(f2, f1))
+    assert vector_equals(cross(f1, f2), -1 * cross(f2, f1))
 
     assert vector_equals(cross(f1, f1 + f2), cross(f1, f2))
     assert vector_equals(cross(f1 + f2, f1 + f2), 0)
 
     assert vector_equals(
         cross(f1 + f2 * 2, -v1 + v2),
-        -cross(f1, v1) + cross(f1, v2) - 2 * cross(f2, v1) + 2 * cross(f2, v2),
+        -1 * cross(f1, v1) + cross(f1, v2) - 2 * cross(f2, v1) + 2 * cross(f2, v2),
     )
 
 
