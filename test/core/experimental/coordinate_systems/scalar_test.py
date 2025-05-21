@@ -6,6 +6,7 @@ from symplyphysics.core.experimental.vectors import VectorSymbol
 from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
     CylindricalCoordinateSystem, SphericalCoordinateSystem, AppliedPoint, CoordinateScalar,
     CoordinateVector)
+from symplyphysics.core.experimental.coordinate_systems.point import GLOBAL_POINT
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -56,25 +57,28 @@ def test_scalar(test_args: Args) -> None:
     assert expr_equals(cart_scalar_none.scalar, 1)
     assert isinstance(cart_scalar_none.scalar, Expr)
     assert cart_scalar_none.system == test_args.cart_sys  # NOTE: same point for all scalars in a Cartesian system
-    assert cart_scalar_none.point is not None
+    assert cart_scalar_none.point == GLOBAL_POINT
 
     cart_scalar_p = CoordinateScalar(1, test_args.cart_sys, test_args.p)
     assert isinstance(cart_scalar_p, CoordinateScalar)
     assert expr_equals(cart_scalar_p.scalar, 1)
     assert isinstance(cart_scalar_p.scalar, Expr)
     assert cart_scalar_p.system == test_args.cart_sys
-    assert cart_scalar_p.point == cart_scalar_none.point
+    assert cart_scalar_p.point == test_args.p
     assert cart_scalar_p != 1
+
+    assert cart_scalar_p != cart_scalar_none
 
     cart_scalar_q = CoordinateScalar(1, test_args.cart_sys, test_args.cart_pt)
     assert isinstance(cart_scalar_q, CoordinateScalar)
     assert expr_equals(cart_scalar_q.scalar, 1)
     assert isinstance(cart_scalar_q.scalar, Expr)
     assert cart_scalar_q.system == test_args.cart_sys
-    assert cart_scalar_q.point == cart_scalar_none.point  # NOTE: same point for all scalars in a Cartesian system
+    assert cart_scalar_q.point == test_args.cart_pt
     assert cart_scalar_q != 1
 
-    assert cart_scalar_p == cart_scalar_q  # NOTE: same point for all scalars in a Cartesian system
+    assert cart_scalar_q != cart_scalar_none
+    assert cart_scalar_q != cart_scalar_p
 
     with raises(ValueError):
         _ = CoordinateScalar(1, test_args.cyl_sys)
@@ -123,7 +127,6 @@ def test_scalar(test_args: Args) -> None:
     assert isinstance(sph_scalar_q.scalar, Expr)
     assert sph_scalar_q.system == test_args.sph_sys
     assert sph_scalar_q.point == test_args.sph_pt
-    assert sph_scalar_q != 1
 
     assert sph_scalar_q != 1
     assert sph_scalar_q != sph_scalar_p
@@ -154,10 +157,11 @@ def test_scalar_bad_input(test_args: Args) -> None:
     with raises(ValueError):
         CoordinateScalar(CoordinateVector([1, 1, 1], test_args.cart_sys), test_args.cart_sys)
 
-    # NOTE: point of application doesn't matter in a Cartesian system
-    _ = CoordinateScalar(1, test_args.cart_sys, test_args.cyl_pt)
-
     # point and system mismatch
+    with raises(ValueError):
+        CoordinateScalar(1, test_args.cart_sys, test_args.cyl_pt)
+    with raises(ValueError):
+        CoordinateScalar(1, test_args.cart_sys, test_args.sph_pt)
     with raises(ValueError):
         CoordinateScalar(1, test_args.cyl_sys, test_args.cart_pt)
     with raises(ValueError):

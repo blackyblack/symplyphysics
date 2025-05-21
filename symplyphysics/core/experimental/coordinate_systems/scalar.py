@@ -11,6 +11,16 @@ from .point import AppliedPoint, check_point_with_system
 
 
 class CoordinateScalar(Expr):
+    """
+    A `CoordinateScalar` represents the value of a scalar field at a particular *point* in space
+    in a certain *coordinate system*. Common examples of scalar fields include the gravitational
+    potential, the electric potential, temperature, pressure, etc.
+
+    Nore that unlike in `CoordinateVector`, the kind of coordinate system the scalar is defined in
+    does not play a role in comparing them, i.e. both the system and the point of application must
+    match.
+    """
+
     _scalar: Expr
     _system: BaseCoordinateSystem
     _point: AppliedPoint | SymSymbol

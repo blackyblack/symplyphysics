@@ -4,7 +4,8 @@ from sympy import pi, Expr, Symbol as SymSymbol
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
     CylindricalCoordinateSystem, SphericalCoordinateSystem, AppliedPoint)
-from symplyphysics.core.experimental.coordinate_systems.point import check_point_with_system
+from symplyphysics.core.experimental.coordinate_systems.point import (check_point_with_system,
+    GLOBAL_POINT)
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -73,9 +74,9 @@ def test_applied_point(test_args: Args) -> None:
 def test_check_point_with_system(test_args: Args) -> None:
     p = SymSymbol("P")
 
-    pt_none = check_point_with_system(test_args.cart_sys, None)
-    assert pt_none == check_point_with_system(test_args.cart_sys, p)
-    assert pt_none == check_point_with_system(test_args.cart_sys, test_args.cart_pt)
+    assert check_point_with_system(test_args.cart_sys, None) == GLOBAL_POINT
+    assert check_point_with_system(test_args.cart_sys, p) == p
+    assert check_point_with_system(test_args.cart_sys, test_args.cart_pt) == test_args.cart_pt
 
     with raises(ValueError):
         _ = check_point_with_system(test_args.cyl_sys, None)
@@ -87,8 +88,10 @@ def test_check_point_with_system(test_args: Args) -> None:
     assert p == check_point_with_system(test_args.sph_sys, p)
     assert test_args.sph_pt == check_point_with_system(test_args.sph_sys, test_args.sph_pt)
 
-    # NOTE: point of application doesn't matter in a Cartesian system
-    _ = check_point_with_system(test_args.cart_sys, test_args.cyl_pt)
+    with raises(ValueError):
+        check_point_with_system(test_args.cart_sys, test_args.cyl_pt)
+    with raises(ValueError):
+        check_point_with_system(test_args.cart_sys, test_args.sph_pt)
 
     with raises(ValueError):
         check_point_with_system(test_args.cyl_sys, test_args.cart_pt)

@@ -6,6 +6,7 @@ from sympy import Basic, Expr, Symbol as SymSymbol
 from sympy.printing.printer import Printer
 
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.core.symbols.symbols import next_name
 
 from ..miscellaneous import sympify_expr
 
@@ -94,8 +95,8 @@ class AppliedPoint(Basic):
         return True
 
 
-# Used as a common point for all Cartesian vectors
-_CartesianVectorPoint = SymSymbol("P")
+# Used as a common point for Cartesian vectors
+GLOBAL_POINT = SymSymbol(next_name("P"))
 
 
 def check_point_with_system(
@@ -103,8 +104,7 @@ def check_point_with_system(
     point: Optional[AppliedPoint | SymSymbol],
 ) -> AppliedPoint | SymSymbol:
     if isinstance(system, CartesianCoordinateSystem):
-        # Cartesian vectors are independent of their point of application.
-        point = _CartesianVectorPoint
+        point = point or GLOBAL_POINT
     elif point is None:
         message = "The point of application must be defined for vectors in non-Cartesian systems"
         raise ValueError(message)

@@ -10,10 +10,21 @@ from ..miscellaneous import sympify_expr
 from ..vectors import VectorExpr, is_vector_expr, into_terms, split_factor, VectorCross
 from .base_system import BaseCoordinateSystem
 from .cartesian_system import CartesianCoordinateSystem
-from .point import AppliedPoint, check_point_with_system
+from .point import AppliedPoint, check_point_with_system, GLOBAL_POINT
 
 
 class CoordinateVector(VectorExpr):
+    """
+    A `CoordinateVector` represents a vector in a certain coordinate _system_ at a particular
+    _point_ in space and is defined as a linear combination of the system's base vectors. The
+    coefficients of the linear combination are the *components* of the vector.
+
+    Note that if a vector is defined in a Cartesian coordinate system, it will be equal to another
+    component-based vector as long as their components match, regardless of their points of
+    application. This is unlike vectors defined in non-Cartesian systems, which are not
+    transferrable and therefore must have the same point of application in order to be compared.
+    """
+
     _components: ImmutableMatrix
     _system: BaseCoordinateSystem
     _point: AppliedPoint | SymSymbol
@@ -42,7 +53,13 @@ class CoordinateVector(VectorExpr):
         return self.components.free_symbols  # type: ignore[no-any-return]
 
     def _hashable_content(self) -> tuple[Basic, ...]:
-        return self.components, self.system, self.point
+        if isinstance(self.system, CartesianCoordinateSystem):
+            # Cartesian-defined vectors are independent of their point of application.
+            point = GLOBAL_POINT
+        else:
+            point = self.point
+
+        return self.components, self.system, point
 
     def __new__(
         cls,
