@@ -1,99 +1,16 @@
 from __future__ import annotations
 
-from typing import Sequence, Optional, Iterable, SupportsFloat, Sized, Any
+from typing import Sequence, Optional, Any
+
 from sympy import (ImmutableMatrix, Expr, sqrt, Symbol as SymSymbol, Basic, Derivative as
-    SymDerivative, Atom)
-from sympy.printing.printer import Printer
+    SymDerivative, S)
 from sympy.matrices.dense import DenseMatrix
 
-from symplyphysics.core.expr_comparisons import expr_equals
-
 from ..miscellaneous import sympify_expr
-from ..coordinate_systems.new_coordinate_systems import BaseCoordinateSystem, CartesianCoordinateSystem
-from . import VectorExpr, is_vector_expr, into_terms, split_factor, VectorCross
-
-
-def _prepare(coordinates: Iterable[SupportsFloat], system: BaseCoordinateSystem) -> dict[SymSymbol,
-    Expr]:
-    return {
-        scalar: sympify_expr(coordinate)
-        for scalar, coordinate in zip(system.base_scalars, coordinates)
-    }
-
-
-class AppliedPoint(Atom):
-    """
-    An `AppliedPoint` corresponds to a point in (3D) space whose coordinates are defined within a
-    certain coordinate system.
-    """
-
-    _coordinates: dict[SymSymbol, Expr]
-    _system: BaseCoordinateSystem
-
-    _iterable = False
-
-    @property
-    def coordinates(self) -> dict[SymSymbol, Expr]:
-        return self._coordinates
-
-    @property
-    def system(self) -> BaseCoordinateSystem:
-        return self._system
-
-    def __getitem__(self, base_scalar: SymSymbol) -> Expr:
-        return self.coordinates[base_scalar]
-
-    def __new__(
-        cls,
-        coordinates: Iterable[Any],
-        system: BaseCoordinateSystem,
-    ) -> AppliedPoint:
-        return super().__new__(cls)  # pylint: disable=no-value-for-parameter
-
-    def __init__(
-        self,
-        coordinates: Iterable[Any],
-        system: BaseCoordinateSystem,
-    ):
-        super().__init__()
-
-        if isinstance(coordinates, Sized):
-            n = len(coordinates)  # can't extract out of if-block, mypy complains otherwise
-        else:
-            coordinates = tuple(coordinates)
-            n = len(coordinates)
-
-        if n != 3:
-            raise ValueError(f"The point must have all 3 coordinates defined, got {n}.")
-
-        self._coordinates = _prepare(coordinates, system)
-        self._system = system
-
-    def _sympystr(self, p: Printer) -> str:
-        system_name = type(self.system).__name__.removesuffix("CoordinateSystem")
-        point_name = f"{system_name}Point"
-
-        coordinates = ", ".join(
-            f"{p.doprint(s)} = {p.doprint(c)}" for s, c in self.coordinates.items())
-
-        return f"{point_name}({coordinates})"
-
-    def _hashable_content(self) -> tuple[Any, ...]:
-        return (tuple(self.coordinates.items()),)
-
-    def equals(self, other: AppliedPoint) -> bool:
-        for base_scalar, coordinate in self.coordinates.items():
-            if base_scalar not in other.coordinates:
-                return False
-
-            if not expr_equals(coordinate, other[base_scalar]):
-                return False
-
-        return True
-
-
-# Used as a common point for all Cartesian vectors
-_CartesianVectorPoint = SymSymbol("P")
+from ..vectors import VectorExpr, is_vector_expr, into_terms, split_factor, VectorCross
+from .base_system import BaseCoordinateSystem
+from .cartesian_system import CartesianCoordinateSystem
+from .point import AppliedPoint, check_point_with_system
 
 
 class CoordinateVector(VectorExpr):
@@ -117,41 +34,44 @@ class CoordinateVector(VectorExpr):
         return self._point
 
     @property
+    def args(self) -> tuple[Basic, ...]:
+        return self.components, self.system, self.point
+
+    @property
     def free_symbols(self) -> set[Expr]:
         return self.components.free_symbols  # type: ignore[no-any-return]
 
     def _hashable_content(self) -> tuple[Basic, ...]:
         return self.components, self.system, self.point
 
-    def __init__(
-        self,
-        components: Sequence[Expr],
+    def __new__(
+        cls,
+        components: Sequence[Any],
         system: BaseCoordinateSystem,
         point: Optional[AppliedPoint | SymSymbol] = None,
-    ) -> None:
-        super().__init__()
-
+    ) -> Expr:
         if isinstance(components, DenseMatrix) and 1 not in components.shape:
             rows, cols = components.shape
             message = f"Expected a row or column vector, got a {rows} by {cols} matrix"
             raise ValueError(message)
 
-        if isinstance(system, CartesianCoordinateSystem):
-            # Cartesian vectors are independent of their point of application.
-            point = _CartesianVectorPoint
-        elif point is None:
-            message = "The point of application must be defined for vectors in non-Cartesian systems"
-            raise ValueError(message)
+        if not isinstance(components, DenseMatrix):
+            components = ImmutableMatrix([sympify_expr(component) for component in components])
+        else:
+            components = ImmutableMatrix(components).reshape(3, 1)
 
-        if isinstance(point, AppliedPoint) and system != point.system:
-            message = "The system of the vector and the point of its application must coincide"
-            raise ValueError(message)
+        if all(component == 0 for component in components):
+            return S.Zero
 
-        components = [sympify_expr(component) for component in components]
-        self._components = ImmutableMatrix(components)
+        obj = super().__new__(cls)  # pylint: disable=no-value-for-parameter
 
-        self._system = system
-        self._point = point
+        point = check_point_with_system(system, point)
+
+        obj._components = components
+        obj._system = system
+        obj._point = point
+
+        return obj
 
     def __str__(self) -> str:
         name = type(self.system).__name__.removesuffix("CoordinateSystem")
@@ -234,3 +154,9 @@ def combine_coordinate_vectors(expr: Expr) -> Expr:
         result += CoordinateVector(components, system, point)
 
     return result
+
+
+__all__ = [
+    "CoordinateVector",
+    "combine_coordinate_vectors",
+]
