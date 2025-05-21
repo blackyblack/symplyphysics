@@ -3,7 +3,7 @@ from typing import Optional, Sequence
 from sympy import Expr, S, cos, sin, sqrt, atan2, Q
 from sympy.logic.boolalg import Boolean
 
-from symplyphysics import Symbol, units
+from symplyphysics import Symbol, units, angle_type
 
 from .base_system import BaseCoordinateSystem
 
@@ -13,7 +13,7 @@ class CylindricalCoordinateSystem(BaseCoordinateSystem):
     def generate_base_scalars(self) -> tuple[Symbol, Symbol, Symbol]:
         return (
             Symbol("rho", units.length, display_latex="\\rho", nonnegative=True),
-            Symbol("phi", display_latex="\\varphi", real=True),
+            Symbol("phi", angle_type, display_latex="\\varphi", real=True),
             Symbol("z", units.length, real=True),
         )
 

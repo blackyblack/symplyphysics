@@ -33,8 +33,6 @@ class AppliedPoint(Basic):
     _coordinates: Mapping[SymSymbol, Expr]
     _system: BaseCoordinateSystem
 
-    # _iterable = False
-
     @property
     def coordinates(self) -> Mapping[SymSymbol, Expr]:
         return self._coordinates

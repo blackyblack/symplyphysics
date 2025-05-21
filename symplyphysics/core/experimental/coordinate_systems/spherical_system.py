@@ -3,7 +3,7 @@ from typing import Optional, Sequence
 from sympy import Expr, S, cos, sin, sqrt, atan2, Q, tan
 from sympy.logic.boolalg import Boolean
 
-from symplyphysics import Symbol, units
+from symplyphysics import Symbol, units, angle_type
 
 from .base_system import BaseCoordinateSystem
 
@@ -13,8 +13,8 @@ class SphericalCoordinateSystem(BaseCoordinateSystem):
     def generate_base_scalars(self) -> tuple[Symbol, Symbol, Symbol]:
         return (
             Symbol("r", units.length, nonnegative=True),
-            Symbol("theta", display_latex="\\theta", nonnegative=True),
-            Symbol("phi", display_latex="\\varphi", real=True),
+            Symbol("theta", angle_type, display_latex="\\theta", nonnegative=True),
+            Symbol("phi", angle_type, display_latex="\\varphi", real=True),
         )
 
     def cartesian_transform(self, base_scalars: Optional[Sequence[Expr]] = None) -> Sequence[Expr]:
@@ -49,5 +49,6 @@ class SphericalCoordinateSystem(BaseCoordinateSystem):
         h_phi = r * sin(theta)
 
         return h_r, h_theta, h_phi
+
 
 __all__ = ["SphericalCoordinateSystem"]

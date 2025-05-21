@@ -16,7 +16,7 @@ class CoordinateScalar(Expr):
     in a certain *coordinate system*. Common examples of scalar fields include the gravitational
     potential, the electric potential, temperature, pressure, etc.
 
-    Nore that unlike in `CoordinateVector`, the kind of coordinate system the scalar is defined in
+    Note that unlike in `CoordinateVector`, the kind of coordinate system the scalar is defined in
     does not play a role in comparing them, i.e. both the system and the point of application must
     match.
     """
