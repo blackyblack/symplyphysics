@@ -59,7 +59,7 @@ def test_non_evaluate() -> None:
     assert vector_equals(grad.doit(), CoordinateVector([1, 0, 0], cartesian))
 
 
-def check(system: BaseCoordinateSystem, value: Expr, components: Sequence[Any]) -> None:
+def _check(system: BaseCoordinateSystem, value: Expr, components: Sequence[Any]) -> None:
     p = SymSymbol("P")
 
     scalar = CoordinateScalar(value, system, p)
@@ -77,13 +77,13 @@ def test_cartesian_system() -> None:
     x, y, z = system.base_scalars
 
     value = sin(x + y + z)
-    check(system, value, ImmutableMatrix.ones(3, 1) * cos(x + y + z))
+    _check(system, value, ImmutableMatrix.ones(3, 1) * cos(x + y + z))
 
     value = (x**2 + y**2 + z**2) / 2
-    check(system, value, [x, y, z])
+    _check(system, value, [x, y, z])
 
     value = x * y + y * z + z * x
-    check(system, value, [y + z, x + z, x + y])
+    _check(system, value, [y + z, x + z, x + y])
 
 
 def test_cylindrical_system() -> None:
@@ -92,10 +92,10 @@ def test_cylindrical_system() -> None:
     rho, phi, z = system.base_scalars
 
     value = rho * sin(phi) - z
-    check(system, value, [sin(phi), cos(phi), -1])
+    _check(system, value, [sin(phi), cos(phi), -1])
 
     value = (rho**2 + z**2) / 2
-    check(system, value, [rho, 0, z])
+    _check(system, value, [rho, 0, z])
 
 
 def test_spherical_system() -> None:
@@ -104,11 +104,11 @@ def test_spherical_system() -> None:
     r, theta, phi = system.base_scalars
 
     value = r * sin(theta - phi)
-    check(system, value, [
+    _check(system, value, [
         sin(theta - phi),
         cos(theta - phi),
         -cos(theta - phi) / sin(theta),
     ])
 
     value = r**2 / 2
-    check(system, value, [r, 0, 0])
+    _check(system, value, [r, 0, 0])
