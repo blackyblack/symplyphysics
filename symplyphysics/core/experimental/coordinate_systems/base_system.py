@@ -1,15 +1,16 @@
 from __future__ import annotations
 
 from typing import Optional, Sequence
-from sympy import (Expr, sqrt, Matrix, true, sin, cos, tan, Q, simplify, atan2, Symbol as SymSymbol,
-    S, ImmutableMatrix, Basic)
+
+from sympy import Expr, sqrt, Matrix, true, simplify, Symbol as SymSymbol, ImmutableMatrix, Basic
 from sympy.logic.boolalg import Boolean
-from symplyphysics import Symbol, units, clone_as_function, Function
+
+from symplyphysics import Symbol, clone_as_function, Function
 
 from ..miscellaneous import cacheit
 
 
-class BaseCoordinateSystem(Basic):  # type: ignore[misc]
+class BaseCoordinateSystem(Basic):
     _base_scalars: tuple[Symbol, Symbol, Symbol]
 
     _cartesian_derivative_matrix: ImmutableMatrix
@@ -33,9 +34,6 @@ class BaseCoordinateSystem(Basic):  # type: ignore[misc]
     @property
     def base_scalar_functions(self) -> tuple[Function, Function, Function]:
         return self._base_scalar_functions
-
-    def _hashable_content(self) -> tuple[Basic, ...]:
-        return ()
 
     def __repr__(self) -> str:
         return type(self).__qualname__
@@ -88,7 +86,7 @@ class BaseCoordinateSystem(Basic):  # type: ignore[misc]
 
         obj._diff_base_vector_matrix = ImmutableMatrix(simplify(diff_matrix * inv_matrix))
 
-        return obj  # type: ignore[no-any-return]
+        return obj
 
     def generate_base_scalars(self) -> tuple[Symbol, Symbol, Symbol]:
         raise NotImplementedError
@@ -225,122 +223,4 @@ class BaseCoordinateSystem(Basic):  # type: ignore[misc]
         return simplify(matrix)
 
 
-class CartesianCoordinateSystem(BaseCoordinateSystem):
-
-    def generate_base_scalars(self) -> tuple[Symbol, Symbol, Symbol]:
-        return (
-            Symbol("x", units.length, real=True),
-            Symbol("y", units.length, real=True),
-            Symbol("z", units.length, real=True),
-        )
-
-    def cartesian_transform(self, base_scalars: Optional[Sequence[Expr]] = None) -> Sequence[Expr]:
-        return base_scalars or self.base_scalars
-
-    def inverse_cartesian_transform(self, cartesian_scalars: Sequence[Expr]) -> Sequence[Expr]:
-        return cartesian_scalars
-
-    def generate_lame_coefficients(self) -> tuple[Expr, Expr, Expr]:
-        return S.One, S.One, S.One
-
-    def cartesian_derivative_matrix(
-        self,
-        _base_scalars: Optional[Sequence[Expr]] = None,
-    ) -> Matrix:
-        return Matrix.eye(3)
-
-    def base_vector_matrix(
-        self,
-        _base_scalars: Optional[Sequence[Expr]] = None,
-    ) -> Matrix:
-        return Matrix.eye(3)
-
-    def diff_base_vector_matrix(
-        self,
-        _wrt: SymSymbol,
-        _base_scalars: Optional[Sequence[Expr]] = None,
-    ) -> Matrix:
-        return Matrix.zeros(3)
-
-
-class CylindricalCoordinateSystem(BaseCoordinateSystem):
-
-    def generate_base_scalars(self) -> tuple[Symbol, Symbol, Symbol]:
-        return (
-            Symbol("rho", units.length, display_latex="\\rho", nonnegative=True),
-            Symbol("phi", display_latex="\\varphi", real=True),
-            Symbol("z", units.length, real=True),
-        )
-
-    def cartesian_transform(self, base_scalars: Optional[Sequence[Expr]] = None) -> Sequence[Expr]:
-        rho, phi, z = base_scalars or self.base_scalars
-
-        x = rho * cos(phi)
-        y = rho * sin(phi)
-
-        return x, y, simplify(z)
-
-    def inverse_cartesian_transform(self, cartesian_scalars: Sequence[Expr]) -> Sequence[Expr]:
-        x, y, z = cartesian_scalars
-
-        rho = sqrt(x**2 + y**2)
-        phi = atan2(y, x)
-
-        return rho, phi, z
-
-    def assumption(self, base_scalars: Optional[Sequence[Expr]] = None) -> Boolean:
-        rho = (base_scalars or self.base_scalars)[0]
-
-        return Q.positive(rho)  # pylint: disable=too-many-function-args
-
-    def generate_lame_coefficients(self) -> tuple[Expr, Expr, Expr]:
-        rho, _, _ = self.base_scalars
-
-        h_rho = S.One
-        h_phi = rho
-        h_z = S.One
-
-        return h_rho, h_phi, h_z
-
-
-class SphericalCoordinateSystem(BaseCoordinateSystem):
-
-    def generate_base_scalars(self) -> tuple[Symbol, Symbol, Symbol]:
-        return (
-            Symbol("r", units.length, nonnegative=True),
-            Symbol("theta", display_latex="\\theta", nonnegative=True),
-            Symbol("phi", display_latex="\\varphi", real=True),
-        )
-
-    def cartesian_transform(self, base_scalars: Optional[Sequence[Expr]] = None) -> Sequence[Expr]:
-        r, theta, phi = base_scalars or self.base_scalars
-
-        x = r * sin(theta) * cos(phi)
-        y = r * sin(theta) * sin(phi)
-        z = r * cos(theta)
-
-        return x, y, z
-
-    def inverse_cartesian_transform(self, cartesian_scalars: Sequence[Expr]) -> Sequence[Expr]:
-        x, y, z = cartesian_scalars
-
-        r = sqrt(x**2 + y**2 + z**2)
-        theta = atan2(sqrt(x**2 + y**2), z)
-        phi = atan2(y, x)
-
-        return r, theta, phi
-
-    def assumption(self, base_scalars: Optional[Sequence[Expr]] = None) -> Boolean:
-        r, theta, *_ = base_scalars or self.base_scalars
-
-        # pylint: disable-next=too-many-function-args
-        return Q.positive(r) & Q.positive(sin(theta)) & Q.positive(tan(theta))
-
-    def generate_lame_coefficients(self) -> tuple[Expr, Expr, Expr]:
-        r, theta, _ = self.base_scalars
-
-        h_r = S.One
-        h_theta = r
-        h_phi = r * sin(theta)
-
-        return h_r, h_theta, h_phi
+__all__ = ["BaseCoordinateSystem"]

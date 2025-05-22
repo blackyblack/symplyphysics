@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Optional, Sequence, Self, Callable
+from typing import Any, Optional, Sequence, Self, Callable, TypeVar, Iterable
 from collections import defaultdict
 from itertools import product as py_product
 
@@ -10,13 +10,45 @@ from sympy import (Basic, Expr, S, Mul as SymMul, Add as SymAdd, Derivative as S
     fraction, sympify as sym_sympify)
 from sympy.core import function as sym_fn
 from sympy.core.parameters import global_parameters
+from sympy.combinatorics.permutations import Permutation
 from sympy.physics.units import Dimension
 from sympy.printing.printer import Printer
 
 from symplyphysics import Symbol
 from symplyphysics.core.symbols.symbols import DimensionSymbol, next_name
 from symplyphysics.core.symbols.id_generator import last_id, next_id
-from ..miscellaneous import sort_with_sign, cacheit, sympify_expr
+from ..miscellaneous import cacheit, sympify_expr
+
+_T = TypeVar("_T")
+
+
+def sort_with_sign(
+    it: Iterable[_T],
+    key: Optional[Callable[[_T], Any]] = None,
+) -> tuple[int, list[_T]]:
+    """
+    Sorts `it` with an optional `key`. Also returns the sign of the permutation of the elements of
+    `it` as the result of sorting, which is `1` if the number of swaps performed between any two
+    elements is even, `-1` if the number is odd, and `0` if `it` contains any equal elements.
+    """
+
+    old_it = it if isinstance(it, list) else list(it)
+
+    if key is None:
+        new_it = sorted(old_it)
+        indices = [old_it.index(v) for v in new_it]
+    else:
+        old_keys = [key(v) for v in old_it]
+        new_keys = sorted(old_keys)
+        indices = [old_keys.index(k) for k in new_keys]
+        new_it = [old_it[i] for i in indices]
+
+    if len(set(indices)) != len(indices):
+        sign = 0
+    else:
+        sign = Permutation(indices).signature()
+
+    return sign, new_it
 
 
 def _check_vector(value: Any) -> Expr:

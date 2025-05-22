@@ -5,10 +5,9 @@ from sympy import (Symbol as SymSymbol, Function as SymFunction, ImmutableMatrix
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.experimental.vectors import (is_vector_expr, VectorSymbol, VectorNorm as
     norm, VectorDot as dot, VectorCross as cross, vector_diff)
-from symplyphysics.core.experimental.coordinate_systems.new_coordinate_systems import (
-    CartesianCoordinateSystem, CylindricalCoordinateSystem, SphericalCoordinateSystem)
-from symplyphysics.core.experimental.vectors.new_coordinate_vectors import (CoordinateVector,
-    combine_coordinate_vectors, AppliedPoint)
+from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
+    CylindricalCoordinateSystem, SphericalCoordinateSystem, AppliedPoint, CoordinateVector,
+    combine_coordinate_vectors)
 
 
 @dataclass(frozen=True, kw_only=True)
