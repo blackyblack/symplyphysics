@@ -2,7 +2,7 @@ from typing import Optional, Any
 
 from sympy import Expr, S, ImmutableMatrix, diff
 
-from ..miscellaneous import set_evaluate, sympify_expr
+from ..miscellaneous import evaluate_or_global_fallback, sympify_expr
 from ..vectors import VectorExpr, is_vector_expr
 from ..coordinate_systems import CoordinateScalar, CoordinateVector
 
@@ -35,7 +35,7 @@ class VectorGradient(VectorExpr):  # pylint: disable=too-few-public-methods
         if is_vector_expr(scalar):
             raise ValueError(f"Expected scalar, got vector: {scalar}")
 
-        evaluate = set_evaluate(evaluate)
+        evaluate = evaluate_or_global_fallback(evaluate)
 
         if not evaluate:
             obj = super().__new__(cls)  # pylint: disable=no-value-for-parameter

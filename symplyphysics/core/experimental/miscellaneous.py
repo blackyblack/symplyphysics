@@ -21,7 +21,9 @@ def sympify_expr(value: Any) -> Expr:
     return result
 
 
-def set_evaluate(evaluate: Optional[bool]) -> bool:
+def evaluate_or_global_fallback(evaluate: Optional[bool]) -> bool:
+    """Fallbacks to the global value of `evaluate` if it is `None`, else returns the input."""
+
     if evaluate is not None:
         return evaluate
 
@@ -31,5 +33,5 @@ def set_evaluate(evaluate: Optional[bool]) -> bool:
 __all__ = [
     "cacheit",
     "sympify_expr",
-    "set_evaluate",
+    "evaluate_or_global_fallback",
 ]
