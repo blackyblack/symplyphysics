@@ -19,6 +19,10 @@ class VectorGradient(VectorExpr):  # pylint: disable=too-few-public-methods
         grad(f) = sum(diff(f, q_i) / h_i * e_i, i)
 
     Here, `diff` is the differentiation operator, and `e_i` is the `i`-th unit base vector.
+
+    **Links:**
+
+    #. `Wikipedia <https://en.wikipedia.org/wiki/Gradient>`__.
     """
 
     def __new__(
