@@ -2,7 +2,7 @@ from typing import Optional, Any
 
 from sympy import Expr, S, diff
 
-from ..miscellaneous import set_evaluate
+from ..miscellaneous import evaluate_or_global_fallback, sympify_expr
 from ..vectors import is_vector_expr
 from ..coordinate_systems import CoordinateScalar
 
@@ -27,21 +27,24 @@ class VectorLaplacian(Expr):  # pylint: disable=too-few-public-methods
         *,
         evaluate: Optional[bool] = None,
     ) -> Expr:
-        is_zero = scalar == 0
-
-        if not is_zero and is_vector_expr(scalar):
-            raise ValueError(f"Expected scalar, got vector: {scalar}")
-
-        if is_zero or not isinstance(scalar, CoordinateScalar):
+        if scalar == 0:
             return S.Zero
 
-        evaluate = set_evaluate(evaluate)
+        scalar = sympify_expr(scalar)
+
+        if is_vector_expr(scalar):
+            raise ValueError(f"Expected scalar, got vector: {scalar}")
+
+        evaluate = evaluate_or_global_fallback(evaluate)
 
         if not evaluate:
             obj = super().__new__(cls)  # pylint: disable=no-value-for-parameter
             obj._args = (scalar,)
 
             return obj
+
+        if not isinstance(scalar, CoordinateScalar):
+            return S.Zero
 
         system = scalar.system
         the_scalar = scalar.scalar
