@@ -1,14 +1,15 @@
 from __future__ import annotations
 
-from typing import Sequence, Optional, Any, Iterable
+from typing import Optional, Any, Iterable
 
 from sympy import (ImmutableMatrix, Expr, sqrt, Symbol as SymSymbol, Basic, Derivative as
     SymDerivative, S)
 from sympy.matrices.dense import DenseMatrix
 from sympy.physics.units import Dimension
 
-from symplyphysics.core.errors import UnitsError
 from symplyphysics.core.dimensions.collect_quantity import collect_quantity_factor_and_dimension
+from symplyphysics.core.dimensions.miscellaneous import is_any_dimension, dimensionless
+from symplyphysics.core.errors import UnitsError
 
 from ..miscellaneous import sympify_expr
 from ..vectors import VectorExpr, is_vector_expr, into_terms, split_factor, VectorCross
@@ -196,15 +197,22 @@ class QuantityCoordinateVector(CoordinateVector):
         dimensions = set()
 
         for component in components:
-            _, dimension = collect_quantity_factor_and_dimension(component)
+            factor, dimension = collect_quantity_factor_and_dimension(component)
+
+            if is_any_dimension(factor):
+                continue
+
             dimensions.add(dimension)
 
-        if len(dimensions) != 1:
+        if len(dimensions) > 1:
             raise UnitsError(f"Expected unique dimension, got {dimensions}")
 
         obj = super().__new__(cls, components, system, point)
 
-        obj._dimension = next(iter(dimensions))
+        if not isinstance(obj, CoordinateVector):
+            return obj
+
+        obj._dimension = next(iter(dimensions), dimensionless)
 
         return obj
 
