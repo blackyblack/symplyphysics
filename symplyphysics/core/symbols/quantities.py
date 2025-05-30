@@ -10,7 +10,6 @@ from sympy.printing.printer import Printer
 
 from .symbols import DimensionSymbol, next_name
 from ..dimensions.collect_quantity import collect_quantity_factor_and_dimension
-from ..dimensions.dimensions import dimension_to_si_unit  # to avoid cyclic import
 
 
 class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancestors
@@ -71,6 +70,8 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
         return self.__class__(Abs(self.scale_factor), dimension=self.dimension)
 
     def _sympystr(self, p: Printer) -> str:
+        from ..dimensions.dimensions import dimension_to_si_unit  # pylint: disable=import-outside-toplevel
+
         if "QTY" not in self.display_name:
             return self.display_name
 
