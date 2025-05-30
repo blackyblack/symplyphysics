@@ -5,7 +5,7 @@ from .spherical_system import SphericalCoordinateSystem
 
 from .point import AppliedPoint
 from .scalar import CoordinateScalar
-from .vector import CoordinateVector, combine_coordinate_vectors
+from .vector import CoordinateVector, combine_coordinate_vectors, QuantityCoordinateVector
 
 __all__ = [
     # Most common coordinate system classes
@@ -19,4 +19,5 @@ __all__ = [
     "CoordinateScalar",
     "CoordinateVector",
     "combine_coordinate_vectors",
+    "QuantityCoordinateVector",
 ]

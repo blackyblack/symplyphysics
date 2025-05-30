@@ -100,7 +100,7 @@ law = Eq(
 def calculate_transmission_matrix(
     characteristic_resistance_: Quantity, parameters_: tuple[tuple[float, float], tuple[float,
     float]]
-) -> tuple[tuple[Quantity, float], tuple[float, Quantity]]:
+) -> tuple[tuple[float, Quantity], tuple[Quantity, float]]:
     result = solve(law, [
         voltage_voltage_parameter, voltage_current_parameter, current_voltage_parameter,
         current_current_parameter

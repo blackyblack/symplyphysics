@@ -1,10 +1,15 @@
 from __future__ import annotations
 
-from typing import Sequence, Optional, Any
+from typing import Optional, Any, Iterable
 
 from sympy import (ImmutableMatrix, Expr, sqrt, Symbol as SymSymbol, Basic, Derivative as
     SymDerivative, S)
 from sympy.matrices.dense import DenseMatrix
+from sympy.physics.units import Dimension
+
+from symplyphysics.core.dimensions.collect_quantity import collect_quantity_factor_and_dimension
+from symplyphysics.core.dimensions.miscellaneous import is_any_dimension, dimensionless
+from symplyphysics.core.errors import UnitsError
 
 from ..miscellaneous import sympify_expr
 from ..vectors import VectorExpr, is_vector_expr, into_terms, split_factor, VectorCross
@@ -63,7 +68,7 @@ class CoordinateVector(VectorExpr):
 
     def __new__(
         cls,
-        components: Sequence[Any],
+        components: Iterable[Any],
         system: BaseCoordinateSystem,
         point: Optional[AppliedPoint | SymSymbol] = None,
     ) -> Expr:
@@ -89,6 +94,9 @@ class CoordinateVector(VectorExpr):
         obj._point = point
 
         return obj
+
+    def __iter__(self) -> Iterable[Expr]:
+        return iter(self.components)
 
     def __str__(self) -> str:
         name = type(self.system).__name__.removesuffix("CoordinateSystem")
@@ -142,7 +150,7 @@ class CoordinateVector(VectorExpr):
 
 def combine_coordinate_vectors(expr: Expr) -> Expr:
     non_coordinate = []
-    system_to_components: dict[tuple[BaseCoordinateSystem, Optional[AppliedPoint | SymSymbol]],
+    system_to_components: dict[tuple[BaseCoordinateSystem, AppliedPoint | SymSymbol],
         ImmutableMatrix] = {}
 
     for cross in expr.atoms(VectorCross):
@@ -171,6 +179,42 @@ def combine_coordinate_vectors(expr: Expr) -> Expr:
         result += CoordinateVector(components, system, point)
 
     return result
+
+
+class QuantityCoordinateVector(CoordinateVector):
+    _dimension: Dimension
+
+    @property
+    def dimension(self) -> Dimension:
+        return self._dimension
+
+    def __new__(
+        cls,
+        components: Iterable[Any],
+        system: BaseCoordinateSystem,
+        point: Optional[AppliedPoint | SymSymbol] = None,
+    ) -> Expr:
+        dimensions = set()
+
+        for component in components:
+            factor, dimension = collect_quantity_factor_and_dimension(component)
+
+            if is_any_dimension(factor):
+                continue
+
+            dimensions.add(dimension)
+
+        if len(dimensions) > 1:
+            raise UnitsError(f"Expected unique dimension, got {dimensions}")
+
+        obj = super().__new__(cls, components, system, point)
+
+        if not isinstance(obj, CoordinateVector):
+            return obj
+
+        obj._dimension = next(iter(dimensions), dimensionless)
+
+        return obj
 
 
 __all__ = [
