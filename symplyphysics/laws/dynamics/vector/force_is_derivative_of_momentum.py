@@ -24,6 +24,7 @@ from symplyphysics.core.dimensions import assert_equivalent_dimension
 from symplyphysics.core.experimental.coordinate_systems import (QuantityCoordinateVector,
     combine_coordinate_vectors, CoordinateVector)
 from symplyphysics.core.experimental.vectors import VectorFunction, VectorDerivative
+from symplyphysics.core.experimental.solvers import solve_for_vector
 
 time = symbols.time
 """
@@ -68,7 +69,8 @@ def calculate_force(
 
     momentum_ = (time / time_) * (momentum_after_ - momentum_before_)
 
-    force_ = force_law.rhs.subs(momentum(time), momentum_).doit()
+    solved = solve_for_vector(force_law, force(time)).rhs
+    force_ = solved.subs(momentum(time), momentum_).doit()
     force_ = combine_coordinate_vectors(force_)
 
     # TODO: provide a better way to go from `Expr` to `QuantityCoordinateVector`?
