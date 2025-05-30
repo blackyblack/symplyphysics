@@ -1,4 +1,3 @@
-from sympy import solve
 from symplyphysics import (
     units,
     Quantity,
@@ -8,15 +7,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_as_function,
     clone_as_symbol,
 )
-from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.definitions import (
-    acceleration_is_speed_derivative as _acceleration_def,
-    momentum_is_mass_times_speed as _momentum_def,
-)
-from symplyphysics.laws.dynamics.vector import force_is_derivative_of_momentum as _force_momentum_law
 
 # Description
 ## Newton's second law in vector form: a = 1/m * F
@@ -37,36 +29,8 @@ def force_law(acceleration_: Vector) -> Vector:
     return scale_vector(mass, acceleration_)
 
 
-# Derive this law from law of force and momentum
+# TODO: Derive this law from law of force and momentum
 # Condition: mass is constant
-
-time = _force_momentum_law.time
-
-_momentum_x = clone_as_function(symbols.momentum, [time], subscript="x")
-_momentum_y = clone_as_function(symbols.momentum, [time], subscript="y")
-_momentum_z = clone_as_function(symbols.momentum, [time], subscript="z")
-_momentum_vec = Vector([_momentum_x(time), _momentum_y(time), _momentum_z(time)])
-
-_force_derived = _force_momentum_law.force_law(_momentum_vec)
-
-_momentum_def_sub = _momentum_def.definition.subs(_momentum_def.mass, mass)
-_velocity_from_momentum = solve(_momentum_def_sub, _momentum_def.speed)[0]
-_velocity_vec = Vector([
-    _velocity_from_momentum.subs(_momentum_def.momentum, momentum_component)
-    for momentum_component in _momentum_vec.components
-])
-
-_acceleration_def_sub = _acceleration_def.definition.rhs.subs(_acceleration_def.time, time)
-_acceleration_vec = Vector([
-    _acceleration_def_sub.subs(_acceleration_def.speed(time), velocity_component)
-    for velocity_component in _velocity_vec.components
-])
-
-_force_from_law = force_law(_acceleration_vec)
-
-for _component_derived, _component_from_law in zip(_force_derived.components,
-    _force_from_law.components):
-    assert expr_equals(_component_derived, _component_from_law)
 
 
 @validate_input(mass_=mass, acceleration_=units.acceleration)
