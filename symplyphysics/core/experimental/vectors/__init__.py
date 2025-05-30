@@ -14,8 +14,7 @@ from sympy.combinatorics.permutations import Permutation
 from sympy.physics.units import Dimension
 from sympy.printing.printer import Printer
 
-from symplyphysics import Symbol
-from symplyphysics.core.symbols.symbols import DimensionSymbol, next_name
+from symplyphysics.core.symbols.symbols import DimensionSymbol, next_name, Symbol
 from symplyphysics.core.symbols.id_generator import last_id, next_id
 from ..miscellaneous import cacheit, sympify_expr
 
@@ -268,12 +267,12 @@ class VectorSymbol(Symbol, VectorExpr):  # pylint: disable=too-many-ancestors
     """
 
     def __new__(
-            cls,
-            display_symbol: Optional[str] = None,
-            dimension: Dimension = Dimension(1),
-            *,
-            display_latex: Optional[str] = None,
-    ) -> VectorExpr:
+        cls,
+        display_symbol: Optional[str] = None,
+        dimension: Dimension = Dimension(1),
+        *,
+        display_latex: Optional[str] = None,
+    ) -> VectorSymbol:
         return super().__new__(cls)  # pylint: disable=no-value-for-parameter
 
     def __init__(
@@ -282,7 +281,7 @@ class VectorSymbol(Symbol, VectorExpr):  # pylint: disable=too-many-ancestors
             dimension: Dimension = Dimension(1),
             *,
             display_latex: Optional[str] = None,
-    ):
+    ) -> None:
         id_ = next_id("VEC")
 
         display_symbol, display_latex = _process_vector_names(display_symbol, display_latex, i=id_)
@@ -917,13 +916,6 @@ class VectorDerivative(SymDerivative, VectorExpr):  # pylint: disable=too-few-pu
                 raise ValueError(f"Unable to differentiate with respect to vector: {symbol}")
 
         return derivative
-
-    def _eval_derivative(self, v: Expr) -> Expr:
-        # Needed for `sympy.solve` to work
-        if is_vector_expr(v):
-            return SymDerivative(self, v, evaluate=False)
-
-        return super().diff(v)
 
 
 def vector_diff(expr: Expr, *variables: Expr, **kwargs: Any) -> Expr:
