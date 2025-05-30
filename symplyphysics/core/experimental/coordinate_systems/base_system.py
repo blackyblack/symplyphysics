@@ -5,7 +5,7 @@ from typing import Optional, Sequence
 from sympy import Expr, sqrt, Matrix, true, simplify, Symbol as SymSymbol, ImmutableMatrix, Basic
 from sympy.logic.boolalg import Boolean
 
-from symplyphysics import Symbol, clone_as_function, Function
+from symplyphysics.core.symbols.symbols import Symbol, clone_as_function, Function
 
 from ..miscellaneous import cacheit
 

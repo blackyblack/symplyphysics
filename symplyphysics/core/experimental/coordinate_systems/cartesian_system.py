@@ -1,8 +1,9 @@
 from typing import Optional, Sequence
 
 from sympy import Expr, Matrix, Symbol as SymSymbol, S
+from sympy.physics import units
 
-from symplyphysics import Symbol, units
+from symplyphysics.core.symbols.symbols import Symbol
 
 from .base_system import BaseCoordinateSystem
 

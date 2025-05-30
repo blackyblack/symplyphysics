@@ -2,8 +2,10 @@ from typing import Optional, Sequence
 
 from sympy import Expr, S, cos, sin, sqrt, atan2, Q
 from sympy.logic.boolalg import Boolean
+from sympy.physics import units
+from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 
-from symplyphysics import Symbol, units, angle_type
+from symplyphysics.core.symbols.symbols import Symbol
 
 from .base_system import BaseCoordinateSystem
 
