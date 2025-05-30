@@ -9,6 +9,8 @@ the net force exerted on a body is equal to the time derivative of the body's mo
 
 #. Works in relativistic mechanics as well as in classical mechanics.
 
+#. See :ref:`vector counterpart <Force is derivative of momentum (vector)>` of this law.
+
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Momentum#Relation_to_force>`__.

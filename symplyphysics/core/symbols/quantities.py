@@ -10,7 +10,7 @@ from sympy.printing.printer import Printer
 
 from .symbols import DimensionSymbol, next_name
 from ..dimensions.collect_quantity import collect_quantity_factor_and_dimension
-from ..dimensions.dimensions import dimension_to_si_unit  # to avoid cyclic import
+from ..dimensions.miscellaneous import dimension_to_si_unit
 
 
 class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancestors

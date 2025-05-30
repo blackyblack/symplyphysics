@@ -6,7 +6,9 @@ from sympy import (ImmutableMatrix, Expr, sqrt, Symbol as SymSymbol, Basic, Deri
     SymDerivative, S)
 from sympy.matrices.dense import DenseMatrix
 from sympy.physics.units import Dimension
+from sympy.physics.units.systems.si import dimsys_SI
 
+from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.core.dimensions.collect_quantity import collect_quantity_factor_and_dimension
 from symplyphysics.core.dimensions.miscellaneous import is_any_dimension, dimensionless
 from symplyphysics.core.errors import UnitsError
@@ -194,25 +196,34 @@ class QuantityCoordinateVector(CoordinateVector):
         system: BaseCoordinateSystem,
         point: Optional[AppliedPoint | SymSymbol] = None,
     ) -> Expr:
-        dimensions = set()
+        factors = []
+        dimension = None
 
         for component in components:
-            factor, dimension = collect_quantity_factor_and_dimension(component)
+            factor, dimension_ = collect_quantity_factor_and_dimension(component)
+            factors.append(factor)
 
             if is_any_dimension(factor):
                 continue
 
-            dimensions.add(dimension)
+            if dimension is None:
+                dimension = dimension_
+            elif not dimsys_SI.equivalent_dims(dimension_, dimension):
+                raise UnitsError(f"Expected {dimension}, got {dimension_}")
 
-        if len(dimensions) > 1:
-            raise UnitsError(f"Expected unique dimension, got {dimensions}")
+        dimension = dimension or dimensionless
+
+        if dimsys_SI.is_dimensionless(dimension):
+            components = factors
+        else:
+            components = [Quantity(factor, dimension=dimension) for factor in factors]
 
         obj = super().__new__(cls, components, system, point)
 
         if not isinstance(obj, CoordinateVector):
             return obj
 
-        obj._dimension = next(iter(dimensions), dimensionless)
+        obj._dimension = dimension
 
         return obj
 

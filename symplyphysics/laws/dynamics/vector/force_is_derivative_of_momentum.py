@@ -1,48 +1,86 @@
-from sympy import Derivative
-from symplyphysics import (
-    units,
-    Quantity,
-    Vector,
-    validate_input,
-    validate_output,
-    scale_vector,
-    add_cartesian_vectors,
-    symbols,
-)
-from symplyphysics.core.vectors.vectors import QuantityVector
+"""
+Force is derivative of momentum (vector)
+========================================
 
-# Description
-## Newton's second law of motion can be generalized in terms of the vector of linear momentum.
+Newton's second law of motion can be generalized in terms of linear momentum. Precisely,
+the net force exerted on a body is equal to the time derivative of the body's momentum.
 
-# Law:
-## F = dp/dt
-## F - force vector
-## p - vector of linear momentum
+**Notes:**
+
+#. Works in relativistic mechanics as well as in classical mechanics.
+
+#. See :ref:`scalar counterpart <Force is derivative of momentum>` of this law.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Momentum#Relation_to_force>`__.
+"""
+
+from sympy import Eq, Expr
+
+from symplyphysics import units, Quantity, symbols
+from symplyphysics.core.dimensions import assert_equivalent_dimension
+
+from symplyphysics.core.experimental.coordinate_systems import (QuantityCoordinateVector,
+    combine_coordinate_vectors, CoordinateVector)
+from symplyphysics.core.experimental.vectors import VectorFunction, VectorDerivative
+from symplyphysics.core.experimental.solvers import solve_for_vector
 
 time = symbols.time
+"""
+:symbols:`time`.
+"""
+
+momentum = VectorFunction("p", (time,), dimension=units.momentum, display_latex="\\mathbf{p}")
+"""
+The magnitude of the :symbols:`momentum` of the body as a function of :attr:`~time`.
+"""
+
+force = VectorFunction("F", (time,), dimension=units.force, display_latex="\\mathbf{F}")
+"""
+The magnitude of the net :symbols:`force` exerted on the body as a function of :attr:`~time`.
+"""
+
+force_law = Eq(force(time), VectorDerivative(momentum(time), time))
+"""
+..
+    Auto-printing of vector expressions has not been implemented yet.
+
+:code:`F(t) = Derivative(p(t), t)`
+
+Latex:
+    .. math::
+        \\mathbf{F}(t) = \\frac{d}{d t} \\mathbf{p}(t)
+"""
 
 
-def force_law(momentum_: Vector) -> Vector:
-    force_components = [Derivative(component, time) for component in momentum_.components]
-    return Vector(force_components, momentum_.coordinate_system)
-
-
-@validate_input(
-    momentum_before_=units.momentum,
-    momentum_after_=units.momentum,
-    time_=time,
-)
-@validate_output(units.force)
 def calculate_force(
-    momentum_before_: QuantityVector,
-    momentum_after_: QuantityVector,
+    momentum_before_: QuantityCoordinateVector,
+    momentum_after_: QuantityCoordinateVector,
     time_: Quantity,
-) -> QuantityVector:
-    # delta_p = (t / delta_t) * (p1 - p0)
-    momentum_function = scale_vector(
-        time / time_,
-        add_cartesian_vectors(momentum_after_.to_base_vector(),
-        scale_vector(-1, momentum_before_.to_base_vector())))
-    result_force_vector = force_law(momentum_function)
-    result_force_components = [component.doit() for component in result_force_vector.components]
-    return QuantityVector(result_force_components, momentum_before_.coordinate_system)
+) -> Expr:
+    # TODO: fix `validate_input` to account for vector expressions
+
+    assert_equivalent_dimension(momentum_before_.dimension, "momentum_before_", "calculate_force",
+        momentum.dimension)
+    assert_equivalent_dimension(momentum_after_.dimension, "momentum_after_", "calculate_force",
+        momentum.dimension)
+    assert_equivalent_dimension(time_, "time_", "calculate_force", time.dimension)
+
+    momentum_ = (time / time_) * (momentum_after_ - momentum_before_)
+
+    solved = solve_for_vector(force_law, force(time)).rhs
+    force_ = solved.subs(momentum(time), momentum_).doit()
+    force_ = combine_coordinate_vectors(force_)
+
+    # TODO: provide a better way to go from `Expr` to `QuantityCoordinateVector`?
+
+    if force_ == 0:
+        return force_
+
+    assert isinstance(force_, CoordinateVector)
+    result = QuantityCoordinateVector(force_.components, force_.system, force_.point)
+
+    assert_equivalent_dimension(result.dimension, "result", "calculate_force", force.dimension)
+
+    return result

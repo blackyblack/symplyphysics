@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 from typing import Any, SupportsFloat
-from sympy import Expr, S
-from sympy.physics import units
+from sympy import S
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import dimsys_SI
 
@@ -82,33 +81,9 @@ def print_dimension(dimension: Dimension) -> str:
     return "dimensionless" if dimsys_SI.is_dimensionless(dimension) else str(dimension.name)
 
 
-_si_conversions = {
-    units.length: units.meter,
-    units.mass: units.kilogram,
-    units.time: units.second,
-    units.current: units.ampere,
-    units.temperature: units.kelvin,
-    units.amount_of_substance: units.mole,
-    units.luminous_intensity: units.candela,
-}
-
-
-def dimension_to_si_unit(dimension: Dimension) -> Expr:
-    """Converts ``dimension`` to the corresponding SI unit."""
-
-    si_unit = S.One
-
-    dependencies = dimsys_SI.get_dimensional_dependencies(dimension)
-    for dim, n in dependencies.items():
-        si_unit *= _si_conversions.get(dim, S.One)**n
-
-    return si_unit
-
-
 __all__ = [
     "AnyDimension",
     "any_dimension",
     "assert_equivalent_dimension",
     "print_dimension",
-    "dimension_to_si_unit",
 ]

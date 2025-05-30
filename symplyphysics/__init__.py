@@ -2,7 +2,7 @@ from sympy.physics import units
 from sympy.physics.units.systems import SI
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 from .core import errors
-from .core.dimensions import dimensionless
+from .core.dimensions.miscellaneous import dimensionless
 from .core.symbols.quantities import Quantity, subs_list
 from .core.convert import convert_to, convert_to_float, convert_to_si
 from .core.operations.sum_indexed import IndexedSum
