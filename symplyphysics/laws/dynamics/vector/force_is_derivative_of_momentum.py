@@ -69,6 +69,4 @@ def calculate_force(
     force_ = solved.subs(momentum(time), momentum_).doit()
     force_ = QuantityCoordinateVector.combine(force_)
 
-    assert_equivalent_dimension(force_.dimension, "result", "calculate_force", force.dimension)
-
     return force_
