@@ -7,6 +7,11 @@ from sympy import S, Expr, Mul, StrPrinter, E
 from sympy.matrices.dense import DenseMatrix
 from sympy.simplify import fraction
 from sympy.printing.precedence import precedence
+
+from symplyphysics.core.experimental.vectors import (VectorSymbol, VectorNorm, VectorDot,
+    VectorCross, VectorMixedProduct, AppliedVectorFunction, VectorFunction)
+from symplyphysics.core.experimental.coordinate_systems import CoordinateScalar, CoordinateVector
+
 from ..core.symbols.symbols import DimensionSymbol, Function, IndexedSymbol
 from .miscellaneous import needs_mul_brackets, needs_add_brackets, process_function
 
@@ -242,13 +247,59 @@ class SymbolCodePrinter(StrPrinter):  # pylint: disable=too-few-public-methods
     def _print_InexactDifferential(self, expr: Any) -> str:
         return f"delta({self._print(expr.factor)})"
 
+    # pylint: disable-next=invalid-name
+    def _print_VectorSymbol(self, expr: VectorSymbol) -> str:
+        return expr.display_name
+
+    # pylint: disable-next=invalid-name
+    def _print_VectorNorm(self, expr: VectorNorm) -> str:
+        return f"norm({self._print(expr.args[0])})"
+
+    # pylint: disable-next=invalid-name
+    def _print_VectorDot(self, expr: VectorDot) -> str:
+        lhs, rhs = expr.args
+        s_lhs = self._print(lhs)
+        s_rhs = self._print(rhs)
+        return f"dot({s_lhs}, {s_rhs})"
+
+    # pylint: disable-next=invalid-name
+    def _print_VectorCross(self, expr: VectorCross) -> str:
+        lhs, rhs = expr.args
+        s_lhs = self._print(lhs)
+        s_rhs = self._print(rhs)
+        return f"cross({s_lhs}, {s_rhs})"
+
+    # pylint: disable-next=invalid-name
+    def _print_VectorMixedProduct(self, expr: VectorMixedProduct) -> str:
+        inner = ", ".join([self._print(arg) for arg in expr.args])
+        return f"mixed({inner})"
+
+    # pylint: disable-next=invalid-name
+    def _print_AppliedVectorFunction(self, expr: AppliedVectorFunction) -> str:
+        s_func = self._print(expr.func)
+        s_args = ", ".join([self._print(arg) for arg in expr.args])
+
+        return f"{s_func}({s_args})"
+
+    # pylint: disable-next=invalid-name
+    def _print_VectorFunction(self, expr: VectorFunction) -> str:
+        return expr.display_name
+
+    # pylint: disable-next=invalid-name
+    def _print_CoordinateScalar(self, expr: CoordinateScalar) -> str:
+        return self._print(expr.scalar)
+
+    # pylint: disable-next=invalid-name
+    def _print_CoordinateVector(self, expr: CoordinateVector) -> str:
+        return self._print(expr.components)
+
 
 def code_str(expr: Any, **settings: Any) -> str:
     printer = SymbolCodePrinter(settings)
 
     if isinstance(expr, IndexedSymbol):
         expr = expr[expr.index]
-    if isinstance(expr, Function):
+    if isinstance(expr, (Function, VectorFunction)):
         expr = process_function(expr)
 
     return str(printer.doprint(expr))
