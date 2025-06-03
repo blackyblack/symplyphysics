@@ -231,6 +231,10 @@ class QuantityCoordinateVector(CoordinateVector):
 
         return obj
 
+    # NOTE: Used in `symplyphysics.core.dimensions.collect_quantity` to avoid cyclic import
+    def collect_quantity_factor_and_dimension(self) -> tuple[Expr, Dimension]:
+        return self, self.dimension
+
 
 __all__ = [
     "CoordinateVector",

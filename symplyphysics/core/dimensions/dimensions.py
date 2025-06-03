@@ -5,6 +5,7 @@ from sympy import S
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import dimsys_SI
 
+from ..experimental.coordinate_systems import QuantityCoordinateVector
 from ..errors import UnitsError
 from .collect_quantity import collect_quantity_factor_and_dimension
 from .miscellaneous import is_any_dimension, is_number
@@ -54,7 +55,7 @@ def assert_equivalent_dimension(
     if not isinstance(arg, Dimension):
         (scale_factor, arg) = collect_quantity_factor_and_dimension(arg)
 
-        if not is_number(scale_factor):
+        if not is_number(scale_factor) and not isinstance(scale_factor, QuantityCoordinateVector):
             # NOTE: this should probably raise `ValueError` or `TypeError`
             raise UnitsError(f"Argument '{param_name}' to function '{func_name}' should "
                 f"not contain free symbols: '{scale_factor}'")

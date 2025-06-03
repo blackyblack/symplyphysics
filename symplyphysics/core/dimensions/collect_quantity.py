@@ -141,6 +141,9 @@ def collect_quantity_factor_and_dimension(expr: SupportsFloat) -> tuple[Expr, Di
         sympy.SympifyError: If ``expr`` cannot be converted to a value used by `sympy`.
     """
 
+    if hasattr(expr, "collect_quantity_factor_and_dimension"):
+        return expr.collect_quantity_factor_and_dimension()
+
     expr = sympify(expr)  # no `strict` because we want to allow sympy functions here too
 
     for type_, collector in _cases.items():

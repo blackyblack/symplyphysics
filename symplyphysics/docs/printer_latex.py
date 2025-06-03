@@ -9,7 +9,13 @@ from sympy.matrices.dense import DenseMatrix
 from sympy.printing.latex import LatexPrinter, accepted_latex_functions
 from sympy.core.function import AppliedUndef
 from sympy.simplify import fraction
-from ..core.symbols.symbols import DimensionSymbol, Function, IndexedSymbol
+
+from symplyphysics.core.symbols.symbols import DimensionSymbol, Function, IndexedSymbol
+
+from symplyphysics.core.experimental.vectors import (VectorSymbol, VectorNorm, VectorDot,
+    VectorCross, VectorMixedProduct, AppliedVectorFunction, VectorFunction)
+from symplyphysics.core.experimental.coordinate_systems import CoordinateScalar, CoordinateVector
+
 from .miscellaneous import process_function
 
 _between_two_numbers_p = (
@@ -324,13 +330,64 @@ class SymbolLatexPrinter(LatexPrinter):
 
         return f"\\delta {inner}"
 
+    # pylint: disable-next=invalid-name
+    def _print_VectorSymbol(self, expr: VectorSymbol) -> str:
+        return expr.display_latex
+
+    # pylint: disable-next=invalid-name
+    def _print_VectorNorm(self, expr: VectorNorm) -> str:
+        inner = self._print(expr.args[0])
+
+        return f"\\left \\Vert {inner} \\right \\Vert"
+
+    # pylint: disable-next=invalid-name
+    def _print_VectorDot(self, expr: VectorDot) -> str:
+        lhs, rhs = expr.args
+        s_lhs = self._print(lhs)
+        s_rhs = self._print(rhs)
+
+        return f"\\left( {s_lhs}, {s_rhs} \\right)"
+
+    # pylint: disable-next=invalid-name
+    def _print_VectorCross(self, expr: VectorCross) -> str:
+        lhs, rhs = expr.args
+        s_lhs = self._print(lhs)
+        s_rhs = self._print(rhs)
+
+        return f"\\left[ {s_lhs}, {s_rhs} \\right]"
+
+    # pylint: disable-next=invalid-name
+    def _print_VectorMixedProduct(self, expr: VectorMixedProduct) -> str:
+        inner = ", ".join([self._print(arg) for arg in expr.args])
+
+        return f"\\left( {inner} \\right)"
+
+    # pylint: disable-next=invalid-name
+    def _print_AppliedVectorFunction(self, expr: AppliedVectorFunction) -> str:
+        s_func = self._print(expr.func)
+        s_args = ", ".join([self._print(arg) for arg in expr.args])
+
+        return f"{s_func} \\left( {s_args} \\right)"
+
+    # pylint: disable-next=invalid-name
+    def _print_VectorFunction(self, expr: VectorFunction) -> str:
+        return expr.display_latex
+
+    # pylint: disable-next=invalid-name
+    def _print_CoordinateScalar(self, expr: CoordinateScalar) -> str:
+        return self._print(expr.scalar)
+
+    # pylint: disable-next=invalid-name
+    def _print_CoordinateVector(self, expr: CoordinateVector) -> str:
+        return self._print(expr.components)
+
 
 def latex_str(expr: Any, **settings: Any) -> str:
     printer = SymbolLatexPrinter(settings)
 
     if isinstance(expr, IndexedSymbol):
         expr = expr[expr.index]
-    if isinstance(expr, Function):
+    if isinstance(expr, (Function, VectorFunction)):
         expr = process_function(expr)
 
     return str(printer.doprint(expr))

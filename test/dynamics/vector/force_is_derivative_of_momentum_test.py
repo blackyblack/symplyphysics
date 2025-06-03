@@ -60,22 +60,22 @@ def test_bad_momenta(test_args: Args) -> None:
     with raises(ValueError):
         force_momentum_law.calculate_force(test_args.p0, p_scalar, test_args.dt)
 
-    with raises(AttributeError):
+    with raises(TypeError):
         force_momentum_law.calculate_force(
             100,  # type: ignore[arg-type]
             test_args.p1,
             test_args.dt)
-    with raises(AttributeError):
+    with raises(TypeError):
         force_momentum_law.calculate_force(
             [100],  # type: ignore[arg-type]
             test_args.p1,
             test_args.dt)
-    with raises(AttributeError):
+    with raises(TypeError):
         force_momentum_law.calculate_force(
             test_args.p0,
             100,  # type: ignore[arg-type]
             test_args.dt)
-    with raises(AttributeError):
+    with raises(TypeError):
         force_momentum_law.calculate_force(
             test_args.p0,
             [100],  # type: ignore[arg-type]

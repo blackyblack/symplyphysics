@@ -70,10 +70,7 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
     def _eval_Abs(self) -> Quantity:
         return self.__class__(Abs(self.scale_factor), dimension=self.dimension)
 
-    def _sympystr(self, p: Printer) -> str:
-        if "QTY" not in self.display_name:
-            return self.display_name
-
+    def split_value_and_unit(self) -> tuple[Expr, Expr]:
         si_unit = dimension_to_si_unit(self.dimension)
 
         si_value = self.convert_to(si_unit) / si_unit
@@ -89,7 +86,23 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
             if abbrev:
                 si_unit = si_unit.subs(qty, abbrev)
 
+        return si_value, si_unit
+
+    def _sympystr(self, p: Printer) -> str:
+        if "QTY" not in self.display_name:
+            return self.display_name
+
+        si_value, si_unit = self.split_value_and_unit()
+
         return str(p.doprint(si_value * si_unit))
+
+    def _latex(self, printer: Printer) -> str:
+        if "QTY" not in self.display_latex:
+            return self.display_latex
+
+        si_value, si_unit = self.split_value_and_unit()
+
+        return str(printer.doprint(si_value * si_unit))
 
 
 # Allows for some SymPy comparisons, eg Piecewise function

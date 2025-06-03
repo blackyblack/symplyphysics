@@ -18,8 +18,7 @@ the net force exerted on a body is equal to the time derivative of the body's mo
 
 from sympy import Eq, Expr
 
-from symplyphysics import units, Quantity, symbols
-from symplyphysics.core.dimensions import assert_equivalent_dimension
+from symplyphysics import units, Quantity, symbols, validate_input, validate_output
 
 from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
 from symplyphysics.core.experimental.vectors import VectorFunction, VectorDerivative
@@ -53,19 +52,17 @@ Latex:
 """
 
 
+@validate_input(
+    momentum_before_=momentum,
+    momentum_after_=momentum,
+    time_=time,
+)
+@validate_output(force)
 def calculate_force(
     momentum_before_: QuantityCoordinateVector,
     momentum_after_: QuantityCoordinateVector,
     time_: Quantity,
 ) -> Expr:
-    # TODO: fix `validate_input` to account for vector expressions
-
-    assert_equivalent_dimension(momentum_before_.dimension, "momentum_before_", "calculate_force",
-        momentum.dimension)
-    assert_equivalent_dimension(momentum_after_.dimension, "momentum_after_", "calculate_force",
-        momentum.dimension)
-    assert_equivalent_dimension(time_, "time_", "calculate_force", time.dimension)
-
     momentum_ = (time / time_) * (momentum_after_ - momentum_before_)
 
     solved = solve_for_vector(force_law, force(time)).rhs

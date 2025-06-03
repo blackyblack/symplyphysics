@@ -2,6 +2,7 @@ from sympy import Expr, Mod, Integral, Product, Sum, Symbol as SymSymbol
 from sympy.printing.precedence import precedence_traditional, PRECEDENCE
 from sympy.core.function import FunctionClass, Application
 from symplyphysics.core.symbols.symbols import Function
+from symplyphysics.core.experimental.vectors import VectorFunction
 
 
 def needs_mul_brackets(expr: Expr, *, first: bool = False, last: bool = False) -> bool:
@@ -45,7 +46,7 @@ def needs_add_brackets(expr: Expr) -> bool:
     return False
 
 
-def process_function(f: Function) -> Application:
+def process_function(f: Function | VectorFunction) -> Application:
     if f.arguments is None:
         raise ValueError(f"{f.display_name} has been defined without arguments.")
 
