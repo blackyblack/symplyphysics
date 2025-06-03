@@ -96,13 +96,13 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
 
         return str(p.doprint(si_value * si_unit))
 
-    def _latex(self, p: Printer) -> str:
+    def _latex(self, printer: Printer) -> str:
         if "QTY" not in self.display_latex:
             return self.display_latex
 
         si_value, si_unit = self.split_value_and_unit()
 
-        return str(p.doprint(si_value * si_unit))
+        return str(printer.doprint(si_value * si_unit))
 
 
 # Allows for some SymPy comparisons, eg Piecewise function
