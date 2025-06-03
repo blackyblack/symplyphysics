@@ -147,7 +147,13 @@ def collect_quantity_factor_and_dimension(expr: SupportsFloat) -> tuple[Expr, Di
         if isinstance(expr, type_):
             return collector(expr)
 
+    if isinstance(expr, QuantityCoordinateVector):
+        return expr, expr.dimension
+
     return _collect_default(expr)
 
 
 __all__ = ["collect_quantity_factor_and_dimension"]
+
+# pylint: disable-next=cyclic-import, wrong-import-position
+from ..experimental.coordinate_systems import QuantityCoordinateVector

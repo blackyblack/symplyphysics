@@ -54,7 +54,7 @@ def assert_equivalent_dimension(
     if not isinstance(arg, Dimension):
         (scale_factor, arg) = collect_quantity_factor_and_dimension(arg)
 
-        if not is_number(scale_factor):
+        if not is_number(scale_factor) and not isinstance(scale_factor, QuantityCoordinateVector):
             # NOTE: this should probably raise `ValueError` or `TypeError`
             raise UnitsError(f"Argument '{param_name}' to function '{func_name}' should "
                 f"not contain free symbols: '{scale_factor}'")
@@ -87,3 +87,6 @@ __all__ = [
     "assert_equivalent_dimension",
     "print_dimension",
 ]
+
+# pylint: disable-next=cyclic-import, wrong-import-position
+from ..experimental.coordinate_systems import QuantityCoordinateVector
