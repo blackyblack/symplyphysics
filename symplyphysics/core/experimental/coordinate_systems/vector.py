@@ -149,38 +149,42 @@ class CoordinateVector(VectorExpr):
 
         return CoordinateVector(diff_components + diff_base_vectors, self.system, self.point)
 
+    @classmethod
+    def combine(cls, expr: Expr) -> Expr:
+        non_coordinate = []
+        system_to_components: dict[tuple[BaseCoordinateSystem, AppliedPoint | SymSymbol],
+            ImmutableMatrix] = {}
 
-def combine_coordinate_vectors(expr: Expr) -> Expr:
-    non_coordinate = []
-    system_to_components: dict[tuple[BaseCoordinateSystem, AppliedPoint | SymSymbol],
-        ImmutableMatrix] = {}
+        for cross in expr.atoms(VectorCross):
+            lhs, rhs = cross.args
+            lhs = cls.combine(lhs)
+            rhs = cls.combine(rhs)
+            expr = expr.subs(cross, VectorCross(lhs, rhs))
 
-    for cross in expr.atoms(VectorCross):
-        lhs, rhs = cross.args
-        lhs = combine_coordinate_vectors(lhs)
-        rhs = combine_coordinate_vectors(rhs)
-        expr = expr.subs(cross, VectorCross(lhs, rhs))
+        for term in into_terms(expr):
+            vector, factor = split_factor(term)
 
-    for term in into_terms(expr):
-        vector, factor = split_factor(term)
+            if not isinstance(vector, cls):
+                non_coordinate.append(term)
+                continue
 
-        if not isinstance(vector, CoordinateVector):
-            non_coordinate.append(term)
-            continue
+            total = system_to_components.get((vector.system, vector.point),
+                ImmutableMatrix.zeros(3, 1))
+            mul = factor * vector.components
+            system_to_components[vector.system, vector.point] = total + mul
 
-        total = system_to_components.get((vector.system, vector.point), ImmutableMatrix.zeros(3, 1))
-        mul = factor * vector.components
-        system_to_components[vector.system, vector.point] = total + mul
+        result = sum(non_coordinate)
 
-    result = sum(non_coordinate)
+        for (system, point), components in system_to_components.items():
+            if components.is_zero_matrix:
+                continue
 
-    for (system, point), components in system_to_components.items():
-        if components.is_zero_matrix:
-            continue
+            result += cls(components, system, point)
 
-        result += CoordinateVector(components, system, point)
+        return result
 
-    return result
+
+combine_coordinate_vectors = CoordinateVector.combine
 
 
 class QuantityCoordinateVector(CoordinateVector):
@@ -230,5 +234,5 @@ class QuantityCoordinateVector(CoordinateVector):
 
 __all__ = [
     "CoordinateVector",
-    "combine_coordinate_vectors",
+    "QuantityCoordinateVector",
 ]

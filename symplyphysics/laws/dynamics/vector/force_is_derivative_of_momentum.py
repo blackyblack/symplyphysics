@@ -21,8 +21,7 @@ from sympy import Eq, Expr
 from symplyphysics import units, Quantity, symbols
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
-from symplyphysics.core.experimental.coordinate_systems import (QuantityCoordinateVector,
-    combine_coordinate_vectors, CoordinateVector)
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
 from symplyphysics.core.experimental.vectors import VectorFunction, VectorDerivative
 from symplyphysics.core.experimental.solvers import solve_for_vector
 
@@ -71,16 +70,8 @@ def calculate_force(
 
     solved = solve_for_vector(force_law, force(time)).rhs
     force_ = solved.subs(momentum(time), momentum_).doit()
-    force_ = combine_coordinate_vectors(force_)
+    force_ = QuantityCoordinateVector.combine(force_)
 
-    # TODO: provide a better way to go from `Expr` to `QuantityCoordinateVector`?
+    assert_equivalent_dimension(force_.dimension, "result", "calculate_force", force.dimension)
 
-    if force_ == 0:
-        return force_
-
-    assert isinstance(force_, CoordinateVector)
-    result = QuantityCoordinateVector(force_.components, force_.system, force_.point)
-
-    assert_equivalent_dimension(result.dimension, "result", "calculate_force", force.dimension)
-
-    return result
+    return force_
