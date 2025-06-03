@@ -5,6 +5,7 @@ from sympy import S
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import dimsys_SI
 
+from ..experimental.coordinate_systems import QuantityCoordinateVector
 from ..errors import UnitsError
 from .collect_quantity import collect_quantity_factor_and_dimension
 from .miscellaneous import is_any_dimension, is_number
@@ -87,6 +88,3 @@ __all__ = [
     "assert_equivalent_dimension",
     "print_dimension",
 ]
-
-# pylint: disable-next=cyclic-import, wrong-import-position
-from ..experimental.coordinate_systems import QuantityCoordinateVector

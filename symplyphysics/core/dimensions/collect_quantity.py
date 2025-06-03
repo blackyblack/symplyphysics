@@ -141,19 +141,16 @@ def collect_quantity_factor_and_dimension(expr: SupportsFloat) -> tuple[Expr, Di
         sympy.SympifyError: If ``expr`` cannot be converted to a value used by `sympy`.
     """
 
+    if hasattr(expr, "collect_quantity_factor_and_dimension"):
+        return expr.collect_quantity_factor_and_dimension()
+
     expr = sympify(expr)  # no `strict` because we want to allow sympy functions here too
 
     for type_, collector in _cases.items():
         if isinstance(expr, type_):
             return collector(expr)
 
-    if isinstance(expr, QuantityCoordinateVector):
-        return expr, expr.dimension
-
     return _collect_default(expr)
 
 
 __all__ = ["collect_quantity_factor_and_dimension"]
-
-# pylint: disable-next=cyclic-import, wrong-import-position
-from ..experimental.coordinate_systems import QuantityCoordinateVector
