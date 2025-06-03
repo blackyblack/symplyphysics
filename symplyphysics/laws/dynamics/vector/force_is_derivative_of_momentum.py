@@ -41,14 +41,9 @@ The magnitude of the net :symbols:`force` exerted on the body as a function of :
 
 force_law = Eq(force(time), VectorDerivative(momentum(time), time))
 """
-..
-    Auto-printing of vector expressions has not been implemented yet.
+:laws:symbol::
 
-:code:`F(t) = Derivative(p(t), t)`
-
-Latex:
-    .. math::
-        \\mathbf{F}(t) = \\frac{d}{d t} \\mathbf{p}(t)
+:laws:latex::
 """
 
 
