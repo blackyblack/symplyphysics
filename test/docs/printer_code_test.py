@@ -1,19 +1,16 @@
 from collections import namedtuple
 from pytest import fixture
-from sympy import I, Integral, evaluate, exp, log, pi, sin, sqrt, Matrix, ImmutableMatrix
-from symplyphysics import (
-    Quantity,
-    Symbol,
-    clone_as_symbol,
-    clone_as_function,
-    units,
-    IndexedSymbol,
-    IndexedSum,
-    IndexedProduct,
-    global_index,
-)
+from sympy import (I, Integral, evaluate, exp, log, pi, sin, sqrt, Matrix, ImmutableMatrix, Symbol
+    as SymSymbol)
+from symplyphysics import (Quantity, Symbol, clone_as_symbol, clone_as_function, units,
+    IndexedSymbol, IndexedSum, IndexedProduct, global_index, Function)
 from symplyphysics.docs.printer_code import code_str
 from symplyphysics.core.operations import symbolic
+
+from symplyphysics.core.experimental.vectors import (VectorSymbol, VectorNorm, VectorDot,
+    VectorCross, VectorMixedProduct, VectorFunction, vector_diff)
+from symplyphysics.core.experimental.coordinate_systems import (CoordinateScalar, CoordinateVector,
+    CartesianCoordinateSystem, CylindricalCoordinateSystem, QuantityCoordinateVector)
 
 Args = namedtuple(
     "Args",
@@ -328,3 +325,180 @@ def test_inexact_differential() -> None:
     a = Symbol("a")
     expr = symbolic.InexactDifferential(a)
     assert code_str(expr) == "delta(a)"
+
+
+def test_vector_symbol() -> None:
+    expr = VectorSymbol("v")
+    assert code_str(expr) == "v"
+
+    expr = VectorSymbol("v", units.velocity)
+    assert code_str(expr) == "v"
+
+
+def test_vector_combination(test_args: Args) -> None:
+    v = VectorSymbol("v", units.velocity)
+    q = VectorSymbol("q")
+
+    with evaluate(False):
+        expr = test_args.speed_of_light * q + test_args.mass * v
+    assert code_str(expr) == "c * q + m * v"
+
+
+def test_vector_norm() -> None:
+    v = VectorSymbol("v")
+    w = VectorSymbol("w")
+
+    expr = VectorNorm(v)
+    assert code_str(expr) == "norm(v)"
+
+    with evaluate(False):
+        expr = VectorNorm(v + 2 * w)
+    assert code_str(expr) == "norm(v + 2 * w)"
+
+
+def test_vector_dot() -> None:
+    v = VectorSymbol("v")
+    w = VectorSymbol("w")
+
+    with evaluate(False):
+        expr = VectorDot(v, w)
+    assert code_str(expr) == "dot(v, w)"
+
+
+def test_vector_cross() -> None:
+    v = VectorSymbol("v")
+    w = VectorSymbol("w")
+
+    with evaluate(False):
+        expr = VectorCross(v, w)
+    assert code_str(expr) == "cross(v, w)"
+
+
+def test_vector_mixed_product() -> None:
+    u = VectorSymbol("u")
+    v = VectorSymbol("v")
+    w = VectorSymbol("w")
+
+    with evaluate(False):
+        expr = VectorMixedProduct(u, v, w)
+    assert code_str(expr) == "mixed(u, v, w)"
+
+
+def test_applied_vector_function() -> None:
+    x = Symbol("x")
+    y = Symbol("y")
+    f = VectorFunction("F")
+
+    expr = f(x)
+    assert code_str(expr) == "F(x)"
+
+    expr = f(x, y)
+    assert code_str(expr) == "F(x, y)"
+
+    f = VectorFunction("F", dimension=units.force)
+
+    expr = f(x)
+    assert code_str(expr) == "F(x)"
+
+    expr = f(x, y)
+    assert code_str(expr) == "F(x, y)"
+
+
+def test_vector_function() -> None:
+    x = Symbol("x")
+    y = Symbol("y")
+
+    expr = VectorFunction("F", [x])
+    assert code_str(expr) == "F(x)"
+
+    expr = VectorFunction("F", [x, y])
+    assert code_str(expr) == "F(x, y)"
+
+    expr = VectorFunction("F", [x], dimension=units.force)
+    assert code_str(expr) == "F(x)"
+
+    expr = VectorFunction("F", [x, y], dimension=units.force)
+    assert code_str(expr) == "F(x, y)"
+
+
+def test_vector_derivative() -> None:
+    x = Symbol("x")
+    y = Symbol("y")
+    f = VectorFunction("F", [x, y])
+
+    expr = vector_diff(f(x, y), x)
+    assert code_str(expr) == "Derivative(F(x, y), x)"
+
+    f = VectorFunction("F", [x, y], dimension=units.force)
+    expr = vector_diff(f(x, y), x)
+    assert code_str(expr) == "Derivative(F(x, y), x)"
+
+
+def test_cartesian_coordinate_scalar() -> None:
+    f = Function("F")
+
+    sys = CartesianCoordinateSystem()
+    x, y, z = sys.base_scalars
+
+    with evaluate(False):
+        scalar = x + y + z
+
+    expr = CoordinateScalar(scalar, sys)
+    assert code_str(expr) == code_str(scalar)
+
+    with evaluate(False):
+        scalar = f(x, y, z)
+
+    expr = CoordinateScalar(scalar, sys)
+    assert code_str(expr) == code_str(scalar)
+
+
+def test_non_cartesian_coordinate_scalar() -> None:
+    f = Function("F")
+
+    sys = CylindricalCoordinateSystem()
+    rho, phi, z = sys.base_scalars
+    p = SymSymbol("P")
+
+    with evaluate(False):
+        scalar = rho + z
+
+    expr = CoordinateScalar(scalar, sys, p)
+    assert code_str(expr) == code_str(scalar)
+
+    with evaluate(False):
+        scalar = f(rho, phi, z)
+
+    expr = CoordinateScalar(scalar, sys, p)
+    assert code_str(expr) == code_str(scalar)
+
+
+def test_cartesian_coordinate_vector() -> None:
+    sys = CartesianCoordinateSystem()
+    x, y, z = sys.base_scalars
+
+    with evaluate(False):
+        components = ImmutableMatrix([x, y, z])
+
+    expr = CoordinateVector(components, sys)
+    assert code_str(expr) == code_str(components)
+
+    components = ImmutableMatrix([Quantity(4 * units.meter), Quantity(-3 * units.meter), 0])
+    expr = QuantityCoordinateVector(components, sys)
+    assert code_str(expr) == code_str(components)
+
+
+def test_non_cartesian_coordinate_vector() -> None:
+    sys = CylindricalCoordinateSystem()
+    p = SymSymbol("P")
+    rho, _, z = sys.base_scalars
+
+    with evaluate(False):
+        components = ImmutableMatrix([rho, 0, z])
+
+    expr = CoordinateVector(components, sys, p)
+    assert code_str(expr) == code_str(components)
+
+    components = ImmutableMatrix([Quantity(4 * units.meter), Quantity(-3 * units.meter), 0])
+    expr = QuantityCoordinateVector(components, sys, p)
+    assert code_str(expr) == code_str(components)
