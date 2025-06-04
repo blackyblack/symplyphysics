@@ -151,7 +151,23 @@ class CoordinateVector(VectorExpr):
 
     @classmethod
     def combine(cls, expr: Expr) -> Expr:
-        non_coordinate = []
+        """
+        Adds up vectors of the given class defined in the same coordinate system and at the same
+        point within the given expression.
+
+        Example:
+        ========
+
+        >>> from sympy import Symbol as SymSymbol
+        >>> from symplyphysics.core.experimental.coordinate_systems import CylindricalCoordinateSystem, CoordinateVector
+        >>> sys = CylindricalCoordinateSystem()
+        >>> p = SymSymbol("P")
+        >>> v1 = CoordinateVector([1, 2, 3], sys, p)
+        >>> v2 = CoordinateVector([-1, -2, -3], sys, p)
+        >>> assert CoordinateVector.combine(v1 + v2) == 0
+        """
+
+        other_type_vectors = []
         system_to_components: dict[tuple[BaseCoordinateSystem, AppliedPoint | SymSymbol],
             ImmutableMatrix] = {}
 
@@ -164,8 +180,8 @@ class CoordinateVector(VectorExpr):
         for term in into_terms(expr):
             vector, factor = split_factor(term)
 
-            if not isinstance(vector, cls):
-                non_coordinate.append(term)
+            if type(vector) is not cls:
+                other_type_vectors.append(term)
                 continue
 
             total = system_to_components.get((vector.system, vector.point),
@@ -173,7 +189,7 @@ class CoordinateVector(VectorExpr):
             mul = factor * vector.components
             system_to_components[vector.system, vector.point] = total + mul
 
-        result = sum(non_coordinate)
+        result = sum(other_type_vectors)
 
         for (system, point), components in system_to_components.items():
             if components.is_zero_matrix:
@@ -182,9 +198,6 @@ class CoordinateVector(VectorExpr):
             result += cls(components, system, point)
 
         return result
-
-
-combine_coordinate_vectors = CoordinateVector.combine
 
 
 class QuantityCoordinateVector(CoordinateVector):
