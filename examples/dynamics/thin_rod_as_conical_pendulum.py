@@ -34,6 +34,10 @@ from symplyphysics.laws.geometry import (
 from symplyphysics.laws.quantities import (
     quantity_is_linear_density_times_length as linear_density_law,)
 
+from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
+    CoordinateVector, combine_coordinate_vectors)
+
 # Description
 ## A thin rod of length `l` is rotating around one of its ends describing a circular cone
 ## (i.e. it is a physical conical pendulum). Find the period `T` of its rotation as a function
@@ -97,11 +101,27 @@ element_mass_expr = solve(
 # is parallel to the position vector, its torque will be zero as per the property of the vector cross
 # product.
 
-gravity_force_acting_on_element = force_law.force_law(acceleration_=Vector(
-    [0, 0, -1 * acceleration_due_to_gravity]),).subs(
-    force_law.mass,
-    element_mass_expr,
-    )
+# NOTE: New vector library is used here.
+cartesian = CartesianCoordinateSystem()
+force_from_acceleration_expr_ = solve_for_vector(force_law.law, force_law.force).rhs
+
+free_fall_acceleration_vector_ = CoordinateVector(
+    [0, 0, -1 * acceleration_due_to_gravity],
+    cartesian,
+)
+
+subs_ = force_from_acceleration_expr_.subs({
+    force_law.acceleration: free_fall_acceleration_vector_,
+    force_law.mass: element_mass_expr,
+})
+gravity_force_acting_on_element_ = combine_coordinate_vectors(subs_)
+
+# TODO: Replace when all code uses the new vector library.
+if isinstance(gravity_force_acting_on_element_, CoordinateVector):
+    gravity_force_acting_on_element = Vector(gravity_force_acting_on_element_.components)
+else:
+    assert gravity_force_acting_on_element_ == 0
+    gravity_force_acting_on_element = Vector([0, 0, 0])
 
 gravity_torque_acting_on_element = torque_def.torque_definition(
     position_=element_position_vector,
@@ -121,8 +141,24 @@ element_centripetal_acceleration_vector = centripetal_law.centripetal_accelerati
 element_centrifugal_acceleration_vector = centrifugal_law.centrifugal_law(
     centripetal_acceleration_=element_centripetal_acceleration_vector,)
 
-centrifugal_force_acting_on_element = force_law.force_law(
-    acceleration_=element_centrifugal_acceleration_vector,).subs(force_law.mass, element_mass_expr)
+# NOTE: New vector library is used here.
+element_centrifugal_acceleration_vector_ = CoordinateVector(
+    element_centrifugal_acceleration_vector.components,
+    cartesian,
+)
+
+subs_ = force_from_acceleration_expr_.subs({
+    force_law.acceleration: element_centrifugal_acceleration_vector_,
+    force_law.mass: element_mass_expr,
+})
+centrifugal_force_acting_on_element_ = combine_coordinate_vectors(subs_)
+
+# TODO: Replace when all code uses the new vector library.
+if isinstance(centrifugal_force_acting_on_element_, CoordinateVector):
+    centrifugal_force_acting_on_element = Vector(centrifugal_force_acting_on_element_.components)
+else:
+    assert centrifugal_force_acting_on_element_ == 0
+    centrifugal_force_acting_on_element = Vector([0, 0, 0])
 
 centrifugal_torque_acting_on_element = torque_def.torque_definition(
     position_=element_position_vector,

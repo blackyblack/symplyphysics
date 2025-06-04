@@ -6,7 +6,8 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.experimental.vectors import (is_vector_expr, VectorSymbol, VectorNorm as
     norm, VectorDot as dot, VectorCross as cross, vector_diff)
 from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
-    CylindricalCoordinateSystem, SphericalCoordinateSystem, AppliedPoint, CoordinateVector)
+    CylindricalCoordinateSystem, SphericalCoordinateSystem, AppliedPoint, CoordinateVector,
+    combine_coordinate_vectors)
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -42,9 +43,9 @@ def test_cartesian_coordinate_vector(test_args: Args) -> None:
     assert is_vector_expr(v2 * 2)
     assert is_vector_expr(v1 + v2)
 
-    assert CoordinateVector.combine(v1 + v2) == CoordinateVector([0, 0, -1], test_args.cart)
+    assert combine_coordinate_vectors(v1 + v2) == CoordinateVector([0, 0, -1], test_args.cart)
 
-    assert CoordinateVector.combine(v1 * 0) == 0
+    assert combine_coordinate_vectors(v1 * 0) == 0
 
     assert dot(v1, v2) == -2
     assert norm(v1) == sqrt(2)
@@ -82,7 +83,7 @@ def test_cylindrical_coordinate_vector(test_args: Args) -> None:
     assert is_vector_expr(-1 * v1 + 3 * v2)
 
     correct = CoordinateVector([-1, 2, 3], test_args.cyl, test_args.p)
-    assert CoordinateVector.combine(v1 - v2) == correct
+    assert combine_coordinate_vectors(v1 - v2) == correct
 
     assert dot(v1, v2) == -1
     assert norm(v2) == 3
@@ -115,10 +116,10 @@ def test_spherical_coordinate_vector(test_args: Args) -> None:
     assert is_vector_expr(-1 * v1 + 3 * v2)
 
     correct = CoordinateVector([-1, 2, 3], test_args.sph, test_args.p)
-    assert CoordinateVector.combine(v1 - v2) == correct
+    assert combine_coordinate_vectors(v1 - v2) == correct
 
     assert dot(v1, v2) == -1
-    assert norm(CoordinateVector.combine(v1 - v2)) == sqrt(14)
+    assert norm(combine_coordinate_vectors(v1 - v2)) == sqrt(14)
 
     v3 = cross(v1, v2)
     assert v3 == CoordinateVector([-1, 4, -3], test_args.sph, test_args.p)
@@ -181,9 +182,9 @@ def test_combine_coordinate_vectors(test_args: Args) -> None:
 
     v = v_coord + v_symbo
 
-    actual = CoordinateVector.combine(v)
+    actual = combine_coordinate_vectors(v)
 
     combined = (CoordinateVector([2, 0, 2], test_args.cart) +
         CoordinateVector([4, 4, 4], test_args.sph, test_args.p) + v7 + v8 + v9)
 
-    assert norm(CoordinateVector.combine(actual - combined)) == 0
+    assert norm(combine_coordinate_vectors(actual - combined)) == 0
