@@ -14,7 +14,7 @@ from symplyphysics.core.dimensions.miscellaneous import is_any_dimension, dimens
 from symplyphysics.core.errors import UnitsError
 
 from ..miscellaneous import sympify_expr
-from ..vectors import VectorExpr, is_vector_expr, into_terms, split_factor, VectorCross
+from ..vectors import VectorExpr, is_vector_expr, into_terms, split_factor
 from .base_system import BaseCoordinateSystem
 from .cartesian_system import CartesianCoordinateSystem
 from .point import AppliedPoint, check_point_with_system, GLOBAL_POINT
@@ -149,55 +149,51 @@ class CoordinateVector(VectorExpr):
 
         return CoordinateVector(diff_components + diff_base_vectors, self.system, self.point)
 
-    @classmethod
-    def combine(cls, expr: Expr) -> Expr:
-        """
-        Adds up vectors of the given class defined in the same coordinate system and at the same
-        point within the given expression.
 
-        Example:
-        ========
+def combine_coordinate_vectors(expr: Expr) -> Expr:
+    """
+    Adds up coordinate vectors defined in the same coordinate system and at the same point within
+    the given expression. Also takes into account the exact class of the vector, e.g.
+    `QuantityCoordinateVector` is computed separately from pure `CoordinateVector`.
 
-        >>> from sympy import Symbol as SymSymbol
-        >>> from symplyphysics.core.experimental.coordinate_systems import CylindricalCoordinateSystem, CoordinateVector
-        >>> sys = CylindricalCoordinateSystem()
-        >>> p = SymSymbol("P")
-        >>> v1 = CoordinateVector([1, 2, 3], sys, p)
-        >>> v2 = CoordinateVector([-1, -2, -3], sys, p)
-        >>> assert CoordinateVector.combine(v1 + v2) == 0
-        """
+    Example:
+    ========
 
-        other_type_vectors = []
-        system_to_components: dict[tuple[BaseCoordinateSystem, AppliedPoint | SymSymbol],
-            ImmutableMatrix] = {}
+    >>> from sympy import Symbol as SymSymbol
+    >>> from symplyphysics.core.experimental.coordinate_systems import CylindricalCoordinateSystem, CoordinateVector
+    >>> sys = CylindricalCoordinateSystem()
+    >>> p = SymSymbol("P")
+    >>> v1 = CoordinateVector([1, 2, 3], sys, p)
+    >>> v2 = CoordinateVector([-1, -2, -3], sys, p)
+    >>> assert combine_coordinate_vectors(v1 + v2) == 0
+    """
 
-        for cross in expr.atoms(VectorCross):
-            lhs, rhs = cross.args
-            lhs = cls.combine(lhs)
-            rhs = cls.combine(rhs)
-            expr = expr.subs(cross, VectorCross(lhs, rhs))
+    result = S.Zero
 
-        for term in into_terms(expr):
-            vector, factor = split_factor(term)
+    mapping: dict[tuple[type[CoordinateVector], BaseCoordinateSystem, AppliedPoint | SymSymbol],
+        ImmutableMatrix] = {}
 
-            if type(vector) is not cls:
-                other_type_vectors.append(term)
-                continue
+    for term in into_terms(expr):
+        vector, factor = split_factor(term)
 
-            total = system_to_components.get((vector.system, vector.point),
-                ImmutableMatrix.zeros(3, 1))
-            mul = factor * vector.components
-            system_to_components[vector.system, vector.point] = total + mul
+        if not isinstance(vector, CoordinateVector):
+            result += term
+            continue
 
-        result = sum(other_type_vectors)
+        mul = factor * vector.components
 
-        for (system, point), components in system_to_components.items():
-            if components.is_zero_matrix:
-                continue
+        args = type(vector), vector.system, vector.point
 
-            result += cls(components, system, point)
+        total = mapping.get(args, ImmutableMatrix.zeros(3, 1))
+        mapping[args] = total + mul
 
-        return result
+    for (cls, system, point), components in mapping.items():
+        if components.is_zero_matrix:
+            continue
+
+        result += cls(components, system, point)
+
+    return result
 
 
 class QuantityCoordinateVector(CoordinateVector):
@@ -252,4 +248,5 @@ class QuantityCoordinateVector(CoordinateVector):
 __all__ = [
     "CoordinateVector",
     "QuantityCoordinateVector",
+    "combine_coordinate_vectors",
 ]
