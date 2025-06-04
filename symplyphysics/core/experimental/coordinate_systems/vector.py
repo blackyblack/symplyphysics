@@ -149,38 +149,55 @@ class CoordinateVector(VectorExpr):
 
         return CoordinateVector(diff_components + diff_base_vectors, self.system, self.point)
 
+    @classmethod
+    def combine(cls, expr: Expr) -> Expr:
+        """
+        Adds up vectors of the given class defined in the same coordinate system and at the same
+        point within the given expression.
 
-def combine_coordinate_vectors(expr: Expr) -> Expr:
-    non_coordinate = []
-    system_to_components: dict[tuple[BaseCoordinateSystem, AppliedPoint | SymSymbol],
-        ImmutableMatrix] = {}
+        Example:
+        ========
 
-    for cross in expr.atoms(VectorCross):
-        lhs, rhs = cross.args
-        lhs = combine_coordinate_vectors(lhs)
-        rhs = combine_coordinate_vectors(rhs)
-        expr = expr.subs(cross, VectorCross(lhs, rhs))
+        >>> from sympy import Symbol as SymSymbol
+        >>> from symplyphysics.core.experimental.coordinate_systems import CylindricalCoordinateSystem, CoordinateVector
+        >>> sys = CylindricalCoordinateSystem()
+        >>> p = SymSymbol("P")
+        >>> v1 = CoordinateVector([1, 2, 3], sys, p)
+        >>> v2 = CoordinateVector([-1, -2, -3], sys, p)
+        >>> assert CoordinateVector.combine(v1 + v2) == 0
+        """
 
-    for term in into_terms(expr):
-        vector, factor = split_factor(term)
+        other_type_vectors = []
+        system_to_components: dict[tuple[BaseCoordinateSystem, AppliedPoint | SymSymbol],
+            ImmutableMatrix] = {}
 
-        if not isinstance(vector, CoordinateVector):
-            non_coordinate.append(term)
-            continue
+        for cross in expr.atoms(VectorCross):
+            lhs, rhs = cross.args
+            lhs = cls.combine(lhs)
+            rhs = cls.combine(rhs)
+            expr = expr.subs(cross, VectorCross(lhs, rhs))
 
-        total = system_to_components.get((vector.system, vector.point), ImmutableMatrix.zeros(3, 1))
-        mul = factor * vector.components
-        system_to_components[vector.system, vector.point] = total + mul
+        for term in into_terms(expr):
+            vector, factor = split_factor(term)
 
-    result = sum(non_coordinate)
+            if type(vector) is not cls:
+                other_type_vectors.append(term)
+                continue
 
-    for (system, point), components in system_to_components.items():
-        if components.is_zero_matrix:
-            continue
+            total = system_to_components.get((vector.system, vector.point),
+                ImmutableMatrix.zeros(3, 1))
+            mul = factor * vector.components
+            system_to_components[vector.system, vector.point] = total + mul
 
-        result += CoordinateVector(components, system, point)
+        result = sum(other_type_vectors)
 
-    return result
+        for (system, point), components in system_to_components.items():
+            if components.is_zero_matrix:
+                continue
+
+            result += cls(components, system, point)
+
+        return result
 
 
 class QuantityCoordinateVector(CoordinateVector):
@@ -234,5 +251,5 @@ class QuantityCoordinateVector(CoordinateVector):
 
 __all__ = [
     "CoordinateVector",
-    "combine_coordinate_vectors",
+    "QuantityCoordinateVector",
 ]

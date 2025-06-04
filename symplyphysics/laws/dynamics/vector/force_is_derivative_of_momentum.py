@@ -20,8 +20,7 @@ from sympy import Eq, Expr
 
 from symplyphysics import units, Quantity, symbols, validate_input, validate_output
 
-from symplyphysics.core.experimental.coordinate_systems import (QuantityCoordinateVector,
-    combine_coordinate_vectors, CoordinateVector)
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
 from symplyphysics.core.experimental.vectors import VectorFunction, VectorDerivative
 from symplyphysics.core.experimental.solvers import solve_for_vector
 
@@ -42,14 +41,9 @@ The magnitude of the net :symbols:`force` exerted on the body as a function of :
 
 force_law = Eq(force(time), VectorDerivative(momentum(time), time))
 """
-..
-    Auto-printing of vector expressions has not been implemented yet.
+:laws:symbol::
 
-:code:`F(t) = Derivative(p(t), t)`
-
-Latex:
-    .. math::
-        \\mathbf{F}(t) = \\frac{d}{d t} \\mathbf{p}(t)
+:laws:latex::
 """
 
 
@@ -68,12 +62,6 @@ def calculate_force(
 
     solved = solve_for_vector(force_law, force(time)).rhs
     force_ = solved.subs(momentum(time), momentum_).doit()
-    force_ = combine_coordinate_vectors(force_)
+    force_ = QuantityCoordinateVector.combine(force_)
 
-    # TODO: provide a better way to go from `Expr` to `QuantityCoordinateVector`?
-
-    if force_ == 0:
-        return force_
-
-    assert isinstance(force_, CoordinateVector)
-    return QuantityCoordinateVector(force_.components, force_.system, force_.point)
+    return force_
