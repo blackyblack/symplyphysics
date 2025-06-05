@@ -21,8 +21,7 @@ from sympy import Eq, Expr
 from symplyphysics import validate_input, validate_output, symbols
 
 from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorCross
-from symplyphysics.core.experimental.coordinate_systems import (QuantityCoordinateVector,
-    combine_coordinate_vectors)
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
 
 position_vector = clone_as_vector_symbol(symbols.distance_to_origin)
 """
@@ -62,4 +61,4 @@ def calculate_angular_momentum(
         linear_momentum: linear_momentum_,
     })
 
-    return combine_coordinate_vectors(angular_momentum_value)
+    return QuantityCoordinateVector.from_expr(angular_momentum_value)
