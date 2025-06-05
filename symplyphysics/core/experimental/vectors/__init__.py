@@ -936,6 +936,8 @@ def clone_as_vector_symbol(
     subscript: Optional[str] = None,
 ) -> VectorSymbol:
     name = display_symbol or source.display_name
+
+    # NOTE: assuming the source latex code allows to be wrapped in "mathbf"
     latex = display_latex or f"\\mathbf{{{source.display_latex}}}"
 
     name, latex = process_subscript_and_names(name, latex, subscript)
