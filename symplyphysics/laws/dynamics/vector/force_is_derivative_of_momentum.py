@@ -18,11 +18,11 @@ the net force exerted on a body is equal to the time derivative of the body's mo
 
 from sympy import Eq, Expr
 
-from symplyphysics import units, Quantity, symbols, validate_input, validate_output
+from symplyphysics import Quantity, symbols, validate_input, validate_output
 
 from symplyphysics.core.experimental.coordinate_systems import (QuantityCoordinateVector,
     combine_coordinate_vectors)
-from symplyphysics.core.experimental.vectors import VectorFunction, VectorDerivative
+from symplyphysics.core.experimental.vectors import VectorDerivative, clone_as_vector_function
 from symplyphysics.core.experimental.solvers import solve_for_vector
 
 time = symbols.time
@@ -30,12 +30,12 @@ time = symbols.time
 :symbols:`time`.
 """
 
-momentum = VectorFunction("p", (time,), dimension=units.momentum, display_latex="\\mathbf{p}")
+momentum = clone_as_vector_function(symbols.momentum, (time,))
 """
 The magnitude of the :symbols:`momentum` of the body as a function of :attr:`~time`.
 """
 
-force = VectorFunction("F", (time,), dimension=units.force, display_latex="\\mathbf{F}")
+force = clone_as_vector_function(symbols.force, (time,))
 """
 The magnitude of the net :symbols:`force` exerted on the body as a function of :attr:`~time`.
 """
