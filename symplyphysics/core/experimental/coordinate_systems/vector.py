@@ -118,6 +118,9 @@ class CoordinateVector(VectorExpr):
         if type(lhs.system) is not type(rhs.system):
             return None
 
+        if not isinstance(lhs.system, CartesianCoordinateSystem) and lhs.point != rhs.point:
+            return None
+
         return lhs.components.dot(rhs.components)
 
     @classmethod
@@ -125,10 +128,16 @@ class CoordinateVector(VectorExpr):
         if not (isinstance(lhs, CoordinateVector) and isinstance(rhs, CoordinateVector)):
             return None
 
-        if type(lhs.system) is not type(rhs.system) or lhs.point != rhs.point:
+        if type(lhs.system) is not type(rhs.system):
+            return None
+
+        if not isinstance(lhs.system, CartesianCoordinateSystem) and lhs.point != rhs.point:
             return None
 
         components = lhs.components.cross(rhs.components)
+
+        if isinstance(lhs, QuantityCoordinateVector) and isinstance(rhs, QuantityCoordinateVector):
+            return QuantityCoordinateVector(components, lhs.system, lhs.point)
 
         return CoordinateVector(components, lhs.system, lhs.point)
 
