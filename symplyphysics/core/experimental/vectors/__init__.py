@@ -14,7 +14,7 @@ from sympy.combinatorics.permutations import Permutation
 from sympy.physics.units import Dimension
 from sympy.printing.printer import Printer
 
-from symplyphysics.core.symbols.symbols import DimensionSymbol, next_name, Symbol
+from symplyphysics.core.symbols.symbols import DimensionSymbol, next_name, Symbol, process_subscript_and_names
 from symplyphysics.core.symbols.id_generator import last_id, next_id
 from ..miscellaneous import cacheit, sympify_expr
 
@@ -928,6 +928,48 @@ def vector_diff(expr: Expr, *variables: Expr, **kwargs: Any) -> Expr:
     ).doit()
 
 
+def clone_as_vector_symbol(
+    source: DimensionSymbol,
+    *,
+    display_symbol: Optional[str] = None,
+    display_latex: Optional[str] = None,
+    subscript: Optional[str] = None,
+) -> VectorSymbol:
+    name = display_symbol or source.display_name
+    latex = display_latex or source.display_latex
+
+    name, latex = process_subscript_and_names(name, latex, subscript)
+
+    return VectorSymbol(
+        display_symbol=name,
+        dimension=source.dimension,
+        display_latex=latex,
+    )
+
+
+def clone_as_vector_function(
+    source: DimensionSymbol,
+    arguments: Optional[Sequence[Any]] = None,
+    *,
+    display_symbol: Optional[str] = None,
+    display_latex: Optional[str] = None,
+    subscript: Optional[str] = None,
+    **kwargs: Any,
+) -> VectorFunction:
+    name = display_symbol or source.display_name
+    latex = display_latex or source.display_latex
+
+    name, latex = process_subscript_and_names(name, latex, subscript)
+
+    return VectorFunction(
+        display_name=name,
+        arguments=arguments,
+        dimension=source.dimension,
+        display_latex=latex,
+        **kwargs,
+    )
+
+
 __all__ = [
     "AppliedVectorFunction",
     "VectorCross",
@@ -938,4 +980,6 @@ __all__ = [
     "VectorNorm",
     "VectorSymbol",
     "VectorDerivative",
+    "clone_as_vector_symbol",
+    "clone_as_vector_function",
 ]

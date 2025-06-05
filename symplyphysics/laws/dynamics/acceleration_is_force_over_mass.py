@@ -10,10 +10,13 @@ to the net force exerted on the body.
 #. `Britannica <https://www.britannica.com/science/Newtons-laws-of-motion/Newtons-second-law-F-ma>`__.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (Vector, Quantity, validate_input, validate_output, symbols)
-from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.dynamics.vector import acceleration_from_force as acceleration_law_vector
+from sympy import Eq, solve
+from symplyphysics import Quantity, validate_input, validate_output, symbols
+from symplyphysics.laws.dynamics.vector import acceleration_from_force as acceleration_law
+
+from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
+    CoordinateVector, combine_coordinate_vectors)
 
 acceleration = symbols.acceleration
 """
@@ -39,13 +42,22 @@ law = Eq(acceleration, force / mass)
 
 # Derive the same law from vector form
 
+_cartesian = CartesianCoordinateSystem()
+
 # Scalar law is equivalent to using one-dimensional vectors
-_force_vector = Vector([force])
-_acceleration_vector = acceleration_law_vector.acceleration_law(_force_vector)
-assert len(_acceleration_vector.components) == 1
-_acceleration_with_mass = _acceleration_vector.components[0].subs(acceleration_law_vector.mass,
-    mass)
-assert expr_equals(_acceleration_with_mass, law.rhs)
+_force_vector = CoordinateVector([force, 0, 0], _cartesian)
+
+_acceleration_vector_derived = solve_for_vector(
+    acceleration_law.law,
+    acceleration_law.acceleration,
+).rhs.subs({
+    acceleration_law.force: _force_vector,
+    acceleration_law.mass: mass,
+})
+
+_acceleration_vector_expected = CoordinateVector([law.rhs, 0, 0], _cartesian)
+
+assert combine_coordinate_vectors(_acceleration_vector_derived - _acceleration_vector_expected) == 0
 
 
 @validate_input(mass_=mass, acceleration_=acceleration)

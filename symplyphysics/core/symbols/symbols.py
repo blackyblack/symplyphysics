@@ -204,7 +204,7 @@ def print_expression(expr: Expr | Equality | Sequence[Expr | Equality]) -> str:
         pretty_use_unicode(uflag)
 
 
-def _process_subscript_and_names(
+def process_subscript_and_names(
     code_name: str,
     latex_name: str,
     subscript: Optional[str] = None,
@@ -225,7 +225,7 @@ def clone_as_symbol(source: Symbol | IndexedSymbol,
     display_symbol = display_symbol or source.display_name
     display_latex = display_latex or source.display_latex
 
-    display_symbol, display_latex = _process_subscript_and_names(display_symbol, display_latex,
+    display_symbol, display_latex = process_subscript_and_names(display_symbol, display_latex,
         subscript)
 
     return Symbol(
@@ -248,7 +248,7 @@ def clone_as_function(
     display_symbol = display_symbol or source.display_name
     display_latex = display_latex or source.display_latex
 
-    display_symbol, display_latex = _process_subscript_and_names(display_symbol, display_latex,
+    display_symbol, display_latex = process_subscript_and_names(display_symbol, display_latex,
         subscript)
 
     return Function(

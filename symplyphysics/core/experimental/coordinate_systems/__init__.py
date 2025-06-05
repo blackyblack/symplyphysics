@@ -5,7 +5,11 @@ from .spherical_system import SphericalCoordinateSystem
 
 from .point import AppliedPoint
 from .scalar import CoordinateScalar
-from .vector import CoordinateVector, QuantityCoordinateVector
+from .vector import CoordinateVector, QuantityCoordinateVector, combine_coordinate_vectors
+
+CARTESIAN = CartesianCoordinateSystem()
+CYLINDRICAL = CylindricalCoordinateSystem()
+SPHERICAL = SphericalCoordinateSystem()
 
 __all__ = [
     # Most common coordinate system classes
@@ -14,9 +18,15 @@ __all__ = [
     "CylindricalCoordinateSystem",
     "SphericalCoordinateSystem",
 
+    # Global constants
+    "CARTESIAN",
+    "CYLINDRICAL",
+    "SPHERICAL",
+
     # Miscellaneous
     "AppliedPoint",
     "CoordinateScalar",
     "CoordinateVector",
     "QuantityCoordinateVector",
+    "combine_coordinate_vectors",
 ]
