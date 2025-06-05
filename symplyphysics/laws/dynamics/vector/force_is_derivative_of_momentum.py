@@ -20,8 +20,7 @@ from sympy import Eq, Expr
 
 from symplyphysics import Quantity, symbols, validate_input, validate_output
 
-from symplyphysics.core.experimental.coordinate_systems import (QuantityCoordinateVector,
-    combine_coordinate_vectors)
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
 from symplyphysics.core.experimental.vectors import VectorDerivative, clone_as_vector_function
 from symplyphysics.core.experimental.solvers import solve_for_vector
 
@@ -63,6 +62,5 @@ def calculate_force(
 
     solved = solve_for_vector(force_law, force(time))
     force_ = solved.subs(momentum(time), momentum_).doit()
-    force_ = combine_coordinate_vectors(force_)
 
-    return force_
+    return QuantityCoordinateVector.from_expr(force_)

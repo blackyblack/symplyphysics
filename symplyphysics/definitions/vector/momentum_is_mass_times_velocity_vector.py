@@ -14,8 +14,7 @@ from symplyphysics import symbols, Quantity, validate_input, validate_output
 
 from symplyphysics.core.experimental.solvers import solve_for_vector
 from symplyphysics.core.experimental.vectors import clone_as_vector_symbol
-from symplyphysics.core.experimental.coordinate_systems import (QuantityCoordinateVector,
-    combine_coordinate_vectors)
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
 
 mass = symbols.mass
 """
@@ -52,7 +51,7 @@ def calculate_momentum(
         velocity: velocity_,
     })
 
-    return combine_coordinate_vectors(momentum_value)
+    return QuantityCoordinateVector.from_expr(momentum_value)
 
 
 @validate_input(mass_=mass, momentum_=momentum)
@@ -67,4 +66,4 @@ def calculate_velocity(
         momentum: momentum_,
     })
 
-    return combine_coordinate_vectors(velocity_value)
+    return QuantityCoordinateVector.from_expr(velocity_value)

@@ -149,6 +149,18 @@ class CoordinateVector(VectorExpr):
 
         return CoordinateVector(diff_components + diff_base_vectors, self.system, self.point)
 
+    @classmethod
+    def from_expr(cls, expr: Expr) -> Expr:
+        combined = combine_coordinate_vectors(expr)
+
+        if combined == 0:
+            return combined
+
+        if not isinstance(combined, cls):
+            raise TypeError(f"Expected {cls.__name__} or zero, got {type(combined).__name__}")
+
+        return combined
+
 
 def combine_coordinate_vectors(expr: Expr) -> Expr:
     """

@@ -15,8 +15,7 @@ from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.laws.dynamics.vector import acceleration_from_force as acceleration_law
 
 from symplyphysics.core.experimental.solvers import solve_for_vector
-from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
-    CoordinateVector, combine_coordinate_vectors)
+from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
 
 acceleration = symbols.acceleration
 """
@@ -42,10 +41,8 @@ law = Eq(acceleration, force / mass)
 
 # Derive the same law from vector form
 
-_cartesian = CartesianCoordinateSystem()
-
 # Scalar law is equivalent to using one-dimensional vectors
-_force_vector = CoordinateVector([force, 0, 0], _cartesian)
+_force_vector = CoordinateVector([force, 0, 0], CARTESIAN)
 
 _acceleration_vector_derived = solve_for_vector(
     acceleration_law.law,
@@ -55,9 +52,9 @@ _acceleration_vector_derived = solve_for_vector(
     acceleration_law.mass: mass,
 })
 
-_acceleration_vector_expected = CoordinateVector([law.rhs, 0, 0], _cartesian)
+_acceleration_vector_expected = CoordinateVector([law.rhs, 0, 0], CARTESIAN)
 
-assert combine_coordinate_vectors(_acceleration_vector_derived - _acceleration_vector_expected) == 0
+assert CoordinateVector.from_expr(_acceleration_vector_derived - _acceleration_vector_expected) == 0
 
 
 @validate_input(mass_=mass, acceleration_=acceleration)
