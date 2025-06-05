@@ -50,7 +50,7 @@ _force_vector = CoordinateVector([force, 0, 0], _cartesian)
 _acceleration_vector_derived = solve_for_vector(
     acceleration_law.law,
     acceleration_law.acceleration,
-).rhs.subs({
+).subs({
     acceleration_law.force: _force_vector,
     acceleration_law.mass: mass,
 })

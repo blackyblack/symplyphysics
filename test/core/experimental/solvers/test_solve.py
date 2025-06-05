@@ -59,21 +59,11 @@ def test_express_atomic() -> None:
 
     old_expr = a * 2 - b + c
     new_eqn = solve_for_vector(old_expr, b)
-    assert vector_equals(new_eqn.lhs, b)
-    assert vector_equals(new_eqn.rhs, a * 2 + c)
-
-    new_eqn = solve_for_vector(old_expr, a, reduce_factor=False)
-    assert vector_equals(new_eqn.lhs, a * (-2))
-    assert vector_equals(new_eqn.rhs, c - b)
+    assert vector_equals(new_eqn, a * 2 + c)
 
     old_eqn = Eq(a * 2, c - b)
     new_eqn = solve_for_vector(old_eqn, b)
-    assert vector_equals(new_eqn.lhs, b)
-    assert vector_equals(new_eqn.rhs, c - a * 2)
-
-    new_eqn = solve_for_vector(old_eqn, c, reduce_factor=False)
-    assert vector_equals(new_eqn.lhs, c)
-    assert vector_equals(new_eqn.rhs, a * 2 + b)
+    assert vector_equals(new_eqn, c - a * 2)
 
     # The expression is not a VectorExpr
     with raises(TypeError):

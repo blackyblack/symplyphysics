@@ -94,7 +94,7 @@ free_fall_acceleration_vector_ = CoordinateVector(
     CARTESIAN,
 )
 
-force_from_acceleration_expr_ = solve_for_vector(force_law.law, force_law.force).rhs
+force_from_acceleration_expr_ = solve_for_vector(force_law.law, force_law.force)
 gravity_force_vector_ = force_from_acceleration_expr_.subs({
     force_law.mass: motion_law.mass,
     force_law.acceleration: free_fall_acceleration_vector_,

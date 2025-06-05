@@ -61,7 +61,7 @@ def calculate_force(
 ) -> Expr:
     momentum_ = (time / time_) * (momentum_after_ - momentum_before_)
 
-    solved = solve_for_vector(force_law, force(time)).rhs
+    solved = solve_for_vector(force_law, force(time))
     force_ = solved.subs(momentum(time), momentum_).doit()
     force_ = combine_coordinate_vectors(force_)
 

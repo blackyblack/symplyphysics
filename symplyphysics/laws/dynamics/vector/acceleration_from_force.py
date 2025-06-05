@@ -51,7 +51,7 @@ def calculate_force(
     mass_: Quantity,
     acceleration_: QuantityCoordinateVector,
 ) -> Expr:
-    force_expr = solve_for_vector(law, force).rhs
+    force_expr = solve_for_vector(law, force)
     force_value = force_expr.subs({
         mass: mass_,
         acceleration: acceleration_,
@@ -66,7 +66,7 @@ def calculate_acceleration(
     mass_: Quantity,
     force_: QuantityCoordinateVector,
 ) -> Expr:
-    acceleration_expr = solve_for_vector(law, acceleration).rhs
+    acceleration_expr = solve_for_vector(law, acceleration)
     acceleration_value = acceleration_expr.subs({
         mass: mass_,
         force: force_,

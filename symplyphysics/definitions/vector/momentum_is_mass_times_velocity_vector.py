@@ -46,7 +46,7 @@ def calculate_momentum(
     mass_: Quantity,
     velocity_: QuantityCoordinateVector,
 ) -> Expr:
-    momentum_expr = solve_for_vector(law, momentum).rhs
+    momentum_expr = solve_for_vector(law, momentum)
     momentum_value = momentum_expr.subs({
         mass: mass_,
         velocity: velocity_,
@@ -61,7 +61,7 @@ def calculate_velocity(
     mass_: Quantity,
     momentum_: QuantityCoordinateVector,
 ) -> Expr:
-    velocity_expr = solve_for_vector(law, velocity).rhs
+    velocity_expr = solve_for_vector(law, velocity)
     velocity_value = velocity_expr.subs({
         mass: mass_,
         momentum: momentum_,
