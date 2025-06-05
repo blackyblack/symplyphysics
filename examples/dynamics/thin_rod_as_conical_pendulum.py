@@ -101,7 +101,7 @@ element_mass_expr = solve(
 # is parallel to the position vector, its torque will be zero as per the property of the vector cross
 # product.
 
-force_from_acceleration_expr_ = solve_for_vector(force_law.law, force_law.force).rhs
+force_from_acceleration_expr_ = solve_for_vector(force_law.law, force_law.force)
 
 free_fall_acceleration_vector_ = CoordinateVector(
     [0, 0, -1 * acceleration_due_to_gravity],

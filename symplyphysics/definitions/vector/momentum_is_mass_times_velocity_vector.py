@@ -9,94 +9,61 @@ An object's *linear momentum* is a vector quantity defined as the product of its
 #. `Wikipedia, see first paragraph <https://en.wikipedia.org/wiki/Momentum#>`__.
 """
 
-from symplyphysics import (
-    units,
-    symbols,
-    Vector,
-    Quantity,
-    QuantityVector,
-    scale_vector,
-    validate_input,
-    validate_output,
-)
+from sympy import Eq, Expr
+from symplyphysics import symbols, Quantity, validate_input, validate_output
+
+from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
 
 mass = symbols.mass
 """
 :symbols:`mass` of the object.
 """
 
+velocity = clone_as_vector_symbol(symbols.speed)
+"""
+Vector of the object's velocity. See :symbols:`speed`.
+"""
 
-def momentum_definition(velocity_: Vector) -> Vector:
-    r"""
-    Vector of *linear momentum*.
+momentum = clone_as_vector_symbol(symbols.momentum)
+"""
+Vector of the object's linear :symbols:`momentum`.
+"""
 
-    Law:
-        :code:`p = m * v`
+law = Eq(momentum, mass * velocity)
+"""
+:laws:symbol::
 
-    Latex:
-        .. math::
-            \vec p = m \vec v
-
-    :param velocity\_: vector of velocity of the object.
-
-        Symbol: :code:`v`
-
-        Latex: :math:`\vec v`
-
-        Dimension: *velocity*
-
-    :return: vector of linear momentum.
-
-        Symbol: :code:`p`
-
-        Latex: :math:`\vec p`
-
-        Dimension: *momentum*
-    """
-
-    return scale_vector(mass, velocity_)
+:laws:latex::
+"""
 
 
-def velocity_law(momentum_: Vector) -> Vector:
-    r"""
-    Vector of *velocity*
+@validate_input(mass_=mass, velocity_=velocity)
+@validate_output(momentum)
+def calculate_momentum(
+    mass_: Quantity,
+    velocity_: QuantityCoordinateVector,
+) -> Expr:
+    momentum_expr = solve_for_vector(law, momentum)
+    momentum_value = momentum_expr.subs({
+        mass: mass_,
+        velocity: velocity_,
+    })
 
-    Law:
-        :code:`v = p / m`
-
-    Latex:
-        .. math::
-            \vec v = \frac{\vec p}{m}
-
-    :param momentum\_: vector of linear momentum.
-
-        Symbol: :code:`p`
-
-        Latex: :math:`\vec p`
-
-        Dimension: *momentum*
-
-    :return: vector of velocity of the object.
-
-        Symbol: :code:`v`
-
-        Latex: :math:`\vec v`
-
-        Dimension: *velocity*
-    """
-
-    return scale_vector(1 / mass, momentum_)
+    return QuantityCoordinateVector.from_expr(momentum_value)
 
 
-@validate_input(mass_=mass, velocity_=units.velocity)
-@validate_output(units.momentum)
-def calculate_momentum(mass_: Quantity, velocity_: QuantityVector) -> QuantityVector:
-    result_vector = momentum_definition(velocity_.to_base_vector())
-    return QuantityVector.from_base_vector(result_vector, subs={mass: mass_})
+@validate_input(mass_=mass, momentum_=momentum)
+@validate_output(velocity)
+def calculate_velocity(
+    mass_: Quantity,
+    momentum_: QuantityCoordinateVector,
+) -> Expr:
+    velocity_expr = solve_for_vector(law, velocity)
+    velocity_value = velocity_expr.subs({
+        mass: mass_,
+        momentum: momentum_,
+    })
 
-
-@validate_input(mass_=mass, momentum_=units.momentum)
-@validate_output(units.velocity)
-def calculate_velocity(mass_: Quantity, momentum_: QuantityVector) -> QuantityVector:
-    result_vector = velocity_law(momentum_.to_base_vector())
-    return QuantityVector.from_base_vector(result_vector, subs={mass: mass_})
+    return QuantityCoordinateVector.from_expr(velocity_value)
