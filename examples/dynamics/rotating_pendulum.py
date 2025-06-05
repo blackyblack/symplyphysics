@@ -38,9 +38,9 @@ from symplyphysics.laws.kinematics import (
     tangential_acceleration_via_angular_acceleration_and_radius as tangential_law,)
 from symplyphysics.laws.geometry import planar_projection_is_cosine as cosine_law
 
+from symplyphysics.core.experimental.legacy import into_legacy_vector
 from symplyphysics.core.experimental.solvers import solve_for_vector
-from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
-    CoordinateVector, combine_coordinate_vectors)
+from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
 
 # Description
 ## A physical pendulum consisting of a ball fixed on the end of a thin rigid rod can freely
@@ -89,26 +89,18 @@ ball_position_vector = Vector([
     ball_z_coordinate,
 ])
 
-# NOTE: New vector library is used here.
-cartesian = CartesianCoordinateSystem()
-free_fall_acceleration_vector = CoordinateVector(
+free_fall_acceleration_vector_ = CoordinateVector(
     [0, 0, -1 * acceleration_due_to_gravity],
-    cartesian,
+    CARTESIAN,
 )
 
 force_from_acceleration_expr_ = solve_for_vector(force_law.law, force_law.force).rhs
-subs_ = force_from_acceleration_expr_.subs({
+gravity_force_vector_ = force_from_acceleration_expr_.subs({
     force_law.mass: motion_law.mass,
-    force_law.acceleration: free_fall_acceleration_vector,
+    force_law.acceleration: free_fall_acceleration_vector_,
 })
-gravity_force_vector_ = combine_coordinate_vectors(subs_)
 
-# TODO: Replace when all code uses the new vector library.
-if isinstance(gravity_force_vector_, CoordinateVector):
-    gravity_force_vector = Vector(gravity_force_vector_.components)
-else:
-    assert gravity_force_vector_ == 0
-    gravity_force_vector = Vector([0, 0, 0])
+gravity_force_vector = into_legacy_vector(gravity_force_vector_)
 
 ball_velocity_vector = Vector([
     0,
