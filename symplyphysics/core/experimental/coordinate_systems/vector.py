@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional, Any, Iterable
+from typing import Optional, Any, Iterable, Self
 
 from sympy import (ImmutableMatrix, Expr, sqrt, Symbol as SymSymbol, Basic, Derivative as
     SymDerivative, S)
@@ -150,7 +150,7 @@ class CoordinateVector(VectorExpr):
         return CoordinateVector(diff_components + diff_base_vectors, self.system, self.point)
 
     @classmethod
-    def from_expr(cls, expr: Expr) -> Expr:
+    def from_expr(cls, expr: Expr) -> Self:
         combined = combine_coordinate_vectors(expr)
 
         if combined == 0:
