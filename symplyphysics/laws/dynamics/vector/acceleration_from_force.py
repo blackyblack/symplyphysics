@@ -16,8 +16,7 @@ from symplyphysics import Quantity, validate_input, validate_output, symbols, cl
 
 from symplyphysics.core.experimental.solvers import solve_for_vector
 from symplyphysics.core.experimental.vectors import clone_as_vector_symbol
-from symplyphysics.core.experimental.coordinate_systems import (QuantityCoordinateVector,
-    combine_coordinate_vectors)
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
 
 mass = clone_as_symbol(symbols.mass, positive=True)
 """
@@ -51,13 +50,13 @@ def calculate_force(
     mass_: Quantity,
     acceleration_: QuantityCoordinateVector,
 ) -> Expr:
-    force_expr = solve_for_vector(law, force).rhs
+    force_expr = solve_for_vector(law, force)
     force_value = force_expr.subs({
         mass: mass_,
         acceleration: acceleration_,
     })
 
-    return combine_coordinate_vectors(force_value)
+    return QuantityCoordinateVector.from_expr(force_value)
 
 
 @validate_input(mass_=mass, force_=force)
@@ -66,10 +65,10 @@ def calculate_acceleration(
     mass_: Quantity,
     force_: QuantityCoordinateVector,
 ) -> Expr:
-    acceleration_expr = solve_for_vector(law, acceleration).rhs
+    acceleration_expr = solve_for_vector(law, acceleration)
     acceleration_value = acceleration_expr.subs({
         mass: mass_,
         force: force_,
     })
 
-    return combine_coordinate_vectors(acceleration_value)
+    return QuantityCoordinateVector.from_expr(acceleration_value)

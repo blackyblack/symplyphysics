@@ -1,5 +1,6 @@
-from typing import Callable, Any
-from sympy import Basic, S, Eq, sympify, solve as sym_solve, Add, Expr
+from typing import Callable
+from sympy import Basic, S, Eq, sympify, Add, Expr
+
 from ..vectors import (
     VectorSymbol,
     VectorNorm as norm,
@@ -28,30 +29,6 @@ def apply(eqn: Basic, f: Callable[[Basic], Basic]) -> Eq:
     return Eq(f(lhs), f(rhs), evaluate=False)
 
 
-def solve_for_scalar(f: Basic, symbol: Basic, **flags: Any) -> list[Eq]:
-    """
-    Solves `f` w.r.t. `symbol` such that the result is presented as a sequence of `Eq` rather than
-    simple list of values or dict (which is what `sympy.solve` produces).
-    
-    Note that this would not work with vector equations. Instead, you can refer to
-    `solve_for_vector` if you need to express a vector given a linear combination of vectors, or
-    `apply` to reduce a vector equation to a scalar one, which can be then given as an input of
-    `solve_for_scalar`.
-
-    Args:
-        f: Equation to be solved.
-        symbol: Symbol or expression with respect to which `f` is solved.
-
-    Kwargs
-    ------
-        Refer to the documentation of `sympy.solve`. The keyword `dict` is forced to be `True`.
-    """
-
-    flags["dict"] = True
-    solution = sym_solve(f, symbol, **flags)[0]
-    return [Eq(lhs, rhs) for lhs, rhs in solution.items()]
-
-
 def vector_equals(lhs: Expr, rhs: Expr) -> bool:
     """Checks the equality of two vector expressions."""
 
@@ -62,8 +39,7 @@ def vector_equals(lhs: Expr, rhs: Expr) -> bool:
 def solve_for_vector(
     expr: Eq | Expr,
     atomic: VectorSymbol,
-    reduce_factor: bool = True,
-) -> Eq:
+) -> Expr:
     """
     Viewing `expr` as a linear combination of vectors, expresses the `atomic` vector using the rest
     of the vectors comprising that linear combination.
@@ -71,8 +47,7 @@ def solve_for_vector(
     To elaborate, suppose `expr` is written in the form `sum(k_i * v_i, i)` where `{k_i}` are
     scalars and `{v_i}` are (atomic) vectors (which can always be done for vector expressions).
     Then, if `atomic` is found under index `j` within `{v_i}`, rewrites `expr` in the form `atomic
-    = sum(-k_i * v_i, i ≠ j)` if `reduce_factor = True`, or in the form `-k_j * v_j =
-    sum(k_i * v_i, i ≠ j)` if `reduce_factor = False`.
+    = sum(-k_i * v_i, i ≠ j)`.
 
     Note that whether any of `k_i` depend on `atomic` or not is not taken into account, so it does
     not truly "solve" w.r.t. `atomic` unless none of `k_i` depend on `atomic`, in which case the
@@ -89,6 +64,7 @@ def solve_for_vector(
         expr = expr.lhs - expr.rhs
 
     if not is_vector_expr(expr):
+        # TODO: Raise `ValueError` instead as it is done in other places
         raise TypeError(f"Expected '{expr}' to be a vector.")
 
     combination = tuple(split_factor(term) for term in into_terms(expr))
@@ -105,9 +81,5 @@ def solve_for_vector(
     combination_rhs = combination[:i] + combination[i + 1:]
     scale = combination[i][1]
 
-    if reduce_factor:
-        rhs = Add(*(v * (-1 * s / scale) for v, s in combination_rhs))
-        return Eq(atomic, rhs)
-
-    rhs = Add(*(v * s for v, s in combination_rhs))
-    return Eq(atomic * (-1 * scale), rhs)
+    rhs = Add(*(v * (-1 * s / scale) for v, s in combination_rhs))
+    return rhs
