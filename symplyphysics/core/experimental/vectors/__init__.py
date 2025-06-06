@@ -105,6 +105,11 @@ def is_vector_expr(value: Any) -> bool:  # pylint: disable=too-many-return-state
             case _:
                 raise ValueError("A vector can only be multiplied by a scalar.")
 
+    if isinstance(value, SymDerivative):
+        func, *args = value.args
+
+        return is_vector_expr(func) and not any(is_vector_expr(arg) for (arg, _) in args)
+
     return False
 
 
