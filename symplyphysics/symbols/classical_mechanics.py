@@ -520,3 +520,13 @@ describe the motion of a continuum.
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Flow_velocity>`__.
 """
+
+damping_constant = Symbol("b", units.mass / units.time, positive=True)
+"""
+As a simple model of the phenomenon of damping in oscillating systems, the damping constant is the
+proportionality constant between the damping force and the body's velocity.
+
+**Links:**
+
+#. `Physics LibreTexts, equation (8.3.1) <https://phys.libretexts.org/Courses/University_of_California_Davis/UCD%3A_Physics_9HA__Classical_Mechanics/8%3A_Small_Oscillations/8.3%3A_Damping_and_Resonance>`__
+"""

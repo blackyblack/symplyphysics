@@ -139,6 +139,7 @@ __all__ = [
     "shear_stress",
     "flow_speed",
     "speed_of_sound",
+    "damping_constant",
     # electrodynamics
     "admittance",
     "electrical_conductance",
