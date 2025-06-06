@@ -58,7 +58,7 @@ Plasma :symbols:`temperature`.
 
 floating_plasma_potential = clone_as_symbol(symbols.electric_potential,
     display_symbol="U_f",
-    display_latex="U_\\mathbf{f}")
+    display_latex="U_\\text{f}")
 """
 Floating plasma :symbols:`electric_potential`.
 """

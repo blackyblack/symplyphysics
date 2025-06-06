@@ -44,15 +44,15 @@ r"""
 it can be represented by the following formula:
 
 .. math::
-    d = \sqrt{\left\Vert \mathbf{r}_2 - \mathbf{r}_1 \right\Vert},
+    d = \sqrt{\left\Vert \vec r_2 - \vec r_1 \right\Vert},
 
-where :math:`\mathbf{r}_1` is the position vector of the first point, :math:`\mathbf{r}_2` is the position
+where :math:`\vec r_1` is the position vector of the first point, :math:`\vec r_2` is the position
 vector of the second point, and :math:`\left\Vert \cdot \right\Vert` is the Euclidean norm.
 
 **Notes:**
 
-#. This symbol can be used for representing **displacement**. In that case, :math:`\mathbf{r}_1` corresponds
-   to the initial position of the body and :math:`\mathbf{r}_2` to the final position of the body.
+#. This symbol can be used for representing **displacement**. In that case, :math:`\vec r_1` corresponds
+   to the initial position of the body and :math:`\vec r_2` to the final position of the body.
 """
 
 distance = Symbol("s", units.length)
@@ -61,9 +61,9 @@ r"""
 Mathematically, it can be represented by the following formula:
 
 .. math::
-    s(t) = \int \limits_0^t |\mathbf{v}(\tau)| d\tau,
+    s(t) = \int \limits_0^t |\vec v(\tau)| d\tau,
 
-where :math:`\mathbf{v}` is the velocity vector of the body as a function of time :math:`t`. It is assumed that
+where :math:`\vec v` is the velocity vector of the body as a function of time :math:`t`. It is assumed that
 the total distance traveled is zero at zero time.
 
 **Notes:**

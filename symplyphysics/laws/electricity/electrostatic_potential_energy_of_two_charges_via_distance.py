@@ -22,7 +22,7 @@ from symplyphysics import (
 
 electrostatic_potential_energy = clone_as_symbol(symbols.energy,
     display_symbol="U_E",
-    display_latex="U_\\mathbf{E}")
+    display_latex="U_{\\vec E}")
 """
 Electrostatic potential :symbols:`energy` of system.
 """
