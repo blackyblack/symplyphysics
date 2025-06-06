@@ -39,7 +39,7 @@ force = clone_as_vector_function(symbols.force, (time,))
 The magnitude of the net :symbols:`force` exerted on the body as a function of :attr:`~time`.
 """
 
-force_law = Eq(force(time), VectorDerivative(momentum(time), time))
+law = Eq(force(time), VectorDerivative(momentum(time), time))
 """
 :laws:symbol::
 
@@ -60,7 +60,7 @@ def calculate_force(
 ) -> Expr:
     momentum_ = (time / time_) * (momentum_after_ - momentum_before_)
 
-    solved = solve_for_vector(force_law, force(time))
+    solved = solve_for_vector(law, force(time))
     force_ = solved.subs(momentum(time), momentum_).doit()
 
     return QuantityCoordinateVector.from_expr(force_)

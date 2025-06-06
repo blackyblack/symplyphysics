@@ -14,9 +14,13 @@ proportionality.
 from sympy import Eq, Expr
 from symplyphysics import Quantity, validate_input, validate_output, symbols, clone_as_symbol
 
-from symplyphysics.core.experimental.solvers import solve_for_vector
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol
+from symplyphysics.core.experimental.solvers import solve_for_vector, vector_equals
+from symplyphysics.core.experimental.vectors import (clone_as_vector_symbol,
+    clone_as_vector_function, vector_diff)
 from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+
+from symplyphysics.definitions.vector import momentum_is_mass_times_velocity_vector as _momentum_def
+from symplyphysics.laws.dynamics.vector import force_is_derivative_of_momentum as _newtons_law
 
 mass = clone_as_symbol(symbols.mass, positive=True)
 """
@@ -40,8 +44,31 @@ law = Eq(acceleration, force / mass)
 :laws:latex::
 """
 
-# TODO: Derive this law from law of force and momentum
+# Derive this law from law of force and momentum
 # Condition: mass is constant
+
+_time = _newtons_law.time
+_velocity = clone_as_vector_function(symbols.speed, (_time,))
+
+_momentum_expr = solve_for_vector(_momentum_def.law, _momentum_def.momentum).subs({
+    _momentum_def.mass: mass,
+    _momentum_def.velocity: _velocity(_time),
+})
+
+_newtons_law_subs = _newtons_law.law.subs({
+    _newtons_law.force(_time): force,
+    _newtons_law.momentum(_time): _momentum_expr,
+})
+
+_force_derived = solve_for_vector(_newtons_law_subs, force)
+
+_force_expected = solve_for_vector(law, force).subs(
+    # TODO: Use vector definition of acceleration
+    acceleration,
+    vector_diff(_velocity(_time), _time),
+)
+
+assert vector_equals(_force_derived, _force_expected)
 
 
 @validate_input(mass_=mass, acceleration_=acceleration)
