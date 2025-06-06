@@ -338,10 +338,10 @@ def test_quantity() -> None:
 
 def test_vector_symbol() -> None:
     expr = VectorSymbol("v")
-    assert latex_str(expr) == "\\mathbf{v}"
+    assert latex_str(expr) == "{\\vec v}"
 
     expr = VectorSymbol("v", units.velocity)
-    assert latex_str(expr) == "\\mathbf{v}"
+    assert latex_str(expr) == "{\\vec v}"
 
     expr = VectorSymbol("w", display_latex="\\omega")
     assert latex_str(expr) == "\\omega"
@@ -352,11 +352,11 @@ def test_vector_symbol() -> None:
 
 def test_vector_combination(test_args: Args) -> None:
     v = VectorSymbol("v", units.velocity)
-    q = VectorSymbol("q", display_latex="\\hat{\\mathbf{q}}")
+    q = VectorSymbol("q", display_latex="\\hat{q}")
 
     with evaluate(False):
         expr = test_args.speed_of_light * q + test_args.mass * v
-    assert latex_str(expr) == "c \\hat{\\mathbf{q}} + m \\mathbf{v}"
+    assert latex_str(expr) == "c \\hat{q} + m {\\vec v}"
 
 
 def test_vector_norm() -> None:
@@ -364,11 +364,11 @@ def test_vector_norm() -> None:
     w = VectorSymbol("w")
 
     expr = VectorNorm(v)
-    assert latex_str(expr) == "\\left \\Vert \\mathbf{v} \\right \\Vert"
+    assert latex_str(expr) == "\\left \\Vert {\\vec v} \\right \\Vert"
 
     with evaluate(False):
         expr = VectorNorm(v + 2 * w)
-    assert latex_str(expr) == "\\left \\Vert \\mathbf{v} + 2 \\mathbf{w} \\right \\Vert"
+    assert latex_str(expr) == "\\left \\Vert {\\vec v} + 2 {\\vec w} \\right \\Vert"
 
 
 def test_vector_dot() -> None:
@@ -378,7 +378,7 @@ def test_vector_dot() -> None:
     with evaluate(False):
         expr = VectorDot(v, w)
 
-    assert latex_str(expr) == "\\left( \\mathbf{v}, \\mathbf{w} \\right)"
+    assert latex_str(expr) == "\\left( {\\vec v}, {\\vec w} \\right)"
 
 
 def test_vector_cross() -> None:
@@ -387,7 +387,7 @@ def test_vector_cross() -> None:
 
     with evaluate(False):
         expr = VectorCross(v, w)
-    assert latex_str(expr) == "\\left[ \\mathbf{v}, \\mathbf{w} \\right]"
+    assert latex_str(expr) == "\\left[ {\\vec v}, {\\vec w} \\right]"
 
 
 def test_vector_mixed_product() -> None:
@@ -397,7 +397,7 @@ def test_vector_mixed_product() -> None:
 
     with evaluate(False):
         expr = VectorMixedProduct(u, v, w)
-    assert latex_str(expr) == "\\left( \\mathbf{u}, \\mathbf{v}, \\mathbf{w} \\right)"
+    assert latex_str(expr) == "\\left( {\\vec u}, {\\vec v}, {\\vec w} \\right)"
 
 
 def test_applied_vector_function() -> None:
@@ -406,18 +406,18 @@ def test_applied_vector_function() -> None:
     f = VectorFunction("F")
 
     expr = f(x)
-    assert latex_str(expr) == "\\mathbf{F} \\left( x \\right)"
+    assert latex_str(expr) == "{\\vec F} \\left( x \\right)"
 
     expr = f(x, y)
-    assert latex_str(expr) == "\\mathbf{F} \\left( x, y \\right)"
+    assert latex_str(expr) == "{\\vec F} \\left( x, y \\right)"
 
     f = VectorFunction("F", dimension=units.force)
 
     expr = f(x)
-    assert latex_str(expr) == "\\mathbf{F} \\left( x \\right)"
+    assert latex_str(expr) == "{\\vec F} \\left( x \\right)"
 
     expr = f(x, y)
-    assert latex_str(expr) == "\\mathbf{F} \\left( x, y \\right)"
+    assert latex_str(expr) == "{\\vec F} \\left( x, y \\right)"
 
 
 def test_vector_function() -> None:
@@ -425,16 +425,16 @@ def test_vector_function() -> None:
     y = Symbol("y")
 
     expr = VectorFunction("F", [x])
-    assert latex_str(expr) == "\\mathbf{F} \\left( x \\right)"
+    assert latex_str(expr) == "{\\vec F} \\left( x \\right)"
 
     expr = VectorFunction("F", [x, y])
-    assert latex_str(expr) == "\\mathbf{F} \\left( x, y \\right)"
+    assert latex_str(expr) == "{\\vec F} \\left( x, y \\right)"
 
     expr = VectorFunction("F", [x], dimension=units.force)
-    assert latex_str(expr) == "\\mathbf{F} \\left( x \\right)"
+    assert latex_str(expr) == "{\\vec F} \\left( x \\right)"
 
     expr = VectorFunction("F", [x, y], dimension=units.force)
-    assert latex_str(expr) == "\\mathbf{F} \\left( x, y \\right)"
+    assert latex_str(expr) == "{\\vec F} \\left( x, y \\right)"
 
     expr = VectorFunction("w", [x], display_latex="\\omega")
     assert latex_str(expr) == "\\omega \\left( x \\right)"
@@ -449,11 +449,11 @@ def test_vector_derivative() -> None:
     f = VectorFunction("F", [x, y])
 
     expr = vector_diff(f(x, y), x)
-    assert latex_str(expr) == "\\frac{\\partial}{\\partial x} \\mathbf{F} \\left( x, y \\right)"
+    assert latex_str(expr) == "\\frac{\\partial}{\\partial x} {\\vec F} \\left( x, y \\right)"
 
     f = VectorFunction("F", [x, y], dimension=units.force)
     expr = vector_diff(f(x, y), x)
-    assert latex_str(expr) == "\\frac{\\partial}{\\partial x} \\mathbf{F} \\left( x, y \\right)"
+    assert latex_str(expr) == "\\frac{\\partial}{\\partial x} {\\vec F} \\left( x, y \\right)"
 
 
 def test_cartesian_coordinate_scalar() -> None:

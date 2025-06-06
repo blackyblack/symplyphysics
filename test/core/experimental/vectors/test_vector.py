@@ -102,7 +102,7 @@ def test_combination() -> None:
 def test_init() -> None:
     name = "F"
     dim = units.force
-    latex = "\\mathbf{F}"
+    latex = "\\vec F"
 
     force = VectorSymbol(name, dim, display_latex=latex)
     assert force.display_name == name
@@ -334,7 +334,7 @@ def test_vector_function() -> None:  # pylint: disable=too-many-statements
     assert f.arguments == (a,)
     assert dimsys_SI.equivalent_dims(f.dimension, units.length)
     assert f.display_name == "f"
-    assert f.display_latex == "\\mathbf{f}"
+    assert f.display_latex == "{\\vec f}"
 
     g = VectorFunction("g")
     assert isinstance(g(), AppliedVectorFunction)
@@ -376,12 +376,12 @@ def test_vector_function() -> None:  # pylint: disable=too-many-statements
     sigma = VectorFunction(
         "sigma",
         dimension=units.area,
-        display_latex="\\mathbf{\\sigma}",
+        display_latex="{\\vec \\sigma}",
         nargs=1,
     )
     assert sigma.display_name == "sigma"
     assert sigma.dimension == units.area
-    assert sigma.display_latex == "\\mathbf{\\sigma}"
+    assert sigma.display_latex == "{\\vec \\sigma}"
     assert dimsys_SI.is_dimensionless(h.dimension)
 
     q = VectorFunction(dimension=units.current)

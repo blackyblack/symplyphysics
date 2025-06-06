@@ -17,69 +17,48 @@ vector of the particle defined relative to that origin.
 #. `Wikipedia, see second paragraph <https://en.wikipedia.org/wiki/Angular_momentum#>`__.
 """
 
-from symplyphysics import (
-    units,
-    Vector,
-    QuantityVector,
-    cross_cartesian_vectors,
-    validate_input,
-    validate_output,
-)
+from sympy import Eq, Expr
+from symplyphysics import validate_input, validate_output, symbols
 
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorCross
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
 
-def angular_momentum_definition(
-    position_vector_: Vector,
-    linear_momentum_: Vector,
-) -> Vector:
-    r"""
-    Pseudovector of angular momentum is defined as the cross product between the position vector and the momentum vector.
+position_vector = clone_as_vector_symbol(symbols.distance_to_origin)
+"""
+Displacement of the body relative to the origin of the reference frame. See
+:symbols:`distance_to_origin`.
+"""
 
-    Law:
-        :code:`L = cross(r, p)`
+linear_momentum = clone_as_vector_symbol(symbols.momentum)
+"""
+Vector of linear :symbols:`momentum`.
+"""
 
-    Latex:
-        .. math::
-            \vec L = \vec r \times \vec p
+angular_momentum = clone_as_vector_symbol(symbols.angular_momentum)
+"""
+Vector of :symbols:`angular_momentum`.
+"""
 
-    :param position_vector\_: position vector of the particle relative to a fixed point.
+law = Eq(angular_momentum, VectorCross(position_vector, linear_momentum))
+"""
+:laws:symbol::
 
-        Symbol: :code:`r`
-
-        Latex: :math:`\vec r`
-
-        Dimension: *length*
-
-    :param linear_momentum\_: vector of linear momentum of the particle.
-
-        Symbol: :code:`p`
-
-        Latex: :math:`\vec p`
-
-        Dimension: *momentum*
-
-    :return: pseudovector of angular momentum of the particle.
-
-        Symbol: :code:`L`
-
-        Latex: :math:`\vec L`
-
-        Dimension: *length* * *momentum*
-    """
-
-    return cross_cartesian_vectors(position_vector_, linear_momentum_)
+:laws:latex::
+"""
 
 
 @validate_input(
-    position_vector_=units.length,
-    linear_momentum_=units.momentum,
+    position_vector_=position_vector,
+    linear_momentum_=linear_momentum,
 )
-@validate_output(units.length * units.momentum)
+@validate_output(angular_momentum)
 def calculate_angular_momentum(
-    position_vector_: QuantityVector,
-    linear_momentum_: QuantityVector,
-) -> QuantityVector:
-    result_vector = angular_momentum_definition(
-        position_vector_.to_base_vector(),
-        linear_momentum_.to_base_vector(),
-    )
-    return QuantityVector.from_base_vector(result_vector)
+    position_vector_: QuantityCoordinateVector,
+    linear_momentum_: QuantityCoordinateVector,
+) -> Expr:
+    angular_momentum_value = law.rhs.subs({
+        position_vector: position_vector_,
+        linear_momentum: linear_momentum_,
+    })
+
+    return QuantityCoordinateVector.from_expr(angular_momentum_value)

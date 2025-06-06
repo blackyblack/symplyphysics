@@ -12,9 +12,9 @@ velocity and the horizon, and the magnitude of the free fall acceleration.
 
 **Conditions:**
 
-#. :math:`\mathbf{v}_0 \cdot \mathbf{g} < 0`, i.e. the vector of initial velocity
-   :math:`\mathbf{v}_0` must have a non-zero component that is antiparallel to the
-   vector of free fall acceleration :math:`\mathbf{g}`.
+#. :math:`\vec v_0 \cdot \vec g < 0`, i.e. the vector of initial velocity
+   :math:`\vec v_0` must have a non-zero component that is antiparallel to the
+   vector of free fall acceleration :math:`\vec g`.
 
 #. The height is measured with respect to the horizontal plane where the projectile
    was located at initial time.

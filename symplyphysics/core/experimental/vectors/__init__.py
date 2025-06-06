@@ -250,9 +250,9 @@ def _process_vector_names(
         code = f"{base}{i}"
         if not latex:
             base = base[0].lower()
-            latex = f"\\mathbf{{{base}}}_{{{i}}}"
+            latex = f"{{\\vec {base}}}_{{{i}}}"
     elif not latex:
-        latex = f"\\mathbf{{{code}}}"
+        latex = f"{{\\vec {code}}}"
 
     return code, latex
 
@@ -937,8 +937,8 @@ def clone_as_vector_symbol(
 ) -> VectorSymbol:
     name = display_symbol or source.display_name
 
-    # NOTE: assuming the source latex code allows to be wrapped in "mathbf"
-    latex = display_latex or f"\\mathbf{{{source.display_latex}}}"
+    # NOTE: assuming the source latex code allows to be placed after "\vec"
+    latex = display_latex or f"{{\\vec {source.display_latex}}}"
 
     name, latex = process_subscript_and_names(name, latex, subscript)
 
