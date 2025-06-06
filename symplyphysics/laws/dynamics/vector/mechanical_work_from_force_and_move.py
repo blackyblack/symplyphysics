@@ -1,24 +1,59 @@
-from sympy import Expr
-from symplyphysics import (units, Quantity, Vector, validate_input, validate_output)
-from symplyphysics.core.vectors.arithmetics import dot_vectors
-from symplyphysics.core.vectors.vectors import QuantityVector
+"""
+Mechanical work from force and displacement (vector)
+====================================================
 
-# Description
-## Work is measured result of force applied. Mechanical work is the only reason for the object energy to be changed.
-## Work is scalar value equal to dot product of force and movement vectors.
-## Law: A = F * S, where
-## A is mechanical work
-## F is force vector applied to object
-## S is movement vector caused by this force
-## * is a scalar multiplication of vectors (dot product)
+Work is measured result of force applied. Mechanical work is the only reason for the object energy
+to be changed. Work is a scalar value equal to the dot product of force and displacement vectors.
+
+**Notation:**
+
+#. :math:`\\left( \\vec a, \\vec b \\right)` (:code:`dot(a, b)`) is the dot product between
+   vectors :math:`\\vec a` and :math:`\\vec b`.
+
+..
+    TODO: Rename file to match heading
+"""
+
+from sympy import Eq
+from symplyphysics import Quantity, validate_input, validate_output, symbols
+
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorDot
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+
+work = symbols.work
+"""
+Mechanical :symbols:`work` done by the :attr:`~force` to displace the body.
+"""
+
+force = clone_as_vector_symbol(symbols.force)
+"""
+Vector of :symbols:`force` exerted on the body.
+"""
+
+displacement = clone_as_vector_symbol(symbols.distance)
+"""
+Vector denoting the change of the position vector of the body when it moves from one point in
+space to another. Also see :symbols:`distance`.
+"""
+
+law = Eq(work, VectorDot(force, displacement))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-def work_law(force_: Vector, distance_: Vector) -> Expr:
-    return dot_vectors(force_, distance_)
+@validate_input(force_=force, distance_=displacement)
+@validate_output(work)
+def calculate_work(
+    force_: QuantityCoordinateVector,
+    distance_: QuantityCoordinateVector,
+) -> Quantity:
+    work_expr = law.rhs
+    work_value = work_expr.subs({
+        force: force_,
+        displacement: distance_,
+    })
 
-
-@validate_input(force_=units.force, distance_=units.length)
-@validate_output(units.energy)
-def calculate_work(force_: QuantityVector, distance_: QuantityVector) -> Quantity:
-    result_work = work_law(force_.to_base_vector(), distance_.to_base_vector())
-    return Quantity(result_work)
+    return Quantity(work_value)

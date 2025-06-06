@@ -1,15 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from sympy import cos, pi, sin
-from symplyphysics import (
-    assert_equal,
-    errors,
-    units,
-    Quantity,
-    QuantityVector,
-)
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
+from symplyphysics import assert_equal, errors, units, Quantity
 from symplyphysics.laws.dynamics.vector import mechanical_work_from_force_and_move as work_law
+
+from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
 
 # Description
 ## Force of 100N is applied to heavy object lying oh horizontal table. Force is directed 60 degrees up.
@@ -23,9 +18,16 @@ Args = namedtuple("Args", ["F", "S"])
 def test_args_fixture() -> Args:
     force_ = Quantity(100 * units.newton)
     distance_ = Quantity(3 * units.meter)
-    coordinates = CoordinateSystem(CoordinateSystem.System.CARTESIAN)
-    force_vector = QuantityVector([force_ * cos(pi / 3), force_ * sin(pi / 3)], coordinates)
-    distance_vector = QuantityVector([distance_, 0], coordinates)
+    force_vector = QuantityCoordinateVector([
+        force_ * cos(pi / 3),
+        force_ * sin(pi / 3),
+        0,
+    ], CARTESIAN)
+    distance_vector = QuantityCoordinateVector([
+        distance_,
+        0,
+        0,
+    ], CARTESIAN)
     return Args(F=force_vector, S=distance_vector)
 
 
@@ -36,7 +38,7 @@ def test_basic_work(test_args: Args) -> None:
 
 def test_bad_force(test_args: Args) -> None:
     Fb = Quantity(1 * units.coulomb)
-    force_vector = QuantityVector([Fb])
+    force_vector = QuantityCoordinateVector([Fb, 0, 0], CARTESIAN)
     with raises(errors.UnitsError):
         work_law.calculate_work(force_vector, test_args.S)
     with raises(TypeError):
@@ -45,7 +47,7 @@ def test_bad_force(test_args: Args) -> None:
 
 def test_bad_move(test_args: Args) -> None:
     Sb = Quantity(1 * units.coulomb)
-    move_vector = QuantityVector([Sb])
+    move_vector = QuantityCoordinateVector([Sb, 0, 0], CARTESIAN)
     with raises(errors.UnitsError):
         work_law.calculate_work(test_args.F, move_vector)
     with raises(TypeError):
