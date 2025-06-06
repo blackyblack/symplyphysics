@@ -13,53 +13,43 @@ The net force exerted on an object is equal to the vector sum of all the forces 
 #. `Wikipedia, general principle <https://en.wikipedia.org/wiki/Superposition_principle>`__.
 """
 
-from typing import Iterable
-from symplyphysics import (units, validate_input, validate_output)
-from symplyphysics.core.vectors.arithmetics import add_cartesian_vectors
-from symplyphysics.core.vectors.vectors import QuantityVector, Vector
+from typing import Sequence
+
+from sympy import Eq, Idx
+
+from symplyphysics import symbols, validate_input, validate_output, IndexedSum, global_index
+
+from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.experimental.vectors import (clone_as_vector_symbol,
+    clone_as_indexed_vector)
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+
+net_force = clone_as_vector_symbol(symbols.force)
+"""
+Vector of the net :symbols:`force` exerted on the body.
+"""
+
+force = clone_as_indexed_vector(symbols.force)
+"""
+Vector of an individual :symbols:`force`.
+"""
+
+law = Eq(net_force, IndexedSum(force[global_index], global_index))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-def superposition_law(forces_: Iterable[Vector]) -> Vector:
-    r"""
-    The net force vector is the sum of individual force vectors.
+@validate_input(forces_=force)
+@validate_output(net_force)
+def calculate_resultant_force(
+        forces_: Sequence[QuantityCoordinateVector]) -> QuantityCoordinateVector:
+    local_index = Idx("i", (1, len(forces_)))
+    net_force_value = solve_for_vector(law, net_force).subs(global_index, local_index).doit()
 
-    Law:
-        :code:`F = Sum(F_i, i)`
+    for i, force_i in enumerate(forces_, start=1):
+        net_force_value = net_force_value.subs(force[i], force_i)
 
-    Latex:
-        .. math::
-            \vec F = \sum_i {\vec F}_i
-
-    :param forces\_: sequence of individual :symbols:`force` vectors.
-
-        Symbol: :code:`F_i`
-
-        Latex: :math:`{\vec F}_i`
-
-        Dimension: *force*
-
-    :return: net :symbols:`force` exerted on the object.
-
-        Symbol: :code:`F`
-
-        Latex: :math:`\vec F`
-
-        Dimension: *force*
-    """
-
-    result = Vector([0, 0, 0], next(iter(forces_)).coordinate_system)
-
-    for force_ in forces_:
-        result = add_cartesian_vectors(result, force_)
-
-    return result
-
-
-@validate_input(forces_=units.force)
-@validate_output(units.force)
-def calculate_resultant_force(forces_: Iterable[QuantityVector]) -> QuantityVector:
-    forces_base_vectors = [f.to_base_vector() for f in forces_]
-    if not forces_base_vectors:
-        raise ValueError("At least one force should be present")
-    result_force_vector = superposition_law(forces_base_vectors)
-    return QuantityVector.from_base_vector(result_force_vector)
+    return QuantityCoordinateVector.from_expr(net_force_value)
