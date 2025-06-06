@@ -26,5 +26,10 @@ class IndexedSum(Expr):
         return self._args[1]
 
     def doit(self, **hints: Any) -> Basic:
+        # NOTE: This allows `IndexedSum` to be used in solvers, since `Sum` cannot be instantiated
+        # without a bounded index.
+        if len(self.index_base.args) < 2:
+            return self
+
         inner_sum = Sum(self.args[0], self.index_base)
         return inner_sum.doit(**hints)

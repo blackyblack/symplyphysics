@@ -15,18 +15,14 @@ spring.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Series_and_parallel_springs#Formulas>`__.
 """
 
-from sympy import Eq, solve
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    Vector,
-    symbols,
-    clone_as_symbol,
-)
+from sympy import Eq, solve, Idx
+from symplyphysics import (Quantity, validate_input, validate_output, global_index, symbols,
+    clone_as_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions.vector import superposition_of_forces_is_sum as superposition_law
 from symplyphysics.laws.dynamics.springs import spring_reaction_is_proportional_to_deformation as hookes_law
+
+from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
 
 total_stiffness = symbols.stiffness
 """
@@ -64,10 +60,17 @@ _second_force = _force_expr.subs(hookes_law.stiffness, second_stiffness)
 
 _total_force_hooke = _force_expr.subs(hookes_law.stiffness, total_stiffness)
 
-_first_force_vector = Vector([_first_force])
-_second_force_vector = Vector([_second_force])
-_total_force_vector = superposition_law.superposition_law(
-    [_first_force_vector, _second_force_vector])
+_force_vectors = [
+    CoordinateVector([_first_force, 0, 0], CARTESIAN),
+    CoordinateVector([_second_force, 0, 0], CARTESIAN),
+]
+_local_index = Idx("i", (1, len(_force_vectors)))
+
+_total_force_vector = superposition_law.law.rhs.subs(global_index, _local_index).doit()
+for _index, _force in enumerate(_force_vectors, start=1):
+    _total_force_vector = _total_force_vector.subs(superposition_law.force[_index], _force)
+_total_force_vector = CoordinateVector.from_expr(_total_force_vector)
+
 for component in _total_force_vector.components[1:]:
     assert expr_equals(component, 0)
 _total_force_added = _total_force_vector.components[0]
