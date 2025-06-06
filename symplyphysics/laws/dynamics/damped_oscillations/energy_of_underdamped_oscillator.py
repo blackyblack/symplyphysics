@@ -69,7 +69,6 @@ law = Eq(
 
 # TODO Derive from [underdamped oscillations](../../kinematics/damped_oscillations/underdamping.py)
 
-
 @validate_input(
     mass_=mass,
     maximum_amplitude_=amplitude,
