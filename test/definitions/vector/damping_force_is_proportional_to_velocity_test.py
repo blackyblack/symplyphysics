@@ -1,14 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (
-    assert_equal_vectors,
-    units,
-    Quantity,
-    errors,
-    QuantityVector,
-)
+from symplyphysics import units, Quantity, errors
 from symplyphysics.definitions.vector import (damping_force_is_proportional_to_velocity as
     damping_def)
+
+from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.experimental.approx import assert_equal_vectors
 
 # Description
 ## A damping force acts on a body. The body's velocity is (4, -2, 0) m/s, the damping constant
@@ -20,15 +17,16 @@ Args = namedtuple("Args", "b v f")
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
     b = Quantity(0.05 * units.kilogram / units.second)
-    v = QuantityVector([
+    v = QuantityCoordinateVector([
         Quantity(4.0 * units.meter / units.second),
         Quantity(-2.0 * units.meter / units.second),
         Quantity(0.0 * units.meter / units.second),
-    ])
-    f = QuantityVector(
-        [Quantity(-0.2 * units.newton),
+    ], CARTESIAN)
+    f = QuantityCoordinateVector([
+        Quantity(-0.2 * units.newton),
         Quantity(0.1 * units.newton),
-        Quantity(0.0 * units.newton)])
+        Quantity(0.0 * units.newton),
+    ], CARTESIAN)
     return Args(b=b, v=v, f=f)
 
 
@@ -55,16 +53,16 @@ def test_bad_damping_constant(test_args: Args) -> None:
 
 
 def test_bad_velocity(test_args: Args) -> None:
-    v_bad_vector = QuantityVector([
+    v_bad_vector = QuantityCoordinateVector([
         Quantity(1.0 * units.meter),
         Quantity(1.0 * units.meter),
         Quantity(1.0 * units.meter),
-    ])
+    ], CARTESIAN)
     with raises(errors.UnitsError):
         damping_def.calculate_damping_force(test_args.b, v_bad_vector)
 
     v_scalar = Quantity(1.0 * units.meter / units.second)
-    with raises(AttributeError):
+    with raises(ValueError):
         damping_def.calculate_damping_force(test_args.b, v_scalar)
 
     with raises(TypeError):
@@ -74,16 +72,16 @@ def test_bad_velocity(test_args: Args) -> None:
 
 
 def test_bad_damping_force(test_args: Args) -> None:
-    f_bad_vector = QuantityVector([
+    f_bad_vector = QuantityCoordinateVector([
         Quantity(1.0 * units.meter),
         Quantity(1.0 * units.meter),
         Quantity(1.0 * units.meter),
-    ])
+    ], CARTESIAN)
     with raises(errors.UnitsError):
         damping_def.calculate_velocity(test_args.b, f_bad_vector)
 
     f_scalar = Quantity(1.0 * units.newton)
-    with raises(AttributeError):
+    with raises(ValueError):
         damping_def.calculate_velocity(test_args.b, f_scalar)
 
     with raises(TypeError):

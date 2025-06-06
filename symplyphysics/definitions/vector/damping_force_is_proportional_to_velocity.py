@@ -11,101 +11,61 @@ of an oscillator.
 #. `Physics LibreTexts, formula 8.3.1 <https://phys.libretexts.org/Courses/University_of_California_Davis/UCD%3A_Physics_9HA__Classical_Mechanics/8%3A_Small_Oscillations/8.3%3A_Damping_and_Resonance>`__.
 """
 
-from symplyphysics import (
-    units,
-    Symbol,
-    Quantity,
-    Vector,
-    QuantityVector,
-    scale_vector,
-    validate_input,
-    validate_output,
-)
+from sympy import Eq
+from symplyphysics import symbols, Quantity, validate_input, validate_output
 
-damping_constant = Symbol("b", units.mass / units.time)
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.experimental.solvers import solve_for_vector
+
+damping_constant = symbols.damping_constant
 """
-Non-negative damping constant.
-
-..
-    TODO: add to `symbols`
+Non-negative :symbols:`damping_constant`.
 """
 
+velocity = clone_as_vector_symbol(symbols.speed)
+"""
+Vector of the body's velocity. See :symbols:`speed`.
+"""
 
-def damping_force_definition(velocity_: Vector) -> Vector:
-    r"""
-    Vector of *damping force* exerted on the object.
+damping_force = clone_as_vector_symbol(symbols.force)
+"""
+Vector of the damping :symbols:`force` exerted on the body.
+"""
 
-    Law:
-        :code:`F = -1 * b * v`
+law = Eq(damping_force, -1 * damping_constant * velocity)
+"""
+:laws:symbol::
 
-    Latex:
-        .. math::
-            \vec F = -b \vec v
-
-    :param velocity\_: velocity vector of the object.
-
-        Symbol: :code:`v`
-
-        Latex: :math:`\vec v`
-
-        Dimension: *velocity*
-
-    :return: vector of damping :symbols:`force`.
-
-        Symbol: :code:`F`
-
-        Latex: :math:`\vec F`
-
-        Dimension: *force*
-    """
-
-    return scale_vector(-1 * damping_constant, velocity_)
+:laws:latex::
+"""
 
 
-def velocity_law(damping_force_: Vector) -> Vector:
-    r"""
-    *Velocity* of the object which the damping force is exerted on.
-    
-    Law:
-        :code:`v = -1/b * F`
+@validate_input(damping_constant_=damping_constant, velocity_=velocity)
+@validate_output(damping_force)
+def calculate_damping_force(
+    damping_constant_: Quantity,
+    velocity_: QuantityCoordinateVector,
+) -> QuantityCoordinateVector:
+    force_expr = solve_for_vector(law, damping_force)
+    force_value = force_expr.subs({
+        damping_constant: damping_constant_,
+        velocity: velocity_,
+    })
 
-    Latex:
-        .. math::
-            \vec v = - \frac{\vec F}{b}
-    
-    :param damping_force\_: damping :symbols:`force` exerted on the object.
-
-        Symbol: :code:`F`
-
-        Latex: :math:`\vec F`
-
-        Dimension: *force*
-
-    :return: velocity vector of the object.
-
-        Symbol: :code:`v`
-
-        Latex: :math:`\vec v`
-
-        Dimension: *velocity*
-    """
-
-    return scale_vector(-1 / damping_constant, damping_force_)
+    return QuantityCoordinateVector.from_expr(force_value)
 
 
-@validate_input(damping_constant_=damping_constant, velocity_=units.velocity)
-@validate_output(units.force)
-def calculate_damping_force(damping_constant_: Quantity,
-    velocity_: QuantityVector) -> QuantityVector:
-    result_vector = damping_force_definition(velocity_.to_base_vector())
-    return QuantityVector.from_base_vector(result_vector,
-        subs={damping_constant: damping_constant_})
+@validate_input(damping_constant_=damping_constant, damping_force_=damping_force)
+@validate_output(velocity)
+def calculate_velocity(
+    damping_constant_: Quantity,
+    damping_force_: QuantityCoordinateVector,
+) -> QuantityCoordinateVector:
+    velocity_expr = solve_for_vector(law, velocity)
+    velocity_value = velocity_expr.subs({
+        damping_constant: damping_constant_,
+        damping_force: damping_force_,
+    })
 
-
-@validate_input(damping_constant_=damping_constant, damping_force_=units.force)
-@validate_output(units.velocity)
-def calculate_velocity(damping_constant_: Quantity,
-    damping_force_: QuantityVector) -> QuantityVector:
-    result_vector = velocity_law(damping_force_.to_base_vector())
-    return QuantityVector.from_base_vector(result_vector,
-        subs={damping_constant: damping_constant_})
+    return QuantityCoordinateVector.from_expr(velocity_value)
