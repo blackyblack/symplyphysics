@@ -1,119 +1,94 @@
-from sympy import Expr
-from symplyphysics import (
-    units,
-    symbols,
-    Quantity,
-    Vector,
-    QuantityVector,
-    validate_input,
-    validate_output,
-    scale_vector,
-    add_cartesian_vectors,
-    vector_magnitude,
+"""
+Relative acceleration from force
+================================
+
+Suppose reference frame :math:`S` is fixed to a moving object (e.g. Earth). For some body
+:math:`B` we can write an equation of motion in coordinates of :math:`S'` akin to the Newton's
+second law of motion for inertial frames, although we obtain two additional components to the
+equation: one corresponding to the Coriolis force, and another to the fictitious force of
+translation between inertial frame :math:`S` and non-inertial frame :math:`S'`.
+
+..
+    TODO: add link to source
+"""
+
+from sympy import Eq
+from symplyphysics import symbols, Quantity, validate_input, validate_output
+
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.experimental.solvers import solve_for_vector
+
+relative_acceleration = clone_as_vector_symbol(
+    symbols.acceleration,
+    display_symbol="a_rel",
+    display_latex="{\\vec a}_\\text{rel}",
 )
+"""
+Vector of relative :symbols:`acceleration` of body :math:`B` relative to :math:`S'`
+"""
 
-# Description
-## Suppose reference S' is fixed to a moving object (e.g. Earth). For some body B we can write an equation of motion
-## in coordinates of S' akin to the Newton's second law of motion for inertial frames, although we obtain two
-## additional components to the equation: one corresponding to the Coriolis force, and another to the fictitious force
-## of translation between inertial frame (S) and non-inertial frame S'.
-
-# Law: a_rel = F / m + a_cor - a_tr
-## a_rel - vector of acceleration of body B relative to S'
-## F - vector sum of forces acting on body B
-## a_cor - vector of [Coriolis acceleration](../../kinematics/vector/coriolis_acceleration.py) of body B
-## a_tr - vector of [translation acceleration](../../kinematics/vector/acceleration_of_transfer_between_relative_frames.py) of body B
+force = clone_as_vector_symbol(symbols.force)
+"""
+Vector of the net :symbols:`force` exerted on body :math:`B`.
+"""
 
 mass = symbols.mass
+"""
+:symbols:`mass` of body :math:`B`.
+"""
 
+coriolis_acceleration = clone_as_vector_symbol(
+    symbols.acceleration,
+    display_symbol="a_Cor",
+    display_latex="{\\vec a}_\\text{Cor}",
+)
+"""
+Vector of the Coriolis :symbols:`acceleration` of body :math:`B`.
 
-def relative_acceleration_law(
-    force_: Vector,
-    coriolis_acceleration_: Vector,
-    translation_acceleration_: Vector,
-) -> Vector:
-    return add_cartesian_vectors(
-        scale_vector(1 / mass, force_),
-        coriolis_acceleration_,
-        scale_vector(-1, translation_acceleration_),
-    )
+..
+    TODO: add link to vector law
+"""
 
+translation_acceleration = clone_as_vector_symbol(
+    symbols.acceleration,
+    display_symbol="a_tr",
+    display_latex="{\\vec a}_\\text{tr}",
+)
+"""
+Vector of translation :symbols:`acceleration` of body :math:`B`.
 
-# F = m * (a_rel - a_cor + a_tr)
-def force_law(
-    relative_acceleration_: Vector,
-    coriolis_acceleration_: Vector,
-    translation_acceleration_: Vector,
-) -> Vector:
-    acceleration_ = add_cartesian_vectors(
-        relative_acceleration_,
-        scale_vector(-1, coriolis_acceleration_),
-        translation_acceleration_,
-    )
-    return scale_vector(mass, acceleration_)
+..
+    TODO: add link to vector law
+"""
 
+law = Eq(relative_acceleration, force / mass + coriolis_acceleration - translation_acceleration)
+"""
+:laws:symbol::
 
-# m = norm(F) / norm(a_rel - a_cor + a_tr), where `norm(x)` is Euclidean norm of vector `x`
-def mass_law(
-    relative_acceleration_: Vector,
-    force_: Vector,
-    coriolis_acceleration_: Vector,
-    translation_acceleration_: Vector,
-) -> Expr:
-    acceleration_ = add_cartesian_vectors(
-        relative_acceleration_,
-        scale_vector(-1, coriolis_acceleration_),
-        translation_acceleration_,
-    )
-    return vector_magnitude(force_) / vector_magnitude(acceleration_)
-
-
-# a_cor = - F / m + a_rel + a_tr
-def coriolis_acceleration_law(
-    relative_acceleration_: Vector,
-    force_: Vector,
-    translation_acceleration_: Vector,
-) -> Vector:
-    return add_cartesian_vectors(
-        scale_vector(-1 / mass, force_),
-        relative_acceleration_,
-        translation_acceleration_,
-    )
-
-
-# a_tr = F / m - a_rel + a_cor
-def translation_acceleration_law(
-    relative_acceleration_: Vector,
-    force_: Vector,
-    coriolis_acceleration_: Vector,
-) -> Vector:
-    return add_cartesian_vectors(
-        scale_vector(1 / mass, force_),
-        scale_vector(-1, relative_acceleration_),
-        coriolis_acceleration_,
-    )
+:laws:latex::
+"""
 
 
 @validate_input(
     mass_=mass,
-    force_=units.force,
-    coriolis_acceleration_=units.acceleration,
-    translation_acceleration_=units.acceleration,
+    force_=force,
+    coriolis_acceleration_=coriolis_acceleration,
+    translation_acceleration_=translation_acceleration,
 )
-@validate_output(units.acceleration)
+@validate_output(relative_acceleration)
 def calculate_relative_acceleration(
     mass_: Quantity,
-    force_: QuantityVector,
-    coriolis_acceleration_: QuantityVector,
-    translation_acceleration_: QuantityVector,
-) -> QuantityVector:
-    result_vector = relative_acceleration_law(
-        force_.to_base_vector(),
-        coriolis_acceleration_.to_base_vector(),
-        translation_acceleration_.to_base_vector(),
-    )
-    result = QuantityVector.from_base_vector(
-        result_vector,
-        subs={mass: mass_},
-    )
-    return result
+    force_: QuantityCoordinateVector,
+    coriolis_acceleration_: QuantityCoordinateVector,
+    translation_acceleration_: QuantityCoordinateVector,
+) -> QuantityCoordinateVector:
+    expr = solve_for_vector(law, relative_acceleration)
+    value = expr.subs({
+        mass: mass_,
+        force: force_,
+        coriolis_acceleration: coriolis_acceleration_,
+        translation_acceleration: translation_acceleration_,
+    })
+
+    return QuantityCoordinateVector.from_expr(value)
