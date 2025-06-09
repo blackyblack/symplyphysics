@@ -1,24 +1,56 @@
-from sympy import Expr
-from symplyphysics import units, Quantity, Vector, validate_input, validate_output
-from symplyphysics.core.vectors.arithmetics import dot_vectors
-from symplyphysics.core.vectors.vectors import QuantityVector
+"""
+Instantaneous power is dot product of force and velocity
+========================================================
 
-# Description
-## The power due to a force is the rate at which that force does work on an object.
+**Instantaneous power** is a measure of the rate of energy transfer or conversion at a given point
+in time.
 
-# Law: P = dot(F, v)
-## P - instantaneous power
-## F - force vector
-## v - instantaneous velocity vector
-## dot(a, b) is the dot product between vectors a and b
+**Conditions:**
+
+#. Force :math:`\\vec F` is constant.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Power_(physics)#Definition>`__.
+"""
+
+from sympy import Eq
+from symplyphysics import Quantity, validate_input, validate_output, symbols
+
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorDot
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+
+power = symbols.power
+"""
+Instantaneous :symbols:`power` due to :attr:`~force`.
+"""
+
+force = clone_as_vector_symbol(symbols.force)
+"""
+Vector of :symbols:`force` exerted on the body.
+"""
+
+velocity = clone_as_vector_symbol(symbols.speed)
+"""
+Vector of the body's velocity. See :symbols:`speed`.
+"""
+
+law = Eq(power, VectorDot(force, velocity))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-def power_law(force_: Vector, velocity_: Vector) -> Expr:
-    return dot_vectors(force_, velocity_)
-
-
-@validate_input(force_=units.force, velocity_=units.velocity)
-@validate_output(units.power)
-def calculate_power(force_: QuantityVector, velocity_: QuantityVector) -> Quantity:
-    result = power_law(force_.to_base_vector(), velocity_.to_base_vector())
+@validate_input(force_=force, velocity_=velocity)
+@validate_output(power)
+def calculate_power(
+    force_: QuantityCoordinateVector,
+    velocity_: QuantityCoordinateVector,
+) -> Quantity:
+    result = law.rhs.subs({
+        force: force_,
+        velocity: velocity_,
+    })
     return Quantity(result)
