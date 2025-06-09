@@ -113,12 +113,15 @@ gravity_force_acting_on_element_ = force_from_acceleration_expr_.subs({
     force_law.mass: element_mass_expr,
 })
 
-gravity_force_acting_on_element = into_legacy_vector(gravity_force_acting_on_element_)
+gravity_torque_acting_on_element_ = solve_for_vector(
+    torque_def.law,
+    torque_def.torque,
+).subs({
+    torque_def.force: gravity_force_acting_on_element_,
+    torque_def.position_vector: from_legacy_vector(element_position_vector),
+})
 
-gravity_torque_acting_on_element = torque_def.torque_definition(
-    position_=element_position_vector,
-    force_=gravity_force_acting_on_element,
-)
+gravity_torque_acting_on_element = into_legacy_vector(gravity_torque_acting_on_element_)
 
 gravity_torque_acting_on_rod = integrate_cartesian_vector(
     gravity_torque_acting_on_element.subs(element_length, 1),
@@ -138,12 +141,15 @@ centrifugal_force_acting_on_element_ = force_from_acceleration_expr_.subs({
     force_law.mass: element_mass_expr,
 })
 
-centrifugal_force_acting_on_element = into_legacy_vector(centrifugal_force_acting_on_element_)
+centrifugal_torque_acting_on_element_ = solve_for_vector(
+    torque_def.law,
+    torque_def.torque,
+).subs({
+    torque_def.force: centrifugal_force_acting_on_element_,
+    torque_def.position_vector: from_legacy_vector(element_position_vector),
+})
 
-centrifugal_torque_acting_on_element = torque_def.torque_definition(
-    position_=element_position_vector,
-    force_=centrifugal_force_acting_on_element,
-)
+centrifugal_torque_acting_on_element = into_legacy_vector(centrifugal_torque_acting_on_element_)
 
 centrifugal_torque_acting_on_rod = integrate_cartesian_vector(
     centrifugal_torque_acting_on_element.subs(element_length, 1),

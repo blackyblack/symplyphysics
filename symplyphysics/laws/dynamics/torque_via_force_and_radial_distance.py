@@ -26,7 +26,10 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
-from symplyphysics.laws.dynamics.vector import torque_vector_of_twisting_force as torque_vector_def
+from symplyphysics.laws.dynamics.vector import torque_vector_of_twisting_force as _torque_vector_def
+
+from symplyphysics.core.experimental.legacy import into_legacy_vector, from_legacy_vector
+from symplyphysics.core.experimental.solvers import solve_for_vector
 
 torque = symbols.torque
 """
@@ -59,7 +62,16 @@ law = Eq(torque, radial_distance * force * sin(angle_between_vectors))
 _force_vector = Vector(sympy_symbols("force_x:z", real=True))
 _position_vector = Vector(sympy_symbols("x:z", real=True))
 
-_torque_vector_derived = torque_vector_def.torque_definition(_force_vector, _position_vector)
+_torque_vector_derived_ = solve_for_vector(
+    _torque_vector_def.law,
+    _torque_vector_def.torque,
+).subs({
+    _torque_vector_def.force: from_legacy_vector(_force_vector),
+    _torque_vector_def.position_vector: from_legacy_vector(_position_vector),
+})
+
+_torque_vector_derived = into_legacy_vector(_torque_vector_derived_)
+
 _torque_magnitude_derived = vector_magnitude(_torque_vector_derived)
 
 _force_magnitude = vector_magnitude(_force_vector)
