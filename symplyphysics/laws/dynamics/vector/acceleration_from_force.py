@@ -16,10 +16,13 @@ from symplyphysics import Quantity, validate_input, validate_output, symbols, cl
 
 from symplyphysics.core.experimental.solvers import solve_for_vector, vector_equals
 from symplyphysics.core.experimental.vectors import (clone_as_vector_symbol,
-    clone_as_vector_function, vector_diff)
+    clone_as_vector_function)
 from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
 
-from symplyphysics.definitions.vector import momentum_is_mass_times_velocity_vector as _momentum_def
+from symplyphysics.definitions.vector import (
+    momentum_is_mass_times_velocity_vector as _momentum_def,
+    acceleration_is_velocity_derivative as _acceleration_def,
+)
 from symplyphysics.laws.dynamics.vector import force_is_derivative_of_momentum as _newtons_law
 
 mass = clone_as_symbol(symbols.mass, positive=True)
@@ -62,10 +65,14 @@ _newtons_law_subs = _newtons_law.law.subs({
 
 _force_derived = solve_for_vector(_newtons_law_subs, force)
 
+_acceleration_def_subs = _acceleration_def.law.subs({
+    _acceleration_def.acceleration(_acceleration_def.time): acceleration,
+    _acceleration_def.velocity(_acceleration_def.time): _velocity(_time),
+})
+
 _force_expected = solve_for_vector(law, force).subs(
-    # TODO: Use vector definition of acceleration
-    acceleration,
-    vector_diff(_velocity(_time), _time),
+    _acceleration_def_subs.lhs,
+    _acceleration_def_subs.rhs,
 )
 
 assert vector_equals(_force_derived, _force_expected)
