@@ -1,15 +1,9 @@
-from sympy import Derivative
-from symplyphysics import (
-    units,
-    Quantity,
-    QuantityVector,
-    Vector,
-    validate_input,
-    validate_output,
-    scale_vector,
-    add_cartesian_vectors,
-    symbols,
-)
+from sympy import Eq
+from symplyphysics import Quantity, validate_input, validate_output, symbols
+
+from symplyphysics.core.experimental.vectors import clone_as_vector_function, vector_diff
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.experimental.solvers import solve_for_vector
 
 # Description
 ## - Case of a single particle
@@ -25,28 +19,44 @@ from symplyphysics import (
 ## t - time
 
 time = symbols.time
+"""
+:symbols:`time`.
+"""
 
+angular_momentum = clone_as_vector_function(symbols.angular_momentum, (time,))
+"""
+Pseudovector of net :symbols:`angular_momentum` as a function of :attr:`~time`.
+"""
 
-def torque_law(angular_momentum_: Vector) -> Vector:
-    torque_components = [Derivative(component, time) for component in angular_momentum_.components]
-    return Vector(torque_components, angular_momentum_.coordinate_system)
+torque = clone_as_vector_function(symbols.torque, (time,))
+"""
+Pseudovector of net :symbols:`torque` as a function of :attr:`~time`.
+"""
+
+law = Eq(torque(time), vector_diff(angular_momentum(time), time))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(
-    angular_momentum_before_=units.length * units.momentum,
-    angular_momentum_after_=units.length * units.momentum,
+    angular_momentum_before_=angular_momentum,
+    angular_momentum_after_=angular_momentum,
     time_=time,
 )
-@validate_output(units.force * units.length)
+@validate_output(torque)
 def calculate_torque(
-    angular_momentum_before_: QuantityVector,
-    angular_momentum_after_: QuantityVector,
+    angular_momentum_before_: QuantityCoordinateVector,
+    angular_momentum_after_: QuantityCoordinateVector,
     time_: Quantity,
-) -> QuantityVector:
-    angular_momentum_function = scale_vector(
-        time / time_,
-        add_cartesian_vectors(angular_momentum_after_.to_base_vector(),
-        scale_vector(-1, angular_momentum_before_.to_base_vector())))
-    result_torque_vector = torque_law(angular_momentum_function)
-    result_components = [component.doit() for component in result_torque_vector.components]
-    return QuantityVector(result_components, angular_momentum_before_.coordinate_system)
+) -> QuantityCoordinateVector:
+    angular_momentum_ = (time / time_) * (angular_momentum_after_ - angular_momentum_before_)
+
+    result = solve_for_vector(
+        law.subs(angular_momentum(time), angular_momentum_),
+        torque(time),
+    ).doit()
+
+    return QuantityCoordinateVector.from_expr(result)
