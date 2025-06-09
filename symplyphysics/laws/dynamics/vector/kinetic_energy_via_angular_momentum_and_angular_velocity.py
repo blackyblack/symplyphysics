@@ -19,12 +19,12 @@ kinetic_energy = symbols.kinetic_energy
 
 angular_momentum = clone_as_vector_symbol(symbols.angular_momentum)
 """
-Vector of the body's :symbols:`angular_momentum`.
+Pseudovector of the body's :symbols:`angular_momentum`.
 """
 
 angular_velocity = clone_as_vector_symbol(symbols.angular_speed)
 """
-Vector of the body's angular velocity. See :symbols:`angular_speed`.
+Pseudovector of the body's angular velocity. See :symbols:`angular_speed`.
 """
 
 law = Eq(kinetic_energy, VectorDot(angular_momentum, angular_velocity) / 2)

@@ -5,8 +5,9 @@ Restoring torque due to twist of torsion pendulum
 A torsion pendulum is a simple harmonic oscillator consisting of a disk suspended by a wire.
 Rotating the disk through an angle in either direction introduces a restoring torque.
 
-..
-    TODO: add link to source
+**Links:**
+
+#. `Wikipedia, scalar equation <https://en.wikipedia.org/wiki/Torsion_spring#Torsion_coefficient>`__.
 """
 
 from sympy import Eq
