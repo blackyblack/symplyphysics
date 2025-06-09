@@ -1,22 +1,24 @@
+"""
+Torque is angular momentum derivative
+=====================================
+
+In the case of a single particle, the total vector sum of all the external torques acting on a
+particle is equal to the time rate change of the angular momentum of that particle.
+
+In the case of a system of particles, the net external torque acting on a system of particles is
+equal to the time rate change of the system's total angular momentum.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Torque#Relationship_with_the_angular_momentum>`__.
+"""
+
 from sympy import Eq
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_function, vector_diff
+from symplyphysics.core.experimental.vectors import clone_as_vector_function, VectorDerivative
 from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
 from symplyphysics.core.experimental.solvers import solve_for_vector
-
-# Description
-## - Case of a single particle
-##   The total vector sum of all the external torques acting on a particle is equal to the
-##   time rate change of the angular momentum of that particle.
-## - Case of a system of particles
-##   The net external torque acting on a system of particles is equal to the time rate change
-##   of the system's total angular momentum.
-
-## Law: tau = dL/dt
-## tau - vector of net torque
-## L - vector of (total) angular momentum
-## t - time
 
 time = symbols.time
 """
@@ -33,7 +35,7 @@ torque = clone_as_vector_function(symbols.torque, (time,))
 Pseudovector of net :symbols:`torque` as a function of :attr:`~time`.
 """
 
-law = Eq(torque(time), vector_diff(angular_momentum(time), time))
+law = Eq(torque(time), VectorDerivative(angular_momentum(time), time))
 """
 :laws:symbol::
 

@@ -32,12 +32,12 @@ mass = clone_as_symbol(symbols.mass, positive=True)
 
 acceleration = clone_as_vector_symbol(symbols.acceleration)
 """
-:symbols:`acceleration` of the object.
+Vector of the :symbols:`acceleration` of the object.
 """
 
 force = clone_as_vector_symbol(symbols.force)
 """
-:symbols:`force` exerted on the object.
+Vector of the :symbols:`force` exerted on the object.
 """
 
 law = Eq(acceleration, force / mass)

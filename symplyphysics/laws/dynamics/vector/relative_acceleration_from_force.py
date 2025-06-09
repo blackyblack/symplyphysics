@@ -8,8 +8,9 @@ second law of motion for inertial frames, although we obtain two additional comp
 equation: one corresponding to the Coriolis force, and another to the fictitious force of
 translation between inertial frame :math:`S` and non-inertial frame :math:`S'`.
 
-..
-    TODO: add link to source
+**Links:**
+
+#. `Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Coriolis_force#Formula>`__.
 """
 
 from sympy import Eq
@@ -30,7 +31,7 @@ Vector of relative :symbols:`acceleration` of body :math:`B` relative to :math:`
 
 force = clone_as_vector_symbol(symbols.force)
 """
-Vector of the net :symbols:`force` exerted on body :math:`B`.
+Vector of the net physical :symbols:`force` exerted on body :math:`B`.
 """
 
 mass = symbols.mass

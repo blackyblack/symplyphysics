@@ -31,12 +31,12 @@ time = symbols.time
 
 momentum = clone_as_vector_function(symbols.momentum, (time,))
 """
-The magnitude of the :symbols:`momentum` of the body as a function of :attr:`~time`.
+Vector of the :symbols:`momentum` of the body as a function of :attr:`~time`.
 """
 
 force = clone_as_vector_function(symbols.force, (time,))
 """
-The magnitude of the net :symbols:`force` exerted on the body as a function of :attr:`~time`.
+Vector of the net :symbols:`force` exerted on the body as a function of :attr:`~time`.
 """
 
 law = Eq(force(time), VectorDerivative(momentum(time), time))

@@ -36,7 +36,7 @@ Vector of linear :symbols:`momentum`.
 
 angular_momentum = clone_as_vector_symbol(symbols.angular_momentum)
 """
-Vector of :symbols:`angular_momentum`.
+Pseudovector of :symbols:`angular_momentum`.
 """
 
 law = Eq(angular_momentum, VectorCross(position_vector, linear_momentum))
