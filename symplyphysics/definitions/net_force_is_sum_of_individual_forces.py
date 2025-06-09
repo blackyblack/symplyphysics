@@ -16,12 +16,14 @@ The net force is the arithmetic sum of forces.
 """
 
 from typing import Sequence
-from sympy import (Eq, Idx, solve)
-from symplyphysics import (symbols, units, Quantity, validate_input, validate_output, global_index,
-    IndexedSum, Vector)
+from sympy import Eq, Idx, solve
+from symplyphysics import (symbols, Quantity, validate_input, validate_output, global_index,
+    IndexedSum)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.symbols import clone_as_indexed
 from symplyphysics.definitions.vector import superposition_of_forces_is_sum as vector_forces_sum
+
+from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
 
 net_force = symbols.force
 """
@@ -44,20 +46,26 @@ definition = Eq(net_force, IndexedSum(force[global_index], global_index))
 
 # Derive the law using 2 forces. Any number of forces can be represented, using 2 of them,
 # eg A + B + C = A + (B + C) = Sum(A, Sum(B, C))
-_local_index_ = Idx("local_index_", (1, 2))
-_forces_law_ = definition.subs(global_index, _local_index_)
-_expected_sum = _forces_law_.doit().rhs
+_local_index = Idx("local_index_", (1, 2))
+_forces_law = definition.subs(global_index, _local_index)
+_expected_sum = _forces_law.doit().rhs
 
 # Using one dimensional vectors represents scalar form of the law
-_vector_forces = [Vector([force[1]]), Vector([force[2]])]
-_resultant_vector = vector_forces_sum.superposition_law(_vector_forces)
+_vector_forces = [
+    CoordinateVector([force[1], 0, 0], CARTESIAN),
+    CoordinateVector([force[2], 0, 0], CARTESIAN),
+]
+_resultant_vector = vector_forces_sum.law.rhs.subs(global_index, _local_index).doit()
+for _index, _force in enumerate(_vector_forces, start=1):
+    _resultant_vector = _resultant_vector.subs(vector_forces_sum.force[_index], _force)
+_resultant_vector = CoordinateVector.from_expr(_resultant_vector)
 assert expr_equals(_resultant_vector.components[0], _expected_sum)
-for component in _resultant_vector.components[1:]:
-    assert component == 0
+assert _resultant_vector.components[1] == 0
+assert _resultant_vector.components[2] == 0
 
 
 @validate_input(forces_=force)
-@validate_output(units.force)
+@validate_output(net_force)
 def calculate_resultant_force(forces_: Sequence[Quantity]) -> Quantity:
     local_index = Idx("index_local", (1, len(forces_)))
     forces_law = definition.subs(global_index, local_index)

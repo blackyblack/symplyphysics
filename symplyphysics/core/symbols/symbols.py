@@ -75,7 +75,7 @@ class IndexedSymbol(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-a
     def __new__(cls,
         name_or_symbol: Optional[str | SymSymbol] = None,
         index: Optional[Idx] = None,
-        _dimension: Dimension = Dimension(S.One),
+        dimension: Dimension = Dimension(S.One),
         *,
         display_latex: Optional[str] = None,
         **assumptions: Any) -> IndexedSymbol:

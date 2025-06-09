@@ -22,7 +22,7 @@ print(sys.path)
 # -- Project information -----------------------------------------------------
 
 project = "symplyphysics"
-copyright = "2024, Symplyphysics"
+copyright = "2024-2025, Symplyphysics"
 author = "blackyblack"
 
 # The full version, including alpha/beta/rc tags

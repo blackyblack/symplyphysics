@@ -7,14 +7,17 @@ from collections import defaultdict
 from itertools import product as py_product
 
 from sympy import (Basic, Expr, S, Mul as SymMul, Add as SymAdd, Derivative as SymDerivative,
-    fraction, sympify as sym_sympify)
+    fraction, sympify as sym_sympify, IndexedBase, Symbol as SymSymbol, Idx)
 from sympy.core import function as sym_fn
 from sympy.core.parameters import global_parameters
 from sympy.combinatorics.permutations import Permutation
 from sympy.physics.units import Dimension
 from sympy.printing.printer import Printer
+from sympy.tensor.indexed import Indexed
 
-from symplyphysics.core.symbols.symbols import DimensionSymbol, next_name, Symbol, process_subscript_and_names
+from symplyphysics.core.operations.sum_indexed import IndexedSum
+from symplyphysics.core.symbols.symbols import (DimensionSymbol, next_name, Symbol,
+    process_subscript_and_names, global_index)
 from symplyphysics.core.symbols.id_generator import last_id, next_id
 from ..miscellaneous import cacheit, sympify_expr
 
@@ -109,6 +112,12 @@ def is_vector_expr(value: Any) -> bool:  # pylint: disable=too-many-return-state
         func, *args = value.args
 
         return is_vector_expr(func) and not any(is_vector_expr(arg) for (arg, _) in args)
+
+    if isinstance(value, Indexed):
+        return is_vector_expr(value.base)
+
+    if isinstance(value, IndexedSum):
+        return is_vector_expr(value.args[0])
 
     return False
 
@@ -308,6 +317,51 @@ class VectorSymbol(Symbol, VectorExpr):  # pylint: disable=too-many-ancestors
             return SymDerivative(self, s, evaluate=False)
 
         return S.Zero
+
+
+class IndexedVectorSymbol(DimensionSymbol, VectorExpr, IndexedBase):
+    index: Idx
+
+    def __new__(
+        cls,
+        name_or_symbol: Optional[str | SymSymbol] = None,
+        index: Optional[Idx] = None,
+        dimension: Dimension = Dimension(S.One),
+        *,
+        display_latex: Optional[str] = None,
+    ) -> IndexedVectorSymbol:
+        # SymPy subs() and solve() creates dummy symbols. Allow create new indexed symbols
+        # without renaming
+        if isinstance(name_or_symbol, SymSymbol):
+            obj = IndexedBase.__new__(cls, name_or_symbol)
+        else:
+            obj = IndexedBase.__new__(cls, next_name("VEC"))
+
+        return obj
+
+    def __init__(
+            self,
+            name_or_symbol: Optional[str | SymSymbol] = None,
+            index: Optional[Idx] = None,
+            dimension: Dimension = Dimension(S.One),
+            *,
+            display_latex: Optional[str] = None,
+    ) -> None:
+        if name_or_symbol is None:
+            display_name = str(self.name)
+        else:
+            display_name = str(name_or_symbol)
+
+        self.index = index or global_index
+
+        DimensionSymbol.__init__(
+            self,
+            display_name=display_name,
+            dimension=dimension,
+            display_latex=display_latex,
+        )
+        VectorExpr.__init__(self)
+        IndexedBase.__init__(self)
 
 
 class VectorNorm(Expr):  # pylint: disable=too-few-public-methods
@@ -949,6 +1003,26 @@ def clone_as_vector_symbol(
 
     return VectorSymbol(
         display_symbol=name,
+        dimension=source.dimension,
+        display_latex=latex,
+    )
+
+
+def clone_as_indexed_vector(
+    source: DimensionSymbol,
+    index: Optional[Idx] = None,
+    *,
+    display_symbol: Optional[str] = None,
+    display_latex: Optional[str] = None,
+) -> IndexedVectorSymbol:
+    name = display_symbol or source.display_name
+
+    # NOTE: assuming the source latex code allows to be placed after "\vec"
+    latex = display_latex or f"{{\\vec {source.display_latex}}}"
+
+    return IndexedVectorSymbol(
+        name_or_symbol=name,
+        index=index,
         dimension=source.dimension,
         display_latex=latex,
     )
