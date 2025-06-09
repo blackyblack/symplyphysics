@@ -38,7 +38,7 @@ from symplyphysics.laws.kinematics import (
     tangential_acceleration_via_angular_acceleration_and_radius as tangential_law,)
 from symplyphysics.laws.geometry import planar_projection_is_cosine as cosine_law
 
-from symplyphysics.core.experimental.legacy import into_legacy_vector
+from symplyphysics.core.experimental.legacy import into_legacy_vector, from_legacy_vector
 from symplyphysics.core.experimental.solvers import solve_for_vector
 from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
 
@@ -124,11 +124,12 @@ ball_transfer_acceleration_vector = transfer_law.transfer_acceleration_law(
     rotation_acceleration_=ZERO,  # the disk's rotation is uniform
 )
 
-ball_acceleration_vector = motion_law.relative_acceleration_law(
-    force_=gravity_force_vector,
-    coriolis_acceleration_=ball_coriolis_acceleration_vector,
-    translation_acceleration_=ball_transfer_acceleration_vector,
-).simplify()
+ball_acceleration_vector_ = motion_law.law.rhs.subs({
+    motion_law.force: from_legacy_vector(gravity_force_vector),
+    motion_law.coriolis_acceleration: from_legacy_vector(ball_coriolis_acceleration_vector),
+    motion_law.translation_acceleration: from_legacy_vector(ball_transfer_acceleration_vector),
+})
+ball_acceleration_vector = into_legacy_vector(ball_acceleration_vector_)
 
 # The normal component of the acceleration does not affect the ball's oscillations.
 
