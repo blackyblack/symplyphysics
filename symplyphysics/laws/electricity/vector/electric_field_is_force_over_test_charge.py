@@ -10,97 +10,61 @@ the electrostatic force that is applied to it.
 #. `Wikipedia, last formula in paragraph <https://en.wikipedia.org/wiki/Electric_field#Electrostatics>`__.
 """
 
-from symplyphysics import (
-    Quantity,
-    QuantityVector,
-    scale_vector,
-    units,
-    validate_input,
-    validate_output,
-    Vector,
-    symbols,
-    clone_as_symbol,
-)
+from sympy import Eq
+from symplyphysics import Quantity, validate_input, validate_output, symbols, clone_as_symbol
+
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol
+from symplyphysics.core.experimental.solvers import solve_for_vector
 
 test_charge = clone_as_symbol(symbols.charge, subscript="0")
 """
 Value of the test :symbols:`charge`.
 """
 
+electric_field = clone_as_vector_symbol(symbols.electric_field_strength)
+"""
+Vector of the electric field. See :symbols:`electric_field_strength`.
+"""
 
-def electric_field_law(electrostatic_force_: Vector) -> Vector:
-    r"""
-    Electric field via electrostatic force.
+electrostatic_force = clone_as_vector_symbol(symbols.force)
+"""
+Vector of the electrostatic :symbols:`force`.
+"""
 
-    Law:
-        :code:`E = F / q0`
+law = Eq(electric_field, electrostatic_force / test_charge)
+"""
+:laws:symbol::
 
-    Latex:
-        .. math::
-            \vec E = \frac{\vec F}{q_0}
-
-    :param electrostatic\_force\_: vector of electrostatic force
-
-        Symbol: :code:`F`
-
-        Latex: :math:`\vec F`
-
-        Dimension: *force*
-
-    :return: vector of electric field
-
-        Symbol: :code:`E`
-
-        Latex: :math:`\vec E`
-
-        Dimension: *force* / *charge*
-    """
-
-    return scale_vector(1 / test_charge, electrostatic_force_)
+:laws:latex::
+"""
 
 
-def electrostatic_force_law(electric_field_: Vector) -> Vector:
-    r"""
-    Electrostatic force via electric field.
+@validate_input(electrostatic_force_=electrostatic_force, test_charge_=test_charge)
+@validate_output(electric_field)
+def calculate_electric_field(
+    electrostatic_force_: QuantityCoordinateVector,
+    test_charge_: Quantity,
+) -> QuantityCoordinateVector:
+    expr = solve_for_vector(law, electric_field)
+    value = expr.subs({
+        electrostatic_force: electrostatic_force_,
+        test_charge: test_charge_,
+    })
 
-    Law:
-        :code:`F = q0 * E`
-
-    Latex:
-        .. math::
-            \vec F = q_0 \vec E
-
-    :param electric\_field\_: vector of electric field
-
-        Symbol: :code:`E`
-
-        Latex: :math:`\vec E`
-
-        Dimension: *force* / *charge*
-
-    :return: vector of electrostatic force
-
-        Symbol: :code:`F`
-
-        Latex: :math:`\vec F`
-
-        Dimension: *force*
-    """
-
-    return scale_vector(test_charge, electric_field_)
+    return QuantityCoordinateVector.from_expr(value)
 
 
-@validate_input(electrostatic_force_=units.force, test_charge_=test_charge)
-@validate_output(units.force / units.charge)
-def calculate_electric_field(electrostatic_force_: QuantityVector,
-    test_charge_: Quantity) -> QuantityVector:
-    result_vector = electric_field_law(electrostatic_force_.to_base_vector())
-    return QuantityVector.from_base_vector(result_vector, subs={test_charge: test_charge_})
+@validate_input(electric_field_=electric_field, test_charge_=test_charge)
+@validate_output(electrostatic_force)
+def calculate_electrostatic_force(
+    electric_field_: QuantityCoordinateVector,
+    test_charge_: Quantity,
+) -> QuantityCoordinateVector:
+    expr = solve_for_vector(law, electrostatic_force)
+    value = expr.subs({
+        electric_field: electric_field_,
+        test_charge: test_charge_,
+    })
 
-
-@validate_input(electric_field_=units.force / units.charge, test_charge_=test_charge)
-@validate_output(units.force)
-def calculate_electrostatic_force(electric_field_: QuantityVector,
-    test_charge_: Quantity) -> QuantityVector:
-    result_vector = electrostatic_force_law(electric_field_.to_base_vector())
-    return QuantityVector.from_base_vector(result_vector, subs={test_charge: test_charge_})
+    return QuantityCoordinateVector.from_expr(value)
