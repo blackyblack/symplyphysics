@@ -78,7 +78,7 @@ _magnetic_field_vec_ = CoordinateVector([0, _magnetic_field, 0], CARTESIAN)
 
 _force_vec_ = _lorentz_law.law.rhs.subs({
     _lorentz_law.charge: _charge,
-    _lorentz_law.electric_field: 0,
+    _lorentz_law.electric_field: 0,  # NOTE: see condition 3 of this law
     _lorentz_law.velocity: _velocity_vec_,
     _lorentz_law.magnetic_flux_density: _magnetic_field_vec_,
 })
