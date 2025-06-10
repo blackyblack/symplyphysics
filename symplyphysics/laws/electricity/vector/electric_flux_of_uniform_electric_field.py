@@ -7,7 +7,7 @@ the electrostatic force that is applied to it.
 
 **Notation:**
 
-#. :math:`\vec a \cdot \vec b` (:code:`dot(a, b)`) is the dot product between vectors
+#. :math:`\\left( \vec a, \vec b \\right)` (:code:`dot(a, b)`) is the dot product between vectors
    :math:`\vec a` and :math:`\vec b`.
 
 **Notes:**
@@ -25,71 +25,45 @@ the electrostatic force that is applied to it.
 #. `Electric flux <https://en.wikipedia.org/wiki/Electric_flux#Overview>`__.
 """
 
-from sympy import Expr
-from symplyphysics import (
-    Quantity,
-    QuantityVector,
-    dot_vectors,
-    units,
-    validate_input,
-    validate_output,
-    Vector,
-)
+from sympy import Eq
+from symplyphysics import Quantity, validate_input, validate_output, symbols
+
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorDot
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+
+electric_flux = symbols.electric_flux
+"""
+:symbols:`electric_flux`.
+"""
+
+electric_field = clone_as_vector_symbol(symbols.electric_field_strength)
+"""
+Vector of the electric field. See :symbols:`electric_field_strength`.
+"""
+
+area = clone_as_vector_symbol(symbols.area)
+"""
+Area pseudovector, i.e. a vector that is aligned in the direction of the unit normal to the surface
+and whose magnitude is equal to the area of the surface. See :symbols:`area`.
+"""
+
+law = Eq(electric_flux, VectorDot(electric_field, area))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-def electric_flux_law(
-    electric_field_: Vector,
-    area_: Vector,
-) -> Expr:
-    r"""
-    Electric flux via electric field and vector area.
-
-    Law:
-        :code:`Phi_E = dot(E, A)`
-
-    Latex:
-        .. math::
-            \Phi_E = \vec E \cdot \vec A
-
-    :param electric\_field\_: vector of electric field
-
-        Symbol: :code:`E`
-
-        Latex: :math:`\vec E`
-
-        Dimension: :code:`voltage/length`
-
-    :param area\_: vector area
-
-        Symbol: :code:`A`
-
-        Latex: :math:`\vec A`
-
-        Dimension: :code:`area`
-
-    :return: electric flux
-
-        Symbol: :code:`Phi_E`
-
-        Latex: :math:`\Phi_E`
-
-        Dimension: :code:`voltage*length`
-    """
-
-    return dot_vectors(electric_field_, area_)
-
-
-@validate_input(
-    electric_field_=units.voltage / units.length,
-    area_=units.area,
-)
-@validate_output(units.voltage * units.length)
+@validate_input(electric_field_=electric_field, area_=area)
+@validate_output(electric_flux)
 def calculate_electric_flux(
-    electric_field_: QuantityVector,
-    area_: QuantityVector,
+    electric_field_: QuantityCoordinateVector,
+    area_: QuantityCoordinateVector,
 ) -> Quantity:
-    result = electric_flux_law(
-        electric_field_=electric_field_.to_base_vector(),
-        area_=area_.to_base_vector(),
-    )
+    result = law.rhs.subs({
+        electric_field: electric_field_,
+        area: area_,
+    })
+
     return Quantity(result)

@@ -19,16 +19,8 @@ charge density.
 #. `Electric field of a uniformly charged plane <https://farside.ph.utexas.edu/teaching/316/lectures/node27.html>`__
 """
 
-from sympy import (Eq, solve, symbols as sympy_symbols)
-from symplyphysics import (
-    quantities,
-    Quantity,
-    Vector,
-    validate_input,
-    validate_output,
-    scale_vector,
-    symbols,
-)
+from sympy import Eq, solve, symbols as sympy_symbols
+from symplyphysics import quantities, Quantity, validate_input, validate_output, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity.vector import (
     electric_flux_of_uniform_electric_field as _flux_law,)
@@ -36,6 +28,8 @@ from symplyphysics.laws.electricity import (
     electric_flux_through_closed_surface_via_total_charge as _gauss_law,)
 from symplyphysics.laws.quantities import (
     quantity_is_areal_density_times_area as _areal_qty_law,)
+
+from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
 
 electric_field_strength = symbols.electric_field_strength
 """
@@ -63,23 +57,25 @@ law = Eq(electric_field_strength, surface_charge_density / (2 * quantities.vacuu
 # Then for the projections of electric field `E` we would have `E(a) = -1 * E(-1 * a)` since
 # the direction of the electric field in one half-space is opposite to that in the other half-space.
 
-_electric_field_left = Vector([-1 * electric_field_strength, 0, 0])
-_electric_field_right = Vector([electric_field_strength, 0, 0])
-
 _cross_sectional_area = sympy_symbols("cross_sectional_area")
 
-_area_left = scale_vector(_cross_sectional_area, Vector([-1, 0, 0]))
-_area_right = scale_vector(_cross_sectional_area, Vector([1, 0, 0]))
+_electric_field_left = CoordinateVector([-1 * electric_field_strength, 0, 0], CARTESIAN)
+_electric_field_right = CoordinateVector([electric_field_strength, 0, 0], CARTESIAN)
 
-_electric_flux_left = _flux_law.electric_flux_law(
-    electric_field_=_electric_field_left,
-    area_=_area_left,
-)
+_e_x = CoordinateVector([1, 0, 0], CARTESIAN)
 
-_electric_flux_right = _flux_law.electric_flux_law(
-    electric_field_=_electric_field_right,
-    area_=_area_right,
-)
+_area_left = -1 * _cross_sectional_area * _e_x
+_area_right = _cross_sectional_area * _e_x
+
+_electric_flux_left = _flux_law.law.rhs.subs({
+    _flux_law.electric_field: _electric_field_left,
+    _flux_law.area: _area_left,
+}).doit()
+
+_electric_flux_right = _flux_law.law.rhs.subs({
+    _flux_law.electric_field: _electric_field_right,
+    _flux_law.area: _area_right,
+}).doit()
 
 # The electric field is orthogonal to the normal vector of the cylinder's side at all points.
 # This, the flux there would be zero.
