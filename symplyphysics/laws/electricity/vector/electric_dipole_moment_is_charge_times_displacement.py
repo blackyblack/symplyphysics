@@ -15,57 +15,49 @@ of the system. It is collinear to the vector connecting the two point charges.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Electric_dipole_moment#Elementary_definition>`__.
 """
 
-from symplyphysics import (
-    units,
-    validate_input,
-    validate_output,
-    Quantity,
-    scale_vector,
-    QuantityVector,
-    Vector,
-    symbols,
-)
+from sympy import Eq
+from symplyphysics import validate_input, validate_output, Quantity, symbols
+
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+
+electric_dipole_moment = clone_as_vector_symbol(symbols.electric_dipole_moment)
+"""
+Vector of :symbols:`electric_dipole_moment`.
+"""
 
 charge = symbols.charge
 """
 Magnitude of the electric :symbols:`charge` of the point charges.
 """
 
+displacement = clone_as_vector_symbol(
+    symbols.distance,
+    display_symbol="d",
+    display_latex="{\\vec d}",
+)
+"""
+Position vector pointing from the *negative* charge to the *positive* charge. See
+:symbols:`distance`.
+"""
 
-def dipole_moment_law(displacement_vector_: Vector) -> Vector:
-    r"""
-    Vector of electric dipole moment via displacement vector.
+law = Eq(electric_dipole_moment, charge * displacement)
+"""
+:laws:symbol::
 
-    Law:
-        :code:`p = q * d`
-
-    Latex:
-        .. math::
-            \vec p = q \vec d
-
-    :param displacement\_vector\_: vector pointing from the negative charge to the positive charge
-
-        Symbol: :code:`d`
-
-        Latex: :math:`\vec d`
-
-        Dimension: *length*
-
-    :return: vector of electric dipole moment
-
-        Symbol: :code:`p`
-
-        Latex: :math:`\vec p`
-
-        Dimension: *charge* * *length*
-    """
-
-    return scale_vector(charge, displacement_vector_)
+:laws:latex::
+"""
 
 
-@validate_input(charge_=charge, displacement_vector_=units.length)
-@validate_output(units.charge * units.length)
-def calculate_dipole_moment(charge_: Quantity,
-    displacement_vector_: QuantityVector) -> QuantityVector:
-    result_vector = dipole_moment_law(displacement_vector_.to_base_vector())
-    return QuantityVector.from_base_vector(result_vector, subs={charge: charge_})
+@validate_input(charge_=charge, displacement_vector_=displacement)
+@validate_output(electric_dipole_moment)
+def calculate_dipole_moment(
+    charge_: Quantity,
+    displacement_vector_: QuantityCoordinateVector,
+) -> QuantityCoordinateVector:
+    result = law.rhs.subs({
+        charge: charge_,
+        displacement: displacement_vector_,
+    })
+
+    return QuantityCoordinateVector.from_expr(result)
