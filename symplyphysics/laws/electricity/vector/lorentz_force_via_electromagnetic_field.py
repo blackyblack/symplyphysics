@@ -1,4 +1,4 @@
-r"""
+"""
 Lorentz force via electromagnetic field
 =======================================
 
@@ -8,10 +8,8 @@ magnetic field.
 
 **Notation:**
 
-#. :math:`\vec a \times \vec b` (:code:`cross(a, b)`) is the cross product between
-   :math:`\vec a` and :math:`\vec b`.
-#. :math:`\lVert \vec a \rVert` (:code:`norm(a)`) is the Euclidean norm of :math:`\vec a`.
-#. :math:`|x|` (:code:`abs(x)`) is the absolute value of :math:`x`.
+#. :math:`\\left[ \\vec a, \\vec b \\right]` (:code:`cross(a, b)`) is the cross product between
+   :math:`\\vec a` and :math:`\\vec b`.
 
 **Notes:**
 
@@ -25,237 +23,63 @@ magnetic field.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Lorentz_force>`__.
 """
 
-from sympy import Expr
-from symplyphysics import (
-    Quantity,
-    QuantityVector,
-    scale_vector,
-    add_cartesian_vectors,
-    subtract_cartesian_vectors,
-    cross_cartesian_vectors,
-    vector_magnitude,
-    units,
-    validate_input,
-    validate_output,
-    Vector,
-    symbols,
-)
+from sympy import Eq
+from symplyphysics import Quantity, validate_input, validate_output, symbols
+
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorCross
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+
+lorentz_force = clone_as_vector_symbol(symbols.force)
+"""
+Vector of the Lorentz :symbols:`force` exerted on the charged particle.
+"""
 
 charge = symbols.charge
 """
 Value of the electric :symbols:`charge` of the test particle.
 """
 
-
-def lorentz_force_law(
-    electric_field_: Vector,
-    magnetic_flux_density_: Vector,
-    velocity_: Vector,
-) -> Vector:
-    r"""
-    Lorentz force via electric and magnetic fields, and velocity.
-
-    Law:
-        :code:`F = q * (E + cross(v, B))`
-
-    Latex:
-        .. math::
-            \vec F = q \left( \vec E + \vec v \times \vec B \right)
-
-    :param electric\_field\_: vector of electric field
-
-        Symbol: :code:`E`
-
-        Latex: :math:`\vec E`
-
-        Dimension: *voltage* / *length*
-    
-    :param magnetic\_flux\_density\_: pseudovector of magnetic flux density
-
-        Symbol: :code:`B`
-
-        Latex: :math:`\vec B`
-
-        Dimension: *magnetic density*
-
-    :param velocity\_: vector of particle's velocity
-
-        Symbol: :code:`v`
-
-        Latex: :math:`\vec v`
-
-        Dimension: *velocity*
-    
-    :return: Lorentz force acting on the charged particle
-
-        Symbol: :code:`F`
-
-        Latex: :math:`\vec F`
-
-        Dimension: *force*
-    """
-
-    velocity_cross_magnetic_field_ = cross_cartesian_vectors(
-        velocity_,
-        magnetic_flux_density_,
-    )
-
-    total_field_ = add_cartesian_vectors(
-        electric_field_,
-        velocity_cross_magnetic_field_,
-    )
-
-    return scale_vector(charge, total_field_)
-
-
-def electric_field_law(
-    lorentz_force_: Vector,
-    magnetic_flux_density_: Vector,
-    velocity_: Vector,
-) -> Vector:
-    r"""
-    Electric field via Lorentz force, magnetic field, and velocity.
-
-    Law:
-        :code:`E = F / q - cross(v, B)`
-
-    Latex:
-        .. math::
-            \vec E = \frac{\vec F}{q} - \vec v \times \vec B
-
-    :param lorentz\_force\_: Lorentz force acting on the charged particle
-
-        Symbol: :code:`F`
-
-        Latex: :math:`\vec F`
-
-        Dimension: *force*
-
-    :param magnetic\_flux\_density\_: pseudovector of magnetic flux density
-
-        Symbol: :code:`B`
-
-        Latex: :math:`\vec B`
-
-        Dimension: *magnetic density*
-
-    :param velocity\_: vector of particle's velocity
-
-        Symbol: :code:`v`
-
-        Latex: :math:`\vec v`
-
-        Dimension: *velocity*
-
-    :return: vector of electric field
-
-        Symbol: :code:`E`
-
-        Latex: :math:`\vec E`
-
-        Dimension: *voltage* / *length*
-    """
-
-    velocity_cross_magnetic_field_ = cross_cartesian_vectors(
-        velocity_,
-        magnetic_flux_density_,
-    )
-
-    total_field_ = scale_vector(1 / charge, lorentz_force_)
-
-    return subtract_cartesian_vectors(
-        total_field_,
-        velocity_cross_magnetic_field_,
-    )
-
-
-def charge_law(
-    lorentz_force_: Vector,
-    electric_field_: Vector,
-    magnetic_flux_density_: Vector,
-    velocity_: Vector,
-) -> Expr:
-    r"""
-    Magnitude of the particle's charge via force and electromagnetic field.
-
-    Law:
-        :code:`abs(q) = norm(F) / norm(E + cross(v, B))`
-
-    Latex:
-        .. math::
-            |q| = \frac{\lVert \vec F \rVert}{\left \lVert \vec E + \vec v \times \vec B \right \rVert}
-
-    :param lorentz\_force\_: Lorentz force acting on the charged particle
-
-        Symbol: :code:`F`
-
-        Latex: :math:`\vec F`
-
-        Dimension: *force*
-
-    :param electric\_field\_: vector of electric field
-
-        Symbol: :code:`E`
-
-        Latex: :math:`\vec E`
-
-        Dimension: *voltage* / *length*
-    
-    :param magnetic\_flux\_density\_: pseudovector of magnetic flux density
-
-        Symbol: :code:`B`
-
-        Latex: :math:`\vec B`
-
-        Dimension: *magnetic density*
-
-    :param velocity\_: vector of particle's velocity
-
-        Symbol: :code:`v`
-
-        Latex: :math:`\vec v`
-
-        Dimension: *velocity*
-
-    :return: magnitude of the test charge
-
-        Symbol: :code:`q`
-
-        Dimension: *charge*
-    """
-
-    velocity_cross_magnetic_field_ = cross_cartesian_vectors(
-        velocity_,
-        magnetic_flux_density_,
-    )
-
-    total_field_ = add_cartesian_vectors(
-        electric_field_,
-        velocity_cross_magnetic_field_,
-    )
-
-    return vector_magnitude(lorentz_force_) / vector_magnitude(total_field_)
+electric_field = clone_as_vector_symbol(symbols.electric_field_strength)
+"""
+Vector of the electric field. See :symbols:`electric_field_strength`.
+"""
+
+velocity = clone_as_vector_symbol(symbols.speed)
+"""
+Vector of the particle's velocity. See :symbols:`speed`.
+"""
+
+magnetic_flux_density = clone_as_vector_symbol(symbols.magnetic_flux_density)
+"""
+Vector of the :symbols:`magnetic_flux_density`.
+"""
+
+law = Eq(lorentz_force, charge * (electric_field + VectorCross(velocity, magnetic_flux_density)))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(
     charge_=charge,
-    electric_field_=units.voltage / units.length,
-    magnetic_flux_density_=units.magnetic_density,
-    velocity_=units.velocity,
+    electric_field_=electric_field,
+    magnetic_flux_density_=magnetic_flux_density,
+    velocity_=velocity,
 )
-@validate_output(units.force)
+@validate_output(lorentz_force)
 def calculate_lorentz_force(
     charge_: Quantity,
-    electric_field_: QuantityVector,
-    magnetic_flux_density_: QuantityVector,
-    velocity_: QuantityVector,
-) -> QuantityVector:
-    result = lorentz_force_law(
-        electric_field_=electric_field_.to_base_vector(),
-        magnetic_flux_density_=magnetic_flux_density_.to_base_vector(),
-        velocity_=velocity_.to_base_vector(),
-    )
-    return QuantityVector.from_base_vector(
-        result,
-        subs={charge: charge_},
-    )
+    electric_field_: QuantityCoordinateVector,
+    magnetic_flux_density_: QuantityCoordinateVector,
+    velocity_: QuantityCoordinateVector,
+) -> QuantityCoordinateVector:
+    result = law.rhs.subs({
+        charge: charge_,
+        electric_field: electric_field_,
+        magnetic_flux_density: magnetic_flux_density_,
+        velocity: velocity_,
+    })
+
+    return QuantityCoordinateVector.from_expr(result)
