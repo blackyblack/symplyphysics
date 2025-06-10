@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 
 from sympy import solve, symbols
-from symplyphysics import print_expression, Vector, Quantity, units, convert_to
+from symplyphysics import print_expression, Quantity, units, convert_to
 from symplyphysics.laws.electricity.vector import electric_field_is_force_over_test_charge as electric_field_law
 from symplyphysics.laws.dynamics import acceleration_is_force_over_mass
 from symplyphysics.laws.kinematics import position_via_constant_acceleration_and_time as const_acceleration_law
 from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as const_velocity_law
+
+from symplyphysics.core.experimental.coordinate_systems import CoordinateVector, CARTESIAN
+from symplyphysics.core.experimental.solvers import solve_for_vector
 
 # Description
 ## A charged drop with a mass of m = 1.5e-7 g and a negative charge of magnitude Q = 2.8e-13 C enters
@@ -28,9 +31,18 @@ values = {
     electric_field_magnitude: Quantity(1.1e6 * units.newton / units.coulomb),
 }
 
-electric_field_vector = Vector([0, -1 * electric_field_magnitude, 0])
-electrostatic_force_vector = electric_field_law.electrostatic_force_law(electric_field_vector)
-electrostatic_force_y_expr = electrostatic_force_vector.components[1]
+electric_field_vector_ = CoordinateVector([0, -1 * electric_field_magnitude, 0], CARTESIAN)
+
+electrostatic_force_vector_ = solve_for_vector(
+    electric_field_law.law,
+    electric_field_law.electrostatic_force,
+).subs(
+    electric_field_law.electric_field,
+    electric_field_vector_,
+)
+
+electrostatic_force_y_expr = CoordinateVector.from_expr(electrostatic_force_vector_).components[1]
+
 electrostatic_force_y = electrostatic_force_y_expr.subs(electric_field_law.test_charge, drop_charge)
 
 drop_acceleration_y = solve(acceleration_is_force_over_mass.law,
