@@ -64,17 +64,20 @@ _electric_field_right = CoordinateVector([electric_field_strength, 0, 0], CARTES
 
 _e_x = CoordinateVector([1, 0, 0], CARTESIAN)
 
-_area_left = -1 * _cross_sectional_area * _e_x
-_area_right = _cross_sectional_area * _e_x
+# The area pseudovector has the magnitude of the area of the surface and the direction of the unit
+# normal to the surface. It is needed for the proper calculation of the electric flux. Also see
+# `area` in `./vector/electric_flux_of_uniform_electric_field`
+_vector_area_left = -1 * _cross_sectional_area * _e_x
+_vector_area_right = _cross_sectional_area * _e_x
 
 _electric_flux_left = _flux_law.law.rhs.subs({
     _flux_law.electric_field: _electric_field_left,
-    _flux_law.area: _area_left,
+    _flux_law.area: _vector_area_left,
 }).doit()
 
 _electric_flux_right = _flux_law.law.rhs.subs({
     _flux_law.electric_field: _electric_field_right,
-    _flux_law.area: _area_right,
+    _flux_law.area: _vector_area_right,
 }).doit()
 
 # The electric field is orthogonal to the normal vector of the cylinder's side at all points.
