@@ -1,84 +1,71 @@
-from sympy import Expr
-from symplyphysics import (
-    symbols,
-    units,
-    Quantity,
-    Vector,
-    QuantityVector,
-    validate_input,
-    validate_output,
-    scale_vector,
-    add_cartesian_vectors,
-    subtract_cartesian_vectors,
-    vector_magnitude,
-)
+"""
+Acceleration due to gravity via gravity force and centripetal acceleration
+==========================================================================
 
-# Description
-## Suppose a reference frame S' is fixed to a rotating body A (e.g. Earth), so that frame S' rotates w.r.t.
-## another static reference frame S. The acceleration due to gravity (in moving frame S') is the
-## acceleration another body B has in the gravity field of body A, with rotational effects such as
-## the centripetal acceleration taken into account. It is the same for all bodies at a fixed point,
-## but can be different at different points in space.
+Suppose a reference frame :math:`S'` is fixed to a rotating body :math:`A` (e.g. Earth), so that
+frame :math:`S'` rotates w.r.t. another static reference frame :math:`S`. The acceleration due to
+gravity (in moving frame :math:`S'`) is the acceleration another body :math:`B` has in the gravity
+field of body :math:`A`, with rotational effects such as the centripetal acceleration taken into
+account. It is the same for all bodies at a fixed point, but can be different at different points
+in space.
 
-# Law: g = F_gravity / m - a_centripetal
-## g - vector of acceleration due to gravity of body B
-## F_gravity - vector of the force of gravity pull acting on body B
-## a_centripetal - vector of centripetal acceleration of body B
-## m - mass of body B
+..
+    TODO: add link to source
+"""
+
+from sympy import Eq
+from symplyphysics import symbols, Quantity, validate_input, validate_output, quantities
+
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
 
 mass = symbols.mass
+"""
+:symbols:`mass` of body :math:`B`.
+"""
 
+acceleration_due_to_gravity = clone_as_vector_symbol(quantities.acceleration_due_to_gravity)
+"""
+Vector of acceleration due to gravity of body :math:`B`.
+"""
 
-def acceleraton_due_to_gravity_law(
-    gravity_force_: Vector,
-    centripetal_acceleration_: Vector,
-) -> Vector:
-    return subtract_cartesian_vectors(
-        scale_vector(1 / mass, gravity_force_),
-        centripetal_acceleration_,
-    )
+gravity_force = clone_as_vector_symbol(symbols.force)
+"""
+Vector of the :symbols:`force` of gravity pull exerted on body :math:`B`.
+"""
 
+centripetal_acceleration = clone_as_vector_symbol(
+    symbols.acceleration,
+    display_symbol="a_cp",
+    display_latex="{\\vec a}_\\text{cp}",
+)
+"""
+Vector of centripetal :symbols:`acceleration` of body :math:`B`.
+"""
 
-# F_gravity = m * (g + a_centripetal)
-def gravity_force_law(
-    acceleration_due_to_gravity_: Vector,
-    centripetal_acceleration_: Vector,
-) -> Vector:
-    return scale_vector(
-        mass,
-        add_cartesian_vectors(
-        acceleration_due_to_gravity_,
-        centripetal_acceleration_,
-        ),
-    )
+law = Eq(acceleration_due_to_gravity, gravity_force / mass - centripetal_acceleration)
+"""
+:laws:symbol::
 
-
-# m = norm(F_gravity) / norm(g + a_centripetal)
-def mass_law(
-    acceleration_due_to_gravity_: Vector,
-    gravity_force_: Vector,
-    centripetal_acceleration_: Vector,
-) -> Expr:
-    acceleration_ = add_cartesian_vectors(
-        acceleration_due_to_gravity_,
-        centripetal_acceleration_,
-    )
-    return vector_magnitude(gravity_force_) / vector_magnitude(acceleration_)
+:laws:latex::
+"""
 
 
 @validate_input(
-    gravity_force_=units.force,
-    centripetal_acceleration_=units.acceleration,
+    gravity_force_=gravity_force,
+    centripetal_acceleration_=centripetal_acceleration,
     mass_=mass,
 )
-@validate_output(units.acceleration)
+@validate_output(acceleration_due_to_gravity)
 def calculate_acceleraton_due_to_gravity(
-    gravity_force_: QuantityVector,
-    centripetal_acceleration_: QuantityVector,
+    gravity_force_: QuantityCoordinateVector,
+    centripetal_acceleration_: QuantityCoordinateVector,
     mass_: Quantity,
-) -> QuantityVector:
-    vector = acceleraton_due_to_gravity_law(
-        gravity_force_.to_base_vector(),
-        centripetal_acceleration_.to_base_vector(),
-    )
-    return QuantityVector.from_base_vector(vector, subs={mass: mass_})
+) -> QuantityCoordinateVector:
+    result = law.rhs.subs({
+        mass: mass_,
+        gravity_force: gravity_force_,
+        centripetal_acceleration: centripetal_acceleration_,
+    })
+
+    return QuantityCoordinateVector.from_expr(result)
