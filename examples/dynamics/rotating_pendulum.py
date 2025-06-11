@@ -108,10 +108,10 @@ ball_velocity_vector = Vector([
     symbols("ball_velocity_z", real=True),
 ])
 
-ball_coriolis_acceleration_vector = coriolis_law.coriolis_acceleration_law(
-    angular_velocity_=disk_angular_velocity_vector,
-    velocity_=ball_velocity_vector,
-)
+ball_coriolis_acceleration_vector_ = coriolis_law.law.rhs.subs({
+    coriolis_law.angular_velocity: from_legacy_vector(disk_angular_velocity_vector),
+    coriolis_law.relative_velocity: from_legacy_vector(ball_velocity_vector),
+})
 
 ball_centripetal_acceleration_vector = centripetal_law.centripetal_acceleration_law(
     angular_velocity_=disk_angular_velocity_vector,
@@ -129,7 +129,7 @@ ball_transfer_acceleration_vector_ = solve_for_vector(
 
 ball_acceleration_vector_ = motion_law.law.rhs.subs({
     motion_law.force: from_legacy_vector(gravity_force_vector),
-    motion_law.coriolis_acceleration: from_legacy_vector(ball_coriolis_acceleration_vector),
+    motion_law.coriolis_acceleration: ball_coriolis_acceleration_vector_,
     motion_law.translation_acceleration: ball_transfer_acceleration_vector_,
 })
 ball_acceleration_vector = into_legacy_vector(ball_acceleration_vector_)
