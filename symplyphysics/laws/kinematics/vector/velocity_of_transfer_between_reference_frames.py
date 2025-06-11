@@ -1,68 +1,82 @@
-from symplyphysics import (
-    units,
-    angle_type,
-    validate_input,
-    validate_output,
-    Vector,
-    QuantityVector,
-    add_cartesian_vectors,
-    scale_vector,
-    cross_cartesian_vectors,
+"""
+Velocity of transfer between reference frames
+=============================================
+
+Suppose two reference frames, one of which is fixed (:math:`S`) and the other one is moving
+(:math:`S'`). The movement of a body stationary in moving frame :math:`S'` due to the movement of
+the frame itself is called transfer movement. The velocity related to such movement is called
+transfer velocity. For any material point :math:`X`, its transfer velocity relative to fixed frame
+:math:`S` is the sum of the velocity of frame :math:`S'` relative to frame :math:`S` and the cross
+product of the angular velocity of moving frame's rotation and the position vector of :math:`X` in
+moving frame :math:`S'`.
+
+**Links:**
+
+#. `Wikipedia, first formula <https://ru.wikipedia.org/wiki/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D0%BC%D0%B0_%D0%BE_%D1%81%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B8_%D1%81%D0%BA%D0%BE%D1%80%D0%BE%D1%81%D1%82%D0%B5%D0%B9#%D0%9E%D0%B1%D1%81%D1%83%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5>`__.
+
+..
+    TODO: find English link
+"""
+
+from sympy import Eq
+from symplyphysics import validate_input, validate_output, symbols
+
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorCross
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.experimental.solvers import solve_for_vector
+
+transfer_velocity = clone_as_vector_symbol(
+    symbols.speed,
+    display_symbol="v_tr",
+    display_latex="{\\vec v}_\\text{tr}",
 )
+"""
+Vector of transfer velocity of point :math:`X` relative to fixed frame :math:`S`. See :symbols:`speed`.
+"""
 
-# Description
-## Suppose two reference frames, one of which is fixed (S) and the other one is moving (S'). The movement of
-## a body stationary in moving frame S' due to the movement of the frame itself is called transfer movement.
-## The velocity related to such movement is called transfer velocity. For any material point X, its transfer
-## velocity relative to fixed frame S is the sum of the velocity of frame S' relative to frame S
-## and the cross product of the angular velocity of moving frame's rotation and the position
-## vector of X in moving frame S'.
+moving_frame_velocity = clone_as_vector_symbol(symbols.speed, subscript="0")
+"""
+Vector of moving frame :math:`S'` relative to fixed frame :math:`S`.
+"""
 
-# Law: v_tr = v_0 + cross(w, r)
-## v_tr - vector of transfer velocity of point X relative to fixed frame S.
-## v_0 - vector of moving frame S' relative to fixed frame S
-## w - pseudovector of angular velocity related to rotation of moving frame S' about instantaneous axis
-## r - vector of position of point X relative to moving frame S'
+angular_velocity = clone_as_vector_symbol(symbols.angular_speed)
+"""
+Pseudovector of the angular velocity related to the rotation of moving frame :math:`S'` about the
+instantaneous axis. See :symbols:`angular_speed`.
+"""
 
-# Links: Wikipedia, first formula <https://ru.wikipedia.org/wiki/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D0%BC%D0%B0_%D0%BE_%D1%81%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B8_%D1%81%D0%BA%D0%BE%D1%80%D0%BE%D1%81%D1%82%D0%B5%D0%B9#%D0%9E%D0%B1%D1%81%D1%83%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5>
-# TODO: find English link
+position_vector = clone_as_vector_symbol(symbols.distance_to_origin)
+"""
+Position vector of point :math:`X` relative to moving frame :math:`S'`. See
+:symbols:`distance_to_origin`.
+"""
 
+law = Eq(
+    transfer_velocity,
+    moving_frame_velocity + VectorCross(angular_velocity, position_vector),
+)
+"""
+:laws:symbol::
 
-def transfer_velocity_law(
-    moving_frame_velocity_: Vector,
-    angular_velocity_: Vector,
-    position_vector_: Vector,
-) -> Vector:
-    return add_cartesian_vectors(
-        moving_frame_velocity_,
-        cross_cartesian_vectors(angular_velocity_, position_vector_),
-    )
-
-
-def moving_frame_velocity_law(
-    transfer_velocity_: Vector,
-    angular_velocity_: Vector,
-    position_vector_: Vector,
-) -> Vector:
-    return add_cartesian_vectors(
-        transfer_velocity_,
-        scale_vector(-1, cross_cartesian_vectors(angular_velocity_, position_vector_)))
+:laws:latex::
+"""
 
 
 @validate_input(
-    moving_frame_velocity_=units.velocity,
-    angular_velocity_=angle_type / units.time,
-    position_vector_=units.length,
+    moving_frame_velocity_=moving_frame_velocity,
+    angular_velocity_=angular_velocity,
+    position_vector_=position_vector,
 )
-@validate_output(units.velocity)
+@validate_output(transfer_velocity)
 def calculate_transfer_velocity(
-    moving_frame_velocity_: QuantityVector,
-    angular_velocity_: QuantityVector,
-    position_vector_: QuantityVector,
-) -> QuantityVector:
-    result = transfer_velocity_law(
-        moving_frame_velocity_.to_base_vector(),
-        angular_velocity_.to_base_vector(),
-        position_vector_.to_base_vector(),
-    )
-    return QuantityVector.from_base_vector(result)
+    moving_frame_velocity_: QuantityCoordinateVector,
+    angular_velocity_: QuantityCoordinateVector,
+    position_vector_: QuantityCoordinateVector,
+) -> QuantityCoordinateVector:
+    result = solve_for_vector(law, transfer_velocity).subs({
+        moving_frame_velocity: moving_frame_velocity_,
+        angular_velocity: angular_velocity_,
+        position_vector: position_vector_,
+    })
+
+    return QuantityCoordinateVector.from_expr(result)
