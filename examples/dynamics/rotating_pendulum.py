@@ -113,17 +113,20 @@ ball_coriolis_acceleration_vector = coriolis_law.coriolis_acceleration_law(
     velocity_=ball_velocity_vector,
 )
 
-ball_centripetal_acceleration_vector = centripetal_law.centripetal_acceleration_law(
-    angular_velocity_=disk_angular_velocity_vector,
-    radius_vector_=ball_position_vector,
-)
+ball_centripetal_acceleration_vector_ = solve_for_vector(
+    centripetal_law.law,
+    centripetal_law.centripetal_acceleration,
+).subs({
+    centripetal_law.angular_velocity: from_legacy_vector(disk_angular_velocity_vector),
+    centripetal_law.position_vector: from_legacy_vector(ball_position_vector),
+})
 
 ball_transfer_acceleration_vector_ = solve_for_vector(
     transfer_law.law,
     transfer_law.transfer_acceleration,
 ).subs({
     transfer_law.moving_frame_acceleration: 0,  # the frame is fixed
-    transfer_law.centripetal_acceleration: from_legacy_vector(ball_centripetal_acceleration_vector),
+    transfer_law.centripetal_acceleration: ball_centripetal_acceleration_vector_,
     transfer_law.rotation_acceleration: 0,  # the disk's rotation is uniform
 })
 
