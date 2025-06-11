@@ -58,8 +58,8 @@ law = Eq(
 :laws:latex::
 """
 
-# Prove that it is equivalent to derive centripetal acceleration via cross product
-# and via vector rejection.
+# Prove that obtaining centripetal acceleration via cross product and via vector rejection yield
+# same result.
 
 _angular_velocity = CoordinateVector(sym_symbols("angular_velocity_x:z"), CARTESIAN)
 _position_vector = CoordinateVector(sym_symbols("position_vector_x:z"), CARTESIAN)
