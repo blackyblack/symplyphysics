@@ -1,21 +1,8 @@
 #!/usr/bin/env python3
 
-from sympy import (
-    symbols,
-    pi,
-    solve,
-    refine,
-    Q,
-    cos,
-    S,
-)
+from sympy import symbols, pi, solve, refine, Q, cos, S
 from sympy.physics.units import acceleration_due_to_gravity
-from symplyphysics import (
-    Vector,
-    add_cartesian_vectors,
-    vector_magnitude,
-    print_expression,
-)
+from symplyphysics import add_cartesian_vectors, vector_magnitude, print_expression
 from symplyphysics.core.vectors.arithmetics import integrate_cartesian_vector
 from symplyphysics.conditions.dynamics.equilibrium import (
     total_torque_is_zero as equilibrium_law,)
@@ -34,7 +21,7 @@ from symplyphysics.laws.geometry import (
 from symplyphysics.laws.quantities import (
     quantity_is_linear_density_times_length as linear_density_law,)
 
-from symplyphysics.core.experimental.legacy import into_legacy_vector, from_legacy_vector
+from symplyphysics.core.experimental.legacy import into_legacy_vector
 from symplyphysics.core.experimental.solvers import solve_for_vector
 from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
 
@@ -59,7 +46,7 @@ distance_to_element, element_length, element_mass = symbols(
 # the origin is at the fixed end of the rod, the longitudinal axis is the `z` axis and the polar axis is
 # the `y` axis.
 
-angular_velocity_vector = Vector([0, 0, angular_velocity])
+angular_velocity_vector_ = CoordinateVector([0, 0, angular_velocity], CARTESIAN)
 
 element_y_coordinate = cosine_law.law.rhs.subs({
     cosine_law.vector_length: distance_to_element,
@@ -71,11 +58,11 @@ element_z_coordinate = cosine_law.law.rhs.subs({
     cosine_law.vector_angle: pi - cone_half_angle,
 })
 
-element_position_vector = Vector([
+element_position_vector_ = CoordinateVector([
     0,
     element_y_coordinate,
     element_z_coordinate,
-])
+], CARTESIAN)
 
 # The rod is uniform, therefore the linear density of the rod as a whole and for any
 # of its elements is the same.
@@ -118,7 +105,7 @@ gravity_torque_acting_on_element_ = solve_for_vector(
     torque_def.torque,
 ).subs({
     torque_def.force: gravity_force_acting_on_element_,
-    torque_def.position_vector: from_legacy_vector(element_position_vector),
+    torque_def.position_vector: element_position_vector_,
 })
 
 gravity_torque_acting_on_element = into_legacy_vector(gravity_torque_acting_on_element_)
@@ -128,17 +115,17 @@ gravity_torque_acting_on_rod = integrate_cartesian_vector(
     (distance_to_element, S.Zero, rod_length),
 )
 
-element_centripetal_acceleration_vector = centripetal_law.centripetal_acceleration_law(
-    angular_velocity_=angular_velocity_vector,
-    radius_vector_=element_position_vector,
-)
+element_centripetal_acceleration_vector_ = centripetal_law.law.rhs.subs({
+    centripetal_law.angular_velocity: angular_velocity_vector_,
+    centripetal_law.position_vector: element_position_vector_,
+})
 
 element_centrifugal_acceleration_vector_ = solve_for_vector(
     centrifugal_law.law,
     centrifugal_law.centrifugal_acceleration,
 ).subs(
     centrifugal_law.centripetal_acceleration,
-    from_legacy_vector(element_centripetal_acceleration_vector),
+    element_centripetal_acceleration_vector_,
 )
 
 centrifugal_force_acting_on_element_ = force_from_acceleration_expr_.subs({
@@ -151,7 +138,7 @@ centrifugal_torque_acting_on_element_ = solve_for_vector(
     torque_def.torque,
 ).subs({
     torque_def.force: centrifugal_force_acting_on_element_,
-    torque_def.position_vector: from_legacy_vector(element_position_vector),
+    torque_def.position_vector: element_position_vector_,
 })
 
 centrifugal_torque_acting_on_element = into_legacy_vector(centrifugal_torque_acting_on_element_)
