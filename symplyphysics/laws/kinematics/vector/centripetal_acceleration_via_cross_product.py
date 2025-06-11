@@ -26,7 +26,6 @@ from symplyphysics.laws.kinematics.vector import (
 from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorCross
 from symplyphysics.core.experimental.coordinate_systems import (CoordinateVector, CARTESIAN,
     QuantityCoordinateVector)
-from symplyphysics.core.experimental.legacy import into_legacy_vector, from_legacy_vector
 from symplyphysics.core.experimental.solvers import vector_equals
 
 centripetal_acceleration = clone_as_vector_symbol(
@@ -70,11 +69,12 @@ _cross_product_result = law.rhs.subs({
 })
 _cross_product_result = CoordinateVector.from_expr(_cross_product_result)
 
-_rejection_result_legacy = rejection_law.centripetal_acceleration_law(
-    into_legacy_vector(_angular_velocity),
-    into_legacy_vector(_position_vector),
-)
-_rejection_result = from_legacy_vector(_rejection_result_legacy)
+_rejection_result = rejection_law.law.rhs.subs({
+    rejection_law.angular_velocity: _angular_velocity,
+    rejection_law.position_vector: _position_vector,
+})
+
+_rejection_result = CoordinateVector.from_expr(_rejection_result)
 
 assert vector_equals(_cross_product_result, _rejection_result)
 
