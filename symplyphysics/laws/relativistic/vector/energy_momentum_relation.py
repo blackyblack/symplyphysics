@@ -1,54 +1,75 @@
-from sympy import Expr
-from symplyphysics import (
-    units,
-    Quantity,
-    validate_input,
-    validate_output,
-    Vector,
-    scale_vector,
-    QuantityVector,
-    vector_magnitude,
-    symbols,
-)
+"""
+Energy—momentum relation
+========================
+
+Relativistic momentum and total relativistic energy of a relativistic particle are related by a
+linear equation.
+
+**Conditions:**
+
+#. Velocity :math:`\\vec v` and momentum :math:`\\vec p` must be parallel to each other.
+
+**Links:**
+
+#. `Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Energy%E2%80%93momentum_relation#Heuristic_approach_for_massive_particles>`__.
+
+..
+    TODO: find a more exact link
+"""
+
+from sympy import Eq
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.quantities import speed_of_light
 
-# Description
-## Relativistic momentum and total relativistic energy are related by a simple equation.
-
-# Law: p * c**2 = E * v
-## p - vector of relativistic momentum
-## c - speed of light
-## E - total energy of relativistic particle
-## v - vector of particle's velocity
-
-# Links: Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Energy%E2%80%93momentum_relation#Heuristic_approach_for_massive_particles>
-# TODO: find a more exact link
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorNorm
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.experimental.solvers import solve_for_vector
 
 total_energy = symbols.energy
+"""
+Total energy of the relativistic :symbols:`energy`.
+"""
 
+momentum = clone_as_vector_symbol(symbols.momentum)
+"""
+Vector of the particle's relativistic :symbols:`momentum`.
+"""
 
-def momentum_law(velocity_: Vector) -> Vector:
-    return scale_vector(total_energy / speed_of_light**2, velocity_)
+velocity = clone_as_vector_symbol(symbols.speed)
+"""
+Vector of the particle's velocity. See :symbols:`speed`.
+"""
 
+vector_law = Eq(momentum * speed_of_light**2, total_energy * velocity)
+"""
+:laws:symbol::
 
-def velocity_law(momentum_: Vector) -> Vector:
-    return scale_vector(speed_of_light**2 / total_energy, momentum_)
+:laws:latex::
+"""
 
+energy_law = Eq(
+    total_energy,
+    speed_of_light**2 * (VectorNorm(momentum) / VectorNorm(velocity)),
+)
+"""
+:laws:symbol::
 
-def total_energy_law(momentum_: Vector, velocity_: Vector) -> Expr:
-    p = vector_magnitude(momentum_)
-    v = vector_magnitude(velocity_)
-    return p * speed_of_light**2 / v
+:laws:latex::
+"""
 
 
 @validate_input(
     total_energy_=total_energy,
-    velocity_=units.velocity,
+    velocity_=velocity,
 )
-@validate_output(units.momentum)
-def calculate_momentum(total_energy_: Quantity, velocity_: QuantityVector) -> QuantityVector:
-    result_vector = momentum_law(velocity_.to_base_vector())
-    return QuantityVector.from_base_vector(
-        result_vector,
-        subs={total_energy: total_energy_},
-    )
+@validate_output(momentum)
+def calculate_momentum(
+    total_energy_: Quantity,
+    velocity_: QuantityCoordinateVector,
+) -> QuantityCoordinateVector:
+    result = solve_for_vector(vector_law, momentum).subs({
+        total_energy: total_energy_,
+        velocity: velocity_,
+    })
+
+    return QuantityCoordinateVector.from_expr(result)
