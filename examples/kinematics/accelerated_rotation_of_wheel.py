@@ -21,6 +21,10 @@ from symplyphysics.laws.kinematics import (
 from symplyphysics.laws.kinematics.vector import (
     acceleration_is_normal_plus_tangential_acceleration as total_acceleration_law,)
 
+from symplyphysics.core.experimental.vectors import VectorNorm
+from symplyphysics.core.experimental.coordinate_systems import CoordinateVector, CARTESIAN
+from symplyphysics.core.experimental.solvers import solve_for_vector
+
 # Description
 ## A wheel is rotating about a fixed axis so that the angular displacement is expressed as k*t^2, where
 ## k = 0.2 rad/s^2. Find the total acceleration of the point on the wheel at the moment t = 2.5 s
@@ -72,11 +76,19 @@ centripetal_acceleration = centripetal_acceleration_law.law.rhs.subs({
 
 # Tangential and centripetal accelerations are perpendicular to one another. Therefore, we can
 # align the tangential acceleration with the x axis, and the centripetal one with the y axis.
-total_acceleration = vector_magnitude(
-    total_acceleration_law.acceleration_law(
-    tangential_acceleration_=Vector([tangential_acceleration, 0]),
-    normal_acceleration_=Vector([0, centripetal_acceleration]),
-    )).simplify()
+normal_acceleration_vector_ = CoordinateVector([0, centripetal_acceleration, 0], CARTESIAN)
+tangential_acceleration_vector_ = CoordinateVector([tangential_acceleration, 0, 0], CARTESIAN)
+
+total_acceleration_vector_ = solve_for_vector(
+    total_acceleration_law.law,
+    total_acceleration_law.total_acceleration,
+).subs({
+    total_acceleration_law.normal_acceleration: normal_acceleration_vector_,
+    total_acceleration_law.tangential_acceleration: tangential_acceleration_vector_,
+})
+total_acceleration_vector_ = CoordinateVector.from_expr(total_acceleration_vector_)
+
+total_acceleration = VectorNorm(total_acceleration_vector_)
 total_acceleration_value = convert_to(
     Quantity(total_acceleration.subs(values)),
     units.meter / units.second**2,
