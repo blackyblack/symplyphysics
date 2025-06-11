@@ -1,4 +1,4 @@
-r"""
+"""
 Centripetal acceleration via vector rejection
 =============================================
 
@@ -9,85 +9,66 @@ Also see :doc:`laws.kinematics.vector.centripetal_acceleration_via_cross_product
 
 **Notation:**
 
-#. :math:`|\vec a|` (:code:`norm(a)`) is the Euclidean norm of :math:`\vec a`.
-#. :math:`\text{oproj}_{\vec b} \vec a` (:code:`reject(a, b)`) is the rejection of
-   :math:`\vec a` from :math:`\vec b`, i.e. the component of :math:`\vec a` orthogonal
-   to :math:`\vec b`.
+#. :math:`\\left( \\vec a, \\vec b \\right)` (:code:`dot(a, b)`) is the dot product between
+   vectors :math:`\\vec a` and :math:`\\vec b`.
 
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Centripetal_force#Derivation_using_vectors>`__.
 """
 
-from symplyphysics import (
-    units,
-    angle_type,
-    validate_input,
-    validate_output,
-    Vector,
-    QuantityVector,
-    vector_magnitude,
-    scale_vector,
+from sympy import Eq
+from symplyphysics import validate_input, validate_output, symbols
+
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorDot
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+
+centripetal_acceleration = clone_as_vector_symbol(
+    symbols.acceleration,
+    display_symbol="a_cp",
+    display_latex="{\\vec a}_\\text{cp}",
 )
-from symplyphysics.core.vectors.arithmetics import reject_cartesian_vector
+"""
+Vector of the body's centripetal :symbols:`acceleration`.
+"""
 
+angular_velocity = clone_as_vector_symbol(symbols.angular_speed)
+"""
+Pseudovector of the angular velocity of the body's rotation. See :symbols:`angular_speed`.
+"""
 
-def centripetal_acceleration_law(
-    angular_velocity_: Vector,
-    radius_vector_: Vector,
-) -> Vector:
-    r"""
-    Centripetal acceleration via angular velocity and radius vector.
+position_vector = clone_as_vector_symbol(symbols.distance_to_origin)
+"""
+The body's position vector. See :symbols:`distance_to_origin`.
+"""
 
-    Law:
-        :code:`a_c = -1 * norm(w)^2 * reject(r, w)`
+# NOTE: the following is an equivalent form of the original `a_cp = -1 * dot(w, w) * reject(r, w)`
+# where `reject(r, w) = r - project(r, w)` and `project(r, w) = w * dot(r, w) / dot(w, w)`.
+# Maybe implement `VectorReject` and `VectorProject` classes if enough laws need them.
+law = Eq(
+    centripetal_acceleration,
+    angular_velocity * VectorDot(position_vector, angular_velocity) -
+    position_vector * VectorDot(angular_velocity, angular_velocity),
+)
+"""
+:laws:symbol::
 
-    Latex:
-        .. math::
-            {\vec a}_\text{c} = - |\vec \omega|^2 \text{oproj}_{\vec \omega} \vec r
-
-    :param angular_velocity\_: pseudovector of angular velocity
-
-        Symbol: :code:`w`
-
-        Latex: :math:`\vec \omega`
-
-        Dimension: *angle* / *time*
-
-    :param radius_vector\_: radius vector, or position vector
-
-        Symbol: :code:`r`
-
-        Latex: :math:`\vec r`
-
-        Dimension: *length*
-
-    :return: vector of centripetal acceleration
-
-        Symbol: :code:`a_c`
-
-        Latex: :math:`{\vec a}_\text{c}`
-
-        Dimension: *acceleration*
-    """
-
-    return scale_vector(
-        -1 * vector_magnitude(angular_velocity_)**2,
-        reject_cartesian_vector(radius_vector_, angular_velocity_),
-    )
+:laws:latex::
+"""
 
 
 @validate_input(
-    angular_velocity_=angle_type / units.time,
-    radius_vector_=units.length,
+    angular_velocity_=angular_velocity,
+    radius_vector_=position_vector,
 )
-@validate_output(units.acceleration)
+@validate_output(centripetal_acceleration)
 def calculate_centripetal_acceleration(
-    angular_velocity_: QuantityVector,
-    radius_vector_: QuantityVector,
-) -> QuantityVector:
-    vector = centripetal_acceleration_law(
-        angular_velocity_.to_base_vector(),
-        radius_vector_.to_base_vector(),
-    )
-    return QuantityVector.from_base_vector(vector)
+    angular_velocity_: QuantityCoordinateVector,
+    radius_vector_: QuantityCoordinateVector,
+) -> QuantityCoordinateVector:
+    result = law.rhs.subs({
+        angular_velocity: angular_velocity_,
+        position_vector: radius_vector_,
+    })
+
+    return QuantityCoordinateVector.from_expr(result)
