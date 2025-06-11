@@ -17,7 +17,7 @@ The acceleration of a body moving arbitrarily is composed of two parts:
 """
 
 from sympy import Eq
-from symplyphysics import validate_input, validate_output, symbols, Quantity, assert_equal
+from symplyphysics import validate_input, validate_output, symbols, Quantity
 
 from symplyphysics.core.approx import approx_equal_numbers
 from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorDot

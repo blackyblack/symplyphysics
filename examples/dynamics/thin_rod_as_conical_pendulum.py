@@ -133,11 +133,16 @@ element_centripetal_acceleration_vector = centripetal_law.centripetal_accelerati
     radius_vector_=element_position_vector,
 )
 
-element_centrifugal_acceleration_vector = centrifugal_law.centrifugal_law(
-    centripetal_acceleration_=element_centripetal_acceleration_vector,)
+element_centrifugal_acceleration_vector_ = solve_for_vector(
+    centrifugal_law.law,
+    centrifugal_law.centrifugal_acceleration,
+).subs(
+    centrifugal_law.centripetal_acceleration,
+    from_legacy_vector(element_centripetal_acceleration_vector),
+)
 
 centrifugal_force_acting_on_element_ = force_from_acceleration_expr_.subs({
-    force_law.acceleration: from_legacy_vector(element_centrifugal_acceleration_vector),
+    force_law.acceleration: element_centrifugal_acceleration_vector_,
     force_law.mass: element_mass_expr,
 })
 

@@ -11,81 +11,65 @@ the sum of weighted relative positions of the distributed mass is zero.
 """
 
 from typing import Sequence
-from sympy import S, Expr
-from symplyphysics import (
-    units,
-    validate_input,
-    validate_output,
-    Quantity,
-    Vector,
-    QuantityVector,
-    add_cartesian_vectors,
-    scale_vector,
+from sympy import Eq, Idx
+
+from symplyphysics import (validate_input, validate_output, Quantity, symbols, global_index,
+    IndexedSum, units)
+from symplyphysics.core.symbols.symbols import clone_as_indexed
+
+from symplyphysics.core.experimental.vectors import clone_as_indexed_vector, VectorSymbol
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+
+center_of_mass = VectorSymbol("r_com", units.length, display_latex="{\\vec r}_\\text{COM}")
+"""
+Vector of the system's center of mass (COM).
+"""
+
+position_vector = clone_as_indexed_vector(symbols.distance_to_origin)
+"""
+Position vector of the :math:`i`-th body. See :symbols:`distance_to_origin`.
+"""
+
+mass = clone_as_indexed(symbols.mass)
+"""
+:symbols:`mass` of the :math:`i`-th body.
+"""
+
+law = Eq(
+    center_of_mass,
+    IndexedSum(mass[global_index] * position_vector[global_index], global_index) /
+    IndexedSum(mass[global_index], global_index),
 )
+"""
+:laws:symbol::
+
+..
+    For the Latex code printer:
+    TODO: fix indexed vector symbols
+    TODO: add parenthesis around IndexedSum when it is the base of an exponent
+
+Latex:
+    .. math::
+        {\\vec r}_\\text{COM} = \\frac{\\sum_i m_i {\\vec r}_i}{\\sum_i m_i}
+"""
 
 
-def center_of_mass_law(
-    masses_: Sequence[Expr],
-    position_vectors_: Sequence[Vector],
-) -> Vector:
-    r"""
-    Vector of the center of mass from masses and position vectors.
-
-    Law:
-        :code:`r_com = Sum(m_i * r_i, i) / Sum(m_i, i)`
-
-    Latex:
-        .. math::
-            {\vec r}_\text{com} = \frac{\sum_i m_i {\vec r}_i}{\sum_i m_i}
-
-    :param masses\_: sequence of masses of individual parts
-
-        Symbol: :code:`m_i`
-
-        Latex: :math:`m_i`
-
-        Dimension: *mass*
-
-    :param position_vectors\_: sequence of position vectors of individual parts
-
-        Symbol: :code:`r_i`
-
-        Latex: :math:`{\vec r}_i`
-
-        Dimension: *length*
-
-    :return: vector of the center of mass
-
-        Symbol: :code:`r_com`
-
-        Latex: :math:`{\vec r}_\text{com}`
-
-        Dimension: *length*
-    """
-
-    result = Vector([0, 0, 0], next(iter(position_vectors_)).coordinate_system)
-    total_mass = S.Zero
-    for mass, position_vector in zip(masses_, position_vectors_):
-        total_mass += mass
-        scaled = scale_vector(mass, position_vector)
-        result = add_cartesian_vectors(result, scaled)
-    scaled_result = scale_vector(1 / total_mass, result)
-    return scaled_result
-
-
-@validate_input(
-    masses_=units.mass,
-    position_vectors_=units.length,
-)
-@validate_output(units.length)
+@validate_input(masses_=mass, position_vectors_=position_vector)
+@validate_output(center_of_mass)
 def calculate_center_of_mass(
     masses_: Sequence[Quantity],
-    position_vectors_: Sequence[QuantityVector],
-) -> QuantityVector:
+    position_vectors_: Sequence[QuantityCoordinateVector],
+) -> QuantityCoordinateVector:
     if len(masses_) != len(position_vectors_):
         raise ValueError("Mass and position arrays should have the same lengths")
-    if len(position_vectors_) == 0:
-        raise ValueError("At least one particle should be present")
-    position_base_vectors = [v.to_base_vector() for v in position_vectors_]
-    result_vector = center_of_mass_law(masses_, position_base_vectors)
-    return QuantityVector.from_base_vector(result_vector)
+
+    local_index = Idx("i", (1, len(masses_)))
+    result = law.rhs.subs(global_index, local_index).doit()
+
+    for index_, (mass_, position_vector_) in enumerate(zip(masses_, position_vectors_), start=1):
+        result = result.subs({
+            position_vector[index_]: position_vector_,
+            mass[index_]: mass_,
+        })
+
+    return QuantityCoordinateVector.from_expr(result)
