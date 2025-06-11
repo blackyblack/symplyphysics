@@ -10,81 +10,44 @@ acceleration* but is directed oppositely to it.
 #. `BYJU's <https://byjus.com/physics/centripetal-and-centrifugal-force/>`__.
 """
 
-from symplyphysics import (
-    units,
-    validate_input,
-    validate_output,
-    Vector,
-    QuantityVector,
-    scale_vector,
+from sympy import Eq
+from symplyphysics import validate_input, validate_output, symbols
+
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+
+centrifugal_acceleration = clone_as_vector_symbol(
+    symbols.acceleration,
+    display_symbol="a_cf",
+    display_latex="{\\vec a}_\\text{cf}",
 )
+"""
+Vector of centrifugal :symbols:`acceleration` experienced by the body in the non-inertial,
+rotating frame.
+"""
+
+centripetal_acceleration = clone_as_vector_symbol(
+    symbols.acceleration,
+    display_symbol="a_cp",
+    display_latex="{\\vec a}_\\text{cp}",
+)
+"""
+Vector of centripetal :symbols:`acceleration` experienced by the rotating body in the inertial
+frame.
+"""
+
+law = Eq(centrifugal_acceleration, -1 * centripetal_acceleration)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-def centrifugal_law(centripetal_acceleration_: Vector) -> Vector:
-    r"""
-    *Centrifugal acceleration* via centripetal acceleration.
-
-    Law:
-        :code:`a_centrifugal = -1 * a_centripetal`
-
-    Latex:
-        .. math::
-            \vec a_\text{cf} = - \vec a_\text{cp}
-
-    :param centripetal_acceleration\_: :symbols:`acceleration` experienced by the rotating body in an inertial frame.
-
-        Symbol: :code:`a_centripetal`
-
-        Latex: :math:`\vec a_\text{cp}`
-
-        Dimension: *acceleration*
-    
-    :return: :symbols:`acceleration` experienced by the body in a non-inertial, rotating frame.
-
-        Symbol: :code:`a_centrifugal`
-
-        Latex: :math:`\vec a_\text{cf}`
-
-        Dimension: *acceleration*
-    """
-
-    return scale_vector(-1, centripetal_acceleration_)
-
-
-def centripetal_law(centrifugal_acceleration_: Vector) -> Vector:
-    r"""
-    *Centripetal acceleration* via centrifugal acceleration.
-
-    Law:
-        :code:`a_centripetal = -1 * a_centrifugal`
-    
-    Latex:
-        .. math::
-            \vec a_\text{cp} = - \vec a_\text{cf}
-    
-    :param centrifugal_acceleration\_: :symbols:`acceleration` experienced by the body in a non-inertial, rotating frame.
-
-        Symbol: :code:`a_centripetal`
-
-        Latex: :math:`\vec a_\text{cp}`
-
-        Dimension: *acceleration*
-
-    :return: :symbols:`acceleration` experienced by the rotating body in an inertial frame.
-    
-        Symbol: :code:`a_centripetal`
-
-        Latex: :math:`\vec a_\text{cp}`
-
-        Dimension: *acceleration*
-    """
-
-    return scale_vector(-1, centrifugal_acceleration_)
-
-
-@validate_input(centripetal_acceleration_=units.acceleration)
-@validate_output(units.acceleration)
+@validate_input(centripetal_acceleration_=centripetal_acceleration)
+@validate_output(centrifugal_acceleration)
 def calculate_centrifugal_acceleration(
-    centripetal_acceleration_: QuantityVector,) -> QuantityVector:
-    result_vector = centrifugal_law(centripetal_acceleration_.to_base_vector())
-    return QuantityVector.from_base_vector(result_vector)
+        centripetal_acceleration_: QuantityCoordinateVector) -> QuantityCoordinateVector:
+    result = law.rhs.subs(centripetal_acceleration, centripetal_acceleration_)
+
+    return QuantityCoordinateVector.from_expr(result)
