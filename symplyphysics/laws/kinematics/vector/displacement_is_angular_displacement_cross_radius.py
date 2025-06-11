@@ -16,68 +16,58 @@ as the cross product of the pseudovector of angular displacement and the radius 
 """
 
 from pytest import approx
-from symplyphysics import (
-    Quantity,
-    dot_vectors,
-    units,
-    angle_type,
-    validate_input,
-    validate_output,
-    Vector,
-    QuantityVector,
-    cross_cartesian_vectors,
+from sympy import Eq
+from symplyphysics import Quantity, validate_input, validate_output, symbols
+
+from symplyphysics.core.approx import approx_equal_numbers
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorCross, VectorDot
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+
+linear_displacement = clone_as_vector_symbol(symbols.distance)
+"""
+Vector of the body's linear displacement. See :symbols:`distance`.
+"""
+
+angular_displacement = clone_as_vector_symbol(symbols.angular_distance)
+"""
+Pseudovector of the body's angular displacement. See :symbols:`angular_distance`. It is parallel
+to the rotation axis.
+"""
+
+rotation_radius_vector = clone_as_vector_symbol(symbols.distance_to_axis)
+"""
+Radius vector pointing away from the rotation axis perpendicular to it. See
+:symbols:`distance_to_axis`.
+"""
+
+law = Eq(
+    linear_displacement,
+    VectorCross(angular_displacement, rotation_radius_vector),
 )
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-def displacement_law(angular_displacement_: Vector, rotation_radius_: Vector) -> Vector:
-    r"""
-    Displacement vector.
+@validate_input(
+    angular_displacement_=angular_displacement,
+    rotation_radius_=rotation_radius_vector,
+)
+@validate_output(linear_displacement)
+def calculate_linear_displacement(
+    angular_displacement_: QuantityCoordinateVector,
+    rotation_radius_: QuantityCoordinateVector,
+) -> QuantityCoordinateVector:
+    dot = Quantity(VectorDot(angular_displacement_, rotation_radius_))
 
-    Law:
-        :code:`s = cross(theta, r)`
+    if not approx_equal_numbers(dot.scale_factor, 0, absolute_tolerance=1e-10):
+        raise ValueError("Angular displacement and rotation radius vector must be orthogonal")
 
-    Latex:
-        .. math::
-            \vec s = \vec \theta \times \vec r
+    result = law.rhs.subs({
+        angular_displacement: angular_displacement_,
+        rotation_radius_vector: rotation_radius_,
+    })
 
-    :param angular_displacement\_: pseudovector of angular displacement parallel to axis of rotation
-
-        Symbol: :code:`theta`
-        
-        Latex: :math:`\vec \theta`
-
-        Dimension: *angle*
-
-    :param rotation_radius\_: radius vector pointing away from the rotational axis and perpendicular to it
-
-        Symbol: :code:`r`
-
-        Latex: :math:`\vec r`
-
-        Dimension: *length*
-
-    :return: vector of linear displacement
-
-        Symbol: :code:`s`
-
-        Latex: :math:`\vec s`
-
-        Dimension: *length*
-    """
-
-    return cross_cartesian_vectors(angular_displacement_, rotation_radius_)
-
-
-@validate_input(angular_displacement_=angle_type, rotation_radius_=units.length)
-@validate_output(units.length)
-def calculate_linear_displacement(angular_displacement_: QuantityVector,
-    rotation_radius_: QuantityVector) -> QuantityVector:
-    angular_displacement_vector = angular_displacement_.to_base_vector()
-    rotation_radius_vector = rotation_radius_.to_base_vector()
-    dot_vectors_result = Quantity(dot_vectors(angular_displacement_vector, rotation_radius_vector))
-    if dot_vectors_result.scale_factor != approx(0.0, rel=1e-3):
-        raise ValueError(
-            "Angular displacement pseudovector and rotation radius vector should be perpendicular to each other"
-        )
-    result_vector = displacement_law(angular_displacement_vector, rotation_radius_vector)
-    return QuantityVector.from_base_vector(result_vector)
+    return QuantityCoordinateVector.from_expr(result)
