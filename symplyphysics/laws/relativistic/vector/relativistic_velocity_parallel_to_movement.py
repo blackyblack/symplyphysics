@@ -1,111 +1,91 @@
-from typing import Optional
-from sympy.physics.units import speed_of_light
-from symplyphysics import (
-    units,
-    Quantity,
-    validate_input,
-    validate_output,
-    Vector,
-    dot_vectors,
-    add_cartesian_vectors,
-    scale_vector,
-    QuantityVector,
-    cross_cartesian_vectors,
-    vector_magnitude,
-    assert_equal,
+"""
+Relativistic velocity tangential to movement
+============================================
+
+Consider two inertial reference frames: one fixed (lab frame) and one tied to the moving object
+(proper frame). The proper frame is moving with some velocity :math:`\\vec v` relative to the lab
+frame. According to the theory of special relativity, the velocity of the object relative to lab
+frame is *not* equal to the sum of its velocity in the proper frame and the velocity of the proper
+frame relative to the lab frame.
+
+**Notes:**
+
+#. One can get the same expression for :math:`{\\vec u'}_\\perp` in terms of :math:`\\vec u` by
+   replacing :math:`\\vec v` with :math:`-{\\vec v}`. This is essentially the inverse Lorentz
+   transformation from lab frame to proper frame that uses the fact that the lab frame can be
+   viewed as moving with velocity vector :math:`-{\\vec v}` relative to the proper frame.
+
+**Conditions:**
+
+#. Works in special relativity.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Velocity-addition_formula#General_configuration>`__.
+
+..
+    TODO: rename file
+"""
+
+from sympy import Eq, evaluate
+from symplyphysics import validate_input, validate_output, symbols, quantities
+
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorDot
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+
+tangential_velocity_in_lab_frame = clone_as_vector_symbol(
+    symbols.speed,
+    display_symbol="u_t",
+    display_latex="{\\vec u}_\\text{t}",
 )
+"""
+Component of the velocity vector relative to the lab frame tangential to :math:`\\vec v`. See
+:symbols:`speed`.
+"""
 
-# Description
-## Consider two inertial reference frames: one fixed (lab frame) and one tied to the moving object (proper frame).
-## The proper frame is moving with some velocity `v` relative to the lab frame. Then, according to the theory of special
-## relativity, the velocity of the object relative to lab frame is not equal to the sum of its velocity in the proper
-## frame and the velocity of the proper frame relative to the lab frame.
+velocity_in_proper_frame = clone_as_vector_symbol(
+    symbols.speed,
+    display_symbol="u'",
+    display_latex="{\\vec u'}",
+)
+"""
+Velocity vector relative to the proper frame. See :symbols:`speed`.
+"""
 
-# Law: u_parallel = (u_parallel' + v) / (1 + dot(u_parallel', v) / c**2)
-## u_parallel - velocity vector relative to lab frame parallel to `v`
-## u_parallel' - velocity vector relative to proper frame parallel to `v`
-## v - velocity vector of proper frame relative to lab frame
-## c - speed of light
+proper_frame_velocity = clone_as_vector_symbol(symbols.speed)
+"""
+Velocity vector of the proper frame relative to the lab frame. See :symbols:`speed`.
+"""
 
-# Notes
-## - One can get the same expression for `u_parallel'` in terms of `u_parallel` by replacing `v` with `-v`. This is
-##   essentially the inverse Lorentz transformation from lab frame to proper frame that uses the fact that the lab frame
-##   can be viewed as moving with velocity vector `-v` relative to the proper frame.
+with evaluate(False):
+    _v = proper_frame_velocity
+    _up = velocity_in_proper_frame
+    _c = quantities.speed_of_light
 
-# Conditions
-## - Works in special relativity
+    _up_tangential_factor = (VectorDot(_up, _v) / VectorDot(_v, _v))
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Velocity-addition_formula#General_configuration>
+    _denominator = 1 + VectorDot(_up, _v) / _c**2
 
+law = Eq(tangential_velocity_in_lab_frame, _v * (_up_tangential_factor + 1) / _denominator)
+"""
+:laws:symbol::
 
-def parallel_velocity_component_in_lab_frame_law(
-    parallel_velocity_component_in_proper_frame_: Vector,
-    proper_frame_velocity_: Vector,
-) -> Vector:
-    dot = dot_vectors(
-        parallel_velocity_component_in_proper_frame_,
-        proper_frame_velocity_,
-    )
-
-    factor = 1 + dot / speed_of_light**2
-
-    added = add_cartesian_vectors(
-        parallel_velocity_component_in_proper_frame_,
-        proper_frame_velocity_,
-    )
-
-    return scale_vector(1 / factor, added)
-
-
-def parallel_velocity_component_in_proper_frame_law(
-    parallel_velocity_component_in_lab_frame_: Vector,
-    lab_frame_velocity_: Vector,
-) -> Vector:
-    return parallel_velocity_component_in_lab_frame_law(
-        parallel_velocity_component_in_lab_frame_,
-        scale_vector(-1, lab_frame_velocity_),
-    )
-
-
-def proper_frame_velocity_in_lab_frame_law(
-    parallel_velocity_component_in_proper_frame_: Vector,
-    parallel_velocity_component_in_lab_frame_: Vector,
-) -> Vector:
-    lab_dot_lab = dot_vectors(
-        parallel_velocity_component_in_lab_frame_,
-        parallel_velocity_component_in_lab_frame_,
-    )
-
-    proper_dot_lab = dot_vectors(
-        parallel_velocity_component_in_proper_frame_,
-        parallel_velocity_component_in_lab_frame_,
-    )
-
-    factor = (lab_dot_lab - proper_dot_lab) / (1 - proper_dot_lab / speed_of_light**2)
-
-    return scale_vector(factor / lab_dot_lab, parallel_velocity_component_in_lab_frame_)
+:laws:latex::
+"""
 
 
 @validate_input(
-    parallel_velocity_component_in_proper_frame_=units.velocity,
-    proper_frame_velocity_=units.velocity,
+    parallel_velocity_component_in_proper_frame_=velocity_in_proper_frame,
+    proper_frame_velocity_=proper_frame_velocity,
 )
-@validate_output(units.velocity)
+@validate_output(tangential_velocity_in_lab_frame)
 def calculate_parallel_velocity_component_in_lab_frame(
-    parallel_velocity_component_in_proper_frame_: QuantityVector,
-    proper_frame_velocity_: QuantityVector,
-    *,
-    tolerance_: Optional[float] = None,
-) -> QuantityVector:
-    cross = cross_cartesian_vectors(
-        parallel_velocity_component_in_proper_frame_.to_base_vector(),
-        proper_frame_velocity_.to_base_vector(),
-    )
+    velocity_component_in_proper_frame_: QuantityCoordinateVector,
+    proper_frame_velocity_: QuantityCoordinateVector,
+) -> QuantityCoordinateVector:
+    result = law.rhs.subs({
+        velocity_in_proper_frame: velocity_component_in_proper_frame_,
+        proper_frame_velocity: proper_frame_velocity_,
+    })
 
-    assert_equal(Quantity(vector_magnitude(cross)).scale_factor, 0, relative_tolerance=tolerance_)
-
-    result = parallel_velocity_component_in_lab_frame_law(
-        parallel_velocity_component_in_proper_frame_.to_base_vector(),
-        proper_frame_velocity_.to_base_vector(),
-    )
-    return QuantityVector.from_base_vector(result)
+    return QuantityCoordinateVector.from_expr(result)
