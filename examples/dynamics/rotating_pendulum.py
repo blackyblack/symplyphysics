@@ -1,24 +1,8 @@
 #!/usr/bin/env python3
 
-from sympy import (
-    symbols,
-    Function as SymFunction,
-    pi,
-    cos,
-    sin,
-    solve,
-    dsolve,
-    Eq,
-    reduce_inequalities,
-)
-from sympy.physics.units import acceleration_due_to_gravity
-from symplyphysics import (
-    Vector,
-    cross_cartesian_vectors,
-    vector_unit,
-    dot_vectors,
-    print_expression,
-)
+from sympy import (symbols, Function as SymFunction, pi, cos, sin, solve, dsolve, Eq,
+    reduce_inequalities)
+from symplyphysics import print_expression, quantities
 from symplyphysics.definitions import (
     angular_acceleration_is_angular_speed_derivative as angular_acceleration_def,
     angular_speed_is_angular_distance_derivative as angular_speed_def,
@@ -38,7 +22,7 @@ from symplyphysics.laws.kinematics import (
     tangential_acceleration_via_angular_acceleration_and_radius as tangential_law,)
 from symplyphysics.laws.geometry import planar_projection_is_cosine as cosine_law
 
-from symplyphysics.core.experimental.legacy import into_legacy_vector, from_legacy_vector
+from symplyphysics.core.experimental.vectors import VectorNorm, VectorCross, VectorDot
 from symplyphysics.core.experimental.solvers import solve_for_vector
 from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
 
@@ -62,13 +46,14 @@ rod_length, disk_angular_velocity, time = symbols(
 
 ball_angle = symbols("ball_angle", real=True, cls=SymFunction)
 
-ZERO = Vector([0, 0, 0])
-
 # The z axis is vertical and co-directional to the disk's angular velocity. The y axis runs from
 # left to right and is parallel to the plane where the pendulum's oscillations occur. The x
 # axis is thus perpendicular to that plane.
 
-disk_angular_velocity_vector = Vector([0, 0, disk_angular_velocity])
+disk_angular_velocity_vector_ = CoordinateVector(
+    [0, 0, disk_angular_velocity],
+    CARTESIAN,
+)
 
 # See [figure](https://www.researchgate.net/figure/The-pendulum-free-body-diagram_fig2_356752900)
 # The `y` and `x` axes in the figure are the `z` and `y` axes here, respectively.
@@ -83,42 +68,40 @@ ball_z_coordinate = cosine_law.law.rhs.subs({
     cosine_law.vector_angle: pi - ball_angle(time)
 })
 
-ball_position_vector = Vector([
-    0,
-    ball_y_coordinate,
-    ball_z_coordinate,
-])
+ball_position_vector_ = CoordinateVector(
+    [0, ball_y_coordinate, ball_z_coordinate],
+    CARTESIAN,
+)
 
 free_fall_acceleration_vector_ = CoordinateVector(
-    [0, 0, -1 * acceleration_due_to_gravity],
+    [0, 0, -1 * quantities.acceleration_due_to_gravity],
     CARTESIAN,
 )
 
 force_from_acceleration_expr_ = solve_for_vector(force_law.law, force_law.force)
+
 gravity_force_vector_ = force_from_acceleration_expr_.subs({
     force_law.mass: motion_law.mass,
     force_law.acceleration: free_fall_acceleration_vector_,
 })
 
-gravity_force_vector = into_legacy_vector(gravity_force_vector_)
-
-ball_velocity_vector = Vector([
+ball_velocity_vector_ = CoordinateVector([
     0,
     symbols("ball_velocity_y", real=True),
     symbols("ball_velocity_z", real=True),
-])
+], CARTESIAN)
 
 ball_coriolis_acceleration_vector_ = coriolis_law.law.rhs.subs({
-    coriolis_law.angular_velocity: from_legacy_vector(disk_angular_velocity_vector),
-    coriolis_law.relative_velocity: from_legacy_vector(ball_velocity_vector),
+    coriolis_law.angular_velocity: disk_angular_velocity_vector_,
+    coriolis_law.relative_velocity: ball_velocity_vector_,
 })
 
 ball_centripetal_acceleration_vector_ = solve_for_vector(
     centripetal_law.law,
     centripetal_law.centripetal_acceleration,
 ).subs({
-    centripetal_law.angular_velocity: from_legacy_vector(disk_angular_velocity_vector),
-    centripetal_law.position_vector: from_legacy_vector(ball_position_vector),
+    centripetal_law.angular_velocity: disk_angular_velocity_vector_,
+    centripetal_law.position_vector: ball_position_vector_,
 })
 
 ball_transfer_acceleration_vector_ = solve_for_vector(
@@ -131,26 +114,29 @@ ball_transfer_acceleration_vector_ = solve_for_vector(
 })
 
 ball_acceleration_vector_ = motion_law.law.rhs.subs({
-    motion_law.force: from_legacy_vector(gravity_force_vector),
+    motion_law.force: gravity_force_vector_,
     motion_law.coriolis_acceleration: ball_coriolis_acceleration_vector_,
     motion_law.translation_acceleration: ball_transfer_acceleration_vector_,
 })
-ball_acceleration_vector = into_legacy_vector(ball_acceleration_vector_)
+ball_acceleration_vector_ = CoordinateVector.from_expr(ball_acceleration_vector_)
 
 # The normal component of the acceleration does not affect the ball's oscillations.
 
-tangential_unit_vector = cross_cartesian_vectors(
-    Vector([1, 0, 0]),
-    vector_unit(ball_position_vector),
+unit_ball_position_vector_ = ball_position_vector_ / VectorNorm(ball_position_vector_)
+unit_ball_position_vector_ = CoordinateVector.from_expr(unit_ball_position_vector_)
+
+tangential_unit_vector_ = VectorCross(
+    CoordinateVector([1, 0, 0], CARTESIAN),
+    unit_ball_position_vector_,
 ).simplify()
 
 # The angle is assumed to be small enough to approximate the trigonometric functions:
 
 ball_angle_sym = symbols("ball_angle", real=True)
 
-ball_tangential_acceleration_via_forces = dot_vectors(
-    ball_acceleration_vector,
-    tangential_unit_vector,
+ball_tangential_acceleration_via_forces = VectorDot(
+    ball_acceleration_vector_,
+    tangential_unit_vector_,
 ).subs({
     sin(ball_angle(time)): sin(ball_angle_sym),
     cos(ball_angle(time)): cos(ball_angle_sym),
