@@ -15,22 +15,17 @@ bodies and inversely proportional to the distance squared between the bodies.
 #. `Physics LibreTexts. Newton's Law of Universal Gravitation (13.2.1) <https://phys.libretexts.org/Workbench/PH_245_Textbook_V2/13%3A_Gravitation/13.02%3A_Newton's_Law_of_Universal_Gravitation>`__.
 """
 
-from sympy import Eq, solve, sqrt, Expr
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    vector_magnitude,
-    clone_as_symbol,
-    symbols,
-    quantities,
-)
-from symplyphysics.core.points.cartesian_point import CartesianPoint
+from sympy import Eq, solve, sqrt
+from symplyphysics import (Quantity, validate_input, validate_output, clone_as_symbol, symbols,
+    quantities)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.fields.scalar_field import ScalarField
 from symplyphysics.laws.dynamics.fields import (
     conservative_force_is_gradient_of_potential_energy as gradient_law,)
 from symplyphysics.laws.gravity import gravitational_potential_energy
+
+from symplyphysics.core.experimental.vectors import VectorNorm
+from symplyphysics.core.experimental.coordinate_systems import (CARTESIAN, CoordinateScalar,
+    CoordinateVector)
 
 gravitational_force = symbols.force
 """
@@ -70,22 +65,26 @@ _potential = gravitational_potential_energy.law.rhs.subs({
     gravitational_potential_energy.distance_between_mass_centers: distance_between_mass_centers,
 })
 
+_x, _y, _z = CARTESIAN.base_scalars
 
-def potential_field_function(point: CartesianPoint) -> Expr:
-    return _potential.subs(
-        distance_between_mass_centers,
-        sqrt(point.x**2 + point.y**2 + point.z**2),
-    )
+_potential_field_value = _potential.subs(
+    distance_between_mass_centers,
+    sqrt(_x**2 + _y**2 + _z**2),
+)
+_potential_field = CoordinateScalar(_potential_field_value, CARTESIAN)
 
+_gravitational_force_vector = gradient_law.law.rhs.subs(
+    gradient_law.potential_energy,
+    _potential_field,
+)
+_gravitational_force_vector = CoordinateVector.from_expr(_gravitational_force_vector)
 
-_potential_field = ScalarField(potential_field_function)
+_gravitational_force_derived = VectorNorm(_gravitational_force_vector)
 
-_gravitational_force_vector = gradient_law.law(_potential_field)
-_gravitational_force_derived = vector_magnitude(_gravitational_force_vector).simplify()
-
-_x, _y, _z = _gravitational_force_vector.coordinate_system.coord_system.base_scalars()
-_gravitational_force_from_law = law.rhs.subs(distance_between_mass_centers,
-    sqrt(_x**2 + _y**2 + _z**2))
+_gravitational_force_from_law = law.rhs.subs(
+    distance_between_mass_centers,
+    sqrt(_x**2 + _y**2 + _z**2),
+)
 
 # sympy avoids oversimplifications in case of square roots without certain assumptions,
 # therefore we resort to squaring both sides to make it work

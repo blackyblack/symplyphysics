@@ -1,27 +1,46 @@
-from symplyphysics import Vector, scale_vector
-from symplyphysics.core.fields.scalar_field import ScalarField
-from symplyphysics.core.fields.operators import gradient_operator
+"""
+Conservative force is gradient of potential energy
+==================================================
 
-# Description
-## A conservative force is a such a force, the total work of which in moving a particle
-## between two points is independent of the path taken. Alternative definition states that
-## if a particle travels in a closed loop, the total work done by a conservative force is zero.
+A conservative force is a such a force, the total work of which in moving a particle between two
+points is independent of the path taken. Alternative definition states that if a particle travels
+in a closed loop, the total work done by a conservative force is zero.
 
-## For every conservative force there exists a scalar field (potential), for which applies
-## the following equality:
+**Conditions:**
 
-# Law: F = - grad U
-## F - vector field of the conservative force
-## U - scalar field of its potential
-## grad - gradient operator
+#. Force is conservative. Mathematically, this can be expressed as
+   :math:`\\text{curl} \, {\\vec F} \\equiv 0`, i.e. the force field must be irrotational.
 
-# Conditions
-## - Force is conservative (see definition above)
+**Links:**
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Conservative_force>
+#. `Wikipedia <https://en.wikipedia.org/wiki/Conservative_force>`__.
+"""
 
+from sympy import Eq
 
-def law(potential_: ScalarField) -> Vector:
-    gradient_vector = gradient_operator(potential_)
-    result_force_vector = scale_vector(-1, gradient_vector)
-    return result_force_vector
+from symplyphysics import symbols
+
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol
+from symplyphysics.core.experimental.operators import VectorGradient
+
+force = clone_as_vector_symbol(symbols.force)
+"""
+Vector field of the conservative force. See :symbols:`force`.
+"""
+
+potential_energy = symbols.potential_energy
+"""
+Scalar field of the force's potential. See :symbols:`potential_energy`.
+"""
+
+law = Eq(force, -1 * VectorGradient(potential_energy, evaluate=False))
+"""
+..
+    NOTE: code printers have not been implemented yet for `VectorGradient`
+
+:code:`F = -grad(U)`
+
+Latex:
+    .. math::
+        \\vec F = - \\text{grad} \, U
+"""

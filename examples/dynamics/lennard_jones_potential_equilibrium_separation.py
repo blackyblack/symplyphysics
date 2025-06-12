@@ -1,17 +1,13 @@
 #!/usr/bin/env python3
 
-from sympy import solve, symbols, Expr
-from symplyphysics import (
-    print_expression,
-    vector_magnitude,
-    convert_to,
-    units,
-    Quantity,
-)
-from symplyphysics.core.fields.scalar_field import ScalarField
-from symplyphysics.core.points.cartesian_point import CartesianPoint
+from sympy import solve, symbols as sym_symbols
+from symplyphysics import print_expression, convert_to, units, Quantity
 from symplyphysics.laws.dynamics.fields import (
     conservative_force_is_gradient_of_potential_energy as potential_law,)
+
+from symplyphysics.core.experimental.vectors import VectorNorm
+from symplyphysics.core.experimental.coordinate_systems import (CoordinateScalar, CARTESIAN,
+    CoordinateVector)
 
 # Description
 ## The potential energy of attraction between atoms and molecules can be modeled in the form of the
@@ -23,24 +19,23 @@ from symplyphysics.laws.dynamics.fields import (
 ## We assume two atoms lying on the x axis, and the first atom is located at the origin.
 ## Thus, the position of the second atom is described by its position on the x axis.
 
-x = symbols("x", real=True)
-A, B = symbols("A B", positive=True)
+x, _, _ = CARTESIAN.base_scalars
+A, B = sym_symbols("A B", positive=True)
 
 values = {
     A: Quantity(1.58e-134 * units.joule * units.meter**12),
     B: Quantity(1.02e-77 * units.joule * units.meter**6),
 }
 
+potential_energy_field = CoordinateScalar(A / x**12 - B / x**6, CARTESIAN)
 
-def potential_energy_function(point: CartesianPoint) -> Expr:
-    return A / point.x**12 - B / point.x**6
+intermolecular_force_vector = potential_law.law.rhs.subs(
+    potential_law.potential_energy,
+    potential_energy_field,
+).doit()
+intermolecular_force_vector = CoordinateVector.from_expr(intermolecular_force_vector)
 
-
-potential_energy_field = ScalarField(potential_energy_function)
-intermolecular_force_vector = potential_law.law(potential_energy_field)
-
-intermolecular_force_magnitude = (vector_magnitude(intermolecular_force_vector).subs(
-    potential_energy_field.coordinate_system.coord_system.base_scalars()[0], x).simplify())
+intermolecular_force_magnitude = VectorNorm(intermolecular_force_vector).simplify()
 
 # Equation has two solutions, first one is negative
 equilibrium_separation = solve(intermolecular_force_magnitude, x)[1]
