@@ -30,7 +30,7 @@ values = {
 potential_energy_field = CoordinateScalar(A / x**12 - B / x**6, CARTESIAN)
 
 intermolecular_force_vector = potential_law.law.rhs.subs(
-    potential_law.potential_energy,
+    potential_law.potential_energy(potential_law.position_vector),
     potential_energy_field,
 ).doit()
 intermolecular_force_vector = CoordinateVector.from_expr(intermolecular_force_vector)

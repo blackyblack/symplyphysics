@@ -9,7 +9,8 @@ in a closed loop, the total work done by a conservative force is zero.
 **Conditions:**
 
 #. Force is conservative. Mathematically, this can be expressed as
-   :math:`\\text{curl} \, {\\vec F} \\equiv 0`, i.e. the force field must be irrotational.
+   :math:`\\text{curl} \, {\\vec F} \\left( \\vec r \\right) \\equiv 0`, i.e. the force field must
+   be irrotational.
 
 **Links:**
 
@@ -18,29 +19,40 @@ in a closed loop, the total work done by a conservative force is zero.
 
 from sympy import Eq
 
-from symplyphysics import symbols
+from symplyphysics import symbols, clone_as_function
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol
+from symplyphysics.core.experimental.vectors import (clone_as_vector_symbol,
+    clone_as_vector_function)
 from symplyphysics.core.experimental.operators import VectorGradient
 
-force = clone_as_vector_symbol(symbols.force)
+position_vector = clone_as_vector_symbol(symbols.distance_to_origin)
 """
-Vector field of the conservative force. See :symbols:`force`.
-"""
-
-potential_energy = symbols.potential_energy
-"""
-Scalar field of the force's potential. See :symbols:`potential_energy`.
+Position vector of a point in space. See :symbols:`distance_to_origin`.
 """
 
-law = Eq(force, -1 * VectorGradient(potential_energy, evaluate=False))
+force = clone_as_vector_function(symbols.force, (position_vector,))
+"""
+Vector field of the conservative force as a function of the :attr`position_vector`. See
+:symbols:`force`.
+"""
+
+potential_energy = clone_as_function(symbols.potential_energy, (position_vector,))
+"""
+Scalar field of the force's potential as a function of the :attr`position_vector`. See
+:symbols:`potential_energy`.
+"""
+
+law = Eq(
+    force(position_vector),
+    -1 * VectorGradient(potential_energy(position_vector), evaluate=False),
+)
 """
 ..
     NOTE: code printers have not been implemented yet for `VectorGradient`
 
-:code:`F = -grad(U)`
+:code:`F(r) = -grad(U(r))`
 
 Latex:
     .. math::
-        \\vec F = - \\text{grad} \, U
+        \\vec F \\left( \\vec r \\right) = - \\text{grad} \, U \\left( \\vec r \\right)
 """

@@ -74,7 +74,7 @@ _potential_field_value = _potential.subs(
 _potential_field = CoordinateScalar(_potential_field_value, CARTESIAN)
 
 _gravitational_force_vector = gradient_law.law.rhs.subs(
-    gradient_law.potential_energy,
+    gradient_law.potential_energy(gradient_law.position_vector),
     _potential_field,
 )
 _gravitational_force_vector = CoordinateVector.from_expr(_gravitational_force_vector)

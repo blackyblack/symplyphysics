@@ -26,7 +26,7 @@ def test_args_fixture() -> Args:
 
 def test_basic_law(test_args: Args) -> None:
     result = gradient_law.law.rhs.subs(
-        gradient_law.potential_energy,
+        gradient_law.potential_energy(gradient_law.position_vector),
         test_args.potential,
     ).doit()
     result = CoordinateVector.from_expr(result)
