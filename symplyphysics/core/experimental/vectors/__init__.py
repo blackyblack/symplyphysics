@@ -1051,6 +1051,19 @@ def clone_as_vector_function(
     )
 
 
+def split_into_tangential_and_normal_components(original: Expr, target: Expr) -> tuple[Expr, Expr]:
+    """
+    Splits `original` into the component tangential to `target` and the component normal to
+    `target`. Note that when added together, they give back `original`.
+    """
+
+    tangential_component = VectorDot(original, target) / VectorDot(target, target) * target
+
+    normal_component = original - tangential_component
+
+    return tangential_component, normal_component
+
+
 __all__ = [
     "AppliedVectorFunction",
     "VectorCross",
@@ -1063,4 +1076,5 @@ __all__ = [
     "VectorDerivative",
     "clone_as_vector_symbol",
     "clone_as_vector_function",
+    "split_into_tangential_and_normal_components",
 ]
