@@ -18,11 +18,12 @@ In special relativity, the Newton's second law does not hold in the classical fo
 #. `Wikipedia, see paragraph <https://en.wikipedia.org/wiki/Acceleration_(special_relativity)#Acceleration_and_force>`__.
 """
 
-from sympy import Eq, root
+from sympy import Eq
 
 from symplyphysics import Quantity, validate_input, validate_output, symbols, quantities
+from symplyphysics.definitions import lorentz_factor as lorentz_factor_def
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorDot
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorDot, VectorNorm
 from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
 
 acceleration = clone_as_vector_symbol(symbols.acceleration)
@@ -71,8 +72,10 @@ def calculate_acceleration(
     force_: QuantityCoordinateVector,
     velocity_: QuantityCoordinateVector,
 ) -> QuantityCoordinateVector:
-    # refer to `symplyphysics.definitions.lorentz_factor`
-    lorentz_factor_ = root(1 - VectorDot(velocity_, velocity_) / quantities.speed_of_light**2, -2)
+    lorentz_factor_ = lorentz_factor_def.definition.rhs.subs(
+        lorentz_factor_def.speed,
+        VectorNorm(velocity_),
+    )
 
     result = law.rhs.subs({
         rest_mass: rest_mass_,

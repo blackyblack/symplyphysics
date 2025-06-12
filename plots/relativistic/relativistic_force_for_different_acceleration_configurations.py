@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 
 from collections import namedtuple
-from sympy import Symbol, plot, sqrt, Expr
+from sympy import Symbol, plot, sqrt
 from symplyphysics.quantities import speed_of_light
 from symplyphysics.core.convert import evaluate_expression
 from symplyphysics.laws.relativistic.vector import force_acceleration_relation as force_law
 from symplyphysics.definitions import lorentz_factor as lorentz_factor_def
 
-from symplyphysics.core.experimental.vectors import VectorNorm, VectorDot
+from symplyphysics.core.experimental.vectors import (VectorNorm,
+    split_into_tangential_and_normal_components)
 from symplyphysics.core.experimental.coordinate_systems import CoordinateVector, CARTESIAN
 
 Datum = namedtuple("Datum", "label acceleration")
@@ -38,24 +39,14 @@ base_plot = plot(
     show=False,
 )
 
-v_dot_v = VectorDot(velocity, velocity)
-
-
-def split_acceleration(acceleration: Expr) -> tuple[Expr, Expr]:
-    tangential = VectorDot(acceleration, velocity) / v_dot_v * velocity
-
-    normal = acceleration - tangential
-
-    return tangential, normal
-
-
 lorentz_factor = lorentz_factor_def.definition.rhs.subs(
     lorentz_factor_def.speed,
     reduced_speed * speed_of_light,
 )
 
 for datum_ in data_:
-    tangential_acceleration, normal_acceleration = split_acceleration(datum_.acceleration)
+    tangential_acceleration, normal_acceleration = split_into_tangential_and_normal_components(
+        datum_.acceleration, velocity)
 
     vector = force_law.law.rhs.subs({
         force_law.rest_mass: 1,

@@ -17,10 +17,12 @@ In special relativity, the Newton's second law does not hold in the classical fo
     TODO: rename file
 """
 
-from sympy import Eq, evaluate, root
-from symplyphysics import Quantity, validate_input, validate_output, symbols, quantities
+from sympy import Eq, evaluate
+from symplyphysics import Quantity, validate_input, validate_output, symbols
+from symplyphysics.definitions import lorentz_factor as lorentz_factor_def
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorDot
+from symplyphysics.core.experimental.vectors import (clone_as_vector_symbol, VectorNorm,
+    split_into_tangential_and_normal_components)
 from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
 
 force = clone_as_vector_symbol(symbols.force)
@@ -84,15 +86,13 @@ def calculate_force(
     acceleration_: QuantityCoordinateVector,
     velocity_: QuantityCoordinateVector,
 ) -> QuantityCoordinateVector:
-    v_dot_v = VectorDot(velocity_, velocity_)
+    tangential_acceleration_, normal_acceleration_ = split_into_tangential_and_normal_components(
+        acceleration_, velocity_)
 
-    tangential_acceleration_ = VectorDot(acceleration_, velocity_) / v_dot_v * velocity_
-
-    normal_acceleration_ = acceleration_ - tangential_acceleration_
-
-    # refer to `symplyphysics.definitions.lorentz_factor`
-    # NOTE: make a law for calculating the Lorentz factor using a velocity vector
-    lorentz_factor_ = root(1 - v_dot_v / quantities.speed_of_light**2, -2)
+    lorentz_factor_ = lorentz_factor_def.definition.rhs.subs(
+        lorentz_factor_def.speed,
+        VectorNorm(velocity_),
+    )
 
     result = law.rhs.subs({
         lorentz_factor: lorentz_factor_,
