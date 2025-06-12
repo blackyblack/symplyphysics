@@ -63,7 +63,7 @@ with evaluate(False):
     _up_normal = _up - _up_tangential
 
     _numerator = sqrt(1 - VectorDot(_v, _v) / _c**2)
-    _denominator = (1 + VectorDot(_up, _v) / _c**2)
+    _denominator = 1 + VectorDot(_up, _v) / _c**2
 
 law = Eq(normal_velocity_in_lab_frame, _up_normal * _numerator / _denominator)
 """
