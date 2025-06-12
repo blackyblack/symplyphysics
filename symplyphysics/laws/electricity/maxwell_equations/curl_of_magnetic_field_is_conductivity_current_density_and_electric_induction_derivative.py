@@ -1,94 +1,122 @@
-from sympy import diff
-from symplyphysics import (QuantityVector, add_cartesian_vectors, scale_vector, units, Quantity,
-    validate_input, validate_output, symbols)
-from symplyphysics.core.fields.operators import curl_operator
-from symplyphysics.core.fields.vector_field import VectorField
+"""
+Curl of magnetic field is free current density and electric displacement derivative
+===================================================================================
+
+The magnetic field circulation theorem states that an electric current and a change in electric
+displacement generate a rotational magnetic field. Also known as the **Ampère's circuital law**.
+
+**Notes:**
+
+#. The :math:`\\text{curl}` operator is only defined for a 3D space.
+
+**Links:**
+
+#. `Wikipedia, second line in table <https://en.wikipedia.org/wiki/Maxwell%27s_equations#Macroscopic_formulation>`__.
+#. `Physics LibreTexts, formula 15.5.3 <https://phys.libretexts.org/Bookshelves/Electricity_and_Magnetism/Electricity_and_Magnetism_(Tatum)/15%3A_Maxwell's_Equations/15.05%3A_Maxwell's_Third_Equation>`__.
+
+..
+    TODO: shorten file name
+"""
+
+from sympy import Eq, evaluate, Expr
+from symplyphysics import Quantity, validate_input, validate_output, symbols, units
 from symplyphysics.core.dimensions import assert_equivalent_dimension
-from symplyphysics.core.vectors.vectors import Vector
 
-## Description
-## The magnetic field circulation theorem states that an electric current and a change in electric induction generate
-## a vortex magnetic field. Also known as Ampere's circuital law.
-
-## Law is: curl(H(r, t)) = j + d(D(r, t)) / dt, where
-## H - magnetic intensity (vector field),
-## D - electric induction (vector field),
-## j - conductivity current density vector,
-## r - radius vector (i.e. x, y, z for point in cartesian coodrinates),
-## t - time,
-## d / dt - partial time derivative,
-## curl - curl of vector field.
-
-# Note:
-## Curl operator is only defined in 3D space. Therefore magnetic intensity should not be defined
-## as 4 dimensional field. Rather time should be a part of vector field component expression.
-
-# Links:
-## Wikipedia, second line in table <https://en.wikipedia.org/wiki/Maxwell%27s_equations#Macroscopic_formulation>
-## Physics LibreTexts, formula 15.5.3 <https://phys.libretexts.org/Bookshelves/Electricity_and_Magnetism/Electricity_and_Magnetism_(Tatum)/15%3A_Maxwell's_Equations/15.05%3A_Maxwell's_Third_Equation>
+from symplyphysics.core.experimental.vectors import (clone_as_vector_function,
+    clone_as_vector_symbol, VectorDerivative)
+from symplyphysics.core.experimental.operators import VectorCurl
+from symplyphysics.core.experimental.coordinate_systems import (QuantityCoordinateVector,
+    AppliedPoint, CoordinateVector)
+from symplyphysics.core.experimental.solvers import solve_for_vector
 
 time = symbols.time
+"""
+:symbols:`time`.
+"""
+
+position_vector = clone_as_vector_symbol(symbols.distance_to_origin)
+"""
+Position vector of a point in space. See :symbols:`distance_to_origin`.
+"""
+
+magnetic_field = clone_as_vector_function(
+    symbols.magnetic_field_strength,
+    (position_vector, time),
+)
+"""
+Vector of the magnetic field as a function of :attr:`~position_vector` and :attr:`~time`. See
+:symbols:~magnetic_field_strength`.
+"""
+
+electric_displacement = clone_as_vector_function(
+    symbols.electric_displacement,
+    (position_vector, time),
+)
+"""
+Vector of the :symbols:`electric_displacement` field as a function of :attr:`~position_vector` and
+:attr:`~time`.
+"""
+
+free_current_density = clone_as_vector_function(
+    symbols.current_density,
+    (position_vector, time),
+    display_symbol="J_f",
+    display_latex="{\\vec J}_\\text{f}",
+)
+"""
+Vector of the free (i.e. unbound) :symbols:`current_density` field as a function of
+:attr:`~position_vector` and :attr:`~time`.
+"""
+
+with evaluate(False):
+    _h = magnetic_field(position_vector, time)
+    _curl_h = VectorCurl(_h, evaluate=False)
+
+    _jf = free_current_density(position_vector, time)
+
+    _d = electric_displacement(position_vector, time)
+    _dd_dt = VectorDerivative(_d, time)
+
+law = Eq(_curl_h, _jf + _dd_dt)
+"""
+..
+    NOTE: code printers have not been implemented for `VectorCurl` yet
+
+:code:`curl(H(r, t)) = J_f(r, t) + Derivative(D(r, t), t)`
+
+Latex:
+    .. math::
+        \\text{curl} \, \\vec H \\! \\left( \\vec r, t \\right)
+            = {\\vec J}_\\text{f} \\! \\left( \\vec r, t \\right)
+            + \\frac{\\partial}{\\partial t} \\vec D \\! \\left( \\vec r, t \\right)
+"""
 
 
-def conductivity_current_density_vector_law(magnetic_intensity: VectorField,
-    electric_induction: VectorField) -> Vector:
-    rotor_magnetic_intensity = curl_operator(magnetic_intensity)
-    rotor_magnetic_intensity_space = rotor_magnetic_intensity.apply_to_basis()
-    electric_induction_space = electric_induction.apply_to_basis()
-    electric_induction_time_derivative = [
-        diff(c, time) for c in electric_induction_space.components
-    ]
-    electric_induction_time_derivative_vector = Vector(electric_induction_time_derivative,
-        electric_induction.coordinate_system)
-    return add_cartesian_vectors(rotor_magnetic_intensity_space,
-        scale_vector(-1, electric_induction_time_derivative_vector))
+@validate_input(time_=time)
+@validate_output(free_current_density)
+def calculate_conductivity_current_density_at_point(
+    magnetic_intensity_: Expr,
+    electric_induction_: Expr,
+    point_: AppliedPoint,
+    time_: Quantity,
+) -> QuantityCoordinateVector:
+    for base_scalar, coordinate in point_.coordinates.items():
+        assert_equivalent_dimension(
+            coordinate,
+            f"point_{base_scalar}",
+            "calculate_charge_volumetric_density_at_point",
+            units.length,
+        )
 
+    expr = solve_for_vector(law, _jf)
 
-def magnetic_intensity_rotor_law(electric_induction: VectorField,
-    conductivity_current_density: Vector) -> VectorField:
-    electric_induction_space = electric_induction.apply_to_basis()
-    electric_induction_time_derivative = [
-        diff(c, time) for c in electric_induction_space.components
-    ]
-    electric_induction_time_derivative_vector = Vector(electric_induction_time_derivative,
-        electric_induction.coordinate_system)
-    sum_vectors = add_cartesian_vectors(conductivity_current_density,
-        electric_induction_time_derivative_vector)
-    return VectorField.from_vector(sum_vectors)
+    result = expr.subs({
+        _h: magnetic_intensity_,
+        _d: electric_induction_,
+    }).doit()
 
+    result = result.subs(point_.coordinates)
+    result = result.subs(time, time_)
 
-def electric_induction_time_derivative_law(magnetic_intensity: VectorField,
-    conductivity_current_density: Vector) -> VectorField:
-    rotor_magnetic_intensity = curl_operator(magnetic_intensity)
-    rotor_magnetic_intensity_space = rotor_magnetic_intensity.apply_to_basis()
-    sub_vectors = add_cartesian_vectors(rotor_magnetic_intensity_space,
-        scale_vector(-1, conductivity_current_density))
-    return VectorField.from_vector(sub_vectors)
-
-
-@validate_input(cartesian_point_=units.length, time_=units.time)
-@validate_output(units.current / units.area)
-def calculate_conductivity_current_density_at_point(magnetic_intensity_: VectorField,
-    electric_induction_: VectorField, cartesian_point_: tuple[Quantity, Quantity,
-    Quantity], time_: Quantity) -> QuantityVector:
-    magnetic_intensity_vector = magnetic_intensity_.apply(cartesian_point_)
-    for i, c in enumerate(magnetic_intensity_vector.components):
-        assert_equivalent_dimension(c, f"magnetic_intensity_vector[{i}]",
-            "calculate_conductivity_current_density_at_point", units.current / units.length)
-
-    electric_induction_vector = electric_induction_.apply(cartesian_point_)
-    for i, c in enumerate(electric_induction_vector.components):
-        expr = c.subs(time, time_)
-        assert_equivalent_dimension(expr, f"electric_induction_vector[{i}]",
-            "calculate_conductivity_current_density_at_point", units.charge / units.area)
-
-    result_vector = conductivity_current_density_vector_law(magnetic_intensity_,
-        electric_induction_)
-    base_scalars = result_vector.coordinate_system.coord_system.base_scalars()
-    return QuantityVector.from_base_vector(result_vector,
-        subs={
-        base_scalars[0]: cartesian_point_[0],
-        base_scalars[1]: cartesian_point_[1],
-        base_scalars[2]: cartesian_point_[2],
-        time: time_
-        })
+    result = CoordinateVector.from_expr(result)
+    return QuantityCoordinateVector(result.components, result.system, result.point)
