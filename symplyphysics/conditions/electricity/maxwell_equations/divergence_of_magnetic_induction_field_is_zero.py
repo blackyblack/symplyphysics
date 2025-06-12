@@ -1,21 +1,47 @@
-from symplyphysics import Quantity
-from symplyphysics.core.fields.operators import divergence_operator
-from symplyphysics.core.fields.vector_field import VectorField
-from symplyphysics.core.symbols.quantities import scale_factor
+"""
+Divergence of magnetic flux density is zero
+===========================================
 
-## Description
-## The divergence of magnetic induction is equal to zero. A simpler formulation of the law
-## is that magnetic charges do not exist.
+The divergence of magnetic induction is equal to zero. Another form of this law states that
+magnetic charges do not exist.
 
-## Law is: div(B) = 0, where
-## B - magnetic induction (vector field),
-## div - divergence (the sum of partial derivatives in coordinates).
+**Links:**
 
-# Links:
-## Wikipedia, second equation <https://en.wikipedia.org/wiki/Maxwell%27s_equations#>
+#. `Wikipedia, second equation <https://en.wikipedia.org/wiki/Maxwell%27s_equations#>`__.
+"""
 
+from sympy import Eq
+from symplyphysics import symbols
 
-def magnetic_field_divergence_condition(magnetic_induction_: VectorField) -> bool:
-    divergence_magnetic_induction = divergence_operator(magnetic_induction_)
-    divergence_magnetic_induction_quantity = Quantity(divergence_magnetic_induction)
-    return scale_factor(divergence_magnetic_induction_quantity) == 0
+from symplyphysics.core.experimental.vectors import (clone_as_vector_function,
+    clone_as_vector_symbol)
+from symplyphysics.core.experimental.operators import VectorDivergence
+
+position_vector = clone_as_vector_symbol(symbols.distance_to_origin)
+"""
+Position vector of the point in space. See :symbols:`distance_to_origin`.
+"""
+
+magnetic_flux_density = clone_as_vector_function(
+    symbols.magnetic_flux_density,
+    (position_vector,),
+)
+"""
+Vector field of the :symbols:`magnetic_flux_density` as a function of the
+:attr:`~position_vector`.
+"""
+
+law = Eq(
+    VectorDivergence(magnetic_flux_density(position_vector), evaluate=False),
+    0,
+)
+"""
+..
+    NOTE: code printers have not been implemented yet for `VectorDivergence`
+
+:code:`div(B(r)) = 0`
+
+Latex:
+    .. math::
+        \\text{div} \, {\\vec B} \\left( \\vec r \\right) = 0
+"""
