@@ -129,7 +129,7 @@ def is_atomic_vector(value: Any) -> bool:
     """
 
     return getattr(value, "is_atomic_vector", None) or isinstance(value,
-        (VectorSymbol, AppliedVectorFunction))
+        (VectorSymbol, AppliedVectorFunction, VectorDerivative))
 
 
 @cacheit
