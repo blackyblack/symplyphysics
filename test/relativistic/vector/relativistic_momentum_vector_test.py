@@ -32,7 +32,7 @@ def test_momentum_law(test_args: Args) -> None:
 
 
 def test_velocity_law(test_args: Args) -> None:
-    result = law.velocity_law_.rhs.subs({
+    result = law.velocity_law.rhs.subs({
         law.momentum: test_args.p,
         law.rest_mass: test_args.m,
     })
