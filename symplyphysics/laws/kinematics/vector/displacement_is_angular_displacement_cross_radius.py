@@ -15,7 +15,6 @@ as the cross product of the pseudovector of angular displacement and the radius 
 #. `Physics LibreTexts, formula 11.1.4 <https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_Introductory_Physics_-_Building_Models_to_Describe_Our_World_(Martin_Neary_Rinaldo_and_Woodman)/11%3A_Rotational_dynamics/11.01%3A_Rotational_kinematic_vectors>`__.
 """
 
-from pytest import approx
 from sympy import Eq
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 
