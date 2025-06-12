@@ -1,59 +1,83 @@
-from sympy import sqrt
-from symplyphysics import (
-    units,
-    Quantity,
-    validate_input,
-    validate_output,
-    Vector,
-    dot_vectors,
-    scale_vector,
-    QuantityVector,
-    symbols,
-)
+"""
+Relativistic momentum via rest mass and velocity
+================================================
+
+Momentum (amount of motion) is a vector physical quantity that is a measure of the mechanical
+movement of a body. The relativistic momentum also takes into account speed limits equal to the
+speed of light.
+
+**Notation:**
+
+#. :quantity_notation:`speed_of_light`.
+
+**Notes:**
+
+#. To find rest mass refer to the :ref:`scalar law <Relativistic momentum via rest mass and
+   speed>`.
+
+**Links:**
+
+#. `Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Mass_in_special_relativity#Relativistic_mass>`__.
+"""
+
+from sympy import Eq, sqrt
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.quantities import speed_of_light
 
-# Description
-## Momentum (amount of motion) is a vector physical quantity that is a measure of the mechanical movement
-## of a body. The relativistic momentum also takes into account speed limits equal to the speed of light.
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorDot
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
 
-# Law: p = m0 * v / sqrt(1 - |v|**2 / c**2)
-## p - vector of relativistic momentum
-## m0 - rest (invariant) mass of object
-## c - speed of light
-## v - vector of particle's velocity
-## |v| - magnitude of velocity
-
-# Note
-## - To find rest mass `m0`, use the [scalar law](../relativistic_momentum.py).
-
-# Links: Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Mass_in_special_relativity#Relativistic_mass>
+momentum = clone_as_vector_symbol(symbols.momentum)
+"""
+Vector of the body's relativistic :symbols:`momentum`.
+"""
 
 rest_mass = symbols.rest_mass
+"""
+:symbols:`rest_mass` of the body.
+"""
 
+velocity = clone_as_vector_symbol(symbols.speed)
+"""
+Vector of the body's velocity. See :symbols:`speed`.
+"""
 
-def momentum_law(velocity_: Vector) -> Vector:
-    v_dot_v = dot_vectors(velocity_, velocity_)
-    factor = rest_mass / sqrt(1 - v_dot_v / speed_of_light**2)
-    return scale_vector(factor, velocity_)
+momentum_law_ = Eq(
+    momentum,
+    (rest_mass * velocity) / sqrt(1 - VectorDot(velocity, velocity) / speed_of_light**2),
+)
+"""
+:laws:symbol::
 
+:laws:latex::
+"""
 
-def velocity_law(momentum_: Vector) -> Vector:
-    p_dot_p = dot_vectors(momentum_, momentum_)
-    factor = speed_of_light / sqrt((rest_mass * speed_of_light)**2 + p_dot_p)
-    return scale_vector(factor, momentum_)
+velocity_law_ = Eq(
+    velocity,
+    (momentum * speed_of_light) /
+    sqrt((rest_mass * speed_of_light)**2 + VectorDot(momentum, momentum)),
+)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
+
+# TODO: prove that the expressions for momentum and velocity are equivalent.
 
 
 @validate_input(
     rest_mass_=rest_mass,
-    velocity_=units.velocity,
+    velocity_=velocity,
 )
-@validate_output(units.momentum)
+@validate_output(momentum)
 def calculate_momentum(
     rest_mass_: Quantity,
-    velocity_: QuantityVector,
-) -> QuantityVector:
-    result = momentum_law(velocity_.to_base_vector())
-    return QuantityVector.from_base_vector(
-        result,
-        subs={rest_mass: rest_mass_},
-    )
+    velocity_: QuantityCoordinateVector,
+) -> QuantityCoordinateVector:
+    result = momentum_law_.rhs.subs({
+        rest_mass: rest_mass_,
+        velocity: velocity_,
+    })
+
+    return QuantityCoordinateVector.from_expr(result)
