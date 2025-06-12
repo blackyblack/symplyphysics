@@ -1,38 +1,90 @@
-from symplyphysics import (units, Quantity, validate_input, validate_output)
+"""
+Divergence of electric displacement field is volumetric charge density
+======================================================================
+
+The divergence of the electric induction field (also known as the electric displacement field) is
+equal to the volumetric charge density at all points in space. Another form of this law states
+that there exist electric charges.
+
+**Links:**
+
+#. `Wikipedia, first line in table <https://en.wikipedia.org/wiki/Maxwell%27s_equations#Macroscopic_formulation>`__.
+#. `Physics LibreTexts, formula 15.2.3 <https://phys.libretexts.org/Bookshelves/Electricity_and_Magnetism/Electricity_and_Magnetism_(Tatum)/15%3A_Maxwell's_Equations/15.02%3A_Maxwell's_First_Equation>`__.
+
+..
+    TODO: rename file
+"""
+
+from sympy import Eq, Expr
+from symplyphysics import Quantity, validate_output, symbols, clone_as_function, units
 from symplyphysics.core.dimensions import assert_equivalent_dimension
-from symplyphysics.core.fields.operators import divergence_operator
-from symplyphysics.core.fields.scalar_field import ScalarField
-from symplyphysics.core.fields.vector_field import VectorField
 
-## Description
-## The divergence of electric induction (or electric displacement field) at some point
-## is equal to the bulk charge density at that point. A simpler formulation of the law
-## is that electric charges exist.
+from symplyphysics.core.experimental.vectors import (clone_as_vector_function,
+    clone_as_vector_symbol)
+from symplyphysics.core.experimental.operators import VectorDivergence
+from symplyphysics.core.experimental.coordinate_systems import AppliedPoint, CoordinateScalar
 
-## Law is: div(D) = p, where
-## D - electric induction (vector field),
-## p - electric charge volumetric density (scalar field),
-## div - divergence (the sum of partial derivatives in coordinates).
+position_vector = clone_as_vector_symbol(symbols.distance_to_origin)
+"""
+Position vector of a point in space. See :symbols:`distance_to_origin`.
+"""
 
-# Links:
-## Wikipedia, first line in table <https://en.wikipedia.org/wiki/Maxwell%27s_equations#Macroscopic_formulation>
-## Physics LibreTexts, formula 15.2.3 <https://phys.libretexts.org/Bookshelves/Electricity_and_Magnetism/Electricity_and_Magnetism_(Tatum)/15%3A_Maxwell's_Equations/15.02%3A_Maxwell's_First_Equation>
+electric_displacement = clone_as_vector_function(
+    symbols.electric_displacement,
+    (position_vector,),
+)
+"""
+Vector field of the :symbols:`electric_displacement` as a function of the
+:attr:`~position_vector`.
+"""
+
+volumetric_charge_density = clone_as_function(
+    symbols.volumetric_charge_density,
+    (position_vector,),
+)
+"""
+Scalar field of the :symbols:`volumetric_charge_density` as a function of the
+:attr:`~position_vector`.
+"""
+
+law = Eq(
+    VectorDivergence(electric_displacement(position_vector), evaluate=False),
+    volumetric_charge_density(position_vector),
+)
+"""
+..
+    NOTE: code printers have not been implemented yet for `VectorDivergence`
+
+:code:`div(D(r)) = rho(r)`
+
+Latex:
+    .. math::
+        \\text{div} \\, \\vec D \\! \\left( \\vec r \\right) = \\rho \\! \\left( \\vec r \\right)
+"""
 
 
-def charge_volumetric_density_law(electric_induction: VectorField) -> ScalarField:
-    return ScalarField.from_expression(divergence_operator(electric_induction),
-        electric_induction.coordinate_system)
-
-
-@validate_input(cartesian_point_=units.length)
-@validate_output(units.charge / units.volume)
+@validate_output(volumetric_charge_density)
 def calculate_charge_volumetric_density_at_point(
-        electric_induction_: VectorField, cartesian_point_: tuple[Quantity, Quantity,
-    Quantity]) -> Quantity:
-    electric_induction_vector = electric_induction_.apply(cartesian_point_)
-    for i, c in enumerate(electric_induction_vector.components):
-        assert_equivalent_dimension(c, f"electric_induction_vector[{i}]",
-            "calculate_charge_volumetric_density_at_point", units.charge / units.area)
-    charge_density_scalar_field_ = charge_volumetric_density_law(electric_induction_)
-    result = charge_density_scalar_field_.apply(cartesian_point_)
+    electric_induction_: Expr,
+    point_: AppliedPoint,
+) -> Quantity:
+    for base_scalar, coordinate in point_.coordinates.items():
+        assert_equivalent_dimension(
+            coordinate,
+            f"point_{base_scalar}",
+            "calculate_charge_volumetric_density_at_point",
+            units.length,
+        )
+
+    result = law.lhs.subs(
+        electric_displacement(position_vector),
+        electric_induction_,
+    ).doit()
+
+    for base_scalar, coordinate in point_.coordinates.items():
+        result = result.subs(base_scalar, coordinate)
+
+    for scalar in result.atoms(CoordinateScalar):
+        result = result.subs(scalar, scalar.scalar)
+
     return Quantity(result)
