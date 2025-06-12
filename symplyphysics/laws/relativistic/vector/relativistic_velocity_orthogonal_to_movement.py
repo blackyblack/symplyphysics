@@ -1,6 +1,6 @@
 """
-Relativistic velocity orthogonal to movement
-============================================
+Relativistic velocity normal to movement
+========================================
 
 Consider two inertial reference frames: one fixed (lab frame) and one tied to the moving object
 (proper frame). The proper frame is moving with some velocity :math:`\\vec v` relative to the lab
@@ -10,7 +10,7 @@ frame relative to the lab frame.
 
 **Notes:**
 
-#. One can get the same expression for :math:`{\\vec u'}_\\perp` in terms of :math:`\\vec u` by
+#. One can get the same expression for :math:`{\\vec u'}_\\text{n}` in terms of :math:`\\vec u` by
    replacing :math:`\\vec v` with :math:`-{\\vec v}`. This is essentially the inverse Lorentz
    transformation from lab frame to proper frame that uses the fact that the lab frame can be
    viewed as moving with velocity vector :math:`-{\\vec v}` relative to the proper frame.
@@ -32,8 +32,8 @@ from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinat
 
 normal_velocity_in_lab_frame = clone_as_vector_symbol(
     symbols.speed,
-    display_symbol="u_perp",
-    display_latex="{\\vec u}_\\perp",
+    display_symbol="u_n",
+    display_latex="{\\vec u}_\\text{n}",
 )
 """
 Component of the velocity vector relative to the lab frame normal to :math:`\\vec v`. See
