@@ -42,7 +42,7 @@ velocity = clone_as_vector_symbol(symbols.speed)
 Vector of the body's velocity. See :symbols:`speed`.
 """
 
-momentum_law_ = Eq(
+momentum_law = Eq(
     momentum,
     (rest_mass * velocity) / sqrt(1 - VectorDot(velocity, velocity) / speed_of_light**2),
 )
@@ -52,7 +52,7 @@ momentum_law_ = Eq(
 :laws:latex::
 """
 
-velocity_law_ = Eq(
+velocity_law = Eq(
     velocity,
     (momentum * speed_of_light) /
     sqrt((rest_mass * speed_of_light)**2 + VectorDot(momentum, momentum)),
@@ -75,7 +75,7 @@ def calculate_momentum(
     rest_mass_: Quantity,
     velocity_: QuantityCoordinateVector,
 ) -> QuantityCoordinateVector:
-    result = momentum_law_.rhs.subs({
+    result = momentum_law.rhs.subs({
         rest_mass: rest_mass_,
         velocity: velocity_,
     })
