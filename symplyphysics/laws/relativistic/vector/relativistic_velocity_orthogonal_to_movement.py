@@ -1,80 +1,90 @@
-from sympy.physics.units import speed_of_light
-from symplyphysics import (
-    units,
-    validate_input,
-    validate_output,
-    Vector,
-    vector_magnitude,
-    dot_vectors,
-    scale_vector,
-    QuantityVector,
+"""
+Relativistic velocity normal to movement
+========================================
+
+Consider two inertial reference frames: one fixed (lab frame) and one tied to the moving object
+(proper frame). The proper frame is moving with some velocity :math:`\\vec v` relative to the lab
+frame. According to the theory of special relativity, the velocity of the object relative to lab
+frame is *not* equal to the sum of its velocity in the proper frame and the velocity of the proper
+frame relative to the lab frame.
+
+**Notes:**
+
+#. One can get the same expression for :math:`{\\vec u'}_\\text{n}` in terms of :math:`\\vec u` by
+   replacing :math:`\\vec v` with :math:`-{\\vec v}`. This is essentially the inverse Lorentz
+   transformation from lab frame to proper frame that uses the fact that the lab frame can be
+   viewed as moving with velocity vector :math:`-{\\vec v}` relative to the proper frame.
+
+**Conditions:**
+
+#. Works in special relativity.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Velocity-addition_formula#General_configuration>`__.
+"""
+
+from sympy import Eq, evaluate, sqrt
+from symplyphysics import validate_input, validate_output, symbols, quantities
+
+from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorDot
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+
+normal_velocity_in_lab_frame = clone_as_vector_symbol(
+    symbols.speed,
+    display_symbol="u_n",
+    display_latex="{\\vec u}_\\text{n}",
 )
-from symplyphysics.core.vectors.arithmetics import reject_cartesian_vector
-from symplyphysics.definitions import lorentz_factor as lorentz_factor_def
+"""
+Component of the velocity vector relative to the lab frame normal to :math:`\\vec v`. See
+:symbols:`speed`.
+"""
 
-# Description
-## Consider two inertial reference frames: one fixed (lab frame) and one tied to the moving object (proper frame).
-## The proper frame is moving with some velocity `v` relative to the lab frame. Then, according to the theory of special
-## relativity, the velocity of the object relative to lab frame is not equal to the sum of its velocity in the proper
-## frame and the velocity of the proper frame relative to the lab frame.
+velocity_in_proper_frame = clone_as_vector_symbol(
+    symbols.speed,
+    display_symbol="u'",
+    display_latex="{\\vec u'}",
+)
+"""
+Velocity vector relative to the proper frame. See :symbols:`speed`.
+"""
 
-# Law: u_orthogonal = u_orthogonal' / (gamma * (1 + dot(v, u') / c**2))
-## u_orthogonal - component of velocity vector relative to lab frame orthogonal to `v`
-## u_orthogonal' - component of velocity vector relative to proper frame orthogonal to `v`
-## u' - velocity vector relative to proper frame
-## v - velocity vector of proper frame relative to lab frame
-## gamma = 1 / sqrt(1 - dot(v, v) / c**2) - Lorentz factor
-## dot(a, b) - dot product between vectors `a` and `b`
+proper_frame_velocity = clone_as_vector_symbol(symbols.speed)
+"""
+Velocity vector of the proper frame relative to the lab frame. See :symbols:`speed`.
+"""
 
-# Notes
-## - One can get the same expression for `u_orthogonal'` in terms of `u_orthogonal` by replacing `v` with `-v`. This is
-##   essentially the inverse Lorentz transformation from lab frame to proper frame that uses the fact that the lab frame
-##   can be viewed as moving with velocity vector `-v` relative to the proper frame.
+with evaluate(False):
+    _v = proper_frame_velocity
+    _up = velocity_in_proper_frame
+    _c = quantities.speed_of_light
 
-# Conditions
-## - Works in special relativity
+    _up_tangential = (VectorDot(_up, _v) / VectorDot(_v, _v)) * _v
+    _up_normal = _up - _up_tangential
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Velocity-addition_formula#General_configuration>
+    _numerator = sqrt(1 - VectorDot(_v, _v) / _c**2)
+    _denominator = (1 + VectorDot(_up, _v) / _c**2)
 
+law = Eq(normal_velocity_in_lab_frame, _up_normal * _numerator / _denominator)
+"""
+:laws:symbol::
 
-def orthogonal_velocity_component_in_lab_frame_law(
-    velocity_in_proper_frame_: Vector,
-    proper_frame_velocity_: Vector,
-) -> Vector:
-    orthogonal_velocity_component_in_proper_frame_ = reject_cartesian_vector(
-        velocity_in_proper_frame_, proper_frame_velocity_)
-
-    lorentz_factor_ = lorentz_factor_def.definition.rhs.subs({
-        lorentz_factor_def.speed: vector_magnitude(proper_frame_velocity_),
-    })
-
-    scale_factor_ = lorentz_factor_ * (1 +
-        dot_vectors(proper_frame_velocity_, velocity_in_proper_frame_) / speed_of_light**2)
-
-    return scale_vector(1 / scale_factor_, orthogonal_velocity_component_in_proper_frame_)
-
-
-def orthogonal_velocity_component_in_proper_frame_law(
-    velocity_in_lab_frame_: Vector,
-    lab_frame_velocity_: Vector,
-) -> Vector:
-    return orthogonal_velocity_component_in_lab_frame_law(
-        velocity_in_lab_frame_,
-        scale_vector(-1, lab_frame_velocity_),
-    )
+:laws:latex::
+"""
 
 
 @validate_input(
-    velocity_in_proper_frame_=units.velocity,
-    proper_frame_velocity_=units.velocity,
+    velocity_in_proper_frame_=velocity_in_proper_frame,
+    proper_frame_velocity_=proper_frame_velocity,
 )
-@validate_output(units.velocity)
+@validate_output(normal_velocity_in_lab_frame)
 def calculate_orthogonal_velocity_component_in_lab_frame(
-    velocity_in_proper_frame_: QuantityVector,
-    proper_frame_velocity_: QuantityVector,
-) -> QuantityVector:
-    result = orthogonal_velocity_component_in_lab_frame_law(
-        velocity_in_proper_frame_.to_base_vector(),
-        proper_frame_velocity_.to_base_vector(),
-    )
-    return QuantityVector.from_base_vector(result)
+    velocity_in_proper_frame_: QuantityCoordinateVector,
+    proper_frame_velocity_: QuantityCoordinateVector,
+) -> QuantityCoordinateVector:
+    result = law.rhs.subs({
+        velocity_in_proper_frame: velocity_in_proper_frame_,
+        proper_frame_velocity: proper_frame_velocity_,
+    })
+
+    return QuantityCoordinateVector.from_expr(result)
