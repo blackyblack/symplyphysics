@@ -43,5 +43,5 @@ law = Eq(
 
 Latex:
     .. math::
-        \\text{div} \, {\\vec B} \\left( \\vec r \\right) = 0
+        \\text{div} \\, {\\vec B} \\left( \\vec r \\right) = 0
 """
