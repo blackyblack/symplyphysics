@@ -1,5 +1,5 @@
 from collections import namedtuple
-from pytest import fixture, raises, mark
+from pytest import fixture, raises
 from sympy import cos, sin
 from symplyphysics import errors, units, Quantity
 from symplyphysics.laws.kinematics.vector import acceleration_due_to_non_uniform_rotation as law
