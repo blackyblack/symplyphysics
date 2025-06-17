@@ -86,7 +86,7 @@ law = Eq(_curl_h, _jf + _dd_dt)
 
 Latex:
     .. math::
-        \\text{curl} \, \\vec H \\! \\left( \\vec r, t \\right)
+        \\text{curl} \\, \\vec H \\! \\left( \\vec r, t \\right)
             = {\\vec J}_\\text{f} \\! \\left( \\vec r, t \\right)
             + \\frac{\\partial}{\\partial t} \\vec D \\! \\left( \\vec r, t \\right)
 """

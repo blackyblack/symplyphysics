@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from sympy import sin
-from symplyphysics import errors, units, Quantity, units, quantities
+from symplyphysics import errors, units, Quantity, quantities
 from symplyphysics.laws.electricity.maxwell_equations import (
     curl_of_magnetic_field_is_conductivity_current_density_and_electric_induction_derivative as
     current_density_law)

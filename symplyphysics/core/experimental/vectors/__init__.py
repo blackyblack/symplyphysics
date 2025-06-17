@@ -805,7 +805,7 @@ class VectorMixedProduct(Expr):  # pylint: disable=too-few-public-methods
         return VectorDot(a, VectorCross(b, c)).diff(symbol)
 
 
-class VectorJacobian(VectorExpr):
+class VectorJacobian(VectorExpr):  # pylint: disable=too-few-public-methods
 
     def __new__(
         cls,
@@ -814,6 +814,7 @@ class VectorJacobian(VectorExpr):
         argument: Expr,
         /,
     ) -> VectorJacobian:
+        # pylint: disable-next=too-many-function-args
         return super().__new__(cls, function, sympify_expr(index), sympify_expr(argument))
 
 
