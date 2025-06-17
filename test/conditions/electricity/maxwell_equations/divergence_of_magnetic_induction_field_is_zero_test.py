@@ -1,8 +1,8 @@
 from collections import namedtuple
-from pytest import fixture
-from sympy import true, Eq
+from pytest import fixture, raises
+from sympy import Eq
 from sympy.core.numbers import Zero
-from symplyphysics import units, Quantity, prefixes
+from symplyphysics import units, Quantity, assert_equal
 from symplyphysics.conditions.electricity.maxwell_equations import (
     divergence_of_magnetic_induction_field_is_zero as divergence_cond,)
 
@@ -26,7 +26,7 @@ def quantity_coordinate_scalar(scalar: CoordinateScalar) -> CoordinateScalar | Z
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    magnetic_amplitude = Quantity(1 * prefixes.kilo * units.tesla)
+    magnetic_amplitude = Quantity(1 * units.kilo * units.tesla)
 
     x, y, _ = CARTESIAN.base_scalars
 
@@ -45,14 +45,12 @@ def test_basic_magnetic_field_divergence_condition(test_args: Args) -> None:
         test_args.magnetic_induction,
     ).doit()
 
-    for scalar in result.atoms(CoordinateScalar):
-        result = result.subs(scalar, quantity_coordinate_scalar(scalar))
-
-    assert result is true
+    assert isinstance(result, Eq)
+    assert_equal(Quantity(result.lhs), Quantity(result.rhs))
 
 
 def test_bad_condition() -> None:
-    magnetic_amplitude = Quantity(1 * prefixes.kilo * units.tesla)
+    magnetic_amplitude = Quantity(1 * units.kilo * units.tesla)
 
     x, y, _ = CARTESIAN.base_scalars
 
@@ -67,7 +65,7 @@ def test_bad_condition() -> None:
         magnetic_induction,
     ).doit()
 
-    for scalar in result.atoms(CoordinateScalar):
-        result = result.subs(scalar, quantity_coordinate_scalar(scalar))
-
     assert isinstance(result, Eq)
+
+    with raises(AssertionError):
+        assert_equal(Quantity(result.lhs), Quantity(result.rhs))

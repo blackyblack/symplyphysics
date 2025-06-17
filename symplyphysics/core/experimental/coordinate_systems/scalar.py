@@ -2,6 +2,9 @@ from typing import Any, Optional
 
 from sympy import Expr, Basic, Symbol as SymSymbol, S
 from sympy.matrices.dense import DenseMatrix
+from sympy.physics.units import Dimension
+
+from symplyphysics.core.dimensions.collect_quantity import collect_quantity_factor_and_dimension
 
 from ..miscellaneous import sympify_expr
 from ..vectors import is_vector_expr
@@ -70,6 +73,9 @@ class CoordinateScalar(Expr):
         obj._point = point
 
         return obj
+
+    def collect_quantity_factor_and_dimension(self) -> tuple[Expr, Dimension]:
+        return collect_quantity_factor_and_dimension(self.scalar)
 
 
 __all__ = ["CoordinateScalar"]
