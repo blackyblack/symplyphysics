@@ -812,10 +812,11 @@ class VectorJacobian(VectorExpr):  # pylint: disable=too-few-public-methods
         function: VectorFunction,
         index: int,
         argument: Expr,
+        wrt: Expr,
         /,
     ) -> VectorJacobian:
         # pylint: disable-next=too-many-function-args
-        return super().__new__(cls, function, sympify_expr(index), sympify_expr(argument))
+        return super().__new__(cls, function, sympify_expr(index), sympify_expr(argument), wrt)
 
 
 class AppliedVectorFunction(sym_fn.Application, VectorExpr):
@@ -874,7 +875,7 @@ class AppliedVectorFunction(sym_fn.Application, VectorExpr):
                 # Here, `jacobian[v](w(x))` denotes the Jacobian matrix of `v` evaluated at `w(x)`.
 
                 # TODO: finish implementing the `VectorJacobian` class logic
-                return VectorJacobian(self, i, arg)
+                return VectorJacobian(self, i, arg, symbol)
 
             scale = arg.diff(symbol)
 
