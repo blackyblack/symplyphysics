@@ -1,6 +1,5 @@
 from collections import namedtuple
 from pytest import fixture
-from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics.fields import (
     conservative_force_is_gradient_of_potential_energy as gradient_law,)
 

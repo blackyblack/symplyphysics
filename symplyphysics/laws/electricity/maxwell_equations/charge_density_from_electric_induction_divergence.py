@@ -16,9 +16,9 @@ that there exist electric charges.
 """
 
 from sympy import Eq, Expr
-from symplyphysics import Quantity, validate_output, symbols, clone_as_function, units
-from symplyphysics.core.dimensions import assert_equivalent_dimension
+from symplyphysics import Quantity, validate_output, symbols, clone_as_function
 
+from symplyphysics.core.experimental.approx import assert_quantity_point
 from symplyphysics.core.experimental.vectors import (clone_as_vector_function,
     clone_as_vector_symbol)
 from symplyphysics.core.experimental.operators import VectorDivergence
@@ -68,13 +68,7 @@ def calculate_charge_volumetric_density_at_point(
     electric_induction_: Expr,
     point_: AppliedPoint,
 ) -> Quantity:
-    for base_scalar, coordinate in point_.coordinates.items():
-        assert_equivalent_dimension(
-            coordinate,
-            f"point_{base_scalar}",
-            "calculate_charge_volumetric_density_at_point",
-            units.length,
-        )
+    assert_quantity_point(point_, "calculate_charge_volumetric_density_at_point")
 
     result = law.lhs.subs(
         electric_displacement(position_vector),

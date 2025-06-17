@@ -1,56 +1,94 @@
-from symplyphysics import (units, Quantity, QuantityVector, validate_input, validate_output,
-    symbols)
-from symplyphysics.core.dimensions import assert_equivalent_dimension
-from symplyphysics.core.fields.operators import curl_operator
-from symplyphysics.core.fields.vector_field import VectorField
-from symplyphysics.core.vectors.arithmetics import diff_cartesian_vector, scale_vector
+"""
+Curl of electric field is negative magnetic flux density derivative
+===================================================================
 
-## Description
-## Faraday's law of induction states that a change in magnetic induction generates a vortex electric field.
-## This law is valid for any magnetic field that changes over time.
+**Faraday's law of induction** states that a change in magnetic flux density generates a
+rotational electric field. This law is valid for any magnetic field that changes over time.
 
-## Law is: curl(E(r, t)) = -d(B(r, t)) / dt, where
-## E - the field of electric intensity,
-## B - the field of magnetic induction,
-## r - the vector of a point in space,
-## t - time,
-## curl - curl of the vector of magnetic induction,
-## d / dt - time partial derivative.
+**Links:**
 
-# Links
-## Wikipedia, fourth line in table <https://en.wikipedia.org/wiki/Maxwell%27s_equations#Macroscopic_formulation>
-## Physics LibreTexts, formula 15.7.1 <https://phys.libretexts.org/Bookshelves/Electricity_and_Magnetism/Electricity_and_Magnetism_(Tatum)/15%3A_Maxwell's_Equations/15.07%3A_Maxwell's_Fourth_Equation>
+#. `Wikipedia, fourth line in table <https://en.wikipedia.org/wiki/Maxwell%27s_equations#Macroscopic_formulation>`__.
+
+#. `Physics LibreTexts, formula 15.7.1 <https://phys.libretexts.org/Bookshelves/Electricity_and_Magnetism/Electricity_and_Magnetism_(Tatum)/15%3A_Maxwell's_Equations/15.07%3A_Maxwell's_Fourth_Equation>`__.
+
+..
+    TODO: rename file
+"""
+
+from sympy import Eq, Expr
+from symplyphysics import Quantity, validate_input, validate_output, symbols, units
+
+from symplyphysics.core.experimental.approx import assert_quantity_point
+from symplyphysics.core.experimental.vectors import (clone_as_vector_function,
+    clone_as_vector_symbol, VectorDerivative)
+from symplyphysics.core.experimental.operators import VectorCurl
+from symplyphysics.core.experimental.coordinate_systems import (QuantityCoordinateVector,
+    AppliedPoint, CoordinateVector)
+from symplyphysics.core.experimental.solvers import solve_for_vector
 
 time = symbols.time
+"""
+:symbols:`time`.
+"""
+
+position_vector = clone_as_vector_symbol(symbols.distance_to_origin)
+"""
+Position vector of a point in space. See :symbols:`distance_to_origin`.
+"""
+
+electric_field = clone_as_vector_function(
+    symbols.electric_field_strength,
+    (position_vector, time),
+)
+"""
+Vector of the electric field as a function of :attr:`~position_vector` and :attr:`~time`. See
+:symbols:`electric_field_strength`.
+"""
+
+magnetic_flux_density = clone_as_vector_function(symbols.magnetic_flux_density,
+    (position_vector, time))
+"""
+Vector of the :symbols:`magnetic_flux_density` field as a function of of :attr:`~position_vector`
+and :attr:`~time`.
+"""
+
+law = Eq(
+    VectorCurl(electric_field(position_vector, time), evaluate=False),
+    -1 * VectorDerivative(magnetic_flux_density(position_vector, time), time),
+)
+"""
+..
+    NOTE: code printers have not been implemented for `VectorCurl` yet
+
+:code:`curl(E(r, t)) = -1 * Derivative(B(r, t), t)`
+
+Latex:
+    .. math::
+        \\text{curl} \\, \\vec E \\! \\left( \\vec r, t \\right)
+            = - \\frac{\\partial}{\\partial t} \\vec B \\! \\left( \\vec r, t \\right)
+"""
 
 
-def magnetic_induction_derivative_law(electric_intensity_: VectorField) -> VectorField:
-    return curl_operator(electric_intensity_)
-
-
-def electric_intensity_curl_law(magnetic_induction_: VectorField) -> VectorField:
-    magnetic_induction_space = magnetic_induction_.apply_to_basis()
-    magnetic_induction_time_derivative = diff_cartesian_vector(magnetic_induction_space, time)
-    magnetic_induction_time_derivative = scale_vector(-1, magnetic_induction_time_derivative)
-    return VectorField.from_vector(magnetic_induction_time_derivative)
-
-
-@validate_input(cartesian_point_=units.length, time_=units.time)
+@validate_input(time_=time)
 @validate_output(units.magnetic_density / units.time)
-def calculate_magnetic_induction_derivative_at_point(electric_intensity_: VectorField,
-    cartesian_point_: tuple[Quantity, Quantity, Quantity], time_: Quantity) -> QuantityVector:
-    electric_intensity_vector = electric_intensity_.apply(cartesian_point_)
-    for i, c in enumerate(electric_intensity_vector.components):
-        assert_equivalent_dimension(c, f"electric_intensity_vector[{i}]",
-            "calculate_magnetic_induction_derivative_at_point", units.force / units.charge)
+def calculate_magnetic_induction_derivative_at_point(
+    electric_intensity_: Expr,
+    point_: AppliedPoint,
+    time_: Quantity,
+) -> QuantityCoordinateVector:
+    assert_quantity_point(point_, "calculate_magnetic_induction_derivative_at_point")
 
-    result_field = magnetic_induction_derivative_law(electric_intensity_)
-    result_space = result_field.apply_to_basis()
-    base_scalars = result_field.coordinate_system.coord_system.base_scalars()
-    return QuantityVector.from_base_vector(result_space,
-        subs={
-        base_scalars[0]: cartesian_point_[0],
-        base_scalars[1]: cartesian_point_[1],
-        base_scalars[2]: cartesian_point_[2],
-        time: time_
-        })
+    expr = solve_for_vector(
+        law,
+        VectorDerivative(magnetic_flux_density(position_vector, time), time),
+    )
+
+    result = expr.subs(
+        electric_field(position_vector, time),
+        electric_intensity_,
+    ).doit()
+    result = CoordinateVector.from_expr(result)
+
+    result = result.subs(point_.coordinates).subs(time, time_)
+
+    return QuantityCoordinateVector(result.components, result.system, result.point)

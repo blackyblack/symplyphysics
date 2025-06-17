@@ -16,6 +16,7 @@ from symplyphysics.core.experimental.vectors import (
     VectorFunction,
     AppliedVectorFunction,
     vector_diff,
+    VectorJacobian,
 )
 from symplyphysics.core.experimental.solvers import vector_equals
 
@@ -475,9 +476,9 @@ def test_vector_derivative() -> None:
     with raises(NotImplementedError):
         vector_diff(f(x, x), x)
 
-    with raises(NotImplementedError):
-        # should evaluate to `dot(Jacobian(f)(h), vector_diff(h(x)))`
-        vector_diff(f(h(x)), x)
+    result = vector_diff(f(h(x)), x)
+    assert isinstance(result, VectorJacobian)
+    assert result.args == (f(h(x)), 0, h(x), x)
 
     # first argument is not a vector
     with raises(ValueError):

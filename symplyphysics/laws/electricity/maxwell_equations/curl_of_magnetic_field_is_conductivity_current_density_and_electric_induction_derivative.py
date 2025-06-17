@@ -19,9 +19,9 @@ displacement generate a rotational magnetic field. Also known as the **Ampère's
 """
 
 from sympy import Eq, evaluate, Expr
-from symplyphysics import Quantity, validate_input, validate_output, symbols, units
-from symplyphysics.core.dimensions import assert_equivalent_dimension
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
+from symplyphysics.core.experimental.approx import assert_quantity_point
 from symplyphysics.core.experimental.vectors import (clone_as_vector_function,
     clone_as_vector_symbol, VectorDerivative)
 from symplyphysics.core.experimental.operators import VectorCurl
@@ -86,7 +86,7 @@ law = Eq(_curl_h, _jf + _dd_dt)
 
 Latex:
     .. math::
-        \\text{curl} \, \\vec H \\! \\left( \\vec r, t \\right)
+        \\text{curl} \\, \\vec H \\! \\left( \\vec r, t \\right)
             = {\\vec J}_\\text{f} \\! \\left( \\vec r, t \\right)
             + \\frac{\\partial}{\\partial t} \\vec D \\! \\left( \\vec r, t \\right)
 """
@@ -100,13 +100,7 @@ def calculate_conductivity_current_density_at_point(
     point_: AppliedPoint,
     time_: Quantity,
 ) -> QuantityCoordinateVector:
-    for base_scalar, coordinate in point_.coordinates.items():
-        assert_equivalent_dimension(
-            coordinate,
-            f"point_{base_scalar}",
-            "calculate_charge_volumetric_density_at_point",
-            units.length,
-        )
+    assert_quantity_point(point_, "calculate_conductivity_current_density_at_point")
 
     expr = solve_for_vector(law, _jf)
 
