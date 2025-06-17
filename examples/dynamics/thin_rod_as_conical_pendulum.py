@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
 from sympy import symbols, pi, solve, refine, Q, cos, S
-from sympy.physics.units import acceleration_due_to_gravity
-from symplyphysics import add_cartesian_vectors, vector_magnitude, print_expression
+from symplyphysics import print_expression, quantities
 from symplyphysics.core.vectors.arithmetics import integrate_cartesian_vector
 from symplyphysics.conditions.dynamics.equilibrium import (
     total_torque_is_zero as equilibrium_law,)
@@ -21,9 +20,10 @@ from symplyphysics.laws.geometry import (
 from symplyphysics.laws.quantities import (
     quantity_is_linear_density_times_length as linear_density_law,)
 
-from symplyphysics.core.experimental.legacy import into_legacy_vector
+from symplyphysics.core.experimental.legacy import into_legacy_vector, from_legacy_vector
 from symplyphysics.core.experimental.solvers import solve_for_vector
 from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
+from symplyphysics.core.experimental.vectors import VectorNorm
 
 # Description
 ## A thin rod of length `l` is rotating around one of its ends describing a circular cone
@@ -91,7 +91,7 @@ element_mass_expr = solve(
 force_from_acceleration_expr_ = solve_for_vector(force_law.law, force_law.force)
 
 free_fall_acceleration_vector_ = CoordinateVector(
-    [0, 0, -1 * acceleration_due_to_gravity],
+    [0, 0, -1 * quantities.acceleration_due_to_gravity],
     CARTESIAN,
 )
 
@@ -148,12 +148,11 @@ centrifugal_torque_acting_on_rod = integrate_cartesian_vector(
     (distance_to_element, S.Zero, rod_length),
 )
 
-total_torque_vector_acting_on_rod = add_cartesian_vectors(
-    gravity_torque_acting_on_rod,
-    centrifugal_torque_acting_on_rod,
-)
+total_torque_vector_acting_on_rod = CoordinateVector.from_expr(
+    from_legacy_vector(gravity_torque_acting_on_rod) +
+    from_legacy_vector(centrifugal_torque_acting_on_rod))
 
-total_torque_acting_on_rod = vector_magnitude(total_torque_vector_acting_on_rod)
+total_torque_acting_on_rod = VectorNorm(total_torque_vector_acting_on_rod)
 
 equilibrium_eqn = equilibrium_law.law.subs(equilibrium_law.total_torque, total_torque_acting_on_rod)
 

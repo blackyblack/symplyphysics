@@ -1,11 +1,8 @@
 from collections import namedtuple
 from pytest import fixture
-from symplyphysics import (
-    Vector,
-    assert_equal,
-    vector_magnitude,
-    dot_vectors,
-)
+from symplyphysics import assert_equal
+from symplyphysics.core.vectors.vectors import Vector
+from symplyphysics.core.vectors.arithmetics import vector_magnitude, dot_vectors
 from symplyphysics.laws.geometry import dot_product_is_proportional_to_cosine_between_vectors as cosine_law
 
 # Description

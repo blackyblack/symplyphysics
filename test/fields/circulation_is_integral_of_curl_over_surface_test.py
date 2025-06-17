@@ -1,14 +1,8 @@
 from collections import namedtuple
 from pytest import fixture
 from sympy import Expr, sin, cos, sqrt, pi
-from symplyphysics import (
-    assert_equal,
-    units,
-    Quantity,
-    CoordinateSystem,
-    SI,
-    convert_to,
-)
+from symplyphysics import assert_equal, units, Quantity, SI, convert_to
+from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
 from symplyphysics.core.fields.vector_field import VectorField
 from symplyphysics.core.points.cartesian_point import CartesianPoint
 from symplyphysics.laws.fields import circulation_is_integral_of_curl_over_surface as circulation_def

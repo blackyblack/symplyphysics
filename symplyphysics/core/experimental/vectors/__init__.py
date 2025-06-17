@@ -490,6 +490,8 @@ class VectorDot(Expr):
     frame is reversed.
     """
 
+    is_commutative = True
+
     @property
     def lhs(self) -> VectorExpr:
         return self.args[0]

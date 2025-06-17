@@ -14,19 +14,13 @@ fall, the vertical acceleration of the vessel and the height of liquid.
     TODO: find link
 """
 
-from sympy import (Eq, solve, sqrt)
-from symplyphysics import (
-    Vector,
-    add_cartesian_vectors,
-    symbols,
-    Quantity,
-    validate_input,
-    validate_output,
-    vector_magnitude,
-    quantities,
-)
+from sympy import Eq, solve, sqrt
+from symplyphysics import symbols, Quantity, validate_input, validate_output, quantities
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.hydro import hydrostatic_pressure_from_density_and_depth_acceleration as pressure_law
+
+from symplyphysics.core.experimental.vectors import VectorNorm
+from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
 
 pressure = symbols.pressure
 """
@@ -62,19 +56,29 @@ law = Eq(pressure,
 # If the acceleration "a" is positive, then it is directed upwards. If the acceleration "a" is negative,
 # then it is directed downward.
 
-_free_fall_acceleration_vector = Vector([0, quantities.acceleration_due_to_gravity])
+_free_fall_acceleration_vector = CoordinateVector(
+    [0, quantities.acceleration_due_to_gravity, 0],
+    CARTESIAN,
+)
+
 # Vertical vector
-_vessel_acceleration_vector = Vector([0, acceleration])
-_total_acceleration = vector_magnitude(
-    add_cartesian_vectors(_free_fall_acceleration_vector, _vessel_acceleration_vector))
+_vessel_acceleration_vector = CoordinateVector([0, acceleration, 0], CARTESIAN)
+
+_total_acceleration_vector = CoordinateVector.from_expr(
+    _free_fall_acceleration_vector + _vessel_acceleration_vector,)
+_total_acceleration = VectorNorm(_total_acceleration_vector)
 
 _pressure_law_applied = pressure_law.law.subs({
     pressure_law.density: density,
     pressure_law.height: height,
     pressure_law.acceleration: _total_acceleration,
 })
-_pressure_derived = solve(_pressure_law_applied, pressure_law.hydrostatic_pressure,
-    dict=True)[0][pressure_law.hydrostatic_pressure]
+
+_pressure_derived = solve(
+    _pressure_law_applied,
+    pressure_law.hydrostatic_pressure,
+    dict=True,
+)[0][pressure_law.hydrostatic_pressure]
 
 # Check if derived pressure is same as declared.
 assert expr_equals(_pressure_derived, law.rhs)

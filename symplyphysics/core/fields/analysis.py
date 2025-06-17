@@ -1,6 +1,7 @@
 from typing import Sequence, Any
 from sympy import Expr, integrate, simplify
-from symplyphysics import Vector, dot_vectors, vector_magnitude, vector_unit
+from ..vectors.vectors import Vector
+from ..vectors.arithmetics import dot_vectors, vector_magnitude, vector_unit
 from ..fields.operators import curl_operator, divergence_operator
 from ..fields.vector_field import VectorField
 from ..geometry.elements import parametrized_curve_element, parametrized_curve_element_magnitude, volume_element_magnitude

@@ -14,22 +14,18 @@ Torque via force and radial distance
 #. `Wikipedia <https://en.wikipedia.org/wiki/Torque#Definition_and_relation_to_other_physical_quantities>`__.
 """
 
-from sympy import Eq, solve, sin, symbols as sympy_symbols, sqrt
-from symplyphysics import (
-    symbols,
-    Quantity,
-    validate_input,
-    validate_output,
-    Vector,
-    dot_vectors,
-    vector_magnitude,
-)
+from sympy import Eq, solve, sin, symbols as sympy_symbols
+from symplyphysics import symbols, Quantity, validate_input, validate_output
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
-from symplyphysics.laws.dynamics.vector import torque_vector_of_twisting_force as _torque_vector_def
+from symplyphysics.laws.dynamics.vector import (
+    torque_vector_of_twisting_force as _torque_vector_def,)
+from symplyphysics.laws.geometry.vector import (
+    dot_product_is_proportional_to_cosine_between_vectors as _dot_product_law,)
 
-from symplyphysics.core.experimental.legacy import into_legacy_vector, from_legacy_vector
 from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.experimental.coordinate_systems import CoordinateVector, CARTESIAN
+from symplyphysics.core.experimental.vectors import VectorNorm
 
 torque = symbols.torque
 """
@@ -59,36 +55,35 @@ law = Eq(torque, radial_distance * force * sin(angle_between_vectors))
 """
 
 # Derive law from its vector counterpart.
-_force_vector = Vector(sympy_symbols("force_x:z", real=True))
-_position_vector = Vector(sympy_symbols("x:z", real=True))
 
-_torque_vector_derived_ = solve_for_vector(
+_force_vector = CoordinateVector(sympy_symbols("F_x:z", real=True), CARTESIAN)
+_position_vector = CoordinateVector(sympy_symbols("x:z", real=True), CARTESIAN)
+
+_torque_vector_derived = solve_for_vector(
     _torque_vector_def.law,
     _torque_vector_def.torque,
 ).subs({
-    _torque_vector_def.force: from_legacy_vector(_force_vector),
-    _torque_vector_def.position_vector: from_legacy_vector(_position_vector),
+    _torque_vector_def.force: _force_vector,
+    _torque_vector_def.position_vector: _position_vector,
 })
 
-_torque_vector_derived = into_legacy_vector(_torque_vector_derived_)
+_torque_magnitude_derived = VectorNorm(_torque_vector_derived)
 
-_torque_magnitude_derived = vector_magnitude(_torque_vector_derived)
-
-_force_magnitude = vector_magnitude(_force_vector)
-_position_magnitude = vector_magnitude(_position_vector)
-
-# Use the definition of dot product (a, b) = |a| * |b| * cos(a, b) to find the sine of angle_between_vectors between vectors
-_cosine_of_angle_in_between = (dot_vectors(_force_vector, _position_vector) / _force_magnitude /
-    _position_magnitude)
-_sine_of_angle_in_between = sqrt(1 - _cosine_of_angle_in_between**2)
-
-_torque_magnitude_from_law = solve(law, torque)[0].subs({
-    force: _force_magnitude,
-    radial_distance: _position_magnitude,
-    sin(angle_between_vectors): _sine_of_angle_in_between,
+_angle_between_vectors = solve(
+    _dot_product_law.law,
+    _dot_product_law.angle_between_vectors,
+)[-1].subs({
+    _dot_product_law.first_vector: _force_vector,
+    _dot_product_law.second_vector: _position_vector,
 })
 
-assert expr_equals(_torque_magnitude_derived, _torque_magnitude_from_law)
+_torque_magnitude_expected = solve(law, torque)[0].subs({
+    force: VectorNorm(_force_vector),
+    radial_distance: VectorNorm(_position_vector),
+    angle_between_vectors: _angle_between_vectors,
+})
+
+assert expr_equals(_torque_magnitude_derived, _torque_magnitude_expected)
 
 
 @validate_input(force_=force, distance_to_axis_=radial_distance, angle_=angle_between_vectors)

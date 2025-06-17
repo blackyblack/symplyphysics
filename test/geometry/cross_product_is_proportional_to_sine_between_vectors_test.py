@@ -1,11 +1,8 @@
 from collections import namedtuple
 from pytest import fixture
-from symplyphysics import (
-    Vector,
-    assert_equal,
-    vector_magnitude,
-    cross_cartesian_vectors,
-)
+from symplyphysics import assert_equal
+from symplyphysics.core.vectors.vectors import Vector
+from symplyphysics.core.vectors.arithmetics import cross_cartesian_vectors, vector_magnitude
 from symplyphysics.laws.geometry import (
     cross_product_is_proportional_to_sine_between_vectors as sine_law,)
 
