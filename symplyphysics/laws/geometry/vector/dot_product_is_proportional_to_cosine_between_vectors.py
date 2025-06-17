@@ -1,31 +1,52 @@
-from sympy import Expr
-from symplyphysics import (
-    Quantity,
-    QuantityVector,
-    Vector,
-    dot_vectors,
-    vector_magnitude,
+"""
+Dot product is proportional to cosine of angle between vectors
+==============================================================
+
+The dot product of two vectors is a scalar binary operation that can be defined as the product of
+the norms of the vectors and the cosine of the angle between them.
+"""
+
+from sympy import solve, Eq, cos
+
+from symplyphysics import Quantity, symbols
+from symplyphysics.core.dimensions import any_dimension
+
+from symplyphysics.core.experimental.vectors import VectorSymbol, VectorDot, VectorNorm
+from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+
+first_vector = VectorSymbol("u", any_dimension)
+"""
+First vector.
+"""
+
+second_vector = VectorSymbol("v", any_dimension)
+"""
+Second vector.
+"""
+
+angle_between_vectors = symbols.angle
+"""
+:symbols:`angle` between :attr:`~first_vector` and :attr:`~second_vector`.
+"""
+
+law = Eq(
+    VectorDot(first_vector, second_vector),
+    VectorNorm(first_vector) * VectorNorm(second_vector) * cos(angle_between_vectors),
 )
+"""
+:laws:symbol::
 
-# Description:
-## Dot product is scalar binary operation defined as the product of the norm of the vectors
-## and the cosine of the angle between them.
-
-# Law: dot(a, b) = norm(a) * norm(b) * cos(phi)
-## a, b - vectors
-## phi - angle between vectors a and b
-## dot(a, b) - dot product between vectors a and b
-## norm(v) - norm, or length, of vector v
+:laws:latex::
+"""
 
 
-def cosine_between_vectors_law(vector_left_: Vector, vector_right_: Vector) -> Expr:
-    dot_product_ = dot_vectors(vector_left_, vector_right_)
-    vector_left_norm_ = vector_magnitude(vector_left_)
-    vector_right_norm_ = vector_magnitude(vector_right_)
-    return dot_product_ / (vector_left_norm_ * vector_right_norm_)
+def calculate_cosine_between_vectors(
+    vector_left_: QuantityCoordinateVector,
+    vector_right_: QuantityCoordinateVector,
+) -> Quantity:
+    result = solve(law, cos(angle_between_vectors))[0].subs({
+        first_vector: vector_left_,
+        second_vector: vector_right_,
+    }).doit()
 
-
-def calculate_cosine_between_vectors(vector_left_: QuantityVector,
-    vector_right_: QuantityVector) -> Quantity:
-    return Quantity(
-        cosine_between_vectors_law(vector_left_.to_base_vector(), vector_right_.to_base_vector()))
+    return Quantity(result)
