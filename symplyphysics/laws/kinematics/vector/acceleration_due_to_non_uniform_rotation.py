@@ -33,7 +33,7 @@ non_uniform_rotation_acceleration = clone_as_vector_symbol(
     display_latex="{\\vec a}_\\text{rot}",
 )
 """
-TODO
+Vector of :symbols:`acceleration` due to non-uniform rotation of :math:`S'` relative to :math:`S`.
 """
 
 time = symbols.time
