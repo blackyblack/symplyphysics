@@ -6,7 +6,7 @@ from sympy import Basic, Expr, Symbol as SymSymbol
 from sympy.printing.printer import Printer
 
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.symbols.symbols import next_name
+from symplyphysics.core.symbols.symbols import next_name, Symbol
 
 from ..miscellaneous import sympify_expr
 
@@ -17,7 +17,7 @@ from .cartesian_system import CartesianCoordinateSystem
 def _prepare(
     coordinates: Iterable[SupportsFloat],
     system: BaseCoordinateSystem,
-) -> dict[SymSymbol, Expr]:
+) -> dict[Symbol, Expr]:
     return {
         scalar: sympify_expr(coordinate)
         for scalar, coordinate in zip(system.base_scalars, coordinates)
@@ -30,18 +30,18 @@ class AppliedPoint(Basic):
     certain coordinate system.
     """
 
-    _coordinates: Mapping[SymSymbol, Expr]
+    _coordinates: Mapping[Symbol, Expr]
     _system: BaseCoordinateSystem
 
     @property
-    def coordinates(self) -> Mapping[SymSymbol, Expr]:
+    def coordinates(self) -> Mapping[Symbol, Expr]:
         return self._coordinates
 
     @property
     def system(self) -> BaseCoordinateSystem:
         return self._system
 
-    def __getitem__(self, base_scalar: SymSymbol) -> Expr:
+    def __getitem__(self, base_scalar: Symbol) -> Expr:
         return self.coordinates[base_scalar]
 
     def __new__(
@@ -99,8 +99,8 @@ GLOBAL_POINT = SymSymbol(next_name("P"))
 
 def check_point_with_system(
     system: BaseCoordinateSystem,
-    point: Optional[AppliedPoint | SymSymbol],
-) -> AppliedPoint | SymSymbol:
+    point: Optional[AppliedPoint | Symbol],
+) -> AppliedPoint | Symbol:
     if isinstance(system, CartesianCoordinateSystem):
         point = point or GLOBAL_POINT
     elif point is None:

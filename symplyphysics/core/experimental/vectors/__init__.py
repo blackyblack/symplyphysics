@@ -805,6 +805,18 @@ class VectorMixedProduct(Expr):  # pylint: disable=too-few-public-methods
         return VectorDot(a, VectorCross(b, c)).diff(symbol)
 
 
+class VectorJacobian(VectorExpr):
+
+    def __new__(
+        cls,
+        function: VectorFunction,
+        index: int,
+        argument: Expr,
+        /,
+    ) -> VectorJacobian:
+        return super().__new__(cls, function, sympify_expr(index), sympify_expr(argument))
+
+
 class AppliedVectorFunction(sym_fn.Application, VectorExpr):
     """This class represents the result of applying a vector-valued function to some arguments."""
 
@@ -854,13 +866,14 @@ class AppliedVectorFunction(sym_fn.Application, VectorExpr):
 
         found = False
 
-        for arg in self.args:
+        for i, arg in enumerate(self.args):
             if is_vector_expr(arg) and arg != 0:
                 # Assuming `v` and `w` are vector-valued functions:
                 #   (d/dx)[v(w(x))] = jacobian[v](w(x)) * (d/dx)[w(x)]
                 # Here, `jacobian[v](w(x))` denotes the Jacobian matrix of `v` evaluated at `w(x)`.
 
-                raise NotImplementedError("Jacobian matrix has not been implemented yet.")
+                # TODO: finish implementing the `VectorJacobian` class logic
+                return VectorJacobian(self, i, arg)
 
             scale = arg.diff(symbol)
 

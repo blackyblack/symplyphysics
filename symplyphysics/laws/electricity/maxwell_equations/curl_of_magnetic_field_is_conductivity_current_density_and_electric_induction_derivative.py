@@ -19,8 +19,8 @@ displacement generate a rotational magnetic field. Also known as the **Ampère's
 """
 
 from sympy import Eq, evaluate, Expr
-from symplyphysics import Quantity, validate_input, validate_output, symbols, units
-from symplyphysics.core.dimensions import assert_equivalent_dimension
+from symplyphysics import Quantity, validate_input, validate_output, symbols
+from symplyphysics.core.dimensions.dimensions import assert_quantity_point
 
 from symplyphysics.core.experimental.vectors import (clone_as_vector_function,
     clone_as_vector_symbol, VectorDerivative)
@@ -100,13 +100,7 @@ def calculate_conductivity_current_density_at_point(
     point_: AppliedPoint,
     time_: Quantity,
 ) -> QuantityCoordinateVector:
-    for base_scalar, coordinate in point_.coordinates.items():
-        assert_equivalent_dimension(
-            coordinate,
-            f"point_{base_scalar}",
-            "calculate_charge_volumetric_density_at_point",
-            units.length,
-        )
+    assert_quantity_point(point_, "calculate_conductivity_current_density_at_point")
 
     expr = solve_for_vector(law, _jf)
 

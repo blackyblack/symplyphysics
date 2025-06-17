@@ -1,11 +1,12 @@
 from __future__ import annotations
 
-from typing import Any, SupportsFloat
+from typing import Any, SupportsFloat, Optional
 from sympy import S
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import dimsys_SI
 
-from ..experimental.coordinate_systems import QuantityCoordinateVector
+from ..experimental.coordinate_systems.vector import QuantityCoordinateVector
+from ..experimental.coordinate_systems.point import AppliedPoint
 from ..errors import UnitsError
 from .collect_quantity import collect_quantity_factor_and_dimension
 from .miscellaneous import is_any_dimension, is_number
@@ -82,9 +83,22 @@ def print_dimension(dimension: Dimension) -> str:
     return "dimensionless" if dimsys_SI.is_dimensionless(dimension) else str(dimension.name)
 
 
+def assert_quantity_point(point: AppliedPoint, func: Optional[str] = None) -> None:
+    func = func or "assert_quantity_point"
+
+    for base_scalar, coordinate in point.coordinates.items():
+        assert_equivalent_dimension(
+            coordinate,
+            f"point_{base_scalar.display_name}",
+            func,
+            base_scalar.dimension,
+        )
+
+
 __all__ = [
     "AnyDimension",
     "any_dimension",
     "assert_equivalent_dimension",
     "print_dimension",
+    "assert_quantity_point",
 ]
