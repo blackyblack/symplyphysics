@@ -23,19 +23,11 @@ particles in thermodynamic equilibrium, the speed distribution function is a fun
 """
 
 from sympy import (Eq, Rational, sqrt, pi, exp, symbols as sym_symbols, solve)
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-    clone_as_symbol,
-    symbols,
-    CoordinateSystem,
-    quantities,
-)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output,
+    clone_as_symbol, symbols, quantities)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.geometry.elements import volume_element_magnitude
+from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import velocity_component_distribution
 
 speed_distribution_function = Symbol("f(v)", 1 / units.velocity)

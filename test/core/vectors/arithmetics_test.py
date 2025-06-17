@@ -2,8 +2,9 @@ from typing import Any
 from collections import namedtuple
 from pytest import fixture, raises
 from sympy import atan2, cos, pi, sin, sqrt, Rational, nan
-from symplyphysics import (SI, Quantity, dimensionless, units, QuantityVector, Vector,
-    CoordinateSystem, coordinates_transform)
+from symplyphysics import SI, Quantity, dimensionless, units
+from symplyphysics.core.vectors.vectors import Vector, QuantityVector
+from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
 from symplyphysics.core.vectors.arithmetics import (add_cartesian_vectors, cross_cartesian_vectors,
     dot_vectors, equal_vectors, scale_vector, vector_magnitude, vector_unit, project_vector,
     reject_cartesian_vector)

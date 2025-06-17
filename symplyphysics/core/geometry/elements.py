@@ -1,5 +1,6 @@
 from sympy import Expr, diff, sin, S
-from symplyphysics import CoordinateSystem, vector_magnitude
+from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
+from symplyphysics.core.vectors.arithmetics import vector_magnitude
 from ..vectors.vectors import Vector
 
 

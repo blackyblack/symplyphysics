@@ -148,5 +148,4 @@ __all__ = [
     "approx_equal_numbers",
     "approx_equal_quantities",
     "assert_equal",
-    "assert_equal_vectors",
 ]
