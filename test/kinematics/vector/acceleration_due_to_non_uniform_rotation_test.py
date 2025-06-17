@@ -45,7 +45,6 @@ def test_law(test_args: Args) -> None:
     assert_equal_vectors(result, expected)
 
 
-@mark.skip("`a_result` seems to be multiplied by -1 for some reason")  # FIXME
 def test_function_law() -> None:
     t = law.time
     w = CoordinateVector([cos(t), 3 * sin(t), 1], CARTESIAN)
