@@ -17,8 +17,8 @@ that there exist electric charges.
 
 from sympy import Eq, Expr
 from symplyphysics import Quantity, validate_output, symbols, clone_as_function
-from symplyphysics.core.dimensions.dimensions import assert_quantity_point
 
+from symplyphysics.core.experimental.approx import assert_quantity_point
 from symplyphysics.core.experimental.vectors import (clone_as_vector_function,
     clone_as_vector_symbol)
 from symplyphysics.core.experimental.operators import VectorDivergence

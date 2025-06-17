@@ -2,8 +2,9 @@ from typing import Any, Optional
 from sympy.physics.units import Dimension
 
 from symplyphysics.core.approx import assert_equal
+from symplyphysics.core.dimensions.dimensions import assert_equivalent_dimension
 
-from .coordinate_systems import QuantityCoordinateVector
+from .coordinate_systems import QuantityCoordinateVector, AppliedPoint
 
 
 def assert_equal_vectors(
@@ -30,3 +31,21 @@ def assert_equal_vectors(
         return
 
     assert lhs == 0 and rhs == 0
+
+
+def assert_quantity_point(point: AppliedPoint, func: Optional[str] = None) -> None:
+    func = func or "assert_quantity_point"
+
+    for base_scalar, coordinate in point.coordinates.items():
+        assert_equivalent_dimension(
+            coordinate,
+            f"point_{base_scalar.display_name}",
+            func,
+            base_scalar.dimension,
+        )
+
+
+__all__ = [
+    "assert_equal_vectors",
+    "assert_quantity_point",
+]
