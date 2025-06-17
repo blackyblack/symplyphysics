@@ -4,7 +4,8 @@ Spring reaction is proportional to deformation
 
 Also called Hooke's law, it is an empirical law which states that the force needed to
 extend or compress a spring by some distance is proportional with respect to the
-deformation of the spring.
+deformation of the spring. Also see the :ref:`vector counterpart <Spring reaction is proportional
+to deformation (vector)>` of this law.
 
 **Notes:**
 
@@ -25,18 +26,13 @@ deformation of the spring.
 """
 
 from sympy import Eq
-from symplyphysics import (
-    symbols,
-    Quantity,
-    validate_input,
-    validate_output,
-    Vector,
-)
+from symplyphysics import symbols, Quantity, validate_input, validate_output
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics.springs.vector import (
-    spring_reaction_is_proportional_to_deformation as hookes_vector_law,)
+    spring_reaction_is_proportional_to_deformation as _hookes_vector_law,)
 
-# Also see its [vector counterpart](../vector/spring_reaction_from_deformation.py)
+from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
+from symplyphysics.core.experimental.solvers import solve_for_vector
 
 spring_reaction = symbols.force
 """
@@ -63,12 +59,21 @@ law = Eq(spring_reaction, -1 * stiffness * deformation)
 
 # Derive current law from its vector counterpart
 
-_deformation_vector = Vector([deformation])
-_spring_reaction_vector_derived = hookes_vector_law.force_law(_deformation_vector)
-assert len(_spring_reaction_vector_derived.components) == 1
-_spring_reaction_derived = _spring_reaction_vector_derived.components[0].subs(
-    hookes_vector_law.stiffness, stiffness)
-assert expr_equals(_spring_reaction_derived, law.rhs)
+_deformation_vector = CoordinateVector([deformation, 0, 0], CARTESIAN)
+
+_spring_reaction_vector_derived = solve_for_vector(
+    _hookes_vector_law.law,
+    _hookes_vector_law.force,
+).subs({
+    _hookes_vector_law.stiffness: stiffness,
+    _hookes_vector_law.deformation: _deformation_vector,
+})
+_spring_reaction_vector_derived = CoordinateVector.from_expr(_spring_reaction_vector_derived)
+_fx, _fy, _fz = _spring_reaction_vector_derived.components
+
+assert expr_equals(_fx, law.rhs)
+assert expr_equals(_fy, 0)
+assert expr_equals(_fz, 0)
 
 
 @validate_input(stiffness_=stiffness, deformation_=deformation)
