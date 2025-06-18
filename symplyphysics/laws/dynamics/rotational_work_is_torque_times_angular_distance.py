@@ -66,7 +66,7 @@ _radius = symbols.distance_to_axis
 
 _tangent_force = solve(projection_law.law, projection_law.projection)[0].subs({
     projection_law.vector_length: _force,
-    projection_law.vector_angle: pi / 2 - _angle  # complementary angle
+    projection_law.angle: pi / 2 - _angle  # complementary angle
 })
 
 _distance_traveled = solve(

@@ -95,14 +95,14 @@ _medium_travel_distance_cartesian_eq = Eq(_medium_travel_distance, sqrt((_d - _x
 
 # Use (pi / 2 - angle) to obtain vertical projection instead of horizontal
 _projection_incidence_eq = projection_law.law.subs({
-    projection_law.vector_angle: pi / 2 - incidence_angle,
+    projection_law.angle: pi / 2 - incidence_angle,
     projection_law.vector_length: _outer_travel_distance,
     projection_law.projection: _x
 })
 _projection_incidence_distance = solve(_projection_incidence_eq, _outer_travel_distance)[0]
 _outer_travel_distance_polar_eq = Eq(_outer_travel_distance, _projection_incidence_distance)
 _projection_refraction_eq = projection_law.law.subs({
-    projection_law.vector_angle: pi / 2 - refraction_angle,
+    projection_law.angle: pi / 2 - refraction_angle,
     projection_law.vector_length: _medium_travel_distance,
     projection_law.projection: _d - _x
 })

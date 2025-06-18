@@ -20,7 +20,7 @@ angle_of_shot = Symbol("angle_of_shot")
 # since there is no vertical component of the velocity at the highest point of the trajectory.
 velocity_projection_equation = projection_velocity.law.subs(({
     projection_velocity.vector_length: start_velocity,
-    projection_velocity.vector_angle: angle_of_shot
+    projection_velocity.angle: angle_of_shot
 })).rhs
 
 kinetic_energy_equation = kinetic_energy.law.subs({

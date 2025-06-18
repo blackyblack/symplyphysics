@@ -27,7 +27,7 @@ gravitational_acceleration = symbols("gravitational_acceleration")
 initial_horizontal_velocity = solve(projector.law, projector.projection,
     dict=True)[0][projector.projection].subs({
     projector.vector_length: throwing_velocity,
-    projector.vector_angle: throwing_angle
+    projector.angle: throwing_angle
     })
 print(f"Initial horizontal velocity: {initial_horizontal_velocity}")
 
@@ -35,7 +35,7 @@ print(f"Initial horizontal velocity: {initial_horizontal_velocity}")
 initial_vertical_velocity = solve(projector.law, projector.projection,
     dict=True)[0][projector.projection].subs({
     projector.vector_length: throwing_velocity,
-    projector.vector_angle: pi / 2 - throwing_angle
+    projector.angle: pi / 2 - throwing_angle
     })
 print(f"Initial vertical velocity: {initial_vertical_velocity}")
 
