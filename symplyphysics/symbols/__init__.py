@@ -140,6 +140,8 @@ __all__ = [
     "flow_speed",
     "speed_of_sound",
     "damping_constant",
+    "shear_modulus",
+    "engineering_shear_strain",
     # electrodynamics
     "admittance",
     "electrical_conductance",
@@ -197,6 +199,7 @@ __all__ = [
     "magnification",
     "optical_power",
     "angular_resolution",
+    "angular_magnification",
     "relative_aperture",
     # relativistic mechanics
     "lorentz_factor",

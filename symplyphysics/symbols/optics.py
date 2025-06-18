@@ -95,6 +95,16 @@ angular_resolution = Symbol("theta", angle_type, display_latex="\\theta")
 #. `Wikipedia <https://en.wikipedia.org/wiki/Angular_resolution#>`__.
 """
 
+angular_magnification = Symbol("M_A", dimensionless, display_latex="M_\\text{A}")
+"""
+**Angular magnification** is the ratio of the angle subtended by an object observed with a
+magnifier to that observed by the naked eye.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Magnification#Angular_magnification>`__.
+"""
+
 relative_aperture = Symbol("A", dimensionless)
 """
 **Relative aperture** is the measure of the light-gathering power of an optical system.

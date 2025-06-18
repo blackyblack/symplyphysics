@@ -1,25 +1,52 @@
-from sympy import Eq, Symbol as SymSymbol, cos, solve
-from symplyphysics import Quantity
+"""
+Dot product is proportional to cosine of angle between vectors
+==============================================================
+
+The dot product of two vectors is a scalar binary operation that can be defined as the product of
+the norms of the vectors and the cosine of the angle between them. Also see the :ref:`vector law
+<Dot product is proportional to cosine of angle between vectors (vector)>`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Dot_product#Geometric_definition>`__.
+"""
+
+from sympy import Eq, cos, solve
+from symplyphysics import Quantity, Symbol, symbols
+from symplyphysics.core.dimensions import any_dimension
 from symplyphysics.core.symbols.quantities import scale_factor
 
-# Description:
-## Dot product is scalar binary operation defined as the product of the norm of the vectors
-## and the cosine of the angle between them.
+dot_product = Symbol(
+    "dot(u, v)",
+    any_dimension,
+    display_latex="\\left( \\vec u, \\vec v \\right)",
+    real=True,
+)
+"""
+Dot product between :math:`\\vec u` and :math:`\\vec v`.
+"""
 
-# Law: dot(a, b) = norm(a) * norm(b) * cos(phi)
-## a, b - vectors
-## phi - angle between vectors a and b
-## dot(a, b) - dot product between vectors a and b
-## norm(v) - norm, or length, of vector v
+first_vector_length = Symbol("u", any_dimension, positive=True)
+"""
+Length of :math:`\\vec u`.
+"""
 
-# TODO: update documentation
+second_vector_length = Symbol("v", any_dimension, positive=True)
+"""
+Length of :math:`\\vec v`.
+"""
 
-dot_product = SymSymbol("dot_product", real=True)
-vector_left_norm = SymSymbol("vector_left_norm", positive=True)
-vector_right_norm = SymSymbol("vector_right_norm", positive=True)
-angle_between_vectors = SymSymbol("cosine_between_vectors", real=True)
+angle_between_vectors = symbols.angle
+"""
+:symbols:`angle` between :math:`\\vec u` and :math:`\\vec v`.
+"""
 
-law = Eq(dot_product, vector_left_norm * vector_right_norm * cos(angle_between_vectors))
+law = Eq(dot_product, first_vector_length * second_vector_length * cos(angle_between_vectors))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 def calculate_cosine_between_vectors(
@@ -32,7 +59,7 @@ def calculate_cosine_between_vectors(
     vector_right_norm_ = scale_factor(vector_right_norm_)
     result = solve(law, cos(angle_between_vectors))[0].subs({
         dot_product: dot_product_,
-        vector_left_norm: vector_left_norm_,
-        vector_right_norm: vector_right_norm_,
+        first_vector_length: vector_left_norm_,
+        second_vector_length: vector_right_norm_,
     })
     return Quantity(result)
