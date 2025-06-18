@@ -1,9 +1,14 @@
 """
-Dot product is proportional to cosine of angle between vectors
-==============================================================
+Dot product is proportional to cosine of angle between vectors (vector)
+=======================================================================
 
 The dot product of two vectors is a scalar binary operation that can be defined as the product of
-the norms of the vectors and the cosine of the angle between them.
+the norms of the vectors and the cosine of the angle between them. Also see the :ref:`scalar law
+<Dot product is proportional to cosine of angle between vectors>`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Dot_product#Geometric_definition>`__.
 """
 
 from sympy import solve, Eq, cos
