@@ -200,6 +200,7 @@ __all__ = [
     "optical_power",
     "angular_resolution",
     "angular_magnification",
+    "relative_aperture",
     # relativistic mechanics
     "lorentz_factor",
     "spacetime_interval",

@@ -104,3 +104,14 @@ magnifier to that observed by the naked eye.
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Magnification#Angular_magnification>`__.
 """
+
+relative_aperture = Symbol("A", dimensionless)
+"""
+**Relative aperture** is the measure of the light-gathering power of an optical system.
+
+**Links:**
+
+#. `Britannica <https://www.britannica.com/technology/relative-aperture>`__.
+
+#. `Wikipedia, see second paragraph <https://en.wikipedia.org/wiki/F-number>`__.
+"""
