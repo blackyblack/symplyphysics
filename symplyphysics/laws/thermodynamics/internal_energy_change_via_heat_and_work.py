@@ -1,4 +1,4 @@
-r"""
+"""
 Internal energy change via heat and work
 ========================================
 
@@ -9,7 +9,7 @@ during a thermodynamic process.
 
 **Notation:**
 
-#. :math:`\delta` (:code:`delta`) denotes an inexact, path-dependent differential.
+#. :math:`\\delta` (:code:`delta`) denotes an inexact, path-dependent differential.
 #. :math:`d` denotes an exact, path-independent differential.
 
 **Notes:**
@@ -27,32 +27,21 @@ during a thermodynamic process.
 """
 
 from sympy import Eq
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    symbols,
-    clone_as_symbol,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
+from symplyphysics.core.operations.symbolic import ExactDifferential, InexactDifferential
 
-internal_energy_change = clone_as_symbol(symbols.internal_energy,
-    display_symbol="dU",
-    display_latex="dU")
+internal_energy_change = ExactDifferential(symbols.internal_energy)
 """
 Infinitesimal change in :symbols:`internal_energy` of the system.
 """
 
-heat_supplied_to_system = clone_as_symbol(symbols.heat,
-    display_symbol="delta(Q)",
-    display_latex="\\delta Q")
+heat_supplied_to_system = InexactDifferential(symbols.heat)
 r"""
 Infinitesimal amount of :symbols:`heat` supplied to the system during its interaction
 with the environment.
 """
 
-work_done_by_system = clone_as_symbol(symbols.work,
-    display_symbol="delta(W)",
-    display_latex="\\delta W")
+work_done_by_system = InexactDifferential(symbols.work)
 """
 Infinitesimal :symbols:`work` done by the system on its environment.
 """

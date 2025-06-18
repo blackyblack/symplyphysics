@@ -1,4 +1,4 @@
-r"""
+"""
 Infinitesimal work in quasistatic process
 =========================================
 
@@ -9,7 +9,7 @@ increment of volume of the system.
 
 **Notation:**
 
-#. :math:`\delta` (:code:`delta`) denotes that the increment is an inexact, path-dependent differential.
+#. :math:`\\delta` (:code:`delta`) denotes that the increment is an inexact, path-dependent differential.
 #. :math:`d` denotes that the increment is an exact, path-independent differential.
 
 **Links:**
@@ -18,17 +18,10 @@ increment of volume of the system.
 """
 
 from sympy import Eq
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    symbols,
-    clone_as_symbol,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
+from symplyphysics.core.operations.symbolic import ExactDifferential, InexactDifferential
 
-work_done_by_system = clone_as_symbol(symbols.work,
-    display_symbol="delta(W)",
-    display_latex="\\delta W")
+work_done_by_system = InexactDifferential(symbols.work)
 """
 Infinitesimal increment of :symbols:`work` done *by* the system.
 """
@@ -38,7 +31,7 @@ pressure = symbols.pressure
 :symbols:`pressure` inside the system.
 """
 
-volume_change = clone_as_symbol(symbols.volume, display_symbol="dV", display_latex="dV")
+volume_change = ExactDifferential(symbols.volume)
 """
 Infinitesimal increment of :symbols:`volume` of the system.
 """
