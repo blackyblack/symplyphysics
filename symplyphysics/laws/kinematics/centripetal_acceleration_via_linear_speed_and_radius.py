@@ -54,11 +54,11 @@ _alpha = clone_as_function(symbols.angular_distance, [_time])
 
 _curve_radius_horisontal = projector.law.rhs.subs({
     projector.vector_length: radius_of_curvature,
-    projector.vector_angle: _alpha(_time)
+    projector.angle: _alpha(_time)
 })
 _curve_radius_vertical = projector.law.rhs.subs({
     projector.vector_length: radius_of_curvature,
-    projector.vector_angle: pi / 2 - _alpha(_time)
+    projector.angle: pi / 2 - _alpha(_time)
 })
 
 ## Velocity projections are derivatives of respective coordinates.

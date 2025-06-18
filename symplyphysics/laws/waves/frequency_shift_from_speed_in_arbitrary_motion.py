@@ -125,7 +125,7 @@ _wavelength = _wavelength_from_period.subs({
 ## it is what we measure on observer. Therefore we take 'source_speed' projection on the signal vector.
 
 _source_speed_projection_on_signal = projector.law.subs({
-    projector.vector_angle: source_angle,
+    projector.angle: source_angle,
     projector.vector_length: source_speed
 }).rhs
 
@@ -155,7 +155,7 @@ assert expr_equals(_frequency_observed, law.rhs.subs(observer_speed, 0))
 ## Now apply movement of the observer
 
 observer_speed_projection_on_signal = projector.law.subs({
-    projector.vector_angle: observer_angle,
+    projector.angle: observer_angle,
     projector.vector_length: observer_speed
 }).rhs
 

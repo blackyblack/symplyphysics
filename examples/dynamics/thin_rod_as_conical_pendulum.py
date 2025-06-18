@@ -50,12 +50,12 @@ angular_velocity_vector_ = CoordinateVector([0, 0, angular_velocity], CARTESIAN)
 
 element_y_coordinate = cosine_law.law.rhs.subs({
     cosine_law.vector_length: distance_to_element,
-    cosine_law.vector_angle: pi / 2 - cone_half_angle,
+    cosine_law.angle: pi / 2 - cone_half_angle,
 })
 
 element_z_coordinate = cosine_law.law.rhs.subs({
     cosine_law.vector_length: distance_to_element,
-    cosine_law.vector_angle: pi - cone_half_angle,
+    cosine_law.angle: pi - cone_half_angle,
 })
 
 element_position_vector_ = CoordinateVector([

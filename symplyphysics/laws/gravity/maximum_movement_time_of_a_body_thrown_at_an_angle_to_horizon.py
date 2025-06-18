@@ -57,7 +57,7 @@ law = Eq(time, 2 * initial_speed * sin(angle) / quantities.acceleration_due_to_g
 # so the angle is represented as a "pi/2 - angle".
 _projection_law_applied = projection_law.law.subs({
     projection_law.vector_length: initial_speed,
-    projection_law.vector_angle: (pi / 2) - angle,
+    projection_law.angle: (pi / 2) - angle,
 })
 _projection_derived = solve(_projection_law_applied, projection_law.projection,
     dict=True)[0][projection_law.projection]

@@ -69,7 +69,7 @@ time = symbols.time
 pendulum_height_before = length
 pendulum_height_after = projector.law.subs({
     projector.vector_length: length,
-    projector.vector_angle: pendulum_angle(time)
+    projector.angle: pendulum_angle(time)
 }).rhs
 amount_of_potential_energy = potential_energy.law.subs({
     potential_energy.mass: pendulum_mass,

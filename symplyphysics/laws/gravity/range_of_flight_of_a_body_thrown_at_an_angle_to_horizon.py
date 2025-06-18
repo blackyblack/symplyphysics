@@ -54,7 +54,7 @@ law = Eq(horizontal_displacement,
 
 _projection_law_applied = projection_law.law.subs({
     projection_law.vector_length: initial_speed,
-    projection_law.vector_angle: angle,
+    projection_law.angle: angle,
 })
 _horizontal_projection_derived = solve(_projection_law_applied,
     projection_law.projection,

@@ -60,12 +60,12 @@ disk_angular_velocity_vector_ = CoordinateVector(
 
 ball_y_coordinate = cosine_law.law.rhs.subs({
     cosine_law.vector_length: rod_length,
-    cosine_law.vector_angle: pi / 2 - ball_angle(time),
+    cosine_law.angle: pi / 2 - ball_angle(time),
 })
 
 ball_z_coordinate = cosine_law.law.rhs.subs({
     cosine_law.vector_length: rod_length,
-    cosine_law.vector_angle: pi - ball_angle(time)
+    cosine_law.angle: pi - ball_angle(time)
 })
 
 ball_position_vector_ = CoordinateVector(
