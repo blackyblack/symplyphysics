@@ -530,3 +530,24 @@ proportionality constant between the damping force and the body's velocity.
 
 #. `Physics LibreTexts, equation (8.3.1) <https://phys.libretexts.org/Courses/University_of_California_Davis/UCD%3A_Physics_9HA__Classical_Mechanics/8%3A_Small_Oscillations/8.3%3A_Damping_and_Resonance>`__
 """
+
+shear_modulus = Symbol("G", units.pressure)
+"""
+**Shear modulus** is a measure of the elastic shear stiffness of a material and is defined as the
+ratio of shear stress to the shear strain.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Shear_modulus>`__.
+"""
+
+engineering_shear_strain = Symbol("gamma", angle_type, display_latex="\\gamma")
+"""
+**Engineering sheer strain** is defined as the change in angle between lines :math:`AC` and
+:math:`AB`, see `figure <https://en.wikipedia.org/wiki/Strain_(mechanics)#/media/File:2D_geometric_strain.svg>`__
+for reference.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Strain_(mechanics)#/media/File:2D_geometric_strain.svg>`__.
+"""
