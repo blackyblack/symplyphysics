@@ -1,4 +1,4 @@
-r"""
+"""
 Internal energy differential
 ============================
 
@@ -14,7 +14,7 @@ thermodynamic quantities depend on variables that are measurable experimentally.
 #. Entropy, volume, and particle count are so called natural variables of internal energy as a
    thermodynamic potential.
 #. For a system with more than one type of particles, the last term can be represented as a sum over all
-   types of particles, i.e. :math:`\sum_i \mu_i \, d N_i`.
+   types of particles, i.e. :math:`\\sum_i \\mu_i \\, d N_i`.
 
 **Conditions:**
 
@@ -27,23 +27,16 @@ thermodynamic quantities depend on variables that are measurable experimentally.
 """
 
 from sympy import Eq, solve
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    symbols,
-    clone_as_symbol,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.core.operations.symbolic import ExactDifferential
 from symplyphysics.laws.thermodynamics import (
-    entropy_change_in_reversible_process as second_law,
-    infinitesimal_work_in_quasistatic_process as work_law,
-    internal_energy_change_via_heat_and_work as first_law,
+    entropy_change_in_reversible_process as _second_law,
+    infinitesimal_work_in_quasistatic_process as _work_law,
+    internal_energy_change_via_heat_and_work as _first_law,
 )
 
-internal_energy_change = clone_as_symbol(symbols.internal_energy,
-    display_symbol="dU",
-    display_latex="dU")
+internal_energy_change = ExactDifferential(symbols.internal_energy)
 """
 Infinitesimal change in :symbols:`internal_energy` of the system.
 """
@@ -53,7 +46,7 @@ temperature = symbols.temperature
 :symbols:`temperature` of the system.
 """
 
-entropy_change = clone_as_symbol(symbols.entropy, display_symbol="dS", display_latex="dS")
+entropy_change = ExactDifferential(symbols.entropy)
 """
 Infinitesimal change in :symbols:`entropy` of the system.
 """
@@ -63,7 +56,7 @@ pressure = symbols.pressure
 :symbols:`pressure` inside the system.
 """
 
-volume_change = clone_as_symbol(symbols.volume, display_symbol="dV", display_latex="dV")
+volume_change = ExactDifferential(symbols.volume)
 """
 Infinitesimal change in :symbols:`volume` of the system.
 """
@@ -73,9 +66,7 @@ chemical_potential = symbols.chemical_potential
 :symbols:`chemical_potential` of the system.
 """
 
-particle_count_change = clone_as_symbol(symbols.particle_count,
-    display_symbol="dN",
-    display_latex="dN")
+particle_count_change = ExactDifferential(symbols.particle_count)
 """
 Infinitesimal change in the number of particles in the system.
 """
@@ -94,19 +85,19 @@ law = Eq(
 # Derive from the first and second laws of thermodynamics
 # TODO: refactor proof to take account of changes in the number of particles
 
-_heat_supplied_to_system = solve(second_law.law, second_law.heat_supplied_to_system)[0].subs({
-    second_law.entropy_change: entropy_change,
-    second_law.common_temperature: temperature,
+_heat_supplied_to_system = solve(_second_law.law, _second_law.heat_supplied_to_system)[0].subs({
+    _second_law.entropy_change: entropy_change,
+    _second_law.common_temperature: temperature,
 })
 
-_work_done_by_system = work_law.law.rhs.subs({
-    work_law.pressure: pressure,
-    work_law.volume_change: volume_change,
+_work_done_by_system = _work_law.law.rhs.subs({
+    _work_law.pressure: pressure,
+    _work_law.volume_change: volume_change,
 })
 
-_internal_energy_change = first_law.law.rhs.subs({
-    first_law.heat_supplied_to_system: _heat_supplied_to_system,
-    first_law.work_done_by_system: _work_done_by_system,
+_internal_energy_change = _first_law.law.rhs.subs({
+    _first_law.heat_supplied_to_system: _heat_supplied_to_system,
+    _first_law.work_done_by_system: _work_done_by_system,
 })
 
 _expr_from_law = law.rhs.subs({particle_count_change: 0})
