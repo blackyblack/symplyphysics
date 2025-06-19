@@ -4,7 +4,7 @@ Symplyphysics latex printer
 
 import re
 from typing import Any
-from sympy import E, S, Expr, Mod, Mul
+from sympy import E, S, Expr, Mod, Mul, Indexed
 from sympy.matrices.dense import DenseMatrix
 from sympy.printing.latex import LatexPrinter, accepted_latex_functions
 from sympy.core.function import AppliedUndef
@@ -13,8 +13,10 @@ from sympy.simplify import fraction
 from symplyphysics.core.symbols.symbols import DimensionSymbol, Function, IndexedSymbol
 
 from symplyphysics.core.experimental.vectors import (VectorSymbol, VectorNorm, VectorDot,
-    VectorCross, VectorMixedProduct, AppliedVectorFunction, VectorFunction)
+    VectorCross, VectorMixedProduct, AppliedVectorFunction, VectorFunction, IndexedVectorSymbol)
 from symplyphysics.core.experimental.coordinate_systems import CoordinateScalar, CoordinateVector
+from symplyphysics.core.experimental.operators import (VectorGradient, VectorCurl, VectorDivergence,
+    VectorLaplacian)
 
 from .miscellaneous import process_function
 
@@ -22,6 +24,10 @@ _between_two_numbers_p = (
     re.compile(r"[0-9][} ]*$"),  # search
     re.compile(r"(\d|\\frac{\d+}{\d+})"),  # match
 )
+
+
+def is_in_braces(s: str) -> bool:
+    return s.startswith("{") and s.endswith("}")
 
 
 def _discard_minus_sign(expr: Expr) -> tuple[Expr, bool]:
@@ -381,11 +387,35 @@ class SymbolLatexPrinter(LatexPrinter):
     def _print_CoordinateVector(self, expr: CoordinateVector) -> str:
         return self._print(expr.components)
 
+    # pylint: disable-next=invalid-name
+    def _print_IndexedVectorSymbol(self, expr: IndexedVectorSymbol) -> str:
+        return expr.display_latex
+
+    # pylint: disable-next=invalid-name
+    def _print_VectorGradient(self, expr: VectorGradient) -> str:
+        # NOTE: the argument might need wrapping in parentheses
+        return f"\\text{{grad}} \\, {self._print(expr.args[0])}"
+
+    # pylint: disable-next=invalid-name
+    def _print_VectorDivergence(self, expr: VectorDivergence) -> str:
+        # NOTE: the argument might need wrapping in parentheses
+        return f"\\text{{div}} \\, {self._print(expr.args[0])}"
+
+    # pylint: disable-next=invalid-name
+    def _print_VectorCurl(self, expr: VectorCurl) -> str:
+        # NOTE: the argument might need wrapping in parentheses
+        return f"\\text{{curl}} \\, {self._print(expr.args[0])}"
+
+    # pylint: disable-next=invalid-name
+    def _print_VectorLaplacian(self, expr: VectorLaplacian) -> str:
+        # NOTE: the argument might need wrapping in parentheses
+        return f"\\nabla^2 {self._print(expr.args[0])})"
+
 
 def latex_str(expr: Any, **settings: Any) -> str:
     printer = SymbolLatexPrinter(settings)
 
-    if isinstance(expr, IndexedSymbol):
+    if isinstance(expr, (IndexedSymbol, IndexedVectorSymbol)):
         expr = expr[expr.index]
     if isinstance(expr, (Function, VectorFunction)):
         expr = process_function(expr)
