@@ -35,40 +35,44 @@ class AppliedPoint(Basic):
 
     @property
     def coordinates(self) -> Mapping[Symbol, Expr]:
-        return self._coordinates
+        return self.args[0]
 
     @property
     def system(self) -> BaseCoordinateSystem:
-        return self._system
+        return self.args[1]
 
     def __getitem__(self, base_scalar: Symbol) -> Expr:
         return self.coordinates[base_scalar]
 
     def __new__(
         cls,
-        coordinates: Iterable[Any],
+        coordinates: Iterable[Any] | Mapping[Symbol, Any],
         system: BaseCoordinateSystem,
     ) -> AppliedPoint:
         return super().__new__(cls)  # pylint: disable=no-value-for-parameter
 
     def __init__(
         self,
-        coordinates: Iterable[Any],
+        coordinates: Iterable[Any] | Mapping[Symbol, Any],
         system: BaseCoordinateSystem,
     ):
         super().__init__()
 
-        if isinstance(coordinates, Sized):
-            n = len(coordinates)  # can't extract out of if-block, mypy complains otherwise
+        if isinstance(coordinates, Mapping):
+            coordinates = dict(coordinates)
         else:
-            coordinates = tuple(coordinates)
-            n = len(coordinates)
+            if isinstance(coordinates, Sized):
+                n = len(coordinates)  # can't extract out of if-block, mypy complains otherwise
+            else:
+                coordinates = tuple(coordinates)
+                n = len(coordinates)
 
-        if n != 3:
-            raise ValueError(f"The point must have all 3 coordinates defined, got {n}.")
+            if n != 3:
+                raise ValueError(f"The point must have all 3 coordinates defined, got {n}.")
 
-        self._coordinates = _prepare(coordinates, system)
-        self._system = system
+            coordinates = _prepare(coordinates, system)
+
+        self._args = coordinates, system
 
     def _sympystr(self, p: Printer) -> str:
         system_name = type(self.system).__name__.removesuffix("CoordinateSystem")
@@ -114,4 +118,8 @@ def check_point_with_system(
     return point
 
 
-__all__ = ["AppliedPoint", "check_point_with_system"]
+__all__ = [
+    "AppliedPoint",
+    "check_point_with_system",
+    "GLOBAL_POINT",
+]
