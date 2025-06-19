@@ -52,14 +52,9 @@ law = Eq(
     volumetric_charge_density(position_vector),
 )
 """
-..
-    NOTE: code printers have not been implemented yet for `VectorDivergence`
+:laws:symbol::
 
-:code:`div(D(r)) = rho(r)`
-
-Latex:
-    .. math::
-        \\text{div} \\, \\vec D \\! \\left( \\vec r \\right) = \\rho \\! \\left( \\vec r \\right)
+:laws:latex::
 """
 
 

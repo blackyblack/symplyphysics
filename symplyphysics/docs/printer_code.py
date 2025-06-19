@@ -9,8 +9,10 @@ from sympy.simplify import fraction
 from sympy.printing.precedence import precedence
 
 from symplyphysics.core.experimental.vectors import (VectorSymbol, VectorNorm, VectorDot,
-    VectorCross, VectorMixedProduct, AppliedVectorFunction, VectorFunction)
+    VectorCross, VectorMixedProduct, AppliedVectorFunction, VectorFunction, IndexedVectorSymbol)
 from symplyphysics.core.experimental.coordinate_systems import CoordinateScalar, CoordinateVector
+from symplyphysics.core.experimental.operators import (VectorGradient, VectorCurl, VectorDivergence,
+    VectorLaplacian)
 
 from ..core.symbols.symbols import DimensionSymbol, Function, IndexedSymbol
 from .miscellaneous import needs_mul_brackets, needs_add_brackets, process_function
@@ -293,11 +295,23 @@ class SymbolCodePrinter(StrPrinter):  # pylint: disable=too-few-public-methods
     def _print_CoordinateVector(self, expr: CoordinateVector) -> str:
         return self._print(expr.components)
 
+    def _print_VectorGradient(self, expr: VectorGradient) -> str:
+        return f"grad({self._print(expr.args[0])})"
+
+    def _print_VectorDivergence(self, expr: VectorDivergence) -> str:
+        return f"div({self._print(expr.args[0])})"
+
+    def _print_VectorCurl(self, expr: VectorCurl) -> str:
+        return f"curl({self._print(expr.args[0])})"
+
+    def _print_VectorLaplacian(self, expr: VectorLaplacian) -> str:
+        return f"Laplace({self._print(expr.args[0])})"
+
 
 def code_str(expr: Any, **settings: Any) -> str:
     printer = SymbolCodePrinter(settings)
 
-    if isinstance(expr, IndexedSymbol):
+    if isinstance(expr, (IndexedSymbol, IndexedVectorSymbol)):
         expr = expr[expr.index]
     if isinstance(expr, (Function, VectorFunction)):
         expr = process_function(expr)

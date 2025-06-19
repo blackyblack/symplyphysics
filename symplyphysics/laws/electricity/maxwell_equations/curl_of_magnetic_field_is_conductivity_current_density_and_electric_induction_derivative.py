@@ -79,16 +79,9 @@ with evaluate(False):
 
 law = Eq(_curl_h, _jf + _dd_dt)
 """
-..
-    NOTE: code printers have not been implemented for `VectorCurl` yet
+:laws:symbol::
 
-:code:`curl(H(r, t)) = J_f(r, t) + Derivative(D(r, t), t)`
-
-Latex:
-    .. math::
-        \\text{curl} \\, \\vec H \\! \\left( \\vec r, t \\right)
-            = {\\vec J}_\\text{f} \\! \\left( \\vec r, t \\right)
-            + \\frac{\\partial}{\\partial t} \\vec D \\! \\left( \\vec r, t \\right)
+:laws:latex::
 """
 
 

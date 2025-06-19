@@ -1055,7 +1055,9 @@ def clone_as_vector_function(
     **kwargs: Any,
 ) -> VectorFunction:
     name = display_symbol or source.display_name
-    latex = display_latex or source.display_latex
+
+    # NOTE: assuming the source latex code allows to be placed after "\vec"
+    latex = display_latex or f"{{\\vec {source.display_latex}}}"
 
     name, latex = process_subscript_and_names(name, latex, subscript)
 

@@ -57,15 +57,9 @@ law = Eq(
     -1 * VectorDerivative(magnetic_flux_density(position_vector, time), time),
 )
 """
-..
-    NOTE: code printers have not been implemented for `VectorCurl` yet
+:laws:symbol::
 
-:code:`curl(E(r, t)) = -1 * Derivative(B(r, t), t)`
-
-Latex:
-    .. math::
-        \\text{curl} \\, \\vec E \\! \\left( \\vec r, t \\right)
-            = - \\frac{\\partial}{\\partial t} \\vec B \\! \\left( \\vec r, t \\right)
+:laws:latex::
 """
 
 

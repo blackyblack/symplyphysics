@@ -34,6 +34,11 @@ Position vector of the body. See :symbols:`distance_to_origin`.
 """
 
 law = Eq(torque, VectorCross(position_vector, force))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(force_=force, position_=position_vector)
