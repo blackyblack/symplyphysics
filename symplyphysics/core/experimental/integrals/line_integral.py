@@ -2,10 +2,8 @@ from __future__ import annotations
 
 from typing import Optional, Any
 
-from sympy import Expr, Symbol as SymSymbol, Integral as SymIntegral, diff
+from sympy import Expr, Symbol as SymSymbol, diff
 from sympy.physics import units
-
-from symplyphysics.core.symbols.symbols import Symbol
 
 from ..miscellaneous import evaluate_or_global_fallback
 
@@ -13,10 +11,10 @@ from ..vectors import VectorSymbol, VectorNorm
 from ..coordinate_systems.curve import Curve
 from ..coordinate_systems.vector import CoordinateVector
 
-INFINITESIMAL_DISPLACEMENT = VectorSymbol("dr", units.length, display_latex="d \\! \\vec r")
+INFINITESIMAL_DISPLACEMENT = VectorSymbol("dr", units.length, display_latex="d \\vec r")
 """To be used when the integrand is a vector field."""
 
-INFINITESIMAL_ARC_LENGTH = Symbol("ds", units.length, display_latex="d \\! s", positive=True)
+INFINITESIMAL_ARC_LENGTH = VectorNorm(INFINITESIMAL_DISPLACEMENT)
 """To be used when the integrand is a scalar field."""
 
 
@@ -72,19 +70,12 @@ class LineIntegral(Expr):  # pylint: disable=too-few-public-methods
             curve.parametrization,
         )
 
-        ds = VectorNorm(dr)
+        expr = expr.subs(INFINITESIMAL_DISPLACEMENT, dr)
 
-        expr = expr.subs({
-            INFINITESIMAL_DISPLACEMENT: dr,
-            INFINITESIMAL_ARC_LENGTH: ds,
-        })
-
-        t0, t1 = bounds
-        return SymIntegral(expr, (t, t0, t1))
+        return curve.to_integral(expr, bounds)
 
 
 __all__ = [
     "INFINITESIMAL_DISPLACEMENT",
-    "INFINITESIMAL_ARC_LENGTH",
     "LineIntegral",
 ]

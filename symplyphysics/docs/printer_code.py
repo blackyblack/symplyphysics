@@ -11,8 +11,10 @@ from sympy.printing.precedence import precedence
 from symplyphysics.core.experimental.vectors import (VectorSymbol, VectorNorm, VectorDot,
     VectorCross, VectorMixedProduct, AppliedVectorFunction, VectorFunction, IndexedVectorSymbol)
 from symplyphysics.core.experimental.coordinate_systems import CoordinateScalar, CoordinateVector
+from symplyphysics.core.experimental.coordinate_systems.curve import Curve
 from symplyphysics.core.experimental.operators import (VectorGradient, VectorCurl, VectorDivergence,
     VectorLaplacian)
+from symplyphysics.core.experimental.integrals.line_integral import LineIntegral
 
 from ..core.symbols.symbols import DimensionSymbol, Function, IndexedSymbol
 from .miscellaneous import needs_mul_brackets, needs_add_brackets, process_function
@@ -306,6 +308,26 @@ class SymbolCodePrinter(StrPrinter):  # pylint: disable=too-few-public-methods
 
     def _print_VectorLaplacian(self, expr: VectorLaplacian) -> str:
         return f"Laplace({self._print(expr.args[0])})"
+
+    def _print_LineIntegral(self, expr: LineIntegral) -> str:
+        integrand, curve, *rest = expr.args
+        bounds = rest[0] if rest else None
+
+        s_integrand = self._print(integrand)
+
+        if isinstance(curve, Curve) and bounds:
+            parameter = curve.parameter
+            s_parameter = self._print(parameter)
+
+            lo, hi = bounds
+            s_lo = self._print(lo)
+            s_hi = self._print(hi)
+
+            return f"LineIntegral({s_integrand}, ({s_parameter, s_lo, s_hi}))"
+
+        s_curve = self._print(curve)
+
+        return f"LineIntegral({s_integrand}, {s_curve})"
 
 
 def code_str(expr: Any, **settings: Any) -> str:
