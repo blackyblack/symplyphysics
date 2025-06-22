@@ -2,11 +2,16 @@
 Angular wavenumber is inverse wavelength
 ========================================
 
-*Angular wavenumber* is the spatial frequency of a wave, measured in radians per unit distance.
+*Angular wavenumber* is the spatial frequency of a wave in classical wave theory.
+
+**Conditions:**
+
+#. Wavelength is defined and non‑zero.
+#. The wave is monochromatic (single, well‑defined wavelength).
 
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Wavenumber#Definition>`__.
+#. `Wikipedia – Wavenumber <https://en.wikipedia.org/wiki/Wavenumber#Definition>`__
 """
 
 from sympy import Eq, pi

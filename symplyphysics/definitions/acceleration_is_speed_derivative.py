@@ -2,11 +2,16 @@
 Acceleration is speed derivative
 ================================
 
-*Acceleration* is the derivative of speed w.r.t. time.
+*Acceleration* describes how quickly speed changes with time.
+
+**Conditions:**
+
+#. Speed must be differentiable with respect to time on the interval of interest.
+#. Non-relativistic motion, i.e. speed of a body is much less than the speed of light and space-time curvature is negligible.
 
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Acceleration#Instantaneous_acceleration>`__.
+#. `Wikipedia – Instantaneous acceleration <https://en.wikipedia.org/wiki/Acceleration#Instantaneous_acceleration>`__
 """
 
 from sympy import Eq, Derivative

@@ -2,14 +2,17 @@
 Admittance is inverse impedance
 ===============================
 
-*Admittance, or complex conductance*, is a physical quantity measuring the
-ability of a circuit or device to conduct electrical current.
+*Admittance* (sometimes called complex conductance) describes how easily alternating current flows through a network. It is defined as the reciprocal of impedance and is measured in siemens (S).
 
 Also see :doc:`Impedance law <definitions.impedance_is_resistance_and_reactance>`
 
+**Conditions:**
+
+#. Applicable under sinusoidal steady‑state (phasor‑domain) analysis for linear, time‑invariant systems.
+
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Admittance>`__.
+#. `Wikipedia – Admittance <https://en.wikipedia.org/wiki/Admittance>`__
 """
 
 from sympy import (Eq, solve)
