@@ -295,15 +295,19 @@ class SymbolCodePrinter(StrPrinter):  # pylint: disable=too-few-public-methods
     def _print_CoordinateVector(self, expr: CoordinateVector) -> str:
         return self._print(expr.components)
 
+    # pylint: disable-next=invalid-name
     def _print_VectorGradient(self, expr: VectorGradient) -> str:
         return f"grad({self._print(expr.args[0])})"
 
+    # pylint: disable-next=invalid-name
     def _print_VectorDivergence(self, expr: VectorDivergence) -> str:
         return f"div({self._print(expr.args[0])})"
 
+    # pylint: disable-next=invalid-name
     def _print_VectorCurl(self, expr: VectorCurl) -> str:
         return f"curl({self._print(expr.args[0])})"
 
+    # pylint: disable-next=invalid-name
     def _print_VectorLaplacian(self, expr: VectorLaplacian) -> str:
         return f"Laplace({self._print(expr.args[0])})"
 

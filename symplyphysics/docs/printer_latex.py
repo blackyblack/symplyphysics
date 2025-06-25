@@ -4,7 +4,7 @@ Symplyphysics latex printer
 
 import re
 from typing import Any
-from sympy import E, S, Expr, Mod, Mul, Indexed
+from sympy import E, S, Expr, Mod, Mul
 from sympy.matrices.dense import DenseMatrix
 from sympy.printing.latex import LatexPrinter, accepted_latex_functions
 from sympy.core.function import AppliedUndef
