@@ -2,10 +2,15 @@
 Electrostatic force between two charges
 =======================================
 
-Also known as **Coulomb's force_law**, it is an experimental force_law that calculates the amount of force
-between two electrically charged particles at rest.
+Also known as **Coulomb's law**, it is an experimental law that calculates the amount
+of force between two electrically charged particles at rest.
 
 Also see the :ref:`scalar law <Electrostatic force via charges and distance>`.
+
+**Notes:**
+
+#. If a given charge is in the vicinity of a system of point charges, then the net law can be
+   found via the :ref:`principle of superposition <Superposition of forces is sum (Vector)>`.
 
 **Notation:**
 
@@ -38,12 +43,12 @@ vicinity of the :attr:`~second_charge` in vacuum.
 
 first_charge = clone_as_symbol(symbols.charge, subscript="1")
 """
-Value of the first :symbols:`charge`.
+Value of the first point :symbols:`charge`.
 """
 
 second_charge = clone_as_symbol(symbols.charge, subscript="2")
 """
-Value of the second :symbols:`charge`.
+Value of the second point :symbols:`charge`.
 """
 
 position_vector = clone_as_vector_symbol(symbols.euclidean_distance, subscript="21")
