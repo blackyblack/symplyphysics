@@ -1,8 +1,9 @@
 from pytest import raises
 
-from sympy import sin, cos, tan, Symbol as SymSymbol, Function as SymFunction
+from sympy import sin, cos, tan, Function as SymFunction
 
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.core.symbols.symbols import BasicSymbol, Symbol
 
 from symplyphysics.core.experimental.vectors import VectorSymbol, VectorCross
 from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
@@ -19,7 +20,7 @@ def test_non_coordinate_vector() -> None:
     with raises(ValueError):
         assert vector_equals(VectorDivergence(1), 0)
 
-    x = SymSymbol("x", real=True)
+    x = Symbol("x", real=True)
     with raises(ValueError):
         _ = VectorDivergence(x)
 
@@ -94,7 +95,7 @@ def test_cylindrical_system() -> None:
     cylindrical = CylindricalCoordinateSystem()
 
     rho, phi, z = cylindrical.base_scalars
-    p = SymSymbol("P")
+    p = BasicSymbol("P")
 
     vector: CoordinateVector = CoordinateVector([rho, z * sin(phi), z * cos(phi)], cylindrical, p)
     div = VectorDivergence(vector)
@@ -111,7 +112,7 @@ def test_spherical_system() -> None:
     spherical = SphericalCoordinateSystem()
 
     r, theta, phi = spherical.base_scalars
-    p = SymSymbol("P")
+    p = BasicSymbol("P")
 
     vector: CoordinateVector = CoordinateVector([r, r * cos(theta), r * sin(phi)], spherical, p)
     div = VectorDivergence(vector)

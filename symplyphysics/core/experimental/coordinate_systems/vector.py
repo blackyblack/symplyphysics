@@ -2,13 +2,13 @@ from __future__ import annotations
 
 from typing import Optional, Any, Iterable, Self
 
-from sympy import (ImmutableMatrix, Expr, sqrt, Symbol as SymSymbol, Basic, Derivative as
-    SymDerivative, S)
+from sympy import (ImmutableMatrix, Expr, sqrt, Basic, Derivative as SymDerivative, S)
 from sympy.matrices.dense import DenseMatrix
 from sympy.physics.units import Dimension
 from sympy.physics.units.systems.si import dimsys_SI
 
 from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import BasicSymbol
 from symplyphysics.core.dimensions.collect_quantity import collect_quantity_factor_and_dimension
 from symplyphysics.core.dimensions.miscellaneous import is_any_dimension, dimensionless
 from symplyphysics.core.errors import UnitsError
@@ -34,7 +34,7 @@ class CoordinateVector(VectorExpr):
 
     _components: ImmutableMatrix
     _system: BaseCoordinateSystem
-    _point: AppliedPoint | SymSymbol
+    _point: AppliedPoint | BasicSymbol
 
     is_number = False
     is_atomic_vector = True
@@ -48,7 +48,7 @@ class CoordinateVector(VectorExpr):
         return self._system
 
     @property
-    def point(self) -> AppliedPoint | SymSymbol:
+    def point(self) -> AppliedPoint | BasicSymbol:
         return self._point
 
     @property
@@ -72,7 +72,7 @@ class CoordinateVector(VectorExpr):
         cls,
         components: Iterable[Any],
         system: BaseCoordinateSystem,
-        point: Optional[AppliedPoint | SymSymbol] = None,
+        point: Optional[AppliedPoint | BasicSymbol] = None,
     ) -> Expr:
         if isinstance(components, DenseMatrix) and 1 not in components.shape:
             rows, cols = components.shape
@@ -191,7 +191,7 @@ def combine_coordinate_vectors(expr: Expr) -> Expr:
 
     result = S.Zero
 
-    mapping: dict[tuple[type[CoordinateVector], BaseCoordinateSystem, AppliedPoint | SymSymbol],
+    mapping: dict[tuple[type[CoordinateVector], BaseCoordinateSystem, AppliedPoint | BasicSymbol],
         ImmutableMatrix] = {}
 
     for term in into_terms(expr):
@@ -228,7 +228,7 @@ class QuantityCoordinateVector(CoordinateVector):
         cls,
         components: Iterable[Any],
         system: BaseCoordinateSystem,
-        point: Optional[AppliedPoint | SymSymbol] = None,
+        point: Optional[AppliedPoint | BasicSymbol] = None,
     ) -> Expr:
         factors = []
         dimension = None

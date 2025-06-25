@@ -10,8 +10,10 @@ application of force along a displacement.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Work_(physics)#Mathematical_calculation>`__.
 """
 
-from sympy import Eq, Symbol as SymSymbol, Expr
-from symplyphysics import Quantity, validate_output, symbols
+from sympy import Eq, Expr
+from symplyphysics import Quantity, validate_output, symbols, Symbol
+from symplyphysics.core.symbols.symbols import BasicSymbol
+from symplyphysics.core.dimensions import any_dimension
 
 from symplyphysics.core.experimental.vectors import (clone_as_vector_function,
     clone_as_vector_symbol, VectorDot)
@@ -34,23 +36,17 @@ force = clone_as_vector_function(symbols.force, (position_vector,))
 Vector of the exerted force as a function of :attr:`~position_vector`.
 """
 
-curve = SymSymbol("C")
+curve = BasicSymbol("C")
 """
 Curve given by the body's trajectory during its displacement.
-
-Symbol:
-    :code:`C`
-
-Latex:
-    :math:`C`
 """
 
-initial_parameter = SymSymbol("t_0")
+initial_parameter = Symbol("t_0", any_dimension)
 """
 Initial value of the curve parameter.
 """
 
-final_parameter = SymSymbol("t_1")
+final_parameter = Symbol("t_0", any_dimension)
 """
 Final value of the curve parameter.
 """

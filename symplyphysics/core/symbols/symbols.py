@@ -1,6 +1,7 @@
 from __future__ import annotations
-from typing import Any, Optional, Sequence
-from sympy import S, Idx, MatAdd, MatMul, MatrixBase, Symbol as SymSymbol, Expr, Equality, IndexedBase, Matrix as SymMatrix
+from typing import Any, Optional, Sequence, ClassVar
+from sympy import (S, Idx, MatAdd, MatMul, MatrixBase, Symbol as SymSymbol, Expr, Equality,
+    IndexedBase, Matrix as SymMatrix, Atom)
 from sympy.physics.units import Dimension
 from sympy.core.function import UndefinedFunction
 from sympy.printing.printer import Printer
@@ -8,6 +9,49 @@ from sympy.printing.pretty.pretty import PrettyPrinter
 from sympy.printing.pretty.stringpict import prettyForm
 from sympy.printing.pretty.pretty_symbology import pretty_symbol, pretty_use_unicode
 from .id_generator import next_id
+
+
+class BasicSymbol(Atom):
+    """Class for unique symbols that are not expressions, e.g. points, curves, surfaces."""
+
+    _id: ClassVar[int] = 0
+
+    _unique_id: int
+    _display_name: str
+    _display_latex: str
+
+    @property
+    def display_name(self) -> str:
+        return self._display_name
+
+    @property
+    def display_latex(self) -> str:
+        return self._display_latex
+
+    def __init__(
+        self,
+        display_name: str,
+        *,
+        display_latex: Optional[str] = None,
+    ) -> None:
+        super().__init__()
+
+        self._unique_id = BasicSymbol._id
+        BasicSymbol._id += 1
+
+        self._display_name = display_name
+        self._display_latex = display_latex or display_name
+
+        self._args = ()
+
+    def _hashable_content(self) -> tuple[Any, ...]:
+        return (self._unique_id,)
+
+    def _sympystr(self, _p: Printer) -> str:
+        return self.display_name
+
+    def _latex(self, _p: Printer) -> str:
+        return self.display_latex
 
 
 class DimensionSymbol:

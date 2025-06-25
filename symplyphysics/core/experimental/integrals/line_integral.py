@@ -2,8 +2,10 @@ from __future__ import annotations
 
 from typing import Optional, Any
 
-from sympy import Expr, Symbol as SymSymbol, diff
+from sympy import Expr, diff
 from sympy.physics import units
+
+from symplyphysics.core.symbols.symbols import BasicSymbol
 
 from ..miscellaneous import evaluate_or_global_fallback
 
@@ -39,14 +41,14 @@ class LineIntegral(Expr):  # pylint: disable=too-few-public-methods
     def __new__(
         cls,
         expr: Expr,
-        curve: Curve | SymSymbol,
+        curve: Curve | BasicSymbol,
         bounds: Optional[tuple[Any, Any]] = None,
         *,
         evaluate: Optional[bool] = None,
     ) -> Expr:
         evaluate = evaluate_or_global_fallback(evaluate)
 
-        if not evaluate or isinstance(curve, SymSymbol):
+        if not evaluate or isinstance(curve, BasicSymbol):
             if not bounds:
                 return super().__new__(cls, expr, curve)  # pylint: disable=too-many-function-args
 

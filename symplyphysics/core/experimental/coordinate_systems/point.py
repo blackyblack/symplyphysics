@@ -2,11 +2,11 @@ from __future__ import annotations
 
 from typing import Mapping, Iterable, Any, Sized, SupportsFloat, Optional
 
-from sympy import Basic, Expr, Symbol as SymSymbol
+from sympy import Basic, Expr
 from sympy.printing.printer import Printer
 
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.symbols.symbols import next_name, Symbol
+from symplyphysics.core.symbols.symbols import Symbol, BasicSymbol
 
 from ..miscellaneous import sympify_expr
 
@@ -98,13 +98,13 @@ class AppliedPoint(Basic):
 
 
 # Used as a common point for Cartesian vectors
-GLOBAL_POINT = SymSymbol(next_name("P"))
+GLOBAL_POINT = BasicSymbol("P")
 
 
 def check_point_with_system(
     system: BaseCoordinateSystem,
-    point: Optional[AppliedPoint | Symbol],
-) -> AppliedPoint | Symbol:
+    point: Optional[AppliedPoint | BasicSymbol],
+) -> AppliedPoint | BasicSymbol:
     if isinstance(system, CartesianCoordinateSystem):
         point = point or GLOBAL_POINT
     elif point is None:

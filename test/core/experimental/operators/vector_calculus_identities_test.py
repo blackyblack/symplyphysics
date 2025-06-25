@@ -1,7 +1,8 @@
 from typing import Sequence, Optional
 
-from sympy import (Symbol as SymSymbol, Function as SymFunction, sqrt, S, cosh, cos, sinh, sin, exp,
-    Expr)
+from sympy import Function as SymFunction, sqrt, S, cosh, cos, sinh, sin, exp, Expr
+
+from symplyphysics.core.symbols.symbols import BasicSymbol
 
 from symplyphysics import Symbol, units
 from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
@@ -23,7 +24,7 @@ def check_div_curl(system: BaseCoordinateSystem) -> bool:
         SymFunction("C")(a, b, c),
     )
 
-    point = SymSymbol("P", commutative=False)
+    point = BasicSymbol("P")
 
     vector = CoordinateVector(components, system, point)
     rot = VectorCurl(vector)
@@ -37,7 +38,7 @@ def check_curl_grad(system: BaseCoordinateSystem) -> bool:
 
     a, b, c = system.base_scalars
 
-    point = SymSymbol("P", commutative=False)
+    point = BasicSymbol("P")
 
     scalar = CoordinateScalar(SymFunction("f")(a, b, c), system, point)
 
@@ -52,7 +53,7 @@ def check_laplacian_is_div_grad(system: BaseCoordinateSystem) -> bool:
 
     a, b, c = system.base_scalars
 
-    point = SymSymbol("P", commutative=False)
+    point = BasicSymbol("P")
 
     scalar = CoordinateScalar(SymFunction("f")(a, b, c), system, point)
 

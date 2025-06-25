@@ -1,8 +1,9 @@
 from pytest import raises
 
-from sympy import S, log, sin, cos, pi, sqrt, Symbol as SymSymbol
+from sympy import S, log, sin, cos, pi, sqrt
 
 from symplyphysics import Symbol, assert_equal, units
+from symplyphysics.core.symbols.symbols import BasicSymbol
 from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.core.experimental.vectors import VectorDot
@@ -16,7 +17,7 @@ x, y, z = CARTESIAN.base_scalars
 
 
 def test_non_evaluate() -> None:
-    curve_symbol = SymSymbol("C")
+    curve_symbol = BasicSymbol("C")
 
     result = LineIntegral(ds, curve_symbol)
     assert isinstance(result, LineIntegral)

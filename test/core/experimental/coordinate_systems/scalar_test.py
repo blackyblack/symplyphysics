@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from pytest import raises, fixture
-from sympy import Expr, Symbol as SymSymbol, Matrix, ImmutableMatrix, Basic
+from sympy import Expr, Matrix, ImmutableMatrix, Basic
+from symplyphysics.core.symbols.symbols import BasicSymbol
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.experimental.vectors import VectorSymbol
 from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
@@ -11,7 +12,7 @@ from symplyphysics.core.experimental.coordinate_systems.point import GLOBAL_POIN
 
 @dataclass(frozen=True, kw_only=True)
 class Args:
-    p: SymSymbol
+    p: BasicSymbol
 
     cart_sys: CartesianCoordinateSystem
     cart_pt: AppliedPoint
@@ -25,7 +26,7 @@ class Args:
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    p = SymSymbol("P")
+    p = BasicSymbol("P")
     cart_sys = CartesianCoordinateSystem()
     cart_pt = AppliedPoint([1, 1, 1], cart_sys)
 

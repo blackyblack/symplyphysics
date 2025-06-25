@@ -1,10 +1,11 @@
 from typing import Any, Optional
 
-from sympy import Expr, Basic, Symbol as SymSymbol, S
+from sympy import Expr, Basic, S
 from sympy.matrices.dense import DenseMatrix
 from sympy.physics.units import Dimension
 
 from symplyphysics.core.dimensions.collect_quantity import collect_quantity_factor_and_dimension
+from symplyphysics.core.symbols.symbols import BasicSymbol
 
 from ..miscellaneous import sympify_expr
 from ..vectors import is_vector_expr
@@ -26,7 +27,7 @@ class CoordinateScalar(Expr):
 
     _scalar: Expr
     _system: BaseCoordinateSystem
-    _point: AppliedPoint | SymSymbol
+    _point: AppliedPoint | BasicSymbol
 
     @property
     def scalar(self) -> Expr:
@@ -37,7 +38,7 @@ class CoordinateScalar(Expr):
         return self._system
 
     @property
-    def point(self) -> AppliedPoint | SymSymbol:
+    def point(self) -> AppliedPoint | BasicSymbol:
         return self._point
 
     @property
@@ -51,7 +52,7 @@ class CoordinateScalar(Expr):
         cls,
         scalar: Any,
         system: BaseCoordinateSystem,
-        point: Optional[AppliedPoint | SymSymbol] = None,
+        point: Optional[AppliedPoint | BasicSymbol] = None,
     ) -> Expr:
         if scalar == 0:
             return S.Zero
