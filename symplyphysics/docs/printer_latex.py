@@ -4,7 +4,7 @@ Symplyphysics latex printer
 
 import re
 from typing import Any
-from sympy import E, S, Expr, Mod, Mul, Indexed
+from sympy import E, S, Expr, Mod, Mul
 from sympy.matrices.dense import DenseMatrix
 from sympy.printing.latex import LatexPrinter, accepted_latex_functions
 from sympy.core.function import AppliedUndef
@@ -15,8 +15,10 @@ from symplyphysics.core.symbols.symbols import DimensionSymbol, Function, Indexe
 from symplyphysics.core.experimental.vectors import (VectorSymbol, VectorNorm, VectorDot,
     VectorCross, VectorMixedProduct, AppliedVectorFunction, VectorFunction, IndexedVectorSymbol)
 from symplyphysics.core.experimental.coordinate_systems import CoordinateScalar, CoordinateVector
+from symplyphysics.core.experimental.coordinate_systems.curve import Curve
 from symplyphysics.core.experimental.operators import (VectorGradient, VectorCurl, VectorDivergence,
     VectorLaplacian)
+from symplyphysics.core.experimental.integrals.line_integral import LineIntegral
 
 from .miscellaneous import process_function
 
@@ -26,8 +28,11 @@ _between_two_numbers_p = (
 )
 
 
-def is_in_braces(s: str) -> bool:
-    return s.startswith("{") and s.endswith("}")
+def wrap_unless_in_braces(s: str) -> str:
+    if s.startswith("{") and s.endswith("}"):
+        return s
+
+    return f"{{{s}}}"
 
 
 def _discard_minus_sign(expr: Expr) -> tuple[Expr, bool]:
@@ -410,6 +415,26 @@ class SymbolLatexPrinter(LatexPrinter):
     def _print_VectorLaplacian(self, expr: VectorLaplacian) -> str:
         # NOTE: the argument might need wrapping in parentheses
         return f"\\nabla^2 {self._print(expr.args[0])})"
+
+    def _print_LineIntegral(self, expr: LineIntegral) -> str:
+        integrand, curve, *rest = expr.args
+        bounds = rest[0] if rest else None
+
+        s_integrand = self._print(integrand)
+
+        if isinstance(curve, Curve) and bounds:
+            parameter = curve.parameter
+            s_parameter = self._print(parameter)
+
+            lo, hi = bounds
+            s_lo = self._print(lo)
+            s_hi = wrap_unless_in_braces(self._print(hi))
+
+            return f"\\int_{{{s_parameter} = {s_lo}}}^{s_hi} {s_integrand}"
+
+        s_curve = wrap_unless_in_braces(self._print(curve))
+
+        return f"\\int_{s_curve} {s_integrand}"
 
 
 def latex_str(expr: Any, **settings: Any) -> str:

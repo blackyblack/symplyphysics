@@ -1,6 +1,8 @@
 from pytest import raises
 
-from sympy import ImmutableMatrix, Symbol as SymSymbol, sin, cos, tan
+from sympy import ImmutableMatrix, sin, cos, tan
+
+from symplyphysics.core.symbols.symbols import BasicSymbol, Symbol
 
 from symplyphysics.core.experimental.vectors import VectorSymbol, VectorCross
 from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
@@ -17,7 +19,7 @@ def test_non_coordinate_scalar() -> None:
     with raises(ValueError):
         assert vector_equals(VectorCurl(1), 0)
 
-    x = SymSymbol("x", real=True)
+    x = Symbol("x", real=True)
     with raises(ValueError):
         assert vector_equals(VectorCurl(x), 0)
 
@@ -40,7 +42,7 @@ def test_non_evaluate() -> None:
     with raises(ValueError):
         assert vector_equals(VectorCurl(1, evaluate=False), 0)
 
-    x = SymSymbol("x", real=True)
+    x = Symbol("x", real=True)
     with raises(ValueError):
         assert vector_equals(VectorCurl(x), 0)
 
@@ -88,7 +90,7 @@ def test_cylindrical_system() -> None:
     cylindrical = CylindricalCoordinateSystem()
 
     rho, phi, z = cylindrical.base_scalars
-    p = SymSymbol("P")
+    p = BasicSymbol("P")
 
     vector = CoordinateVector([rho, z * sin(phi), z], cylindrical, p)
     assert vector_equals(
@@ -109,7 +111,7 @@ def test_spherical_system() -> None:
     spherical = SphericalCoordinateSystem()
 
     r, theta, phi = spherical.base_scalars
-    p = SymSymbol("P")
+    p = BasicSymbol("P")
 
     vector = CoordinateVector([r * sin(theta), r * sin(phi), r], spherical, p)
     expected = CoordinateVector([

@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 from pytest import raises, fixture
-from sympy import (Symbol as SymSymbol, Function as SymFunction, ImmutableMatrix, sin, cos, sqrt,
+from sympy import (Function as SymFunction, ImmutableMatrix, sin, cos, sqrt,
     symbols as sym_symbols)
+from symplyphysics.core.symbols.symbols import BasicSymbol, Symbol
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.experimental.vectors import (is_vector_expr, VectorSymbol, VectorNorm as
     norm, VectorDot as dot, VectorCross as cross, vector_diff)
@@ -15,8 +16,8 @@ class Args:
     cart: CartesianCoordinateSystem
     cyl: CylindricalCoordinateSystem
     sph: SphericalCoordinateSystem
-    t: SymSymbol
-    p: SymSymbol
+    t: Symbol
+    p: BasicSymbol
 
 
 @fixture(name="test_args")
@@ -24,8 +25,8 @@ def test_args_fixture() -> Args:
     cart = CartesianCoordinateSystem()
     cyl = CylindricalCoordinateSystem()
     sph = SphericalCoordinateSystem()
-    t = SymSymbol("t", real=True)
-    p = SymSymbol("P", commutative=False)  # point symbol
+    t = Symbol("t", real=True)
+    p = BasicSymbol("P")  # point symbol
 
     return Args(cart=cart, cyl=cyl, sph=sph, t=t, p=p)
 
