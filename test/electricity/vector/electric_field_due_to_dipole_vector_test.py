@@ -38,11 +38,7 @@ def test_electric_field_law(test_args: Args) -> None:
 
 
 def test_electric_dipole_moment(test_args: Args) -> None:
-    result = law.electric_dipole_moment_law.rhs.subs({
-        law.electric_field: test_args.e,
-        law.position_vector: test_args.r,
-    })
-    result = QuantityCoordinateVector.from_expr(result)
+    result = law.calculate_electric_dipole_moment(test_args.e, test_args.r)
 
     assert_equal_vectors(result, test_args.p)
 
@@ -66,12 +62,35 @@ def test_bad_position_vector(test_args: Args) -> None:
     rb_vector = QuantityCoordinateVector([units.candela, 0, 0], CARTESIAN)
     with raises(errors.UnitsError):
         law.calculate_electric_field(test_args.p, rb_vector)
+    with raises(errors.UnitsError):
+        law.calculate_electric_dipole_moment(test_args.e, rb_vector)
 
     rb_scalar = units.meter
     with raises(ValueError):
         law.calculate_electric_field(test_args.p, rb_scalar)
+    with raises(ValueError):
+        law.calculate_electric_dipole_moment(test_args.e, rb_scalar)
 
     with raises(TypeError):
         law.calculate_electric_field(test_args.p, 100)
     with raises(TypeError):
         law.calculate_electric_field(test_args.p, [100])
+    with raises(TypeError):
+        law.calculate_electric_dipole_moment(test_args.e, 100)
+    with raises(TypeError):
+        law.calculate_electric_dipole_moment(test_args.e, [100])
+
+
+def test_bad_electric_field(test_args: Args) -> None:
+    eb_vector = QuantityCoordinateVector([units.candela, 0, 0], CARTESIAN)
+    with raises(errors.UnitsError):
+        law.calculate_electric_dipole_moment(eb_vector, test_args.r)
+
+    eb_scalar = units.volt / units.meter
+    with raises(ValueError):
+        law.calculate_electric_dipole_moment(eb_scalar, test_args.r)
+
+    with raises(TypeError):
+        law.calculate_electric_dipole_moment(100, test_args.r)
+    with raises(TypeError):
+        law.calculate_electric_dipole_moment([100], test_args.r)

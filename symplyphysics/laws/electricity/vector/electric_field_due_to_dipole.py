@@ -65,3 +65,20 @@ def calculate_electric_field(
     })
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+@validate_input(
+    electric_field_=electric_field,
+    position_vector_=position_vector,
+)
+@validate_output(electric_dipole_moment)
+def calculate_electric_dipole_moment(
+    electric_field_: QuantityCoordinateVector,
+    position_vector_: QuantityCoordinateVector,
+) -> QuantityCoordinateVector:
+    result = electric_dipole_moment_law.rhs.subs({
+        electric_field: electric_field_,
+        position_vector: position_vector_,
+    })
+
+    return QuantityCoordinateVector.from_expr(result)
