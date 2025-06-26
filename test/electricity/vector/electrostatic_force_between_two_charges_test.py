@@ -37,18 +37,14 @@ def test_force_law(test_args: Args) -> None:
 
 
 def test_position_vector_law(test_args: Args) -> None:
-    result = law.position_vector_law.rhs.subs({
-        law.first_charge: test_args.q1,
-        law.second_charge: test_args.q2,
-        law.force: test_args.f,
-    })
-    result = QuantityCoordinateVector.from_expr(result)
+    result = law.calculate_position_vector(test_args.q1, test_args.q2, test_args.f)
 
     assert_equal_vectors(result, test_args.r)
 
 
 def test_bad_charge(test_args: Args) -> None:
     qb = Quantity(units.candela)
+
     with raises(errors.UnitsError):
         law.calculate_force(qb, test_args.q2, test_args.r)
     with raises(TypeError):
@@ -57,6 +53,15 @@ def test_bad_charge(test_args: Args) -> None:
         law.calculate_force(test_args.q1, qb, test_args.r)
     with raises(TypeError):
         law.calculate_force(test_args.q1, 100, test_args.r)
+
+    with raises(errors.UnitsError):
+        law.calculate_position_vector(qb, test_args.q2, test_args.f)
+    with raises(TypeError):
+        law.calculate_position_vector(100, test_args.q2, test_args.f)
+    with raises(errors.UnitsError):
+        law.calculate_position_vector(test_args.q1, qb, test_args.f)
+    with raises(TypeError):
+        law.calculate_position_vector(test_args.q1, 100, test_args.f)
 
 
 def test_bad_position_vector(test_args: Args) -> None:
@@ -72,3 +77,18 @@ def test_bad_position_vector(test_args: Args) -> None:
         law.calculate_force(test_args.q1, test_args.q2, 100)
     with raises(TypeError):
         law.calculate_force(test_args.q1, test_args.q2, [100])
+
+
+def test_bad_force(test_args: Args) -> None:
+    fb_vector = QuantityCoordinateVector([units.candela, 0, 0], CARTESIAN)
+    with raises(errors.UnitsError):
+        law.calculate_position_vector(test_args.q1, test_args.q2, fb_vector)
+
+    fb_scalar = units.newton
+    with raises(ValueError):
+        law.calculate_position_vector(test_args.q1, test_args.q2, fb_scalar)
+
+    with raises(TypeError):
+        law.calculate_position_vector(test_args.q1, test_args.q2, 100)
+    with raises(TypeError):
+        law.calculate_position_vector(test_args.q1, test_args.q2, [100])

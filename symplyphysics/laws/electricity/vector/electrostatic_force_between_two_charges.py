@@ -100,3 +100,23 @@ def calculate_force(
     })
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+@validate_input(
+    first_charge_=first_charge,
+    second_charge_=second_charge,
+    force_=force,
+)
+@validate_output(position_vector)
+def calculate_position_vector(
+    first_charge_: Quantity,
+    second_charge_: Quantity,
+    force_: QuantityCoordinateVector,
+) -> QuantityCoordinateVector:
+    result = position_vector_law.rhs.subs({
+        first_charge: first_charge_,
+        second_charge: second_charge_,
+        force: force_,
+    })
+
+    return QuantityCoordinateVector.from_expr(result)
