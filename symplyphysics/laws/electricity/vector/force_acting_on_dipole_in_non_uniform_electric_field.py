@@ -78,6 +78,7 @@ def calculate_force(
     position_change_: Quantity,
     electric_field_change_: QuantityCoordinateVector,
 ) -> QuantityCoordinateVector:
+    # NOTE: assuming the electric field is a linear function of position
     electric_field_ = position / position_change_ * electric_field_change_
 
     result = law.rhs.subs({
