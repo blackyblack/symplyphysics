@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, errors, units, Quantity)
-from symplyphysics.laws.hydro import efficiency_of_the_hydraulic_press_from_force_and_height as efficiency
+from symplyphysics.laws.hydro import efficiency_of_hydraulic_press_from_force_and_height as efficiency
 
 Args = namedtuple("Args", ["useful_force", "useful_height", "expended_force", "expended_height"])
 

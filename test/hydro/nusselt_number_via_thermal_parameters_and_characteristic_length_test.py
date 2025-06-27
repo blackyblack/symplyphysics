@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import assert_equal, Quantity, units, errors
-from symplyphysics.laws.hydro import nusselt_number
+from symplyphysics.laws.hydro import nusselt_number_via_thermal_parameters_and_characteristic_length
 
 # Example from: https://www.omnicalculator.com/physics/nusselt-number
 # Conditions:
@@ -26,7 +26,7 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_nusselt_number(test_args: Args) -> None:
-    result = nusselt_number.calculate_nusselt_number(
+    result = nusselt_number_via_thermal_parameters_and_characteristic_length.calculate_nusselt_number(
         heat_transfer_coefficient_=test_args.heat_transfer_coefficient,
         characteristic_length_=test_args.characteristic_length,
         thermal_conductivity_=test_args.thermal_conductivity)
@@ -36,13 +36,13 @@ def test_basic_nusselt_number(test_args: Args) -> None:
 def test_bad_heat_transfer_coefficient(test_args: Args) -> None:
     htc = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        nusselt_number.calculate_nusselt_number(
+        nusselt_number_via_thermal_parameters_and_characteristic_length.calculate_nusselt_number(
             htc,
             test_args.characteristic_length,
             test_args.thermal_conductivity,
         )
     with raises(TypeError):
-        nusselt_number.calculate_nusselt_number(
+        nusselt_number_via_thermal_parameters_and_characteristic_length.calculate_nusselt_number(
             1,
             test_args.characteristic_length,
             test_args.thermal_conductivity,
@@ -52,13 +52,13 @@ def test_bad_heat_transfer_coefficient(test_args: Args) -> None:
 def test_bad_length(test_args: Args) -> None:
     bl = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        nusselt_number.calculate_nusselt_number(
+        nusselt_number_via_thermal_parameters_and_characteristic_length.calculate_nusselt_number(
             test_args.heat_transfer_coefficient,
             bl,
             test_args.thermal_conductivity,
         )
     with raises(TypeError):
-        nusselt_number.calculate_nusselt_number(
+        nusselt_number_via_thermal_parameters_and_characteristic_length.calculate_nusselt_number(
             test_args.heat_transfer_coefficient,
             1,
             test_args.thermal_conductivity,
@@ -68,13 +68,13 @@ def test_bad_length(test_args: Args) -> None:
 def test_bad_conductivity(test_args: Args) -> None:
     bc = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        nusselt_number.calculate_nusselt_number(
+        nusselt_number_via_thermal_parameters_and_characteristic_length.calculate_nusselt_number(
             test_args.heat_transfer_coefficient,
             test_args.characteristic_length,
             bc,
         )
     with raises(TypeError):
-        nusselt_number.calculate_nusselt_number(
+        nusselt_number_via_thermal_parameters_and_characteristic_length.calculate_nusselt_number(
             test_args.heat_transfer_coefficient,
             test_args.characteristic_length,
             1,

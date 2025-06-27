@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.hydro import input_force_to_area_ratio_equals_to_output as hydraulic
+from symplyphysics.laws.hydro import force_to_area_ratio_in_hydraulic_press as hydraulic
 
 Args = namedtuple("Args", ["first_force", "first_area", "second_area"])
 

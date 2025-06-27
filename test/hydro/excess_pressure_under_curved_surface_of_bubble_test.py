@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.hydro import excessive_pressure_under_curved_surface_of_bubble as pressure_law
+from symplyphysics.laws.hydro import excess_pressure_under_curved_surface_of_bubble as pressure_law
 
 # Description
 ## The coefficient of surface tension of the bubble is 0.04 [newton / meter], the radius of the bubble is 7 centimeter.

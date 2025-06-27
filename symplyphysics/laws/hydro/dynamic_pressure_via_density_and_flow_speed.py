@@ -1,6 +1,6 @@
 """
-Dynamic pressure from speed
-===========================
+Dynamic pressure from density and flow speed
+============================================
 
 **Dynamic pressure**, sometimes called **velocity pressure**, is a physical quantity denoting the
 pressure caused by a flowing fluid.

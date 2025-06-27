@@ -1,6 +1,6 @@
 """
-Hydrostatic pressure from density, height and acceleration
-==========================================================
+Hydrostatic pressure via density, height and acceleration
+=========================================================
 
 Hydrostatic pressure is the pressure exerted by a fluid at equilibrium at a given point
 within the fluid, due to the force of gravity.

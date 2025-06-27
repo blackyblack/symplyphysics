@@ -1,6 +1,6 @@
 """
-Froude number formula
-=====================
+Froude number via flow speed and characteristic length
+======================================================
 
 The Froude number is based on the speed-to-length ratio as defined by Froude. It has
 some analogy with the :ref:`Mach number <Mach number is flow speed over speed of sound>`,
