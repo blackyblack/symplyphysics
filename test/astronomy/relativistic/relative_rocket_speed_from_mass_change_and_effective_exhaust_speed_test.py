@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy.physics.units import speed_of_light
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.astronomy.relativistic import relative_speed_of_rocket_depends_on_mass_and_impulse as speed_law
+from symplyphysics.laws.astronomy.relativistic import relative_rocket_speed_from_mass_change_and_effective_exhaust_speed as speed_law
 
 # Description
 ## Let the exhaust velocity be equal to the speed of light. Then, with an initial mass of 72200 tons and

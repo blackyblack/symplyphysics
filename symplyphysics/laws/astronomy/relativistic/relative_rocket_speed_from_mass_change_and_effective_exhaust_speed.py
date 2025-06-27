@@ -13,9 +13,6 @@ Tsiolkovsky formula is valid for a rocket flying at a speed close to the speed o
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Tsiolkovsky_rocket_equation#Special_relativity>`__.
-
-..
-    TODO: rename file
 """
 
 from sympy import (Eq, solve)
