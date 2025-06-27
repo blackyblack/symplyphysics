@@ -2,7 +2,7 @@
 Efficiency of hydraulic press from force and height
 ===================================================
 
-A real hydraulic press is never :math:`100%` efficient due to friction and other energy
+A real hydraulic press is never :math:`100 \\%` efficient due to friction and other energy
 losses. Its efficiency is the ratio of the useful work (given by the product of output
 force and the height of the output side) to the expended work (given by the product of
 input force and the height of the input side).
