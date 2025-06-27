@@ -7,15 +7,15 @@ to determine the latitude of the observation site.
 
 **Notes:**
 
-#. Northern star is any star north of the zenith with known declination.
-#. Southern star is any star south of the zenith with known declination.
+#. Northern star is any star located north of the zenith with a known declination.
+#. Southern star is any star located south of the zenith with a known declination.
 
 **Conditions:**
 
 #. Both stars are at upper transit (culmination).
 
 ..
-    TODO find link
+    TODO: check possible link <https://cseligman.com/laboratory/navcalc.htm>
 """
 
 from sympy import Eq, solve

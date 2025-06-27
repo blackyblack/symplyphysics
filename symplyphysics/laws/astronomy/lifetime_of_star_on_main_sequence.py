@@ -2,10 +2,9 @@
 Lifetime of star on main sequence
 =================================
 
-The main sequence is the stage of stellar evolution. This stage begins in stars after the
-protostar stage. At the beginning of the main sequence stage, the age of the star is
-considered to be zero. The lifetime of the star can be approximated from the mass of the
-star.
+The main sequence is a stage of stellar evolution following the protostar stage. At the beginning
+of the main sequence stage, the age of the star is considered to be zero. The lifetime of a star
+can be approximated from the mass of the star.
 
 **Notation:**
 
@@ -17,8 +16,10 @@ star.
    :math:`2` solar masses, and :math:`4.75 m + 2.125` for stars with mass of :math:`0.1`
    to :math:`0.7` solar masses. Here :math:`m` refers to the mass of the star.
 
-..
-    TODO find link
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Main_sequence#Lifetime>`__. Corresponds to the
+   current law with a fixed indicator value.
 """
 
 from sympy import Eq, solve

@@ -1,18 +1,18 @@
 """
-Relative speed of rocket depends on mass and impulse
-----------------------------------------------------
+Relative rocket speed from mass change and effective exhaust speed
+==================================================================
 
-The Tsiolkovsky formula determines the speed that an aircraft develops under the influence of the thrust
-of a rocket engine, unchanged in direction, in the absence of all other forces.
-For a rocket flying at a speed close to the speed of light, the generalized Tsiolkovsky formula is valid,
-in which the speed of light is present.
+The Tsiolkovsky formula determines the speed that an aircraft develops due to the
+constant-direction thrust of the rocket engine in the absence of other forces. The generalized
+Tsiolkovsky formula is valid for a rocket flying at a speed close to the speed of light.
 
 **Notation:**
 
 #. :quantity_notation:`speed_of_light`.
 
-..
-    TODO find link
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Tsiolkovsky_rocket_equation#Special_relativity>`__.
 """
 
 from sympy import (Eq, solve)
@@ -27,7 +27,8 @@ from symplyphysics.quantities import speed_of_light
 
 speed = symbols.speed
 """
-Final :symbols:`speed` of the rocket
+Final :symbols:`speed` of the rocket in the inertial reference frame where the rocket started at
+rest.
 """
 
 effective_exhaust_speed = clone_as_symbol(symbols.speed,
@@ -39,12 +40,12 @@ Effective exhaust :symbols:`speed` of the rocket engine.
 
 initial_mass = clone_as_symbol(symbols.mass, subscript="0")
 """
-Initial :symbols:`mass` of the rocket
+Initial :symbols:`mass` of the rocket.
 """
 
 final_mass = clone_as_symbol(symbols.mass, subscript="1")
 """
-Final :symbols:`mass` of the rocket
+Final :symbols:`mass` of the rocket.
 """
 
 law = Eq(final_mass / initial_mass, ((1 - (speed / speed_of_light)) / (1 +

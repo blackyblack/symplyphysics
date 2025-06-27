@@ -1,8 +1,13 @@
 """
-Absolute magnitude of stars from apparent magnitude and distance
-================================================================
+Absolute magnitude from apparent magnitude and distance
+=======================================================
 
 Absolute magnitude can be calculated using apparent magnitude and distance to the object.
+
+**Conditions:**
+
+#. The `extinction <https://en.wikipedia.org/wiki/Extinction_(astronomy)>`__ from gas and dust,
+   i.e. the interstellar absorption and scattering, is negligible.
 
 **Links:**
 
@@ -34,16 +39,15 @@ distance = symbols.euclidean_distance
 :symbols:`euclidean_distance` to the object.
 """
 
-distance_constant = Quantity(
-    2.063e+6 * units.astronomical_unit,
-    display_symbol="d_0",
-    display_latex="d_0",
-)
+distance_constant = Quantity(2.063e+6 * units.astronomical_unit, display_symbol="d_0")
 """
 Constant equal to :math:`2.063 \\cdot 10^6` astronomical units.
 """
 
-law = Eq(absolute_magnitude, apparent_magnitude - 5 * log(distance / distance_constant, 10))
+law = Eq(
+    absolute_magnitude,
+    apparent_magnitude - 5 * log(distance / distance_constant, 10),
+)
 """
 :laws:symbol::
 
