@@ -348,17 +348,6 @@ The **Mach number** is a dimensionless quantity in fluid dynamics representing t
 past a boundary to the local speed of sound.
 """
 
-diffusion_coefficient = Symbol("D", units.area / units.time)
-"""
-**Diffusion coefficient**, or **diffusivity**, is usually defined as the proportionality constant between
-the molar flux due to molecular diffusion and the negative value of the gradient in the concentration of
-the species.
-
-**Links:**
-
-#. `Mass diffusivity <https://en.wikipedia.org/wiki/Mass_diffusivity>`__.
-"""
-
 dynamic_viscosity = Symbol("mu", units.pressure * units.time)
 """
 **Dynamic viscosity** is a physical quantity measuring the resistance to deformation at a given rate.
