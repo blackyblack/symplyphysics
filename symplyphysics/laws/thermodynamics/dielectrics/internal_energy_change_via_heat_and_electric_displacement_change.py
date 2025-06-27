@@ -15,6 +15,9 @@ and the change in electric displacement.
 **Links:**
 
 #. Formula 31.2 on p. 122 of "General Course of Physics" (Obschiy kurs fiziki), vol. 3 by Sivukhin D.V. (1979).
+
+..
+    TODO: make dD and E vectors
 """
 
 from sympy import Eq

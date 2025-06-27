@@ -14,6 +14,9 @@ the Helmholtz free energy and the electric displacement and field strength.
 **Links:**
 
 #. Formula 31.4 on p. 122 of "General Course of Physics" (Obschiy kurs fiziki), vol. 3 by Sivukhin D.V. (1979).
+
+..
+    TODO: make E and D vectors
 """
 
 from sympy import Eq

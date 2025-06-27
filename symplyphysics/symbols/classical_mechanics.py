@@ -348,7 +348,7 @@ The **Mach number** is a dimensionless quantity in fluid dynamics representing t
 past a boundary to the local speed of sound.
 """
 
-dynamic_viscosity = Symbol("mu", units.pressure * units.time)
+dynamic_viscosity = Symbol("mu", units.pressure * units.time, display_latex="\\mu")
 """
 **Dynamic viscosity** is a physical quantity measuring the resistance to deformation at a given rate.
 Specifically in fluid mechanics, it is the proportionality factor between the shear stress of the adjacent

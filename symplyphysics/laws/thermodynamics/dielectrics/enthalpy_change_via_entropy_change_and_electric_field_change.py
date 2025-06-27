@@ -15,6 +15,9 @@ field strength.
 **Links:**
 
 #. Formula 31.9 on p. 122 of "General Course of Physics" (Obschiy kurs fiziki), vol. 3 by Sivukhin D.V. (1979).
+
+..
+    TODO: make D and dE vectors
 """
 
 from sympy import Eq
