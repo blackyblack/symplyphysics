@@ -3,7 +3,7 @@ Interaction cross section in elastic interaction model
 ======================================================
 
 The Sutherland formula adjusts the formula of the cross section of interacting gas molecules
-taking into account their pairwise interactions. See :ref:`Effective cross section <_effective_cross_section>`.
+taking into account their pairwise interactions. See :ref:`Effective cross section <effective_cross_section>`.
 
 **Conditions:**
 
