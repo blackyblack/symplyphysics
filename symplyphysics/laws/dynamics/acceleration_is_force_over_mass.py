@@ -8,6 +8,8 @@ to the net force exerted on the body.
 **Links:**
 
 #. `Britannica <https://www.britannica.com/science/Newtons-laws-of-motion/Newtons-second-law-F-ma>`__.
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Newton's_laws_of_motion#Second_law>`__.
 """
 
 from sympy import Eq, solve

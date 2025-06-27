@@ -9,6 +9,9 @@ and friction force.
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Braking_distance>`__.
+
+..
+    TODO: reformulate in terms of the coefficient of friction?
 """
 
 from sympy import (Eq, solve)
