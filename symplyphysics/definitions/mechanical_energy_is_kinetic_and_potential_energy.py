@@ -2,7 +2,7 @@
 Mechanical energy is kinetic and potential energy
 =================================================
 
-*Mechanical energy* of a system equals to the sum of its kinetic energy and
+*Mechanical energy* of a system is equal to the sum of its kinetic energy and
 potential energy.
 
 **Conditions:**

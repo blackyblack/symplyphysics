@@ -50,7 +50,7 @@ definition = Eq(acceleration(time), Derivative(speed(time), time))
 @validate_output(acceleration)
 def calculate_linear_acceleration(velocity_start_: Quantity, velocity_end_: Quantity,
     time_: Quantity) -> Quantity:
-    # velocity changes linearly from over the time interval `time_`
+    # velocity changes linearly over the time interval `time_`
     velocity_function_ = time * (velocity_end_ - velocity_start_) / time_
     applied_definition = definition.subs(speed(time), velocity_function_)
     dsolved = applied_definition.doit()

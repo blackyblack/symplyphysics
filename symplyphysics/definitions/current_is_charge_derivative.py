@@ -48,7 +48,7 @@ definition = Eq(current(time), Derivative(charge(time), time))
 @validate_input(charge_start_=charge, charge_end_=charge, time_=time)
 @validate_output(current)
 def calculate_current(charge_start_: Quantity, charge_end_: Quantity, time_: Quantity) -> Quantity:
-    # charge changes linearly from over the time interval `time_`
+    # charge changes linearly over the time interval `time_`
     charge_function_ = time * (charge_end_ - charge_start_) / time_
     applied_definition = definition.subs(charge(time), charge_function_)
     dsolved = applied_definition.doit()
