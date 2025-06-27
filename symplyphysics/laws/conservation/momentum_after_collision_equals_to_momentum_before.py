@@ -2,7 +2,7 @@
 Initial momentum equals final momentum
 ======================================
 
-If there is no external force applied to system of objects, the summary momentum of this
+If no external force is applied to a system of objects, the total momentum of the
 system remains constant during and after any interactions between objects. See
 :ref:`Momentum is constant`.
 

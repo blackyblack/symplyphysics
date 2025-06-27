@@ -3,8 +3,8 @@ Mechanical energy is constant
 =============================
 
 Mechanical energy is constant in a system that has only gravitational forces or in an
-otherwise idealized system — that is, one lacking dissipative forces, such as friction
-and air resistance, or one in which such forces can be reasonably neglected.
+otherwise idealized system, that is it lacks dissipative forces, such as friction
+and air resistance, or when such forces can be reasonably neglected.
 
 **Notes:**
 

@@ -2,10 +2,9 @@
 Momentum is constant
 ====================
 
-If there is no external force applied to system of objects, the summary momentum of this
-system remains constant during and after any interactions between objects. Summary
-momentum of the system is the sum of momentums of every object in this system. Also
-applicable for reactive engine simulation.
+If there is no external force applied to system of objects, the total momentum of this
+system remains constant during and after any interactions between objects. The total
+momentum of the system is the sum of momenta of every object in this system.
 
 **Conditions:**
 
@@ -17,6 +16,7 @@ applicable for reactive engine simulation.
 
 ..
     TODO: rename file
+    TODO: vector counterpart of this law
 """
 
 from sympy import (Derivative, Eq, dsolve)
