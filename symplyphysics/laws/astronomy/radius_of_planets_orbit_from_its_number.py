@@ -2,8 +2,8 @@
 Radius of planetary orbits from number
 ======================================
 
-The Titius—Bode rule is an empirical formula that roughly describes the distances between the planets of the
-Solar System and the Sun (the average radii of the orbits).
+The Titius—Bode rule is an empirical formula that roughly describes the distances between the
+planets of the Solar System and the Sun (the average radii of the orbits).
 
 **Notes:**
 

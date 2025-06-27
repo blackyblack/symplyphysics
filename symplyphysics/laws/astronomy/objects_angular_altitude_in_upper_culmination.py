@@ -2,9 +2,9 @@
 Object's angular altitude in upper culmination
 ==============================================
 
-In observational astronomy, culmination is the passage of a celestial object across the
-observer's local meridian. An object's angular altitude in degrees at its upper
-culmination is equal to 90 minus the observer's latitude plus the object's declination.
+In observational astronomy, culmination is the passage of a celestial object across the observer's
+local meridian. **Upper culmination** refers to the time when the object reaches its highest point
+(i.e. it is nearest to the zenith).
 
 **Conditions:**
 
