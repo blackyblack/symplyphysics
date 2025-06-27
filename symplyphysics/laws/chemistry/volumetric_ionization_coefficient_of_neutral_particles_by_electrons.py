@@ -1,6 +1,6 @@
 """
-Coefficient of volumetric ionization of neutral molecules by electrons
-======================================================================
+Volumetric ionization coefficient of neutral particles by electrons
+===================================================================
 
 At a certain voltage, the gas discharge becomes independent. To find this voltage, it is
 necessary to know the (volumetric) ionization coefficient. And it, in turn, depends on

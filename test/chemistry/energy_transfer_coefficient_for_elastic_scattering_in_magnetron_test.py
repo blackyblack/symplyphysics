@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.chemistry import energy_transfer_coefficient_for_elastic_scattering_of_traveling_atom_on_gas_atom_in_magnetron as coefficient_law
+from symplyphysics.laws.chemistry import energy_transfer_coefficient_for_elastic_scattering_in_magnetron as coefficient_law
 
 # Description
 ## The mass of the traveling titanium atom is 7.95e-26 kilograms. The mass of an argon atom is 6.63e-26 kilogram.

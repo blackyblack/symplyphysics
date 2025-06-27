@@ -1,4 +1,4 @@
-r"""
+"""
 Avogadro constant is particle count over amount of substance
 ============================================================
 

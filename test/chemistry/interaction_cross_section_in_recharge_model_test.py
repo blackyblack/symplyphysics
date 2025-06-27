@@ -7,7 +7,7 @@ from symplyphysics import (
     assert_equal,
 )
 
-from symplyphysics.laws.chemistry import cross_section_of_interaction_in_recharge_model as cross_section_law
+from symplyphysics.laws.chemistry import interaction_cross_section_in_recharge_model as cross_section_law
 
 ## The ionization energy of atoms is equal to 14.69 electronvolt. The mass of an atom is 4.64e-26 kilogram.
 ## The pressure is 1 pascal, the temperature is 573 kelvin. The electric field strength is 5857 volt per meter.

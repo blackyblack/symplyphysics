@@ -1,6 +1,6 @@
 """
-Cross section of ionization of atom by electrons per Granovsky
-==============================================================
+Ionization cross section of atom by electrons per Granovsky
+===========================================================
 
 The **Granovsky approximation** for the ionization cross section is considered. As the
 electron energy increases, the velocities of primary and secondary electrons increase,

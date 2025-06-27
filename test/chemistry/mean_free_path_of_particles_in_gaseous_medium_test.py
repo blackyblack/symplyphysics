@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors, quantities)
-from symplyphysics.laws.chemistry import free_path_of_atomic_particles_in_gaseous_medium as path_law
+from symplyphysics.laws.chemistry import mean_free_path_of_particles_in_gaseous_medium as path_law
 
 # Description
 ## Under normal conditions (T = 0°C, p = 1 atm) the mean free path of hydrogen molecules is 130 nm.

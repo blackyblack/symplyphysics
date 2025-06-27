@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.chemistry import cross_section_of_interaction_in_model_of_quasirigid_spheres as cross_section_law
+from symplyphysics.laws.chemistry import interaction_cross_section_in_model_of_hard_spheres as cross_section_law
 
 # Description
 ## The distance of the closest approach of two particles is 1.63e-10 meter.

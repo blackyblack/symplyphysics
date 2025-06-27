@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.chemistry import electron_distribution_function_in_gas_plasma_by_maxwell as function_law
+from symplyphysics.laws.chemistry import electron_distribution_function_in_gas_plasma_per_maxwell as function_law
 
 # Description
 ## The voltage between electrodes is 250 volt. The electron energy is equal to 60 electronvolt.

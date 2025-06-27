@@ -1,6 +1,6 @@
 """
-Cross section of interaction in recharge model
-==============================================
+Interaction cross section in recharge model
+===========================================
 
 See :ref:`Effective cross section`.
 

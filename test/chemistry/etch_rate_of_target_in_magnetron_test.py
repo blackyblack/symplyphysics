@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.chemistry import etching_rate_of_target_in_magnetron as rate_law
+from symplyphysics.laws.chemistry import etch_rate_of_target_in_magnetron as rate_law
 
 # Description
 ## The current density of ions incident on the target is 97.566 [ampere / meter^2]. The molar mass of the target atom

@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.chemistry import number_of_collisions_of_atomized_atom_with_gas_atoms_in_magnetron as number_law
+from symplyphysics.laws.chemistry import number_of_collisions_of_particle_with_gas_in_magnetron as number_law
 
 # Description
 ## The initial energy of the atomized atom is 4 electronvolt. The energy of thermal motion
