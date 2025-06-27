@@ -6,7 +6,7 @@ Compliance is inverse stiffness
 
 **Conditions:**
 
-#. Stiffness is non‑zero and constant (linear, time‑invariant spring).
+#. Stiffness is non-zero and constant (linear, time-invariant spring).
 #. Deformation remains within the elastic (Hookean) range.
 
 **Links:**

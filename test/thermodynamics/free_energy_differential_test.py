@@ -10,7 +10,7 @@ from symplyphysics.laws.thermodynamics import (
     free_energy_differential as free_energy_law,)
 
 # Description
-## A closed system in thermal equlibrium has entropy S = 1 J/k and pressure p = 1 Pa inside.
+## A closed system in thermal equilibrium has entropy S = 1 J/k and pressure p = 1 Pa inside.
 ## The temperature of the system drops by 0.01 K and the volume grows by 0.02 m**3. The number
 ## of particles decreases by 1, the chemical potential is 0.1 J.
 ## Then the change in Helmholtz free energy of the system is -0.11 J.

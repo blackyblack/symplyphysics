@@ -2,13 +2,13 @@
 Admittance is inverse impedance
 ===============================
 
-*Admittance* (sometimes called complex conductance) describes how easily alternating current flows through a network. It is defined as the reciprocal of impedance and is measured in siemens (S).
+*Admittance* (sometimes called complex conductance) describes how easily alternating current flows through a network. It is defined as the reciprocal of impedance.
 
 Also see :doc:`Impedance law <definitions.impedance_is_resistance_and_reactance>`
 
 **Conditions:**
 
-#. Applicable under sinusoidal steady‑state (phasor‑domain) analysis for linear, time‑invariant systems.
+#. Applicable under sinusoidal steady-state (phasor-domain) analysis for linear, time-invariant systems.
 
 **Links:**
 

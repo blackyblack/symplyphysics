@@ -2,7 +2,7 @@
 Compressibility factor is deviation from ideal gas
 ==================================================
 
-The **compressibility factor** (also called the **compression factor** or **gas deviation factor**) quantifies how far a real gas departs from ideal‑gas behaviour.
+The **compressibility factor** (also called the **compression factor** or **gas deviation factor**) quantifies how far a real gas departs from ideal-gas behaviour.
 
 **Notation:**
 
@@ -11,13 +11,13 @@ The **compressibility factor** (also called the **compression factor** or **gas 
 **Conditions:**
 
 #. Temperature is strictly greater than zero.
-#. Amount of substance, pressure, and volume are all finite and non‑zero.
+#. Amount of substance, pressure, and volume are all finite and non-zero.
 #. The gas sample is at thermodynamic equilibrium.
 
 **Notes:**
 
 #. Can be equivalently defined as the ratio of the molar volume :math:`V/n` of the real gas to the molar volume :math:`RT/\\rho` of the corresponding ideal gas at the same temperature and pressure.
-#. :math:`Z = 1` corresponds to ideal‑gas behaviour.
+#. :math:`Z = 1` corresponds to ideal-gas behaviour.
 #. At high pressures repulsive interactions dominate, giving :math:`Z > 1`.
 #. At low pressures attractive interactions dominate, giving :math:`Z < 1`.
 

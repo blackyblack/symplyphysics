@@ -2,7 +2,7 @@
 Boltzmann factor via state energy and temperature
 =================================================
 
-The *Boltzmann factor* weights how likely a system is to occupy a micro‑state of a given energy at thermal equilibrium.
+The *Boltzmann factor* weights how likely a system is to occupy a micro-state of a given energy at thermal equilibrium.
 
 **Notation:**
 

@@ -6,7 +6,7 @@ The *heat capacity ratio* (also called the *adiabatic index*, *ratio of specific
 
 **Conditions:**
 
-#. Isochoric heat capacity is finite and non‑zero.
+#. Isochoric heat capacity is finite and non-zero.
 
 **Notes:**
 

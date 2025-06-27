@@ -263,7 +263,7 @@ is up to debate, however, the fundamental theory gives the number :math:`7%` per
 
 zero_point_luminosity = Quantity(3.0128e28 * units.watt, display_symbol="L_0")
 """
-**Zero-point luminosity** is a constant defined relative to a star for calibrating perposes. The
+**Zero-point luminosity** is a constant defined relative to a star for calibrating purposes. The
 value given here has been defined by the International Astronomical Union (IAU).
 
 **Links:**

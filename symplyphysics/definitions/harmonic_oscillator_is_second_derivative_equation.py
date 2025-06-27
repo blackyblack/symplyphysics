@@ -2,7 +2,7 @@
 Harmonic oscillator is a second order derivative equation
 =========================================================
 
-In classical mechanics a *simple harmonic oscillator* is a system that, after a small displacement from equilibrium, experiences a restoring force :math:`F` proportional to that displacement. Examples include small‑angle pendulums, mass–spring systems, acoustic resonators, and electrical RLC circuits.
+In classical mechanics a *simple harmonic oscillator* is a system that, after a small displacement from equilibrium, experiences a restoring force :math:`F` proportional to that displacement. Examples include small-angle pendulums, mass–spring systems, acoustic resonators, and electrical RLC circuits.
 If :math:`F` is the only force acting on the system, the system is called a simple harmonic oscillator.
 
 **Conditions:**

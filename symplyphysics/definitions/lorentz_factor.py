@@ -2,17 +2,21 @@
 Lorentz factor
 ==============
 
-**Lorentz factor**, also known as **Lorentz term** or **gamma factor**, is a quantity that
-expresses how much the measurements of time, length, and other physical properties
-change for a body while it is moving.
+The *Lorentz factor* (also called the *gamma factor*) expresses how time intervals,
+lengths, and other physical quantities transform for a body while it moves.
 
 **Notation:**
 
-#. :quantity_notation:`speed_of_light`.
+#. :quantity_notation:`speed_of_light`
+
+**Conditions:**
+
+#. The speed is non-negative and less than speed of light.
+#. Special-relativistic effects only (flat space-time, no gravity).
 
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Lorentz_factor#Definition>`__.
+#. `Wikipedia – Definition <https://en.wikipedia.org/wiki/Lorentz_factor#Definition>`__
 """
 
 from sympy import Eq, sqrt

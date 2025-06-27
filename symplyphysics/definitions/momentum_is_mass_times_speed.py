@@ -2,11 +2,15 @@
 Momentum is mass times speed
 ============================
 
-Momentum is a physical quantity equal to the product of the object's speed and its mass.
+The *momentum* of an object equals the product of its mass and speed.
+
+**Conditions:**
+
+#. Mass and speed are measured in the same inertial frame.
 
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Momentum#Single_particle>`__.
+#. `Wikipedia - Momentum <https://en.wikipedia.org/wiki/Momentum#Single_particle>`__
 """
 
 from sympy import (Eq, solve)

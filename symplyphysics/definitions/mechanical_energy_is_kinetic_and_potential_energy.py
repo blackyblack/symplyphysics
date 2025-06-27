@@ -2,11 +2,16 @@
 Mechanical energy is kinetic and potential energy
 =================================================
 
-*Mechanical energy* of the system is defined as the sum of its kinetic energy and potential energy.
+*Mechanical energy* of a system equals to the sum of its kinetic energy and
+potential energy.
+
+**Conditions:**
+
+#. Kinetic and potential energies are evaluated in the same reference frame.
 
 **Links:**
 
-#. `Wikipedia, first equation <https://en.wikipedia.org/wiki/Mechanical_energy#General>`__.
+#. `Wikipedia - Mechanical energy <https://en.wikipedia.org/wiki/Mechanical_energy#General>`__
 """
 
 from sympy import Eq, solve

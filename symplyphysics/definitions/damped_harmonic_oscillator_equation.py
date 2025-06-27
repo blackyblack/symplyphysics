@@ -2,18 +2,18 @@
 Damped harmonic oscillator equation
 ===================================
 
-Describes the motion of a single‑degree‑of‑freedom mechanical oscillator that experiences *linear (viscous) damping*.
+Describes the motion of a single-degree-of-freedom mechanical oscillator that experiences *linear (viscous) damping*.
 
 **Conditions:**
 
 #. Damping force is directly proportional to velocity (viscous).
 #. Undamped angular frequency is positive and constant.
-#. Damping ratio is non‑negative.
+#. Damping ratio is non-negative.
 #. Motion is restricted to one spatial dimension.
 
 **Links:**
 
-#. `Physics LibreTexts – Damped Oscillations (Eq. 15.6.2) <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/Book%3A_University_Physics_I_-_Mechanics_Sound_Oscillations_and_Waves_(OpenStax)/15%3A_Oscillations/15.06%3A_Damped_Oscillations>`__
+#. `Physics LibreTexts – Damped Oscillations (Eq. 15.6.2) <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/Book%3A_University_Physics_I_-_Mechanics_Sound_Oscillations_and_Waves_(OpenStax)/15%3A_Oscillations/15.06%3A_Damped_Oscillations>`__
 """
 
 from sympy import Derivative, Eq, dsolve

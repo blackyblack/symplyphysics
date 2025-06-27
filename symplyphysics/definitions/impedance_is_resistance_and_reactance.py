@@ -2,17 +2,22 @@
 Impedance is resistance and reactance
 =====================================
 
-*Impedance* is the combination of resistance and reactance (both inductive and capacitive) and is
-a complex number, containing both real and imaginary parts. The real part of impedance is
-resistance, and the imaginary part is reactance.
+*Impedance* combines a circuit's resistance (real part) and reactance (imaginary part) into a
+single complex quantity. The definition applies at a specific angular frequency and is used
+for steady-state AC analysis.
 
 **Notation:**
 
 #. :math:`i` is the imaginary unit.
 
+**Conditions:**
+
+#. Linear, time-invariant circuit operating in steady-state with sinusoidal excitation.
+#. Resistance and reactance are evaluated at the same angular frequency.
+
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Electrical_impedance#Complex_impedance>`__.
+#. `Wikipedia – Electrical impedance <https://en.wikipedia.org/wiki/Electrical_impedance#Complex_impedance>`__
 """
 
 from sympy import (I, Eq, solve)
