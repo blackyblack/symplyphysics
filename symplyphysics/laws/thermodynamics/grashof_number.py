@@ -1,8 +1,8 @@
-r"""
+"""
 Grashof number
 ==============
 
-The Grashof number (Gr) is a dimensionless number which approximates the ratio of the
+The Grashof number is a dimensionless number which approximates the ratio of the
 buoyancy to viscous forces acting on a fluid. It arises in situations involving natural convection
 and is analogous to the Reynolds number.
 
@@ -33,7 +33,7 @@ grashof_number = symbols.grashof_number
 
 volumetric_expansion_coefficient = clone_as_symbol(symbols.thermal_expansion_coefficient,
     subscript="V")
-r"""
+"""
 Volumetric (see :symbols:`volume`) :symbols:`thermal_expansion_coefficient` of the body.
 """
 

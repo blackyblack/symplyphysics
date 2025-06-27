@@ -1,4 +1,4 @@
-r"""
+"""
 Most probable speed in Maxwell—Boltzmann statistics
 ===================================================
 

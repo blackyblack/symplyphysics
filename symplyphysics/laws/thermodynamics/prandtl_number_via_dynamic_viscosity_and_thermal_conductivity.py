@@ -1,4 +1,4 @@
-r"""
+"""
 Prandtl number via dynamic viscosity and thermal conductivity
 =============================================================
 

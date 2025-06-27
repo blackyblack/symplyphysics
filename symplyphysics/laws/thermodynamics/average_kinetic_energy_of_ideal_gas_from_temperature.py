@@ -1,4 +1,4 @@
-r"""
+"""
 Average kinetic energy of ideal gas from temperature
 ====================================================
 

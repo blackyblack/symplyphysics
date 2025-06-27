@@ -1,4 +1,4 @@
-r"""
+"""
 Fractional volume change via small temperature change
 =====================================================
 
@@ -8,8 +8,8 @@ and the fractional change in the body's volume is proportional to the change in 
 
 **Conditions:**
 
-#. The temperature change :math:`\Delta T` is small enough for the expansion coefficient
-   :math:`\alpha_V` to be constant.
+#. The temperature change :math:`\\Delta T` is small enough for the expansion coefficient
+   :math:`\\alpha_V` to be constant.
 
 **Links:**
 

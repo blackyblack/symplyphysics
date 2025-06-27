@@ -1,4 +1,4 @@
-r"""
+"""
 Quantum isochoric molar heat capacity of solids
 ===============================================
 
@@ -7,7 +7,7 @@ same model as in the classical case, namely the atoms are harmonic oscillators w
 of freedom, located in the nodes of the crystal lattice, performing thermal oscillations around the
 equlibrium positions with the same frequency. But he used a more correct expression for the energy
 of the oscillators, and although the result still only qualitatively describes the heat capacity of
-solids, it is a big achievement and the result has correct asymptotic behaviour for :math:`T \to 0`.
+solids, it is a big achievement and the result has correct asymptotic behaviour for :math:`T \\to 0`.
 
 **Notation:**
 
@@ -40,9 +40,9 @@ isochoric_molar_heat_capacity = clone_as_symbol(
 """
 
 reduced_photon_energy = Symbol("x", dimensionless)
-r"""
-Reduced photon energy, defined as the ratio of photon energy :math:`\hbar \omega` or :math:`h \nu` to
-thermal energy :math:`k_\text{B} T`.
+"""
+Reduced photon energy, defined as the ratio of photon energy :math:`\\hbar \\omega` or :math:`h \\nu` to
+thermal energy :math:`k_\\text{B} T`.
 """
 
 law = Eq(isochoric_molar_heat_capacity, (3 * quantities.molar_gas_constant) *

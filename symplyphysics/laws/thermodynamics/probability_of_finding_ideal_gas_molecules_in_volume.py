@@ -1,4 +1,4 @@
-r"""
+"""
 Probability of finding ideal gas molecules in volume
 ====================================================
 
@@ -8,7 +8,7 @@ in space, say, a container with gas particles.
 **Conditions:**
 
 #. The gas is ideal.
-#. :math:`V \le V_0`
+#. :math:`V \\le V_0`
 #. There are no external fields acting on the particles.
 
 **Links:**

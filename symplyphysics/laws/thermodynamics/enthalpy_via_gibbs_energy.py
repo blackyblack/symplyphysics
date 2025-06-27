@@ -1,4 +1,4 @@
-r"""
+"""
 Enthalpy via Gibbs energy
 =========================
 

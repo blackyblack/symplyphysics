@@ -20,7 +20,7 @@ from symplyphysics import (
 )
 
 chemical_potential = symbols.chemical_potential
-r"""
+"""
 :symbols:`chemical_potential` of the system.
 """
 

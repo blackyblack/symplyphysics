@@ -1,4 +1,4 @@
-r"""
+"""
 Dieterici equation
 ==================
 
@@ -14,11 +14,11 @@ along with the more well-known van der Waals equation of state.
 #. Like the van der Waals equation of state, the Dieterici equation is semi-empirical.
 #. It approximates moderate pressures of real gases much better than the van der Waals equation
    within the conditions stated below.
-#. Can be converted to the van der Waals equation under an additional limit :math:`a \ll R T V_m`.
+#. Can be converted to the van der Waals equation under an additional limit :math:`a \\ll R T V_m`.
 
 **Conditions:**
 
-#. Only applicable in the limits :math:`b \ll V_m` and :math:`a \ll p V_m^2`. Refer to symbols below.
+#. Only applicable in the limits :math:`b \\ll V_m` and :math:`a \\ll p V_m^2`. Refer to symbols below.
 #. Inapplicable for high pressures.
 
 **Links:**

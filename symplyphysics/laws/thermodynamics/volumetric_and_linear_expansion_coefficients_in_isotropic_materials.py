@@ -37,7 +37,7 @@ Volumetric :symbols:`thermal_expansion_coefficient` of the material. Also see
 """
 
 linear_expansion_coefficient = clone_as_symbol(symbols.thermal_expansion_coefficient, subscript="l")
-r"""
+"""
 Linear :symbols:`thermal_expansion_coefficient` of the material. Also see
 :doc:`Linear expansion coefficient <definitions.linear_coefficient_of_thermal_expansion>`.
 """

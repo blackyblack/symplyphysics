@@ -1,4 +1,4 @@
-r"""
+"""
 Probability of ideal gas macrostate
 ===================================
 

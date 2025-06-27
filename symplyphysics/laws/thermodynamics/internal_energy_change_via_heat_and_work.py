@@ -36,7 +36,7 @@ Infinitesimal change in :symbols:`internal_energy` of the system.
 """
 
 heat_supplied_to_system = InexactDifferential(symbols.heat)
-r"""
+"""
 Infinitesimal amount of :symbols:`heat` supplied to the system during its interaction
 with the environment.
 """

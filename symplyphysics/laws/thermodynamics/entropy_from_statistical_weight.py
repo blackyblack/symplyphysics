@@ -1,4 +1,4 @@
-r"""
+"""
 Entropy from statistical weight
 ===============================
 

@@ -22,7 +22,7 @@ from symplyphysics import (
 from symplyphysics.core.geometry.line import two_point_function
 
 chemical_potential = symbols.chemical_potential
-r"""
+"""
 :symbols:`chemical_potential` of the system.
 """
 

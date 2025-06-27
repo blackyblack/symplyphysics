@@ -26,7 +26,7 @@ from symplyphysics.definitions import number_density_is_number_of_objects_per_un
 average_kinetic_energy = clone_as_symbol(symbols.kinetic_energy,
     display_symbol="avg(K)",
     display_latex="\\langle K \\rangle")
-r"""
+"""
 Average :symbols:`kinetic_energy` of gas particles.
 """
 

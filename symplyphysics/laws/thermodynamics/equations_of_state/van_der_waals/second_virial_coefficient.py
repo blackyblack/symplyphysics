@@ -1,4 +1,4 @@
-r"""
+"""
 Second virial coefficient
 =========================
 

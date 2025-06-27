@@ -1,4 +1,4 @@
-r"""
+"""
 Average square speed in Maxwell—Boltzmann statistics
 ====================================================
 

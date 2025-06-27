@@ -1,4 +1,4 @@
-r"""
+"""
 Radiation power via temperature
 ===============================
 

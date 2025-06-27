@@ -44,7 +44,7 @@ energy_of_state = clone_as_symbol(symbols.energy, subscript="i")
 """
 
 total_chemical_potential = symbols.chemical_potential
-r"""
+"""
 Total :symbols:`chemical_potential` of the system.
 """
 

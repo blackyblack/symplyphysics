@@ -61,7 +61,7 @@ volume = clone_as_function(
 """
 
 isobaric_heat_capacity = clone_as_symbol(symbols.heat_capacity, subscript="p")
-r"""
+"""
 :symbols:`heat_capacity` of the system at constant pressure.
 """
 

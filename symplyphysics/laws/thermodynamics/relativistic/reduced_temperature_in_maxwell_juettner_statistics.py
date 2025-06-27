@@ -1,4 +1,4 @@
-r"""
+"""
 Reduced temperature in Maxwell—Jüttner statistics
 =================================================
 
