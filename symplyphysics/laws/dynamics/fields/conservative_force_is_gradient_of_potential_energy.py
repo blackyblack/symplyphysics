@@ -9,7 +9,7 @@ in a closed loop, the total work done by a conservative force is zero.
 **Conditions:**
 
 #. Force is conservative. Mathematically, this can be expressed as
-   :math:`\\text{curl} \\, {\\vec F} \\left( \\vec r \\right) \\equiv 0`, i.e. the force field must
+   :math:`\\text{curl} \\, {\\vec F} \\! \\left( \\vec r \\right) \\equiv 0`, i.e. the force field must
    be irrotational.
 
 **Links:**
@@ -47,12 +47,7 @@ law = Eq(
     -1 * VectorGradient(potential_energy(position_vector), evaluate=False),
 )
 """
-..
-    NOTE: code printers have not been implemented yet for `VectorGradient`
+:laws:symbol::
 
-:code:`F(r) = -grad(U(r))`
-
-Latex:
-    .. math::
-        \\vec F \\left( \\vec r \\right) = - \\text{grad} \\, U \\left( \\vec r \\right)
+:laws:latex::
 """
