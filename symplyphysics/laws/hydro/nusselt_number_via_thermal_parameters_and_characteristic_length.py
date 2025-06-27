@@ -1,6 +1,6 @@
 """
-Nusselt number formula
-======================
+Nusselt number via thermal parameters and characteristic length
+===============================================================
 
 Nusselt number is the ratio of total heat transfer to conductive heat transfer at a
 boundary in a fluid. It can be expressed using the heat transfer coefficient of the

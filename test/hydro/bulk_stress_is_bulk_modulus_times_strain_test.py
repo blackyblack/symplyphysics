@@ -7,7 +7,7 @@ from symplyphysics import (
     prefixes,
     Quantity,
 )
-from symplyphysics.laws.hydro import hydraulic_stress_is_bulk_modulus_times_strain as stress_law
+from symplyphysics.laws.hydro import bulk_stress_is_bulk_modulus_times_strain as stress_law
 
 # Description
 ## A steel object (B = 160 GPa) is undergoing bulk compression in a fluid.

@@ -1,6 +1,6 @@
 """
-Capillary rise from surface tension and contact angle
-=====================================================
+Capillary height via surface tension and contact angle
+=======================================================
 
 The Jurin's law determines the height to which the liquid rises in capillaries. It
 states that the maximum height of a liquid in a capillary tube is inversely proportional

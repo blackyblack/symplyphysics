@@ -1,4 +1,4 @@
-r"""
+"""
 Shear stress is proportional to speed gradient
 ==============================================
 
@@ -14,7 +14,7 @@ As an example of this law, consider two solid flat plates that contain water in 
 The bottom plate is fixed in place, while the top plate moves parallel to the bottom one with
 a small speed :code:`u` such that the flow of the water is steady. If we were to measure the force that
 needed to make the top plate continue to move, we would find that it is proportional to the area
-of the plate and the ratio :math:`\frac{u}{d}` where :math:`d` is the distance between the plates.
+of the plate and the ratio :math:`\\frac{u}{d}` where :math:`d` is the distance between the plates.
 
 **Conditions:**
 

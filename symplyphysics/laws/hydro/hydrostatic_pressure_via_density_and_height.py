@@ -23,7 +23,7 @@ due to the force of gravity.
 from sympy import Eq, solve
 from symplyphysics import Quantity, validate_input, validate_output, symbols, quantities
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.hydro import hydrostatic_pressure_from_density_and_depth_acceleration as pressure_law
+from symplyphysics.laws.hydro import hydrostatic_pressure_via_density_height_and_acceleration as pressure_law
 
 hydrostatic_pressure = symbols.hydrostatic_pressure
 """

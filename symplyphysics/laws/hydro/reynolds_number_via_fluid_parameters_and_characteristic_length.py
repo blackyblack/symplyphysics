@@ -1,6 +1,6 @@
 """
-Reynolds number formula
-=======================
+Reynolds number via fluid parameters and characteristic length
+==============================================================
 
 *Reynolds number* is a dimensionless quantity that characterizes the flow of a fluid. It
 helps predict fluid flow patterns in different situations by measuring the ratio between
