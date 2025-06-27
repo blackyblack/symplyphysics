@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import dynamic_viscosity_of_gas_from_control_viscosity_and_temperature as dynamic_viscosity
+from symplyphysics.laws.thermodynamics import dynamic_viscosity_from_temperature as dynamic_viscosity
 
 ## Link of numbers: https://ru.wikipedia.org/wiki/Вязкость#Вязкость_воды
 

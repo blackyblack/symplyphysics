@@ -37,7 +37,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import compressibility_factor_is_deviation_from_ideal_gas as compressibility_def
-from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import equation as vdw_eqn
+from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import van_der_vaals_equation as vdw_eqn
 from symplyphysics.laws.quantities import (
     quantity_is_volumetric_density_times_volume as density_qty_law,
     quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,

@@ -1,6 +1,6 @@
 """
-Dynamic viscosity of gas from temperature
-=========================================
+Dynamic viscosity from temperature
+==================================
 
 Viscosity is a phenomenon of molecular transport, the property of fluid bodies (liquids and gases)
 to resist the movement of one part of them relative to another. As a result, the macroscopic work
@@ -14,9 +14,6 @@ with increasing temperature, whereas for liquids it decreases with increasing te
 **Links:**
 
 #. `Sutherland model <https://en.wikipedia.org/wiki/Temperature_dependence_of_viscosity#Sutherland_model>`__.
-
-..
-    TODO Rename file
 """
 
 from sympy import Eq, solve, Rational

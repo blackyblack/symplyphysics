@@ -1,6 +1,6 @@
 """
-Most probable speed in Maxwell—Boltzmann statistics
-===================================================
+Most probable speed
+===================
 
 The *most probable speed* is the speed at which the Maxwell—Boltzmann speed distribution function
 is maximum.
