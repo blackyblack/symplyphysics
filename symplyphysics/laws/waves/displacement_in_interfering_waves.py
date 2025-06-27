@@ -1,18 +1,18 @@
-r"""
+"""
 Displacement in interfering waves
 =================================
 
 If two waves are traveling in the same direction and have the same amplitude, period, and
 wavelength (and hence the same frequency and wavenumber), but differ in the phase constant, the result
 is a single wave with the same period and wavelength, but its amplitude depends on the phase
-shift between the waves. If the shift is a multiple of :math:`2 \pi`, the waves are exactly
-in phase and their interference is *fully constructive*. If it is :math:`\pi` plus a multiple of :math:`2 \pi`,
+shift between the waves. If the shift is a multiple of :math:`2 \\pi`, the waves are exactly
+in phase and their interference is *fully constructive*. If it is :math:`\\pi` plus a multiple of :math:`2 \\pi`,
 they are exactly out of phase and their interference is *fully destructive*.
 
 **Notes:**
 
-#. The form of the first wave is :math:`u_\text{max} \sin(k x - \omega t)` and of the second wave
-   is :math:`u_\text{max} \sin(k x - \omega t + \varphi)`.
+#. The form of the first wave is :math:`u_\\text{max} \\sin(k x - \\omega t)` and of the second wave
+   is :math:`u_\\text{max} \\sin(k x - \\omega t + \\varphi)`.
 #. The travel of the waves in unaffected by their interference.
 
 **Conditions:**

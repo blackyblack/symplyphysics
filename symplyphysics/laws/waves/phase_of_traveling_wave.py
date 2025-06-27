@@ -1,18 +1,18 @@
-r"""
+"""
 Phase of traveling wave
 =======================
 
 The phase of a wave or other periodic function of some real variable :math:`t` is an angle-like
 quantity representing the fraction of the cycle covered up to :math:`t`. As the variable :math:`t`
-completes a full period, the phase increases by :math:`360^\circ` or :math:`2 \pi`.
+completes a full period, the phase increases by :math:`360^\\circ` or :math:`2 \\pi`.
 
 If a function :math:`h(x, t)` describes a traveling wave, then position :math:`x` and time :math:`t`
 can only appear in the form of the wave phase described below.
 
 **Notes:**
 
-#. :math:`\omega = (\vec \omega \cdot {\vec e}_x)`, i.e. the angular frequency is a positive quantity
-   if the wave travels in the positive direction of the :math:`x`-axis. Here :math:`{\vec e}_x` is the
+#. :math:`\\omega = (\\vec \\omega \\cdot {\\vec e}_x)`, i.e. the angular frequency is a positive quantity
+   if the wave travels in the positive direction of the :math:`x`-axis. Here :math:`{\\vec e}_x` is the
    unit vector pointing in the positive direction of the :math:`x`-axis.
 
 **Conditions:**

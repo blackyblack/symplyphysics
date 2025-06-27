@@ -1,4 +1,4 @@
-r"""
+"""
 Speed of light via vacuum permittivity and permeability
 =======================================================
 
