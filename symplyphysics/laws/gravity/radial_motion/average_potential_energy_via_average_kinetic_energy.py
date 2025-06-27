@@ -11,7 +11,7 @@ kinetic energy. The average of both energies is taken w.r.t. time.
 
 **Links:**
 
-#. `Physics LibreTexts. Energy in Circular Orbits <https://phys.libretexts.org/Workbench/PH_245_Textbook_V2/13%3A_Gravitation/13.05%3A_Satellite_Orbits_and_Energy>`__.
+#. `Physics LibreTexts <https://phys.libretexts.org/Workbench/PH_245_Textbook_V2/13%3A_Gravitation/13.05%3A_Satellite_Orbits_and_Energy>`__. Section "Energy in Circular Orbits", derivable from formulas (5.1.4.10) and (5.1.4.11).
 """
 
 from sympy import Eq
