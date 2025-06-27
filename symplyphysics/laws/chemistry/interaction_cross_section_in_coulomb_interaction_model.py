@@ -3,7 +3,7 @@ Interaction cross section in Coulomb's interaction model
 ========================================================
 
 In a magnetron, the effective cross section of particle interaction can be calculated via the
-ionization energy of gas atoms. See :ref:`Effective cross section`.
+ionization energy of gas atoms. See :ref:`Effective cross section <effective_cross_section>`.
 
 **Notation:**
 
