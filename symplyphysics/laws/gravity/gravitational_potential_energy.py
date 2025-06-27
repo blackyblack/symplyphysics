@@ -12,7 +12,7 @@ particles were brought together from infinity to the given distance.
 
 **Links:**
 
-#. `Physics LibreTexts. Gravitational Potential Energy beyond Earth (13.4.6) <https://phys.libretexts.org/Workbench/PH_245_Textbook_V2/13%3A_Gravitation/13.04%3A_Gravitational_Potential_Energy_and_Total_Energy>`__.
+#. `Physics LibreTexts. Gravitational Potential Energy beyond Earth (5.1.3.6) <https://phys.libretexts.org/Workbench/PH_245_Textbook_V2/13%3A_Gravitation/13.04%3A_Gravitational_Potential_Energy_and_Total_Energy>`__.
 """
 
 from sympy import Eq
