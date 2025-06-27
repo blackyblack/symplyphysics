@@ -15,7 +15,7 @@ to determine the latitude of the observation site.
 #. Both stars are at upper transit (culmination).
 
 ..
-    NOTE: possible link, but looks dubious <https://cseligman.com/laboratory/navcalc.htm>
+    TODO: check possible link <https://cseligman.com/laboratory/navcalc.htm>
 """
 
 from sympy import Eq, solve

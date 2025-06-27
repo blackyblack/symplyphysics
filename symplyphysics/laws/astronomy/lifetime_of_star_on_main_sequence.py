@@ -20,9 +20,6 @@ can be approximated from the mass of the star.
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Main_sequence#Lifetime>`__. Corresponds to the
    current law with a fixed indicator value.
-
-..
-    TODO find link
 """
 
 from sympy import Eq, solve
