@@ -28,7 +28,7 @@ from symplyphysics import (
     clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.conservation import momentum_of_colliding_objects_is_constant as constant_momentum
+from symplyphysics.laws.conservation import momentum_is_constant as constant_momentum
 
 initial_time = clone_as_symbol(symbols.time, subscript="0")
 """

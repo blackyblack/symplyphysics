@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.conservation import momentum_of_colliding_objects_is_constant as conservation_law
+from symplyphysics.laws.conservation import momentum_is_constant as conservation_law
 
 Args = namedtuple("Args", ["Ps"])
 
