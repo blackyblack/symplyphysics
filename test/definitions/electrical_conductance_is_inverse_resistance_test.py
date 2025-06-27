@@ -6,10 +6,10 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.definitions import electrical_conductance_is_inversed_resistance as conductivity_def
+from symplyphysics.definitions import electrical_conductance_is_inverse_resistance as conductance_def
 
 # Description
-## If the object has 2 Ohm resistance, it should have 0.5 Siemens conductivity. No external calculators were used for such computation.
+## If the object has 2 Ohm resistance, it should have 0.5 Siemens conductance. No external calculators were used for such computation.
 
 Args = namedtuple("Args", ["R"])
 
@@ -20,14 +20,14 @@ def test_args_fixture() -> Args:
     return Args(R=R)
 
 
-def test_basic_conductivity(test_args: Args) -> None:
-    result = conductivity_def.calculate_conductivity(test_args.R)
+def test_basic_conductance(test_args: Args) -> None:
+    result = conductance_def.calculate_conductance(test_args.R)
     assert_equal(result, 0.5 * units.siemens)
 
 
 def test_bad_resistance() -> None:
     Rb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        conductivity_def.calculate_conductivity(Rb)
+        conductance_def.calculate_conductance(Rb)
     with raises(TypeError):
-        conductivity_def.calculate_conductivity(100)
+        conductance_def.calculate_conductance(100)

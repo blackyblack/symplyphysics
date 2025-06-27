@@ -2,12 +2,15 @@
 Current is charge derivative
 ============================
 
-The instantaneous electric current, or simply the *electric current*, is a physical quantity
-defined as the time derivative of the flowing charge.
+*Electric current* is the rate at which electric charge changes with time in classical electromagnetism.
+
+**Conditions:**
+
+#. Charge is differentiable with respect to time.
 
 **Links:**
 
-#. `Wikipedia, second equation <https://en.wikipedia.org/wiki/Electric_current#Metals>`__.
+#. `Wikipedia – Electric current <https://en.wikipedia.org/wiki/Electric_current#Metals>`__
 """
 
 from sympy import Eq, Derivative
@@ -26,12 +29,12 @@ time = symbols.time
 
 current = clone_as_function(symbols.current, [time])
 """
-Electric :symbols:`current` as a function of time.
+:symbols:`current` as a function of time.
 """
 
 charge = clone_as_function(symbols.charge, [time])
 """
-Electric :symbols:`charge` as a function of time.
+:symbols:`charge` as a function of time.
 """
 
 definition = Eq(current(time), Derivative(charge(time), time))
@@ -45,6 +48,7 @@ definition = Eq(current(time), Derivative(charge(time), time))
 @validate_input(charge_start_=charge, charge_end_=charge, time_=time)
 @validate_output(current)
 def calculate_current(charge_start_: Quantity, charge_end_: Quantity, time_: Quantity) -> Quantity:
+    # charge changes linearly from over the time interval `time_`
     charge_function_ = time * (charge_end_ - charge_start_) / time_
     applied_definition = definition.subs(charge(time), charge_function_)
     dsolved = applied_definition.doit()

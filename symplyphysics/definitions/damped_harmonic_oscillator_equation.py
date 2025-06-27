@@ -2,13 +2,18 @@
 Damped harmonic oscillator equation
 ===================================
 
-Assuming there is a damping force acting on an oscillating body that is linearly proportional
-to the body's velocity, we can write a differential equation for the body's position. We're
-assuming the body only moves in one direction.
+Describes the motion of a single‑degree‑of‑freedom mechanical oscillator that experiences *linear (viscous) damping*.
+
+**Conditions:**
+
+#. Damping force is directly proportional to velocity (viscous).
+#. Undamped angular frequency is positive and constant.
+#. Damping ratio is non‑negative.
+#. Motion is restricted to one spatial dimension.
 
 **Links:**
 
-#. `Physics LibreTexts, similar equation 15.6.2 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/Book%3A_University_Physics_I_-_Mechanics_Sound_Oscillations_and_Waves_(OpenStax)/15%3A_Oscillations/15.06%3A_Damped_Oscillations>`__.
+#. `Physics LibreTexts – Damped Oscillations (Eq. 15.6.2) <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/Book%3A_University_Physics_I_-_Mechanics_Sound_Oscillations_and_Waves_(OpenStax)/15%3A_Oscillations/15.06%3A_Damped_Oscillations>`__
 """
 
 from sympy import Derivative, Eq, dsolve
@@ -33,7 +38,7 @@ displacement = clone_as_function(
     display_latex="x",
 )
 """
-Displacement of the oscillating body as a function of time. See :symbols:`euclidean_distance`.
+Displacement (1-D) of the oscillating body as a function of time. See :symbols:`euclidean_distance`.
 """
 
 undamped_angular_frequency = clone_as_symbol(symbols.angular_frequency, positive=True)
@@ -43,7 +48,7 @@ Undamped :symbols:`angular_frequency` of the oscillator.
 
 damping_ratio = clone_as_symbol(symbols.damping_ratio, positive=True)
 """
-:symbols:`damping_ratio`, which critically determines the behavior of the system.
+:symbols:`damping_ratio` of the system.
 """
 
 definition = Eq(
