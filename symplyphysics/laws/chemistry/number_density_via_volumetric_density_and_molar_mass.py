@@ -1,4 +1,4 @@
-r"""
+"""
 Number density via volumetric density and molar mass
 ====================================================
 
@@ -28,7 +28,7 @@ number_density = symbols.number_density
 """
 
 volumetric_density = symbols.density
-r"""
+"""
 Volumetric :symbols:`density`, or mass per unit volume.
 """
 

@@ -21,7 +21,7 @@ phase_velocity = symbols.phase_speed
 
 bulk_modulus = symbols.bulk_modulus
 """
-:symbols:`bulk_modulus` of the medium. Also see :doc:`laws.hydro.hydraulic_stress_is_bulk_modulus_times_strain`.
+:symbols:`bulk_modulus` of the medium. Also see :doc:`laws.hydro.bulk_stress_is_bulk_modulus_times_strain`.
 """
 
 density = symbols.density

@@ -17,7 +17,7 @@ fall, the horizontal acceleration of the vessel and the height of liquid.
 from sympy import Eq, solve, sqrt
 from symplyphysics import symbols, Quantity, validate_input, validate_output, quantities
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.hydro import hydrostatic_pressure_from_density_and_depth_acceleration as pressure_law
+from symplyphysics.laws.hydro import hydrostatic_pressure_via_density_height_and_acceleration as pressure_law
 
 from symplyphysics.core.experimental.vectors import VectorNorm
 from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector

@@ -1,6 +1,6 @@
-r"""
-Electric field due to dipole
-============================
+"""
+Electric field due to dipole on the dipole axis
+===============================================
 
 The strength of the electric field set up by a dipole at a distant point on the dipole axis,
 which runs through both point charges comprising the dipole, is proportional to the inverse
@@ -12,7 +12,7 @@ cube of the distance to the dipole and the value of the electric dipole moment.
 
 **Conditions:**
 
-#. :math:`r / d \gg 1` where :math:`d` is the distance between point charges of the
+#. :math:`r / d \\gg 1` where :math:`d` is the distance between point charges of the
    dipole. This means that the point where electric field is measured must be far enough
    from the dipole itself.
 

@@ -21,7 +21,7 @@ and (2) the angular frequency of the external force driving the oscillations.
 
 **Links:**
 
-#. `Physics LibreTexts, derivable from (15.7.2) and (15.7.3) <https://en.wikipedia.org/wiki/Force#Second_law>`__.
+#. `Physics LibreTexts, derivable from (15.7.2) and (15.7.3) <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/Book%3A_University_Physics_I_-_Mechanics_Sound_Oscillations_and_Waves_(OpenStax)/15%3A_Oscillations/15.07%3A_Forced_Oscillations>`__.
 """
 
 from sympy import Eq, cos, dsolve
@@ -80,16 +80,10 @@ The :symbols:`phase_shift` of the oscillations of the external force.
 law = Eq(displacement(time),
     (driving_force_amplitude / mass) * cos(driving_angular_frequency * time + driving_phase_lag) /
     (natural_angular_frequency**2 - driving_angular_frequency**2))
-r"""
-.. only:: comment
+"""
+:laws:symbol::
 
-    `displacement` is a sympy Symbol, therefore auto-generation of formulas is impossible
-
-:code:`q(t) = F / (m * (w0^2 - w^2)) * cos(w * t + phi)`
-
-Latex:
-    .. math::
-        q(t) = \frac{F}{m \left( \omega_0^2 - \omega^2 \right)} \cos{\left( \omega t + \varphi \right)}
+:laws:latex::
 """
 
 # Derive law from forced oscillations equation

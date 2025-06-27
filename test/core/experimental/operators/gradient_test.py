@@ -1,7 +1,9 @@
 from typing import Sequence, Any
 from pytest import raises
 
-from sympy import sin, cos, Symbol as SymSymbol, Expr, ImmutableMatrix
+from sympy import sin, cos, Expr, ImmutableMatrix
+
+from symplyphysics.core.symbols.symbols import BasicSymbol, Symbol
 
 from symplyphysics.core.experimental.vectors import VectorSymbol
 from symplyphysics.core.experimental.coordinate_systems import (BaseCoordinateSystem,
@@ -16,7 +18,7 @@ def test_non_coordinate_scalar() -> None:
     assert vector_equals(VectorGradient(0), 0)
     assert vector_equals(VectorGradient(1), 0)
 
-    x = SymSymbol("x", real=True)
+    x = Symbol("x", real=True)
     assert vector_equals(VectorGradient(x), 0)  # not a CoordinateScalar
 
     v = VectorSymbol("v")
@@ -37,7 +39,7 @@ def test_non_evaluate() -> None:
     assert grad.args == (1,)
     assert vector_equals(grad, 0)  # evaluate
 
-    x = SymSymbol("x", real=True)
+    x = Symbol("x", real=True)
     grad = VectorGradient(x, evaluate=False)
     assert isinstance(grad, VectorGradient)
     assert grad.args == (x,)
@@ -60,7 +62,7 @@ def test_non_evaluate() -> None:
 
 
 def _check(system: BaseCoordinateSystem, value: Expr, components: Sequence[Any]) -> None:
-    p = SymSymbol("P")
+    p = BasicSymbol("P")
 
     scalar = CoordinateScalar(value, system, p)
 

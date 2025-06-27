@@ -1,4 +1,4 @@
-r"""
+"""
 Submerged volume of floating body via density ratio
 ===================================================
 
@@ -11,7 +11,7 @@ depends on the ratio of the densities of the body and the fluid.
 
 **Conditions:**
 
-#. :math:`\rho \le \rho_\text{fl}`, so the body must be floating. See below for the
+#. :math:`\\rho \\le \\rho_\\text{fl}`, so the body must be floating. See below for the
    description of the symbols.
 #. The body must be in static equilibrium.
 

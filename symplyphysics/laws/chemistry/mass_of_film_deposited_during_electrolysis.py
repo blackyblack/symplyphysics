@@ -9,16 +9,16 @@ through a solution or melt of an electrolyte.
 
 **Notation:**
 
-#. :quantity_notation:`elementary_charge`.
-#. :quantity_notation:`avogadro_constant`.
+#. :quantity_notation:`faraday_constant`.
 
-..
-    TODO: find link
+**Links:**
+
+#. `Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Faraday%27s_laws_of_electrolysis#Derivation>`__.
 """
 
 from sympy import Eq, solve
 from symplyphysics import Quantity, validate_input, validate_output, symbols, Symbol, dimensionless
-from symplyphysics.quantities import elementary_charge, avogadro_constant
+from symplyphysics.quantities import faraday_constant
 
 film_mass = symbols.mass
 """
@@ -52,8 +52,7 @@ time = symbols.time
 
 law = Eq(
     film_mass,
-    current * molar_mass * current_output * time /
-    (valence * elementary_charge * avogadro_constant),
+    current * molar_mass * current_output * time / (valence * faraday_constant),
 )
 """
 :laws:symbol::

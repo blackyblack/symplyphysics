@@ -20,7 +20,7 @@ from symplyphysics import symbols, Quantity, validate_input, validate_output, qu
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.gravity import gravitational_potential_energy as potential_energy_law
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy_law
-from symplyphysics.laws.conservation import mechanical_energy_after_equals_to_mechanical_energy_before as conservation_law
+from symplyphysics.laws.conservation import initial_mechanical_energy_equals_final_mechanical_energy as conservation_law
 
 speed = symbols.speed
 """

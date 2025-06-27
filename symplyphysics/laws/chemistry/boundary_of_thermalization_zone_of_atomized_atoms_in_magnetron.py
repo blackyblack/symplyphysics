@@ -13,7 +13,7 @@ atoms. The number of collisions of a traveling atom is the number of collisions,
 which its energy will be equal to the energy of thermal motion in a gas-discharge plasma.
 
 ..
-    TODO: find link
+    TODO: find link and check description
     TODO: move to `magnetron` folder?
 """
 

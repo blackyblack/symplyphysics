@@ -1,6 +1,8 @@
 from pytest import raises
 
-from sympy import Symbol as SymSymbol, sin, cos, tan
+from sympy import sin, cos, tan
+
+from symplyphysics.core.symbols.symbols import BasicSymbol, Symbol
 
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.experimental.vectors import VectorSymbol
@@ -15,7 +17,7 @@ def test_non_coordinate_scalar() -> None:
     assert expr_equals(VectorLaplacian(0), 0)
     assert expr_equals(VectorLaplacian(1), 0)
 
-    x = SymSymbol("x", real=True)
+    x = Symbol("x", real=True)
     assert expr_equals(VectorLaplacian(x), 0)
 
     v = VectorSymbol("v")
@@ -36,7 +38,7 @@ def test_non_evaluate() -> None:
     assert result.args == (1,)
     assert expr_equals(result, 0)  # evaluate
 
-    x = SymSymbol("x", real=True)
+    x = Symbol("x", real=True)
     result = VectorLaplacian(2 * x, evaluate=False)
     assert isinstance(result, VectorLaplacian)
     assert result.args == (2 * x,)
@@ -73,7 +75,7 @@ def test_cylindrical_system() -> None:
     cylindrical = CylindricalCoordinateSystem()
 
     rho, phi, z = cylindrical.base_scalars
-    p = SymSymbol("P")
+    p = BasicSymbol("P")
 
     scalar: CoordinateScalar = CoordinateScalar(rho**2 + z * sin(phi), cylindrical, p)
     result = VectorLaplacian(scalar)
@@ -94,7 +96,7 @@ def test_spherical_system() -> None:
     spherical = SphericalCoordinateSystem()
 
     r, theta, phi = spherical.base_scalars
-    p = SymSymbol("P")
+    p = BasicSymbol("P")
 
     scalar: CoordinateScalar = CoordinateScalar(r * sin(theta) * cos(phi), spherical, p)
     result = VectorLaplacian(scalar)

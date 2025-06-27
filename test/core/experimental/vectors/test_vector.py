@@ -1,7 +1,7 @@
 from collections import defaultdict
 from pytest import raises
-from sympy import Symbol as SymSymbol, Function as SymFunction, S, Basic, Mul, Expr
-from symplyphysics import units, dimensionless, symbols
+from sympy import Function as SymFunction, S, Basic, Mul, Expr
+from symplyphysics import units, dimensionless, symbols, Symbol
 from symplyphysics.core.dimensions import dimsys_SI
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.experimental.vectors import (
@@ -27,8 +27,8 @@ def test_is_vector_expr() -> None:
     assert not is_vector_expr(1)
     assert not is_vector_expr(S(-5))
 
-    x = SymSymbol("x")
-    y = SymSymbol("y")
+    x = Symbol("x")
+    y = Symbol("y")
     v = VectorSymbol("v")
     w = VectorSymbol("w")
 
@@ -72,8 +72,8 @@ def check_combination(expr: Expr, combination: dict[Expr, Expr]) -> bool:
 def test_combination() -> None:
     assert check_combination(0, {})
 
-    x = SymSymbol("x")
-    y = SymSymbol("y")
+    x = Symbol("x")
+    y = Symbol("y")
     v = VectorSymbol("v")
     w = VectorSymbol("w")
 
@@ -132,7 +132,7 @@ def test_equality() -> None:
 
 def test_vector_scaling() -> None:
     force = VectorSymbol("F", units.force)
-    scale = SymSymbol("k", real=True)
+    scale = Symbol("k", real=True)
 
     scaled_force = force * scale
     assert isinstance(scaled_force, Mul)
@@ -175,8 +175,8 @@ def test_vector_norm() -> None:
     # VectorScale
 
     force = VectorSymbol("F", units.force)
-    real_scale = SymSymbol("k", real=True)
-    pos_scale = SymSymbol("m", positive=True)
+    real_scale = Symbol("k", real=True)
+    pos_scale = Symbol("m", positive=True)
 
     assert expr_equals(norm(force * real_scale), norm(force) * abs(real_scale))
     assert expr_equals(norm(force * pos_scale), norm(force) * pos_scale)
@@ -317,7 +317,7 @@ def test_vector_mixed() -> None:
 
 
 def test_vector_function() -> None:  # pylint: disable=too-many-statements
-    a = SymSymbol("a")
+    a = Symbol("a")
     v = VectorSymbol("v")
 
     f = VectorFunction("f", arguments=(a,), dimension=units.length)
@@ -359,8 +359,8 @@ def test_vector_function() -> None:  # pylint: disable=too-many-statements
     assert dimsys_SI.is_dimensionless(g.dimension)
 
     h = VectorFunction("h", nargs=3)
-    b = SymSymbol("b")
-    c = SymSymbol("c")
+    b = Symbol("b")
+    c = Symbol("c")
     assert isinstance(h(a, b, c), AppliedVectorFunction)
     assert isinstance(h(v, b, c), AppliedVectorFunction)
     assert isinstance(h(v, v, c), AppliedVectorFunction)
@@ -403,8 +403,8 @@ def test_vector_function() -> None:  # pylint: disable=too-many-statements
 
 
 def test_vector_derivative() -> None:
-    x = SymSymbol("x")
-    y = SymSymbol("y")
+    x = Symbol("x")
+    y = Symbol("y")
 
     v = VectorSymbol("v")
     w = VectorSymbol("w")

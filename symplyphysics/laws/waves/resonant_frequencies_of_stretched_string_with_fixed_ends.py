@@ -1,4 +1,4 @@
-r"""
+"""
 Resonant frequencies of stretched string with fixed ends
 ========================================================
 

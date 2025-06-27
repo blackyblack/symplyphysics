@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from pytest import raises, fixture
-from sympy import pi, Expr, Symbol as SymSymbol
+from sympy import pi, Expr
+from symplyphysics.core.symbols.symbols import BasicSymbol
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
     CylindricalCoordinateSystem, SphericalCoordinateSystem, AppliedPoint)
@@ -72,7 +73,7 @@ def test_applied_point(test_args: Args) -> None:
 
 
 def test_check_point_with_system(test_args: Args) -> None:
-    p = SymSymbol("P")
+    p = BasicSymbol("P")
 
     assert check_point_with_system(test_args.cart_sys, None) == GLOBAL_POINT
     assert check_point_with_system(test_args.cart_sys, p) == p
