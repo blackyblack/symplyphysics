@@ -7,7 +7,7 @@ temperature. This law is known as the *Wien's displacement law*.
 
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Group_velocity#Definition_and_interpretation>`__.
+#. `Wikipedia <https://en.wikipedia.org/wiki/Wien%27s_displacement_law>`__.
 """
 
 from sympy import Eq, solve

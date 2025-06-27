@@ -7,7 +7,7 @@ electron transition to the levels between which the transition is occurring.
 
 **Links:**
 
-#. `Wikipedia, equivalent formula in terms of wavelength <https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_Introductory_Physics_-_Building_Models_to_Describe_Our_World_(Martin_Neary_Rinaldo_and_Woodman)/14%3A_Waves/14.07%3A_Standing_waves>`__.
+#. `Physics LibreTexts, equivalent formula in terms of wavelength <https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_Introductory_Physics_-_Building_Models_to_Describe_Our_World_(Martin_Neary_Rinaldo_and_Woodman)/14%3A_Waves/14.07%3A_Standing_waves>`__.
 """
 
 from sympy import Eq, solve
