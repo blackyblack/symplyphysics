@@ -2,11 +2,9 @@
 Electrochemical equivalent from molar mass and valence
 ======================================================
 
-Faraday's second law of electrolysis. The equivalent mass of a substance in general in
-chemistry is its molar mass divided by an integer depending on the chemical reaction in
-which the substance participates; in this case, the equivalent is the molar mass of the
-substance formed during ion discharge divided by the sum of the ion charges (measured
-in elementary units), resulting in a molecule or atom of the substance.
+**Faraday's second law of electrolysis** states that if the same amount of electricity is passed
+through different electrolytes, the masses of ions deposited at the electrodes are directly
+proportional to their chemical equivalents.
 
 **Notations:**
 
@@ -14,13 +12,15 @@ in elementary units), resulting in a molecule or atom of the substance.
 
 **Links:**
 
-#. `Wikipedia, derivable <https://en.wikipedia.org/wiki/Electrochemical_equivalent>`__.
+#. `Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Faraday%27s_laws_of_electrolysis#Derivation>`__.
+
+#. `BYJU'S <https://byjus.com/chemistry/laws-of-electrolysis/>`__.
 """
 
 from sympy import Eq, solve
 from symplyphysics import Quantity, validate_input, validate_output, symbols, quantities
 
-equivalent = symbols.electrochemical_equivalent
+electrochemical_equivalent = symbols.electrochemical_equivalent
 """
 :symbols:`electrochemical_equivalent`.
 """
@@ -35,7 +35,7 @@ valence = symbols.valence
 :symbols:`valence`.
 """
 
-law = Eq(equivalent, molar_mass / (quantities.faraday_constant * valence))
+law = Eq(electrochemical_equivalent, molar_mass / (quantities.faraday_constant * valence))
 """
 :laws:symbol::
 
@@ -44,14 +44,14 @@ law = Eq(equivalent, molar_mass / (quantities.faraday_constant * valence))
 
 
 @validate_input(molar_mass_=molar_mass, valence_=valence)
-@validate_output(equivalent)
+@validate_output(electrochemical_equivalent)
 def calculate_equivalent(molar_mass_: Quantity, valence_: int) -> Quantity:
     if not isinstance(valence_, int):
         raise ValueError("valence_ must be an integer.")
     if valence_ <= 0:
         raise ValueError("valence_ must be greater than 0.")
 
-    result_expr = solve(law, equivalent, dict=True)[0][equivalent]
+    result_expr = solve(law, electrochemical_equivalent, dict=True)[0][electrochemical_equivalent]
     result_expr = result_expr.subs({
         molar_mass: molar_mass_,
         valence: valence_,

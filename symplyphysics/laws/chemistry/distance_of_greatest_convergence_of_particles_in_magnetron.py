@@ -10,7 +10,7 @@ quasi-rigid spheres. The discharge voltage is the voltage between the cathode an
 anode in the magnetron at which plasma occurs.
 
 ..
-    TODO: find link
+    TODO: find link and check file
     TODO: move to `magnetron` folder?
 """
 

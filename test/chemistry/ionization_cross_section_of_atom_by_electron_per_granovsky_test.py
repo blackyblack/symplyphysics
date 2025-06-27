@@ -7,7 +7,7 @@ from symplyphysics import (
     assert_equal,
 )
 
-from symplyphysics.laws.chemistry import cross_section_of_ionization_of_atom_by_electron_by_granovsky as cross_section_law
+from symplyphysics.laws.chemistry import ionization_cross_section_of_atom_by_electron_per_granovsky as cross_section_law
 
 ## The ionization energy of atom is equal to 15.8 electronvolt. The energy of the ionizing electron is 45 electronvolt.
 ## The maximum value of the ionization cross-sectional area is 3.1e-20 [meter^2].

@@ -1,6 +1,6 @@
 """
-Cross section of ionization of atom by electrons per Lotz-Drevin
-================================================================
+Ionization cross section of atom by electrons per Lotz-Drevin
+=============================================================
 
 In this law, we are talking about the interaction of an atom and an electron, which
 ionizes an atom. Equivalent electrons on the outer shell of the ionized atom are
@@ -13,7 +13,7 @@ Lotz-Drewin approximation for the ionization cross section is considered.
 #. :quantity_notation:`hydrogen_ionization_energy`.
 
 ..
-    TODO: find link
+    TODO: find link and check file
     TODO: fix file name
     TODO: move to `ionization` folder?
 """

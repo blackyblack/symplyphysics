@@ -2,10 +2,8 @@
 Mass of substance deposited on electrode
 ========================================
 
-Faraday's first law of electrolysis: the mass of a substance deposited on an electrode
-during electrolysis is directly proportional to the amount of electricity transferred to
-this electrode. By the amount of electricity, we mean the total electric charge that has
-passed through the surface of the electrode.
+**Faraday's first law of electrolysis** states that the mass of a substance deposited or liberated
+at an electrode is directly proportional to the charge.
 
 **Links:**
 

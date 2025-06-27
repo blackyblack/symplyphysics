@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.chemistry import velocity_of_directional_motion_of_charged_particles_in_gas as velocity_law
+from symplyphysics.laws.chemistry import speed_of_charged_particles_in_gas_via_mobility as velocity_law
 
 # Description
 ## The mobility of charged particles at a single pressure is 2450 [meter^2 * pascal / (volt * second)].

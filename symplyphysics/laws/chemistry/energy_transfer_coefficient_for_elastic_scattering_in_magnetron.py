@@ -7,7 +7,7 @@ collides with gas atoms. The energy transfer coefficient in these collisions dep
 the mass of the traveling atom and the mass of the gas atom.
 
 ..
-    TODO: find link
+    TODO: find link and check file
 """
 
 from sympy import Eq, solve

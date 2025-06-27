@@ -1,11 +1,15 @@
 """
-Cross section of interaction in elastic interaction model
-=========================================================
+Interaction cross section in elastic interaction model
+======================================================
 
-The effective cross section is a physical quantity characterizing the probability of
-transition of a system of two interacting particles to a certain final state, a
-quantitative characteristic of the acts of collision of particles of a stream hitting a
-target with target particles. The effective cross-section has the dimension of the area.
+The Sutherland formula adjusts the formula of the cross section of interacting gas molecules
+taking into account their pairwise interactions. See :ref:`Effective cross section`.
+
+**Conditions:**
+
+#. The sizes of the target and field molecules are equal.
+
+#. Applicable to gases under moderate pressure.
 
 **Links:**
 
@@ -13,6 +17,7 @@ target with target particles. The effective cross-section has the dimension of t
 
 ..
     TODO: find English link
+    NOTE: a more proper law would replace `particle_diameter` with `test_radius + target_radius`
 """
 
 from sympy import Eq, solve, pi

@@ -1,6 +1,6 @@
 """
-Cross section of interaction in model of hard spheres
-=====================================================
+Interaction cross section in model of hard spheres
+==================================================
 
 The model used in this law assumes atoms to be hard spheres, in which case the cross
 section of the interaction between the atoms is proportional to the square of the

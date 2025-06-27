@@ -1,11 +1,10 @@
 """
-Etching rate of target in magnetron
-===================================
+Etch rate of target in magnetron
+================================
 
-The ions of the gas-discharge plasma in the magnetron fall on the target and knock the
-atoms out of it. The etching rate is how many nanometers of the target
-substance are etched per unit of time. In other words, this is how much thinner a target
-becomes per unit of time.
+The ions of the gas-discharge plasma in the magnetron fall on the target and knock the atoms out
+of it. The etch rate is how many nanometers of the target substance are etched per unit of time.
+In other words, this is how much thinner a target becomes per unit of time.
 
 **Notation:**
 
@@ -13,7 +12,7 @@ becomes per unit of time.
 #. :quantity_notation:`avogadro_constant`.
 
 ..
-    TODO: find link
+    TODO: find link and check file
     TODO: move to `magnetron` folder?
 """
 
@@ -28,7 +27,7 @@ from symplyphysics import (
 )
 from symplyphysics.quantities import elementary_charge, avogadro_constant
 
-etching_rate = symbols.speed
+etch_rate = symbols.speed
 """
 Target etching rate. See :symbols:`speed`.
 """
@@ -54,7 +53,7 @@ Target :symbols:`density`.
 """
 
 law = Eq(
-    etching_rate,
+    etch_rate,
     ion_current_density * target_molar_mass * sputtering_coefficient /
     (elementary_charge * target_density * avogadro_constant),
 )
@@ -69,10 +68,10 @@ law = Eq(
     molar_mass_of_target_atom_=target_molar_mass,
     sputtering_coefficient_=sputtering_coefficient,
     target_density_=target_density)
-@validate_output(etching_rate)
+@validate_output(etch_rate)
 def calculate_etching_rate(ion_current_density_: Quantity, molar_mass_of_target_atom_: Quantity,
     sputtering_coefficient_: float, target_density_: Quantity) -> Quantity:
-    result_expr = solve(law, etching_rate, dict=True)[0][etching_rate]
+    result_expr = solve(law, etch_rate, dict=True)[0][etch_rate]
     result_expr = result_expr.subs({
         ion_current_density: ion_current_density_,
         target_molar_mass: molar_mass_of_target_atom_,

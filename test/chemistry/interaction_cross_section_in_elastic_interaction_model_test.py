@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.chemistry import cross_section_of_interaction_in_elastic_interaction_model as cross_section_law
+from symplyphysics.laws.chemistry import interaction_cross_section_in_elastic_interaction_model as cross_section_law
 
 # Description
 ## The diameter of the atom is 1.31e-10 meter. Sutherland's constant is 133.5 kelvin. The temperature is 573 kelvin.

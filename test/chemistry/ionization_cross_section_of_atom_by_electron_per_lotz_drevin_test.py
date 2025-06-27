@@ -7,7 +7,7 @@ from symplyphysics import (
     assert_equal,
 )
 
-from symplyphysics.laws.chemistry import cross_section_of_ionization_of_atom_by_electron_by_lotz_drevin as cross_section_law
+from symplyphysics.laws.chemistry import ionization_cross_section_of_atom_by_electron_per_lotz_drevin as cross_section_law
 
 ## The ionization energy of atom is equal to 15.8 electronvolt. The energy of the ionizing electron is 110 electronvolt.
 ## The first and second calculation coefficients are 1.9 and 0.4. The number of equivalent electrons on the outer shell of an atom is 6.

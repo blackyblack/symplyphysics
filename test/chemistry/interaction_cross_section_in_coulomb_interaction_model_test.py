@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.chemistry import cross_section_of_interaction_in_coulomb_interaction_model as cross_section_law
+from symplyphysics.laws.chemistry import interaction_cross_section_in_coulomb_interaction_model as cross_section_law
 
 # Description
 ## The ionization energy, expressed in voltage, is 14.69 volt.
