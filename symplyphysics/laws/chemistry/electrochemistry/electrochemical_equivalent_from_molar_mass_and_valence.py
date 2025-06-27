@@ -14,7 +14,7 @@ proportional to their chemical equivalents.
 
 #. `Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Faraday%27s_laws_of_electrolysis#Derivation>`__.
 
-#. `BYJY'S <https://byjus.com/chemistry/laws-of-electrolysis/>`__.
+#. `BYJU'S <https://byjus.com/chemistry/laws-of-electrolysis/>`__.
 """
 
 from sympy import Eq, solve
