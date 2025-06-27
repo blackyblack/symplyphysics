@@ -1,4 +1,4 @@
-r"""
+"""
 Maxwell—Jüttner distribution
 ============================
 
@@ -59,7 +59,7 @@ law = Eq(
     lorentz_factor * sqrt(lorentz_factor**2 - 1) /
     (reduced_temperature * besselk(2, 1 / reduced_temperature)) *
     exp(-1 * lorentz_factor / reduced_temperature))
-r"""
+"""
 ..
     The printers do not yet recognize the `besselk` function.
 
@@ -67,9 +67,9 @@ r"""
 
 Latex:
     .. math::
-        f(\gamma) = \frac{\gamma \sqrt{\gamma^2 - 1}}
-                         {\theta K_2 \left( \frac{1}{\theta} \right)} 
-                    \exp{\left( -\frac{\gamma}{\theta} \right)}
+        f(\\gamma) = \\frac{\\gamma \\sqrt{\\gamma^2 - 1}}
+                         {\\theta K_2 \\left( \\frac{1}{\\theta} \\right)} 
+                    \\exp{\\left( -\\frac{\\gamma}{\\theta} \\right)}
 """
 
 

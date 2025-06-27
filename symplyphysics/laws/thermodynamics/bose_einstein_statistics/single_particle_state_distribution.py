@@ -1,4 +1,4 @@
-r"""
+"""
 Single particle state distribution
 ==================================
 
@@ -12,7 +12,7 @@ of the state and the temperature and the chemical potential of the system.
 
 **Conditions:**
 
-#. :math:`E_i > \mu`.
+#. :math:`E_i > \\mu`.
 
 **Links:**
 

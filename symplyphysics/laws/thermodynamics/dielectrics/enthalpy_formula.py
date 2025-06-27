@@ -14,6 +14,9 @@ its internal energy and the electric field and electric displacement.
 **Links:**
 
 #. Formula 31.5 on p. 122 of "General Course of Physics" (Obschiy kurs fiziki), vol. 3 by Sivukhin D.V. (1979).
+
+..
+    TODO: make E and D vectors
 """
 
 from sympy import Eq
@@ -50,6 +53,11 @@ law = Eq(
     enthalpy_density,
     internal_energy_density - electric_field_strength * electric_displacement,
 )
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(

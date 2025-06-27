@@ -16,6 +16,9 @@ The *average*, or mean, *speed* is the expected value of the speed distribution 
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution#Typical_speeds>`__.
+
+..
+    TODO: move to `./maxwell_boltzmann_statistics.py`
 """
 
 from sympy import Eq, sqrt, pi, S, stats, Interval

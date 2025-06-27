@@ -21,12 +21,12 @@ from symplyphysics import (
 )
 
 heat_from_heater = clone_as_symbol(symbols.heat, subscript="h")
-r"""
+"""
 :symbols:`heat` transferred by the heater to the heat engine.
 """
 
 heat_to_refrigerator = clone_as_symbol(symbols.heat, subscript="r")
-r"""
+"""
 :symbols:`heat` transferred by the heat engine to the refrigerator.
 """
 

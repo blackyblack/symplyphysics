@@ -1,4 +1,4 @@
-r"""
+"""
 Diffusion coefficient of spherical Brownian particles from temperature and dynamic viscosity
 ============================================================================================
 
@@ -7,7 +7,7 @@ substance in a liquid or gas caused by the thermal motion of particles of a liqu
 The *diffusion coefficient* is a quantitative characteristic of the diffusion rate, equal to
 the amount of matter passing per unit time through a section of a unit area as a result of
 the thermal motion of molecules with a concentration gradient equal to one (corresponding to
-a change from :math:`1 \frac{\text{mol}}{\text{L}}` to :math:`0 \frac{\text{mol}}{\text{L}}`
+a change from :math:`1 \\frac{\\text{mol}}{\\text{L}}` to :math:`0 \\frac{\\text{mol}}{\\text{L}}`
 per unit length). The diffusion coefficient is determined by the properties of the medium and
 the type of diffusing particles. This law is also known as the *Stokes—Einstein—Sutherland relation*.
 

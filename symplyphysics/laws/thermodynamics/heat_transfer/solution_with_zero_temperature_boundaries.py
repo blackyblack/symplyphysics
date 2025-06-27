@@ -1,4 +1,4 @@
-r"""
+"""
 Solution with zero temperature boundaries
 =========================================
 
@@ -13,13 +13,13 @@ the boundary equation :math:`f(x) = T(x, 0)`.
 
     .. _heat_transfer_zero_temperature_solution_coefficient_note:
 
-#. Values :math:`B_n` are found using the boundary condition :math:`f(x) = \sum_n T_n(x, 0)`
+#. Values :math:`B_n` are found using the boundary condition :math:`f(x) = \\sum_n T_n(x, 0)`
    with the help of the Fourier method.
-#. The total solution :math:`T(x, t) = \sum_n T_n(x, t)`.
+#. The total solution :math:`T(x, t) = \\sum_n T_n(x, t)`.
 
 **Conditions:**
 
-#. Position :math:`x \in [0, L]`.
+#. Position :math:`x \\in [0, L]`.
 #. Temperature on both ends is zero: :math:`T_n(0, t) = 0`, :math:`T_n(L, t) = 0`
 
 **Links:**

@@ -1,4 +1,4 @@
-r"""
+"""
 Classical isochoric molar heat capacity of solids
 =================================================
 

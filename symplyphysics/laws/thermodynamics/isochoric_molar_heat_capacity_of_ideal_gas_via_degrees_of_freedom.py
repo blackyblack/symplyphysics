@@ -1,4 +1,4 @@
-r"""
+"""
 Isochoric molar heat capacity of ideal gas via degrees of freedom
 =================================================================
 

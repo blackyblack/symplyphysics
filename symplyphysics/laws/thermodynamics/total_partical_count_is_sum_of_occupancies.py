@@ -1,4 +1,4 @@
-r"""
+"""
 Total particle count is sum of occupancies
 ==========================================
 
@@ -9,7 +9,7 @@ in the system.
 
 **Notes:**
 
-#. This law can be used to express chemical potential :math:`\mu` as a function of temperature :math:`T`
+#. This law can be used to express chemical potential :math:`\\mu` as a function of temperature :math:`T`
    and total particle count :math:`N` for Fermi—Dirac and Bose—Einstein distributions.
 
 **Links:**

@@ -1,4 +1,4 @@
-r"""
+"""
 Critical temperature
 ====================
 

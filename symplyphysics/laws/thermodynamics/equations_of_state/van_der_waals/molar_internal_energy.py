@@ -11,7 +11,7 @@ as a function of volume at constant temperature.
 
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Van_der_Waals_equation#Internal_energy_and_specific_heat_at_constant_volume>`__.
+#. `Wikipedia <https://en.wikipedia.org/wiki/Van_der_Waals_equation#Internal_energy,_and_entropy>`__.
 """
 
 from sympy import Eq, Integral

@@ -22,13 +22,13 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import (
-    equation,
     critical_molar_volume,
     critical_pressure,
     critical_temperature,
     reduced_pressure as reduced_pressure_law,
     reduced_volume as reduced_volume_law,
     reduced_temperature as reduced_temperature_law,
+    van_der_vaals_equation,
 )
 
 reduced_pressure = Symbol("p_r", dimensionless)
@@ -59,17 +59,17 @@ law = Eq(
 # Derive from van der Waals equation of state
 
 _critical_pressure_expr = critical_pressure.law.rhs.subs({
-    critical_pressure.attractive_forces_parameter: equation.attractive_forces_parameter,
-    critical_pressure.excluded_volume_parameter: equation.excluded_volume_parameter,
+    critical_pressure.attractive_forces_parameter: van_der_vaals_equation.attractive_forces_parameter,
+    critical_pressure.excluded_volume_parameter: van_der_vaals_equation.excluded_volume_parameter,
 })
 
 _critical_molar_volume_expr = critical_molar_volume.law.rhs.subs({
-    critical_molar_volume.excluded_volume_parameter: equation.excluded_volume_parameter,
+    critical_molar_volume.excluded_volume_parameter: van_der_vaals_equation.excluded_volume_parameter,
 })
 
 _critical_temperature_expr = critical_temperature.law.rhs.subs({
-    critical_temperature.attractive_forces_parameter: equation.attractive_forces_parameter,
-    critical_temperature.excluded_volume_parameter: equation.excluded_volume_parameter,
+    critical_temperature.attractive_forces_parameter: van_der_vaals_equation.attractive_forces_parameter,
+    critical_temperature.excluded_volume_parameter: van_der_vaals_equation.excluded_volume_parameter,
 })
 
 _pressure = solve(reduced_pressure_law.law, reduced_pressure_law.pressure)[0].subs({
@@ -87,10 +87,10 @@ _temperature = solve(reduced_temperature_law.law, reduced_temperature_law.temper
     reduced_temperature_law.critical_temperature: _critical_temperature_expr,
 })
 
-_reduced_eqn = equation.law.subs({
-    equation.pressure: _pressure,
-    equation.molar_volume: _molar_volume,
-    equation.temperature: _temperature,
+_reduced_eqn = van_der_vaals_equation.law.subs({
+    van_der_vaals_equation.pressure: _pressure,
+    van_der_vaals_equation.molar_volume: _molar_volume,
+    van_der_vaals_equation.temperature: _temperature,
 })
 
 _reduced_temperature_derived = solve(_reduced_eqn, reduced_temperature)[0]

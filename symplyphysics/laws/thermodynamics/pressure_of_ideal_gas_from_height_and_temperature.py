@@ -1,4 +1,4 @@
-r"""
+"""
 Pressure of ideal gas from height and temperature
 =================================================
 

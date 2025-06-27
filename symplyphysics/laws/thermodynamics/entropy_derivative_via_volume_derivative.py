@@ -1,4 +1,4 @@
-r"""
+"""
 Entropy derivative via volume derivative
 ========================================
 

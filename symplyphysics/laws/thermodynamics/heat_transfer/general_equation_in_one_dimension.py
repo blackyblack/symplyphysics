@@ -1,4 +1,4 @@
-r"""
+"""
 General equation in one dimension
 =================================
 
@@ -10,7 +10,7 @@ the evolution of heat transferred from hotter to colder environments in time and
 #. There is no straghtforward solution to this equation, and it depends on initial
    conditions as well.
 #. To get a similar equation for the 3-dimensional case, replace the spatial
-   derivative with gradient :math:`\nabla`.
+   derivative with gradient :math:`\\nabla`.
 #. Thermal conductivity :math:`k` can depend not only on position, but also on local
    temperature, but this is out of the scope of this law.
 

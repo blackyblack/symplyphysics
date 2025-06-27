@@ -1,6 +1,6 @@
 """
-Isentropic speed of sound
-=========================
+Isentropic speed of sound via pressure derivative
+=================================================
 
 Derived by Laplace, the formula for the speed of sound in fluids uses the pressure-density dependence
 and the fact that the oscillations in a sound wave happen so fast, and the thermal conductivity of air

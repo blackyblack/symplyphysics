@@ -14,7 +14,7 @@ of the gas and the average kinetic energy of gas particles.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Kinetic_theory_of_gases#Pressure_and_kinetic_energy>`__.
 """
 
-from sympy import (Eq, solve)
+from sympy import Eq, solve, Rational
 from symplyphysics import (Quantity, validate_input, validate_output, quantities, symbols,
     clone_as_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -26,7 +26,7 @@ from symplyphysics.definitions import number_density_is_number_of_objects_per_un
 average_kinetic_energy = clone_as_symbol(symbols.kinetic_energy,
     display_symbol="avg(K)",
     display_latex="\\langle K \\rangle")
-r"""
+"""
 Average :symbols:`kinetic_energy` of gas particles.
 """
 
@@ -40,7 +40,7 @@ pressure = symbols.pressure
 :symbols:`pressure` inside the gas.
 """
 
-law = Eq(pressure, 2 / 3 * number_density * average_kinetic_energy)
+law = Eq(pressure, Rational(2, 3) * number_density * average_kinetic_energy)
 """
 :laws:symbol::
 

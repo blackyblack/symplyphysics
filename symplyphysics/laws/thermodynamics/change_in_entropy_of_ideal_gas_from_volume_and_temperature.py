@@ -1,4 +1,4 @@
-r"""
+"""
 Change in entropy of ideal gas from volume and temperature
 ==========================================================
 

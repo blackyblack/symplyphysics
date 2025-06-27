@@ -1,4 +1,4 @@
-r"""
+"""
 Enthalpy differential
 =====================
 
@@ -14,7 +14,7 @@ thermodynamic quantities depend on variables that are measurable experimentally.
 #. Entropy, pressure, and particle count are so called natural variables of enthalpy as a
    thermodynamic potential.
 #. For a system with more than one type of particles, the last term can be represented as a sum over all
-   types of particles, i.e. :math:`\sum_i \mu_i \, d N_i`.
+   types of particles, i.e. :math:`\\sum_i \\mu_i \\, d N_i`.
 
 **Conditions:**
 

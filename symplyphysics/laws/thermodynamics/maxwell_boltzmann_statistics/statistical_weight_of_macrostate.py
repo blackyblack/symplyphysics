@@ -1,4 +1,4 @@
-r"""
+"""
 Statistical weight of macrostate
 ================================
 
@@ -9,7 +9,7 @@ for the statistical weight of the system can be found in combinatorics.
 
 **Notes:**
 
-#. Law can also be represented in form :math:`\\Omega = \frac{N!}{\prod_i (N_i!)}`
+#. Law can also be represented in form :math:`\\Omega = \\frac{N!}{\\prod_i (N_i!)}`
    (:code:`Omega = factorial(N) / Product(factorial(N_i), i)`)
 
 **Links:**

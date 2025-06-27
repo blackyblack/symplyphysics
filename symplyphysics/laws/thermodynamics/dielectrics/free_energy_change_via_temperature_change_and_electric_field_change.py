@@ -15,6 +15,9 @@ displacement.
 **Links:**
 
 #. Formula 31.7 on p. 122 of "General Course of Physics" (Obschiy kurs fiziki), vol. 3 by Sivukhin D.V. (1979).
+
+..
+    TODO: make E and dD vectors
 """
 
 from sympy import Eq

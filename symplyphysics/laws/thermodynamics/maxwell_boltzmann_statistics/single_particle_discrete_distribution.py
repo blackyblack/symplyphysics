@@ -1,6 +1,6 @@
-r"""
-Discrete distribution
-=====================
+"""
+Single-particle discrete distribution
+=====================================
 
 Maxwell—Boltzmann distribution can be written as a discrete distribution of a single particle's
 discrete energy spectrum. Maxwell-Boltzmann statistics gives the average number of particles

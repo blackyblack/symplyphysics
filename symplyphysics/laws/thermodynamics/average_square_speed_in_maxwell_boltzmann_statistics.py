@@ -1,4 +1,4 @@
-r"""
+"""
 Average square speed in Maxwell—Boltzmann statistics
 ====================================================
 
@@ -17,6 +17,9 @@ and inversely proportional to the mass of the gas.
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution#Typical_speeds>`__.
+
+..
+    TODO: move to `./maxwell_boltzmann_statistics.py`
 """
 
 from sympy import (Eq, solve, S, stats, Interval)
