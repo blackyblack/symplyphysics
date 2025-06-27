@@ -2,8 +2,10 @@
 Energy of electron in hydrogen atom per Bohr
 ============================================
 
-There is an expression for the total energy of the hydrogen atom according to Bohr's
-theory.
+In the Bohr's model of the Hydrogen atom, the electron is viewed as moving along a circular orbit
+around the nucleus (which was further generalized onto elliptical orbits by Sommerfeld). In the
+circular case, the energy of the atom can be expressed directly as a function of the electron's
+orbit radius.
 
 **Notation:**
 
@@ -12,20 +14,24 @@ theory.
 
 **Links:**
 
-#. `Wikipedia, derivable from first formula and formula for kinetic energy <https://en.wikipedia.org/wiki/Classical_electron_radius#>`__.
+#. Formula 13.8 on p. 71 of "General Course of Physics" (Obschiy kurs fiziki), vol. 5, part 1 by
+   Sivukhin D.V. (1979).
+
+..
+    TODO: find English link
 """
 
-from sympy import (Eq, solve, pi)
-from symplyphysics import (Quantity, validate_input, validate_output, quantities, symbols)
+from sympy import Eq, solve, pi
+from symplyphysics import Quantity, validate_input, validate_output, quantities, symbols
 
 energy = symbols.energy
 """
-Electron :symbols:`energy`.
+:symbols:`energy` of the Hydrogen atom.
 """
 
 radius = symbols.radius
 """
-Electron :symbols:`radius`.
+:symbols:`radius` of the electron's orbit.
 """
 
 law = Eq(energy,

@@ -19,22 +19,12 @@ value of this potential is removed.
 #. :quantity_notation:`boltzmann_constant`.
 
 ..
-    TODO: find link
+    TODO: find link and check file
 """
 
 from sympy import Eq, solve, pi, exp, sqrt
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    symbols,
-    clone_as_symbol,
-)
-from symplyphysics.quantities import (
-    elementary_charge,
-    electron_rest_mass,
-    boltzmann_constant,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols, clone_as_symbol
+from symplyphysics.quantities import elementary_charge, electron_rest_mass, boltzmann_constant
 
 probe_current = symbols.current
 """

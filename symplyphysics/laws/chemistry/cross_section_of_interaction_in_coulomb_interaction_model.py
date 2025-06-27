@@ -2,12 +2,8 @@
 Cross section of interaction in Coulomb's interaction model
 ===========================================================
 
-The effective cross section is a physical quantity characterizing the probability of
-transition of a system of two interacting particles to a certain final state, a
-quantitative characteristic of the acts of collision of particles of a stream hitting a
-target with target particles. The effective cross-section has the dimension of the area.
-In a magnetron, this value can be calculated if you know the ionization energy of gas
-atoms.
+In a magnetron, the effective cross section of particle interaction can be calculated via the
+ionization energy of gas atoms. See :ref:`Effective cross section`.
 
 **Notation:**
 
@@ -29,7 +25,7 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-cross_sectional_area_of_interaction = symbols.cross_section
+interaction_cross_section = symbols.cross_section
 """
 :symbols:`cross_section` of the interaction of particles.
 """
@@ -42,7 +38,7 @@ Ionization :symbols:`energy` of atoms expressed in :symbols:`voltage`.
 """
 
 law = Eq(
-    cross_sectional_area_of_interaction, quantities.elementary_charge**2 /
+    interaction_cross_section, quantities.elementary_charge**2 /
     (2 * pi * quantities.vacuum_permittivity**2 * ionization_energy**2))
 """
 :laws:symbol::
@@ -52,10 +48,9 @@ law = Eq(
 
 
 @validate_input(ionization_energy_=ionization_energy)
-@validate_output(cross_sectional_area_of_interaction)
+@validate_output(interaction_cross_section)
 def calculate_cross_sectional_area_of_interaction(ionization_energy_: Quantity) -> Quantity:
-    result_expr = solve(law, cross_sectional_area_of_interaction,
-        dict=True)[0][cross_sectional_area_of_interaction]
+    result_expr = solve(law, interaction_cross_section, dict=True)[0][interaction_cross_section]
     result_expr = result_expr.subs({
         ionization_energy: ionization_energy_,
     })

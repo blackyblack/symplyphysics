@@ -10,7 +10,7 @@ plasma, can be calculated. This amount will depend on the initial energy of the
 traveling atom and the energy transfer coefficient between the atom and the gas atoms.
 
 ..
-    TODO: find link
+    TODO: find link and check file
     TODO: move to `magnetron` folder?
 """
 
@@ -26,9 +26,9 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-collision_count = Symbol("N", dimensionless)
+collision_count = symbols.nonnegative_number
 """
-Number of collisions between the particle and gas.
+Number of collisions between the particle and gas. See :symbols:`nonnegative_number`.
 """
 
 initial_energy = clone_as_symbol(symbols.energy, subscript="0")

@@ -2,8 +2,8 @@ r"""
 Avogadro constant is particle count over amount of substance
 ============================================================
 
-The Avogadro constant is the constant of proportionality between particle count
-and amount of substance.
+The Avogadro constant is the constant of proportionality between particle count and amount of
+substance.
 
 **Notation:**
 

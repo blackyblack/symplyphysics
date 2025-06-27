@@ -10,7 +10,7 @@ decreases, as the electrons fly past the atom without having time to ionize it, 
 the time spent by the electron near the atom decreases.
 
 ..
-    TODO: find link
+    TODO: find link and check file
     TODO: move to `ionization` folder?
 """
 

@@ -2,9 +2,9 @@
 Mean free path of particles in gaseous medium
 =============================================
 
-The atoms of the target material evaporate and move towards the substrate inside the
-magnetron. At the same time, it collides with gas atoms. The free path length is the
-distance that a traveling atom travels between two collisions.
+The mean free path of a gas particle, defined as the average distance the particle travels between
+consecutive interactions with another particles, depends on the thermodynamical parameters of the
+gas as well as the interaction cross section.
 
 **Notation:**
 
@@ -12,17 +12,17 @@ distance that a traveling atom travels between two collisions.
 
 **Notes:**
 
-#. Assuming the model of spherical gas molecules, :math:`\\sigma = pi d^2`, where
+#. Assuming the model of spherical gas molecules, :math:`\\sigma = \\pi d^2`, where
    :math:`\\sigma` is the cross section and :math:`d` is the molecule diameter.
+
+**Conditions:**
+
+#. The gas is in a state of thermodynamic equilibrium.
 
 **Links:**
 
 #. `Wikipedia, the fourth formula <https://en.wikipedia.org/wiki/Mean_free_path#Kinetic_theory_of_gases>`__.
 #. `Chemistry LibreTexts, "27.6.4. Mean Free Path" <https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Physical_Chemistry_(LibreTexts)/27%3A_The_Kinetic_Theory_of_Gases/27.06%3A_Mean_Free_Path>`__.
-
-..
-    NOTE: remove the mention of a magnetron from the description?
-    TODO: move to `magnetron` folder?
 """
 
 from sympy import Eq, solve, sqrt
