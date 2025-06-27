@@ -6,7 +6,7 @@ from symplyphysics import (
     Quantity,
     errors,
 )
-from symplyphysics.laws.conservation import mixture_moles_amount_is_components_moles_amounts_sum as sum_of_moles_law
+from symplyphysics.laws.conservation import amount_of_mixture_is_sum_of_amounts_of_components as sum_of_moles_law
 
 Args = namedtuple("Args", ["nu1", "nu2"])
 

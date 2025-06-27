@@ -6,7 +6,7 @@ from symplyphysics import (
     Quantity,
     errors,
 )
-from symplyphysics.laws.conservation import mixture_mass_equal_sum_of_components_masses as sum_of_masses_law
+from symplyphysics.laws.conservation import mixture_mass_is_sum_of_component_masses as sum_of_masses_law
 
 Args = namedtuple("Args", ["m1", "m2"])
 

@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.conservation import momentum_after_collision_equals_to_momentum_before as conservation_law
+from symplyphysics.laws.conservation import initial_momentum_equals_final_momentum as conservation_law
 
 Args = namedtuple("Args", ["Ps"])
 

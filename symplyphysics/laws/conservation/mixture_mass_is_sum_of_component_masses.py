@@ -1,6 +1,6 @@
 """
-Mixture mass equals sum of component masses
-===========================================
+Mixture mass is sum of component masses
+=======================================
 
 The mass of a mixture of fluids is equal to the sum of the masses of the components of
 the mixture.

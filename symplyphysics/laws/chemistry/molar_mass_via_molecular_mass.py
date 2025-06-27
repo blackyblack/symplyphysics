@@ -28,7 +28,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.chemistry import (
     avogadro_constant_is_particle_count_over_amount_of_substance as avogadro_law,)
 from symplyphysics.laws.conservation import (
-    mixture_mass_equal_sum_of_components_masses as mass_sum_law,)
+    mixture_mass_is_sum_of_component_masses as mass_sum_law,)
 from symplyphysics.laws.quantities import (
     quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,)
 

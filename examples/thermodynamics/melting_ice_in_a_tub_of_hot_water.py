@@ -3,7 +3,7 @@
 from sympy import Idx, solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to, global_index
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
-from symplyphysics.laws.conservation import mixture_mass_equal_sum_of_components_masses as sum_masses_law
+from symplyphysics.laws.conservation import mixture_mass_is_sum_of_component_masses as sum_masses_law
 from symplyphysics.laws.thermodynamics import (
     heat_is_heat_capacity_times_temperature_change as thermal_energy_law,
     latent_heat_of_fusion_via_mass as energy_melting_law,

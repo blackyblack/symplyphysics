@@ -22,10 +22,6 @@ from symplyphysics import (
     symbols,
 )
 
-# Law: dq/dt = 0
-## q - total charge of the system
-## d/dt - derivative with respect to time
-
 time = symbols.time
 """
 :symbols:`time`.

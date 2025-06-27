@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.conservation import mass_after_equals_to_mass_before as conservation_law
+from symplyphysics.laws.conservation import initial_mass_equals_final_mass as conservation_law
 
 Args = namedtuple("Args", ["ms"])
 

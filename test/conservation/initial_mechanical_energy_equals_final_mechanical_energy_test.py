@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.conservation import mechanical_energy_after_equals_to_mechanical_energy_before as conservation_law
+from symplyphysics.laws.conservation import initial_mechanical_energy_equals_final_mechanical_energy as conservation_law
 
 Args = namedtuple("Args", ["Es"])
 

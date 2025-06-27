@@ -5,8 +5,8 @@ from symplyphysics import print_expression
 from symplyphysics.core.convert import evaluate_expression
 from symplyphysics.quantities import speed_of_light
 from symplyphysics.laws.conservation import (
-    mechanical_energy_after_equals_to_mechanical_energy_before as energy_conservation_law,
-    momentum_after_collision_equals_to_momentum_before as momentum_conservation_law,
+    initial_mechanical_energy_equals_final_mechanical_energy as energy_conservation_law,
+    initial_momentum_equals_final_momentum as momentum_conservation_law,
 )
 from symplyphysics.laws.relativistic import (
     total_energy_via_momentum_and_rest_mass as energy_momentum_law,

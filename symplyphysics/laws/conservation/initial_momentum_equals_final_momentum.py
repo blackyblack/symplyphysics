@@ -2,7 +2,7 @@
 Initial momentum equals final momentum
 ======================================
 
-If there is no external force applied to system of objects, the summary momentum of this
+If no external force is applied to a system of objects, the total momentum of the
 system remains constant during and after any interactions between objects. See
 :ref:`Momentum is constant`.
 
@@ -28,7 +28,7 @@ from symplyphysics import (
     clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.conservation import momentum_of_colliding_objects_is_constant as constant_momentum
+from symplyphysics.laws.conservation import momentum_is_constant as constant_momentum
 
 initial_time = clone_as_symbol(symbols.time, subscript="0")
 """
