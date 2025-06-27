@@ -6,7 +6,7 @@ from symplyphysics import (
     Quantity,
     errors,
 )
-from symplyphysics.laws.astronomy import objects_angular_altitude_in_upper_culmination as altitude_law
+from symplyphysics.laws.astronomy import angular_altitude_in_upper_culmination as altitude_law
 
 # Description
 ## The declination of the object is -26 degrees. The latitude is 50 degrees. Then the height of the luminary

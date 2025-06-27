@@ -1,6 +1,6 @@
 """
-Object's angular altitude in upper culmination
-==============================================
+Angular altitude in upper culmination
+=====================================
 
 In observational astronomy, culmination is the passage of a celestial object across the observer's
 local meridian. **Upper culmination** refers to the time when the object reaches its highest point
@@ -15,14 +15,8 @@ local meridian. **Upper culmination** refers to the time when the object reaches
 #. `Wikipedia <https://en.wikipedia.org/wiki/Culmination#>`__.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (
-    units,
-    Quantity,
-    validate_input,
-    validate_output,
-    symbols,
-)
+from sympy import Eq, solve
+from symplyphysics import units, Quantity, validate_input, validate_output, symbols
 
 altitude = symbols.altitude
 """
