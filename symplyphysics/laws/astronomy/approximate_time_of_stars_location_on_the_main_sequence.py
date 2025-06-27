@@ -1,5 +1,5 @@
 """
-Approximate star_lifetime of stars located on the main sequence
+Approximate lifetime of stars located on the main sequence
 ==========================================================
 
 The main sequence is a stage of stellar evolution following the protostar stage. At the beginning
