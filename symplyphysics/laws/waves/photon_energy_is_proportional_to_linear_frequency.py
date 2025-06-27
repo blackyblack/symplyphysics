@@ -11,7 +11,7 @@ in any reference frame. The energy of a photon depends only on its frequency.
 
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Photon#Relativistic_energy_and_momentum>`__.
+#. `Wikipedia <https://en.wikipedia.org/wiki/Photon#Energy_and_momentum>`__.
 """
 
 from sympy import Eq, solve

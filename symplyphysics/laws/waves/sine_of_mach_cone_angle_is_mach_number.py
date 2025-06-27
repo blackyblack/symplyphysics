@@ -1,4 +1,4 @@
-r"""
+"""
 Sine of Mach cone angle via Mach number
 =======================================
 
@@ -11,7 +11,7 @@ phenomenon.
 
 **Conditions:**
 
-#. :math:`M \ge 1`, i.e. the source speed exceeds the speed of sound in the medium.
+#. :math:`M \\ge 1`, i.e. the source speed exceeds the speed of sound in the medium.
 
 **Links:**
 

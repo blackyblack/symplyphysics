@@ -1,11 +1,11 @@
-r"""
+"""
 Light frequency change is proportional to gravitational potential change
 ========================================================================
 
 When light is propagating in a gravitational field, its frequency changes proportionally to the
 change in the potential of the gravitational field.
 
-Let us consider an infinitesimally small section :math:`d \vec r` of the light's path, such that
+Let us consider an infinitesimally small section :math:`d \\vec r` of the light's path, such that
 the frequency of light is constant within that section. In that case we can obtain a dependency
 between the change in light's frequency and the change in the gravitational potential.
 
@@ -13,12 +13,12 @@ between the change in light's frequency and the change in the gravitational pote
 
     .. _gravitational potential:
 
-#. The *gravitational potential* :math:`\varphi` is defined as a scalar quantity such that the equation
-   :math:`\vec g = - \nabla \varphi` holds where :math:`\vec g` is the vector of acceleration due to gravity
-   and :math:`\nabla` is the nabla operator.
+#. The *gravitational potential* :math:`\\varphi` is defined as a scalar quantity such that the equation
+   :math:`\\vec g = - \\nabla \\varphi` holds where :math:`\\vec g` is the vector of acceleration due to gravity
+   and :math:`\\nabla` is the nabla operator.
 
-#. :math:`d \varphi = - \left( \vec g, d \vec r \right)` where :math:`\left( \vec a_1, \vec a_2 \right)` is
-   the dot product between :math:`\vec a_1` and :math:`\vec a_2`.
+#. :math:`d \\varphi = - \\left( \\vec g, d \\vec r \\right)` where :math:`\\left( \\vec a_1, \\vec a_2 \\right)` is
+   the dot product between :math:`\\vec a_1` and :math:`\\vec a_2`.
 
 **Links:**
 

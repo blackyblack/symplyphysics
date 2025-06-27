@@ -14,7 +14,7 @@ expressions.
 
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Photon#Relativistic_energy_and_momentum>`__.
+#. `Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Photon#Energy_and_momentum>`__.
 """
 
 from sympy import Eq, solve

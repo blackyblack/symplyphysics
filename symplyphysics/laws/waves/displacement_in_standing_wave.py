@@ -1,4 +1,4 @@
-r"""
+"""
 Displacement in standing wave
 =============================
 
@@ -8,7 +8,7 @@ moving in opposite directions.
 **Notes:**
 
 #. In this law we assume the standing wave to be composed of two identical traveling sinusoidal
-   waves of the form :math:`u_\text{max} \sin(k x \pm \omega t)`
+   waves of the form :math:`u_\\text{max} \\sin(k x \\pm \\omega t)`
 #. A standing wave is no longer a traveling one because it doesn't move in a single direction.
 
 **Links:**
