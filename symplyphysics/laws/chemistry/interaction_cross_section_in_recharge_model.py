@@ -2,7 +2,7 @@
 Interaction cross section in recharge model
 ===========================================
 
-See :ref:`effective-cross-section`.
+See :ref:`Effective cross section <_effective_cross_section>`.
 
 **Notation:**
 

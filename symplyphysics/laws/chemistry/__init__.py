@@ -6,6 +6,8 @@ Chemistry is a physical science that studies the chemical elements that make up 
 compounds made of atoms, molecules and ions: their composition, structure, properties,
 behavior and the changes they undergo during reactions with other substances.
 
+.. _effective_cross_section:
+
 **Effective cross section**
 
 The effective cross section is a physical quantity characterizing the probability of transition of
