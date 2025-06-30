@@ -1,4 +1,4 @@
-r"""
+"""
 Speed via constant acceleration and time
 ========================================
 
@@ -7,7 +7,7 @@ of time.
 
 **Conditions:**
 
-#. Acceleration is constant, i.e. :math:`\frac{d a}{d t} = 0.`
+#. Acceleration is constant, i.e. :math:`\\frac{d a}{d t} = 0.`
 
 **Links:**
 

@@ -1,4 +1,4 @@
-r"""
+"""
 Displacement in critical damping
 ================================
 
@@ -9,7 +9,7 @@ initial velocity is nonzero. This behavior is also called *critical damping*.
 
 **Conditions:**
 
-#. The system is critically damped, i.e. its damping ratio :math:`\zeta = 1`.
+#. The system is critically damped, i.e. its damping ratio :math:`\\zeta = 1`.
 """
 
 from sympy import Eq, exp, dsolve, solve

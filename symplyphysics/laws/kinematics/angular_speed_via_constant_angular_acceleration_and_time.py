@@ -1,4 +1,4 @@
-r"""
+"""
 Angular speed via constant angular acceleration and time
 ========================================================
 
@@ -8,7 +8,7 @@ speed is a linear function of time.
 **Conditions:**
 
 #. The axis is fixed.
-#. Angular acceleration is constant, i.e. :math:`\frac{d \alpha}{d t} = 0.`
+#. Angular acceleration is constant, i.e. :math:`\\frac{d \\alpha}{d t} = 0.`
 
 **Links:**
 
@@ -38,7 +38,7 @@ initial_angular_speed = clone_as_symbol(symbols.angular_speed, subscript="0")
 """
 
 angular_acceleration = symbols.angular_acceleration
-r"""
+"""
 Constant :symbols:`angular_acceleration`.
 """
 

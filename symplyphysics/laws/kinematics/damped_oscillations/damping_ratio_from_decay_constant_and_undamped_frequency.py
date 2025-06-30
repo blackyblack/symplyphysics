@@ -20,7 +20,7 @@ exponential_decay_constant = symbols.exponential_decay_constant
 """
 
 undamped_angular_frequency = symbols.angular_frequency
-r"""
+"""
 Undamped :symbols:`angular_frequency` of the oscillator.
 """
 

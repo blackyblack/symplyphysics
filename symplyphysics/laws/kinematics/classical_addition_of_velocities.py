@@ -1,4 +1,4 @@
-r"""
+"""
 Classical addition of velocities
 ================================
 

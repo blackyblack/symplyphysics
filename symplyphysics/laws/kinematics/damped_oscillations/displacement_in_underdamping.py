@@ -1,4 +1,4 @@
-r"""
+"""
 Displacement in underdamping
 ============================
 
@@ -9,7 +9,7 @@ to zero. This behavior is also known as *underdamping*.
 
 **Conditions:**
 
-#. The system is underdamped, i.e. its damping ratio :math:`\zeta < 1`.
+#. The system is underdamped, i.e. its damping ratio :math:`\\zeta < 1`.
 """
 
 from sympy import Eq, exp, cos, solve

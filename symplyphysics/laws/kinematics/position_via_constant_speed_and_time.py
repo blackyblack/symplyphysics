@@ -1,4 +1,4 @@
-r"""
+"""
 Position via constant speed and time
 ====================================
 
@@ -7,7 +7,7 @@ of time.
 
 **Conditions:**
 
-#. Speed is constant, i.e. :math:`\frac{d v}{d t} = 0.`
+#. Speed is constant, i.e. :math:`\\frac{d v}{d t} = 0.`
 
 **Links:**
 

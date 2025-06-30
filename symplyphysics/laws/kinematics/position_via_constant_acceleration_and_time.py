@@ -1,4 +1,4 @@
-r"""
+"""
 Position via constant acceleration and time
 ===========================================
 
@@ -6,7 +6,7 @@ If a body is moving with a constant acceleration, its position in space is a qua
 
 **Conditions:**
 
-#. Acceleration is constant, i.e. :math:`\frac{d a}{d t} = 0.`
+#. Acceleration is constant, i.e. :math:`\\frac{d a}{d t} = 0.`
 
 **Links:**
 

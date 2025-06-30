@@ -1,4 +1,4 @@
-r"""
+"""
 Tangential acceleration via angular acceleration and radius
 ===========================================================
 
@@ -7,7 +7,7 @@ of the velocity vector, and its vector is tangent to the path of the body.
 
 **Conditions:**
 
-#. Radius is constant, i.e. :math:`\frac{d r}{d t} = 0.`
+#. Radius is constant, i.e. :math:`\\frac{d r}{d t} = 0.`
 
 **Links:**
 
