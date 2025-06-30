@@ -17,7 +17,7 @@ potential and a time-dependent wave function.
 
 **Links:**
 
-#. Wikipedia <https://en.wikipedia.org/wiki/Schr%C3%B6dinger_equation#Separation_of_variables>
+#. `Wikipedia <https://en.wikipedia.org/wiki/Schr%C3%B6dinger_equation#Separation_of_variables>`__.
 """
 
 from sympy import Eq, Derivative, I

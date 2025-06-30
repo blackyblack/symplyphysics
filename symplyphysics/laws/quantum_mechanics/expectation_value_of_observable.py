@@ -55,7 +55,7 @@ law = Eq(
     conjugate(wave_function(position, time)) * observable(wave_function(position, time)),
     (position, S.NegativeInfinity, S.Infinity)),
 )
-r"""
+"""
 :laws:symbol::
 
 ..
@@ -63,7 +63,7 @@ r"""
 
 .. math::
     
-    \langle O \rangle = \int \limits_{-\infty}^{\infty} \psi^* (x, t) O[\psi](x, t) dx
+    \\langle O \\rangle = \\int \\limits_{-\\infty}^{\\infty} \\psi^* (x, t) O[\\psi](x, t) dx
 """
 
 
