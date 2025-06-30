@@ -1,6 +1,6 @@
 """
 Linear displacement is angular displacement cross radius
-=================================================
+========================================================
 
 Assuming a body rotating around a fixed axis, the vector of its linear displacement can be expressed
 as the cross product of the pseudovector of angular displacement and the radius vector of rotation.

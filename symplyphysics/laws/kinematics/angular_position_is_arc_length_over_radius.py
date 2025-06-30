@@ -18,7 +18,7 @@ from sympy import Eq
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 
 angular_position = symbols.angular_distance
-r"""
+"""
 :symbols:`angular_distance` of the body.
 """
 

@@ -1,11 +1,11 @@
-r"""
+"""
 Angular position via constant angular acceleration and time
 ===========================================================
 
 If a body is rotating with a constant acceleration, its angular position is a quadratic function of time.
 
 #. The axis is fixed.
-#. Angular acceleration is constant, i.e. :math:`\frac{d \alpha}{d t} = 0.`
+#. Angular acceleration is constant, i.e. :math:`\\frac{d \\alpha}{d t} = 0.`
 
 **Links:**
 
