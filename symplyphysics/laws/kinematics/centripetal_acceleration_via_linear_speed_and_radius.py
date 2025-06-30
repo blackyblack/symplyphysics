@@ -16,7 +16,7 @@ from symplyphysics.core.expr_comparisons import expr_equals, expr_equals_abs
 from symplyphysics.definitions import speed_is_distance_derivative as velocity_def
 from symplyphysics.definitions import angular_speed_is_angular_distance_derivative as angular_velocity_def
 from symplyphysics.definitions import acceleration_is_speed_derivative as acceleration_def
-from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
+from symplyphysics.laws.geometry import scalar_projection_is_vector_length_times_cosine_of_angle as projector
 from symplyphysics.laws.kinematics import speed_via_angular_speed_and_radius as linear_velocity_law
 
 from symplyphysics.core.experimental.vectors import VectorDot

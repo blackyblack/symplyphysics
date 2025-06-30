@@ -16,7 +16,7 @@ from symplyphysics.laws.kinematics.vector import (
     centrifugal_acceleration_via_centripetal_acceleration as centrifugal_law,
 )
 from symplyphysics.laws.geometry import (
-    planar_projection_is_cosine as cosine_law,)
+    scalar_projection_is_vector_length_times_cosine_of_angle as cosine_law,)
 from symplyphysics.laws.quantities import (
     quantity_is_linear_density_times_length as linear_density_law,)
 
