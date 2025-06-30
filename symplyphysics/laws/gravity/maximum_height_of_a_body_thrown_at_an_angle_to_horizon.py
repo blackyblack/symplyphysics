@@ -37,7 +37,7 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematics import position_via_constant_acceleration_and_time as distance_law
 from symplyphysics.laws.kinematics import speed_via_constant_acceleration_and_time as velocity_law
-from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
+from symplyphysics.laws.geometry import scalar_projection_is_vector_length_times_cosine_of_angle as projection_law
 
 height = symbols.height
 """

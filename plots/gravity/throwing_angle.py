@@ -7,7 +7,7 @@ from sympy import diff, symbols, Eq, solve, simplify, pi
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics.laws.kinematics import position_via_constant_acceleration_and_time as movement_law
-from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
+from symplyphysics.laws.geometry import scalar_projection_is_vector_length_times_cosine_of_angle as projector
 
 flight_time = symbols("flight_time")
 throwing_velocity = symbols("throwing_velocity")

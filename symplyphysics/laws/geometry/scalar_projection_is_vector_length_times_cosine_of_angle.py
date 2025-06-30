@@ -1,6 +1,6 @@
 """
-Scalar projection is vector_length times cosine of angle
-====================================================
+Scalar projection is vector length times cosine of angle
+========================================================
 
 The **scalar projection** of a vector :math:`\\vec a` onto a vector :math:`\\vec b` can be found
 if the vector_length of :math:`\\vec a` and the angle between :math:`\\vec a` and :math:`\\vec b` are

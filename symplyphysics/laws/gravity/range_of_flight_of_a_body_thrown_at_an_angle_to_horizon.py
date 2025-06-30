@@ -23,7 +23,7 @@ from sympy import Eq, solve, sin
 from symplyphysics import Quantity, validate_input, validate_output, symbols, quantities, clone_as_symbol
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as distance_law
-from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
+from symplyphysics.laws.geometry import scalar_projection_is_vector_length_times_cosine_of_angle as projection_law
 from symplyphysics.laws.gravity import maximum_movement_time_of_a_body_thrown_at_an_angle_to_horizon as time_law
 
 horizontal_displacement = symbols.euclidean_distance

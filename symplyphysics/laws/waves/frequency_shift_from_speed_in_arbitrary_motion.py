@@ -30,7 +30,7 @@ from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.laws.waves import (
     wavelength_from_phase_speed_and_period as period_law,)
 from symplyphysics.definitions import temporal_frequency_from_period as frequency_def
-from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
+from symplyphysics.laws.geometry import scalar_projection_is_vector_length_times_cosine_of_angle as projector
 from symplyphysics.laws.kinematics import (
     position_via_constant_speed_and_time as distance_law,)
 

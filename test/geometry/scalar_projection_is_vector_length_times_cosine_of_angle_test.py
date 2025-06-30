@@ -7,7 +7,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
+from symplyphysics.laws.geometry import scalar_projection_is_vector_length_times_cosine_of_angle as projection_law
 
 Args = namedtuple("Args", ["force_vector_amplitude", "angle_between_vector_and_horizontal_axis"])
 

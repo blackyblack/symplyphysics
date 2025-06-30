@@ -26,7 +26,7 @@ from sympy import Eq, solve, sin, pi
 from symplyphysics import Quantity, validate_input, validate_output, symbols, quantities, clone_as_symbol
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematics import position_via_constant_acceleration_and_time as distance_law
-from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
+from symplyphysics.laws.geometry import scalar_projection_is_vector_length_times_cosine_of_angle as projection_law
 
 time = symbols.time
 """

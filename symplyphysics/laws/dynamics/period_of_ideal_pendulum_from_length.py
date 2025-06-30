@@ -27,7 +27,7 @@ from symplyphysics import (
     clone_as_function,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
+from symplyphysics.laws.geometry import scalar_projection_is_vector_length_times_cosine_of_angle as projector
 from symplyphysics.laws.dynamics import potential_energy_from_mass_and_height as potential_energy
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy
 from symplyphysics.laws.kinematics import speed_via_angular_speed_and_radius as angular_velocity_law
