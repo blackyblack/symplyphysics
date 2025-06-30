@@ -8,7 +8,8 @@ factor, resonance escape probability, and thermal utilization factor.
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Nuclear_chain_reaction#Six-factor_formula>`__.
-# `NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/nuclear-fission-chain-reaction/four-factor-formula-infinite-multiplication-factor/>`__.
+
+#. `NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/nuclear-fission-chain-reaction/four-factor-formula-infinite-multiplication-factor/>`__.
 """
 
 from sympy import (Eq, solve)

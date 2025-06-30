@@ -28,7 +28,7 @@ Average number of neutrons produced per fission. See :symbols:`particle_count`.
 
 macroscopic_fission_cross_section = clone_as_symbol(symbols.macroscopic_cross_section,
     display_symbol="Sigma_f",
-    display_latex="\\Sigma_text{f}")
+    display_latex="\\Sigma_\\text{f}")
 """
 :symbols:`macroscopic_cross_section` of fission.
 """
