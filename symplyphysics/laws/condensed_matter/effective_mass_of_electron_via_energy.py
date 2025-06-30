@@ -13,8 +13,6 @@ of a free particle with that mass.
 
 **Links:**
 
-#. `Technische Universität Kiel, green box <https://www.tf.uni-kiel.de/matwis/amat/semi_en/kap_2/backbone/r2_3_1.html>`__.
-
 #. `Wikipedia, fifth formula with adjustments <https://en.wikipedia.org/wiki/Effective_mass_(solid-state_physics)#Inertial_effective_mass_tensor>`__.
 """
 

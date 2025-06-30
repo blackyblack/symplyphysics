@@ -1,4 +1,4 @@
-r"""
+"""
 Current density in thermionic emission per Richardson
 =====================================================
 
