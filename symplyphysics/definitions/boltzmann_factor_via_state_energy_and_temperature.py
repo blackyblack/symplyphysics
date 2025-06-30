@@ -10,8 +10,7 @@ The *Boltzmann factor* weights how likely a system is to occupy a micro-state of
 
 **Conditions:**
 
-#. Equilibrium temperature is strictly greater than zero.
-#. Energy of the state is finite.
+#. Equilibrium temperature is positive.
 
 **Links:**
 

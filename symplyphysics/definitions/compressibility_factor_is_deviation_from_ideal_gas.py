@@ -10,8 +10,7 @@ The **compressibility factor** (also called the **compression factor** or **gas 
 
 **Conditions:**
 
-#. Temperature is strictly greater than zero.
-#. Amount of substance, pressure, and volume are all finite and non-zero.
+#. Temperature is positive.
 #. The gas sample is at thermodynamic equilibrium.
 
 **Notes:**

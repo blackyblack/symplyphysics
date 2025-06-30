@@ -7,7 +7,6 @@ mass to the total mass of the mixture.
 
 **Conditions:**
 
-#. Total mass is not zero.
 #. All masses refer to the same mixture at the same state.
 
 **Links:**

@@ -4,10 +4,6 @@ Current is charge derivative
 
 *Electric current* is the rate at which electric charge changes with time in classical electromagnetism.
 
-**Conditions:**
-
-#. Charge is differentiable with respect to time.
-
 **Links:**
 
 #. `Wikipedia – Electric current <https://en.wikipedia.org/wiki/Electric_current#Metals>`__

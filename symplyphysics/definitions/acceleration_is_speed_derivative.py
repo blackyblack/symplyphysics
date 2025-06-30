@@ -4,10 +4,11 @@ Acceleration is speed derivative
 
 *Acceleration* describes how quickly speed changes with time.
 
-**Conditions:**
+**Notes:**
 
-#. Speed must be differentiable with respect to time on the interval of interest.
-#. Non-relativistic motion, i.e. speed of a body is much less than the speed of light and space-time curvature is negligible.
+#. It still holds for special relativity and general relativity cases, but general relativity requires
+    4-velocity and 4-acceleration instead of speed and acceleration.
+    See `Wikipedia – Acceleration (special relativity) <https://en.wikipedia.org/wiki/Acceleration_(special_relativity)>`__ for reference.
 
 **Links:**
 

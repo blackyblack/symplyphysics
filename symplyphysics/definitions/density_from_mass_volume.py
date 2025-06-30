@@ -7,8 +7,6 @@ for a generalized version of this law.
 
 **Conditions:**
 
-#. Mass and volume are both finite.
-#. Volume is strictly greater than zero.
 #. The material is homogeneous over the volume considered (uniform density).
 
 **Links:**

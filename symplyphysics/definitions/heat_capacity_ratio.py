@@ -2,11 +2,9 @@
 Heat capacity ratio
 ===================
 
-The *heat capacity ratio* (also called the *adiabatic index*, *ratio of specific heats*, or *isentropic expansion factor*) is the ratio of heat capacity at constant pressure to heat capacity at constant volume. It governs adiabatic processes and influences the speed of sound in a medium.
-
-**Conditions:**
-
-#. Isochoric heat capacity is finite and non-zero.
+The *heat capacity ratio* (also called the *adiabatic index*, *ratio of specific heats*, or *isentropic expansion factor*)
+is the ratio of heat capacity at constant pressure to heat capacity at constant volume. It governs adiabatic processes and
+influences the speed of sound in a medium.
 
 **Notes:**
 

@@ -6,7 +6,6 @@ Electrical conductance is inverse resistance
 
 **Conditions:**
 
-#. Resistance is finite and non-zero.
 #. The current–voltage relationship is linear (Ohmic behaviour) and time-invariant.
 
 **Links:**

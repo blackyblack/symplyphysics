@@ -7,7 +7,8 @@ If :math:`F` is the only force acting on the system, the system is called a simp
 
 **Conditions:**
 
-#. The system experiences a single restoring force :math:`F`.
+#. There is no damping (i.e. friction) in the system.
+#. The system experiences a single restoring force :math:`F` (for mechanical oscillators).
 
 **Links:**
 

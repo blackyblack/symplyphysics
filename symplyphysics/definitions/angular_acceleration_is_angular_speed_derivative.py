@@ -6,7 +6,6 @@ Angular acceleration is angular speed derivative
 
 **Conditions:**
 
-#. Angular speed is differentiable with respect to time.
 #. Observations are made in an inertial reference frame.
 
 **Links:**

@@ -11,7 +11,7 @@ lengths, and other physical quantities transform for a body while it moves.
 
 **Conditions:**
 
-#. The speed is non-negative and less than speed of light.
+#. The speed is less than speed of light.
 #. Special-relativistic effects only (flat space-time, no gravity).
 
 **Links:**

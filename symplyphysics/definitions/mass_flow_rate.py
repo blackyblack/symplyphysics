@@ -5,10 +5,6 @@ Mass flow rate
 The *mass flow rate* of a system is the time derivative of its mass. Typical
 examples include fluid passing through a pipe section or fuel being burned.
 
-**Conditions:**
-
-#. Mass is a continuous, differentiable function of time.
-
 **Links:**
 
 #. `Wikipedia – Formulation <https://en.wikipedia.org/wiki/Mass_flow_rate#Formulation>`__

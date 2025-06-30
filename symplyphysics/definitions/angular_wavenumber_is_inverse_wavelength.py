@@ -6,7 +6,7 @@ Angular wavenumber is inverse wavelength
 
 **Conditions:**
 
-#. Wavelength is defined and non-zero.
+#. Wavelength is positive.
 #. The wave is monochromatic (single, well-defined wavelength).
 
 **Links:**

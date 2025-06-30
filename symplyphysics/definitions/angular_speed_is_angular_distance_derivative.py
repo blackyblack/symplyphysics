@@ -4,10 +4,6 @@ Angular speed is angular distance derivative
 
 *Angular speed* describes how fast the angular position of a body changes with time.
 
-**Conditions:**
-
-#. Angular distance is differentiable with respect to time.
-
 **Links:**
 
 #. `Wikipedia – Angular speed <https://en.wikipedia.org/wiki/Angular_velocity>`__
