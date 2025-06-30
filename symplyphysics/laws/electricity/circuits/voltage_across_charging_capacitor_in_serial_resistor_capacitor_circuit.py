@@ -1,4 +1,4 @@
-r"""
+"""
 Voltage across charging capacitor in serial resistor-capacitor circuit
 ======================================================================
 
@@ -14,7 +14,7 @@ reaches the voltage of the source.
 
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Capacitor#DC_circuits>`__.
+#. `Wikipedia <https://en.wikipedia.org/wiki/Capacitor#RC_circuits>`__.
 """
 
 from sympy import Derivative, Eq, Idx, solve, exp, simplify

@@ -9,7 +9,7 @@ would also be proportional to the number of turn the current makes.
 
 **Links:**
 
-#. `Wikipedia, second formula <https://en.wikipedia.org/wiki/Faraday%27s_law_of_induction#Mathematical_statement>`__.
+#. `Wikipedia, third formula <https://en.wikipedia.org/wiki/Faraday%27s_law_of_induction#Flux_rule>`__.
 """
 
 from sympy import (Eq, Derivative)
@@ -23,7 +23,7 @@ from symplyphysics import (
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
 electromotive_force = symbols.electromotive_force
-r"""
+"""
 :symbols:`electromotive_force` induced in the contour.
 """
 

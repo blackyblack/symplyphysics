@@ -35,12 +35,12 @@ Total :symbols:`inductance` of the circuit.
 """
 
 inductance = clone_as_indexed(symbols.inductance)
-r"""
+"""
 :symbols:`inductance` of the :math:`i`-th component.
 """
 
 law = Eq(total_inductance, IndexedSum(inductance[global_index], global_index))
-r"""
+"""
 :laws:symbol::
 
 :laws:latex::

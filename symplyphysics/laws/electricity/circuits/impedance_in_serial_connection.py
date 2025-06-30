@@ -31,7 +31,7 @@ Total :symbols:`electrical_impedance` of the circuit.
 """
 
 impedance = clone_as_indexed(symbols.electrical_impedance)
-r"""
+"""
 :symbols:`electrical_impedance` of the :math:`i`-th component.
 """
 

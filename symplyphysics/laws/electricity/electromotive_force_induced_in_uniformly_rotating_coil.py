@@ -1,4 +1,4 @@
-r"""
+"""
 Electromotive force induced in rotating coil
 ============================================
 
@@ -11,8 +11,8 @@ the area of the coil's contour.
 
 **Notes:**
 
-#. The angle :math:`\varphi` between the normal to the coil's contour and the magnetic flux
-   density is :math:`\varphi \propto \cos(\omega t)`. See `Figure <https://thefactfactor.com/wp-content/uploads/2020/03/Self-Induction-17.png>`__. 
+#. The angle :math:`\\varphi` between the normal to the coil's contour and the magnetic flux
+   density is :math:`\\varphi \\propto \\cos(\\omega t)`. See `Figure <https://thefactfactor.com/wp-content/uploads/2020/03/Self-Induction-17.png>`__. 
 
 **Conditions:**
 
@@ -33,7 +33,7 @@ from symplyphysics.laws.kinematics import (
     angular_position_via_constant_angular_speed_and_time as _angle_law,)
 
 electromotive_force = symbols.electromotive_force
-r"""
+"""
 :symbols:`electromotive_force` induced in the coil.
 """
 
@@ -53,7 +53,7 @@ Cross-sectional :symbols:`area` of the contour enclosed by the coil.
 """
 
 angular_frequency = symbols.angular_frequency
-r"""
+"""
 :symbols:`angular_frequency` of the coil's rotation.
 """
 

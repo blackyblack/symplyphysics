@@ -61,7 +61,7 @@ law = Eq(
     sqrt((power_ratio + 1) / power_ratio),
     1 / sqrt(power_ratio),
     ]))
-r"""
+"""
 :laws:symbol::
 
 :laws:latex::

@@ -1,4 +1,4 @@
-r"""
+"""
 Electric field due to point charge
 ==================================
 
@@ -28,7 +28,7 @@ from symplyphysics.laws.electricity import electrostatic_force_via_charges_and_d
 from symplyphysics.laws.electricity import electric_field_is_force_over_test_charge as electric_field_def
 
 electric_field_strength = symbols.electric_field_strength
-r"""
+"""
 :symbols:`electric_field_strength` due to point charge :math:`q`.
 """
 

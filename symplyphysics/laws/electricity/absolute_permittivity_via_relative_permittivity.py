@@ -1,4 +1,4 @@
-r"""
+"""
 Absolute permittivity via relative permittivity
 ===============================================
 
