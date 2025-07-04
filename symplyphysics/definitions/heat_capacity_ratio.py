@@ -2,19 +2,17 @@
 Heat capacity ratio
 ===================
 
-The *heat capacity ratio*, also known as the *adiabatic index*, the *ratio of specific heats*, or
-the *isentropic expansion factor*, is the ratio of the heat capacity at constant pressure
-to that of constant volume. The heat capacity ratio is used in the description of thermodynamic
-reversible processes; the speed of sound also depends on this factor.
+The *heat capacity ratio* (also called the *adiabatic index*, *ratio of specific heats*, or *isentropic expansion factor*)
+is the ratio of heat capacity at constant pressure to heat capacity at constant volume. It governs adiabatic processes and
+influences the speed of sound in a medium.
 
 **Notes:**
 
-#. One can also use intensive heat capacities, such as specific or molar ones, in place of the 
-   extensive heat capacity presented here.
+#. One can also use intensive heat capacities, e.g. specific or molar, in place of the extensive heat capacities presented here.
 
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Heat_capacity_ratio#>`__.
+#. `Wikipedia – Heat capacity ratio <https://en.wikipedia.org/wiki/Heat_capacity_ratio>`__
 """
 
 from sympy import Eq

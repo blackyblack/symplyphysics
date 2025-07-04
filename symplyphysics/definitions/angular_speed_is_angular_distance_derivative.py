@@ -2,11 +2,11 @@
 Angular speed is angular distance derivative
 ============================================
 
-*Angular speed* is a physical quantity that describes the change in angular distance over time.
+*Angular speed* describes how fast the angular position of a body changes with time.
 
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Angular_velocity#Orbital_angular_velocity_of_a_point_particle>`__.
+#. `Wikipedia – Angular speed <https://en.wikipedia.org/wiki/Angular_velocity>`__
 """
 
 from sympy import Eq, Derivative

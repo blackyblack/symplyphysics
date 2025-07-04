@@ -5,7 +5,7 @@ Quantum isochoric molar heat capacity of solids
 To derive the heat capacity of a solid, one should account for quantum effects. Albert Einstein used the
 same model as in the classical case, namely the atoms are harmonic oscillators with three degrees
 of freedom, located in the nodes of the crystal lattice, performing thermal oscillations around the
-equlibrium positions with the same frequency. But he used a more correct expression for the energy
+equilibrium positions with the same frequency. But he used a more correct expression for the energy
 of the oscillators, and although the result still only qualitatively describes the heat capacity of
 solids, it is a big achievement and the result has correct asymptotic behaviour for :math:`T \\to 0`.
 

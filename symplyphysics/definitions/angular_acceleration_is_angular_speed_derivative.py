@@ -2,11 +2,15 @@
 Angular acceleration is angular speed derivative
 ================================================
 
-*Angular acceleration* is a physical quantity that describes the change in angular speed over time.
+*Angular acceleration* describes how quickly angular speed changes with time.
+
+**Conditions:**
+
+#. Observations are made in an inertial reference frame.
 
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Angular_acceleration>`__.
+#. `Wikipedia – Angular acceleration <https://en.wikipedia.org/wiki/Angular_acceleration>`__
 """
 
 from sympy import Eq, Derivative

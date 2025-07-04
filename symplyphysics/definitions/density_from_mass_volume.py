@@ -2,13 +2,16 @@
 Density from mass and volume
 ============================
 
-Volumetric mass *density* of an object is a physical quantity equal to the mass of the
-object per unit of its volume. See :doc:`laws.quantities.quantity_is_volumetric_density_times_volume`
-for a general version of this law.
+Volumetric mass *density* is the mass of substance contained in a unit volume of a substance. See :doc:`laws.quantities.quantity_is_volumetric_density_times_volume`
+for a generalized version of this law.
+
+**Conditions:**
+
+#. The material is homogeneous over the volume considered (uniform density) or the average density is used.
 
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Density#>`__.
+#. `Wikipedia – Density <https://en.wikipedia.org/wiki/Density>`__
 """
 
 from sympy import Eq, solve

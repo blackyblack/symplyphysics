@@ -2,12 +2,15 @@
 Electrical conductance is inverse resistance
 =============================================
 
-*Conductivity* is a physical quantity describing the ability of a medium to conduct electrical current.
-It is defined as the inverse of resistance.
+*Electrical conductance* quantifies how readily electric current flows through a component or material; it is defined as the reciprocal of electrical resistance.
+
+**Conditions:**
+
+#. The current–voltage relationship is linear (Ohmic behaviour) and time-invariant.
 
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Electrical_resistance_and_conductance#>`__.
+#. `Wikipedia – Electrical resistance and conductance <https://en.wikipedia.org/wiki/Electrical_resistance_and_conductance>`__
 """
 
 from sympy import (Eq, solve)
@@ -33,7 +36,7 @@ definition = Eq(conductance, 1 / resistance)
 
 @validate_input(resistance_=resistance)
 @validate_output(conductance)
-def calculate_conductivity(resistance_: Quantity) -> Quantity:
+def calculate_conductance(resistance_: Quantity) -> Quantity:
     solved = solve(definition, conductance, dict=True)[0][conductance]
     result_expr = solved.subs({resistance: resistance_})
     return Quantity(result_expr)

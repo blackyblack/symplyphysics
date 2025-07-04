@@ -2,12 +2,16 @@
 Compliance is inverse stiffness
 ===============================
 
-*Compliance, or flexibility*, of a spring is the inverse of its stiffness and measures
-how flexible the spring is.
+*Compliance* (also called *flexibility*) quantifies how much a system deforms under load; for an ideal linear spring it is the reciprocal of its stiffness.
+
+**Conditions:**
+
+#. This law holds locally (i.e. at a specific point along the spring), and is always true when stiffness is constant throughout the spring.
+#. Deformation remains within the elastic (Hookean) range.
 
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Stiffness#Compliance>`__.
+#. `Wikipedia – Compliance (mechanics) <https://en.wikipedia.org/wiki/Stiffness#Compliance>`__
 """
 
 from sympy import Eq
