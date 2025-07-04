@@ -82,7 +82,7 @@ Optical **magnification** is the ratio between the apparent size in an image and
 
 optical_power = Symbol("D", 1 / units.length)
 """
-**Optical power**, also callled **dioptric power** or **focusing power**, is the degree to which
+**Optical power**, also called **dioptric power** or **focusing power**, is the degree to which
 a lens, mirror, or other optical system converges or diverges light.
 """
 

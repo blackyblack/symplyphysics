@@ -1,5 +1,5 @@
 """
-Characteristic resitance of rectangular waveguide for transverse magnetic waves
+Characteristic resistance of rectangular waveguide for transverse magnetic waves
 ===============================================================================
 
 The resistance of a rectangular waveguide to transverse magnetic waves can be calculated

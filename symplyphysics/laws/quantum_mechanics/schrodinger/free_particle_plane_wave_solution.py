@@ -14,7 +14,7 @@ a `plane wave <https://en.wikipedia.org/wiki/Plane_wave>`__.
 #. The energy and momentum of a quantum particle are related by the equation :math:`E = p^2 / (2 m)`
    where :math:`m` is the mass of the quantum particle.
 #. The wave function must be normalized, i.e. the integral of the square of its absolute value
-   over the whole range of the spatial variable must equal 1, but the integral of the complex expontential
+   over the whole range of the spatial variable must equal 1, but the integral of the complex exponential
    diverges if taken over the real line. This is not a problem, though, because the states described by
    such a wave function would never be infinite (they would not be defined over the whole real line).
    Moreover, the correct solution can be represented by a linear combination of planar waves, which can be

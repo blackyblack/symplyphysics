@@ -6,7 +6,7 @@ from symplyphysics import (errors, units, Quantity, assert_equal, prefixes)
 from symplyphysics.laws.electricity.circuits.transmission_lines import transmission_matrix_lossless_transmission_line as matrix_law
 
 ## Characteristic resistance of the transmission line is equal to 50 ohm, line is equal 1 meter,
-## constant propogation is equal 6300 [1 / meter].
+## constant propagation is equal 6300 [1 / meter].
 ## Then the values of A, B, C, D parameters are equal, respectively: -0.4476, -44.7 * I ohm, -17.88 * I millisiemens, -0.4476.
 
 Args = namedtuple("Args", ["characteristic_resistance", "line_length", "constant_propagation"])

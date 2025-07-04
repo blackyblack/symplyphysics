@@ -2,7 +2,7 @@
 Latent heat of fusion via mass
 ==============================
 
-*Latent heat of fusion* is the heat released into or withdrawn from the enviroment when
+*Latent heat of fusion* is the heat released into or withdrawn from the environment when
 the body changes its state from a solid to a liquid. The same law applies to the process
 of solidification, when the body changes its state from a liquid to a solid, and the
 specific heat of solidification is equal by magnitude to that of fusion.

@@ -2,7 +2,7 @@
 Spacetime interval via time and distance
 ========================================
 
-The spacetime interval is a combination of distance and time that is invariant under Lorentz tranformations.
+The spacetime interval is a combination of distance and time that is invariant under Lorentz transformations.
 It has the property of being invariant in the sense that it has the same value for all observers in any
 inertial reference frame.
 

@@ -10,7 +10,7 @@ from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as g
 
 # Description
 ## For example we are calculating gravity force for objects with masses 3000 and 5000 kilograms
-## with 0.06 meters of distance betweem their centers of mass.
+## with 0.06 meters of distance between their centers of mass.
 ## According to matematika-club.ru gravity calculator, force should be equal to 0.27809583 Newtons.
 
 Args = namedtuple("Args", ["m1", "m2", "R"])

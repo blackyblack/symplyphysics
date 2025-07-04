@@ -40,7 +40,7 @@ def test_basic_height_barrier(test_args: Args) -> None:
     result = barrier_law.calculate_height_barrier(test_args.donors_concentration,
         test_args.acceptors_concentration, test_args.charge_carriers_concentration,
         test_args.temperature, test_args.charge_electron)
-    # NOTE: onsite intrinsic charge carriers are caclulated instead of hardcoded 1e10 value,
+    # NOTE: onsite intrinsic charge carriers are calculated instead of hardcoded 1e10 value,
     #       therefore result in our test is not very accurate
     assert_equal(result, 0.529 * units.volt, relative_tolerance=0.1)
 
