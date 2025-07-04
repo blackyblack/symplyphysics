@@ -34,12 +34,12 @@ Total resistance of the circuit.
 """
 
 resistance = clone_as_indexed(symbols.electrical_resistance)
-r"""
+"""
 Resistance of the :math:`i`-th component.
 """
 
 law = Eq(total_resistance, IndexedSum(resistance[global_index], global_index))
-r"""
+"""
 :laws:symbol::
 
 :laws:latex::

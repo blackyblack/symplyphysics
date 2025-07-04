@@ -1,4 +1,4 @@
-r"""
+"""
 Capacitance is proportional to plate area
 =========================================
 

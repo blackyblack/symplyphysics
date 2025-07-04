@@ -31,7 +31,7 @@ voltage = symbols.voltage
 :symbols:`voltage` between two points.
 """
 
-distance = symbols.euclidean_distance
+distance = clone_as_symbol(symbols.euclidean_distance, display_symbol="s", display_latex="s")
 """
 :symbols:`euclidean_distance` traveled.
 """

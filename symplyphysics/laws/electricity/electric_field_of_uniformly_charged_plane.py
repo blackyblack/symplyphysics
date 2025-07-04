@@ -1,4 +1,4 @@
-r"""
+"""
 Electric field of uniformly charged plane
 =========================================
 

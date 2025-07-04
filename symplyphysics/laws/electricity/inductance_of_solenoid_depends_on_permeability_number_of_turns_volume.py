@@ -7,7 +7,7 @@ permeability, the number of turns in the coil per unit length and its volume.
 
 **Links:**
 
-#. `Physics LibreTexts, formula 14.3.12 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_II_-_Thermodynamics_Electricity_and_Magnetism_(OpenStax)/14%3A_Inductance/14.03%3A_Self-Inductance_and_Inductors>`__.
+#. `Physics LibreTexts, formula 14.3.8 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_II_-_Thermodynamics_Electricity_and_Magnetism_(OpenStax)/14%3A_Inductance/14.03%3A_Self-Inductance_and_Inductors>`__.
 
 ..
     TODO rename file

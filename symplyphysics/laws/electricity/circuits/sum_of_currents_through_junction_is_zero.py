@@ -31,7 +31,7 @@ from symplyphysics.core.symbols.symbols import clone_as_indexed
 index = Idx("k")
 
 current = clone_as_indexed(symbols.current, index)
-r"""
+"""
 :math:`k`-th current flowing through the node.
 """
 
