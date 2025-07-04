@@ -292,7 +292,7 @@ vacuum_impedance = Quantity(376.730313412 * units.ohm, display_symbol="Z_0")
 """
 The **impedance of free space** is a physical constant relating the magnitudes of the
 electric and magnetic fields of electromagnetic radiation travelling through free space.
-A common appoximation of its value is :math:`120 \\pi \\, \\Omega`.
+A common approximation of its value is :math:`120 \\pi \\, \\Omega`.
 
 **Links:**
 

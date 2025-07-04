@@ -64,8 +64,7 @@ def solve_for_vector(
         expr = expr.lhs - expr.rhs
 
     if not is_vector_expr(expr):
-        # TODO: Raise `ValueError` instead as it is done in other places
-        raise TypeError(f"Expected '{expr}' to be a vector.")
+        raise ValueError(f"Expected '{expr}' to be a vector.")
 
     combination = tuple(split_factor(term) for term in into_terms(expr))
     i = None
