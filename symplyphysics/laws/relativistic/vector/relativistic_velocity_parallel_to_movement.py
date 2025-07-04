@@ -10,7 +10,7 @@ frame relative to the lab frame.
 
 **Notes:**
 
-#. One can get the same expression for :math:`{\\vec u'}_\\perp` in terms of :math:`\\vec u` by
+#. One can get the same expression for :math:`{\\vec u}_\\text{t}'` in terms of :math:`\\vec u` by
    replacing :math:`\\vec v` with :math:`-{\\vec v}`. This is essentially the inverse Lorentz
    transformation from lab frame to proper frame that uses the fact that the lab frame can be
    viewed as moving with velocity vector :math:`-{\\vec v}` relative to the proper frame.
