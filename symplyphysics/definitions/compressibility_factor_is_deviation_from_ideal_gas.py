@@ -10,7 +10,6 @@ The **compressibility factor** (also called the **compression factor** or **gas 
 
 **Conditions:**
 
-#. Temperature is positive.
 #. The gas sample is at thermodynamic equilibrium.
 
 **Notes:**

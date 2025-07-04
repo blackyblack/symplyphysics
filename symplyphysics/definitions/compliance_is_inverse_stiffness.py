@@ -6,7 +6,7 @@ Compliance is inverse stiffness
 
 **Conditions:**
 
-#. Stiffness is non-zero and constant (linear, time-invariant spring).
+#. This law holds locally (i.e. at a specific point along the spring), and is always true when stiffness is constant throughout the spring.
 #. Deformation remains within the elastic (Hookean) range.
 
 **Links:**

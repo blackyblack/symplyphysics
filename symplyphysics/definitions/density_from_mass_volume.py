@@ -7,7 +7,7 @@ for a generalized version of this law.
 
 **Conditions:**
 
-#. The material is homogeneous over the volume considered (uniform density).
+#. The material is homogeneous over the volume considered (uniform density) or the average density is used.
 
 **Links:**
 

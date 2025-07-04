@@ -7,8 +7,6 @@ Describes the motion of a single-degree-of-freedom mechanical oscillator that ex
 **Conditions:**
 
 #. Damping force is directly proportional to velocity (viscous).
-#. Undamped angular frequency is positive and constant.
-#. Damping ratio is non-negative.
 #. Motion is restricted to one spatial dimension.
 
 **Links:**
