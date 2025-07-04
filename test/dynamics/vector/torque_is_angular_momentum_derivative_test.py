@@ -51,9 +51,9 @@ def test_bad_angular_momenta(test_args: Args) -> None:
         torque_law.calculate_torque(test_args.L0, Lb, test_args.t)
 
     Ls = Quantity(1.0 * units.kilogram * units.meter**2 / units.second)
-    with raises(TypeError):
+    with raises(ValueError):
         torque_law.calculate_torque(Ls, test_args.L1, test_args.t)
-    with raises(TypeError):
+    with raises(ValueError):
         torque_law.calculate_torque(test_args.L0, Ls, test_args.t)
 
     with raises(TypeError):

@@ -66,7 +66,7 @@ def test_express_atomic() -> None:
     assert vector_equals(new_eqn, c - a * 2)
 
     # The expression is not a VectorExpr
-    with raises(TypeError):
+    with raises(ValueError):
         solve_for_vector(norm(a), a)
 
     # The expression does not contain the symbol
