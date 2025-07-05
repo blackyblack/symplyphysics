@@ -416,6 +416,7 @@ class SymbolLatexPrinter(LatexPrinter):
         # NOTE: the argument might need wrapping in parentheses
         return f"\\nabla^2 {self._print(expr.args[0])}"
 
+    # pylint: disable-next=invalid-name
     def _print_LineIntegral(self, expr: LineIntegral) -> str:
         integrand, curve, *rest = expr.args
         bounds = rest[0] if rest else None

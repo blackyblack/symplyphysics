@@ -18,9 +18,6 @@ class IndexedSum(Expr):
         obj._args = tuple(arglist)
         return obj
 
-    def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
-        pass
-
     @property
     def index_base(self) -> Basic:
         return self._args[1]
