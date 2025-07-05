@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Optional
 from sympy.physics.units import Dimension
 
 from symplyphysics.core.approx import assert_equal
@@ -8,8 +8,8 @@ from .coordinate_systems import QuantityCoordinateVector, AppliedPoint
 
 
 def assert_equal_vectors(
-    lhs: Any,
-    rhs: Any,
+    lhs: QuantityCoordinateVector | float,
+    rhs: QuantityCoordinateVector | float,
     *,
     relative_tolerance: Optional[float] = None,
     absolute_tolerance: Optional[float] = None,
