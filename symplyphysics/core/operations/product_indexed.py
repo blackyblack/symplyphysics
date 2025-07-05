@@ -19,7 +19,7 @@ class IndexedProduct(Expr):
         return obj
 
     def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
-        pass
+        return self.doit()._eval_nseries(x, n, logx, cdir)
 
     @property
     def index_base(self) -> Basic:

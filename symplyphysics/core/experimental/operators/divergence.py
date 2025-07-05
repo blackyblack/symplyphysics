@@ -67,4 +67,4 @@ class VectorDivergence(Expr):  # pylint: disable=too-few-public-methods
         return CoordinateScalar(result, system, vector.point)
 
     def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
-        pass
+        return self.doit()._eval_nseries(x, n, logx, cdir)
