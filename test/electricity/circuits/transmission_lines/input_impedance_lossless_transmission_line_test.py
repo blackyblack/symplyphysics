@@ -6,7 +6,7 @@ from symplyphysics import (errors, units, Quantity, assert_equal)
 from symplyphysics.laws.electricity.circuits.transmission_lines import input_impedance_lossless_transmission_line as impedance_law
 
 ## Characteristic resistance of the transmission line is equal to 50 ohm, line is equal 1 meter,
-## constant propogation is equal 6300 [1 / meter]. Load resistance is equal to 100 ohm.
+## constant propagation is equal 6300 [1 / meter]. Load resistance is equal to 100 ohm.
 ## Then the input impedance is equal to 29.42 - 17.66 * I ohm.
 
 Args = namedtuple("Args",

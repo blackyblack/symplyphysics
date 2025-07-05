@@ -14,7 +14,7 @@ from symplyphysics import symbols
 
 total_torque = symbols.torque
 """
-Total :symbols:`torque` is the magnitue of the vector sum of all torques acting on the body.
+Total :symbols:`torque` is the magnitude of the vector sum of all torques acting on the body.
 """
 
 law = Eq(total_torque, 0)

@@ -31,8 +31,8 @@ orbit_radius = symbols.radius
 
 planet_number = symbols.whole_number
 """
-The value :math:`-\\infty` corresponts to Mercury, :math:`0` to Venus, :math:`1` to
-Earth, :math:`2` to Mars, :math:`3` to Ceres, :math:`4` to Jupyter, :math:`5` to Saturn,
+The value :math:`-\\infty` corresponds to Mercury, :math:`0` to Venus, :math:`1` to
+Earth, :math:`2` to Mars, :math:`3` to Ceres, :math:`4` to Jupiter, :math:`5` to Saturn,
 :math:`6` to Uranus, and :math:`7` to Pluto.
 """
 

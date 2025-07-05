@@ -32,7 +32,7 @@ coriolis_acceleration = clone_as_vector_symbol(
     display_latex="{\\vec a}_\\text{Cor}",
 )
 """
-Vector of the body's Coreolis :symbols:`acceleration` in :math:`S'`.
+Vector of the body's Coriolis :symbols:`acceleration` in :math:`S'`.
 """
 
 relative_velocity = clone_as_vector_symbol(

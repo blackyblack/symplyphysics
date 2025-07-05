@@ -10,7 +10,7 @@ from symplyphysics.laws.electricity.circuits import oscillation_period_of_induct
 
 # Description
 ## Assert we have a capacitor with 1 farad capacitance and 1 henry inductor.
-## Accordind to Tomson's formula oscillation period of this circuit should be 6.28 seconds
+## According to Tomson's formula oscillation period of this circuit should be 6.28 seconds
 
 Args = namedtuple("Args", ["L", "C"])
 
