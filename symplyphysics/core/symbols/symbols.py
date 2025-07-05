@@ -142,9 +142,6 @@ class IndexedSymbol(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-a
         self.index = index or global_index
         super().__init__(display_name, dimension, display_latex=display_latex)
 
-    def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
-        pass
-
 
 class Function(DimensionSymbol, UndefinedFunction):
     arguments: Optional[Sequence[Expr]]
