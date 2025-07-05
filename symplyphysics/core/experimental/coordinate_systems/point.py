@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Mapping, Iterable, Any, Sized, SupportsFloat, Optional
+from collections.abc import Sized
+from typing import Mapping, Iterable, Any, SupportsFloat, Optional
 
 from sympy import Basic, Expr
 from sympy.printing.printer import Printer

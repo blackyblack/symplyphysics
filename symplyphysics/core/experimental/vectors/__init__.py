@@ -238,9 +238,6 @@ class VectorExpr(Expr):  # pylint: disable=too-few-public-methods
     covered by `sympy.Add` and `sympy.Mul` respectively.
     """
 
-    def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
-        pass
-
     def _eval_vector_norm(self) -> Optional[Expr]:
         return None
 
@@ -425,9 +422,6 @@ class VectorNorm(Expr):  # pylint: disable=too-few-public-methods
 
         return cls(vector, evaluate=False) * abs(factor)
 
-    def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
-        pass
-
     def _sympystr(self, p: Printer) -> str:
         return f"norm({p.doprint(self.args[0])})"
 
@@ -553,9 +547,6 @@ class VectorDot(Expr):
                 result += dot * factor
 
         return result
-
-    def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
-        pass
 
     def _sympystr(self, p: Printer) -> str:
         return f"dot({p.doprint(self.lhs)}, {p.doprint(self.rhs)})"
@@ -790,9 +781,6 @@ class VectorMixedProduct(Expr):  # pylint: disable=too-few-public-methods
                 result += mixed * factor * sign
 
         return result
-
-    def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
-        pass
 
     def _sympystr(self, p: Printer) -> str:
         a, b, c = self.args
