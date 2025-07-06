@@ -471,7 +471,7 @@ class VectorDot(Expr):
 
     3. **Linearity** in the **second** argument, which follows from (1) and (2).
 
-    4. **Absense of cancellation**: for all vectors `a, b, c` s.t. `a ≠ 0`, `dot(a, b) = dot(a, c)`
+    4. **Absence of cancellation**: for all vectors `a, b, c` s.t. `a ≠ 0`, `dot(a, b) = dot(a, c)`
        does not imply `b = c`.
 
     5. Applicability of the **product rule**: for all vector-valued differentiable functions
@@ -586,13 +586,13 @@ class VectorCross(VectorExpr):  # pylint: disable=too-few-public-methods
     3. **Distributivity over addition**: for all vectors `a, b, c`, `cross(a, b + c) =
        cross(a, b) + cross(a, c)`.
 
-    4. **Absense of associativity**: for all vectors `a, b, c`, `cross(a, cross(b, c)) ≠
+    4. **Absence of associativity**: for all vectors `a, b, c`, `cross(a, cross(b, c)) ≠
        cross(cross(a, b), c)`.
 
     5. However, the **Jacobi identity** is satisfied: for all vectors `a, b, c`,
        `cross(a, cross(b, c)) + cross(b, cross(c, a)) + cross(c, cross(b, a)) = 0`.
 
-    6. **Absense of cancellation**: for all vectors `a, b, c` s.t. `a ≠ 0`, `cross(a, b) =
+    6. **Absence of cancellation**: for all vectors `a, b, c` s.t. `a ≠ 0`, `cross(a, b) =
        cross(a, c)` does not imply `b = c`. This only happens if `dot(a, b) = dot(a, c)` holds.
 
     7. Applicability of the **product rule**: for all vector-valued differentiable functions
