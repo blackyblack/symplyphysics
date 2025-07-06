@@ -23,7 +23,7 @@ entities and the Avogadro constant.
 
 density_of_states = Symbol("D", 1 / units.volume)
 r"""
-The **density of states** of a system describes describes the number of allowed modes or states
+The **density of states** of a system describes the number of allowed modes or states
 per unit energy range.
 """
 
