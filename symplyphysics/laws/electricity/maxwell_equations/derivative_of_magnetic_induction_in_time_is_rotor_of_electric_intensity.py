@@ -48,7 +48,7 @@ Vector of the electric field as a function of :attr:`~position_vector` and :attr
 magnetic_flux_density = clone_as_vector_function(symbols.magnetic_flux_density,
     (position_vector, time))
 """
-Vector of the :symbols:`magnetic_flux_density` field as a function of of :attr:`~position_vector`
+Vector of the :symbols:`magnetic_flux_density` field as a function of :attr:`~position_vector`
 and :attr:`~time`.
 """
 

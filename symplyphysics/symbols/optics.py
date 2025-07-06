@@ -12,7 +12,7 @@ from symplyphysics.core.symbols.symbols import Symbol
 
 relative_refractive_index = Symbol("n", dimensionless)
 """
-**Relative refractive index** of of an optical medium is a dimensionless number that gives the
+**Relative refractive index** of an optical medium is a dimensionless number that gives the
 indication of the light bending ability of that medium. It is defined relative to a certain medium.
 """
 

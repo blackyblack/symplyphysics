@@ -157,7 +157,7 @@ def split_factor(value: Any) -> tuple[Expr, Expr]:
 @cacheit
 def into_terms(value: Any) -> tuple[Expr, ...]:
     """
-    Returns a tuple consisting of the terms which, when when added up, would give `value` again.
+    Returns a tuple consisting of the terms which, when added up, would give `value` again.
 
     Raises an error if `value` isn't a vector expression.
     """
