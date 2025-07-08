@@ -2,12 +2,12 @@
 Mass flow rate
 ==============
 
-Mass flow rate is the rate of change in the mass of an object. Examples include the outflow of a substance
-from a certain volume, the flow in a pipe section, the combustion of fuel.
+The *mass flow rate* of a system is the time derivative of its mass. Typical
+examples include fluid passing through a pipe section or fuel being burned.
 
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Mass_flow_rate#Formulation>`__.
+#. `Wikipedia – Formulation <https://en.wikipedia.org/wiki/Mass_flow_rate#Formulation>`__
 """
 
 from sympy import Eq, Derivative
@@ -46,9 +46,9 @@ definition = Eq(mass_flow_rate(time), Derivative(mass(time), time))
 @validate_output(mass_flow_rate)
 def calculate_mass_flow_rate(mass_start_: Quantity, mass_end_: Quantity,
     time_: Quantity) -> Quantity:
+    # mass changes linearly over the time interval `time_`
     mass_function_ = time * (mass_end_ - mass_start_) / time_
     applied_definition = definition.subs(mass(time), mass_function_)
-    # calculate mass flow rate
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
     return Quantity(result_expr)

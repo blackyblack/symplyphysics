@@ -7,7 +7,7 @@ to accumulate energy as magnetic field.
 
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Inductance#Inductance_of_a_solenoid>`__.
+#. `Wikipedia <https://en.wikipedia.org/wiki/Inductance#Solenoid>`__.
 
 ..
     TODO: fix file name

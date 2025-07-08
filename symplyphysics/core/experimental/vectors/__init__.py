@@ -157,7 +157,7 @@ def split_factor(value: Any) -> tuple[Expr, Expr]:
 @cacheit
 def into_terms(value: Any) -> tuple[Expr, ...]:
     """
-    Returns a tuple consisting of the terms which, when when added up, would give `value` again.
+    Returns a tuple consisting of the terms which, when added up, would give `value` again.
 
     Raises an error if `value` isn't a vector expression.
     """
@@ -237,9 +237,6 @@ class VectorExpr(Expr):  # pylint: disable=too-few-public-methods
     Base class for vector expressions, excluding their sum and scalar multiplication, which are
     covered by `sympy.Add` and `sympy.Mul` respectively.
     """
-
-    def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
-        pass
 
     def _eval_vector_norm(self) -> Optional[Expr]:
         return None
@@ -425,9 +422,6 @@ class VectorNorm(Expr):  # pylint: disable=too-few-public-methods
 
         return cls(vector, evaluate=False) * abs(factor)
 
-    def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
-        pass
-
     def _sympystr(self, p: Printer) -> str:
         return f"norm({p.doprint(self.args[0])})"
 
@@ -477,7 +471,7 @@ class VectorDot(Expr):
 
     3. **Linearity** in the **second** argument, which follows from (1) and (2).
 
-    4. **Absense of cancellation**: for all vectors `a, b, c` s.t. `a ≠ 0`, `dot(a, b) = dot(a, c)`
+    4. **Absence of cancellation**: for all vectors `a, b, c` s.t. `a ≠ 0`, `dot(a, b) = dot(a, c)`
        does not imply `b = c`.
 
     5. Applicability of the **product rule**: for all vector-valued differentiable functions
@@ -554,9 +548,6 @@ class VectorDot(Expr):
 
         return result
 
-    def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
-        pass
-
     def _sympystr(self, p: Printer) -> str:
         return f"dot({p.doprint(self.lhs)}, {p.doprint(self.rhs)})"
 
@@ -595,13 +586,13 @@ class VectorCross(VectorExpr):  # pylint: disable=too-few-public-methods
     3. **Distributivity over addition**: for all vectors `a, b, c`, `cross(a, b + c) =
        cross(a, b) + cross(a, c)`.
 
-    4. **Absense of associativity**: for all vectors `a, b, c`, `cross(a, cross(b, c)) ≠
+    4. **Absence of associativity**: for all vectors `a, b, c`, `cross(a, cross(b, c)) ≠
        cross(cross(a, b), c)`.
 
     5. However, the **Jacobi identity** is satisfied: for all vectors `a, b, c`,
        `cross(a, cross(b, c)) + cross(b, cross(c, a)) + cross(c, cross(b, a)) = 0`.
 
-    6. **Absense of cancellation**: for all vectors `a, b, c` s.t. `a ≠ 0`, `cross(a, b) =
+    6. **Absence of cancellation**: for all vectors `a, b, c` s.t. `a ≠ 0`, `cross(a, b) =
        cross(a, c)` does not imply `b = c`. This only happens if `dot(a, b) = dot(a, c)` holds.
 
     7. Applicability of the **product rule**: for all vector-valued differentiable functions
@@ -790,9 +781,6 @@ class VectorMixedProduct(Expr):  # pylint: disable=too-few-public-methods
                 result += mixed * factor * sign
 
         return result
-
-    def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
-        pass
 
     def _sympystr(self, p: Printer) -> str:
         a, b, c = self.args

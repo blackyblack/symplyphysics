@@ -2,16 +2,17 @@
 Linear coefficient of thermal expansion
 =======================================
 
-The coefficient of thermal expansion describes how the size of an object changes with a change in temperature
-at constant pressure.
+The *linear coefficient of thermal expansion* quantifies how an object's length
+changes with temperature when pressure remains constant.
 
 **Conditions:**
 
-#. Pressure must be constant during the expansion process.
+#. Pressure is constant throughout the temperature change.
+#. The temperature interval is small enough for the coefficient to be treated as constant.
 
 **Links:**
 
-#. `Wikipedia <https://en.wikipedia.org/wiki/Thermal_expansion#Length>`__.
+#. `Wikipedia <https://en.wikipedia.org/wiki/Thermal_expansion#Length>`__
 """
 
 from sympy import Eq, Derivative

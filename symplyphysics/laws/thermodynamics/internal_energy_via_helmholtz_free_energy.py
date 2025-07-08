@@ -48,7 +48,7 @@ free_energy = clone_as_function(symbols.helmholtz_free_energy, [temperature, vol
 :symbols:`helmholtz_free_energy` of the system as a function of temperature and volume.
 """
 
-# Volume is held constant during the evalution of the derivative
+# Volume is held constant during the evaluation of the derivative
 
 law = Eq(
     internal_energy,

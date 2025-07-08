@@ -8,7 +8,7 @@ capacitor is infinite, i.e. it is considered to be an opened connection.
 
 **Links:**
 
-#. `Wikipedia, second formula <https://en.wikipedia.org/wiki/Electrical_impedance#Inductor_and_capacitor>`__.
+#. `Wikipedia, second formula <https://en.wikipedia.org/wiki/Electrical_impedance#Inductor_and_capacitor_(in_the_steady_state)>`__.
 """
 
 from sympy import I, Eq, solve

@@ -6,7 +6,7 @@ from symplyphysics.laws.electricity import current_is_voltage_over_resistance as
 from symplyphysics.laws.electricity.circuits import admittance_in_parallel_connection as total_admittance_law
 from symplyphysics.laws.electricity import admittance_is_conductance_and_susceptance as admittance_law
 from symplyphysics.laws.electricity.circuits import resistance_in_serial_connection as serial_resistance
-from symplyphysics.definitions import electrical_conductance_is_inversed_resistance as conductivity_law
+from symplyphysics.definitions import electrical_conductance_is_inverse_resistance as conductivity_law
 
 # Two resistors are connected across a 12 V battery with internal resistance of 1 Ohm.
 # When they are connected in parallel, the current in the circuit is 4 A.

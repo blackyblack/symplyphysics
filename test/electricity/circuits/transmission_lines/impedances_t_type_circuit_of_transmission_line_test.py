@@ -6,7 +6,7 @@ from symplyphysics import (errors, units, Quantity, assert_equal)
 from symplyphysics.laws.electricity.circuits.transmission_lines import impedances_t_type_circuit_of_transmission_line as impedances_law
 
 ## Characteristic resistance of the transmission line is equal to 50 ohm, line is equal 1 meter,
-## constant propogation is equal 6300 [1 / meter], loss factor is equal to 1.7 [1 / meter].
+## constant propagation is equal 6300 [1 / meter], loss factor is equal to 1.7 [1 / meter].
 ## Then the impedances Z1, Z2, Z3 are equal, respectively: (55.56 - 18.78 * I) ohm,
 ## (55.56 - 18.78 * I) ohm, (-7.59 + 16.21 * I) ohm.
 

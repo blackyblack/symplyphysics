@@ -16,7 +16,7 @@ proportional to the current in the coil's wire.
 
 **Links:**
 
-#. `Physics LibreTexts, similar formula 12.7.11 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_II_-_Thermodynamics_Electricity_and_Magnetism_(OpenStax)/12%3A_Sources_of_Magnetic_Fields/12.07%3A_Solenoids_and_Toroids>`__.
+#. `Physics LibreTexts, similar formula 12.7.10 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_II_-_Thermodynamics_Electricity_and_Magnetism_(OpenStax)/12%3A_Sources_of_Magnetic_Fields/12.07%3A_Solenoids_and_Toroids>`__.
 """
 
 from sympy import Eq, solve

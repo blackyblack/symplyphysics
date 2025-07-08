@@ -1,4 +1,4 @@
-r"""
+"""
 Charge is quantized
 ===================
 

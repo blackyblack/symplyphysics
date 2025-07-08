@@ -3,7 +3,7 @@ Solution to the exponential decay equation
 ==========================================
 
 The solution to the exponential decay equation is the product of the initial quantity
-and the the ratio of the current time to the half-life of the quantity, raised to the
+and the ratio of the current time to the half-life of the quantity, raised to the
 power of 2. In other words, for every half-life that passes, the quantity decays by a
 factor of 2.
 

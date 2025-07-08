@@ -1,4 +1,4 @@
-r"""
+"""
 Energy via constant power and time
 ==================================
 
@@ -6,7 +6,7 @@ When power is constant, energy can be expressed as a product of power and time.
 
 **Conditions:**
 
-#. Power is constant, i.e. :math:`\frac{d P}{d t} = 0`.
+#. Power is constant, i.e. :math:`\\frac{d P}{d t} = 0`.
 
 **Links:**
 

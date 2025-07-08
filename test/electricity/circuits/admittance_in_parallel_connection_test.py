@@ -10,7 +10,7 @@ from symplyphysics.laws.electricity.circuits import admittance_in_parallel_conne
 
 # Description
 ## Assert we have two resistors with 1/2 Siemens and 1/4 Siemens conductance.
-## Accordind to calculator (https://www.chipdip.ru/calc/parallel-resistors) resulting conductance should be 0.75 Siemens.
+## According to calculator (https://www.chipdip.ru/calc/parallel-resistors) resulting conductance should be 0.75 Siemens.
 ## Hence resistors are dipoles, test fixture for parallel resistors law should be suitable for parallel dipoles law as well.
 
 Args = namedtuple("Args", ["S1", "S2"])

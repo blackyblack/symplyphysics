@@ -4,7 +4,7 @@ from symplyphysics import (assert_equal, errors, units, Quantity)
 from symplyphysics.laws.electricity import power_factor_is_real_power_over_apparent_power as power_factor_law
 
 # Description
-## Assert we have a device wich consumes 10 Watt of power and makes 3 Watt of work. Power factor of this consumer should be 3/10.
+## Assert we have a device which consumes 10 Watt of power and makes 3 Watt of work. Power factor of this consumer should be 3/10.
 
 Args = namedtuple("Args", ["P", "S"])
 

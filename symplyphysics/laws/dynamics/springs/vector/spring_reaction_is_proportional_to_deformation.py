@@ -2,7 +2,7 @@
 Spring reaction is proportional to deformation (vector)
 =======================================================
 
-The empirical law known as **Hooke's law** states that that the force needed to extend or compress
+The empirical law known as **Hooke's law** states that the force needed to extend or compress
 a spring by some distance scales linearly with respect to that distance. Also see the :ref:`scalar
 counterpart <Spring reaction is proportional to deformation>` of this law.
 

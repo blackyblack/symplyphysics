@@ -143,7 +143,7 @@ other than thermodynamic work and transfer of matter.
 thermal_efficiency = Symbol("eta", dimensionless, display_latex="\\eta")
 """
 The **thermal efficiency** is a dimensionless performance measure of a device that uses thermal energy. A generic
-definition of thermal energy is the ratio of the energy benefit to the energy costs attributed to the defice.
+definition of thermal energy is the ratio of the energy benefit to the energy costs attributed to the device.
 """
 
 statistical_weight = Symbol("Omega", dimensionless, display_latex="\\Omega")

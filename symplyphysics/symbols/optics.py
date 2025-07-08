@@ -12,7 +12,7 @@ from symplyphysics.core.symbols.symbols import Symbol
 
 relative_refractive_index = Symbol("n", dimensionless)
 """
-**Relative refractive index** of of an optical medium is a dimensionless number that gives the
+**Relative refractive index** of an optical medium is a dimensionless number that gives the
 indication of the light bending ability of that medium. It is defined relative to a certain medium.
 """
 
@@ -82,7 +82,7 @@ Optical **magnification** is the ratio between the apparent size in an image and
 
 optical_power = Symbol("D", 1 / units.length)
 """
-**Optical power**, also callled **dioptric power** or **focusing power**, is the degree to which
+**Optical power**, also called **dioptric power** or **focusing power**, is the degree to which
 a lens, mirror, or other optical system converges or diverges light.
 """
 

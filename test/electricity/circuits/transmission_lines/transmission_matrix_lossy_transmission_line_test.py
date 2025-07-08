@@ -6,7 +6,7 @@ from symplyphysics import (errors, units, Quantity, assert_equal, prefixes)
 from symplyphysics.laws.electricity.circuits.transmission_lines import transmission_matrix_lossy_transmission_line as matrix_law
 
 ## Characteristic resistance of the transmission line is equal to 50 ohm, line is equal 1 meter,
-## constant propogation is equal 6300 [1 / meter], loss factor is equal to 1.7 [1 / meter].
+## constant propagation is equal 6300 [1 / meter], loss factor is equal to 1.7 [1 / meter].
 ## Then the values of A, B, C, D parameters are equal, respectively: -1.265 - 2.365 * I,
 ## -59.2 - 126.5 * I ohm, -23.7 - 50.6 * I millisiemens, -1.265 - 2.365 * I.
 

@@ -328,7 +328,7 @@ class SymbolCodePrinter(StrPrinter):  # pylint: disable=too-few-public-methods
             s_lo = self._print(lo)
             s_hi = self._print(hi)
 
-            return f"LineIntegral({s_integrand}, ({s_parameter, s_lo, s_hi}))"
+            return f"LineIntegral({s_integrand}, ({s_parameter}, {s_lo}, {s_hi}))"
 
         s_curve = self._print(curve)
 

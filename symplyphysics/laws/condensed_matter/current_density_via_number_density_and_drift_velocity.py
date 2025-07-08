@@ -9,7 +9,7 @@ of the positive charges at this point.
 
 **Conditions:**
 
-#. Charge carriers carry the the same amount of charge.
+#. Charge carriers carry the same amount of charge.
 
 **Links:**
 

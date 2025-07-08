@@ -1,4 +1,4 @@
-r"""
+"""
 Energy density via permittivity and electric field
 ==================================================
 
@@ -30,7 +30,7 @@ electric_field_strength = symbols.electric_field_strength
 """
 
 law = Eq(energy_density, (absolute_permittivity * electric_field_strength**2) / 2)
-r"""
+"""
 :laws:symbol::
 
 :laws:latex::

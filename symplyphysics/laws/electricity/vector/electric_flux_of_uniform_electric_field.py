@@ -1,4 +1,4 @@
-r"""
+"""
 Electric flux of uniform electric field
 =======================================
 
@@ -7,8 +7,8 @@ the electrostatic force that is applied to it.
 
 **Notation:**
 
-#. :math:`\\left( \vec a, \vec b \\right)` (:code:`dot(a, b)`) is the dot product between vectors
-   :math:`\vec a` and :math:`\vec b`.
+#. :math:`\\left( \\vec a, \\vec b \\right)` (:code:`dot(a, b)`) is the dot product between vectors
+   :math:`\\vec a` and :math:`\\vec b`.
 
 **Notes:**
 

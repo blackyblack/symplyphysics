@@ -12,7 +12,7 @@ the
 
 **Links:**
 
-#. `Wikipedia, first link <https://en.wikipedia.org/wiki/Wave_impedance#In_a_waveguide>`__.
+#. `Wikipedia, first formula <https://en.wikipedia.org/wiki/Wave_impedance#In_a_waveguide>`__.
 """
 
 from sympy import Eq, solve, sqrt

@@ -414,7 +414,7 @@ class SymbolLatexPrinter(LatexPrinter):
     # pylint: disable-next=invalid-name
     def _print_VectorLaplacian(self, expr: VectorLaplacian) -> str:
         # NOTE: the argument might need wrapping in parentheses
-        return f"\\nabla^2 {self._print(expr.args[0])})"
+        return f"\\nabla^2 {self._print(expr.args[0])}"
 
     # pylint: disable-next=invalid-name
     def _print_LineIntegral(self, expr: LineIntegral) -> str:

@@ -50,11 +50,12 @@ def test_function_law() -> None:
     w = CoordinateVector([cos(t), 3 * sin(t), 1], CARTESIAN)
     r = CoordinateVector([1, -3, 2], CARTESIAN)
 
-    a_result = law.law.rhs.subs({
+    a_result_expr = law.law.rhs.subs({
         law.angular_velocity(law.time): w,
         law.position_vector: r,
     }).doit()
 
+    a_result = CoordinateVector.from_expr(a_result_expr)
     a_correct = CoordinateVector([6 * cos(t), 2 * sin(t), 3 * (sin(t) - cos(t))], CARTESIAN)
 
     assert vector_equals(a_result, a_correct)

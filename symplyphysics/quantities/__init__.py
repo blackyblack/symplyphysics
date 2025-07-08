@@ -263,7 +263,7 @@ is up to debate, however, the fundamental theory gives the number :math:`7%` per
 
 zero_point_luminosity = Quantity(3.0128e28 * units.watt, display_symbol="L_0")
 """
-**Zero-point luminosity** is a constant defined relative to a star for calibrating perposes. The
+**Zero-point luminosity** is a constant defined relative to a star for calibrating purposes. The
 value given here has been defined by the International Astronomical Union (IAU).
 
 **Links:**
@@ -292,7 +292,7 @@ vacuum_impedance = Quantity(376.730313412 * units.ohm, display_symbol="Z_0")
 """
 The **impedance of free space** is a physical constant relating the magnitudes of the
 electric and magnetic fields of electromagnetic radiation travelling through free space.
-A common appoximation of its value is :math:`120 \\pi \\, \\Omega`.
+A common approximation of its value is :math:`120 \\pi \\, \\Omega`.
 
 **Links:**
 

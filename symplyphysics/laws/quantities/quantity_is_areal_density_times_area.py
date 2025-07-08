@@ -26,7 +26,7 @@ areal_density = clone_as_symbol(
     display_symbol="sigma_X",
     display_latex="\\sigma_X",
 )
-r"""
+"""
 Intensive area-specific density, which has the dimension of :attr:`~extensive_quantity`
 divided by :attr:`~area`. See :symbols:`any_quantity`.
 """
