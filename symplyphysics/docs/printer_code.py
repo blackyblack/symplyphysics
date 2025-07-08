@@ -313,6 +313,7 @@ class SymbolCodePrinter(StrPrinter):  # pylint: disable=too-few-public-methods
     def _print_VectorLaplacian(self, expr: VectorLaplacian) -> str:
         return f"Laplace({self._print(expr.args[0])})"
 
+    # pylint: disable-next=invalid-name
     def _print_LineIntegral(self, expr: LineIntegral) -> str:
         integrand, curve, *rest = expr.args
         bounds = rest[0] if rest else None

@@ -17,7 +17,7 @@ from ..coordinate_systems.surface import Surface
 INFINITESIMAL_VECTOR_AREA = VectorSymbol("dS", units.area, display_latex="d \\vec S")
 
 
-class SurfaceIntegral(Expr):
+class SurfaceIntegral(Expr):  # pylint: disable=too-few-public-methods
     """
     A **surface integral** is an integral where the integrand is evaluated over a surface.
 
@@ -73,6 +73,6 @@ class SurfaceIntegral(Expr):
         expr = expr.subs(INFINITESIMAL_VECTOR_AREA, n)
 
         for f, q in zip(system.base_scalar_functions, position_vector_components):
-            expr = expr.replace(f, lambda _: q)
+            expr = expr.replace(f, lambda _: q)  # pylint: disable=cell-var-from-loop
 
         return surface.to_integral(expr, (t10, t11), (t20, t21))
