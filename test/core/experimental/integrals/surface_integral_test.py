@@ -97,10 +97,10 @@ def test_cylindrical_vector_surface_integral() -> None:
     f = CoordinateVector([rho, 0, z], CYLINDRICAL, surface.parametrization)
 
     result = SurfaceIntegral(VectorDot(f, ds), surface, ((0, pi / 2), (0, 2 * pi)))
-    assert_equal(result.doit(), 2 * pi * m**3)
+    assert_equal(result.doit().doit(), 2 * pi * m**3)
 
     result = SurfaceIntegral(VectorDot(f, ds), surface, ((0, pi / 3), (0, 2 * pi)))
-    assert_equal(result.doit(), pi * m**3)
+    assert_equal(result.doit().doit(), pi * m**3)
 
     # Undefined bounds
 
@@ -118,7 +118,7 @@ def test_spherical_vector_surface_integral() -> None:
 
     surface = Surface((t, phi), AppliedPoint([m * t, pi / 4, phi], SPHERICAL))
     result = SurfaceIntegral(VectorNorm(ds), surface, ((0, 1), (0, pi)))
-    assert_equal(result.doit(), sqrt(2) / 4 * pi * m**2)
+    assert_equal(result.doit().doit(), sqrt(2) / 4 * pi * m**2)
 
     # More complex surface and integrand
 
@@ -126,10 +126,10 @@ def test_spherical_vector_surface_integral() -> None:
 
     f = CoordinateVector([r, 0, 0], SPHERICAL, surface.parametrization)
     result = SurfaceIntegral(VectorDot(f, ds), surface, ((0, pi / 2), (0, 2 * pi)))
-    assert_equal(result.doit(), 2 * pi * m**3)
+    assert_equal(result.doit().doit(), 2 * pi * m**3)
 
     result = SurfaceIntegral(VectorDot(f, ds), surface, ((0, pi / 3), (0, 2 * pi)))
-    assert_equal(result.doit(), pi * m**3)
+    assert_equal(result.doit().doit(), pi * m**3)
 
     # Undefined bounds
 
