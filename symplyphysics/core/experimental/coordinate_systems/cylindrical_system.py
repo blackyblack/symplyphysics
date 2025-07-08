@@ -1,4 +1,4 @@
-from typing import Optional, Sequence
+from typing import Optional, Sequence, Iterable
 
 from sympy import Expr, S, cos, sin, sqrt, atan2, Q
 from sympy.logic.boolalg import Boolean
@@ -48,6 +48,11 @@ class CylindricalCoordinateSystem(BaseCoordinateSystem):
         h_z = S.One
 
         return h_rho, h_phi, h_z
+
+    def extract_position_vector_components(self, coordinates: Iterable[Expr]) -> Sequence[Expr]:
+        rho, _, z = coordinates
+
+        return rho, S.Zero, z
 
 
 __all__ = ["CylindricalCoordinateSystem"]

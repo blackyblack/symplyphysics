@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-from typing import Mapping, Iterable, Any, Sized, SupportsFloat, Optional
+from typing import Optional, Iterable, Any, Sized
 
-from sympy import Basic, Expr
+from sympy import Basic, Expr, Dict, Tuple
 from sympy.printing.printer import Printer
 
-from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.symbols import Symbol, BasicSymbol
 
 from ..miscellaneous import sympify_expr
@@ -14,28 +13,18 @@ from .base_system import BaseCoordinateSystem
 from .cartesian_system import CartesianCoordinateSystem
 
 
-def _prepare(
-    coordinates: Iterable[SupportsFloat],
-    system: BaseCoordinateSystem,
-) -> dict[Symbol, Expr]:
-    return {
-        scalar: sympify_expr(coordinate)
-        for scalar, coordinate in zip(system.base_scalars, coordinates)
-    }
-
-
 class AppliedPoint(Basic):
     """
     An `AppliedPoint` corresponds to a point in (3D) space whose coordinates are defined within a
     certain coordinate system.
     """
 
-    _coordinates: Mapping[Symbol, Expr]
+    _coordinates: Dict
     _system: BaseCoordinateSystem
 
     @property
-    def coordinates(self) -> Mapping[Symbol, Expr]:
-        return self.args[0]
+    def coordinates(self) -> Dict:  # Dict[Symbol, Expr]
+        return Dict(dict(zip(self.system.base_scalars, self.args[0])))
 
     @property
     def system(self) -> BaseCoordinateSystem:
@@ -46,31 +35,28 @@ class AppliedPoint(Basic):
 
     def __new__(
         cls,
-        coordinates: Iterable[Any] | Mapping[Symbol, Any],
+        coordinates: Iterable[Any],
         system: BaseCoordinateSystem,
     ) -> AppliedPoint:
         return super().__new__(cls)  # pylint: disable=no-value-for-parameter
 
     def __init__(
         self,
-        coordinates: Iterable[Any] | Mapping[Symbol, Any],
+        coordinates: Iterable[Any],
         system: BaseCoordinateSystem,
     ):
         super().__init__()
 
-        if isinstance(coordinates, Mapping):
-            coordinates = dict(coordinates)
+        if isinstance(coordinates, Sized):
+            n = len(coordinates)  # can't extract out of if-block, mypy complains otherwise
         else:
-            if isinstance(coordinates, Sized):
-                n = len(coordinates)  # can't extract out of if-block, mypy complains otherwise
-            else:
-                coordinates = tuple(coordinates)
-                n = len(coordinates)
+            coordinates = tuple(coordinates)
+            n = len(coordinates)
 
-            if n != 3:
-                raise ValueError(f"The point must have all 3 coordinates defined, got {n}.")
+        if n != 3:
+            raise ValueError(f"The point must have all 3 coordinates defined, got {n}.")
 
-            coordinates = _prepare(coordinates, system)
+        coordinates = Tuple(*(sympify_expr(coordinate) for coordinate in coordinates))
 
         self._args = coordinates, system
 
@@ -84,17 +70,7 @@ class AppliedPoint(Basic):
         return f"{point_name}({coordinates})"
 
     def _hashable_content(self) -> tuple[Any, ...]:
-        return (tuple(self.coordinates.items()),)
-
-    def equals(self, other: AppliedPoint) -> bool:
-        for base_scalar, coordinate in self.coordinates.items():
-            if base_scalar not in other.coordinates:
-                return False
-
-            if not expr_equals(coordinate, other[base_scalar]):
-                return False
-
-        return True
+        return self.args
 
 
 # Used as a common point for Cartesian vectors
