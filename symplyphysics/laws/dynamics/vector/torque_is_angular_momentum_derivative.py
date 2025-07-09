@@ -16,9 +16,21 @@ equal to the time rate change of the system's total angular momentum.
 from sympy import Eq
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_function, VectorDerivative
+from symplyphysics.core.experimental.vectors import (
+    clone_as_vector_function,
+    VectorDerivative,
+    vector_diff,
+)
 from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
-from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.experimental.solvers import solve_for_vector, apply
+
+from symplyphysics.definitions.vector import (
+    velocity_is_position_vector_derivative as _velocity_def,
+    angular_momentum_is_position_cross_linear_momentum as _angular_momentum_def,
+    momentum_is_mass_times_velocity_vector as _linear_momentum_def,
+    acceleration_is_velocity_derivative as _acceleration_def,
+)
+from symplyphysics.laws.dynamics.vector import acceleration_from_force as _newtons_second_law
 
 time = symbols.time
 """
@@ -41,6 +53,41 @@ law = Eq(torque(time), VectorDerivative(angular_momentum(time), time))
 
 :laws:latex::
 """
+
+# Derive law
+
+_mass = symbols.mass
+
+_position = _velocity_def.position_vector
+
+_velocity_eqn = _velocity_def.law.subs(_velocity_def.time, time).subs(
+    _velocity_def.position_vector(time),
+    _position(time),
+)
+
+_linear_momentum_eqn = _linear_momentum_def.law.subs({
+    _linear_momentum_def.mass: _mass,
+    _linear_momentum_def.velocity: _velocity_eqn.rhs,
+})
+
+_angular_momentum_eqn = _angular_momentum_def.law.subs({
+    _angular_momentum_def.angular_momentum: angular_momentum(time),
+    _angular_momentum_def.position_vector: _position(time),
+    _angular_momentum_def.linear_momentum: _linear_momentum_eqn.rhs,
+})
+
+_acceleration_eqn = _acceleration_def.law.subs(_acceleration_def.time, time).subs({
+    _acceleration_def.acceleration(time): _newtons_second_law.acceleration,
+    _acceleration_def.velocity(time): _velocity_eqn.rhs,
+})
+
+# _angular_momentum_eqn_diff_time = apply(
+#     _angular_momentum_eqn,
+#     lambda x: vector_diff(x, time),
+# ).subs(
+#     _acceleration_eqn.rhs,
+#     _acceleration_eqn.lhs,
+# )
 
 
 @validate_input(
