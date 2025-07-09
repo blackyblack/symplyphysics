@@ -65,8 +65,8 @@ class SurfaceIntegral(Expr):  # pylint: disable=too-few-public-methods
         g = Function("g")
         r = CoordinateVector([r0 + g(t1, t2), r1, r2], r.system, r.point)
 
-        dr_dt1 = vector_diff(r, t1).subs(g(t1, t2), 0).doit()
-        dr_dt2 = vector_diff(r, t2).subs(g(t1, t2), 0).doit()
+        dr_dt1 = vector_diff(r, t1).replace(g, lambda *_: 0).doit()
+        dr_dt2 = vector_diff(r, t2).replace(g, lambda *_: 0).doit()
 
         n = VectorCross(dr_dt1, dr_dt2).simplify()
 
