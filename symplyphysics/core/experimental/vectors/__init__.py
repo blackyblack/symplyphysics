@@ -124,6 +124,11 @@ def is_vector_expr(value: Any) -> bool:  # pylint: disable=too-many-return-state
 
 
 def convert_sympy_to_vector_derivatives(expr: Expr) -> VectorDerivative:
+    """
+    Replaces `sympy.Derivative` instances that are vector expressions with `VectorDerivative`
+    ones within the given `expr`. This function leaves scalar derivatives intact.
+    """
+
     for old_der in expr.atoms(SymDerivative):
         if isinstance(expr, VectorDerivative):
             continue
