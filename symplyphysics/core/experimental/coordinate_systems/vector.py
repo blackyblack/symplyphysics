@@ -266,8 +266,16 @@ class QuantityCoordinateVector(CoordinateVector):
         return self, self.dimension
 
 
+def construct_position_vector(point: AppliedPoint) -> CoordinateVector:
+    system = point.system
+    components = system.extract_position_vector_components(point.coordinates.values())
+
+    return CoordinateVector(components, system, point)
+
+
 __all__ = [
     "CoordinateVector",
     "QuantityCoordinateVector",
     "combine_coordinate_vectors",
+    "construct_position_vector",
 ]
