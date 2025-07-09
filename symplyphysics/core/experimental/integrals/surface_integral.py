@@ -73,6 +73,6 @@ class SurfaceIntegral(Expr):  # pylint: disable=too-few-public-methods
         expr = expr.subs(INFINITESIMAL_VECTOR_AREA, n)
 
         for f, q in zip(system.base_scalar_functions, position_vector_components):
-            expr = expr.replace(f, lambda _: q)  # pylint: disable=cell-var-from-loop
+            expr = expr.subs({f(t1): q, f(t2): q})
 
         return surface.to_integral(expr, (t10, t11), (t20, t21))
