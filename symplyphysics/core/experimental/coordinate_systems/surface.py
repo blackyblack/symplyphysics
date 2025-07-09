@@ -9,12 +9,14 @@ from .point import AppliedPoint
 
 class Surface(Basic):
     """
-    Topologically, a **surface** is TODO
+    Topologically, a **surface** is a manifold of dimension two. Usually we deal with **parametric
+    differentiable surfaces**, which are defined by a continuous function of two variables whose
+    domain is an open subset of the Euclidean plane.
     """
 
     @property
     def parameters(self) -> tuple[SymSymbol, SymSymbol]:
-        """The symbols that parametrized the surface."""
+        """The symbols that parametrize the surface."""
 
         return self.args[0]
 
