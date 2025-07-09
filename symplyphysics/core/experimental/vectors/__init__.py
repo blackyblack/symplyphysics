@@ -19,6 +19,7 @@ from symplyphysics.core.operations.sum_indexed import IndexedSum
 from symplyphysics.core.symbols.symbols import (DimensionSymbol, next_name, Symbol,
     process_subscript_and_names, global_index)
 from symplyphysics.core.symbols.id_generator import last_id, next_id
+
 from ..miscellaneous import cacheit, sympify_expr
 
 _T = TypeVar("_T")
@@ -120,6 +121,23 @@ def is_vector_expr(value: Any) -> bool:  # pylint: disable=too-many-return-state
         return is_vector_expr(value.args[0])
 
     return False
+
+
+def convert_sympy_to_vector_derivatives(expr: Expr) -> VectorDerivative:
+    for old_der in expr.atoms(SymDerivative):
+        if isinstance(expr, VectorDerivative):
+            continue
+
+        func, *args = old_der.args
+
+        try:
+            new_der = VectorDerivative(func, *args)
+        except ValueError:
+            continue
+
+        expr = expr.subs(old_der, new_der)
+
+    return expr
 
 
 def is_atomic_vector(value: Any) -> bool:
