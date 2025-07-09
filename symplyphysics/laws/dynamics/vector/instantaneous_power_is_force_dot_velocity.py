@@ -14,7 +14,7 @@ in time.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Power_(physics)#Definition>`__.
 """
 
-from sympy import Eq
+from sympy import Eq, diff
 
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -62,13 +62,10 @@ _work_expr = _work_law.law.rhs.subs({
 _power_expr = _power_def.definition.rhs.subs(
     _power_def.energy(_time),
     _work_expr,
-)
+).doit()
 
 # TODO: use vector law here
-_power_expr = _power_expr.subs(
-    _displacement(_time).diff(_time),
-    velocity,
-)
+_power_expr = _power_expr.subs(_displacement(_time).diff(_time), velocity)
 
 assert expr_equals(law.rhs, _power_expr)
 
