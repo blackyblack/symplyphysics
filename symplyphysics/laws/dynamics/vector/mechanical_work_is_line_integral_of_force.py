@@ -62,6 +62,9 @@ law = Eq(
 :laws:latex::
 """
 
+# Derivable from `./mechanical_work_from_force_and_move` by summing over a piecewise approximation
+# of the curve and taking the limit when the length of the pieces approaches zero.
+
 
 @validate_output(work)
 def calculate_work(

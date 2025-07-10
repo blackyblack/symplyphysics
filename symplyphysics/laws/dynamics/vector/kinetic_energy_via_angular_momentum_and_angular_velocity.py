@@ -1,4 +1,4 @@
-r"""
+"""
 Kinetic energy via angular momentum and angular velocity
 ========================================================
 
@@ -33,6 +33,9 @@ law = Eq(kinetic_energy, VectorDot(angular_momentum, angular_velocity) / 2)
 
 :laws:latex::
 """
+
+# Derivable from the last equation here: https://en.wikipedia.org/wiki/Moment_of_inertia#Kinetic_energy_2
+# together with the last equation here: https://en.wikipedia.org/wiki/Moment_of_inertia#Angular_momentum
 
 
 @validate_input(
