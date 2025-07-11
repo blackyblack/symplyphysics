@@ -10,7 +10,7 @@ Args = namedtuple("Args", "n a")
 
 
 @fixture(name="test_args")
-def test_args_fixture() -> None:
+def test_args_fixture() -> Args:
     n = QuantityCoordinateVector([0.1, -0.4, 0.911], CARTESIAN)
 
     a = Quantity(3e-7 * units.meter**2)
@@ -48,4 +48,3 @@ def test_bad_area(test_args: Args) -> None:
         law.calculate_vector_area(test_args.n, bad_scalar)
     with raises(TypeError):
         law.calculate_vector_area(test_args.n, 100)
-    
