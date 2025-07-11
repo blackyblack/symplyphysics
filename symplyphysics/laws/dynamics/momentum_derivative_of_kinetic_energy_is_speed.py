@@ -10,14 +10,14 @@ not only in the case of variable mass, but also in the relativistic case.
 #. `Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Kinetic_energy#With_vector_calculus>`__.
 """
 
-from sympy import Eq, Derivative
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    symbols,
-    clone_as_function,
-)
+from sympy import Eq, Derivative, solve
+from symplyphysics import Quantity, validate_input, validate_output, symbols, clone_as_function
+from symplyphysics.core.expr_comparisons import expr_equals
+
+from symplyphysics.definitions import momentum_is_mass_times_speed as _momentum_def
+from symplyphysics.laws.dynamics import kinetic_energy_via_momentum as _kinetic_energy_law
+
+from symplyphysics.core.experimental.solvers import apply
 
 speed = symbols.speed
 """
@@ -44,7 +44,30 @@ law = Eq(
 :laws:latex::
 """
 
-# TODO: derive from the differential definition of work and the generalized Newton's second law
+# Derive law
+
+_kinetic_energy_eqn = _kinetic_energy_law.law.subs({
+    _kinetic_energy_law.kinetic_energy: kinetic_energy(momentum(speed)),
+    _kinetic_energy_law.momentum: momentum(speed),
+})
+
+_kinetic_energy_diff_momentum_eqn = apply(
+    _kinetic_energy_eqn,
+    lambda x: x.diff(momentum(speed)),
+)
+
+_momentum_eqn = _momentum_def.definition.subs({
+    _momentum_def.momentum: momentum(speed),
+    _momentum_def.speed: speed,
+})
+
+_rhs = solve(
+    (_kinetic_energy_diff_momentum_eqn, _momentum_eqn),
+    (law.lhs, momentum(speed)),
+    dict=True,
+)[0][law.lhs]
+
+assert expr_equals(_rhs, law.rhs)
 
 
 @validate_input(
