@@ -2,8 +2,8 @@
 Work is integral of force over distance
 =======================================
 
-Assuming a one-dimensional environment, when the force F on a particle-like object depends
-on the position of the object, the work done by F on the object while the object moves
+Assuming a one-dimensional environment, when the force :math:`\\vec F` on a particle-like object depends
+on the position of the object, the work done by :math:`\\vec F` on the object while the object moves
 from one position to another is to be found by integrating the force along the path of the
 object.
 
@@ -13,15 +13,16 @@ object.
 """
 
 from sympy import Eq, Integral
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    symbols,
-    clone_as_function,
-    clone_as_symbol,
-)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, clone_as_function,
+    clone_as_symbol)
 from symplyphysics.core.geometry.line import two_point_function, Point2D
+from symplyphysics.core.expr_comparisons import expr_equals
+
+from symplyphysics.core.experimental.coordinate_systems import (AppliedPoint, CARTESIAN,
+    CoordinateVector)
+from symplyphysics.core.experimental.coordinate_systems.curve import Curve
+
+from symplyphysics.laws.dynamics.vector import mechanical_work_is_line_integral_of_force as _work_law
 
 work = symbols.work
 """
@@ -54,6 +55,21 @@ law = Eq(work, Integral(force(position), (position, position_before, position_af
 
 :laws:latex::
 """
+
+# Derive from the vector law
+
+# Since this law works in a 1D setting, we define the curve and the force along the x-axis
+_curve = Curve(position, AppliedPoint([position, 0, 0], CARTESIAN))
+_force = CoordinateVector([force(position), 0, 0], CARTESIAN)
+
+_work_expr = _work_law.law.rhs.subs({
+    _work_law.force(_work_law.position_vector): _force,
+    _work_law.curve: _curve,
+    _work_law.initial_parameter: position_before,
+    _work_law.final_parameter: position_after,
+}).doit()
+
+assert expr_equals(law.rhs, _work_expr)
 
 
 # Assuming the force changes linearly with respect to position
