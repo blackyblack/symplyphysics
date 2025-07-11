@@ -2,7 +2,8 @@
 Normal force via pressure and vector area
 =========================================
 
-TODO
+Pressure is the proportionality constant between the vector area and the normal force
+acting on it.
 
 **Conditions:**
 
@@ -12,6 +13,8 @@ TODO
 **Links:**
 
 #. `Wikipedia — Pressure <https://en.wikipedia.org/wiki/Pressure#Formula>`__.
+
+#. `Wikipedia — Normal force <https://en.wikipedia.org/wiki/Normal_force>`__.
 """
 
 from sympy import Eq
@@ -23,7 +26,8 @@ from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinat
 
 normal_force = clone_as_vector_symbol(symbols.force, subscript="n")
 """
-TODO
+**Normal force** is the component of a contact force that is normal to the contact surface of the
+object.
 """
 
 pressure = symbols.pressure
@@ -33,7 +37,10 @@ pressure = symbols.pressure
 
 vector_area = clone_as_vector_symbol(symbols.area)
 """
-TODO
+Vector area is a vector that is normal to the surface and has a magnitude of its (scalar) area.
+
+..
+    TODO: add reference to definition file
 """
 
 law = Eq(normal_force, pressure * vector_area)
