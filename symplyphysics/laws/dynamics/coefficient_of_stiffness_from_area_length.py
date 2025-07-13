@@ -10,7 +10,7 @@ Young's modulus is a tabular value that is different for each material.
 #. `Wikipedia, first formula <https://en.wikipedia.org/wiki/Stiffness#Relationship_to_elasticity>`__.
 """
 
-from sympy import (Eq, solve, Q, Symbol as SymSymbol)
+from sympy import (Eq, solve, Q, Symbol as SymSymbol, Expr)
 from symplyphysics import (Quantity, validate_input, validate_output, symbols)
 from symplyphysics.core.expr_comparisons import expr_equals
 
@@ -52,7 +52,7 @@ law = Eq(stiffness, young_modulus * area / length)
 # Derive law
 
 
-def _replace(expr, eqn, *, old):
+def _replace(expr: Expr, eqn: Eq, *, old: Expr) -> Expr:
     """Replaces `old` within `expr` according to equation `eqn`."""
 
     sym = SymSymbol("x")
