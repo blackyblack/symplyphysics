@@ -17,29 +17,36 @@ from symplyphysics import (clone_as_symbol, symbols, quantities, Quantity, valid
 from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.core.experimental.coordinate_systems import CoordinateVector, CARTESIAN
-from symplyphysics.core.experimental.vectors import VectorSymbol, VectorDot
+from symplyphysics.core.experimental.vectors import VectorSymbol, VectorNorm
 
 from symplyphysics.definitions.vector import superposition_of_forces_is_sum as _superposition_law
 from symplyphysics.laws.hydro import hydrostatic_pressure_via_density_and_height as _pressure_depth_law
 
-buoyant_force = clone_as_symbol(symbols.force, display_symbol="F_A", display_latex="F_\\text{A}")
+buoyant_force = clone_as_symbol(
+    symbols.force,
+    display_symbol="F_A",
+    display_latex="F_\\text{A}",
+    positive=True,
+)
 """
-The buoyant (Archimedes) :symbols:`force`.
+The buoyant (Archimedes) :symbols:`force`. Note that this is the *magnitude* of the force vector.
 """
 
-fluid_density = symbols.density
+fluid_density = clone_as_symbol(symbols.density, positive=True)
 """
 The :symbols:`density` of the fluid.
 """
 
-displaced_volume = symbols.volume
+displaced_volume = clone_as_symbol(symbols.volume, positive=True)
 """
 The :symbols:`volume` of the displaced fluid. Equivalently, the volume of the part of the body
 immersed in the fluid.
 """
 
-law = Eq(buoyant_force,
-    -1 * fluid_density * quantities.acceleration_due_to_gravity * displaced_volume)
+law = Eq(
+    buoyant_force,
+    fluid_density * quantities.acceleration_due_to_gravity * displaced_volume,
+)
 """
 :laws:symbol::
 
@@ -98,22 +105,23 @@ _net_force_expr = _superposition_law.law.rhs.subs(
 })
 _net_force_expr = CoordinateVector.from_expr(_net_force_expr)
 
-# The axis along which depth is measured in this law is antiparallel to the z-axis
-_net_force_projection = VectorDot(_net_force_expr, -1 * _k).doit()
+_net_force_norm_expr = VectorNorm(_net_force_expr)
 
 # Replace `l_z * A_xy` with `V`
-_net_force_projection = solve(
+_net_force_norm_expr = solve(
     [
-    Eq(buoyant_force, _net_force_projection),
+    Eq(buoyant_force, _net_force_norm_expr),
     Eq(displaced_volume, _z_length * _xy_area),
     ],
     (buoyant_force, _z_length),
     dict=True,
 )[0][buoyant_force]
 
-assert expr_equals(law.rhs, _net_force_projection)
+assert expr_equals(law.rhs, _net_force_norm_expr)
 
-# For any other shape of the object, we can approximate it with parallelepipeds
+# For any other shape of the object, refer to a more general law that connects the buoyant force
+# to the divergence of the Cauchy stress tensor (and therefore fluid pressure):
+# <https://en.wikipedia.org/wiki/Archimedes%27_principle#Forces_and_equilibrium>
 
 
 @validate_input(fluid_density_=fluid_density, displaced_volume_=displaced_volume)
@@ -124,4 +132,4 @@ def calculate_force_buoyant(fluid_density_: Quantity, displaced_volume_: Quantit
         fluid_density: fluid_density_,
         displaced_volume: displaced_volume_
     })
-    return Quantity(abs(result_expr))
+    return Quantity(result_expr)
