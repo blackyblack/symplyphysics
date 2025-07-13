@@ -11,13 +11,7 @@ It is proportional to the normal force between the two objects.
 """
 
 from sympy import Eq, solve
-from symplyphysics import (
-    clone_as_symbol,
-    symbols,
-    Quantity,
-    validate_input,
-    validate_output,
-)
+from symplyphysics import (clone_as_symbol, symbols, Quantity, validate_input, validate_output)
 
 friction_force = clone_as_symbol(symbols.force, display_symbol="F_fr", display_latex="F_\\text{fr}")
 """
@@ -25,7 +19,7 @@ The friction :symbols:`force`.
 """
 
 friction_coefficient = symbols.friction_coefficient
-r"""
+"""
 The :symbols:`friction_coefficient` between the two objects.
 """
 
@@ -39,13 +33,13 @@ The normal reaction :symbols:`force` from one object to another.
 """
 
 law = Eq(friction_force, friction_coefficient * normal_force)
-r"""
-:code:`F_fr = mu * N`
-
-Latex:
-    .. math::
-        F_\text{fr} = \mu N
 """
+:laws:symbol::
+
+:laws:latex::
+"""
+
+# This is an empirical law describing a phenomenological model of friction.
 
 
 @validate_input(friction_coefficient_=friction_coefficient, normal_reaction_=normal_force)
