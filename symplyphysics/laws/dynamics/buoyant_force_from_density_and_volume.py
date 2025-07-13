@@ -17,9 +17,14 @@ from symplyphysics import (clone_as_symbol, symbols, quantities, Quantity, valid
 from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.core.experimental.coordinate_systems import CoordinateVector, CARTESIAN
-from symplyphysics.core.experimental.vectors import VectorSymbol, VectorNorm
+from symplyphysics.core.experimental.vectors import VectorNorm
 
-from symplyphysics.definitions.vector import superposition_of_forces_is_sum as _superposition_law
+from symplyphysics.definitions.vector import (
+    superposition_of_forces_is_sum as _superposition_law,
+    vector_area_is_unit_normal_times_scalar_area as _vector_area_def,
+)
+from symplyphysics.laws.dynamics.vector import (
+    normal_force_via_pressure_and_vector_area as _normal_force_law,)
 from symplyphysics.laws.hydro import hydrostatic_pressure_via_density_and_height as _pressure_depth_law
 
 buoyant_force = clone_as_symbol(
@@ -68,27 +73,26 @@ _bottom_depth = _top_depth + _z_length
 # a.k.a. gauge pressure; it is a function of `_depth`
 _hydrostatic_pressure = _pressure_depth_law.law.rhs.subs(_pressure_depth_law.density, fluid_density)
 
-_unit_normal = VectorSymbol("n")
-_area = symbols.area
-
 # Note that we ignore the external (e.g. atmospheric) pressure because it is considered constant
 # and it therefore does not contribute to the buoyant force.
 
-# TODO: use law here
-_force_expr = -1 * _hydrostatic_pressure * _unit_normal * _area
+_vector_area_expr = _vector_area_def.law.rhs.subs(_vector_area_def.scalar_area, _xy_area)
+
+_z_force_expr = _normal_force_law.law.rhs.subs({
+    _normal_force_law.pressure: _hydrostatic_pressure,
+    _normal_force_law.vector_area: _vector_area_expr,
+})
 
 _k = CoordinateVector([0, 0, 1], CARTESIAN)
 
-_top_force_expr = _force_expr.subs({
+_top_force_expr = _z_force_expr.subs({
     _depth: _top_depth,
-    _unit_normal: _k,
-    _area: _xy_area,
+    _vector_area_def.unit_normal: _k,
 })
 
-_bottom_force_expr = _force_expr.subs({
+_bottom_force_expr = _z_force_expr.subs({
     _depth: _bottom_depth,
-    _unit_normal: -1 * _k,
-    _area: _xy_area,
+    _vector_area_def.unit_normal: -1 * _k,
 })
 
 # NOTE: the forces exerted on the sides cancel each other out. For instance, the 2 sides parallel
