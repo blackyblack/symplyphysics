@@ -61,16 +61,14 @@ _bottom_depth = _top_depth + _z_length
 # a.k.a. gauge pressure; it is a function of `_depth`
 _hydrostatic_pressure = _pressure_depth_law.law.rhs.subs(_pressure_depth_law.density, fluid_density)
 
-_atmospheric_pressure = clone_as_symbol(symbols.pressure, subscript="0")
-
-# NOTE: pressure is locally additive
-_total_pressure = _atmospheric_pressure + _hydrostatic_pressure
-
 _unit_normal = VectorSymbol("n")
 _area = symbols.area
 
+# Note that we ignore the external (e.g. atmospheric) pressure because it is considered constant
+# and it therefore does not contribute to the buoyant force.
+
 # TODO: use law here
-_force_expr = -1 * _total_pressure * _unit_normal * _area
+_force_expr = -1 * _hydrostatic_pressure * _unit_normal * _area
 
 _k = CoordinateVector([0, 0, 1], CARTESIAN)
 
@@ -100,7 +98,7 @@ _net_force_expr = _superposition_law.law.rhs.subs(
 })
 _net_force_expr = CoordinateVector.from_expr(_net_force_expr)
 
-# The axis along which depth is measure in this law is antiparallel to the z-axis
+# The axis along which depth is measured in this law is antiparallel to the z-axis
 _net_force_projection = VectorDot(_net_force_expr, -1 * _k).doit()
 
 # Replace `l_z * A_xy` with `V`
