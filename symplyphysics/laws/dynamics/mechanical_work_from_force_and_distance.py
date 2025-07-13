@@ -1,30 +1,47 @@
-r"""
+"""
 Mechanical work is force times distance
 =======================================
 
 Work is measured result of force applied. Mechanical work is the only reason for the object energy to be changed.
 Work is scalar value equal to force multiplied by distance.
 
+**Notes:**
+
+#. This law works even when the force vector :math:`\\vec F` and the displacement vector
+   :math:`\\vec s` are not collinear or codirectional. In that case one should use the projection
+   of :math:`\\vec F` onto :math:`\\vec s` as the force or the projection of :math:`\\vec s` on
+   :math:`\\vec F` as the distance, due to the projection law. See **notes**.
+
+.. math::
+
+    W = \\left( \\vec F, \\vec s \\right) = \\left( \\vec F, \\frac{\\vec s}{\\left \\Vert \\vec s \\right \\Vert} \\right) \\left \\Vert \\vec s \\right \\Vert = F_s s
+
+    W = \\left( \\vec F, \\vec s \\right) = \\left( \\frac{\\vec F}{\\left \\Vert \\vec F \\right \\Vert}, \\vec s \\right) \\left \\Vert \\vec F \\right \\Vert = F s_F
+
 **Conditions:**
 
-#. The force and displacement vectors are collinear.
+#. The force and displacement vectors are **collinear** and **codirectional**.
 
 **Notes:**
 
-#. Use the vector form of this law for non-collinear vectors of force and movement.
+#. Use the :ref:`vector form <Mechanical work from force and displacement>` of this law for
+   non-collinear vectors of force and movement.
 
 **Links:**
 
 #. `Wikipedia, first formula <https://en.wikipedia.org/wiki/Work_(physics)#>`__.
+
+..
+    NOTE: include angle in the formula?
 """
 
 from sympy import Eq, solve
-from symplyphysics import (
-    symbols,
-    Quantity,
-    validate_input,
-    validate_output,
-)
+from symplyphysics import symbols, Quantity, validate_input, validate_output
+from symplyphysics.core.expr_comparisons import expr_equals
+
+from symplyphysics.core.experimental.vectors import VectorSymbol, VectorNorm, VectorCross
+
+from symplyphysics.laws.dynamics.vector import mechanical_work_from_force_and_move as _work_law
 
 work = symbols.work
 """
@@ -47,6 +64,25 @@ law = Eq(work, force * distance)
 
 :laws:latex::
 """
+
+# Derive law from vector law
+
+_vector = VectorSymbol("u")
+_unit_vector = _vector / VectorNorm(_vector)
+
+_force_vector = force * _unit_vector
+
+_displacement_vector = distance * _unit_vector
+
+# Proof that `F` and `s` are collinear vectors
+assert expr_equals(VectorCross(_force_vector, _displacement_vector), 0)
+
+_work_expr = _work_law.law.rhs.subs({
+    _work_law.force: _force_vector,
+    _work_law.displacement: _displacement_vector,
+})
+
+assert expr_equals(_work_expr, law.rhs)
 
 
 @validate_input(force_=force, displacement_=distance)
