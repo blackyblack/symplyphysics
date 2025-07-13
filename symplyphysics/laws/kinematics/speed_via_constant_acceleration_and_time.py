@@ -12,6 +12,9 @@ of time.
 **Links:**
 
 #. `Wikipedia, vector counterpart of this law <https://en.wikipedia.org/wiki/Kinematics#Relative_acceleration>`__.
+
+..
+    TODO: make a vector counterpart of this law
 """
 
 from sympy import (Eq, solve)
@@ -29,7 +32,8 @@ time = symbols.time
 
 acceleration = symbols.acceleration
 """
-Constant :symbols:`acceleration`.
+Constant :symbols:`acceleration`. Note that it is the *projection* of the acceleration vector on the
+axis along which position is measured.
 """
 
 initial_speed = clone_as_symbol(symbols.speed, subscript="0")
