@@ -46,6 +46,8 @@ law = Eq(force(time), VectorDerivative(momentum(time), time))
 :laws:latex::
 """
 
+# NOTE: derivable from the Lagrangian or Hamiltonian formulation of classical mechanics
+
 
 @validate_input(
     momentum_before_=momentum,

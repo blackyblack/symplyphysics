@@ -5,6 +5,12 @@ Mechanical work from force and displacement (vector)
 Work is measured result of force applied. Mechanical work is the only reason for the object energy
 to be changed. Work is a scalar value equal to the dot product of force and displacement vectors.
 
+**Conditions:**
+
+#. Force must be constant during the body's displacement. This is possible when the displacement is
+   infinitesimally small. For the case non-constant force and/or finite displacement, refer to
+   :ref:`Mechanical work is line integral of force`.
+
 **Notation:**
 
 #. :math:`\\left( \\vec a, \\vec b \\right)` (:code:`dot(a, b)`) is the dot product between
