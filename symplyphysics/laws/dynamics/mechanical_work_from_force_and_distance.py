@@ -33,7 +33,7 @@ Work is scalar value equal to force multiplied by distance.
     NOTE: include angle in the formula?
 """
 
-from sympy import Eq, solve, Q
+from sympy import Eq, solve, Q, refine
 from symplyphysics import symbols, Quantity, validate_input, validate_output
 from symplyphysics.core.expr_comparisons import expr_equals
 
@@ -77,8 +77,10 @@ _displacement_vector = distance * _unit_vector
 assert expr_equals(VectorCross(_force_vector, _displacement_vector), 0)
 
 # Proof that `F` and `s` are codirectional
-assert (VectorDot(_force_vector, _displacement_vector)
-    > 0).refine(Q.positive(force) & Q.positive(distance))
+assert refine(
+    VectorDot(_force_vector, _displacement_vector) > 0,
+    Q.positive(force) & Q.positive(distance),
+)
 
 _work_expr = _work_law.law.rhs.subs({
     _work_law.force: _force_vector,
