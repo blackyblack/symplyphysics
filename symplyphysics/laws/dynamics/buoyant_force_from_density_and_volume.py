@@ -123,9 +123,10 @@ _net_force_norm_expr = solve(
 
 assert expr_equals(law.rhs, _net_force_norm_expr)
 
-# For any other shape of the object, refer to a more general law that connects the buoyant force
-# to the divergence of the Cauchy stress tensor (and therefore fluid pressure):
-# <https://en.wikipedia.org/wiki/Archimedes%27_principle#Forces_and_equilibrium>
+# For any other shape of the object, approximate the submerged part of the object with
+# parallelepipeds, and since for each parallelepiped the force exerted on it from the fluid
+# depends only on its volume, and the forces are additive, we then obtain the formula presented
+# in this law.
 
 
 @validate_input(fluid_density_=fluid_density, displaced_volume_=displaced_volume)
