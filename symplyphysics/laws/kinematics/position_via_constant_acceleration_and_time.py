@@ -11,16 +11,13 @@ If a body is moving with a constant acceleration, its position in space is a qua
 **Links:**
 
 #. `Wikipedia, vector counterpart of this law <https://en.wikipedia.org/wiki/Kinematics#Relative_acceleration>`__.
+
+..
+    TODO: make a vector counterpart of this law
 """
 
 from sympy import Eq, solve, dsolve
-from symplyphysics import (
-    symbols,
-    Quantity,
-    validate_input,
-    validate_output,
-    clone_as_symbol,
-)
+from symplyphysics import symbols, Quantity, validate_input, validate_output, clone_as_symbol
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import speed_is_distance_derivative as _velocity_definition
 from symplyphysics.definitions import acceleration_is_speed_derivative as _acceleration_definition
@@ -37,12 +34,14 @@ initial_position = clone_as_symbol(symbols.position, subscript="0")
 
 initial_speed = clone_as_symbol(symbols.speed, subscript="0")
 """
-:symbols:`speed` at :math:`t = 0`.
+:symbols:`speed` at :math:`t = 0`. Note that it is the *projection* of the velocity vector on the
+axis of the body's movement.
 """
 
 acceleration = symbols.acceleration
 """
-Constant :symbols:`acceleration`.
+Constant :symbols:`acceleration`. Note that it is the *projection* of the acceleration vector on the
+axis of the body's movement.
 """
 
 time = symbols.time
