@@ -34,7 +34,7 @@ initial_position = clone_as_symbol(symbols.position, subscript="0")
 
 initial_speed = clone_as_symbol(symbols.speed, subscript="0")
 """
-:symbols:`speed` at :math:`t = 0`. Note that is is the *projection* of the velocity vector on the
+:symbols:`speed` at :math:`t = 0`. Note that it is the *projection* of the velocity vector on the
 axis of the body's movement.
 """
 

@@ -6,8 +6,9 @@ The maximum height that a body thrown vertically will rise to depends on the ini
 
 **Notes:**
 
-#. If the body is thrown at a non-right angle to the horizon, this formula is still applicable but
-   you must use the projection of the velocity vector on the :math:`z` axis as the initial speed.
+#. If the body is launched at an arbitrary angle to the horizontal, this formula is still
+   applicable but you must use the projection of the velocity vector on the :math:`z` axis as the
+   initial speed.
 
 **Conditions:**
 
@@ -39,9 +40,9 @@ maximum_height = symbols.height
 The maximum :symbols:`height` that the object will reach.
 """
 
-initial_speed = symbols.speed
+initial_speed = clone_as_symbol(symbols.speed)
 """
-The initial :symbols:`speed` of the object. Note that is the *projection* of the body's velocity
+The initial :symbols:`speed` of the object. Note that it is the *projection* of the body's velocity
 vector on the :math:`z`-axis.
 """
 
@@ -59,14 +60,11 @@ _acceleration = _projection_law.law.rhs.subs({
     _projection_law.angle: pi
 })
 
-_speed_eqn = _speed_law.law.subs(
-    {
+_speed_eqn = _speed_law.law.subs({
     _speed_law.final_speed: 0,  # the body exhausts all its kinetic energy and comes to a stop
     _speed_law.initial_speed: initial_speed,
     _speed_law.acceleration: _acceleration,
-    },
-    # `_speed_law.final_speed` and `initial_speed` happen to be the same Python object
-    simultaneous=True)
+})
 
 _time = _speed_law.time
 
