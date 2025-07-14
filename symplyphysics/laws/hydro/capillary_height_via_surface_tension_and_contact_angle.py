@@ -2,7 +2,7 @@
 Capillary height via surface tension and contact angle
 =======================================================
 
-The Jurin's law determines the height to which the liquid rises in capillaries. It
+The **Jurin's law** determines the height to which the liquid rises in capillaries. It
 states that the maximum height of a liquid in a capillary tube is inversely proportional
 to the tube's diameter.
 
@@ -26,6 +26,10 @@ to the tube's diameter.
 
 from sympy import Eq, solve, cos
 from symplyphysics import (Quantity, validate_input, validate_output, symbols, quantities)
+from symplyphysics.core.expr_comparisons import expr_equals
+
+from symplyphysics.laws.thermodynamics import laplace_pressure_of_spherical_shapes as _laplace_law
+from symplyphysics.laws.hydro import hydrostatic_pressure_via_density_and_height as _pressure_law
 
 height = symbols.height
 """
@@ -60,6 +64,35 @@ law = Eq(
 
 :laws:latex::
 """
+
+# Derive law
+
+# The meniscus has a spherical shape (since a sphere is a shape with the smallest surface area for
+# a given volume). Also see [this figure](https://en.wikipedia.org/wiki/Young%E2%80%93Laplace_equation#/media/File:Spherical_meniscus.PNG)
+_radius_of_curvature = radius / cos(angle)
+
+_laplace_eqn = _laplace_law.law.subs({
+    _laplace_law.surface_tension: surface_tension,
+    _laplace_law.radius_of_curvature: _radius_of_curvature,
+})
+
+_hydrostatic_pressure_eqn = _pressure_law.law.subs({
+    _pressure_law.density: density,
+    _pressure_law.height: height,
+})
+
+_fluid_equlibrium_eqn = Eq(
+    _laplace_law.laplace_pressure,
+    _pressure_law.hydrostatic_pressure,
+)
+
+_height_derived = solve(
+    (_fluid_equlibrium_eqn, _laplace_eqn, _hydrostatic_pressure_eqn),
+    (_laplace_law.laplace_pressure, _pressure_law.hydrostatic_pressure, height),
+    dict=True,
+)[0][height]
+
+assert expr_equals(_height_derived, law.rhs)
 
 
 @validate_input(surface_tension_coefficient_=surface_tension,
