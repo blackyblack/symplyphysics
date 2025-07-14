@@ -37,10 +37,7 @@ pressure = symbols.pressure
 
 vector_area = clone_as_vector_symbol(symbols.area)
 """
-Vector area is a vector that is normal to the surface and has a magnitude of its (scalar) area.
-
-..
-    TODO: add reference to definition file
+:ref:`Vector area <Vector area is unit normal times scalar area>`.
 """
 
 law = Eq(normal_force, pressure * vector_area)
