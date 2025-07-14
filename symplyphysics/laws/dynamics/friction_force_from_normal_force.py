@@ -2,8 +2,9 @@
 Friction force from normal force
 ================================
 
-The *friction* force is tangential interaction between two objects, which impedes their relative movement.
-It is proportional to the normal force between the two objects.
+The *friction* force is a tangential interaction between two objects, which impedes their relative
+movement. In the phenomenological model of friction there is an empirical law stating that the
+friction force is proportional to the normal force between the two objects.
 
 **Links**
 
@@ -38,8 +39,6 @@ law = Eq(friction_force, friction_coefficient * normal_force)
 
 :laws:latex::
 """
-
-# This is an empirical law describing a phenomenological model of friction.
 
 
 @validate_input(friction_coefficient_=friction_coefficient, normal_reaction_=normal_force)
