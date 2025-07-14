@@ -10,7 +10,7 @@ Work is scalar value equal to force multiplied by distance.
 #. This law works even when the force vector :math:`\\vec F` and the displacement vector
    :math:`\\vec s` are not collinear or codirectional. In that case one should use the projection
    of :math:`\\vec F` onto :math:`\\vec s` as the force or the projection of :math:`\\vec s` on
-   :math:`\\vec F` as the distance, due to the projection law. See **notes**.
+   :math:`\\vec F` as the distance, due to the projection law. See the second **note** for reference.
 
 .. math::
 
@@ -18,14 +18,12 @@ Work is scalar value equal to force multiplied by distance.
 
     W = \\left( \\vec F, \\vec s \\right) = \\left( \\frac{\\vec F}{\\left \\Vert \\vec F \\right \\Vert}, \\vec s \\right) \\left \\Vert \\vec F \\right \\Vert = F s_F
 
+#. Use the :ref:`vector form <Mechanical work from force and displacement>` of this law for
+   non-collinear vectors of force and movement.
+
 **Conditions:**
 
 #. The force and displacement vectors are **collinear** and **codirectional**.
-
-**Notes:**
-
-#. Use the :ref:`vector form <Mechanical work from force and displacement>` of this law for
-   non-collinear vectors of force and movement.
 
 **Links:**
 
@@ -35,11 +33,12 @@ Work is scalar value equal to force multiplied by distance.
     NOTE: include angle in the formula?
 """
 
-from sympy import Eq, solve
+from sympy import Eq, solve, Q
 from symplyphysics import symbols, Quantity, validate_input, validate_output
 from symplyphysics.core.expr_comparisons import expr_equals
 
-from symplyphysics.core.experimental.vectors import VectorSymbol, VectorNorm, VectorCross
+from symplyphysics.core.experimental.vectors import (VectorSymbol, VectorNorm, VectorCross,
+    VectorDot)
 
 from symplyphysics.laws.dynamics.vector import mechanical_work_from_force_and_move as _work_law
 
@@ -76,6 +75,10 @@ _displacement_vector = distance * _unit_vector
 
 # Proof that `F` and `s` are collinear vectors
 assert expr_equals(VectorCross(_force_vector, _displacement_vector), 0)
+
+# Proof that `F` and `s` are codirectional
+assert (VectorDot(_force_vector, _displacement_vector)
+    > 0).refine(Q.positive(force) & Q.positive(distance))
 
 _work_expr = _work_law.law.rhs.subs({
     _work_law.force: _force_vector,
