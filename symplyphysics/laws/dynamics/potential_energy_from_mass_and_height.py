@@ -18,7 +18,8 @@ other objects.
 """
 
 from sympy import Eq, solve, symbols as sym_symbols
-from symplyphysics import (Quantity, validate_input, validate_output, symbols, quantities)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, quantities,
+    clone_as_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
@@ -58,6 +59,8 @@ law = Eq(potential_energy, mass * quantities.acceleration_due_to_gravity * heigh
 
 # Derive law
 
+# 1. Find the work eone by the body to move in the (Earth's) gravitational field.
+
 # Note that the potential energy the body possesses is equal (by magnitude) to the amount of work
 # it can do against the gravity force, so we can use the expression for work.
 
@@ -87,14 +90,13 @@ _work_expr = _work_law.law.rhs.subs({
     _work_law.displacement: _displacement
 })
 
-# Now let's show that `U = -W`
+# 2. Show that `U = -W`
 
 _k0 = _work_energy_law.kinetic_energy(_work_energy_law.time_before)
 _k1 = _work_energy_law.kinetic_energy(_work_energy_law.time_after)
 
-# The initial value doesn't matter since we only calculate the difference in potential energy:
-_u0 = 0
-_u1 = potential_energy
+_u0 = clone_as_symbol(potential_energy, subscript="0")
+_u1 = clone_as_symbol(potential_energy, subscript="1")
 
 _e0 = _energy_def.definition.rhs.subs({
     _energy_def.kinetic_energy: _k0,
@@ -115,9 +117,16 @@ _work_energy_eqn = _work_energy_law.law.subs({
     _work_energy_law.work: _work_expr,
 })
 
+# The "potential energy" used in the law is actually defined as the the difference in potential
+# energy (or, more precisely, the gravitational potential) after and before the movement.
+_potential_energy_eqn = Eq(
+    potential_energy,
+    _u1 - _u0,
+)
+
 _potential_energy_derived = solve(
-    (_total_energy_eqn, _work_energy_eqn),
-    (potential_energy, _k0),
+    (_total_energy_eqn, _work_energy_eqn, _potential_energy_eqn),
+    (potential_energy, _k0, _u0),
     dict=True,
 )[0][potential_energy]
 
