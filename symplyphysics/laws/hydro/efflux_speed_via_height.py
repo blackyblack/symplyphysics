@@ -77,8 +77,8 @@ _hydrostatic_pressure_expr = _hydrostatic_law.law.rhs.subs({
     _hydrostatic_law.height: _height,
 })
 
-# We assume the static pressure to be equal at all points of the fluid (it can be set to the
-# atmospheric pressure in Earth's conditions):
+# We assume the static pressure to be equal at all points of the fluid (in Earth's conditions it
+# can be set to the atmospheric pressure):
 _inner_pressure_expr = _inner_pressure_def.law.rhs.subs({
     _inner_pressure_def.dynamic_pressure: _dynamic_pressure_expr,
     _inner_pressure_def.hydrostatic_pressure: _hydrostatic_pressure_expr,
@@ -124,9 +124,9 @@ _continuity_dsolved_eqn = dsolve(
 
 # 3. Combine with the remaining equations
 
-_factor = SymSymbol("k", positive=True)
+_cross_section_ratio = SymSymbol("k", positive=True)
 _cross_section_eqn = Eq(
-    _factor,
+    _cross_section_ratio,
     _cross_section_at_orifice / _cross_section_at_surface,
 )
 
@@ -142,7 +142,7 @@ _efflux_speed_derived = solve(
 )[0][_flow_speed_at_orifice]
 
 # Refer to the first condition of this law
-_efflux_speed_derived = _efflux_speed_derived.limit(_factor, 0)
+_efflux_speed_derived = _efflux_speed_derived.limit(_cross_section_ratio, 0)
 
 assert expr_equals(_efflux_speed_derived, law.rhs)
 
