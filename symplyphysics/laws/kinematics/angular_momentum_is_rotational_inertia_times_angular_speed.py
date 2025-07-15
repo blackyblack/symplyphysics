@@ -69,7 +69,7 @@ _e_w_vec = _w_vec / VectorNorm(_w_vec)
 # `r = r_t + r_n` i.e. the position vector can be split into a component tangential to the angular
 # velocity pseudovector and a component normal to it.
 _r_t = clone_as_symbol(symbols.distance_to_origin, subscript="t")
-_r_t_vec = _r_t * _e_w_vec
+_r_t_vec = _r_t * _e_w_vec  # this expresses the tangentiality condition
 _r_n_vec = clone_as_vector_symbol(symbols.distance_to_axis, subscript="n")
 
 _orthogonality_condition = {
