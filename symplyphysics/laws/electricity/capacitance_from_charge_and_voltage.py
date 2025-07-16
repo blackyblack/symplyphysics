@@ -6,6 +6,10 @@ The electrical *capacitance* of an object is a physical quantity that describes 
 of the object to store energy in the form of an electric charge. It is directly proportional to
 the charge accumulated in the object and inversely proportional to the voltage across it.
 
+**Notes:**
+
+#. This equation can be seen as the definition of capacitance.
+
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Capacitance#Mutual_capacitance>`__.
