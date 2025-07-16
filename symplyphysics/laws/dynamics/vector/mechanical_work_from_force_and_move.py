@@ -1,6 +1,6 @@
 """
-Mechanical work from force and displacement (vector)
-====================================================
+Mechanical work from force and displacement
+===========================================
 
 Work is measured result of force applied. Mechanical work is the only reason for the object energy
 to be changed. Work is a scalar value equal to the dot product of force and displacement vectors.
