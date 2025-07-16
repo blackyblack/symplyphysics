@@ -46,6 +46,9 @@ law = Eq(Derivative(tube_area(time) * flow_speed(time), time), 0)
 :laws:latex::
 """
 
+# Derivable from a [more general continuity equation](https://en.wikipedia.org/wiki/Continuity_equation#Fluid_dynamics)
+# for ideal fluids.
+
 
 @validate_input(tube_area_before_=tube_area,
     fluid_speed_before_=flow_speed,
