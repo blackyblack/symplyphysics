@@ -59,7 +59,7 @@ law = Eq(potential_energy, mass * quantities.acceleration_due_to_gravity * heigh
 
 # Derive law
 
-# 1. Find the work eone by the body to move in the (Earth's) gravitational field.
+# 1. Find the work done by the body to move in the (Earth's) gravitational field.
 
 # Note that the potential energy the body possesses is equal (by magnitude) to the amount of work
 # it can do against the gravity force, so we can use the expression for work.
