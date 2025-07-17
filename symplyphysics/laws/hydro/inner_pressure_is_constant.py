@@ -78,14 +78,9 @@ _continuity_dsolved_eqn = dsolve(
     ics={_tube_area(0): _tube_area(0)},
 )
 
-_volume_flow_rate_applied_eqn = apply(
+_continuity_dsolved_multiplied_eqn = apply(
     _continuity_dsolved_eqn,
-    lambda x: x * _flow_speed(time),
-)
-
-_mass_change_applied_eqn = apply(
-    _volume_flow_rate_applied_eqn,
-    lambda x: x * _density * _time_change,
+    lambda x: x * _flow_speed(time) * _density * _time_change,
 )
 
 _distance_change_expr = _distance_law.law.rhs.subs({
@@ -107,7 +102,7 @@ _initial_mass_change_eqn = _mass_change_original_eqn.subs(time, 0)
 _final_mass_change_eqn = _mass_change_original_eqn  # at time `t`
 
 _mass_change_expr = solve(
-    (_mass_change_applied_eqn, _initial_mass_change_eqn, _final_mass_change_eqn),
+    (_continuity_dsolved_multiplied_eqn, _initial_mass_change_eqn, _final_mass_change_eqn),
     (_mass_change(time), _flow_speed(time), _flow_speed(0)),
     dict=True,
 )[0][_mass_change(time)]
