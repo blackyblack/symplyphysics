@@ -58,7 +58,6 @@ law = Eq(laplace_pressure, outside_pressure - inside_pressure)
 )
 @validate_output(laplace_pressure)
 def calculate_laplace_pressure(
-    sign_: int,
     external_pressure_: Quantity,
     internal_pressure_: Quantity,
 ) -> Quantity:
