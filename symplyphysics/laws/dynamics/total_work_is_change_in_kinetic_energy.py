@@ -8,6 +8,9 @@ The work-energy principle states that the work done by all forces acting on a pa
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Work_(physics)#Work%E2%80%93energy_principle>`__.
+
+..
+    TODO: replace `time_before` and `time_after` with `initial_time` and `final_time`
 """
 
 from sympy import Eq
