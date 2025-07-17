@@ -58,7 +58,7 @@ law = Eq(angular_momentum, rotational_inertia * angular_speed)
 
 # Derive the law in case of a material point (particle)
 
-# Angular velocity pseudovector `w`.
+# Angular velocity pseudovector `w`, which is parallel to the rotational axis in question.
 _w_vec = clone_as_vector_symbol(symbols.angular_speed)
 
 # Unit (pseudo)vector in the direction of `w`.
@@ -66,7 +66,7 @@ _e_w_vec = _w_vec / VectorNorm(_w_vec)
 
 # 1. Decompose the position vector of the particle
 
-# `r = r_t + r_n` i.e. the position vector can be split into a component tangential to the angular
+# `r = r_t + r_n`, i.e. the position vector can be split into a component tangent to the angular
 # velocity pseudovector and a component normal to it.
 _r_t = clone_as_symbol(symbols.distance_to_origin, subscript="t")
 _r_t_vec = _r_t * _e_w_vec  # this expresses the tangentiality condition
@@ -111,6 +111,9 @@ _v_vec = _absolute_velocity_law.law.rhs.subs({
 
 _l_vec = _l_vec.subs(_linear_momentum_def.velocity, _v_vec).subs(_orthogonality_condition)
 
+# Since we're looking for the component of the angular momentum pseudovector tangent to the
+# rotational axis, we can find its dot product with the normalized angular velocity (i.e. it has a
+# unit norm).
 _l_t_expr = VectorDot(_l_vec, _e_w_vec).subs(_orthogonality_condition)
 _l_t_expr = _l_t_expr.subs({
     VectorNorm(_w_vec): angular_speed,
@@ -127,8 +130,8 @@ assert expr_equals(_l_t_expr, law.rhs)
 
 # In case of a finite rigid body, sum the expression for `L_t` across all points of the body; note
 # that the body's angular velocity is constant and could be taken out of the summation, thus
-# leaving us with the sum `m_i * r_i^2`, equal to the body's rotational inertia about the given
-# axis.
+# leaving us with the sum over `m_i * r_i^2`, equal to the body's rotational inertia about the
+# given axis.
 
 
 @validate_input(rotational_inertia_=rotational_inertia, angular_velocity_=angular_speed)
