@@ -139,7 +139,7 @@ _efflux_speed_derived = solve(
     (_inner_pressure_dsolved_eqn, _continuity_dsolved_eqn, _cross_section_eqn, _height_eqn),
     (_flow_speed_at_orifice, _flow_speed_at_surface, _cross_section_at_surface, _height_at_surface),
     dict=True,
-)[0][_flow_speed_at_orifice]
+)[-1][_flow_speed_at_orifice]  # the square root gives two values
 
 # Refer to the first condition of this law
 _efflux_speed_derived = _efflux_speed_derived.limit(_cross_section_ratio, 0)
