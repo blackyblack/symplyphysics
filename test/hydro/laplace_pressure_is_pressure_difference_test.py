@@ -24,8 +24,8 @@ def test_bad_pressure(test_args: Args) -> None:
     with raises(errors.UnitsError):
         law.calculate_laplace_pressure(bad_scalar, test_args.p_i)
     with raises(TypeError):
-        law.calculate_laplace_pressure(bad_scalar, test_args.p_i)
+        law.calculate_laplace_pressure(100, test_args.p_i)
     with raises(errors.UnitsError):
         law.calculate_laplace_pressure(test_args.p_o, bad_scalar)
     with raises(TypeError):
-        law.calculate_laplace_pressure(test_args.p_o, bad_scalar)
+        law.calculate_laplace_pressure(test_args.p_o, 100)
