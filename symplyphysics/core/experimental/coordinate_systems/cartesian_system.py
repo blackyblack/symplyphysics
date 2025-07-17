@@ -1,4 +1,4 @@
-from typing import Optional, Sequence
+from typing import Optional, Sequence, Iterable
 
 from sympy import Expr, Matrix, Symbol as SymSymbol, S
 from sympy.physics import units
@@ -44,6 +44,11 @@ class CartesianCoordinateSystem(BaseCoordinateSystem):
         _base_scalars: Optional[Sequence[Expr]] = None,
     ) -> Matrix:
         return Matrix.zeros(3)
+
+    def extract_position_vector_components(self, coordinates: Iterable[Expr]) -> Sequence[Expr]:
+        x, y, z = coordinates
+
+        return x, y, z
 
 
 __all__ = ["CartesianCoordinateSystem"]
