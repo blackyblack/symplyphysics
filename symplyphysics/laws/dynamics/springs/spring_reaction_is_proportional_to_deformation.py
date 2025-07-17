@@ -27,17 +27,16 @@ to deformation (vector)>` of this law.
 
 from sympy import Eq
 from symplyphysics import symbols, Quantity, validate_input, validate_output
-from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics.springs.vector import (
     spring_reaction_is_proportional_to_deformation as _hookes_vector_law,)
 
 from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
-from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.experimental.solvers import solve_for_vector, vector_equals
 
 spring_reaction = symbols.force
 """
-Restoring :symbols:`force`, or spring reaction, exerted by the spring due to the
-deformation.
+Restoring :symbols:`force`, or spring reaction, exerted by the spring due to the deformation. Note
+that this is the *projection* of the reaction force on the displacement vector of the spring's end.
 """
 
 stiffness = symbols.stiffness
@@ -69,11 +68,10 @@ _spring_reaction_vector_derived = solve_for_vector(
     _hookes_vector_law.deformation: _deformation_vector,
 })
 _spring_reaction_vector_derived = CoordinateVector.from_expr(_spring_reaction_vector_derived)
-_fx, _fy, _fz = _spring_reaction_vector_derived.components
 
-assert expr_equals(_fx, law.rhs)
-assert expr_equals(_fy, 0)
-assert expr_equals(_fz, 0)
+_expected_force_expr = CoordinateVector([law.rhs, 0, 0], CARTESIAN)
+
+assert vector_equals(_spring_reaction_vector_derived, _expected_force_expr)
 
 
 @validate_input(stiffness_=stiffness, deformation_=deformation)
