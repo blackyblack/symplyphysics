@@ -8,7 +8,13 @@ the charge accumulated in the object and inversely proportional to the voltage a
 
 **Notes:**
 
-#. This equation can be seen as the definition of capacitance.
+#. This equation can be seen as the definition of *self-capacitance*.
+
+#. This law can be used to as well calculate the *mutual capacitance* of two conductive bodies
+   whose net charge is zero, e.g. a parallel-plate capacitor, in which case :math:`q` is the
+   magnitude of the electric charge of the plates and :math:`V` is the voltage between the plates.
+   In other cases, the `capacitance matrix <https://en.wikipedia.org/wiki/Capacitance#Capacitance_matrix>`__
+   must be used.
 
 **Links:**
 

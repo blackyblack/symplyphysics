@@ -11,6 +11,7 @@ the coil and volume of the core.
 
 ..
     TODO: replace `solenoid` with `coil` in file name
+    TODO: use `energy_density` like in the electric field law
 """
 
 from sympy import Eq, solve
