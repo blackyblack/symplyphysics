@@ -26,7 +26,7 @@ import ast
 import re
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Optional
+from typing import Any, Optional, cast
 from ..core.symbols.symbols import DimensionSymbol, Function
 from ..core.dimensions import print_dimension
 from .printer_code import code_str
@@ -244,7 +244,7 @@ def find_members_and_functions(
 
             if (isinstance(stmt, ast.Expr) and current_member_name and
                     isinstance(stmt.value, ast.Constant)):
-                docstrings[current_member_name] = stmt.value.value
+                docstrings[current_member_name] = cast(str, stmt.value.value)
 
         return functions, member_names, docstrings
 
