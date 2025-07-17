@@ -11,12 +11,15 @@ density.
 
 #. The body is completely *submersed* in the fluid.
 
+#. The density of the body is no less than than the density of the fluid, otherwise the body would
+   float to the surface and will be only partially submerged.
+
 **Links:**
 
 #. `Physics LibreTexts, derivable from here <https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/10%3A_Fluids/10.3%3A_Archimedes_Principle>`__.
 """
 
-from sympy import Eq, solve, pi, Idx
+from sympy import Eq, solve, pi, Idx, ask
 from symplyphysics import (clone_as_symbol, symbols, Quantity, validate_input, validate_output,
     quantities, global_index)
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -46,16 +49,22 @@ weight_in_vacuum = clone_as_symbol(symbols.force,
 Weight of the body in vacuum, i.e. its true weight. See :symbols:`force`.
 """
 
-fluid_density = clone_as_symbol(symbols.density,
+fluid_density = clone_as_symbol(
+    symbols.density,
     display_symbol="rho_fl",
-    display_latex="\\rho_\\text{fl}")
+    display_latex="\\rho_\\text{fl}",
+    positive=True,
+)
 """
 :symbols:`density` of the fluid.
 """
 
-body_density = clone_as_symbol(symbols.density,
+body_density = clone_as_symbol(
+    symbols.density,
     display_symbol="rho_b",
-    display_latex="\\rho_\\text{b}")
+    display_latex="\\rho_\\text{b}",
+    positive=True,
+)
 """
 :symbols:`density` of the body.
 """
@@ -69,18 +78,15 @@ law = Eq(weight_in_fluid, weight_in_vacuum * (1 - (fluid_density / body_density)
 
 # Derive law
 
-_body_volume = _density_def.volume
+_body_volume = clone_as_symbol(_density_def.volume, positive=True)
 
 # 1. Find the Archimedes' force and project it onto the gravity force vector.
 
-_archimedes_force_norm_expr = _archimedes_law.law.rhs.subs({
+# Note that the buoyant force is co-directed with the z-axis, so this expression is also the
+# projection of the buoyant force vector to the z-axis.
+_archimedes_force_expr = _archimedes_law.law.rhs.subs({
     _archimedes_law.fluid_density: fluid_density,
     _archimedes_law.displaced_volume: _body_volume,
-})
-
-_archimedes_force_proj_expr = _projection_law.law.rhs.subs({
-    _projection_law.vector_length: _archimedes_force_norm_expr,
-    _projection_law.angle: pi,
 })
 
 # 2. True weight of the body is equal to the gravity force on the body as a whole.
@@ -88,10 +94,13 @@ _archimedes_force_proj_expr = _projection_law.law.rhs.subs({
 _body_mass_expr = solve(
     _density_def.definition,
     _density_def.mass,
-)[0].subs(_density_def.density, body_density)
+)[0].subs({
+    _density_def.density: body_density,
+    _density_def.volume: _body_volume,
+})
 
 # Equal to the true weight of the body
-_gravity_force_expr = solve(
+_gravity_force_norm_expr = solve(
     _newtons_law.law,
     _newtons_law.force,
 )[0].subs({
@@ -99,20 +108,36 @@ _gravity_force_expr = solve(
     _newtons_law.mass: _body_mass_expr,
 })
 
+# The force of gravity is parallel to the vector of acceleration due to gravity, which in turn is
+# parallel to the z-axis but points in the other direction, therefore the angle between the force
+# of gravity and the unit vector parallel to the z-axis is `pi`
+_gravity_force_proj_expr = _projection_law.law.rhs.subs({
+    _projection_law.vector_length: _gravity_force_norm_expr,
+    _projection_law.angle: pi,
+})
+
 # 3. Apparent weight is the true weight with the Archimedes' force substituted from it since the
 #    gravity force and the buoyant force are antiparallel.
 
-_apparent_weight_expr = _superposition_law.definition.rhs.subs(
+# This is the projection of the net force on the z-axis.
+_net_force_proj_expr = _superposition_law.definition.rhs.subs(
     global_index,
     Idx("i", (1, 2)),
 ).doit().subs({
-    _superposition_law.force[1]: _gravity_force_expr,
-    _superposition_law.force[2]: _archimedes_force_proj_expr,
+    _superposition_law.force[1]: _gravity_force_proj_expr,
+    _superposition_law.force[2]: _archimedes_force_expr,
 })
+
+# The net force points opposite to direction of the z-axis.
+assert ask(_net_force_proj_expr < 0, body_density > fluid_density)
+
+# Therefore the apparent weight, being the absolute value of the net force on the body, can be
+# found like this, note that `abs(x) = -1 * x` if `x < 0`.
+_apparent_weight_expr = -1 * _net_force_proj_expr
 
 # 4. Perform final replacements
 
-_true_weight_eqn = Eq(weight_in_vacuum, _gravity_force_expr)
+_true_weight_eqn = Eq(weight_in_vacuum, _gravity_force_norm_expr)
 _apparent_weight_eqn = Eq(weight_in_fluid, _apparent_weight_expr)
 
 _apparent_weight_expr = solve(
