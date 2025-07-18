@@ -60,6 +60,9 @@ law = Eq(
 :laws:latex::
 """
 
+# The law can be derived from the definition of the rotational inertia integral and the center of
+# mass. See more [here](https://en.wikipedia.org/wiki/Parallel_axis_theorem#Derivation).
+
 
 @validate_input(
     rotational_inertia_through_com_=rotational_inertia_through_com,

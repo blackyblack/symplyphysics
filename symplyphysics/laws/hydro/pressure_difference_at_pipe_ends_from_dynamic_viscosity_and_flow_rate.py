@@ -65,6 +65,9 @@ law = Eq(pressure_difference, 8 * dynamic_viscosity * length * flow_rate / (pi *
 :laws:latex::
 """
 
+# Derivable from the [Navier—Stokes equation](https://en.wikipedia.org/wiki/Navier%E2%80%93Stokes_equations#General_continuum_equations)
+# Also see [this](https://en.wikipedia.org/wiki/Hagen%E2%80%93Poiseuille_equation#Derivation)
+
 
 @validate_input(
     dynamic_viscosity_=dynamic_viscosity,
