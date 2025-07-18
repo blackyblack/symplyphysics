@@ -149,15 +149,15 @@ _apparent_weight_expr = solve(
 assert expr_equals(_apparent_weight_expr, law.rhs)
 
 
-@validate_input(weight_air_=weight_in_vacuum,
+@validate_input(weight_vacuum_=weight_in_vacuum,
     liquid_density_=fluid_density,
     body_density_=body_density)
 @validate_output(weight_in_fluid)
-def calculate_weight(weight_air_: Quantity, liquid_density_: Quantity,
+def calculate_weight(weight_vacuum_: Quantity, liquid_density_: Quantity,
     body_density_: Quantity) -> Quantity:
     result_expr = solve(law, weight_in_fluid, dict=True)[0][weight_in_fluid]
     result_weight = result_expr.subs({
-        weight_in_vacuum: weight_air_,
+        weight_in_vacuum: weight_vacuum_,
         fluid_density: liquid_density_,
         body_density: body_density_,
     })
