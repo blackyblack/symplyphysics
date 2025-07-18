@@ -5,6 +5,14 @@ Current is voltage over resistance
 Current flowing through a conductor is proportional to voltage applied to it and
 inversely proportional to its resistance. This is also known as the **Ohm's law**.
 
+**Notes:**
+
+#. This is a phenomenological equation.
+
+**Conditions:**
+
+#. The material must be ohmic, i.e. current must be proportional to voltage.
+
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Ohm%27s_law>`__.

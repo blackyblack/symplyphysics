@@ -6,6 +6,10 @@ Electric dipole moment is a measure of the separation of positive and negative
 electrical charges within a system, i.e. it is a measure of the system's overall
 polarity. Also see :doc:`vector counterpart <laws.electricity.vector.electric_dipole_moment_is_charge_times_displacement>`.
 
+**Notes:**
+
+#. This law can be seen as the definition of electric dipole moment.
+
 **Conditions:**
 
 #. The system can be viewed as composed of two point charges.

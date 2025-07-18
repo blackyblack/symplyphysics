@@ -12,8 +12,10 @@ particles is set to another electrode, then a current will flow through the gap.
    greater than current between electrodes.
 #. There is gaseous medium between electrodes.
 
-..
-    TODO: find link
+**Links:**
+
+#. `Wikipedia — Space charge <https://en.wikipedia.org/wiki/Space_charge#Drift_regime_(Mott%E2%80%93Gurney_law)>`__.
+   See "Mott—Gurney law".
 """
 
 from sympy import Eq, solve, sqrt, Rational
@@ -48,6 +50,8 @@ law = Eq(
 
 :laws:latex::
 """
+
+# For derivation see the Wikipedia link
 
 
 @validate_input(coordinate_=coordinate,

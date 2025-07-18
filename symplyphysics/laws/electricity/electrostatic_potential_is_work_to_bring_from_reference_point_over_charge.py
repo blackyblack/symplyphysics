@@ -13,6 +13,8 @@ the potential approach zero at an infinitely remote point.
 
 #. The electric potential is defined up to a constant.
 
+#. This law can be seen as the definition of electrostatic potential.
+
 **Links:**
 
 #. `Wikipedia, fourth formula <https://en.wikipedia.org/wiki/Electric_potential#Electrostatics>`__.

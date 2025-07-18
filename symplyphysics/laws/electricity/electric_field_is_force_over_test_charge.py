@@ -7,6 +7,15 @@ so called test charge in that point and measuring the electrostatic force applie
 the test charge. The resulting electric field is the ratio of the force applied to
 the value of the test charge.
 
+**Notes:**
+
+#. This is an operational definition of the electric field.
+
+**Conditions:**
+
+#. The test charge must be small enough not to disturb the existing charge distribution and/or
+   fields.
+
 **Links:**
 
 #. `Wikipedia, last formula in paragraph <https://en.wikipedia.org/wiki/Electric_field#Electrostatics>`__.

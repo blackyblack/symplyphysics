@@ -49,6 +49,8 @@ law = Eq(magnetic_flux_density, quantities.vacuum_permeability * current * coil_
 :laws:latex::
 """
 
+# Refer to the link for the derivation.
+
 
 @validate_input(current_=current, length_=length, number_turns_=coil_turn_count)
 @validate_output(magnetic_flux_density)

@@ -11,6 +11,7 @@ permeability, the number of turns in the coil per unit length and its volume.
 
 ..
     TODO rename file
+    FIXME remove either this law or `./inductance_is_proportional_to_turns_squared.py`, they are the same law
 """
 
 from sympy import Eq, solve

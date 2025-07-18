@@ -2,8 +2,7 @@
 Power via voltage and current
 =============================
 
-Electric power can be expressed using current flowing through a
-conductor and voltage applied.
+Electric power can be expressed using current flowing through a conductor and voltage applied.
 
 **Links:**
 

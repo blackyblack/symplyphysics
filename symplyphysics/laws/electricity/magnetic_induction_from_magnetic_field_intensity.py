@@ -6,6 +6,15 @@ Magnetic flux density is a physical quantity that is a force characteristic of a
 field, namely, a characteristic of its action on moving charged particles and on bodies
 with a magnetic moment.
 
+**Notes:**
+
+#. This is a `constitutive equation <https://en.wikipedia.org/wiki/Constitutive_equation>`__
+   describing a model of a material's response to the magnetic field.
+
+**Conditions:**
+
+#. The medium is linear, homogeneous, and isotropic.
+
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Magnetic_field#The_H-field>`__.

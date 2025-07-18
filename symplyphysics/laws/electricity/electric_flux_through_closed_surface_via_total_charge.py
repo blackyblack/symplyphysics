@@ -42,6 +42,9 @@ law = Eq(total_electric_flux, total_charge / quantities.vacuum_permittivity)
 :laws:latex::
 """
 
+# This law is the integral from of one of the Maxwell's equations
+# See :ref:`Divergence of electric displacement field is volumetric charge density`
+
 
 @validate_input(total_charge_=total_charge)
 @validate_output(total_electric_flux)

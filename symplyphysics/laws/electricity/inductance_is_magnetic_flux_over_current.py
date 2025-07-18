@@ -2,9 +2,13 @@
 Inductance is magnetic flux over current
 ========================================
 
-Inductance is the tendency of an electrical component to oppose a change in the electric current
+**Inductance** is the tendency of an electrical component to oppose a change in the electric current
 flowing through it. It can be defined as the ratio of the total magnetic flux through a circuit
 due to the component over the current in it.
+
+**Notes:**
+
+#. This law can be seen as the definition of (self-)inductance for linear magnetic media.
 
 **Links:**
 

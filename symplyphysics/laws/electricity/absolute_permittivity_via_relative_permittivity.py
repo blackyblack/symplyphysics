@@ -5,6 +5,10 @@ Absolute permittivity via relative permittivity
 Absolute permittivity of a medium can be expressed as the product of its relative permittivity
 and vacuum permittivity.
 
+**Notes:**
+
+#. This equation can be seen as the definition of relative permittivity.
+
 **Notation:**
 
 #. :quantity_notation:`vacuum_permittivity`.

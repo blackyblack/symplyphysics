@@ -1,20 +1,22 @@
 """
-Instantaneous energy of electric field
+Instantaneous energy of magnetic field
 ======================================
 
-There is an oscillatory circuit with alternating current. Then the energy of the
-electric field will depend on the inductance, the maximum value of the current, the
-angular frequency of the current, the time and the initial phase.
+There is an oscillatory circuit with alternating current. Then the energy of the magnetic field in
+the inductor will depend on the inductance, the maximum value of the current, the angular frequency
+of the current, the time and the initial phase.
+
+**Conditions:**
+
+#. The current depends on time sinusoidally:
+
+   .. math::
+
+       I(t) = I_\\text{max} \cos(\omega t + \\varphi)
 """
 
 from sympy import Eq, solve, cos
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    symbols,
-    clone_as_symbol,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols, clone_as_symbol
 
 energy = symbols.energy
 """
@@ -55,6 +57,8 @@ law = Eq(energy,
 
 :laws:latex::
 """
+
+# Derivable from the formula for energy stored in the inductor: W = L * I^2 / 2 (TODO: make this law)
 
 
 @validate_input(inductance_=inductance,

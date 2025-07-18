@@ -50,6 +50,8 @@ law = Eq(electric_field_strength, charge / (4 * pi * quantities.vacuum_permittiv
 :laws:latex::
 """
 
+# Derive from Gauss's law, see :ref:`Electric flux through closed surface via total charge`
+
 
 @validate_input(charge_=charge, distance_=distance)
 @validate_output(electric_field_strength)

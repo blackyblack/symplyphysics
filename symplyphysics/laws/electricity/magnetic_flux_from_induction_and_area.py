@@ -7,6 +7,9 @@ Magnetic flux is the flux of the vector of magnetic flux density through a certa
 **Links:**
 
 #. `Wikipedia, first formula <https://en.wikipedia.org/wiki/Magnetic_flux>`__.
+
+..
+    TODO: make vector law
 """
 
 from sympy import (Eq, solve, cos)

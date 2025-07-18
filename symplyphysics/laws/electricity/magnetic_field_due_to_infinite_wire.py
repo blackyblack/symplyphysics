@@ -50,6 +50,9 @@ law = Eq(magnetic_flux_density,
 :laws:latex::
 """
 
+# Refer to the link for the derivation.
+# TODO: make the Biot—Savart law
+
 
 @validate_input(
     current_=current,

@@ -5,6 +5,11 @@ Admittance is conductance and susceptance
 Admittance is generally a complex quantity whose real part is called conductance
 and whose imaginary part is called susceptance.
 
+**Notes:**
+
+#. This equation can be seen as the definition of conductance and susceptance as the real and
+   imaginary parts of admittance respectively.
+
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Admittance>`__.

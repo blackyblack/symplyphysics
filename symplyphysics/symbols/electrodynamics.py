@@ -10,23 +10,23 @@ from sympy.physics import units
 from symplyphysics.core.dimensions import dimensionless
 from symplyphysics.core.symbols.symbols import Symbol
 
-admittance = Symbol("Y", units.conductance)
+admittance = Symbol("Y", units.conductance, complex=True)
 """
 **Admittance** is a measure of how easily a circuit or device will allow a current to flow, defined as the reciprocal
 of impedance.
 """
 
-electrical_conductance = Symbol("G", units.conductance)
+electrical_conductance = Symbol("G", units.conductance, real=True)
 """
 **Conductance** is the ability of charge to flow in a certain path. It is the reciprocal of electrical resistance.
 """
 
-susceptance = Symbol("B", units.conductance)
+susceptance = Symbol("B", units.conductance, real=True)
 """
 **Susceptance** is the imaginary part of the electrical admittance.
 """
 
-electrical_impedance = Symbol("Z", units.impedance)
+electrical_impedance = Symbol("Z", units.impedance, complex=True)
 """
 **Electrical impedance** is the opposition to current presented by the combined effect of
 resistance and reactance in a circuit.
