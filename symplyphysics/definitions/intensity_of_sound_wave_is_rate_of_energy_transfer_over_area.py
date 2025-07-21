@@ -11,16 +11,11 @@ per unit area, through or onto that surface.
 
 **Links:**
 
-#. `Wikipedia – Mathematical description <https://en.wikipedia.org/wiki/Intensity_(physics)#Mathematical_description>`__
+#. `Wikipedia — Mathematical description <https://en.wikipedia.org/wiki/Intensity_(physics)#Mathematical_description>`__
 """
 
 from sympy import Eq
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    symbols,
-)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols)
 
 intensity = symbols.intensity
 """
