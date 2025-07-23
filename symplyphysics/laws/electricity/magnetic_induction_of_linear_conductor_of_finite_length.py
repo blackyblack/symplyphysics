@@ -64,6 +64,8 @@ law = Eq(
 :laws:latex::
 """
 
+# Derivable from the Biot-Savart law
+
 
 @validate_input(relative_permeability_=absolute_permeability,
     current_=current,

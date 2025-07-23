@@ -49,6 +49,9 @@ law = Eq(electromotive_force, -1 * current_turn_count * Derivative(magnetic_flux
 :laws:latex::
 """
 
+# This is the integral form of one of the Maxwell's equations.
+# See :ref:`Curl of electric field is negative magnetic flux density derivative`
+
 
 @validate_input(
     current_turn_count_=current_turn_count,

@@ -6,8 +6,13 @@ The corona discharge is an independent discharge in a relatively dense gas. If a
 electric field is applied to two electrodes between which there is a gas gap, then a
 corona discharge occurs at a certain potential difference between the electrodes.
 
-..
-    TODO: find link
+**Notes:**
+
+#. This is a phenomenological equation.
+
+**Links:**
+
+#. `ResearchGate — "Generalization of the Townsend current-voltage characteristics of a corona discharge", p. 306, formula 1 <https://www.researchgate.net/publication/272031809_Generalization_of_the_Townsend_current-voltage_characteristics_of_a_corona_discharge>`__.
 """
 
 from sympy import Eq, solve

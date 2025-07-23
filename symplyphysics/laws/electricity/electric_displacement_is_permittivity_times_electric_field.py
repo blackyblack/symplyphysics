@@ -16,6 +16,9 @@ being the permittivity of the medium.
 #. In a nonlinear medium, permittivity is a function of the electric field and has a
    time-dependent response.
 
+#. This is a `constitutive equation <https://en.wikipedia.org/wiki/Constitutive_equation>`__
+   describing a model of a material's response to the electric field.
+
 **Conditions:**
 
 #. The medium is linear, homogeneous, and isotropic.

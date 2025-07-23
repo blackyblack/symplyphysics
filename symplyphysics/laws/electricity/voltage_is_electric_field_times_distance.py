@@ -2,10 +2,17 @@
 Voltage is electric field times distance
 ========================================
 
+Voltage between two points in space can be found as the negative line integral of the electric
+field across the path that connects those points. In the case of a constant electric field it can
+be simplified to the product of the electric field strength and the distance between the points,
+multiplying by the necessary sign.
+
 **Conditions:**
 
 #. The electric field is constant between the two points. This might be achieved by
    choosing a small enough distance between the points.
+
+#. The electric field must be conservative, i.e. this law only applies in the electrostatic case.
 
 **Links:**
 
@@ -13,12 +20,7 @@ Voltage is electric field times distance
 """
 
 from sympy import Eq
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    symbols,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
 voltage = symbols.voltage
 """
@@ -41,6 +43,8 @@ law = Eq(voltage, electric_field_strength * distance)
 
 :laws:latex::
 """
+
+# Derivable from the integral in `./voltage_is_line_integral_of_electric_field.py`
 
 
 @validate_input(
