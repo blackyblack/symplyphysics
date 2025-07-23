@@ -48,6 +48,9 @@ law = Eq(
 :laws:latex::
 """
 
+# Coulomb's law can be derived from the first Maxwell's equation (relating the electric field and
+# volumetric charge density) under the electrostatic conditions.
+
 
 @validate_input(first_charge_=first_charge, second_charge_=second_charge, distance_=distance)
 @validate_output(electrostatic_force)

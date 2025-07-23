@@ -18,6 +18,8 @@ wave.
 
 #. `Wikipedia, derivable from last formula in paragraph <https://en.wikipedia.org/wiki/Wave_impedance#Definition>`__.
 
+#. `Physics LibreTexts — Plane Waves, formula 7.7 <https://phys.libretexts.org/Bookshelves/Electricity_and_Magnetism/Essential_Graduate_Physics_-_Classical_Electrodynamics_(Likharev)/07%3A_Electromagnetic_Wave_Propagation/7.01%3A_Plane_Waves>`__.
+
 ..
     TODO: rename file
 """
@@ -53,6 +55,9 @@ law = Eq(wave_impedance,
 
 :laws:latex::
 """
+
+# For the derivation see the Physics LibreTexts link
+# TODO: add the definition of wave impedance as `eta = E / H`
 
 
 @validate_input(relative_permittivity_=relative_permittivity,

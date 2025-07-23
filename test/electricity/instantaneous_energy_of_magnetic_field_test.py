@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity import instantaneous_energy_of_electric_field as energy_law
+from symplyphysics.laws.electricity import instantaneous_energy_of_magnetic_field as energy_law
 
 # Description
 ## The inductance in the oscillatory circuit is 1 henry, the maximum current value is 0.02 ampere, and the frequency is 2 * pi * 200 radian per second.

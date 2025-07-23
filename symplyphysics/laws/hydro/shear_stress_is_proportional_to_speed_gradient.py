@@ -16,6 +16,10 @@ a small speed :code:`u` such that the flow of the water is steady. If we were to
 needed to make the top plate continue to move, we would find that it is proportional to the area
 of the plate and the ratio :math:`\\frac{u}{d}` where :math:`d` is the distance between the plates.
 
+**Notes:**
+
+#. This is a phenomenological equation.
+
 **Conditions:**
 
 #. The flow is one-dimensional. For a two-dimensional flow, replace the derivative with a sum of partial

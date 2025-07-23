@@ -4,6 +4,10 @@ Charge is quantized
 
 Electric charge is quantized, i.e. restricted to certain values.
 
+**Notes:**
+
+#. This is a phenomenological equation.
+
 **Notation:**
 
 #. :quantity_notation:`elementary_charge`.

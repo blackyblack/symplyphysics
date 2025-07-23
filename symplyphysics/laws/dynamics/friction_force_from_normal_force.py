@@ -2,8 +2,9 @@
 Friction force from normal force
 ================================
 
-The *friction* force is tangential interaction between two objects, which impedes their relative movement.
-It is proportional to the normal force between the two objects.
+The *friction* force is a tangential interaction between two objects, which impedes their relative
+movement. In the phenomenological model of friction there is an empirical law stating that the
+friction force is proportional to the normal force between the two objects.
 
 **Links**
 
@@ -11,13 +12,7 @@ It is proportional to the normal force between the two objects.
 """
 
 from sympy import Eq, solve
-from symplyphysics import (
-    clone_as_symbol,
-    symbols,
-    Quantity,
-    validate_input,
-    validate_output,
-)
+from symplyphysics import (clone_as_symbol, symbols, Quantity, validate_input, validate_output)
 
 friction_force = clone_as_symbol(symbols.force, display_symbol="F_fr", display_latex="F_\\text{fr}")
 """
@@ -25,7 +20,7 @@ The friction :symbols:`force`.
 """
 
 friction_coefficient = symbols.friction_coefficient
-r"""
+"""
 The :symbols:`friction_coefficient` between the two objects.
 """
 
@@ -39,12 +34,10 @@ The normal reaction :symbols:`force` from one object to another.
 """
 
 law = Eq(friction_force, friction_coefficient * normal_force)
-r"""
-:code:`F_fr = mu * N`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        F_\text{fr} = \mu N
+:laws:latex::
 """
 
 

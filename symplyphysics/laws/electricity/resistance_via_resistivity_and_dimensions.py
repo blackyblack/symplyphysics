@@ -7,6 +7,10 @@ to its length and the inverse of its cross-sectional area. The constant of propo
 is called resistivity of the material. Unlike resistance, resistivity is an intrinsic
 property of the material and does not depend on its geometry.
 
+**Notes:**
+
+#. This is a phenomenological equation.
+
 **Conditions:**
 
 #. The cross section is uniform throughout the conductor.

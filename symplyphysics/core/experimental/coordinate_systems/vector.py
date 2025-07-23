@@ -158,17 +158,10 @@ class CoordinateVector(VectorExpr):
 
         return CoordinateVector(diff_components + diff_base_vectors, self.system, self.point)
 
+    # NOTE: this method is for compatibility
     @classmethod
-    def from_expr(cls, expr: Expr) -> Self:
-        combined = combine_coordinate_vectors(expr)
-
-        if combined == 0:
-            return combined
-
-        if not isinstance(combined, cls):
-            raise TypeError(f"Expected {cls.__name__} or zero, got {type(combined).__name__}")
-
-        return combined
+    def from_expr(cls, expr: Expr) -> CoordinateVector:
+        return as_coordinate_vector(expr)
 
 
 def combine_coordinate_vectors(expr: Expr) -> Expr:
@@ -212,7 +205,15 @@ def combine_coordinate_vectors(expr: Expr) -> Expr:
         if components.is_zero_matrix:
             continue
 
-        result += cls(components, system, point)
+        if issubclass(cls, QuantityCoordinateVector):
+            try:
+                term = cls(components, system, point)
+            except ValueError:
+                term = CoordinateVector(components, system, point)
+        else:
+            term = CoordinateVector(components, system, point)
+
+        result += term
 
     return result
 
@@ -264,6 +265,35 @@ class QuantityCoordinateVector(CoordinateVector):
     # NOTE: Used in `symplyphysics.core.dimensions.collect_quantity` to avoid cyclic import
     def collect_quantity_factor_and_dimension(self) -> tuple[Expr, Dimension]:
         return self, self.dimension
+
+    # NOTE: this method is for compatibility
+    @classmethod
+    def from_expr(cls, expr: Expr) -> QuantityCoordinateVector:
+        return as_quantity_coordinate_vector(expr)
+
+
+def as_coordinate_vector(expr: Expr) -> CoordinateVector:
+    result = combine_coordinate_vectors(expr)
+
+    if result == 0:
+        return result
+
+    if not isinstance(result, CoordinateVector):
+        raise TypeError(f"Expected CoordinateVector or zero, got {type(result).__name__}")
+
+    return result
+
+
+def as_quantity_coordinate_vector(expr: Expr) -> QuantityCoordinateVector:
+    result = combine_coordinate_vectors(expr)
+
+    if result == 0 or isinstance(result, QuantityCoordinateVector):
+        return result
+
+    if isinstance(result, CoordinateVector):
+        return QuantityCoordinateVector(result.components, result.system, result.point)
+
+    raise TypeError(f"Expected QuantityCoordinateVector or zero, got {type(result).__name__}")
 
 
 def construct_position_vector(point: AppliedPoint) -> CoordinateVector:

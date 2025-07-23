@@ -40,6 +40,8 @@ law = Eq(torque, VectorCross(position_vector, force))
 :laws:latex::
 """
 
+# This law is actually the definition of torque in classical mechanics
+
 
 @validate_input(force_=force, position_=position_vector)
 @validate_output(torque)

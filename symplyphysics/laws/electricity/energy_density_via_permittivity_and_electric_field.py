@@ -36,6 +36,8 @@ law = Eq(energy_density, (absolute_permittivity * electric_field_strength**2) / 
 :laws:latex::
 """
 
+# TODO: Derive in the quasi-static case from the energy of a capacitor
+
 
 @validate_input(absolute_permittivity_=absolute_permittivity,
     electric_intensity_=electric_field_strength)

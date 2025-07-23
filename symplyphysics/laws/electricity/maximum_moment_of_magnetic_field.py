@@ -2,9 +2,8 @@
 Magnetic moment via current and contour area
 ============================================
 
-The **magnetic moment** is the main physical quantity characterizing the magnetic
-properties of a substance, that is, the ability to create and perceive a magnetic
-field.
+The **magnetic (dipole) moment** is the main physical quantity characterizing the magnetic
+properties of a substance, that is, the ability to create and perceive a magnetic field.
 
 **Conditions:**
 
@@ -26,7 +25,7 @@ field.
 from sympy import Eq, solve
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-moment = symbols.magnetic_moment
+moment = symbols.magnetic_moment  # TODO: rename variable to magnetic_moment
 """
 :symbols:`magnetic_moment`.
 """
@@ -47,6 +46,8 @@ law = Eq(moment, current * area)
 
 :laws:latex::
 """
+
+# Derivable from the multipole expansion of the vector potential `A`, refer to the link for more.
 
 
 @validate_input(current_=current, area_=area)
