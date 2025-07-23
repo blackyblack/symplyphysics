@@ -12,8 +12,7 @@ multiplying by the necessary sign.
 #. The electric field is constant between the two points. This might be achieved by
    choosing a small enough distance between the points.
 
-#. The electric field must be conservative, or equivalently, the this law applies in the
-   electrostatic case.
+#. The electric field must be conservative, i.e. this law only applies in the electrostatic case.
 
 **Links:**
 

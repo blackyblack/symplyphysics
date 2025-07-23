@@ -10,8 +10,6 @@ system.
 
 #. This law can be seen as the definition of electric dipole moment.
 
-**Notes:**
-
 #. The value of the electric dipole moment for such a system is independent of the choice of the
    origin of the coordinate frame (i.e. it is translationally invariant).
 
