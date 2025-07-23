@@ -1,25 +1,30 @@
 """
-Weight in fluid via ratio of densities
-======================================
+Apparent weight of a fully submersed body in fluid
+==================================================
 
 The *Archimedean force* acting on a body fully submersed in a fluid is equal to the weight of the
 fluid displaced by the body. It can be derived that the weight of the body submersed in the fluid
 is proportional to its weight in vacuum and also depends on the ratio of the fluid density and body
 density.
 
+**Notes:**
+
+#. Positive apparent weight means that the body is sinking, whereas negative apparent weight means
+   that the body is floating to the surface.
+
 **Conditions:**
 
 #. The body is completely *submersed* in the fluid.
 
-#. The density of the body is no less than than the density of the fluid, otherwise the body would
-   float to the surface and will be only partially submerged.
-
 **Links:**
 
 #. `Physics LibreTexts, derivable from here <https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/10%3A_Fluids/10.3%3A_Archimedes_Principle>`__.
+
+..
+    TODO: rename law
 """
 
-from sympy import Eq, solve, pi, Idx, ask
+from sympy import Eq, solve, pi, Idx
 from symplyphysics import (clone_as_symbol, symbols, Quantity, validate_input, validate_output,
     quantities, global_index)
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -39,7 +44,7 @@ weight_in_fluid = clone_as_symbol(symbols.force,
     display_symbol="W_fl",
     display_latex="W_\\text{fl}")
 """
-Weight of the body submersed in the fluid. See :symbols:`force`.
+Apparent weight of the body submersed in the fluid. See :symbols:`force`.
 """
 
 weight_in_vacuum = clone_as_symbol(symbols.force,
@@ -128,11 +133,8 @@ _net_force_proj_expr = _superposition_law.definition.rhs.subs(
     _superposition_law.force[2]: _archimedes_force_expr,
 })
 
-# The net force points opposite to direction of the z-axis.
-assert ask(_net_force_proj_expr < 0, body_density > fluid_density)
-
-# Therefore the apparent weight, being the absolute value of the net force on the body, can be
-# found like this, note that `abs(x) = -1 * x` if `x < 0`.
+# The apparent weight is positive when the net force projection is negative and vice versa; see
+# firse note in the law description.
 _apparent_weight_expr = -1 * _net_force_proj_expr
 
 # 4. Perform final replacements
