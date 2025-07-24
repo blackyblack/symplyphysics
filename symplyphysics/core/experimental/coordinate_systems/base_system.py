@@ -216,7 +216,7 @@ class BaseCoordinateSystem(Basic):
                 elem = diff_matrix[i_row, i_col]
 
                 for func_base_scalar, base_scalar in zip(self._base_scalar_functions, base_scalars):
-                    elem = elem.replace(func_base_scalar, lambda _: base_scalar)  # pylint: disable=cell-var-from-loop
+                    elem = elem.replace(func_base_scalar, lambda _, *, base_scalar1=base_scalar: base_scalar1)
 
                 matrix[i_row, i_col] = elem
 

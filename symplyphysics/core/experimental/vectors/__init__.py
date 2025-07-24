@@ -1008,11 +1008,9 @@ class VectorDerivative(SymDerivative, VectorExpr):  # pylint: disable=too-few-pu
 def vector_diff(expr: Expr, *variables: Expr, **kwargs: Any) -> Expr:
     """Evaluate the derivative of `expr` with respect to `variables`."""
 
-    return VectorDerivative(
-        expr,
-        *(sympify_expr(variable) for variable in variables),
-        **kwargs,
-    ).doit()
+    vector_vars = (sympify_expr(variable) for variable in variables)
+    derivative = VectorDerivative(expr, *vector_vars, **kwargs)
+    return derivative.doit()
 
 
 def clone_as_vector_symbol(

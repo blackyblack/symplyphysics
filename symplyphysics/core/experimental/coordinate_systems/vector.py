@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional, Any, Iterable, Self
+from typing import Optional, Any, Iterable
 
 from sympy import (ImmutableMatrix, Expr, sqrt, Basic, Derivative as SymDerivative, S)
 from sympy.matrices.dense import DenseMatrix

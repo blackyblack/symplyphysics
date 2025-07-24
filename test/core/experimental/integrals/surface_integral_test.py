@@ -1,8 +1,8 @@
 from pytest import raises
 
-from sympy import sin, cos, pi, sqrt
+from sympy import evaluate, sin, cos, pi, sqrt
 
-from symplyphysics import Symbol, assert_equal, units
+from symplyphysics import Symbol, assert_equal, symbols, units
 from symplyphysics.core.symbols.symbols import BasicSymbol
 
 from symplyphysics.core.experimental.vectors import VectorDot, VectorNorm
@@ -74,6 +74,25 @@ def test_cartesian_vector_surface_integral() -> None:
 
     with raises(ValueError):
         result = SurfaceIntegral(VectorDot(f, ds), surface)
+
+
+# This is a test for weird `evaluate` behavior. After using once `evaluate(False)`, the
+# `vector_diff` function starts returning vectors with new coordinate system instead of
+# the original one.
+def test_bad_evaluate() -> None:
+    with evaluate(False):
+        _expression = 2 * symbols.length
+    m1 = units.meter
+
+    _, phi1, _ = CYLINDRICAL.base_scalars
+
+    t11 = Symbol("t11", real=True)
+
+    # Surface area of a cylindrical surface, r=1*meter
+
+    surface1 = Surface((phi1, t11), AppliedPoint([m1, phi1, t11 * m1], CYLINDRICAL))
+    result1 = SurfaceIntegral(VectorNorm(ds), surface1, ((0, 2 * pi), (0, 1)))
+    assert_equal(result1.doit(), 2 * pi * m1**2)
 
 
 def test_cylindrical_vector_surface_integral() -> None:
