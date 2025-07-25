@@ -15,6 +15,9 @@ can only appear in the form of the wave phase described below.
    if the wave travels in the positive direction of the :math:`x`-axis. Here :math:`{\\vec e}_x` is the
    unit vector pointing in the positive direction of the :math:`x`-axis.
 
+#. The expression for the phase of a traveling wave arises from solving the one-dimensional wave
+   equation. For more, refer to :ref:`General solution to wave equation in one dimension`.
+
 **Conditions:**
 
 #. This law applies to a 1-dimensional traveling wave.
@@ -23,6 +26,9 @@ can only appear in the form of the wave phase described below.
 **Links:**
 
 #. `Wikipedia, similar formula <https://en.wikipedia.org/wiki/Sinusoidal_plane_wave#Alternative_representations>`__.
+
+..
+    TODO: make a law for the phase of a three-dimensional wave
 """
 
 from sympy import Eq
