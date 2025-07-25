@@ -7,7 +7,10 @@ from sympy.logic.boolalg import Boolean
 
 from symplyphysics.core.symbols.symbols import Symbol, clone_as_function, Function
 
-from ..miscellaneous import cacheit
+from ..miscellaneous import const
+
+_base_coordinate_system_cache: dict[tuple[type[BaseCoordinateSystem], Optional[tuple[Symbol, Symbol,
+    Symbol]], Optional[tuple[Function, function, function]]], BaseCoordinateSystem] = {}
 
 
 class BaseCoordinateSystem(Basic):
@@ -38,21 +41,31 @@ class BaseCoordinateSystem(Basic):
     def __repr__(self) -> str:
         return type(self).__qualname__
 
-    @cacheit
     def __new__(
         cls,
         base_scalars: Optional[tuple[Symbol, Symbol, Symbol]] = None,
         base_scalar_functions: Optional[tuple[Function, Function, Function]] = None,
     ) -> BaseCoordinateSystem:
+        if base_scalars:
+            base_scalars = tuple(base_scalars)
+
+        if base_scalar_functions:
+            base_scalar_functions = tuple(base_scalar_functions)
+
+        cached = _base_coordinate_system_cache.get((cls, base_scalars, base_scalar_functions))
+
+        if cached is not None:
+            return cached
+
         obj = super().__new__(cls)  # pylint: disable=no-value-for-parameter
+        _base_coordinate_system_cache[cls, base_scalars, base_scalar_functions] = obj
 
         if not base_scalars:
             base_scalars = obj.generate_base_scalars()
 
-        q1, q2, q3 = base_scalars
-        obj._base_scalars = q1, q2, q3
-
         a, b, c = base_scalars
+        obj._base_scalars = a, b, c
+
         x, y, z = obj.cartesian_transform(base_scalars)
 
         obj._cartesian_derivative_matrix = ImmutableMatrix([
@@ -216,7 +229,7 @@ class BaseCoordinateSystem(Basic):
                 elem = diff_matrix[i_row, i_col]
 
                 for func_base_scalar, base_scalar in zip(self._base_scalar_functions, base_scalars):
-                    elem = elem.replace(func_base_scalar, lambda _, *, base_scalar1=base_scalar: base_scalar1)
+                    elem = elem.replace(func_base_scalar, const(base_scalar))
 
                 matrix[i_row, i_col] = elem
 

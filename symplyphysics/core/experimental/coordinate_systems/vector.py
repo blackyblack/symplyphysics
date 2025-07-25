@@ -19,6 +19,9 @@ from .base_system import BaseCoordinateSystem
 from .cartesian_system import CartesianCoordinateSystem
 from .point import AppliedPoint, check_point_with_system, GLOBAL_POINT
 
+_coordinate_vector_cache: dict[tuple[type[CoordinateVector], ImmutableMatrix, BaseCoordinateSystem,
+    AppliedPoint | BasicSymbol], CoordinateVector] = {}
+
 
 class CoordinateVector(VectorExpr):
     """
@@ -87,9 +90,15 @@ class CoordinateVector(VectorExpr):
         if all(component == 0 for component in components):
             return S.Zero
 
-        obj = super().__new__(cls)  # pylint: disable=no-value-for-parameter
-
         point = check_point_with_system(system, point)
+
+        cached = _coordinate_vector_cache.get((cls, components, system, point))
+
+        if cached is not None:
+            return cached
+
+        obj = super().__new__(cls)  # pylint: disable=no-value-for-parameter
+        _coordinate_vector_cache[cls, components, system, point] = obj
 
         obj._components = components
         obj._system = system
