@@ -26,12 +26,7 @@ can only appear in the form of the wave phase described below.
 """
 
 from sympy import Eq
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    symbols,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
 wave_phase = symbols.phase
 """

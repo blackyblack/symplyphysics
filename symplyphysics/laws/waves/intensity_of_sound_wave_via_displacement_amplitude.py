@@ -100,10 +100,17 @@ _phase_expr = _phase_law.law.rhs.subs({
     _phase_law.angular_frequency: angular_frequency,
 })
 
+_phase_shift = clone_as_symbol(symbols.phase_shift)
+
+# `_solution_law.solution` is an arbitrary single-valued function, so we can replace it with a
+# sinusoidal function as long as it depends on `_solution_law.wave_phase`. Then we can substitute
+# the wave phase symbol with the expression for it, which we've already found.
 _displacement_expr = _solution_law.law.rhs.replace(
     _solution_law.solution,
-    lambda _: displacement_amplitude * cos(_phase_expr),
-)
+    lambda arg: displacement_amplitude * cos(arg + _phase_shift),
+).subs({
+    _solution_law.wave_phase: _phase_expr,
+})
 
 # 3. Find the speed of an oscillating element of the medium
 
@@ -201,8 +208,8 @@ _average_mechanical_power_expr = solve(
     dict=True,
 )[0][_average_mechanical_power]
 
-# NOTE: we assume that the potential energy is carried along the wave with the same rate as the
-# kinetic energy.
+# NOTE: we assume that the potential energy is carried along the wave at the same *average* rate
+# as the kinetic energy.
 _average_mechanical_power_expr = _average_mechanical_power_expr.subs({
     _average_potential_power: _average_kinetic_power,
 }).subs({
