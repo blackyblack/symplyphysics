@@ -46,17 +46,17 @@ class BaseCoordinateSystem(Basic):
         base_scalars: Optional[Sequence[Symbol]] = None,
         base_scalar_functions: Optional[Sequence[Symbol]] = None,
     ) -> BaseCoordinateSystem:
+        base_scalars_ = None
+
         if base_scalars:
             a, b, c = base_scalars
             base_scalars_ = a, b, c
-        else:
-            base_scalars_ = None
+
+        base_scalar_functions_ = None
 
         if base_scalar_functions:
             f, g, h = base_scalar_functions
             base_scalar_functions_ = f, g, h
-        else:
-            base_scalar_functions_ = None
 
         cached = _base_coordinate_system_cache.get((cls, base_scalars_, base_scalar_functions_))
 
