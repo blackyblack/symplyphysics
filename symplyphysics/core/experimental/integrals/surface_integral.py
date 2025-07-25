@@ -7,7 +7,7 @@ from sympy.physics import units
 
 from symplyphysics.core.symbols.symbols import BasicSymbol, Function
 
-from ..miscellaneous import evaluate_or_global_fallback
+from ..miscellaneous import evaluate_or_global_fallback, const
 
 from ..vectors import VectorSymbol, vector_diff, VectorCross
 from ..coordinate_systems import CoordinateVector
@@ -65,22 +65,16 @@ class SurfaceIntegral(Expr):  # pylint: disable=too-few-public-methods
         g = Function("g")
         r = CoordinateVector([r0 + g(t1, t2), r1, r2], r.system, r.point)
 
-        # HACK: vector_diff() sometimes create new Vector instance so we need to use
-        # new coordinate sytem of the resulting vector
-        dr_dt1 = vector_diff(r, t1).replace(g, lambda *_: 0)
-        system1 = dr_dt1.args[1]
-        dr_dt1 = dr_dt1.doit()
-        dr_dt2 = vector_diff(r, t2).replace(g, lambda *_: 0)
-        system2 = dr_dt1.args[1]
-        dr_dt2 = dr_dt2.doit()
+        dr_dt1 = vector_diff(r, t1).replace(g, const(0)).doit()
+        dr_dt2 = vector_diff(r, t2).replace(g, const(0)).doit()
 
         n = VectorCross(dr_dt1, dr_dt2).simplify()
 
         expr = expr.subs(INFINITESIMAL_VECTOR_AREA, n)
 
-        for f, q in zip(system1.base_scalar_functions, position_vector_components):
-            expr = expr.replace(f, lambda _, *, q1=q: q1)
-        for f, q in zip(system2.base_scalar_functions, position_vector_components):
-            expr = expr.replace(f, lambda _, *, q1=q: q1)
+        for f, q in zip(system.base_scalar_functions, position_vector_components):
+            expr = expr.replace(f, const(q))
+        for f, q in zip(system.base_scalar_functions, position_vector_components):
+            expr = expr.replace(f, const(q))
 
         return surface.to_integral(expr, (t10, t11), (t20, t21))

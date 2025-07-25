@@ -1,4 +1,4 @@
-from typing import TypeVar, Any, Optional
+from typing import TypeVar, Any, Optional, Callable
 
 from sympy import cacheit as sym_cacheit, Expr, sympify
 from sympy.core.parameters import global_parameters
@@ -30,8 +30,18 @@ def evaluate_or_global_fallback(evaluate: Optional[bool]) -> bool:
     return global_parameters.evaluate
 
 
+def const(value: _T) -> Callable[..., _T]:
+    """Returns a function that always returns the given `value`."""
+
+    def closure(*_: Any) -> _T:
+        return value
+
+    return closure
+
+
 __all__ = [
     "cacheit",
     "sympify_expr",
     "evaluate_or_global_fallback",
+    "const",
 ]
