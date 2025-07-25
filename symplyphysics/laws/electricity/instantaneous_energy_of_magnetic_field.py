@@ -12,7 +12,7 @@ of the current, the time and the initial phase.
 
    .. math::
 
-       I(t) = I_\\text{max} \cos(\omega t + \\varphi)
+       I(t) = I_\\text{max} \\cos(\\omega t + \\varphi)
 """
 
 from sympy import Eq, solve, cos

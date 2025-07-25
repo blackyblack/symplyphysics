@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional, Sequence
+from typing import Optional, Sequence, Iterable
 
 from sympy import Expr, sqrt, Matrix, true, simplify, Symbol as SymSymbol, ImmutableMatrix, Basic
 from sympy.logic.boolalg import Boolean
@@ -216,11 +216,19 @@ class BaseCoordinateSystem(Basic):
                 elem = diff_matrix[i_row, i_col]
 
                 for func_base_scalar, base_scalar in zip(self._base_scalar_functions, base_scalars):
-                    elem = elem.replace(func_base_scalar, lambda _: base_scalar)  # pylint: disable=cell-var-from-loop
+                    elem = elem.replace(func_base_scalar, lambda _, *, base_scalar1=base_scalar: base_scalar1)
 
                 matrix[i_row, i_col] = elem
 
         return simplify(matrix)
+
+    def extract_position_vector_components(self, coordinates: Iterable[Expr]) -> Sequence[Expr]:
+        """
+        Convert the coordinates of a point into the components of the position vector that starts
+        at the origin of the coordinate system and ends in that point.
+        """
+
+        raise NotImplementedError
 
 
 __all__ = ["BaseCoordinateSystem"]

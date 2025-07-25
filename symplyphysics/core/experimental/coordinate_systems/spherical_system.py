@@ -1,4 +1,4 @@
-from typing import Optional, Sequence
+from typing import Optional, Sequence, Iterable
 
 from sympy import Expr, S, cos, sin, sqrt, atan2, Q, tan
 from sympy.logic.boolalg import Boolean
@@ -51,6 +51,11 @@ class SphericalCoordinateSystem(BaseCoordinateSystem):
         h_phi = r * sin(theta)
 
         return h_r, h_theta, h_phi
+
+    def extract_position_vector_components(self, coordinates: Iterable[Expr]) -> Sequence[Expr]:
+        r, _, _ = coordinates
+
+        return r, S.Zero, S.Zero
 
 
 __all__ = ["SphericalCoordinateSystem"]

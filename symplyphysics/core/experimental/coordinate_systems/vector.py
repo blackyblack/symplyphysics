@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional, Any, Iterable, Self
+from typing import Optional, Any, Iterable
 
 from sympy import (ImmutableMatrix, Expr, sqrt, Basic, Derivative as SymDerivative, S)
 from sympy.matrices.dense import DenseMatrix
@@ -296,8 +296,16 @@ def as_quantity_coordinate_vector(expr: Expr) -> QuantityCoordinateVector:
     raise TypeError(f"Expected QuantityCoordinateVector or zero, got {type(result).__name__}")
 
 
+def construct_position_vector(point: AppliedPoint) -> CoordinateVector:
+    system = point.system
+    components = system.extract_position_vector_components(point.coordinates.values())
+
+    return CoordinateVector(components, system, point)
+
+
 __all__ = [
     "CoordinateVector",
     "QuantityCoordinateVector",
     "combine_coordinate_vectors",
+    "construct_position_vector",
 ]
