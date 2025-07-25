@@ -7,13 +7,7 @@ to the initial value of the quantity.
 """
 
 from sympy import Eq
-from symplyphysics import (
-    convert_to_float,
-    Quantity,
-    validate_output,
-    symbols,
-    clone_as_symbol,
-)
+from symplyphysics import (convert_to_float, Quantity, validate_output, symbols, clone_as_symbol)
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
 fractional_change = clone_as_symbol(symbols.fractional_change, subscript="X")
