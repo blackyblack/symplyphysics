@@ -11,18 +11,13 @@ modulus of a substance is a measure of its resistance to bulk compression.
 
 #. This is an empirical law.
 
-..
-    TODO: find link
+**Links:**
+
+#. Equation 12-25 on p. 341 of "Fundamentals of Physics" by David Halladay et al., 10th Ed.
 """
 
 from sympy import Eq
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    symbols,
-    clone_as_symbol,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols, clone_as_symbol
 
 bulk_stress = clone_as_symbol(symbols.pressure,
     display_symbol="Delta(p)",
