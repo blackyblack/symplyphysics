@@ -102,10 +102,17 @@ _phase_expr = _phase_law.law.rhs.subs({
     _phase_law.angular_frequency: wave_angular_frequency,
 })
 
+_phase_shift = clone_as_symbol(symbols.phase_shift)
+
+# First, we replace the `_solution_law.solution` function (since it is arbitrary) with a sinusoidal
+# function as long as it is a function of `_solution_law.wave_phase`. Second, we replace the wave
+# phase symbol with the expression for it, which we found above.
 _transverse_displacement_expr = _solution_law.law.rhs.replace(
     _solution_law.solution,
-    lambda _: wave_amplitude * cos(_phase_expr),
-)
+    lambda arg: wave_amplitude * cos(arg + _phase_shift),
+).subs({
+    _solution_law.wave_phase: _phase_expr,
+})
 
 # 2. Find the kinetic energy change of a small string element
 
@@ -117,7 +124,7 @@ _transverse_speed_expr = _speed_def.definition.rhs.subs(_speed_def.time, _time).
 ).doit()
 
 # NOTE: we choose a small string element, which is initially horizontal (due to the equilibrium
-#  shape)
+# shape)
 _small_element_length = clone_as_symbol(symbols.distance, display_symbol="dx", positive=True)
 
 _small_element_mass_expr = _linear_density_law.law.rhs.subs({
@@ -138,7 +145,7 @@ _transverse_displacement = clone_as_function(symbols.distance, (_position, _time
 _small_transverse_displacement_expr = (_transverse_displacement(_position, _time).diff(_position) *
     _small_element_length)
 
-# A symbol we use to replace `∂s/∂x` with in the expression
+# A symbol we use to replace `∂s/∂x` within the expression
 _slope = SymSymbol("k")
 
 # The string element was initially horizontal, and after a `dt` time it moves up a `ds` distance.
@@ -149,7 +156,7 @@ _small_arc_length_expr = sqrt(_small_element_length**2 + _small_transverse_displ
 _small_arc_length_expr = _small_arc_length_expr.subs(
     _transverse_displacement(_position, _time).diff(_position),
     _slope,
-).series(_slope, 0, 4).removeO().simplify().subs(
+).series(_slope, 0, 3).removeO().simplify().subs(
     _slope,
     _transverse_displacement(_position, _time).diff(_position),
 ).replace(
