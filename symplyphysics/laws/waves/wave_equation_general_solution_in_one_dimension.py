@@ -11,37 +11,22 @@ expression in the form of the :doc:`wave phase <laws.waves.phase_of_traveling_wa
 #. `Wikipedia <https://en.wikipedia.org/wiki/Wave_equation#General_solution>`__.
 """
 
-from sympy import Eq, symbols as sym_symbols, Function as SymFunction, cos
-from symplyphysics import Quantity, validate_input, symbols
+from sympy import Eq, cos
+from symplyphysics import Quantity, validate_input, symbols, Symbol, Function
+from symplyphysics.core.dimensions import any_dimension
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.quantity_decorator import validate_output_same
 from symplyphysics.core.symbols.quantities import scale_factor
+
 from symplyphysics.definitions import wave_equation_in_one_dimension as wave_eqn
 from symplyphysics.laws.waves import (
     phase_of_traveling_wave as phase_law,
     phase_velocity_from_angular_frequency_and_wavenumber as phase_velocity_law,
 )
 
-displacement = sym_symbols("u")
+displacement = Symbol("u", any_dimension)
 """
 Displacement from rest in the wave. Usually depends on position and time.
-
-Symbol:
-    :code:`u`
-
-Latex:
-    :math:`u`
-"""
-
-solution = sym_symbols("f", cls=SymFunction)
-r"""
-One-argument solution function of the wave equation.
-
-Symbol:
-    :code:`f(phi)`
-
-Latex:
-    :math:`f(\varphi)`
 """
 
 wave_phase = symbols.phase
@@ -49,13 +34,16 @@ wave_phase = symbols.phase
 :symbols:`phase` of the wave.
 """
 
-law = Eq(displacement, solution(wave_phase))
-r"""
-:code:`u = f(phi)`
+solution = Function("f", (wave_phase,), dimension=any_dimension)
+"""
+One-argument solution function of the wave equation.
+"""
 
-Latex:
-    .. math::
-        u = f(\varphi)
+law = Eq(displacement, solution(wave_phase))
+"""
+:laws:symbol::
+
+:laws:latex::
 """
 
 # Prove this is a solution of the wave equation
