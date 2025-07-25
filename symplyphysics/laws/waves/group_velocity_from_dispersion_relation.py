@@ -7,7 +7,7 @@ is called group velocity. In other words, it is the speed with which the overall
 shape of the wave's amplitudes — called envelope of modulation of the wave — propagates
 through space.
 
-#. This law can be thought of the operational definition of group velocity.
+#. This law can be thought of as the operational definition of group velocity.
 
 **Links:**
 
