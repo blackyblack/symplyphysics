@@ -152,7 +152,11 @@ _slope = SymSymbol("k")
 # Since the lengths are small we can find the length of the arc using the Pythagoras theorem.
 _small_arc_length_expr = sqrt(_small_element_length**2 + _small_transverse_displacement_expr**2)
 
-# Per condition 2 we can use the Taylor series expansion w.r.t. `k = ∂s/∂x`
+# Per condition 2 we can use the Taylor series expansion w.r.t. `k = ∂s/∂x` up to the second power
+# of `k` inclusively. Since `k` only appears in the form of `k^2` in the original expression, we
+# only need the Taylor expansion to be linear w.r.t. `k^2` and we can cut off higher terms (which
+# would be too small and outside our interest anyway). A smaller power would be equal to finding
+# the free term of the Taylor expansion, and we're not interested in that either.
 _small_arc_length_expr = _small_arc_length_expr.subs(
     _transverse_displacement(_position, _time).diff(_position),
     _slope,
