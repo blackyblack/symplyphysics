@@ -31,7 +31,7 @@ def evaluate_or_global_fallback(evaluate: Optional[bool]) -> bool:
 
 
 def const(value: _T) -> Callable[..., _T]:
-    """Returns a function that always returns a given `value`."""
+    """Returns a function that always returns the given `value`."""
 
     def closure(*_: Any) -> _T:
         return value
@@ -43,4 +43,5 @@ __all__ = [
     "cacheit",
     "sympify_expr",
     "evaluate_or_global_fallback",
+    "const",
 ]
