@@ -7,19 +7,15 @@ is called group velocity. In other words, it is the speed with which the overall
 shape of the wave's amplitudes — called envelope of modulation of the wave — propagates
 through space.
 
+#. This law can be thought of as the operational definition of group velocity.
+
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Group_velocity#Definition_and_interpretation>`__.
 """
 
 from sympy import Eq, Derivative
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    symbols,
-    clone_as_function,
-)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, clone_as_function)
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
 angular_wavenumber = symbols.angular_wavenumber
