@@ -47,10 +47,12 @@ class BaseCoordinateSystem(Basic):
         base_scalar_functions: Optional[tuple[Function, Function, Function]] = None,
     ) -> BaseCoordinateSystem:
         if base_scalars:
-            base_scalars = tuple(base_scalars)
+            a, b, c = tuple(base_scalars)
+            base_scalars = a, b, c
 
         if base_scalar_functions:
-            base_scalar_functions = tuple(base_scalar_functions)
+            f, g, h = tuple(base_scalar_functions)
+            base_scalar_functions = f, g, h
 
         cached = _base_coordinate_system_cache.get((cls, base_scalars, base_scalar_functions))
 
