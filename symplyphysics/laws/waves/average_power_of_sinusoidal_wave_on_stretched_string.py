@@ -107,14 +107,17 @@ _transverse_displacement_expr = _solution_law.law.rhs.replace(
     lambda _: wave_amplitude * cos(_phase_expr),
 )
 
-# 2. Find the kinetic energy change
+# 2. Find the kinetic energy change of a small string element
 
+# This is the speed at which a string element at a specific location moves in the transverse
+# direction.
 _transverse_speed_expr = _speed_def.definition.rhs.subs(_speed_def.time, _time).replace(
     _speed_def.distance,
     lambda _: _transverse_displacement_expr,
 ).doit()
 
-# NOTE: we choose a small string element, which is initially horizontal (equilibrium shape)
+# NOTE: we choose a small string element, which is initially horizontal (due to the equilibrium
+#  shape)
 _small_element_length = clone_as_symbol(symbols.distance, display_symbol="dx", positive=True)
 
 _small_element_mass_expr = _linear_density_law.law.rhs.subs({
@@ -127,7 +130,7 @@ _small_element_kinetic_energy_expr = _kinetic_energy_def.law.rhs.subs({
     _kinetic_energy_def.speed: _transverse_speed_expr,
 })
 
-# 2. Find the potential energy change
+# 2. Find the potential energy change of that small string element
 
 _transverse_displacement = clone_as_function(symbols.distance, (_position, _time), real=True)
 
@@ -156,6 +159,7 @@ _small_arc_length_expr = _small_arc_length_expr.subs(
 
 _arc_length_change = (_small_arc_length_expr - _small_element_length).simplify()
 
+# The string element gets stretched out and thus, potential energy is stored in the string.
 _tension = _string_speed_law.tension
 
 # The tension force vector and the displacement of the string element are almost parallel.
@@ -214,6 +218,8 @@ _period_expr = _period_law.law.rhs.subs({
     _period_law.angular_frequency: wave_angular_frequency,
 })
 
+# Since the string performs a simple harmonic motion (i.e. the motion repeats itself every period)
+# we can average it as time ranges from `0` to the oscillation period.
 _average_power_expr = _power_expr.integrate((_time, 0, _period_expr)).simplify() / _period_expr
 
 assert expr_equals(_average_power_expr, law.rhs)
