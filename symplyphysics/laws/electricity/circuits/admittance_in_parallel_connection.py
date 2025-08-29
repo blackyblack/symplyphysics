@@ -49,6 +49,7 @@ _current = _ohms_law.current
 
 _admittance = _admittance_def.admittance
 
+# NOTE: voltage is the same across all components of a parallel connection.
 _admittance_eqn = _admittance_def.definition.subs({
     _admittance_def.impedance: _ohms_law.impedance,
 })
@@ -62,6 +63,8 @@ _current_expr = solve(
 _first_current_expr = _current_expr.subs(_admittance, admittance[1])
 _second_current_expr = _current_expr.subs(_admittance, admittance[2])
 
+# This is the current if we were to replace the two components with a single component that yields
+# the same current and voltage.
 _total_current_expr = _current_expr.subs(_admittance, total_admittance)
 
 _total_current_eqn = _kirchhofs_law.law.subs(
