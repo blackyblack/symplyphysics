@@ -21,6 +21,7 @@ from symplyphysics.core.symbols.symbols import clone_as_indexed
 from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.laws.electricity import current_is_voltage_over_impedance as _ohms_law
+from symplyphysics.laws.electricity.circuits import sum_of_voltages_in_loop_is_zero as kirchhoff_law_2
 
 total_impedance = symbols.electrical_impedance
 """
@@ -48,8 +49,19 @@ _voltage_expr = solve(_ohms_law.law, _ohms_law.voltage)[0]
 _first_voltage_expr = _voltage_expr.subs(_ohms_law.impedance, impedance[1])
 _second_voltage_expr = _voltage_expr.subs(_ohms_law.impedance, impedance[2])
 
-# NOTE: voltage is additive.
-_total_voltage_original = _first_voltage_expr + _second_voltage_expr
+_local_index_ = Idx("_local_index_", (1, 3))
+_three_voltages_law = kirchhoff_law_2.law.subs(global_index, _local_index_).doit()
+
+# First and second impedances are consumers, third voltage is the source.
+_three_voltages_applied = _three_voltages_law.subs({
+    kirchhoff_law_2.voltage[1]: -1 * _first_voltage_expr,
+    kirchhoff_law_2.voltage[2]: -1 * _second_voltage_expr
+})
+
+_total_voltage_original = solve(_three_voltages_applied, kirchhoff_law_2.voltage[3])[0]
+
+# voltage is additive - proven from Kirchhoff's law above
+assert expr_equals(_total_voltage_original, _first_voltage_expr + _second_voltage_expr)
 
 # We replace the two components with a single component that yields the same voltage and current.
 _total_voltage_replaced = _voltage_expr.subs(_ohms_law.impedance, total_impedance)
