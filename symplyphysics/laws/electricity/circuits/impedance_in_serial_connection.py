@@ -15,15 +15,13 @@ of the impedances of individual components.
 """
 
 from sympy import Eq, Idx, solve
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    IndexedSum,
-    global_index,
-    symbols,
-)
+from symplyphysics import (Quantity, validate_input, validate_output, IndexedSum, global_index,
+    symbols)
 from symplyphysics.core.symbols.symbols import clone_as_indexed
+from symplyphysics.core.expr_comparisons import expr_equals
+
+from symplyphysics.laws.electricity import current_is_voltage_over_impedance as _ohms_law
+from symplyphysics.laws.electricity.circuits import sum_of_voltages_in_loop_is_zero as kirchhoff_law_2
 
 total_impedance = symbols.electrical_impedance
 """
@@ -41,6 +39,41 @@ law = Eq(total_impedance, IndexedSum(impedance[global_index], global_index))
 
 :laws:latex::
 """
+
+# Derive from Ohm's law and the additive property of voltage for a two-component system. For more
+# components the derivation is similar to this one.
+
+# NOTE: in a serial connection the current flowing through the components is the same.
+_voltage_expr = solve(_ohms_law.law, _ohms_law.voltage)[0]
+
+_first_voltage_expr = _voltage_expr.subs(_ohms_law.impedance, impedance[1])
+_second_voltage_expr = _voltage_expr.subs(_ohms_law.impedance, impedance[2])
+
+_local_index_ = Idx("_local_index_", (1, 3))
+_three_voltages_law = kirchhoff_law_2.law.subs(global_index, _local_index_).doit()
+
+# First and second impedances are consumers, third voltage is the source.
+_three_voltages_applied = _three_voltages_law.subs({
+    kirchhoff_law_2.voltage[1]: -1 * _first_voltage_expr,
+    kirchhoff_law_2.voltage[2]: -1 * _second_voltage_expr
+})
+
+_total_voltage_original = solve(_three_voltages_applied, kirchhoff_law_2.voltage[3])[0]
+
+# voltage is additive - proven from Kirchhoff's law above
+assert expr_equals(_total_voltage_original, _first_voltage_expr + _second_voltage_expr)
+
+# We replace the two components with a single component that yields the same voltage and current.
+_total_voltage_replaced = _voltage_expr.subs(_ohms_law.impedance, total_impedance)
+
+_total_impedance_derived = solve(
+    Eq(_total_voltage_original, _total_voltage_replaced),
+    total_impedance,
+)[0]
+
+_total_impedance_expected = law.rhs.subs(global_index, Idx("i", (1, 2)))
+
+assert expr_equals(_total_impedance_derived, _total_impedance_expected)
 
 
 @validate_input(impedances_=impedance)
