@@ -39,6 +39,7 @@ extensions = [
     "sphinx.ext.mathjax",
     "sphinx.ext.githubpages",
     "sphinx_sitemap",
+    "sphinx_togglebutton",
 ]
 
 # List of patterns, relative to source directory, that match files and
@@ -66,7 +67,12 @@ add_module_names = False
 
 mathjax_path = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 
-# -- Options for sphinx-sitemap
+# -- Options for sphinx-sitemap ----------------------------------------------
 
 html_baseurl = "https://symplyphysics.github.io/"
 sitemap_url_scheme = "{link}"
+
+# -- Options for sphinx_togglebutton -----------------------------------------
+
+togglebutton_hint = "Expand"
+togglebutton_hint_hide = "Collapse"
