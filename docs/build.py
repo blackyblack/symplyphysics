@@ -8,6 +8,7 @@ from pathlib import Path
 from sphinx.application import Sphinx
 
 from symplyphysics.docs.build import generate_laws_docs
+from symplyphysics.docs.formulas import generate_formulas
 from symplyphysics.docs import symbols_role, quantity_notation_role
 
 
@@ -126,6 +127,8 @@ def main(argv: Sequence[str]) -> None:
         shutil.copyfile(index_file, out_index_file, follow_symlinks=True)
 
         process_generated_files(args.generated_dir)
+
+        generate_formulas(args.generated_dir, "formulas.rst")
 
     if args.rst_only:
         return

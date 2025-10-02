@@ -28,6 +28,7 @@ dev = [
   "pylint>=3.3.0",
   "Sphinx",
   "sphinx-sitemap",
+  "sphinx_togglebutton",
 ]
 
 [tool.setuptools.packages.find]
