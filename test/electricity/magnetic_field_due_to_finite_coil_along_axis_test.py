@@ -8,7 +8,7 @@ Args = namedtuple("Args", "i n l p1 p2")
 
 
 @fixture(name="test_args")
-def test_args_fixture() -> None:
+def test_args_fixture() -> Args:
     i = Quantity(10 * units.ampere)
     n = 1000
     l = Quantity(1 * units.meter)

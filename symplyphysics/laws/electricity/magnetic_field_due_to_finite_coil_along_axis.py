@@ -77,7 +77,7 @@ law = Eq(
     turn_count_=turn_count,
     coil_length_=coil_length,
     first_angle_=first_angle,
-    second_angle_=second_angle, 
+    second_angle_=second_angle,
 )
 @validate_output(magnetic_flux_density)
 def calculate_magnetic_flux_density(
