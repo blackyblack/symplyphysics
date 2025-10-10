@@ -8,15 +8,38 @@ experiences an overall non-zero acceleration.
 
 **Notes:**
 
-#. A more general representation of this law, which does not require choosing an axis aligned with
-   the dipole, assuming Cartesian coordinates:
+#.  A more general representation of this law, which does not require choosing an axis aligned with
+    the dipole, assuming Cartesian coordinates:
 
-   .. math::
+    .. math::
 
-       \\vec F = \\left( \\vec p, \\nabla \\right) \\vec E 
-               = p_x \\frac{\\partial \\vec E}{\\partial x}
-               + p_y \\frac{\\partial \\vec E}{\\partial y}
-               + p_z \\frac{\\partial \\vec E}{\\partial z}
+        \\vec F = \\left( \\vec p, \\nabla \\right) \\vec E 
+                = p_x \\frac{\\partial \\vec E}{\\partial x}
+                + p_y \\frac{\\partial \\vec E}{\\partial y}
+                + p_z \\frac{\\partial \\vec E}{\\partial z}
+
+    In general orthogonal curvilinear coordinates, this equates the contration of the *covariant
+    derivative* tensor of the electric field with the electric dipole moment vector:
+
+    .. math::
+
+        F^i = \\left( \\nabla \\vec E : \\vec p \\right)^i = \\sum_j \\nabla_j E^i p_j,
+
+    .. math::
+    
+        \\nabla_j E^i = \\partial_j E^i + \\sum_k \\Gamma^i{}_{jk} E^k.
+        
+    Here, superscript denotes vector components, :math:`\\partial_j` the partial derivative
+    with respect to :math:`q^j`, and :math:`\\Gamma^i{}_{jk}` the **Christoffel symbols of
+    the second kind** (`Wikipedia
+    <https://en.wikipedia.org/wiki/Curvilinear_coordinates#Christoffel_symbols>`__). If vectors
+    are represented in an *orthonormal* basis, then :math:`\\hat{\\Gamma}^i{}_{jk}` is
+    used instead, related by the equation
+
+    .. math::
+
+        h_j h_k \\hat{\\Gamma}^i{}_{jk} = h_i \\Gamma^i{}_{jk} + \\delta_{ik} \\partial_j h_i
+                                        - \\delta_{ij} \\partial_k h_j
 
 **Links:**
 
