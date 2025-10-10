@@ -28,7 +28,7 @@ electric current.
 """
 
 from sympy import Eq, pi
-from symplyphysics import Quantity, validate_input, validate_output, symbols, quantities
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
 from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorCross, VectorNorm
 from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
@@ -40,6 +40,11 @@ magnetic_flux_density_change = clone_as_vector_symbol(
 )
 """
 Infinitesimal change of the :symbols:`magnetic_flux_density` at a given point in space.
+"""
+
+absolute_permeability = symbols.absolute_permeability
+"""
+:symbols:`absolute_permeability` of the medium.
 """
 
 current = symbols.current
@@ -74,7 +79,7 @@ the direction of conventional current. Also see :symbols:`euclidean_distance`.
 
 law = Eq(
     magnetic_flux_density_change,
-    (quantities.vacuum_permeability / (4 * pi)) * ((current *
+    (absolute_permeability / (4 * pi)) * ((current *
     VectorCross(contour_element_displacement, position_vector - contour_element_position_vector)) /
     VectorNorm(position_vector - contour_element_position_vector)**3),
 )
@@ -89,6 +94,7 @@ law = Eq(
 
 
 @validate_input(
+    absolute_permeability_=absolute_permeability,
     current_=current,
     position_vector_=position_vector,
     contour_element_position_vector_=contour_element_position_vector,
@@ -96,12 +102,14 @@ law = Eq(
 )
 @validate_output(magnetic_flux_density_change)
 def calculate_magnetic_flux_density_change(
+    absolute_permeability_: Quantity,
     current_: Quantity,
     position_vector_: QuantityCoordinateVector,
     contour_element_position_vector_: QuantityCoordinateVector,
     contour_element_displacement_: QuantityCoordinateVector,
 ) -> QuantityCoordinateVector:
     result = law.rhs.subs({
+        absolute_permeability: absolute_permeability_,
         current: current_,
         position_vector: position_vector_,
         contour_element_position_vector: contour_element_position_vector_,
