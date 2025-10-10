@@ -6,6 +6,10 @@ If an electric dipole is positioned in a spatially non-uniform electric field, t
 on the point charges that compose the dipole no longer cancel each other and the dipole
 experiences an overall non-zero acceleration.
 
+**Conditions:**
+
+#. The vector of electric dipole moment does not depent on coordinates.
+
 **Notes:**
 
 #.  A more general representation of this law, which does not require choosing an axis aligned with
