@@ -21,14 +21,13 @@ of the sphere. However, due to the Gauss's law, on the inside the electric field
 #. `Wikipedia, "Spherical volume" <https://en.wikipedia.org/wiki/Electric_field#Common_formul%C3%A6>`__.
 """
 
-from sympy import (Eq, solve, pi, sin, integrate)
+from sympy import (Eq, solve, pi, integrate)
 from symplyphysics import (Quantity, validate_input, validate_output, symbols, quantities,
     clone_as_symbol)
 from symplyphysics.definitions.vector import vector_area_is_unit_normal_times_scalar_area as _vector_area_def
 from symplyphysics.laws.electricity import electric_flux_through_closed_surface_via_total_charge as _gauss_law
 from symplyphysics.laws.electricity.vector import electric_flux_of_uniform_electric_field as _flux_def
 
-from symplyphysics.core.operations.symbolic import ExactDifferential
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.symbols import BasicSymbol
 from symplyphysics.core.experimental.coordinate_systems import SPHERICAL, CoordinateVector, AppliedPoint
@@ -44,7 +43,7 @@ charge = symbols.charge
 Total :symbols:`charge` of the sphere.
 """
 
-distance = symbols.euclidean_distance
+distance = clone_as_symbol(symbols.euclidean_distance, positive=True)
 """
 :symbols:`euclidean_distance` to the center of the sphere.
 """
