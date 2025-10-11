@@ -58,16 +58,19 @@ law = Eq(electric_field_strength, charge / (4 * pi * quantities.vacuum_permittiv
 
 # Derive from Gauss's law, see :ref:`Electric flux through closed surface via total charge`
 
-# Imagine a sphere `S'` concentric with the given sphere `S`. Note that since the system is
-# spherically symmetrical, the electric field vector only has a radial component, i.e. at any
-# point `P` on `S'` the electric field only has a radial component. Imagine a small area `A`
-# around `P` on `S'` and let us calculate the electric field flux through that area. The area
+# Imagine a sphere `S'` concentric with the given sphere `S`. Imagine a small area `A` around a
+# point `P` on `S'` and let us calculate the electric field flux through that area. The area
 # vector `A` also has only a radial component (it points outside the sphere in the direction of
 # the `r`-axis):
 
 _p = BasicSymbol("P")
 _e_r = CoordinateVector([1, 0, 0], SPHERICAL, _p)  # unit vector along the `r`-axis
 
+# The `E`-field remains the same under any rotation whose axis passes through the origin (i.e.
+# there is no preferred direction), therefore its components can only depend on `r` (the distance
+# to origin). The rotational symmetry also means that the electric field only has the component
+# along the `r` axis. So at any point of the sphere `S'`, the electric field has the same magnitude
+# and is parallel to the radial vector:
 _electric_field = electric_field_strength * _e_r
 
 _, _theta, _phi = SPHERICAL.base_scalars
