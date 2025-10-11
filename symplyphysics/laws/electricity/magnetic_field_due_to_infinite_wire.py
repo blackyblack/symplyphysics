@@ -74,7 +74,7 @@ _magnetic_flux_density = _finite_wire_law.law.rhs.subs({
     _finite_wire_law.current: current,
     _finite_wire_law.first_angle: _theta_infinite,
     _finite_wire_law.second_angle: _theta_infinite,
-    _finite_wire_law.distance: radial_distance,
+    _finite_wire_law.radial_distance: radial_distance,
 })
 
 assert expr_equals(_magnetic_flux_density, law.rhs)
