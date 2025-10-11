@@ -31,7 +31,8 @@ from symplyphysics.laws.electricity.vector import electric_flux_of_uniform_elect
 from symplyphysics.core.operations.symbolic import ExactDifferential
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.symbols import BasicSymbol
-from symplyphysics.core.experimental.coordinate_systems import SPHERICAL, CoordinateVector
+from symplyphysics.core.experimental.coordinate_systems import SPHERICAL, CoordinateVector, AppliedPoint
+from symplyphysics.core.experimental.coordinate_systems.surface import Surface
 
 electric_field_strength = symbols.electric_field_strength
 """
@@ -69,7 +70,12 @@ _e_r = CoordinateVector([1, 0, 0], SPHERICAL, _p)  # unit vector along the `r`-a
 
 _electric_field = electric_field_strength * _e_r
 
-_area_change = clone_as_symbol(_vector_area_def.scalar_area, display_symbol="dA")
+_, _theta, _phi = SPHERICAL.base_scalars
+_sphere = Surface((_theta, _phi), AppliedPoint([distance, _theta, _phi], SPHERICAL))
+# We do not multiply this by `d(theta) * d(phi)` because these differentials will be set to `1`
+# when we integrate over the infinitesimal flux later on.
+_area_change = _sphere.scalar_area_multiple
+
 _vector_area_change = _vector_area_def.law.rhs.subs({
     _vector_area_def.scalar_area: _area_change,
     _vector_area_def.unit_normal: _e_r,
@@ -81,34 +87,8 @@ _flux_change = _flux_def.law.rhs.subs({
     _flux_def.area: _vector_area_change,
 }).doit()
 
-_polar_angle = clone_as_symbol(symbols.angle, display_symbol="theta")
-_polar_angle_change = ExactDifferential(_polar_angle, wrap_code=True)
-
-_azimuthal_angle = clone_as_symbol(symbols.angle, display_symbol="phi")
-_azimuthal_angle_change = ExactDifferential(_azimuthal_angle, wrap_code=True)
-
-# Mathematical relation between infinitesimal area on a sphere and infinitesimal spherical angles:
-_area_eqn = Eq(
-    _area_change,
-    distance**2 * sin(_polar_angle) * _polar_angle_change * _azimuthal_angle_change,
-)
-
-# Replace infinitesimal area using the equation above:
-_flux_change = solve(
-    (Eq(_flux_def.electric_flux, _flux_change), _area_eqn),
-    (_flux_def.electric_flux, _area_change),
-    dict=True,
-)[0][_flux_def.electric_flux]
-
 # Now we can integrate the infinitesimal flux over the whole sphere:
-_total_flux = integrate(
-    _flux_change.subs({
-    _polar_angle_change: 1,
-    _azimuthal_angle_change: 1
-    }),
-    (_polar_angle, 0, pi),
-    (_azimuthal_angle, 0, 2 * pi),
-)
+_total_flux = integrate(_flux_change, (_theta, 0, pi), (_phi, 0, 2 * pi))
 
 # Note that the radius of the sphere of integration must be greater than the radius of the charged
 # sphere, otherwise `charge` would be 0.
