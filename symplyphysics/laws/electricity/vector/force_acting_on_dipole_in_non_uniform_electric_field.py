@@ -22,7 +22,7 @@ experiences an overall non-zero acceleration.
                 + p_y \\frac{\\partial \\vec E}{\\partial y}
                 + p_z \\frac{\\partial \\vec E}{\\partial z}
 
-    In general orthogonal curvilinear coordinates, this equates the contration of the *covariant
+    In general orthogonal curvilinear coordinates, this equates the contraction of the *covariant
     derivative* tensor of the electric field with the electric dipole moment vector:
 
     .. math::
