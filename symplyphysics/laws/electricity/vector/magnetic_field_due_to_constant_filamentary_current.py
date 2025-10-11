@@ -18,9 +18,11 @@ electric current.
 
        I d \\vec{\\ell} = \\vec{J} dV
 
-#. The system is in a vacuum.
-
 #. To find the total magnetic flux density, calculate the line integral over the whole contour.
+
+**Conditions:**
+
+#. The system is in a vacuum.
 
 **Links:**
 
