@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
     prefixes,
 )
-from symplyphysics.laws.optics import focal_length_of_a_concave_spherical_mirror as mirror_focus_law
+from symplyphysics.laws.optics import focal_length_of_concave_spherical_mirror as mirror_focus_law
 
 # Test example from https://www.test-uz.ru/solutions_view.php?cat=6&num=15.5
 
