@@ -20,7 +20,7 @@ from symplyphysics.core.experimental.coordinate_systems import CoordinateVector,
 from symplyphysics.core.experimental.vectors import VectorNorm
 
 from symplyphysics.definitions.vector import (
-    superposition_of_forces_is_sum as _superposition_law,
+    net_force_vector_is_sum_of_forces as _superposition_law,
     vector_area_is_unit_normal_times_scalar_area as _vector_area_def,
 )
 from symplyphysics.laws.dynamics.vector import (

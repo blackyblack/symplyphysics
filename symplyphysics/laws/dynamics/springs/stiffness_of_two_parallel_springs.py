@@ -19,7 +19,7 @@ from sympy import Eq, solve, Idx
 from symplyphysics import (Quantity, validate_input, validate_output, global_index, symbols,
     clone_as_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.definitions.vector import superposition_of_forces_is_sum as superposition_law
+from symplyphysics.definitions.vector import net_force_vector_is_sum_of_forces as superposition_law
 from symplyphysics.laws.dynamics.springs import spring_reaction_is_proportional_to_deformation as hookes_law
 
 from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
