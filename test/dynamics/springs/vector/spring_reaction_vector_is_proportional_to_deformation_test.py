@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import errors, units, Quantity
-from symplyphysics.laws.dynamics.springs.vector import spring_reaction_is_proportional_to_deformation as spring_law
+from symplyphysics.laws.dynamics.springs.vector import spring_reaction_vector_is_proportional_to_deformation as spring_law
 
 from symplyphysics.core.experimental.approx import assert_equal_vectors
 from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector, CARTESIAN
