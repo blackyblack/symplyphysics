@@ -4,11 +4,11 @@ from sympy import pi
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import units, convert_to, quantities
-from symplyphysics.laws.quantum_mechanics.harmonic_oscillator import wave_eigenfunctions
+from symplyphysics.laws.quantum_mechanics.harmonic_oscillator import quantum_oscillator_wave_eigenfunctions as law
 
 values = {
-    wave_eigenfunctions.oscillator_mass: convert_to(units.planck_mass, units.kilogram).evalf(),
-    wave_eigenfunctions.angular_frequency: 1e10,  # rad/s
+    law.oscillator_mass: convert_to(units.planck_mass, units.kilogram).evalf(),
+    law.angular_frequency: 1e10,  # rad/s
 }
 
 mode_numbers_ = 0, 1, 2, 3
@@ -22,17 +22,17 @@ base_plot = plot(
     show=False,
 )
 
-law = wave_eigenfunctions.law.rhs.subs({
+law_rhs = law.law.rhs.subs({
     pi: pi.evalf(),
     quantities.hbar: convert_to(units.hbar, units.joule * units.second).evalf(),
 })
 
 for mode_number_ in mode_numbers_:
-    expr = law.subs(values).subs(wave_eigenfunctions.mode_number, mode_number_)
+    expr = law_rhs.subs(values).subs(law.mode_number, mode_number_)
 
     sub_plot = plot(
         expr,
-        (wave_eigenfunctions.position, -3e-18, 3e-18),  # m
+        (law.position, -3e-18, 3e-18),  # m
         label=f"$n = {mode_number_}$",
         show=False,
     )
