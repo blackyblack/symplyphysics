@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import assert_equal, errors, units, Quantity
-from symplyphysics.laws.thermodynamics.dielectrics import gibbs_energy_formula as law
+from symplyphysics.laws.thermodynamics.dielectrics import gibbs_energy_formula_in_dielectrics as law
 
 Args = namedtuple("Args", "f e d")
 
