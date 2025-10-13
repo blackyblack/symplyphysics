@@ -31,7 +31,10 @@ from symplyphysics import (
     quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.quantum_mechanics.harmonic_oscillator import equation, wave_eigenfunctions
+from symplyphysics.laws.quantum_mechanics.harmonic_oscillator import (
+    quantum_harmonic_oscillator_equation as equation,
+    wave_eigenfunctions,
+)
 
 energy_level = clone_as_symbol(symbols.energy, subscript="n")
 """
