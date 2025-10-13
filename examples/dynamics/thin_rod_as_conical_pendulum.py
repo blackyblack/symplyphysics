@@ -8,7 +8,7 @@ from symplyphysics.conditions.dynamics.equilibrium import (
 from symplyphysics.definitions import (
     period_from_angular_frequency as period_def,)
 from symplyphysics.laws.dynamics.vector import (
-    acceleration_from_force as force_law,
+    acceleration_from_force_vector as force_law,
     torque_vector_of_twisting_force as torque_def,
 )
 from symplyphysics.laws.kinematics.vector import (

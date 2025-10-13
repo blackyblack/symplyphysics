@@ -28,7 +28,7 @@ from symplyphysics.definitions.vector import (
     acceleration_is_velocity_derivative as _acceleration_def,
 )
 from symplyphysics.laws.dynamics.vector import (
-    acceleration_from_force as _newtons_second_law,
+    acceleration_from_force_vector as _newtons_second_law,
     torque_vector_of_twisting_force as _torque_def,
 )
 
