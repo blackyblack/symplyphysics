@@ -32,7 +32,7 @@ from symplyphysics.laws.conservation import (
 from symplyphysics.laws.dynamics import total_work_is_change_in_kinetic_energy as _work_energy_law
 from symplyphysics.laws.dynamics.vector import (
     acceleration_from_force_vector as _newtons_second_law,
-    mechanical_work_from_force_and_move as _work_law,
+    mechanical_work_from_force_and_displacement as _work_law,
 )
 
 potential_energy = symbols.potential_energy
