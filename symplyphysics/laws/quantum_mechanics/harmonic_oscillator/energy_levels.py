@@ -62,7 +62,7 @@ law = Eq(
 :laws:latex::
 """
 
-# Derive from Schrödinger _equation and wave eigenfunction expressions
+# Derive from Schrödinger equation and wave eigenfunction expressions
 
 _position = _equation.position
 _mass = _equation.particle_mass
