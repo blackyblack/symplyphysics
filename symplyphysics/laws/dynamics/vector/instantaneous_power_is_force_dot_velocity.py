@@ -25,7 +25,7 @@ from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinat
 
 from symplyphysics.definitions import power_is_energy_derivative as _power_def
 from symplyphysics.definitions.vector import velocity_is_position_vector_derivative as _velocity_def
-from symplyphysics.laws.dynamics.vector import mechanical_work_from_force_and_move as _work_law
+from symplyphysics.laws.dynamics.vector import mechanical_work_from_force_and_displacement as _work_law
 
 power = symbols.power
 """

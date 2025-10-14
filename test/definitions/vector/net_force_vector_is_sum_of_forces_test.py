@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import cos, pi, sin
 from symplyphysics import units, Quantity, errors
-from symplyphysics.definitions.vector import superposition_of_forces_is_sum as forces_law
+from symplyphysics.definitions.vector import net_force_vector_is_sum_of_forces as forces_law
 
 from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
 from symplyphysics.core.experimental.approx import assert_equal_vectors

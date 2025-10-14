@@ -3,7 +3,7 @@ from pytest import fixture
 from symplyphysics import assert_equal
 from symplyphysics.core.vectors.vectors import Vector
 from symplyphysics.core.vectors.arithmetics import vector_magnitude, dot_vectors
-from symplyphysics.laws.geometry import dot_product_is_proportional_to_cosine_between_vectors as cosine_law
+from symplyphysics.laws.geometry import dot_product_is_proportional_to_cosine_between_vectors_scalar as cosine_law
 
 # Description
 ## A point with position vector of (0.0, 0.3, 2.3) m is moving under a force (1.0, 2.0, -1.5) N.

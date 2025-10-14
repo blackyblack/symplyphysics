@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import units, errors, Quantity
-from symplyphysics.laws.electricity.vector import electric_field_is_force_over_test_charge as electric_field
+from symplyphysics.laws.electricity.vector import electric_field_vector_is_force_over_test_charge as electric_field
 
 from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector, CARTESIAN
 from symplyphysics.core.experimental.approx import assert_equal_vectors

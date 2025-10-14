@@ -23,7 +23,7 @@ from symplyphysics.definitions.vector import (
     momentum_is_mass_times_velocity_vector as _momentum_def,
     acceleration_is_velocity_derivative as _acceleration_def,
 )
-from symplyphysics.laws.dynamics.vector import force_is_derivative_of_momentum as _newtons_law
+from symplyphysics.laws.dynamics.vector import force_vector_is_derivative_of_momentum as _newtons_law
 
 mass = clone_as_symbol(symbols.mass, positive=True)
 """

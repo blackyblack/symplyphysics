@@ -10,8 +10,8 @@ from symplyphysics.definitions import (
     period_from_angular_frequency as period_def,
 )
 from symplyphysics.laws.dynamics.vector import (
+    acceleration_from_force_vector as force_law,
     relative_acceleration_from_force as motion_law,
-    acceleration_from_force as force_law,
 )
 from symplyphysics.laws.kinematics.vector import (
     acceleration_of_transfer_between_relative_frames as transfer_law,

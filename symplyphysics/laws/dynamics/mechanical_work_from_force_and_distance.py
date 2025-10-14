@@ -40,7 +40,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.experimental.vectors import (VectorSymbol, VectorNorm, VectorCross,
     VectorDot)
 
-from symplyphysics.laws.dynamics.vector import mechanical_work_from_force_and_move as _work_law
+from symplyphysics.laws.dynamics.vector import mechanical_work_from_force_and_displacement as _work_law
 
 work = symbols.work
 """

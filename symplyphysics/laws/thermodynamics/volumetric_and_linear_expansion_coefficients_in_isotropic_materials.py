@@ -66,11 +66,11 @@ _initial_volume_expr = _volume_expr.subs(_length, _initial_length)
 _final_volume_expr = _volume_expr.subs(_length, _final_length_expr)
 
 _volumetric_expr = volumetric_def.definition.rhs.subs({
-    volumetric_def.volume(volumetric_def.temperature).diff(volumetric_def.temperature):
+    volumetric_def.volume(volumetric_def.temperature, volumetric_def.parameters).diff(volumetric_def.temperature):
     _volume_change / _temperature_change,
     _volume_change:
     _final_volume_expr - _initial_volume_expr,
-    volumetric_def.volume(volumetric_def.temperature):
+    volumetric_def.volume(volumetric_def.temperature, volumetric_def.parameters):
         _initial_volume_expr,
 })
 

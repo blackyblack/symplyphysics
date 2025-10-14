@@ -2,7 +2,7 @@
 
 from sympy import solve, symbols
 from symplyphysics import print_expression, Quantity, units, convert_to
-from symplyphysics.laws.electricity.vector import electric_field_is_force_over_test_charge as electric_field_law
+from symplyphysics.laws.electricity.vector import electric_field_vector_is_force_over_test_charge as electric_field_law
 from symplyphysics.laws.dynamics import acceleration_is_force_over_mass
 from symplyphysics.laws.kinematics import position_via_constant_acceleration_and_time as const_acceleration_law
 from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as const_velocity_law

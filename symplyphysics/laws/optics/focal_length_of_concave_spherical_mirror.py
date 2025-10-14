@@ -19,12 +19,7 @@ The focal length of a spherical mirror is equal to half the radius of curvature.
 """
 
 from sympy import Eq, simplify, solve
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    symbols,
-)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, clone_as_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.optics import (
     optical_strength_of_spherical_lens_from_refractive_indices_of_environment_and_lens_and_focal_distances
@@ -49,7 +44,7 @@ law = Eq(focal_length, curvature_radius / 2)
 """
 
 # Mirror has refraction index equal -n, where n - refraction index of environment
-refraction_index = symbols.relative_refractive_index
+refraction_index = clone_as_symbol(symbols.relative_refractive_index)
 
 spherical_lens_eq = spherical_lens_law.law.subs({
     spherical_lens_law.curvature_radius_lens: curvature_radius,

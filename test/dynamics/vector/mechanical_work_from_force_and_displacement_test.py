@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import cos, pi, sin
 from symplyphysics import assert_equal, errors, units, Quantity
-from symplyphysics.laws.dynamics.vector import mechanical_work_from_force_and_move as work_law
+from symplyphysics.laws.dynamics.vector import mechanical_work_from_force_and_displacement as work_law
 
 from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
 

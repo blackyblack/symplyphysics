@@ -31,7 +31,10 @@ from symplyphysics import (
     quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.quantum_mechanics.harmonic_oscillator import equation, wave_eigenfunctions
+from symplyphysics.laws.quantum_mechanics.harmonic_oscillator import (
+    quantum_harmonic_oscillator_equation as _equation,
+    quantum_oscillator_wave_eigenfunctions as _eigenfunction_law,
+)
 
 energy_level = clone_as_symbol(symbols.energy, subscript="n")
 """
@@ -61,23 +64,23 @@ law = Eq(
 
 # Derive from Schrödinger equation and wave eigenfunction expressions
 
-_position = equation.position
-_mass = equation.particle_mass
+_position = _equation.position
+_mass = _equation.particle_mass
 
-_schrodinger_eqn = equation.law.subs({
-    equation.angular_frequency: angular_frequency,
-    equation.particle_energy: energy_level,
+_schrodinger_eqn = _equation.law.subs({
+    _equation.angular_frequency: angular_frequency,
+    _equation.particle_energy: energy_level,
 })
 
-_eigenfunction_expr = wave_eigenfunctions.law.rhs.subs({
-    wave_eigenfunctions.mode_number: mode_number,
-    wave_eigenfunctions.oscillator_mass: _mass,
-    wave_eigenfunctions.angular_frequency: angular_frequency,
-    wave_eigenfunctions.position: _position,
+_eigenfunction_expr = _eigenfunction_law.law.rhs.subs({
+    _eigenfunction_law.mode_number: mode_number,
+    _eigenfunction_law.oscillator_mass: _mass,
+    _eigenfunction_law.angular_frequency: angular_frequency,
+    _eigenfunction_law.position: _position,
 })
 
 _schrodinger_eqn = _schrodinger_eqn.replace(
-    equation.wave_function,
+    _equation.wave_function,
     lambda position_: _eigenfunction_expr.subs(_position, position_),
 ).doit()
 

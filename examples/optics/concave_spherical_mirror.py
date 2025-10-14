@@ -1,7 +1,7 @@
 from sympy import Symbol, solve, Eq, simplify
 
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
-from symplyphysics.laws.optics import focal_length_of_a_concave_spherical_mirror as mirror_law
+from symplyphysics.laws.optics import focal_length_of_concave_spherical_mirror as mirror_law
 from symplyphysics.laws.optics import linear_magnification_from_distance_to_object_and_distance_to_image as magnification_distance_law
 from symplyphysics.laws.optics import linear_magnification_from_object_height_and_image_height as magnification_height_law
 from symplyphysics.laws.optics import lens_focus_from_object_and_image as lens_focus_law
