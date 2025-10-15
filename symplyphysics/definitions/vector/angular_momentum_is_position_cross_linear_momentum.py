@@ -62,3 +62,6 @@ def calculate_angular_momentum(
     })
 
     return QuantityCoordinateVector.from_expr(angular_momentum_value)
+
+
+# UNIQUE_LAW_ID: 785

@@ -62,3 +62,6 @@ law = Eq(
 
 # The solutions of the Schrödinger equation vary drastically with the kind of potential energy
 # function used and also depend on the boundary conditions.
+
+
+# UNIQUE_LAW_ID: 690

@@ -98,3 +98,6 @@ def calculate_most_probable_speed(
         molecular_mass: particle_mass_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 137

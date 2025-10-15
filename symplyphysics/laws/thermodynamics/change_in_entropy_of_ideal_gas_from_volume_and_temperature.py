@@ -111,3 +111,6 @@ def calculate_entropy_change(mass_: Quantity, molar_mass_: Quantity, molar_heat_
         final_volume: final_volume_,
     })
     return Quantity(result_entropy_change)
+
+
+# UNIQUE_LAW_ID: 53

@@ -54,3 +54,6 @@ def calculate_total_entropy(subsystem_entropies_: Sequence[Quantity]) -> Quantit
     for idx, subsystem_entropy_ in enumerate(subsystem_entropies_, 1):
         result = result.subs(subsystem_entropy[idx], subsystem_entropy_)
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 58

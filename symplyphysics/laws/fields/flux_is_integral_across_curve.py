@@ -54,3 +54,6 @@ def calculate_flux(
     (parameter_from, parameter_to) = parameter_limits
     result_expr = flux_law(field, trajectory, parameter_from, parameter_to)
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 147

@@ -59,3 +59,6 @@ def calculate_waveguide_wavelength(signal_wavelength_: Quantity,
         critical_wavelength: critical_wavelength_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 572

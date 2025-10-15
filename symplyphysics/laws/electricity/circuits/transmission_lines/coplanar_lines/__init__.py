@@ -25,3 +25,6 @@ Imagine an environment in which the field will have the same magnitude as the fi
 coplanar line. The (relative) permittivity of such a medium will be called the
 *effective (relative) permittivity* of the line.
 """
+
+
+# UNIQUE_LAW_ID: 620

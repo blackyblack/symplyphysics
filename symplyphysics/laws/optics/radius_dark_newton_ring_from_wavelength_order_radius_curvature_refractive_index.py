@@ -83,3 +83,6 @@ def calculate_radius(wavelength_: Quantity, order_of_ring_: int,
         lens_radius_of_curvature: radius_curvature_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 255

@@ -52,3 +52,6 @@ def calculate_amount_energy(specific_heat_vaporization_: Quantity,
         mass: mass_of_matter_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 26

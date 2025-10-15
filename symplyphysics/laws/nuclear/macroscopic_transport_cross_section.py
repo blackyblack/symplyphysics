@@ -64,3 +64,6 @@ def calculate_cross_section(macroscopic_scattering_cross_section_: Quantity,
         average_scattering_angle_cosine: average_scattering_angle_cosine_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 285

@@ -45,3 +45,6 @@ def calculate_migration_area(diffusion_area_: Quantity, neutron_fermi_age_: Quan
         fermi_age: neutron_fermi_age_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 293

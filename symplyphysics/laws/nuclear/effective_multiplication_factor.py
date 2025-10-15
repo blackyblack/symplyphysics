@@ -56,3 +56,6 @@ def calculate_multiplication_factor(infinite_multiplication_factor_: float,
         thermal_non_leakage_probability: thermal_non_leakage_probability_
     })
     return float(result_expr.evalf())
+
+
+# UNIQUE_LAW_ID: 289

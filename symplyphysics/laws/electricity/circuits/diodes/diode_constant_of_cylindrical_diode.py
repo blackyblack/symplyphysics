@@ -71,3 +71,6 @@ def calculate_diode_constant(anode_area_: Quantity, anode_radius_: Quantity,
         cathode_radius: cathode_radius_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 568

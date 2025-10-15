@@ -62,3 +62,6 @@ def calculate_semimajor_axis(
         specific_energy: total_energy_per_unit_mass_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 379

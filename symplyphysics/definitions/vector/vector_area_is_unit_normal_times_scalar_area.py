@@ -87,3 +87,6 @@ def calculate_vector_area(
     })
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 786

@@ -57,3 +57,6 @@ def calculate_current(voltage_: Quantity, impedance_: Quantity) -> Quantity:
         impedance: impedance_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 487

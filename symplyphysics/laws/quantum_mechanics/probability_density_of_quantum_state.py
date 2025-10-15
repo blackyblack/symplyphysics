@@ -36,3 +36,6 @@ law = Eq(probability_density, abs(wave_function)**2)
 def calculate_probability_density(wave_function_value_: Quantity) -> Quantity:
     result = law.rhs.subs(wave_function, wave_function_value_)
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 680

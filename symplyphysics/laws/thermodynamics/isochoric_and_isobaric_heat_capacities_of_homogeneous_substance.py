@@ -101,3 +101,6 @@ def calculate_isochoric_heat_capacity(
         isothermal_compressibility: isothermal_compressibility_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 46

@@ -60,3 +60,6 @@ def calculate_admittance(
         susceptance: susceptance_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 482

@@ -47,3 +47,6 @@ def calculate_accumulated_energy(inductance_: Quantity, current_: Quantity) -> Q
     result_energy_expr = solve(law, energy, dict=True)[0][energy]
     result_expr = result_energy_expr.subs({inductance: inductance_, current: current_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 557

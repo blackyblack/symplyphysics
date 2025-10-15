@@ -72,3 +72,6 @@ def calculate_resultant_force(forces_: Sequence[Quantity]) -> Quantity:
     for i, v in enumerate(forces_):
         solved = solved.subs(force[i + 1], v)
     return Quantity(solved)
+
+
+# UNIQUE_LAW_ID: 748

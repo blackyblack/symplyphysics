@@ -88,3 +88,6 @@ def calculate_range(
         angle: angle_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 351

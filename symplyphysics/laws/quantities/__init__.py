@@ -12,3 +12,6 @@ how the property changes when the size or extent of the system changes.
     A quantity whose magnitude scales linearly with the size of the system,
     i.e. it is additive with respect to its subsystems.
 """
+
+
+# UNIQUE_LAW_ID: 673

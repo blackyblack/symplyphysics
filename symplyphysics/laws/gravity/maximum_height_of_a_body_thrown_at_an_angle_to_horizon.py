@@ -103,3 +103,6 @@ def calculate_height(initial_velocity_: Quantity, angle_: float | Quantity) -> Q
         angle: convert_to_si(angle_),
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 360

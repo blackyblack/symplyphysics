@@ -123,3 +123,6 @@ def calculate_magnetic_flux_density_change(
         result = result.subs(norm, VectorNorm(arg))
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 525

@@ -40,3 +40,6 @@ def calculate_diffusion_coefficient(macroscopic_transport_cross_section_: Quanti
     result_expr = result_coefficient_expr.subs(
         {macroscopic_transport_cross_section: macroscopic_transport_cross_section_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 286

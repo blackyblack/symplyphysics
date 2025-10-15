@@ -72,3 +72,6 @@ def calculate_coriolis_acceleration(
     })
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 448

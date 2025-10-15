@@ -49,3 +49,6 @@ def calculate_particles_count(mole_count_: Quantity) -> int:
     result_expr = solved.subs(amount_of_substance, mole_count_)
     result = Quantity(result_expr)
     return int(convert_to_float(result))
+
+
+# UNIQUE_LAW_ID: 150

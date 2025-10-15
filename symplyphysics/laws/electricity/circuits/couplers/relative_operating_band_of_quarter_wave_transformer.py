@@ -68,3 +68,6 @@ def calculate_relative_bandwidth(load_resistance_: Quantity, characteristic_resi
         reflection_coefficient: reflection_coefficient_
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 642

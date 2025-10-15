@@ -70,3 +70,6 @@ def calculate_orbital_velocity(planet_mass_: Quantity, distance_: Quantity,
         semimajor_axis: large_half_axis_length_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 368

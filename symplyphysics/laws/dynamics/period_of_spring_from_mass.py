@@ -113,3 +113,6 @@ def calculate_period(stiffness_: Quantity, object_mass_: Quantity) -> Quantity:
     solved = solve(law, period, dict=True)[0][period]
     result_expr = solved.subs({stiffness: stiffness_, mass: object_mass_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 205

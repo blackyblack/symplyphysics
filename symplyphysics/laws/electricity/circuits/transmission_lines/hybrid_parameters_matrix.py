@@ -106,3 +106,6 @@ def calculate_current_and_voltage(
     assert_equivalent_dimension(result_output_voltage, 'result_output_voltage',
         "calculate_current_and_voltage", units.voltage)
     return (result_input_current, result_output_voltage)
+
+
+# UNIQUE_LAW_ID: 602

@@ -51,3 +51,6 @@ def calculate_relativistic_length(rest_length_: Quantity, velocity_: Quantity) -
     result_expr = solve(law, relativistic_length, dict=True)[0][relativistic_length]
     length_applied = result_expr.subs({proper_length: rest_length_, speed: velocity_})
     return Quantity(length_applied)
+
+
+# UNIQUE_LAW_ID: 698

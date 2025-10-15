@@ -61,3 +61,6 @@ def calculate_geometric_buckling_squared(cylinder_radius_: Quantity,
     solved = solve(law, geometric_buckling, dict=True)[0][geometric_buckling]
     result_expr = solved.subs({radius: cylinder_radius_, height: cylinder_height_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 308

@@ -69,3 +69,6 @@ def calculate_mass(energy_function_: Expr, wavenumber_: Quantity) -> Quantity:
     result_expr = applied_law.subs(angular_wavenumber, wavenumber_)
     result = solve(result_expr, effective_mass, dict=True)[0][effective_mass]
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 338

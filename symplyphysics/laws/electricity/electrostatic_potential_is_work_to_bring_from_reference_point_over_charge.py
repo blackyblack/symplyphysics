@@ -60,3 +60,6 @@ def calculate_work(charge_: Quantity, voltage_: Quantity) -> Quantity:
         electrostatic_potential: voltage_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 499

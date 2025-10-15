@@ -137,3 +137,6 @@ def calculate_wave_function_value(
         time: time_,
     })
     return complex(convert_to(result, S.One))
+
+
+# UNIQUE_LAW_ID: 687

@@ -92,3 +92,6 @@ def calculate_geometric_buckling_squared(infinite_multiplication_factor_: float,
         diffusion_area: diffusion_area_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 306

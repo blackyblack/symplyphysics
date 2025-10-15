@@ -79,3 +79,6 @@ def calculate_wave_resistance_odd_modes(coupling_factor_: float,
         segment_count: number_segments_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 641

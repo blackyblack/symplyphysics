@@ -55,3 +55,6 @@ def calculate_geometric_buckling_squared(slab_width_: Quantity) -> Quantity:
     solved = solve(law, geometric_buckling, dict=True)[0][geometric_buckling]
     result_expr = solved.subs(thickness, slab_width_)
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 302

@@ -48,3 +48,6 @@ def calculate_speed_of_sound(bulk_modulus_: Quantity, density_: Quantity) -> Qua
         density: density_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 406

@@ -59,3 +59,6 @@ def calculate_current(diode_constant_: Quantity, voltage_: Quantity) -> Quantity
         anode_voltage: voltage_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 559

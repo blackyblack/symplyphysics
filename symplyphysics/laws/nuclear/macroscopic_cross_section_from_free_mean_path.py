@@ -42,3 +42,6 @@ def calculate_cross_section(mean_free_path_: Quantity) -> Quantity:
         dict=True)[0][macroscopic_cross_section]
     result_expr = result_cross_section_expr.subs(mean_free_path, mean_free_path_)
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 280

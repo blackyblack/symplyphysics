@@ -71,3 +71,6 @@ def calculate_irradiance(
         polarization_angle: polarization_angle_,
     })
     return Quantity(irradiance_applied)
+
+
+# UNIQUE_LAW_ID: 270

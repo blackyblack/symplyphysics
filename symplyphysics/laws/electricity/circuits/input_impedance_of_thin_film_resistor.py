@@ -59,3 +59,6 @@ def calculate_input_impedance(
         capacitance: capacitance_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 543

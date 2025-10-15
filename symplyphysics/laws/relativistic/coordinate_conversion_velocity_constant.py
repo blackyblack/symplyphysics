@@ -74,3 +74,6 @@ def calculate_coordinate_second_frame(coordinate_first_frame_: Quantity, velocit
         time_in_lab_frame: time_first_frame_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 695

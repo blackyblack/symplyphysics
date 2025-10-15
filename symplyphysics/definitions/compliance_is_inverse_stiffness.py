@@ -45,3 +45,6 @@ definition = Eq(compliance, 1 / stiffness)
 def calculate_compliance(stiffness_: Quantity) -> Quantity:
     result = definition.rhs.subs(stiffness, stiffness_)
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 773

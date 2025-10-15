@@ -51,3 +51,6 @@ def calculate_intensity(energy_: Quantity, area_: Quantity, time_: Quantity) -> 
     result_expr = solve(law, intensity, dict=True)[0][intensity]
     intensity_applied = result_expr.subs({energy: energy_, area: area_, time: time_})
     return Quantity(intensity_applied)
+
+
+# UNIQUE_LAW_ID: 258

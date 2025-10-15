@@ -72,3 +72,6 @@ def calculate_phase_velocity(
         angular_wavenumber: angular_wavenumber_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 402

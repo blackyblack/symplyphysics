@@ -78,3 +78,6 @@ def calculate_distance_of_convergence_of_particles(discharge_voltage_: Quantity,
         second_atomic_number: second_atomic_number_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 153

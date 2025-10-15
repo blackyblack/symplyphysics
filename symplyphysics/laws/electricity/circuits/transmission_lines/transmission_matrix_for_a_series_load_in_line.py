@@ -92,3 +92,6 @@ def calculate_transmission_matrix(
     assert_equivalent_dimension(result_b, 'result_b', "calculate_transmission_matrix",
         units.impedance)
     return ((result_a, result_b), (result_c, result_d))
+
+
+# UNIQUE_LAW_ID: 607

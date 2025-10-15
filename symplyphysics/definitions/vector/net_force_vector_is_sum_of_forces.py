@@ -53,3 +53,6 @@ def calculate_resultant_force(
         net_force_value = net_force_value.subs(force[i], force_i)
 
     return QuantityCoordinateVector.from_expr(net_force_value)
+
+
+# UNIQUE_LAW_ID: 782

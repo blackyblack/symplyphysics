@@ -50,3 +50,6 @@ def calculate_mass(equivalent_: Quantity, current_: Quantity, time_: Quantity) -
     result_expr = solve(law, mass, dict=True)[0][mass]
     result_expr = result_expr.subs({equivalent: equivalent_, current: current_, time: time_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 177

@@ -115,3 +115,6 @@ relative_aperture = Symbol("A", dimensionless)
 
 #. `Wikipedia, see second paragraph <https://en.wikipedia.org/wiki/F-number>`__.
 """
+
+
+# UNIQUE_LAW_ID: 792

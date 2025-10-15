@@ -52,3 +52,6 @@ def calculate_resolution(wavelength_: Quantity, lens_diameter_: Quantity) -> Qua
         lens_diameter: lens_diameter_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 269

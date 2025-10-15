@@ -48,3 +48,6 @@ def calculate_energy_transfer_coefficient(mass_of_traveling_atom_: Quantity,
         gas_atom_mass: mass_of_gas_atom_,
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 149

@@ -134,3 +134,6 @@ def calculate_torque(
     ).doit()
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 236

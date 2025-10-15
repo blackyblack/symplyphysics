@@ -129,3 +129,6 @@ def calculate_multiplication_factor(neutron_flux_function_: Expr, neutrons_per_f
     result_factor_expr = solve(result_expr, effective_multiplication_factor,
         dict=True)[0][effective_multiplication_factor]
     return convert_to_float(result_factor_expr)
+
+
+# UNIQUE_LAW_ID: 294

@@ -46,3 +46,6 @@ def calculate_momentum(wavenumber_: Quantity) -> Quantity:
     result_momentum_expr = solve(law, momentum, dict=True)[0][momentum]
     result_expr = result_momentum_expr.subs({angular_wavenumber: wavenumber_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 401

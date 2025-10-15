@@ -62,3 +62,6 @@ def calculate_radius_of_orbit(mass_of_planet_: Quantity,
         satellite_angular_speed: speed_rotation_satellite_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 352

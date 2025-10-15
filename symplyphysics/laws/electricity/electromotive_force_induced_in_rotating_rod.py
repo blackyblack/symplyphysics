@@ -102,3 +102,6 @@ def calculate_voltage(magnetic_induction_: Quantity, rotation_frequency_: Quanti
         length: rod_length_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 498

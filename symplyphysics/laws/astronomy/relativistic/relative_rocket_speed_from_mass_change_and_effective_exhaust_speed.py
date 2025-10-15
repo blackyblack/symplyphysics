@@ -70,3 +70,6 @@ def calculate_speed(exhaust_velocity_: Quantity, initial_mass_: Quantity,
         final_mass: final_mass_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 325

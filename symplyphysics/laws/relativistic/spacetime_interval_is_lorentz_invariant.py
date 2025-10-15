@@ -45,3 +45,6 @@ law = Eq(second_spacetime_interval, first_spacetime_interval)
 def calculate_second_spacetime_interval(first_spacetime_interval_: Quantity) -> Quantity:
     result = law.rhs.subs({first_spacetime_interval: first_spacetime_interval_})
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 691

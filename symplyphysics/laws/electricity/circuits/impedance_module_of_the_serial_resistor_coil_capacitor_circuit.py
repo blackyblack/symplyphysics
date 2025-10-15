@@ -93,3 +93,6 @@ def calculate_circuit_impedance_module(resistance_resistor_: Quantity,
         coil_reactance: coil_reactance_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 545

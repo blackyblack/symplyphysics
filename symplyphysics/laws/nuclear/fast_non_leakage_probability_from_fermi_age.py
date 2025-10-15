@@ -54,3 +54,6 @@ def calculate_probability(geometric_buckling_: Quantity,
         fermi_age: neutron_fermi_age_
     })
     return Probability(convert_to_float(result_expr))
+
+
+# UNIQUE_LAW_ID: 296

@@ -70,3 +70,6 @@ def calculate_potential(
         distance: distance_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 173

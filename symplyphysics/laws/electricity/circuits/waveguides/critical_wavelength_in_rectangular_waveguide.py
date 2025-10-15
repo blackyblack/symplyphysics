@@ -72,3 +72,6 @@ def calculate_critical_wavelength(first_index_: float, second_index_: float, wid
         height: height_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 575

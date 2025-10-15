@@ -165,3 +165,6 @@ def calculate_weight(weight_vacuum_: Quantity, liquid_density_: Quantity,
     })
 
     return Quantity(result_weight)
+
+
+# UNIQUE_LAW_ID: 720

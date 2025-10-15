@@ -57,3 +57,6 @@ def calculate_electrostatic_potential(absolute_permittivity_: Quantity, distance
         charge: charge_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 490

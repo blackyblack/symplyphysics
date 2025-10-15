@@ -172,3 +172,6 @@ def calculate_oscillation_period(inductance_: Quantity, capacitance_: Quantity) 
     result_period_expr = solve(law, period, dict=True)[0][period]
     result_expr = result_period_expr.subs({inductance: inductance_, capacitance: capacitance_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 537

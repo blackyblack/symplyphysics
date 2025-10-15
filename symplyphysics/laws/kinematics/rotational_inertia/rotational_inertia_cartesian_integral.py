@@ -120,3 +120,6 @@ def calculate_rotational_inertia(density_: Quantity, x_: Quantity, y_: Quantity,
         z_end: z_,
     }).doit()
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 465

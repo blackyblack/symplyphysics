@@ -66,3 +66,6 @@ def calculate_cross_sectional_area_of_interaction(diameter_of_atom_: Quantity,
         temperature: temperature_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 157

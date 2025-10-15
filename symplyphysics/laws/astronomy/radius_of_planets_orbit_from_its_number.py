@@ -62,3 +62,6 @@ def calculate_radius_of_orbit(planet_number_: int | NegativeInfinity) -> Quantit
         planet_number: planet_number_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 316

@@ -46,3 +46,6 @@ def calculate_kinetic_energy(body_mass_: Quantity, body_velocity_: Quantity) -> 
     result_energy_expr = solve(law, kinetic_energy, dict=True)[0][kinetic_energy]
     result_expr = result_energy_expr.subs({mass: body_mass_, speed: body_velocity_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 197

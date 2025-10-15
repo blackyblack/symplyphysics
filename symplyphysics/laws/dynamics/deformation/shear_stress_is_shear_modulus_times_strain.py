@@ -58,3 +58,6 @@ def calculate_shear_stress(
         shear_strain: scale_factor(shear_strain_),
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 223

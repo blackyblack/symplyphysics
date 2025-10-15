@@ -66,3 +66,6 @@ def calculate_relativistic_energy(
         invariant_mass: invariant_mass_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 701

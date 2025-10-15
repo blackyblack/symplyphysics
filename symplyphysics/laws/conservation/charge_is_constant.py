@@ -49,3 +49,6 @@ def calculate_charge_after(total_charge_before_: Quantity) -> Quantity:
     dsolved_sub_after = dsolved.subs("C1", C1)
     result_charge = dsolved_sub_after.rhs
     return Quantity(result_charge)
+
+
+# UNIQUE_LAW_ID: 330

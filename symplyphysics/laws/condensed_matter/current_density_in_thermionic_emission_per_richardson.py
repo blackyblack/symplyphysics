@@ -59,3 +59,6 @@ def calculate_current(thermodynamic_work_: Quantity, temperature_: Quantity) -> 
         temperature: temperature_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 345

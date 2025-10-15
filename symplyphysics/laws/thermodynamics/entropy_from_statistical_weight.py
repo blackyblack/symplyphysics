@@ -228,3 +228,6 @@ def calculate_entropy(statistical_weight_: float) -> Quantity:
     result_entropy_expr = solve(law, entropy, dict=True)[0][entropy]
     result_expr = result_entropy_expr.subs({statistical_weight: statistical_weight_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 71

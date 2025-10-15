@@ -78,3 +78,6 @@ def calculate_film_thickness(wavelength_: Quantity, order_interference_: int,
         refraction_angle: angle_refraction_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 267

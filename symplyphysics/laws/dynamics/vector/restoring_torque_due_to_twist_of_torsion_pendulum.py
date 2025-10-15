@@ -68,3 +68,6 @@ def calculate_rotation_vector(
     })
 
     return QuantityCoordinateVector.from_expr(value)
+
+
+# UNIQUE_LAW_ID: 235

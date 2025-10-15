@@ -92,3 +92,6 @@ def calculate_momentum(photon_energy_: Quantity) -> Quantity:
     result_momentum_expr = solve(law, momentum, dict=True)[0][momentum]
     result_expr = result_momentum_expr.subs({energy: photon_energy_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 414

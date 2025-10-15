@@ -59,3 +59,6 @@ def calculate_statistical_weight(particle_counts_: Sequence[int]) -> int:
     for idx_, particle_count_ in enumerate(particle_counts_, 1):
         result = result.subs(particle_count_in_state[idx_], particle_count_)
     return int(result)
+
+
+# UNIQUE_LAW_ID: 138

@@ -60,3 +60,6 @@ def calculate_elastic_energy_density(
         bulk_modulus: bulk_modulus_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 222

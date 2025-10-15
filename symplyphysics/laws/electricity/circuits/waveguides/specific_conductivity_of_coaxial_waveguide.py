@@ -64,3 +64,6 @@ def calculate_specific_conductivity(angular_frequency_: Quantity, specific_capac
         loss_tangent: tangent_dielectric_loss_angle_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 583

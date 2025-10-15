@@ -64,3 +64,6 @@ def calculate_internal_energy(
         temperature_change: temperature_change_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 63

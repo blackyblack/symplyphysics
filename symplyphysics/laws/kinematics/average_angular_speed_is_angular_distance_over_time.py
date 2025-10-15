@@ -59,3 +59,6 @@ def calculate_frequency(radians_: float | Quantity, time_: Quantity) -> Quantity
     solved = solve(law, average_angular_speed, dict=True)[0][average_angular_speed]
     result_expr = solved.subs({time: time_, angular_distance: angle_radians})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 438

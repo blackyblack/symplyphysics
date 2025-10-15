@@ -79,3 +79,6 @@ def calculate_probability(
     })
 
     return Probability(convert_to_float(result))
+
+
+# UNIQUE_LAW_ID: 36

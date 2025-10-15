@@ -78,3 +78,6 @@ def calculate_energy(inductance_: Quantity, current_amplitude_: Quantity, freque
         initial_phase: initial_phase_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 478

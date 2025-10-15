@@ -6,3 +6,6 @@ A *spring* is a device consisting of an elastic but largely rigid material bent 
 that can return into shape after being compressed or extended. When compressed, springs can store
 energy.
 """
+
+
+# UNIQUE_LAW_ID: 248

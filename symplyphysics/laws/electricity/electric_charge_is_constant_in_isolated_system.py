@@ -40,3 +40,6 @@ def calculate_charge_after(charge_before_: Quantity) -> Quantity:
     solved = solve(law, final_charge, dict=True)[0][final_charge]
     result_expr = solved.subs(initial_charge, charge_before_)
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 506

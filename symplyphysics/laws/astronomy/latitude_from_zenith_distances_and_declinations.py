@@ -86,3 +86,6 @@ def calculate_latitude(zenith_distance_north_: Quantity, south_zenith_angle_: Qu
         south_declination: south_declination_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 314

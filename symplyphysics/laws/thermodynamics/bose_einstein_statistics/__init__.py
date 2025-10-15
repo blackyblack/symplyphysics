@@ -7,3 +7,6 @@ system consisting of many non-interacting, identical particles that strictly do 
 the Pauli exclusion principle. Particles following Bose-Einstein statistics are called bosons
 and have integer values of spin.
 """
+
+
+# UNIQUE_LAW_ID: 142

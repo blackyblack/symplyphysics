@@ -4,3 +4,6 @@
 
 The conditions in this folder are related to the equilibrium in dynamic systems.
 """
+
+
+# UNIQUE_LAW_ID: 9

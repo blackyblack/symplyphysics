@@ -59,3 +59,6 @@ def calculate_hydraulic_stress(
         fractional_volume_change: fractional_volume_change_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 714

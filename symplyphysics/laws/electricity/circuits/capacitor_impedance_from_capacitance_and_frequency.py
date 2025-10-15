@@ -51,3 +51,6 @@ def calculate_impedance(capacitance_: Quantity, circular_frequency_: Quantity) -
         angular_frequency: circular_frequency_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 538

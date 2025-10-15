@@ -139,3 +139,6 @@ def calculate_period(pendulum_length_: Quantity) -> Quantity:
     solved = solve(law, period, dict=True)[0][period]
     result_expr = solved.subs(length, pendulum_length_)
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 199

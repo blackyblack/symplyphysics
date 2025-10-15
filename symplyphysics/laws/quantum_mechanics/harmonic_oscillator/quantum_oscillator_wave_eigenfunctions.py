@@ -86,3 +86,6 @@ def calculate_wave_function_value(
         position: position_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 682

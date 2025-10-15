@@ -50,3 +50,6 @@ def calculate_time_constant(resistance_: Quantity, capacitance_: Quantity) -> Qu
         capacitance: capacitance_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 544

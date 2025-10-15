@@ -99,3 +99,6 @@ def calculate_velocity(planet_mass_: Quantity, radius_: Quantity, height_: Quant
         height: height_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 349

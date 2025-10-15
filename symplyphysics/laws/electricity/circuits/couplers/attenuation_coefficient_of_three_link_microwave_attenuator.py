@@ -54,3 +54,6 @@ def calculate_attenuation_coefficient(first_resistance_: Quantity,
         second_resistance: second_resistance_,
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 648

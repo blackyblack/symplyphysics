@@ -53,3 +53,6 @@ def calculate_rotational_inertia(rotational_inertias_: Sequence[Quantity]) -> Qu
     for i, v in enumerate(rotational_inertias_):
         solved = solved.subs(rotational_inertia[i + 1], v)
     return Quantity(solved)
+
+
+# UNIQUE_LAW_ID: 464

@@ -86,3 +86,6 @@ def calculate_entropy(
     gibbs_energy_ = (gibbs_energy_change_ / temperature_change_) * temperature
     result = law.rhs.subs(gibbs_energy(temperature, pressure, particle_count), gibbs_energy_).doit()
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 19

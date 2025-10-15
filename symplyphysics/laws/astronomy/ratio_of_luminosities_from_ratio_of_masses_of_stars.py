@@ -65,3 +65,6 @@ def calculate_illuminance_second(mass_first_: Quantity, mass_second_: Quantity,
         first_luminosity: illuminance_first_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 322

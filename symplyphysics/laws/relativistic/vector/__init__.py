@@ -4,3 +4,6 @@
 
 A collection of laws related to a vectorial description of relativistic mechanics.
 """
+
+
+# UNIQUE_LAW_ID: 705

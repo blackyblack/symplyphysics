@@ -51,3 +51,6 @@ def calculate_moment_of_force(moment_of_inertia_: Quantity,
         angular_acceleration: angular_acceleration_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 196

@@ -23,3 +23,6 @@ law = Eq(total_torque, 0)
 
 :laws:latex::
 """
+
+
+# UNIQUE_LAW_ID: 10

@@ -81,3 +81,6 @@ def calculate_phase_difference(distance_between_points_: Quantity, wavelength_: 
         wavelength: wavelength_
     }).doit()
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 385

@@ -101,3 +101,6 @@ assert expr_equals(_volumetric_expr_derived, law.rhs)
 def calculate_volumetric_expansion_coefficient(linear_expansion_coefficient_: Quantity) -> Quantity:
     result = law.rhs.subs(linear_expansion_coefficient, linear_expansion_coefficient_)
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 77

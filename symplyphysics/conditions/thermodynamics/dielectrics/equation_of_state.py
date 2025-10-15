@@ -53,3 +53,6 @@ condition = Eq(electric_displacement, state_function(electric_field_strength, te
 
 :laws:latex::
 """
+
+
+# UNIQUE_LAW_ID: 7

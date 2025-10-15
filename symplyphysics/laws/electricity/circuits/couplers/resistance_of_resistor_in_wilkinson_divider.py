@@ -56,3 +56,6 @@ def calculate_resistance(transmission_line_resistance_: Quantity,
         power_ratio: ratio_of_power_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 638

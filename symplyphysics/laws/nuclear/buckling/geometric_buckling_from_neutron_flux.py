@@ -91,3 +91,6 @@ def calculate_geometric_buckling_squared(neutron_flux_function_: Expr) -> Quanti
     result_expr = apply_neutron_flux_function(neutron_flux_function_)
     result_buckling_expr = solve(result_expr, geometric_buckling, dict=True)[0][geometric_buckling]
     return Quantity(result_buckling_expr)
+
+
+# UNIQUE_LAW_ID: 304

@@ -72,3 +72,6 @@ def calculate_junction_capacitance(junction_capacitance_without_bias_voltage_: Q
         doping_coefficient: doping_coefficient_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 542

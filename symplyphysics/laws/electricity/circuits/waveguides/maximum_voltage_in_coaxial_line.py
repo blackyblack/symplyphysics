@@ -69,3 +69,6 @@ def calculate_maximum_voltage(breakdown_intensity_: Quantity, outer_diameter_: Q
         inner_diameter: inner_diameter_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 573

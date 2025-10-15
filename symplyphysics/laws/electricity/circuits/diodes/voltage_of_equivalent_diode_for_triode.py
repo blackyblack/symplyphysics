@@ -73,3 +73,6 @@ def calculate_voltage_of_equivalent_diode(distance_to_anode_: Quantity, distance
         grid_voltage: grid_voltage_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 564

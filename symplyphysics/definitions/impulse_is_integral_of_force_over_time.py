@@ -79,3 +79,6 @@ def calculate_impulse(
         time_after: time_end_,
     }).doit()
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 762

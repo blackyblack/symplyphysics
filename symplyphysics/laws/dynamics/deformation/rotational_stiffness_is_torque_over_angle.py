@@ -55,3 +55,6 @@ def calculate_rotational_stiffness(
         angular_distance: scale_factor(rotation_angle_),
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 225

@@ -74,3 +74,6 @@ def calculate_electromotive_force(
         current_turn_count: current_turn_count_,
     }).doit()
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 517

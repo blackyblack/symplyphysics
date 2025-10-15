@@ -106,3 +106,6 @@ def calculate_attenuation_coefficient(relative_permittivity_: float, relative_pe
         inner_diameter: inner_diameter_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 592

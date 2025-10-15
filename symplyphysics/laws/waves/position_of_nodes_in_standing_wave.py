@@ -68,3 +68,6 @@ def calculate_node_position(
         wavelength: wavelength_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 408

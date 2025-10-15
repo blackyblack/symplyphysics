@@ -76,3 +76,6 @@ def calculate_work(pressure_: Quantity, init_volume_: Quantity,
         final_volume: result_volume_,
     })
     return Quantity(result_work)
+
+
+# UNIQUE_LAW_ID: 88

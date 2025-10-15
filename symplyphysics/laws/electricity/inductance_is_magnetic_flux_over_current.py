@@ -55,3 +55,6 @@ def calculate_inductance(
         current: current_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 504

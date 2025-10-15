@@ -64,3 +64,6 @@ def calculate_froude_number(velocity_: Quantity, characteristic_length_: Quantit
         characteristic_length: characteristic_length_
     })
     return convert_to_float(result_applied)
+
+
+# UNIQUE_LAW_ID: 723

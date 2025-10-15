@@ -86,3 +86,6 @@ def calculate_magnetic_induction_derivative_at_point(
     result = result.subs(point_.coordinates).subs(time, time_)
 
     return QuantityCoordinateVector(result.components, result.system, result.point)
+
+
+# UNIQUE_LAW_ID: 671

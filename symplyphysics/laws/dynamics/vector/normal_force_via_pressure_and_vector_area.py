@@ -63,3 +63,6 @@ def calculate_normal_force(
     })
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 234

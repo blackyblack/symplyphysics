@@ -51,3 +51,6 @@ def calculate_density(mass_: Quantity, volume_: Quantity) -> Quantity:
     solved = solve(definition, density, dict=True)[0][density]
     result_expr = solved.subs({mass: mass_, volume: volume_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 766

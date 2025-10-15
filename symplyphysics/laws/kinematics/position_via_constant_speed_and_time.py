@@ -70,3 +70,6 @@ def calculate_distance(initial_distance_: Quantity, velocity_: Quantity,
         time: time_
     })
     return Quantity(result_expr_substituted)
+
+
+# UNIQUE_LAW_ID: 431

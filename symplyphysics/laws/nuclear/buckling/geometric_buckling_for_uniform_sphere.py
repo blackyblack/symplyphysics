@@ -48,3 +48,6 @@ def calculate_geometric_buckling_squared(sphere_radius_: Quantity) -> Quantity:
     solved = solve(law, geometric_buckling, dict=True)[0][geometric_buckling]
     result_expr = solved.subs(radius, sphere_radius_)
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 309

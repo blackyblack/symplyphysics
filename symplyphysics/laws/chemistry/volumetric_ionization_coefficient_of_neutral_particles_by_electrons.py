@@ -74,3 +74,6 @@ def calculate_ionization_coefficient(first_constant_of_gas_: Quantity, second_co
         electric_field_strength: electric_intensity_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 162

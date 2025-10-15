@@ -58,3 +58,6 @@ def calculate_mass_fraction(mass_of_component_: Quantity, mass_of_mixture_: Quan
     })
     result = Quantity(result_expr)
     return Fraction(convert_to_float(result))
+
+
+# UNIQUE_LAW_ID: 750

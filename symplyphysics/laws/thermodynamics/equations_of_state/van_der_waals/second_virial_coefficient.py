@@ -128,3 +128,6 @@ def calculate_second_virial_coefficient(
         temperature: temperature_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 114

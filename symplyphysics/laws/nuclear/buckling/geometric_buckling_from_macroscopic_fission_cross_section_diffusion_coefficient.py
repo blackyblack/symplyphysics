@@ -120,3 +120,6 @@ def calculate_buckling(neutrons_per_fission_: float, effective_multiplication_fa
         diffusion_coefficient: diffusion_coefficient_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 307

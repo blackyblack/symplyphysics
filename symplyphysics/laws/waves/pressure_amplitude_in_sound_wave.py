@@ -176,3 +176,6 @@ def calculate_pressure_amplitude(
         displacement_amplitude: displacement_amplitude_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 387

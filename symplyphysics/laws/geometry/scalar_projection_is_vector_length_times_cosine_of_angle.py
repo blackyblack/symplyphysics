@@ -51,3 +51,6 @@ def calculate_projection(vector_length_: Quantity, angle_: Quantity | float) -> 
         angle: angle_radians,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 180

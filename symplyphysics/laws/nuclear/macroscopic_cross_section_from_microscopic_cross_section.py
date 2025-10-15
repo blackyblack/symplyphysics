@@ -50,3 +50,6 @@ def calculate_cross_section(microscopic_cross_section_: Quantity,
         number_density: atomic_number_density_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 297

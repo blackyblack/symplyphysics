@@ -89,3 +89,6 @@ def calculate_concentration(density_of_states_in_conduction_band_: Quantity,
         temperature: temperature_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 341

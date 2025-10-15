@@ -114,3 +114,6 @@ def calculate_observed_frequency(real_frequency_: Quantity,
         relative_speed: relative_velocity_
     })
     return Quantity(frequency_applied)
+
+
+# UNIQUE_LAW_ID: 423

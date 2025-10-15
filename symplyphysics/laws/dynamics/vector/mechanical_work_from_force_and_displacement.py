@@ -63,3 +63,6 @@ def calculate_work(
     })
 
     return Quantity(work_value)
+
+
+# UNIQUE_LAW_ID: 241

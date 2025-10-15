@@ -326,3 +326,6 @@ __all__ = [
     "faraday_constant",
     "vacuum_impedance",
 ]
+
+
+# UNIQUE_LAW_ID: 788

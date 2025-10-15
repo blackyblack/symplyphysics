@@ -70,3 +70,6 @@ def calculate_inductance(magnetic_permeability_: Quantity, number_of_turns_: flo
         length: coil_length_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 479

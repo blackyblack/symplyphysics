@@ -55,3 +55,6 @@ def calculate_boundary_of_thermalization_zone(number_of_collisions_of_atom_: flo
         free_path_length: free_path_length_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 158

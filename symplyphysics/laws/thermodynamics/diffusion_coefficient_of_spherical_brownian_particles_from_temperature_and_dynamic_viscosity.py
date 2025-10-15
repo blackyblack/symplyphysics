@@ -80,3 +80,6 @@ def calculate_diffusion_coefficient(temperature_: Quantity, particle_radius_: Qu
         dynamic_viscosity: dynamic_viscosity_
     })
     return Quantity(result_diffusion_coefficient)
+
+
+# UNIQUE_LAW_ID: 45

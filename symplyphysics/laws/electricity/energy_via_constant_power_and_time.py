@@ -78,3 +78,6 @@ def calculate_energy(
         time: time_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 491

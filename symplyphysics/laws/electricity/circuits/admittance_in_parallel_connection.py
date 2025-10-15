@@ -93,3 +93,6 @@ def calculate_parallel_admittance(admittances_: list[Quantity]) -> Quantity:
     for i, v in enumerate(admittances_):
         solved = solved.subs(admittance[i + 1], v)
     return Quantity(solved)
+
+
+# UNIQUE_LAW_ID: 554

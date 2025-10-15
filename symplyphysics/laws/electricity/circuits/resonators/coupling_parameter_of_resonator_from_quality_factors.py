@@ -57,3 +57,6 @@ def calculate_coupling_parameter(resonator_quality_factor_: float,
         external_circuit_quality_factor: external_circuit_quality_factor_,
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 655

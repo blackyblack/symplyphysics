@@ -52,3 +52,6 @@ def calculate_period(frequency_: Quantity) -> Quantity:
     solved = solve(law, period, dict=True)[0][period]
     result_expr = solved.subs(angular_frequency, frequency_)
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 749

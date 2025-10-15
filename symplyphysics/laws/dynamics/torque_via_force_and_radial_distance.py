@@ -98,3 +98,6 @@ def calculate_torque(force_: Quantity, distance_to_axis_: Quantity,
         angle_between_vectors: angle_value,
     })
     return Quantity(result_torque)
+
+
+# UNIQUE_LAW_ID: 214

@@ -92,3 +92,6 @@ def calculate_wavelength(
         string_length: string_length_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 399

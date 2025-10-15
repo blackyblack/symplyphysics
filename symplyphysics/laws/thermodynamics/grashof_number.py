@@ -90,3 +90,6 @@ def calculate_grashof_number(coefficient_of_volume_expansion_: Quantity,
         kinematic_viscosity: viscosity_
     })
     return convert_to_float(result_applied)
+
+
+# UNIQUE_LAW_ID: 74

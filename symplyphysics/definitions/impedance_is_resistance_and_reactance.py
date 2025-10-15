@@ -53,3 +53,6 @@ def calculate_impedance_magnitude(resistance_: Quantity, reactance_: Quantity) -
     result_expr = solved.subs({resistance: resistance_, reactance: reactance_})
     result_magnitude = abs(result_expr)
     return Quantity(result_magnitude)
+
+
+# UNIQUE_LAW_ID: 779

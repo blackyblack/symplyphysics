@@ -65,3 +65,6 @@ def calculate_voltage(inductance_: Quantity, current_start_: Quantity, current_e
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 512

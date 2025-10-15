@@ -57,3 +57,6 @@ def calculate_focus(object_distance_: Quantity, image_distance_: Quantity) -> Qu
         distance_to_image: image_distance_
     })
     return Quantity(focus_applied)
+
+
+# UNIQUE_LAW_ID: 268

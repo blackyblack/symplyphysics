@@ -50,3 +50,6 @@ def calculate_pressure(intensity_: Quantity, reflection_coefficient_: float) -> 
         reflection_coefficient: reflection_coefficient_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 263

@@ -89,3 +89,6 @@ def calculate_displacement(
         damping_ratio: damping_ratio_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 778

@@ -130,3 +130,6 @@ def calculate_current_density(electrons_concentration_: Quantity, holes_concentr
         electric_field_strength: electric_intensity_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 343

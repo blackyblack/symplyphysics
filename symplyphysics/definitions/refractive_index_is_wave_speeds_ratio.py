@@ -71,3 +71,6 @@ def calculate_refractive_index(incident_wave_speed_: Quantity,
     })
     result = Quantity(result_expr)
     return convert_to_float(result)
+
+
+# UNIQUE_LAW_ID: 761

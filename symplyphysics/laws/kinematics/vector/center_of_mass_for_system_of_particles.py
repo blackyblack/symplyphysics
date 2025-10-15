@@ -73,3 +73,6 @@ def calculate_center_of_mass(
         })
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 443

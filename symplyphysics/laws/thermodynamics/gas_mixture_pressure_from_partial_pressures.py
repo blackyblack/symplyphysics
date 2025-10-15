@@ -54,3 +54,6 @@ def calculate_total_pressure(partial_pressures_: Sequence[Quantity]) -> Quantity
     for i, v in enumerate(partial_pressures_):
         solved = solved.subs(partial_pressure[i + 1], v)
     return Quantity(solved)
+
+
+# UNIQUE_LAW_ID: 83

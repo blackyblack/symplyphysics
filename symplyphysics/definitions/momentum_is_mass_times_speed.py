@@ -45,3 +45,6 @@ def calculate_momentum(mass_: Quantity, speed_: Quantity) -> Quantity:
     solved = solve(definition, momentum, dict=True)[0][momentum]
     result_expr = solved.subs({mass: mass_, speed: speed_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 776

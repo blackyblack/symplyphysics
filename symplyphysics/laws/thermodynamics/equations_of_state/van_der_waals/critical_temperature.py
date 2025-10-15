@@ -67,3 +67,6 @@ def calculate_critical_temperature(
         excluded_volume_parameter: molecules_volume_parameter_,
     })
     return Quantity(temperature_)
+
+
+# UNIQUE_LAW_ID: 112

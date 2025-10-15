@@ -72,3 +72,6 @@ def calculate_energy(absolute_permittivity_: Quantity, distance_: Quantity, char
         second_charge: charge_2_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 519

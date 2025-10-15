@@ -58,3 +58,6 @@ def calculate_work_done_by_system(
         volume_change: infinitesimal_volume_change_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 70

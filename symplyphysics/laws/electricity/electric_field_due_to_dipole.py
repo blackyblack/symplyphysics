@@ -120,3 +120,6 @@ def calculate_electric_field(dipole_moment_: Quantity, distance_to_dipole_: Quan
         distance: distance_to_dipole_,
     })
     return Quantity(result_field)
+
+
+# UNIQUE_LAW_ID: 522

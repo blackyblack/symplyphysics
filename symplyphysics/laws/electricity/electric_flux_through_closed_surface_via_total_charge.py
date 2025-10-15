@@ -51,3 +51,6 @@ law = Eq(total_electric_flux, total_charge / quantities.vacuum_permittivity)
 def calculate_total_electric_flux(total_charge_: Quantity) -> Quantity:
     result = law.rhs.subs(total_charge, total_charge_)
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 481

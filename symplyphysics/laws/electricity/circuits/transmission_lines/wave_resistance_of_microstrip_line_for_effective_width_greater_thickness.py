@@ -86,3 +86,6 @@ def calculate_resistance(effective_permittivity_: float, thickness_of_substrate_
         effective_width: effective_width_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 613

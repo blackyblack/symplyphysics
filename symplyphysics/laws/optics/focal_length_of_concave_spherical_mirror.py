@@ -81,3 +81,6 @@ def calculate_focus_distance(curvature_radius_: Quantity) -> Quantity:
     solved = solve(law, focal_length, dict=True)[0][focal_length]
     result_expr = solved.subs({curvature_radius: curvature_radius_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 276

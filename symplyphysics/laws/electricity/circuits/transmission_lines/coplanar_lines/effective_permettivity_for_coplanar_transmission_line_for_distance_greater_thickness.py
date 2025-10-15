@@ -101,3 +101,6 @@ def calculate_effective_permittivity(relative_permittivity_: float,
         central_electrode_width: central_electrode_width_
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 622

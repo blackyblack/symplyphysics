@@ -120,3 +120,6 @@ def calculate_position_vector(
     })
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 528

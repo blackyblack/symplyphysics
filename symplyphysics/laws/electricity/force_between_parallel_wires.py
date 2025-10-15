@@ -80,3 +80,6 @@ def calculate_force(absolute_permeability_: Quantity, first_wire_current_: Quant
         distance: distance_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 475

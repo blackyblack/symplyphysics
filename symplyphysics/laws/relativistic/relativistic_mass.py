@@ -53,3 +53,6 @@ def calculate_relativistic_mass(rest_mass_: Quantity, velocity_: Quantity) -> Qu
     result_expr = solve(law, relativistic_mass, dict=True)[0][relativistic_mass]
     mass_applied = result_expr.subs({rest_mass: rest_mass_, speed: velocity_})
     return Quantity(mass_applied)
+
+
+# UNIQUE_LAW_ID: 702

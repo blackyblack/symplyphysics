@@ -60,3 +60,6 @@ def calculate_lifetime(mass_of_star_: Quantity, luminosity_of_star_: float) -> Q
         star_luminosity: luminosity_of_star_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 321

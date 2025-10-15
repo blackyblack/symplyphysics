@@ -60,3 +60,6 @@ assert expr_equals(_coef_expr, law.rhs)
 def calculate_volumetric_expansion_coefficient(temperature_: Quantity) -> Quantity:
     result = law.rhs.subs(temperature, temperature_)
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 52

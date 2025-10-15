@@ -24,3 +24,6 @@ The **scattering matrix** is one of the ways to describe a microwave device. The
 relates the waves reflected from the input and output to the waves incident on the input
 and output.
 """
+
+
+# UNIQUE_LAW_ID: 597

@@ -51,3 +51,6 @@ def calculate_centrifugal_acceleration(
     result = law.rhs.subs(centripetal_acceleration, centripetal_acceleration_)
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 454

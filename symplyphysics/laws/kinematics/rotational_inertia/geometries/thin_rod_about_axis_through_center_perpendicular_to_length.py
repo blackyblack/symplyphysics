@@ -68,3 +68,6 @@ def calculate_rotational_inertia(mass_: Quantity, length_: Quantity) -> Quantity
         length: length_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 468

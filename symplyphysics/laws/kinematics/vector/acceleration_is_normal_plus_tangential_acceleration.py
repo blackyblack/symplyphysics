@@ -109,3 +109,6 @@ def calculate_tangential_acceleration(
     })
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 452

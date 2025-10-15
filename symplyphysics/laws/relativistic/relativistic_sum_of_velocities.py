@@ -61,3 +61,6 @@ def calculate_velocity(first_velocity_: Quantity, second_velocity_: Quantity) ->
         proper_frame_speed_in_lab_frame: second_velocity_,
     })
     return Quantity(velocity_applied)
+
+
+# UNIQUE_LAW_ID: 700

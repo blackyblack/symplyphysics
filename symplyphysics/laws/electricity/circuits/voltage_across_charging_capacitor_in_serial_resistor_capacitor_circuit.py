@@ -152,3 +152,6 @@ def calculate_capacitor_voltage(initial_voltage_: Quantity, time_constant_: Quan
         time: time_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 552

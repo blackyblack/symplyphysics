@@ -61,3 +61,6 @@ def calculate_total_strain(
         second_strain: second_strain_,
     })
     return convert_to_float(result)
+
+
+# UNIQUE_LAW_ID: 230

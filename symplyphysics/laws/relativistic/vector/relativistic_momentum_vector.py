@@ -81,3 +81,6 @@ def calculate_momentum(
     })
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 710

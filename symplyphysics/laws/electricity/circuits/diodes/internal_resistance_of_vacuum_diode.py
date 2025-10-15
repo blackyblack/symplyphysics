@@ -45,3 +45,6 @@ def calculate_internal_resistance(diode_constant_: Quantity, voltage_: Quantity)
         voltage: voltage_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 571

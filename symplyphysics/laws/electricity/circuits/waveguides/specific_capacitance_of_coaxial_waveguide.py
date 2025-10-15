@@ -66,3 +66,6 @@ def calculate_specific_capacitance(absolute_permittivity_: Quantity, outer_radiu
         inner_radius: inner_radius_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 590

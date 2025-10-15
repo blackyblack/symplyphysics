@@ -63,3 +63,6 @@ def calculate_total_work(kinetic_energy_before_: Quantity,
         kinetic_energy(time_after): kinetic_energy_after_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 189

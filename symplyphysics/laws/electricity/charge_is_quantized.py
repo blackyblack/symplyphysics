@@ -50,3 +50,6 @@ def calculate_charge(integer_factor_: int) -> Quantity:
     charge_expr = law.rhs
     charge_value = charge_expr.subs(integer_factor, integer_factor_)
     return Quantity(charge_value)
+
+
+# UNIQUE_LAW_ID: 494

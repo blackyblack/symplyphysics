@@ -57,3 +57,6 @@ def calculate_equivalent(molar_mass_: Quantity, valence_: int) -> Quantity:
         valence: valence_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 178

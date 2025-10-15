@@ -52,3 +52,6 @@ def calculate_wave_speed(
         linear_density: string_linear_density_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 398

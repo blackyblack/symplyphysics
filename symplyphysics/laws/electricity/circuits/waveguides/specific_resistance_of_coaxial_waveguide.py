@@ -82,3 +82,6 @@ def calculate_specific_resistance(absolute_permeability_: Quantity, angular_freq
         inner_radius: inner_radius_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 580

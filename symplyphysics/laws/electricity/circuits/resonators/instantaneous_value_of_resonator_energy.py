@@ -67,3 +67,6 @@ def calculate_instantaneous_energy(initial_energy_: Quantity, time_: Quantity,
         quality_factor: quality_factor_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 651

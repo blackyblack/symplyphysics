@@ -42,3 +42,6 @@ def calculate_admittance(impedance_: Quantity) -> Quantity:
     solved = solve(definition, admittance, dict=True)[0][admittance]
     result_expr = solved.subs({impedance: impedance_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 739

@@ -85,3 +85,6 @@ def calculate_planetary_potential_energy(
         distance: distance_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 377

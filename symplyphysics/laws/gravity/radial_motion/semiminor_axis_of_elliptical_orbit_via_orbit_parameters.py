@@ -72,3 +72,6 @@ def calculate_semiminor_axis(
         attracting_mass: attracting_body_mass_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 381

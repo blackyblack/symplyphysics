@@ -540,3 +540,6 @@ for reference.
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Strain_(mechanics)#/media/File:2D_geometric_strain.svg>`__.
 """
+
+
+# UNIQUE_LAW_ID: 794

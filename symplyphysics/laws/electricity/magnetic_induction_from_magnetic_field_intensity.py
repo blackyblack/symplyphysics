@@ -58,3 +58,6 @@ def calculate_induction(absolute_permeability_: Quantity, intensity_: Quantity) 
         magnetic_field_strength: intensity_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 497

@@ -129,3 +129,6 @@ def calculate_period(
         distance_to_pivot: distance_to_pivot_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 206

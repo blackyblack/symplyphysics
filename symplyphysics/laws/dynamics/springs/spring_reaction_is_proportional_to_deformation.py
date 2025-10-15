@@ -79,3 +79,6 @@ assert vector_equals(_spring_reaction_vector_derived, _expected_force_expr)
 def calculate_spring_reaction(stiffness_: Quantity, deformation_: Quantity) -> Quantity:
     result = law.rhs.subs({stiffness: stiffness_, deformation: deformation_})
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 250

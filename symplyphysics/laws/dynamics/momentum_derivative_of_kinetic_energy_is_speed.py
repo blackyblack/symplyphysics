@@ -85,3 +85,6 @@ def calculate_speed(
         kinetic_energy_,
     ).doit()
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 192

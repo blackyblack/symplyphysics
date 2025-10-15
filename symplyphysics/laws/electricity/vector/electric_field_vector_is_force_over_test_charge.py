@@ -68,3 +68,6 @@ def calculate_electrostatic_force(
     })
 
     return QuantityCoordinateVector.from_expr(value)
+
+
+# UNIQUE_LAW_ID: 529

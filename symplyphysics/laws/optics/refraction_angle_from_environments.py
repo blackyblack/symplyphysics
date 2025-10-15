@@ -190,3 +190,6 @@ def calculate_refraction_angle(incidence_angle_: Quantity | float,
     assert angle_applied >= -pi / 2
     #HACK: angle type is automatically detected as dimensionless. Force it to angle.
     return Quantity(angle_applied * units.radian, dimension=angle_type)
+
+
+# UNIQUE_LAW_ID: 277

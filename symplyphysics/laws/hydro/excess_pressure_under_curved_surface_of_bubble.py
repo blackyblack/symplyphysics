@@ -72,3 +72,6 @@ def calculate_excessive_pressure(surface_tension_of_the_liquid_: Quantity,
         radius: radius_of_bubble_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 725

@@ -131,3 +131,6 @@ def calculate_speed_of_sound(
         molar_mass: mole_mass_,
     })
     return Quantity(result_applied)
+
+
+# UNIQUE_LAW_ID: 81

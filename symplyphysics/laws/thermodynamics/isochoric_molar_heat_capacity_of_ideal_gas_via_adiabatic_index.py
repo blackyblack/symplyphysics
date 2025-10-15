@@ -81,3 +81,6 @@ assert expr_equals(_molar_isochoric_heat, law.rhs)
 def calculate_isochoric_molar_heat_capacity(adiabatic_index_: float) -> Quantity:
     result = law.rhs.subs(adiabatic_index, adiabatic_index_)
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 54

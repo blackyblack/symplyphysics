@@ -78,3 +78,6 @@ def calculate_wave_resistance(wave_resistance_without_frequency_: Quantity,
         independent_effective_permittivity: effective_permittivity_without_frequency_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 636

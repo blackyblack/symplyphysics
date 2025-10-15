@@ -46,3 +46,6 @@ def calculate_amount_energy(amounts_energy_: list[Quantity]) -> Quantity:
     for i, v in enumerate(amounts_energy_):
         solved = solved.subs(energy[i + 1], v)
     return Quantity(solved)
+
+
+# UNIQUE_LAW_ID: 38

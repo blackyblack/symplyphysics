@@ -58,3 +58,6 @@ def calculate_moles_count_of_mixture(amount_of_components_: Sequence[Quantity]) 
     for i, v in enumerate(amount_of_components_):
         solved = solved.subs(amount_of_component[i + 1], v)
     return Quantity(solved)
+
+
+# UNIQUE_LAW_ID: 327

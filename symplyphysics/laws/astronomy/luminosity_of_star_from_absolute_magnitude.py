@@ -48,3 +48,6 @@ def calculate_luminosity(absolute_magnitude_: float) -> Quantity:
         absolute_magnitude: absolute_magnitude_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 312

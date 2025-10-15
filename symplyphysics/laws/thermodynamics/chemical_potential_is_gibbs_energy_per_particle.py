@@ -58,3 +58,6 @@ def calculate_chemical_potential(
         particle_count: particle_count_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 48

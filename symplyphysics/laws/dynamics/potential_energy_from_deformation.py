@@ -55,3 +55,6 @@ def calculate_energy(stiffness_: Quantity, deformation_: Quantity) -> Quantity:
         dict=True)[0][elastic_potential_energy]
     result_expr = result_energy_expr.subs({stiffness: stiffness_, displacement: deformation_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 203

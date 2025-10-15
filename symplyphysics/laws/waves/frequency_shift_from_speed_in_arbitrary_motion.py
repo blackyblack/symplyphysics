@@ -200,3 +200,6 @@ def calculate_observed_frequency(
         observer_angle: observer_angle_radians
     })
     return Quantity(frequency_applied)
+
+
+# UNIQUE_LAW_ID: 409

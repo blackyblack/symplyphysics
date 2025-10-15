@@ -90,3 +90,6 @@ def calculate_internal_energy(
         molar_volume: molar_volume_,
         })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 113

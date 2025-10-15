@@ -74,3 +74,6 @@ def calculate_number_of_collisions_of_atoms(initial_energy_: Quantity,
         energy_transfer_coefficient: energy_transfer_coefficient_,
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 159

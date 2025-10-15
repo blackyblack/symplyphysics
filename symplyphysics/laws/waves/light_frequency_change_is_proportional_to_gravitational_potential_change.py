@@ -84,3 +84,6 @@ def calculate_frequency_change(
         gravitational_potential_change: gravitational_potential_change_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 412

@@ -46,3 +46,6 @@ law = Eq(energy, quantities.hbar * angular_frequency)
 def calculate_energy(angular_frequency_: Quantity) -> Quantity:
     result_expr = law.rhs.subs({angular_frequency: angular_frequency_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 397

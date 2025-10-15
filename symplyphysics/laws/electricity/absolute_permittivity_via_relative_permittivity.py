@@ -50,3 +50,6 @@ law = Eq(absolute_permittivity, quantities.vacuum_permittivity * relative_permit
 def calculate_absolute_permittivity(relative_permittivity_: float) -> Quantity:
     result = law.rhs.subs(relative_permittivity, relative_permittivity_)
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 513

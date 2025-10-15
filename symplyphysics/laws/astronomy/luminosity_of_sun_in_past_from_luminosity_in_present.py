@@ -62,3 +62,6 @@ def calculate_luminosity_past(luminosity_present_: Quantity, time_: Quantity) ->
         time: time_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 317

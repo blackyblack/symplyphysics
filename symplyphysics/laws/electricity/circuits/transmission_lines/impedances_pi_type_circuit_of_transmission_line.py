@@ -143,3 +143,6 @@ def calculate_impedances(characteristic_resistance_: Quantity, line_length_: Qua
     result_b = Quantity(result_b.subs(substitutions))
     result_c = Quantity(result_c.subs(substitutions))
     return (result_a, result_b, result_c)
+
+
+# UNIQUE_LAW_ID: 618

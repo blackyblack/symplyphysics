@@ -70,3 +70,6 @@ def calculate_linear_displacement(
     })
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 453

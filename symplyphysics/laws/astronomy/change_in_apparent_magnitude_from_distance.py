@@ -71,3 +71,6 @@ def calculate_apparent_magnitude_second(apparent_magnitude_first_: float,
         second_irradiance: illuminance_second_
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 323

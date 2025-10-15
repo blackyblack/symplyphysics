@@ -56,3 +56,6 @@ def calculate_partition_function(boltzmann_factors_: Sequence[float]) -> float:
     for i, v in enumerate(boltzmann_factors_):
         solved = solved.subs(boltzmann_factor[i + 1], v)
     return convert_to_float(solved)
+
+
+# UNIQUE_LAW_ID: 72

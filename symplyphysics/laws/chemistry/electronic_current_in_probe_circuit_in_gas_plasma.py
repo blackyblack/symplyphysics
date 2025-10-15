@@ -87,3 +87,6 @@ def calculate_current(area_probe_surface_: Quantity, electron_concentration_: Qu
         probe_potential: probe_potential_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 164

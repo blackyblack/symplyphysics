@@ -55,3 +55,6 @@ def calculate_momentum(mass_: Quantity, velocity_: Quantity) -> Quantity:
         speed: velocity_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 699

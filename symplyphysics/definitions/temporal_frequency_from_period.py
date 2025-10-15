@@ -55,3 +55,6 @@ def calculate_frequency(period_: Quantity) -> Quantity:
     solved = solve(law, temporal_frequency, dict=True)[0][temporal_frequency]
     result_expr = solved.subs(period, period_)
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 757

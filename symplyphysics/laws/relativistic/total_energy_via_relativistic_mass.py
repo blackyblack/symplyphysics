@@ -46,3 +46,6 @@ def calculate_rest_energy(relativistic_mass_: Quantity) -> Quantity:
     result_expr = solve(law, relativistic_energy, dict=True)[0][relativistic_energy]
     energy_applied = result_expr.subs({relativistic_mass: relativistic_mass_})
     return Quantity(energy_applied)
+
+
+# UNIQUE_LAW_ID: 697

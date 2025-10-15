@@ -73,3 +73,6 @@ def calculate_diffusion_flux(diffusion_coefficient_: Quantity, concentration_sta
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 41

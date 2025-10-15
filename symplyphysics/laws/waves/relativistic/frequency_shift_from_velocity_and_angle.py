@@ -85,3 +85,6 @@ def calculate_observed_frequency(real_frequency_: Quantity, relative_speed_: Qua
         source_angle: source_angle_radians
     })
     return Quantity(frequency_applied)
+
+
+# UNIQUE_LAW_ID: 425

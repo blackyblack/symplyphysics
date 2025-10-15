@@ -72,3 +72,6 @@ def calculate_butterworth_filter_order(bandwidth_distortion_: float, band_stop_d
         cutoff_frequency: cutoff_frequency_,
     })
     return int(ceiling(convert_to_float(result_expr)))
+
+
+# UNIQUE_LAW_ID: 667

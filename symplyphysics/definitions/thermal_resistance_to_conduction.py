@@ -56,3 +56,6 @@ def calculate_thermal_insulance(
         thermal_conductivity: thermal_conductivity_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 764

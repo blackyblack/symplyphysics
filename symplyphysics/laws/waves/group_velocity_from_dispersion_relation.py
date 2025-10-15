@@ -72,3 +72,6 @@ def calculate_group_velocity(
         dispersion_relation_,
     ).doit()
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 407

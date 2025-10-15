@@ -67,3 +67,6 @@ def calculate_boltzmann_factor(
         equilibrium_temperature: equilibrium_temperature_,
     })
     return convert_to_float(result)
+
+
+# UNIQUE_LAW_ID: 752

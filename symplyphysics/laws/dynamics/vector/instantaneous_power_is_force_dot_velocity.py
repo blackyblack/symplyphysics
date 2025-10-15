@@ -89,3 +89,6 @@ def calculate_power(
         velocity: velocity_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 239

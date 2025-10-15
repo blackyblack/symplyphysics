@@ -85,3 +85,6 @@ def calculate_non_uniform_rotation_acceleration(
     )
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 449

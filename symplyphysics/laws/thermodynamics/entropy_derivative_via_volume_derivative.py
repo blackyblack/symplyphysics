@@ -119,3 +119,6 @@ def calculate_entropy_differential(
     volume_ = (volume_change_ / temperature_change_) * temperature
     result = law.rhs.subs(volume(temperature, pressure), volume_).doit()
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 49

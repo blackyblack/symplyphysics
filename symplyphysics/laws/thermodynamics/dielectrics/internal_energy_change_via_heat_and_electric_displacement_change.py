@@ -87,3 +87,6 @@ def calculate_internal_energy_density_change(
         electric_displacement_change: electric_displacement_change_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 103

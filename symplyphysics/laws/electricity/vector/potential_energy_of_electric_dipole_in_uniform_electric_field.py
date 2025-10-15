@@ -58,3 +58,6 @@ def calculate_potential_energy(
     })
 
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 532

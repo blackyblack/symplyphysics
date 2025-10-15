@@ -62,3 +62,6 @@ def calculate_coefficient_standing_wave(maximum_voltage_: Quantity,
         minimum_voltage_module: minimum_voltage_,
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 616

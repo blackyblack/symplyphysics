@@ -49,3 +49,6 @@ def calculate_angular_magnification(focal_length_lens_: Quantity,
         eyepiece_focal_length: focal_length_eyepiece_,
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 260

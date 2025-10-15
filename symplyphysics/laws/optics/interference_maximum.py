@@ -48,3 +48,6 @@ def calculate_travel_difference(wave_length_: Quantity, number_maximum_: int) ->
     solved = solve(law, travel_difference, dict=True)[0][travel_difference]
     result_expr = solved.subs({wavelength: wave_length_, integer_factor: number_maximum_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 259

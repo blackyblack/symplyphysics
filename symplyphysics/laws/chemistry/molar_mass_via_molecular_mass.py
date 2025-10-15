@@ -77,3 +77,6 @@ assert expr_equals(_molar_mass_derived, law.rhs)
 def calculate_molar_mass(particle_mass_: Quantity) -> Quantity:
     result = law.rhs.subs(molecular_mass, particle_mass_)
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 156

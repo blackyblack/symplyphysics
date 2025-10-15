@@ -54,3 +54,6 @@ def calculate_angular_velocity(angle_start_: Quantity | float, angle_end_: Quant
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 747

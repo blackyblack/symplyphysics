@@ -69,3 +69,6 @@ relativistic_mass = Symbol("m", units.mass)
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Mass_in_special_relativity#>`__.
 """
+
+
+# UNIQUE_LAW_ID: 795

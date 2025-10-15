@@ -53,3 +53,6 @@ definition = Eq(sound_level, reference_sound_level * log(intensity / reference_i
 def calculate_sound_level(intensity_: Quantity) -> float:
     result = definition.rhs.subs(intensity, intensity_)
     return scale_factor(Quantity(result))
+
+
+# UNIQUE_LAW_ID: 751

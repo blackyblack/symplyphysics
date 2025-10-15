@@ -64,3 +64,6 @@ def calculate_surface_resistance(absolute_permeability_: Quantity, angular_frequ
         specific_conductance: specific_conductivity_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 581

@@ -72,3 +72,6 @@ def calculate_gravitational_potential_energy(
         distance_between_mass_centers: distance_between_mass_centers_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 369

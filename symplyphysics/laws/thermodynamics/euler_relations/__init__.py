@@ -8,3 +8,6 @@ integrals* because they feature not differentials of thermodynamic potentials, b
 forms. They are derived using `Euler's homogeneous function theorem
 <https://en.wikipedia.org/wiki/Homogeneous_function#Euler's_theorem>`_.
 """
+
+
+# UNIQUE_LAW_ID: 124

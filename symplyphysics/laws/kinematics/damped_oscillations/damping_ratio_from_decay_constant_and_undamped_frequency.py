@@ -46,3 +46,6 @@ def calculate_damping_ratio(
         undamped_angular_frequency: undamped_angular_frequency_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 460

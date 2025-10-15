@@ -60,3 +60,6 @@ def calculate_electric_moment(charge_: Quantity, distance_: Quantity) -> Quantit
         distance: distance_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 514

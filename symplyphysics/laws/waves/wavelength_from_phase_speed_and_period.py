@@ -63,3 +63,6 @@ def calculate_wavelength(velocity_: Quantity, period_: Quantity) -> Quantity:
     applied_definition = solve(law, wavelength, dict=True)[0][wavelength]
     result_expr = applied_definition.subs({phase_velocity: velocity_, period: period_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 400

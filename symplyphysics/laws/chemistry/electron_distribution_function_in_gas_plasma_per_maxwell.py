@@ -78,3 +78,6 @@ def calculate_value_of_distribution_function(voltage_between_electrodes_: Quanti
         electron_energy: electron_energy_,
     })
     return Probability(convert_to_float(result_expr))
+
+
+# UNIQUE_LAW_ID: 154

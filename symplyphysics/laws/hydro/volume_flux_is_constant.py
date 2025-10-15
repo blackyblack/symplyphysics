@@ -66,3 +66,6 @@ def calculate_fluid_speed(tube_area_before_: Quantity, fluid_speed_before_: Quan
         tube_area(time): tube_area_after_,
     }).rhs
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 722

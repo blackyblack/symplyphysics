@@ -50,3 +50,6 @@ def calculate_power(energy_start_: Quantity, energy_end_: Quantity, time_: Quant
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 743

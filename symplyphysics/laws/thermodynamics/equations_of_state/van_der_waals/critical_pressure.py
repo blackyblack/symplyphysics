@@ -61,3 +61,6 @@ def calculate_critical_pressure(
         excluded_volume_parameter: molecules_volume_parameter_,
     })
     return Quantity(pressure_)
+
+
+# UNIQUE_LAW_ID: 120

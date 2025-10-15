@@ -77,3 +77,6 @@ def calculate_rotation_period(
         planetary_mass: planetary_mass_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 347

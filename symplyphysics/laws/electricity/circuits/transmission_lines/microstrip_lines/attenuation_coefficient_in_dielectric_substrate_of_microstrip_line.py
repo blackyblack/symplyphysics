@@ -77,3 +77,6 @@ def calculate_attenuation_coefficient(relative_permittivity_: float, effective_p
         loss_tangent: loss_tangent_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 635

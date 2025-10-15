@@ -73,3 +73,6 @@ def calculate_energy_radiation_rate(
         temperature: temperature_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 56

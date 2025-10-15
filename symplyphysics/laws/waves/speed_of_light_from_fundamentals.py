@@ -31,3 +31,6 @@ Latex:
 
 assert convert_to(law.lhs, units.meter / units.second) == convert_to(law.rhs,
     units.meter / units.second)
+
+
+# UNIQUE_LAW_ID: 396

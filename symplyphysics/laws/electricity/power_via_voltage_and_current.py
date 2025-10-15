@@ -41,3 +41,6 @@ def calculate_power(current_: Quantity, voltage_: Quantity) -> Quantity:
     result_power_expr = solve(law, power, dict=True)[0][power]
     result_expr = result_power_expr.subs({current: current_, voltage: voltage_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 484

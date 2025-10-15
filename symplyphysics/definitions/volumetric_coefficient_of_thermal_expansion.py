@@ -88,3 +88,6 @@ def calculate_volumetric_expansion_coefficient(
     result = ((definition.rhs).subs(volume(temperature, parameters),
         volume_function).doit().subs(temperature, temperature_after_))
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 771

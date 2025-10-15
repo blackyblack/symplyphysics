@@ -60,3 +60,6 @@ def calculate_diode_constant(electrode_area_: Quantity,
         electrode_distance: distance_between_electrodes_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 563

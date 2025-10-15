@@ -74,3 +74,6 @@ def calculate_acceleration(planet_mass_: Quantity, planet_radius_: Quantity,
         elevation: height_above_surface_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 362

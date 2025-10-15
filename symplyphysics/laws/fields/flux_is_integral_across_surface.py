@@ -56,3 +56,6 @@ def calculate_flux(
 ) -> Quantity:
     result_expr = flux_law(field, surface, parameter1_limits, parameter2_limits)
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 145

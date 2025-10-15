@@ -64,3 +64,6 @@ def calculate_absolute_magnitude(apparent_magnitude_: float, distance_: Quantity
         distance: distance_,
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 315

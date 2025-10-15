@@ -69,3 +69,6 @@ def calculate_speed_of_sound(
     pressure_ = (pressure_change_ / density_change_) * density
     result = law.rhs.subs(pressure(density, entropy), pressure_).doit()
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 64

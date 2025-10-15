@@ -56,3 +56,6 @@ def calculate_space_charge_density(voltage_on_grid_: Quantity,
         distance: distance_between_cathode_and_grid_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 569

@@ -69,3 +69,6 @@ def calculate_acceleraton_due_to_gravity(
     })
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 371

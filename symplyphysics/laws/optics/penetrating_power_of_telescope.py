@@ -39,3 +39,6 @@ def calculate_penetrating_power(lens_diameter_: Quantity) -> float:
         lens_diameter: lens_diameter_,
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 271

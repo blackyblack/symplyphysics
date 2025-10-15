@@ -100,3 +100,6 @@ def calculate_output_force(input_force_: Quantity, input_area_: Quantity,
         output_area: output_forces_area_,
     })
     return Quantity(result_force)
+
+
+# UNIQUE_LAW_ID: 721

@@ -114,3 +114,6 @@ def calculate_wavevector(
     })
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 422

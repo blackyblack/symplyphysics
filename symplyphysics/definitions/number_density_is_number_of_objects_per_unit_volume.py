@@ -47,3 +47,6 @@ def calculate_number_density(objects_: int, volume_: Quantity) -> Quantity:
     solved = solve(definition, number_density, dict=True)[0][number_density]
     result_expr = solved.subs({number_of_objects: objects_, volume: volume_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 755

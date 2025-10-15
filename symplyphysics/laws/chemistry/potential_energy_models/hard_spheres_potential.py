@@ -69,3 +69,6 @@ def calculate_potential(
         sphere_diameter: sphere_diameter_,
     }).doit()
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 174

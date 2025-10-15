@@ -71,3 +71,6 @@ def calculate_inner_energy(mass_of_gas_: Quantity, temperature_: Quantity,
         molar_mass: mole_mass_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 35

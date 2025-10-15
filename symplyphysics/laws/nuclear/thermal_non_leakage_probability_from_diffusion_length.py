@@ -59,3 +59,6 @@ def calculate_probability(thermal_diffusion_area_: Quantity,
         geometric_buckling: geometric_buckling_
     })
     return Probability(convert_to_float(result_expr))
+
+
+# UNIQUE_LAW_ID: 279

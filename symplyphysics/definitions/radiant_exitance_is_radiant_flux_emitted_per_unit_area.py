@@ -59,3 +59,6 @@ def calculate_radiant_exitance(
     flux_function = radiant_flux_ * area / surface_area_
     result = definition.rhs.subs(radiant_flux(area), flux_function).doit()
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 769

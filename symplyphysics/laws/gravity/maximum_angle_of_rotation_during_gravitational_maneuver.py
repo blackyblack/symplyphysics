@@ -59,3 +59,6 @@ def calculate_maximum_angle(first_cosmic_velocity_planet_: Quantity,
         rocket_speed: rocket_speed_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 365

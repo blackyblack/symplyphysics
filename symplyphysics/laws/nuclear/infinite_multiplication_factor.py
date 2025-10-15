@@ -63,3 +63,6 @@ def calculate_multiplication_factor(neutron_reproduction_: float, fast_fission_:
         thermal_utilization_factor: thermal_utilisation_
     })
     return float(result_expr.evalf())
+
+
+# UNIQUE_LAW_ID: 290

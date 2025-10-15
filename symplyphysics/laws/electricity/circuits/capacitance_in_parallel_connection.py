@@ -82,3 +82,6 @@ def calculate_parallel_capacitance(capacitances_: list[Quantity]) -> Quantity:
     for i, v in enumerate(capacitances_):
         solved = solved.subs(capacitance[i + 1], v)
     return Quantity(solved)
+
+
+# UNIQUE_LAW_ID: 556

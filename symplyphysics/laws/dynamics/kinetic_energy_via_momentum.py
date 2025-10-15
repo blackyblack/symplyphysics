@@ -84,3 +84,6 @@ def calculate_kinetic_energy(
         mass: mass_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 204

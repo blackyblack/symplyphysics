@@ -68,3 +68,6 @@ def calculate_internal_energy_change(
         work_done_by_system: work_done_by_system_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 42

@@ -64,3 +64,6 @@ def calculate_amount_energy(heat_capacity_: Quantity, temperature_change_: Quant
         temperature_change: temperature_change_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 31

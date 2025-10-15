@@ -72,3 +72,6 @@ def calculate_quality_factor(resistance_: Quantity, inductance_: Quantity, frequ
         load_resistance: load_resistance_,
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 656

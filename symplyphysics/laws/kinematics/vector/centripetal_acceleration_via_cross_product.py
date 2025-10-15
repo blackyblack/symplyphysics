@@ -94,3 +94,6 @@ def calculate_centripetal_acceleration(
     })
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 447

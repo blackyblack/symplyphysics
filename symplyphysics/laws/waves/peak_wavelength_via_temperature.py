@@ -48,3 +48,6 @@ def calculate_intensive_wavelength(object_temperature_: Quantity) -> Quantity:
     result_wavelength_expr = solve(law, peak_wavelength, dict=True)[0][peak_wavelength]
     result_expr = result_wavelength_expr.subs({temperature: object_temperature_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 389

@@ -97,3 +97,6 @@ def calculate_total_stiffness(
         second_stiffness: second_stiffness_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 251

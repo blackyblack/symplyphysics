@@ -83,3 +83,6 @@ def calculate_entropy(
     free_energy_ = (free_energy_change_ / temperature_change_) * temperature
     result = law.rhs.subs(free_energy(temperature, volume, particle_count), free_energy_).doit()
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 44

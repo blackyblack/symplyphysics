@@ -94,3 +94,6 @@ def calculate_displacement(
         amplitude_ * cos(wave_phase_),
     )
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 394

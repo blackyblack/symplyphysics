@@ -74,3 +74,6 @@ def calculate_current(gas_coefficient_: Quantity, mobility_of_charged_particles_
         discharge_voltage: corona_discharge_occurrence_voltage_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 523

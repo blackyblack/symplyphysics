@@ -4,3 +4,6 @@
 
 The laws in this folder are related to the thermodynamics of dielectric media.
 """
+
+
+# UNIQUE_LAW_ID: 6

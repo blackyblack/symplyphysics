@@ -89,3 +89,6 @@ def calculate_maximum_electric_intensity(relative_permittivity_: float, waveguid
         magnetic_field_strength: magnetic_intensity_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 586

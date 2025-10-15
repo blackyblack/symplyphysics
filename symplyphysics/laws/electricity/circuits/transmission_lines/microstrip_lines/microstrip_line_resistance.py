@@ -72,3 +72,6 @@ def calculate_resistance(strip_thickness_: Quantity, strip_length_: Quantity,
         surface_resistance: surface_resistance_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 627

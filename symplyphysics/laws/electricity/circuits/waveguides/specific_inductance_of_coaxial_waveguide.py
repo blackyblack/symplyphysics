@@ -66,3 +66,6 @@ def calculate_specific_inductance(absolute_permeability_: Quantity, outer_radius
         inner_radius: inner_radius_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 579

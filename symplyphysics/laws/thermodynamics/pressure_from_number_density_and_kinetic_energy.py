@@ -89,3 +89,6 @@ def calculate_pressure(molecules_concentration_: Quantity,
         average_kinetic_energy: average_kinetic_energy_,
     })
     return Quantity(result_pressure)
+
+
+# UNIQUE_LAW_ID: 98

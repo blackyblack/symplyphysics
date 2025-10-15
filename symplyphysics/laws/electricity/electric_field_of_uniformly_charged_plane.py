@@ -111,3 +111,6 @@ def calculate_electric_intensity(surface_charge_density_: Quantity) -> Quantity:
         surface_charge_density: surface_charge_density_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 492

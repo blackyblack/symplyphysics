@@ -59,3 +59,6 @@ def calculate_power(force_: Quantity, speed_: Quantity, angle_: Quantity | float
         angle_between_vectors: angle_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 198

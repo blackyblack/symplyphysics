@@ -45,3 +45,6 @@ definition = Eq(intensity, power / area)
 def calculate_intensity(power_: Quantity, area_: Quantity) -> Quantity:
     result = definition.rhs.subs({power: power_, area: area_})
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 745

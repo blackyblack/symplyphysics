@@ -79,3 +79,6 @@ def calculate_mean_observable_value(
         lambda _wave_function: observable_(wave_function_)(position, time),
     ).doit()
     return result
+
+
+# UNIQUE_LAW_ID: 681

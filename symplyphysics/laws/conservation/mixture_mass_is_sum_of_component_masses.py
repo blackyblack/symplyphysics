@@ -59,3 +59,6 @@ def calculate_mass_of_mixture(masses_of_components_: Sequence[Quantity]) -> Quan
     for i, v in enumerate(masses_of_components_):
         solved = solved.subs(component_mass[i + 1], v)
     return Quantity(solved)
+
+
+# UNIQUE_LAW_ID: 329

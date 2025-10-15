@@ -87,3 +87,6 @@ def calculate_wave_phase(
         time: time_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 415

@@ -57,3 +57,6 @@ def calculate_coefficient(filter_function_at_frequency: float,
     })
     result = solve(result_expr, transfer_coefficient, dict=True)[0][transfer_coefficient]
     return convert_to_float(result)
+
+
+# UNIQUE_LAW_ID: 666

@@ -63,3 +63,6 @@ def calculate_angle(planet_mass_: Quantity, aiming_range_: Quantity,
         rocket_speed: rocket_speed_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 366

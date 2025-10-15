@@ -98,3 +98,6 @@ def calculate_gibbs_energy_density_change(
         electric_field_change: electric_field_change_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 100

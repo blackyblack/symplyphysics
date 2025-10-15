@@ -29,3 +29,6 @@ finding an object or system in a particular state at a particular position and t
 #. `Wikipedia <https://en.wikipedia.org/wiki/Probability_amplitude>`__.
 #. `AK Lectures <https://aklectures.com/lecture/schrodinger%27s-equations/probability-density-of-particles>`__.
 """
+
+
+# UNIQUE_LAW_ID: 790

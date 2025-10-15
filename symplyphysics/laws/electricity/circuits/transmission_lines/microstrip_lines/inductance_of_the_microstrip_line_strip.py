@@ -61,3 +61,6 @@ def calculate_inductance(thickness_: Quantity, strip_length_: Quantity,
     result_expr = solve(law, inductance, dict=True)[0][inductance]
     result_expr = result_expr.subs({thickness: thickness_, length: strip_length_, width: width_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 634

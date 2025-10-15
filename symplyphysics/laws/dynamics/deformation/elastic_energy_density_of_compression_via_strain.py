@@ -61,3 +61,6 @@ def calculate_elastic_energy_density(
         engineering_normal_strain: engineering_normal_strain_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 221

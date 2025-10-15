@@ -45,3 +45,6 @@ def calculate_linear_velocity(angular_velocity_: Quantity, curve_radius_: Quanti
         radius_of_curvature: curve_radius_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 428

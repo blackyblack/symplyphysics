@@ -65,3 +65,6 @@ law = Eq(isochoric_molar_heat_capacity, (degrees_of_freedom / 2) * quantities.mo
 def calculate_isochoric_molar_heat_capacity(degrees_of_freedom_: int) -> Quantity:
     result = law.rhs.subs(degrees_of_freedom, degrees_of_freedom_)
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 69

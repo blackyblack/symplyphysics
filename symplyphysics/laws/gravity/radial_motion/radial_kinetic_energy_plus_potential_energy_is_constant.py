@@ -68,3 +68,6 @@ def calculate_total_energy(
         potential_energy: potential_energy_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 376

@@ -53,3 +53,6 @@ def calculate_efficiency_factor(heat_from_heater_: Quantity,
         heat_to_refrigerator: heat_to_refrigerator_
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 82

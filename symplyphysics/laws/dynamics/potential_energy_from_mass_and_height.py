@@ -139,3 +139,6 @@ def calculate_potential_energy(body_mass_: Quantity, height_: Quantity) -> Quant
     result_energy_expr = solve(law, potential_energy, dict=True)[0][potential_energy]
     result_expr = result_energy_expr.subs({mass: body_mass_, height: height_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 190

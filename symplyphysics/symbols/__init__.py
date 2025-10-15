@@ -275,3 +275,6 @@ __all__ = [
     "fast_utilization",
     "fast_fission_factor",
 ]
+
+
+# UNIQUE_LAW_ID: 789

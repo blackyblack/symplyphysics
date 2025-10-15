@@ -68,3 +68,6 @@ def calculate_max_kinetic_energy(photon_energy_: Quantity, work_function_: Quant
         work_function: work_function_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 384

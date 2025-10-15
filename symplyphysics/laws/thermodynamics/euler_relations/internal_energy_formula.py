@@ -90,3 +90,6 @@ def calculate_internal_energy(
         particle_count: particle_count_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 126

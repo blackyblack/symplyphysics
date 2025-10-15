@@ -50,3 +50,6 @@ def calculate_force(surface_coefficient_: Quantity, contour_length_: Quantity) -
         length: contour_length_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 738

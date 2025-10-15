@@ -101,3 +101,6 @@ def calculate_capacity(absolute_permittivity_: Quantity, inner_radius_: Quantity
         outer_radius: max([inner_radius_, outer_radius_], key=lambda x: x.scale_factor)
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 539

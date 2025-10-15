@@ -106,3 +106,6 @@ def calculate_acceleration(
     })
 
     return QuantityCoordinateVector.from_expr(acceleration_value)
+
+
+# UNIQUE_LAW_ID: 231

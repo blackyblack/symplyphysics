@@ -63,3 +63,6 @@ def calculate_infinitesimal_entropy_change(
         common_temperature: common_temperature_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 43

@@ -101,3 +101,6 @@ def calculate_cross_sectional_area_of_interaction(ionization_energy_: Quantity,
     eqn = evaluate_expression(eqn)
     result_expr = nsolve(eqn, cross_section_sym, 1)
     return Quantity(result_expr, dimension=units.area)
+
+
+# UNIQUE_LAW_ID: 167

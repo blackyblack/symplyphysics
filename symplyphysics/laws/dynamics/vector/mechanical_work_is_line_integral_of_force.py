@@ -81,3 +81,6 @@ def calculate_work(
     }).doit().doit()
 
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 237

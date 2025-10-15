@@ -256,3 +256,6 @@ def calculate_average_power(
         wave_amplitude: wave_amplitude_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 391

@@ -37,3 +37,6 @@ def calculate_optical_power(focus_distance_: Quantity) -> Quantity:
     solved = solve(law, optical_power, dict=True)[0][optical_power]
     result_expr = solved.subs({focus_distance: focus_distance_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 257

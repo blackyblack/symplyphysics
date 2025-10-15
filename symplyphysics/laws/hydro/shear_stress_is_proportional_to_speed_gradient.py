@@ -91,3 +91,6 @@ def calculate_shear_stress(
     })
     result_expr = solve(applied_law, shear_stress)[0]
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 724

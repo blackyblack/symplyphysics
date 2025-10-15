@@ -42,3 +42,6 @@ law = Eq(phase_shift, 2 * pi * integer_factor)
 def calculate_phase_shift(integer_factor_: int) -> Quantity:
     result = law.rhs.subs(integer_factor, integer_factor_)
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 403

@@ -55,3 +55,6 @@ def calculate_velocity(position_start_: Quantity, position_end_: Quantity,
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 756

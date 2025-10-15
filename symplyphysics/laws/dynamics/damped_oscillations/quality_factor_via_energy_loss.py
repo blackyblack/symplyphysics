@@ -75,3 +75,6 @@ def calculate_quality_factor(
         power_loss: power_loss_,
     })
     return scale_factor(Quantity(result))
+
+
+# UNIQUE_LAW_ID: 245

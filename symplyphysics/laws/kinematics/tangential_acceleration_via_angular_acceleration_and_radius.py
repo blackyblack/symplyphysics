@@ -110,3 +110,6 @@ def calculate_tangential_acceleration(angular_acceleration_: Quantity,
         radius_of_curvature: rotation_radius_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 429

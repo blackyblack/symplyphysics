@@ -67,3 +67,6 @@ def calculate_resistance(resistance_of_medium_: Quantity, wavelength_: Quantity,
         critical_wavelength: critical_wavelength_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 591

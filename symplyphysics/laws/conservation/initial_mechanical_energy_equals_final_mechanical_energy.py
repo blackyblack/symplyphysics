@@ -79,3 +79,6 @@ def calculate_energy_after(mechanical_energy_before_: Quantity) -> Quantity:
     solved = solve(law, mechanical_energy(final_time), dict=True)[0][mechanical_energy(final_time)]
     result_expr = solved.subs(mechanical_energy(initial_time), mechanical_energy_before_)
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 335

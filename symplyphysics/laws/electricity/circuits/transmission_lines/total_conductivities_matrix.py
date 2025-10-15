@@ -110,3 +110,6 @@ def calculate_voltages(
     result_input_voltage = result_input_voltage.subs(substitutions)
     result_output_voltage = result_output_voltage.subs(substitutions)
     return (Quantity(result_input_voltage), Quantity(result_output_voltage))
+
+
+# UNIQUE_LAW_ID: 615

@@ -98,3 +98,6 @@ def calculate_standard_change_isobaric_potential(
         standard_molar_heat_capacity_change: standard_change_heat_capacity_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 89

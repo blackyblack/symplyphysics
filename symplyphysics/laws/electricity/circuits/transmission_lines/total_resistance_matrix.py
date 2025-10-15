@@ -113,3 +113,6 @@ def calculate_currents(
     result_input_current = result_input_current.subs(substitutions)
     result_output_current = result_output_current.subs(substitutions)
     return (Quantity(result_input_current), Quantity(result_output_current))
+
+
+# UNIQUE_LAW_ID: 594

@@ -60,3 +60,6 @@ def calculate_acceleration(
     acceleration_value = acceleration_expr.subs(velocity(time), velocity_).doit()
 
     return QuantityCoordinateVector.from_expr(acceleration_value)
+
+
+# UNIQUE_LAW_ID: 787

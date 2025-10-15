@@ -117,3 +117,6 @@ def calculate_isobaric_potential(thermal_effect_: Quantity, entropy_: Quantity,
         third_capacity_coefficient: coefficient_capacity_3_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 32

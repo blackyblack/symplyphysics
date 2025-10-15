@@ -102,3 +102,6 @@ def calculate_rotation_period(
         semimajor_axis: semimajor_axis_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 356

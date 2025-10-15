@@ -138,3 +138,6 @@ def calculate_force_buoyant(fluid_density_: Quantity, displaced_volume_: Quantit
         displaced_volume: displaced_volume_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 186

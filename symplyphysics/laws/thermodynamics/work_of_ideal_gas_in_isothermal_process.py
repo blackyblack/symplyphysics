@@ -112,3 +112,6 @@ def calculate_work(amount_of_substance_: Quantity, start_volume_: Quantity, fina
         temperature: temperature_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 50

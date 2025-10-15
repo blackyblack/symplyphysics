@@ -50,3 +50,6 @@ def calculate_wavespeed(permittivity_: float, permeability_: float) -> Quantity:
         relative_permeability: permeability_
     })
     return Quantity(wavespeed_applied)
+
+
+# UNIQUE_LAW_ID: 386

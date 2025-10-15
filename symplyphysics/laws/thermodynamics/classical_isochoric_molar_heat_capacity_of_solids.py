@@ -47,3 +47,6 @@ law = Eq(isochoric_molar_heat_capacity, 3 * quantities.molar_gas_constant)
 @validate_output(isochoric_molar_heat_capacity)
 def calculate_isochoric_molar_heat_capacity() -> Quantity:
     return Quantity(law.rhs)
+
+
+# UNIQUE_LAW_ID: 73

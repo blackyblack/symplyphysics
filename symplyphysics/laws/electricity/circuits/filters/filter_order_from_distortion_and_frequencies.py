@@ -70,3 +70,6 @@ def calculate_order(filter_function_: Expr, band_stop_frequency_: Quantity,
     })
     result = solve(result_expr, filter_order, dict=True)[0][filter_order]
     return int(ceiling(convert_to_float(result)))
+
+
+# UNIQUE_LAW_ID: 662

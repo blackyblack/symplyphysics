@@ -81,3 +81,6 @@ def calculate_rotational_inertia(
         distance_between_axes: distance_between_axes_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 463

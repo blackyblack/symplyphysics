@@ -131,3 +131,6 @@ def calculate_internal_energy_change(
         particle_count_change: particle_count_change_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 60

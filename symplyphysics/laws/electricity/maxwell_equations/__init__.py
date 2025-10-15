@@ -7,3 +7,6 @@ and magnetic fields. They are a set of coupled partial differential equations th
 with the Lorentz force law, form the foundation of classical electromagnetism, classical
 optics, electric and magnetic circuits.
 """
+
+
+# UNIQUE_LAW_ID: 669

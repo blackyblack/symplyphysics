@@ -56,3 +56,6 @@ def calculate_moment(current_: Quantity, area_: Quantity) -> Quantity:
     result_expr = solve(law, moment, dict=True)[0][moment]
     result_expr = result_expr.subs({current: current_, area: area_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 496

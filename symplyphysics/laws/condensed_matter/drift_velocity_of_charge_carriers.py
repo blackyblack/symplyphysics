@@ -49,3 +49,6 @@ def calculate_velocity(charge_carriers_mobility_: Quantity,
         electric_field_strength: electric_intensity_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 342

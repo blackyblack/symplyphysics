@@ -68,3 +68,6 @@ def calculate_electric_displacement(
         electric_field_strength: electric_field_strength_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 480

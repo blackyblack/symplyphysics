@@ -64,3 +64,6 @@ def calculate_angle_deviation(angle_faces_: float | Quantity, refractive_index_:
         relative_refractive_index: refractive_index_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 266

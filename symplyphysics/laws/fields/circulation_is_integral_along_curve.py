@@ -53,3 +53,6 @@ def calculate_circulation(
     (parameter_from, parameter_to) = parameter_limits
     result_expr = circulation_law(field, trajectory, parameter_from, parameter_to)
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 148

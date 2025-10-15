@@ -93,3 +93,6 @@ def calculate_displacement(amplitude_: Quantity, angular_frequency_: Quantity,
         time: time_
     }).rhs
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 740

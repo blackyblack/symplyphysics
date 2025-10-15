@@ -100,3 +100,6 @@ def calculate_energy_distribution_function(
         equilibrium_temperature: equilibrium_temperature_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 141

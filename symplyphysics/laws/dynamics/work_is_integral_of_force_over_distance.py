@@ -98,3 +98,6 @@ def calculate_work(
     })
     result_work = result.doit()
     return Quantity(result_work)
+
+
+# UNIQUE_LAW_ID: 193

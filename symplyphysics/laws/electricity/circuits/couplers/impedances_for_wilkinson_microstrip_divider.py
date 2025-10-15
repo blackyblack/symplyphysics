@@ -91,3 +91,6 @@ def calculate_impedances(characteristic_resistance_: Quantity,
     result_z3 = Quantity(result_z3.subs(substitutions))
     result_z4 = Quantity(result_z4.subs(substitutions))
     return (result_z1, result_z2, result_z3, result_z4)
+
+
+# UNIQUE_LAW_ID: 646

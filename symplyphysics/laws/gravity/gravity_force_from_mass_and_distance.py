@@ -104,3 +104,6 @@ def calculate_force(first_object_mass_: Quantity, second_object_mass_: Quantity,
         distance_between_mass_centers: distance_between_objects_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 353

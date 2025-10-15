@@ -103,3 +103,6 @@ def calculate_effective_permittivity(relative_permittivity_: float, frequency_: 
         independent_effective_permittivity: effective_permittivity_without_frequency_
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 633

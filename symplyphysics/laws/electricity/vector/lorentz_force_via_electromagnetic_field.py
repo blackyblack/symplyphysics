@@ -83,3 +83,6 @@ def calculate_lorentz_force(
     })
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 526

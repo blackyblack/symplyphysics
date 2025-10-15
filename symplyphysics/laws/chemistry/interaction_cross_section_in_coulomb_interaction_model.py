@@ -55,3 +55,6 @@ def calculate_cross_sectional_area_of_interaction(ionization_energy_: Quantity) 
         ionization_energy: ionization_energy_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 169

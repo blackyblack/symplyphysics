@@ -59,3 +59,6 @@ def calculate_isobaric_potential(thermal_effect_: Quantity, entropy_: Quantity,
         temperature: temperature_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 55

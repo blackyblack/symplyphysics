@@ -73,3 +73,6 @@ _solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
 assert _solved.rhs == radial_constant**2
 
 # There is no calculate() method. Neutron flux is usually being used internally to pass to other laws.
+
+
+# UNIQUE_LAW_ID: 303

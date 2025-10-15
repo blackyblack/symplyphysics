@@ -74,3 +74,6 @@ def calculate_geometric_buckling_squared(parallelepiped_width_: Quantity,
         height: parallelepiped_height_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 310

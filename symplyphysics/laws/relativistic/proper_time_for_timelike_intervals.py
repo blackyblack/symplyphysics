@@ -65,3 +65,6 @@ def calculate_proper_time(spacetime_interval_: Quantity,) -> Quantity:
 
     result = law.rhs.subs({spacetime_interval: spacetime_interval_})
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 696

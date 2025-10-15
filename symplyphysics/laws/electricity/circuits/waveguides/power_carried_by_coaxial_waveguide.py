@@ -90,3 +90,6 @@ def calculate_waveguide_power(relative_permittivity_: float, relative_permeabili
         inner_diameter: inner_diameter_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 584

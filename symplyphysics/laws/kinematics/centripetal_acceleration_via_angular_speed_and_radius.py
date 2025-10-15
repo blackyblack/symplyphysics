@@ -74,3 +74,6 @@ def calculate_centripetal_acceleration(angular_velocity_: Quantity,
         radius_of_curvature: curve_radius_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 434

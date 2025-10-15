@@ -64,3 +64,6 @@ def calculate_induction(current_: Quantity, length_: Quantity, number_turns_: fl
         coil_turn_count: number_turns_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 509

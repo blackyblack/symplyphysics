@@ -121,3 +121,6 @@ def calculate_work(torque_: Quantity, angular_displacement_: Quantity | float) -
         angular_distance: angular_displacement_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 208

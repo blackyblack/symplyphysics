@@ -55,3 +55,6 @@ def calculate_current_density(
     })
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 530

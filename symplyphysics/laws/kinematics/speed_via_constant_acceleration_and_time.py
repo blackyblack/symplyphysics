@@ -83,3 +83,6 @@ def calculate_velocity(initial_velocity_: Quantity, acceleration_: Quantity,
         time: time_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 440

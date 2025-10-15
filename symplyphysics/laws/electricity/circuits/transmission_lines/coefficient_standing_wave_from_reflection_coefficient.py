@@ -44,3 +44,6 @@ def calculate_coefficient_standing_wave(reflection_coefficient_module_: float) -
         reflection_coefficient: reflection_coefficient_module_,
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 614

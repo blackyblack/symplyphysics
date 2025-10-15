@@ -38,3 +38,6 @@ law = Eq(quality_factor, 1 / (2 * damping_ratio))
 def calculate_quality_factor(damping_ratio_: float) -> float:
     result = law.rhs.subs(damping_ratio, damping_ratio_)
     return convert_to_float(result)
+
+
+# UNIQUE_LAW_ID: 246

@@ -65,3 +65,6 @@ def calculate_dipole_moment(
     })
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 531

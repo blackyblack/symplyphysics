@@ -46,3 +46,6 @@ def calculate_momentum_after(momentum_before_: Quantity) -> Quantity:
     solved = dsolve(law, momentum(time))
     result_expr = solved.subs("C1", momentum_before_).rhs
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 331

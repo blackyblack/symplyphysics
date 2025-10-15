@@ -85,3 +85,6 @@ def calculate_hydrostatic_pressure(density_: Quantity, depth_: Quantity,
         acceleration: acceleration_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 718

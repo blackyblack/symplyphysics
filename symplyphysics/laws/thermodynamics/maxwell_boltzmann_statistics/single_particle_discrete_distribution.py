@@ -88,3 +88,6 @@ def calculate_particle_count_in_microstate(
         single_particle_partition_function: single_particle_partition_function_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 139

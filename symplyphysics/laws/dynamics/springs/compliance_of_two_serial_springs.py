@@ -108,3 +108,6 @@ def calculate_compliance(
         second_compliance: second_compliance_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 249

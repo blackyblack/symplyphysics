@@ -75,3 +75,6 @@ def calculate_low_pass_chebyshev_filter_order(bandwidth_distortion_: float,
         cutoff_frequency: cutoff_frequency_,
     })
     return int(ceiling(convert_to_float(result_expr)))
+
+
+# UNIQUE_LAW_ID: 663

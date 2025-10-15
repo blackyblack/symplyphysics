@@ -66,3 +66,6 @@ def calculate_optical_power(lens_refractive_index_: float, medium_refractive_ind
         back_radius: back_radius_
     })
     return Quantity(optical_power_applied)
+
+
+# UNIQUE_LAW_ID: 262

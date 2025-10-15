@@ -82,3 +82,6 @@ def calculate_chemical_potential(
     ).doit()
 
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 68

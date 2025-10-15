@@ -151,3 +151,6 @@ def calculate_time_dependent_wave_function_value(
         time: time_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 689

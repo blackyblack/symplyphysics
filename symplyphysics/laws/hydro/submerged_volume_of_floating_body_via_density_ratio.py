@@ -77,3 +77,6 @@ def calculate_submerged_volume(body_volume_: Quantity, body_density_: Quantity,
         fluid_density: fluid_density_,
     })
     return Quantity(result_volume)
+
+
+# UNIQUE_LAW_ID: 730

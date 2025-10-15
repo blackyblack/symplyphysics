@@ -97,3 +97,6 @@ def calculate_magnetic_field(
         radial_distance: radial_distance_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 486

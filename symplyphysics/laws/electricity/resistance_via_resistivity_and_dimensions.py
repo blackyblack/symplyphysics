@@ -65,3 +65,6 @@ def calculate_resistance(resistivity_: Quantity, wire_length_: Quantity,
         area: cross_section_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 488

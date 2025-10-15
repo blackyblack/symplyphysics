@@ -86,3 +86,6 @@ def calculate_serial_impedance(impedances_: list[Quantity]) -> Quantity:
     for i, v in enumerate(impedances_):
         solved = solved.subs(impedance[i + 1], v)
     return Quantity(solved)
+
+
+# UNIQUE_LAW_ID: 547

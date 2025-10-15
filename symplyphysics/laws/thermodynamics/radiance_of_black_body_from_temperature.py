@@ -71,3 +71,6 @@ def calculate_radiance(temperature_: Quantity) -> Quantity:
     solved = solve(law, radiance, dict=True)[0][radiance]
     result_expr = solved.subs(temperature, temperature_)
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 28

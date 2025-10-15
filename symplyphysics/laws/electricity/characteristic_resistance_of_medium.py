@@ -70,3 +70,6 @@ def calculate_resistance(relative_permittivity_: float, relative_permeability_: 
         relative_permeability: relative_permeability_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 511

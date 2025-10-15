@@ -105,3 +105,6 @@ def calculate_waves(
     result_input_wave = result_input_wave.subs(substitutions)
     result_output_wave = result_output_wave.subs(substitutions)
     return (Quantity(result_input_wave), Quantity(result_output_wave))
+
+
+# UNIQUE_LAW_ID: 600

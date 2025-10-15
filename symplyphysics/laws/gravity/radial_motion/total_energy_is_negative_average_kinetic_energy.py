@@ -49,3 +49,6 @@ law = Eq(total_mechanical_energy, -1 * average_kinetic_energy)
 def calculate_total_energy(average_kinetic_energy_: Quantity) -> Quantity:
     result = law.rhs.subs(average_kinetic_energy, average_kinetic_energy_)
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 378

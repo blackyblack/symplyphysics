@@ -72,3 +72,6 @@ def calculate_diffusion_coefficient(energy_: Quantity, diffusion_constant_: Quan
         temperature: temperature_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 339

@@ -69,3 +69,6 @@ def calculate_distance(diffraction_order_: int, wavelength_: Quantity,
         glancing_angle: angle_
     })
     return Quantity(distance_applied)
+
+
+# UNIQUE_LAW_ID: 254

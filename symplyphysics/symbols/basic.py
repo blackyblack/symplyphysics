@@ -161,3 +161,6 @@ molar_volume = Symbol("v_m", units.volume / units.amount_of_substance, display_l
 """
 **Molar volume** is defined as :symbols:`volume` per unit :symbols:`amount_of_substance`.
 """
+
+
+# UNIQUE_LAW_ID: 791

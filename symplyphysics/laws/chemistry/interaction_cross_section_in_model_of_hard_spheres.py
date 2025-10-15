@@ -50,3 +50,6 @@ def calculate_cross_sectional_area_of_interaction(distance_of_convergence_: Quan
         distance_of_convergence: distance_of_convergence_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 161

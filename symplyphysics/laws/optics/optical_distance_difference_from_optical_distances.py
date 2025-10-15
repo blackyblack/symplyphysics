@@ -60,3 +60,6 @@ def calculate_optical_difference_distance(optical_distance1_: Quantity,
         second_optical_distance: optical_distance2_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 275

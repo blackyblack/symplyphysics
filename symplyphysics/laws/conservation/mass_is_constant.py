@@ -47,3 +47,6 @@ def calculate_mass_after(mass_before_: Quantity) -> Quantity:
     solved = dsolve(law, mass(time))
     result_expr = solved.subs("C1", mass_before_).rhs
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 333

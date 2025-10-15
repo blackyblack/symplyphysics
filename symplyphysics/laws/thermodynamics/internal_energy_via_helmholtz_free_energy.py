@@ -104,3 +104,6 @@ def calculate_internal_energy(
         free_energy_).doit().subs(temperature, temperature_)
 
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 30

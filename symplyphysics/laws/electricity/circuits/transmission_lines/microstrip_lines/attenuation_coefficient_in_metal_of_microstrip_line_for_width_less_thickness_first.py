@@ -108,3 +108,6 @@ def calculate_attenuation_coefficient(surface_resistance_: Quantity, wave_resist
         width: width_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 629

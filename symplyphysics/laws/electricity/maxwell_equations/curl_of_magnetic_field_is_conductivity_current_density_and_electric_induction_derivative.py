@@ -107,3 +107,6 @@ def calculate_conductivity_current_density_at_point(
 
     result = CoordinateVector.from_expr(result)
     return QuantityCoordinateVector(result.components, result.system, result.point)
+
+
+# UNIQUE_LAW_ID: 670

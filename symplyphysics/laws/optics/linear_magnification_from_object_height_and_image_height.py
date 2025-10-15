@@ -58,3 +58,6 @@ def calculate_magnification(image_height_: Quantity, object_height_: Quantity) -
         object_height: object_height_,
     })
     return convert_to_float(result_magnification)
+
+
+# UNIQUE_LAW_ID: 274

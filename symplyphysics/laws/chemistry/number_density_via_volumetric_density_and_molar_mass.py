@@ -86,3 +86,6 @@ def calculate_atomic_number_density(material_density_: Quantity,
     solved = solve(law, number_density, dict=True)[0][number_density]
     result_expr = solved.subs({volumetric_density: material_density_, molar_mass: atomic_weight_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 165

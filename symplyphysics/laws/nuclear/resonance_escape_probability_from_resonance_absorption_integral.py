@@ -93,3 +93,6 @@ def calculate_resonance_escape_probability(
             macroscopic_scattering_cross_section_moderator_
     })
     return Probability(convert_to_float(result_expr))
+
+
+# UNIQUE_LAW_ID: 282

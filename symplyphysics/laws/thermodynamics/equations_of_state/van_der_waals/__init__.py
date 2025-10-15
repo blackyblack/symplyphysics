@@ -26,3 +26,6 @@ Reduced units
 van der Waals equation of state. A reduced quantity :math:`X_r` is defined as the ratio of quantity
 :math:`X` to the corresponding :ref:`critical parameter <vdw_critical_parameters_def>` :math:`X_\\text{c}`.
 """
+
+
+# UNIQUE_LAW_ID: 111

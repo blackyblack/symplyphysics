@@ -56,3 +56,6 @@ def calculate_coupling_parameter(resonator_resistance_: Quantity,
         load_resistance: load_resistance_,
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 653

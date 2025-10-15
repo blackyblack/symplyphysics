@@ -65,3 +65,6 @@ def calculate_current(charge_carriers_concentration_: Quantity, drift_velocity_:
         charge: charge_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 340

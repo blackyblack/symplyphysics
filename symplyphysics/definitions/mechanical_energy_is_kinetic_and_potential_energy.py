@@ -54,3 +54,6 @@ def calculate_mechanical_energy(kinetic_energy_: Quantity, potential_energy_: Qu
         potential_energy: potential_energy_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 746

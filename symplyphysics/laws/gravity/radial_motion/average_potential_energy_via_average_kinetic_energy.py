@@ -56,3 +56,6 @@ law = Eq(average_potential_energy, -2 * average_kinetic_energy)
 def calculate_average_potential_energy(average_kinetic_energy_: Quantity) -> Quantity:
     result = law.rhs.subs(average_kinetic_energy, average_kinetic_energy_)
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 380

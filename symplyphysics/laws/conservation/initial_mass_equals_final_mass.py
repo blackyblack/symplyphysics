@@ -70,3 +70,6 @@ def calculate_mass_after(mass_before_: Quantity) -> Quantity:
     solved = solve(law, mass(final_time), dict=True)[0][mass(final_time)]
     result_expr = solved.subs(mass(initial_time), mass_before_)
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 336

@@ -73,3 +73,6 @@ def calculate_lifetime(mass_of_star_: Quantity, indicator_: float) -> Quantity:
         indicator: indicator_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 318

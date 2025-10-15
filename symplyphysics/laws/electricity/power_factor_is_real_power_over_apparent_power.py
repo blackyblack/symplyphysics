@@ -50,3 +50,6 @@ def calculate_power_factor(active_power_: Quantity, full_power_: Quantity) -> Qu
     result_factor_expr = solve(law, power_factor, dict=True)[0][power_factor]
     result_expr = result_factor_expr.subs({real_power: active_power_, apparent_power: full_power_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 493

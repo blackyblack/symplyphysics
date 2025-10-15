@@ -60,3 +60,6 @@ def calculate_energy(relative_permeability_: float, intensity_: Quantity,
         volume: volume_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 483

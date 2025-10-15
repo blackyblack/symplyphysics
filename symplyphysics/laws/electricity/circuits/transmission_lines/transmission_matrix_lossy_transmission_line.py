@@ -113,3 +113,6 @@ def calculate_transmission_matrix(
     assert_equivalent_dimension(result_cv, 'result_cv', "calculate_transmission_matrix",
         units.conductance)
     return ((result_vv, result_vc), (result_cv, result_cc))
+
+
+# UNIQUE_LAW_ID: 599

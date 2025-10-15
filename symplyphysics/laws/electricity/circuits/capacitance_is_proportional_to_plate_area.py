@@ -62,3 +62,6 @@ def calculate_capacitance(dielectric_permeability_: float, plate_area_: Quantity
         distance: distance_between_plates_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 550

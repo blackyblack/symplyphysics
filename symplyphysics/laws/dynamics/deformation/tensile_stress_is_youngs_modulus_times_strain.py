@@ -55,3 +55,6 @@ def calculate_tensile_stress(
         engineering_normal_strain: engineering_normal_strain_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 224

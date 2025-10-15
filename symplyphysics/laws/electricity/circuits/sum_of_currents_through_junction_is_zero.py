@@ -56,3 +56,6 @@ def calculate_current_from_array(currents_: Sequence[Quantity]) -> Quantity:
     for i, v in enumerate(currents_):
         solved = solved.subs(current[i + 1], v)
     return Quantity(solved)
+
+
+# UNIQUE_LAW_ID: 546

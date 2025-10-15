@@ -142,3 +142,6 @@ def calculate_acceleration(linear_velocity_: Quantity, curve_radius_: Quantity) 
     solved = solve(law, centripetal_acceleration, dict=True)[0][centripetal_acceleration]
     result_expr = solved.subs({speed: linear_velocity_, radius_of_curvature: curve_radius_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 437

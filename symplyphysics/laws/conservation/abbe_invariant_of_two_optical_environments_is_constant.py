@@ -94,3 +94,6 @@ def calculate_refraction_index_lens(
         distance_from_image: distance_from_image_,
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 328

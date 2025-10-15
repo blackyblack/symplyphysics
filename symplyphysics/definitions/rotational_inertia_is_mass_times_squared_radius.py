@@ -50,3 +50,6 @@ def calculate_moment_of_inertia(mass_: Quantity, radius_: Quantity) -> Quantity:
     result_inertia_expr = solve(definition, rotational_inertia, dict=True)[0][rotational_inertia]
     result_expr = result_inertia_expr.subs({mass: mass_, radial_distance: radius_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 758

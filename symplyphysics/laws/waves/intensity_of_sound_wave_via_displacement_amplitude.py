@@ -245,3 +245,6 @@ def calculate_intensity(
         displacement_amplitude: displacement_amplitude_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 390

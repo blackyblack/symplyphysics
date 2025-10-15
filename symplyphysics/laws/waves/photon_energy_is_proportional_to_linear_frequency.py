@@ -47,3 +47,6 @@ def calculate_energy(photon_frequency_: Quantity) -> Quantity:
     result_energy_expr = solve(law, energy, dict=True)[0][energy]
     result_expr = result_energy_expr.subs({frequency: photon_frequency_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 411

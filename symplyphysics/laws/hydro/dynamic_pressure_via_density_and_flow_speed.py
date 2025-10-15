@@ -47,3 +47,6 @@ def calculate_pressure(density_: Quantity, velocity_: Quantity) -> Quantity:
     result_pressure_expr = solve(law, dynamic_pressure, dict=True)[0][dynamic_pressure]
     result_expr = result_pressure_expr.subs({density: density_, flow_speed: velocity_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 731

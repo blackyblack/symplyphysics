@@ -77,3 +77,6 @@ def calculate_input_impedance(surge_impedance_: Quantity, load_resistance_: Quan
         length: length_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 608

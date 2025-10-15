@@ -120,3 +120,6 @@ def calculate_period(mass_: Quantity, charge_: Quantity, induction_: Quantity) -
         magnetic_flux_density: induction_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 503

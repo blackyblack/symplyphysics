@@ -69,3 +69,6 @@ def calculate_isochoric_heat_capacity(
         amount_of_substance: amount_of_substance_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 40

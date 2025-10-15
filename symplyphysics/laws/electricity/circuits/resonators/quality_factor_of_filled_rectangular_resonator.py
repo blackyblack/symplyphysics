@@ -49,3 +49,6 @@ def calculate_quality_factor(empty_resonator_quality_factor_: float,
         loss_tangent: tangent_dielectric_loss_angle_,
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 657

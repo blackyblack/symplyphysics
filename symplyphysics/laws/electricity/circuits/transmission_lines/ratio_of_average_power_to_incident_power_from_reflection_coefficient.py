@@ -61,3 +61,6 @@ def calculate_absolute_reflection_coefficient(incident_power_: Quantity,
         average_power: average_power_,
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 598

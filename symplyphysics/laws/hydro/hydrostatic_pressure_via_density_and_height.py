@@ -67,3 +67,6 @@ def calculate_hydrostatic_pressure(density_: Quantity, depth_: Quantity) -> Quan
     result_pressure_expr = solve(law, hydrostatic_pressure, dict=True)[0][hydrostatic_pressure]
     result_expr = result_pressure_expr.subs({density: density_, height: depth_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 735

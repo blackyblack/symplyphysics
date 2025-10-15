@@ -61,3 +61,6 @@ def calculate_isochoric_molar_heat_capacity(reduced_photon_energy_: float,) -> Q
         reduced_photon_energy: reduced_photon_energy_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 85

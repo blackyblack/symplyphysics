@@ -44,3 +44,6 @@ law = Eq(critical_molar_volume, 3 * excluded_volume_parameter)
 def calculate_critical_molar_volume(molecules_volume_parameter_: Quantity) -> Quantity:
     result = law.rhs.subs(excluded_volume_parameter, molecules_volume_parameter_)
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 115

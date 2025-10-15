@@ -99,3 +99,6 @@ def calculate_refraction_index_lens(distance_to_object_: Quantity, distance_to_i
         medium_refraction_index: refraction_index_environment_
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 278

@@ -70,3 +70,6 @@ def calculate_transition_frequency(number_level_to_: int, number_level_from_: in
         higher_principal_quantum_number: number_level_from_
     })
     return Quantity(transition_frequency_applied)
+
+
+# UNIQUE_LAW_ID: 388

@@ -66,3 +66,6 @@ def calculate_heat_capacity_ratio(
         isochoric_heat_capacity: isochoric_heat_capacity_,
     })
     return convert_to_float(result)
+
+
+# UNIQUE_LAW_ID: 774

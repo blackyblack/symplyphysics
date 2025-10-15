@@ -53,3 +53,6 @@ def calculate_capacitance(charge_: Quantity, voltage_: Quantity) -> Quantity:
     solved = solve(definition, capacitance, dict=True)[0][capacitance]
     result_expr = solved.subs({charge: charge_, voltage: voltage_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 495

@@ -67,3 +67,6 @@ def calculate_velocity(
     })
 
     return QuantityCoordinateVector.from_expr(velocity_value)
+
+
+# UNIQUE_LAW_ID: 781

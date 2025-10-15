@@ -143,3 +143,6 @@ def calculate_angular_momentum(rotational_inertia_: Quantity,
         angular_speed: angular_velocity_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 427

@@ -71,3 +71,6 @@ def calculate_quality_factor(
         resonance_width: resonance_width_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 244

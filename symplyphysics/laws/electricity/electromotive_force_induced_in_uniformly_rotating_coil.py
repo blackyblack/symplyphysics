@@ -113,3 +113,6 @@ def calculate_voltage(number_turns_: int, induction_: Quantity, contour_area_: Q
         time: time_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 502

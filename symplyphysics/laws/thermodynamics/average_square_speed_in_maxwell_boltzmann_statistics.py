@@ -83,3 +83,6 @@ def calculate_average_square_velocity(temperature_in_gas_: Quantity,
         molecular_mass: mass_of_molecule_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 65

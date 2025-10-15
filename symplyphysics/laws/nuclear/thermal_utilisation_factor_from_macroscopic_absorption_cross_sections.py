@@ -75,3 +75,6 @@ def calculate_utilisation_factor(
         macroscopic_total_absorption_cross_section: macroscopic_total_absorption_cross_section_
     })
     return Probability(convert_to_float(result_expr))
+
+
+# UNIQUE_LAW_ID: 281

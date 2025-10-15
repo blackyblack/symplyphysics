@@ -109,3 +109,6 @@ def calculate_resonant_frequency(indexes_: tuple[float, float,
         relative_permeability: relative_permeability_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 659

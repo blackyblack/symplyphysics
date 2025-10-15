@@ -44,3 +44,6 @@ definition = Eq(angular_wavenumber, 2 * pi / wavelength)
 def calculate_wavenumber(wavelength_: Quantity) -> Quantity:
     result = definition.rhs.subs(wavelength, wavelength_)
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 759

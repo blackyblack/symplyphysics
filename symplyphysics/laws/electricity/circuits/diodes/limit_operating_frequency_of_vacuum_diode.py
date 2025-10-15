@@ -53,3 +53,6 @@ def calculate_limit_operating_frequency(distance_between_electrodes_: Quantity,
         voltage: voltage_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 566

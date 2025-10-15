@@ -65,3 +65,6 @@ def calculate_full_gain(gain_of_input_matching_circuit_: float, transistor_gain_
         output_circuit_gain: gain_of_output_matching_circuit_,
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 645

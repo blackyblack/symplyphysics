@@ -8,3 +8,6 @@ is an idealized opaque, non-reflective body. It has a specific, continuous spect
 wavelengths, inversely related to intensity, that depend only on the body's temperature,
 which is assumed, for the sake of calculations and theory, to be uniform and constant.
 """
+
+
+# UNIQUE_LAW_ID: 418

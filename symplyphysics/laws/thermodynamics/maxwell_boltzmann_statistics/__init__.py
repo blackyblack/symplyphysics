@@ -6,3 +6,6 @@ In statistical mechanics, Maxwell—Boltzmann statistics describes the distribut
 particles over various energy states in thermal equilibrium. It is applicable when the temperature is
 high enough or the particle density is low enough to render quantum effects negligible.
 """
+
+
+# UNIQUE_LAW_ID: 136

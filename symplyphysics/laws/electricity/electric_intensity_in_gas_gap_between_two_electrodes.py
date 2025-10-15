@@ -69,3 +69,6 @@ def calculate_electric_intensity(coordinate_: Quantity, distance_between_electro
         voltage: voltage_between_electrodes_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 473

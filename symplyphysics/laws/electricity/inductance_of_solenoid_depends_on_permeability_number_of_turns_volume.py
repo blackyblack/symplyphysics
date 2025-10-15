@@ -65,3 +65,6 @@ def calculate_inductance(absolute_permeability_: Quantity, turn_count_: Quantity
         volume: volume_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 505

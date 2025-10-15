@@ -66,3 +66,6 @@ def calculate_thermal_wavelength(
         temperature: temperature_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 744

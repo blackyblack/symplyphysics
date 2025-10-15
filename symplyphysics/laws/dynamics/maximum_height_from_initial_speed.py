@@ -108,3 +108,6 @@ def calculate_maximum_height(initial_velocity_: Quantity) -> Quantity:
     result_maximum_height = solve(law, maximum_height, dict=True)[0][maximum_height]
     result_expr = result_maximum_height.subs({initial_speed: initial_velocity_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 195

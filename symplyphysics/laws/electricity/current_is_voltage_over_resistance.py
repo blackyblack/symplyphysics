@@ -50,3 +50,6 @@ def calculate_current(voltage_: Quantity, resistance_: Quantity) -> Quantity:
     result_current_expr = solve(law, current, dict=True)[0][current]
     result_expr = result_current_expr.subs({voltage: voltage_, resistance: resistance_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 485

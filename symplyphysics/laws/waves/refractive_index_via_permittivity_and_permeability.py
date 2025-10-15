@@ -52,3 +52,6 @@ def calculate_refraction_factor(relative_dielectric_permeability_: float,
         relative_permeability: relative_magnetic_permeability_
     })
     return convert_to_float(factor_applied)
+
+
+# UNIQUE_LAW_ID: 382

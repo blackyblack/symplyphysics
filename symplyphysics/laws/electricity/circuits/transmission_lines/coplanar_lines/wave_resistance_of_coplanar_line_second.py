@@ -88,3 +88,6 @@ def calculate_wave_resistance(effective_permittivity_: float,
         central_electrode_width: central_electrode_width_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 619

@@ -49,3 +49,6 @@ def calculate_optical_path(geometric_path_: Quantity, refractive_index_: float) 
         refractive_index: refractive_index_,
     })
     return Quantity(result_optical_path)
+
+
+# UNIQUE_LAW_ID: 273

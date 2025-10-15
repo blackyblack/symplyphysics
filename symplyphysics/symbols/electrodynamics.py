@@ -337,3 +337,6 @@ quantifies a dielectric material's inherent dissipation of electromagnetic energ
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Dielectric_loss#>`__.
 """
+
+
+# UNIQUE_LAW_ID: 799

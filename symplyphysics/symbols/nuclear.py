@@ -217,3 +217,6 @@ thermal fissions to the thermal absorption in fuel isotope.
 
 #. `Wikipedia, first row in table <https://en.wikipedia.org/wiki/Four_factor_formula>`__.
 """
+
+
+# UNIQUE_LAW_ID: 796

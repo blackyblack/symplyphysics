@@ -93,3 +93,6 @@ def calculate_relative_acceleration(
     })
 
     return QuantityCoordinateVector.from_expr(value)
+
+
+# UNIQUE_LAW_ID: 242

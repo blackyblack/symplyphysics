@@ -71,3 +71,6 @@ def calculate_multiplication_factor(neutrons_per_fission_: float,
         macroscopic_absorption_cross_section: macroscopic_absorption_cross_section_
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 295

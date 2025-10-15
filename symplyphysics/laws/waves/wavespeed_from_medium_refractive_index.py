@@ -40,3 +40,6 @@ def calculate_wavespeed(refraction_factor_: float) -> Quantity:
     result_expr = solve(law, wave_speed, dict=True)[0][wave_speed]
     wavespeed_applied = result_expr.subs(refractive_index, refraction_factor_)
     return Quantity(wavespeed_applied)
+
+
+# UNIQUE_LAW_ID: 395

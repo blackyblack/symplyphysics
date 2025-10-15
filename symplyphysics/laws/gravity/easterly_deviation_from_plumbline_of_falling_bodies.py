@@ -88,3 +88,6 @@ def calculate_easterly_deviation_from_plumbline(
         latitude: scale_factor(latitude_),
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 364

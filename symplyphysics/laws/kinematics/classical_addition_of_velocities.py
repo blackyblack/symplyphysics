@@ -67,3 +67,6 @@ def calculate_body_velocity_in_first_frame(
         second_frame_speed_in_first_frame: second_frame_velocity_in_first_frame_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 435

@@ -66,3 +66,6 @@ def calculate_force(
     force_ = solved.subs(momentum(time), momentum_).doit()
 
     return QuantityCoordinateVector.from_expr(force_)
+
+
+# UNIQUE_LAW_ID: 238

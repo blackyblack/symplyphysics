@@ -63,3 +63,6 @@ def calculate_spectral_energy_density(
         equilibrium_temperature: equilibrium_temperature_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 417

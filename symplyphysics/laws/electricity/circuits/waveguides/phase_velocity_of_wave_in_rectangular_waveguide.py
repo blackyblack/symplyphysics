@@ -77,3 +77,6 @@ def calculate_phase_velocity(relative_permittivity_: float, relative_permeabilit
         critical_wavelength: critical_wavelength_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 576

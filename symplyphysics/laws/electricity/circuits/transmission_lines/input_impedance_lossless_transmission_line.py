@@ -74,3 +74,6 @@ def calculate_input_impedance(characteristic_resistance_: Quantity, load_impedan
         length: length_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 611

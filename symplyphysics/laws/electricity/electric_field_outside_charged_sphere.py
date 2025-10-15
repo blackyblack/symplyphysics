@@ -113,3 +113,6 @@ def calculate_electric_intensity(charge_: Quantity, distance_: Quantity) -> Quan
         distance: distance_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 507

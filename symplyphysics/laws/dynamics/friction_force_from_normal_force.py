@@ -50,3 +50,6 @@ def calculate_friction_force(friction_coefficient_: float, normal_reaction_: Qua
         normal_force: normal_reaction_
     })
     return Quantity(friction_force_applied)
+
+
+# UNIQUE_LAW_ID: 217

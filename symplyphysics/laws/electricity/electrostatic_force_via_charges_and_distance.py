@@ -63,3 +63,6 @@ def calculate_force(first_charge_: Quantity, second_charge_: Quantity,
         distance: distance_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 508

@@ -105,3 +105,6 @@ def calculate_power(
         resistance: resistance_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 501

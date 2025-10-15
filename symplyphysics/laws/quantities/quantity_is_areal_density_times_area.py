@@ -60,3 +60,6 @@ def calculate_extensive_quantity(
     )
 
     return result
+
+
+# UNIQUE_LAW_ID: 677

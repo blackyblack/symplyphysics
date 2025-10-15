@@ -96,3 +96,6 @@ def calculate_work(force_: Quantity, displacement_: Quantity) -> Quantity:
     result_work_expr = solve(law, work, dict=True)[0][work]
     result_expr = result_work_expr.subs({force: force_, distance: displacement_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 200

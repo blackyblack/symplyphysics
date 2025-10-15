@@ -69,3 +69,6 @@ def calculate_efficiency(useful_force_: Quantity, useful_height_: Quantity,
         input_distance: expended_height_
     })
     return convert_to_float(result_efficiency)
+
+
+# UNIQUE_LAW_ID: 726

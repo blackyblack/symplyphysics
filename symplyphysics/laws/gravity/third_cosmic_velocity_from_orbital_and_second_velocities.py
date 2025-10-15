@@ -54,3 +54,6 @@ def calculate_third_velocity(orbital_velocity_: Quantity, second_velocity_: Quan
         second_cosmic_speed: second_velocity_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 361

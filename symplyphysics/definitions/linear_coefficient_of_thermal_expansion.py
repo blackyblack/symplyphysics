@@ -87,3 +87,6 @@ def calculate_linear_expansion_coefficient(
     )
     result = result.doit().subs(temperature, temperature_after_)
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 775

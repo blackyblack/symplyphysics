@@ -79,3 +79,6 @@ def calculate_resistance(resistance_initial_: Quantity, temperature_coefficient_
         temperature: temperature_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 346

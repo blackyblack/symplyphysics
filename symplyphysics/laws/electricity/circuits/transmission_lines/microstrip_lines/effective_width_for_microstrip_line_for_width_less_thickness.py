@@ -78,3 +78,6 @@ def calculate_effective_width(strip_thickness_: Quantity, thickness_of_substrate
         width: width_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 624

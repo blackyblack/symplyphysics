@@ -81,3 +81,6 @@ def calculate_braking_path(mass_: Quantity, velocity_: Quantity,
         friction_force: friction_force_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 210

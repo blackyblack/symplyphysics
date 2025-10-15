@@ -62,3 +62,6 @@ def calculate_frequency(ring_length_: Quantity, order_interference_: int,
         relative_permittivity: permittivity_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 654

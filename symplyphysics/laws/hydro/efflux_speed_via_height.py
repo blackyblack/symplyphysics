@@ -153,3 +153,6 @@ def calculate_velocity(height_: Quantity) -> Quantity:
     result_velocity_expr = solve(law, efflux_speed, dict=True)[0][efflux_speed]
     result_expr = result_velocity_expr.subs({height: height_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 737

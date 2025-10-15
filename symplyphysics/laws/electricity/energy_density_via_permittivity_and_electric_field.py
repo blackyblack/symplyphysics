@@ -50,3 +50,6 @@ def calculate_energy_density(absolute_permittivity_: Quantity,
         electric_field_strength: electric_intensity_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 510

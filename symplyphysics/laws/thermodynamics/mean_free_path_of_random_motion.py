@@ -56,3 +56,6 @@ def calculate_mean_free_path(
         number_density: number_density_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 95

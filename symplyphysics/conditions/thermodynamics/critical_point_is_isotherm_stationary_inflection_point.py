@@ -44,3 +44,6 @@ flat_tangent_condition = Eq(Derivative(pressure(volume), volume, 2), 0)
 """
 
 conditions = inflection_point_condition, flat_tangent_condition
+
+
+# UNIQUE_LAW_ID: 4

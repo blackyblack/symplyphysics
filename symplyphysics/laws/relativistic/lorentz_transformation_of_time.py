@@ -97,3 +97,6 @@ def calculate_time_in_proper_frame(
         proper_frame_speed_in_lab_frame: proper_frame_speed_in_lab_frame_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 703

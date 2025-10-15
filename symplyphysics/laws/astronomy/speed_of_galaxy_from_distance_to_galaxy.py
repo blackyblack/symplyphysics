@@ -50,3 +50,6 @@ def calculate_speed(distance_to_galaxy_: Quantity) -> Quantity:
         distance: distance_to_galaxy_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 320

@@ -47,3 +47,6 @@ def calculate_frequency(number_of_events_: float, time_: Quantity) -> Quantity:
     solved = solve(definition, temporal_frequency, dict=True)[0][temporal_frequency]
     result_expr = solved.subs({time: time_, number_of_events: number_of_events_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 763

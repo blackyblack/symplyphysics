@@ -60,3 +60,6 @@ def calculate_rate_of_change_of_area(planet_angular_momentum_: Quantity,
         planet_mass: planet_mass_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 355

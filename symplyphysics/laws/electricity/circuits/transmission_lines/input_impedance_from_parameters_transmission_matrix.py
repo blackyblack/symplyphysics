@@ -91,3 +91,6 @@ def calculate_input_impedance(
         current_current_parameter: parameters_[1][1],
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 609

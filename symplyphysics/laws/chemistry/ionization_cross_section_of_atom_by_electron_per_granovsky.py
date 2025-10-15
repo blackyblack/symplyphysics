@@ -86,3 +86,6 @@ def calculate_cross_sectional_area_of_ionization(
         maximum_electron_energy: energy_of_electron_at_max_area_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 171

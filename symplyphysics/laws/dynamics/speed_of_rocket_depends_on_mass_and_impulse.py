@@ -64,3 +64,6 @@ def calculate_speed(specific_impulse_: Quantity, initial_mass_: Quantity,
         final_mass: final_mass_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 207

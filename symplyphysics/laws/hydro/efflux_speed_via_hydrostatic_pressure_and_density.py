@@ -70,3 +70,6 @@ def calculate_velocity(pressure_: Quantity, density_: Quantity) -> Quantity:
         density: density_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 727

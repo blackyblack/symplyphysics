@@ -60,3 +60,6 @@ def calculate_circulation(
 ) -> Quantity:
     result_expr = circulation_law(field, surface, parameter1_limits, parameter2_limits)
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 146

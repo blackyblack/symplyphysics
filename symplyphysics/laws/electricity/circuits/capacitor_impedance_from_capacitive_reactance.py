@@ -37,3 +37,6 @@ def calculate_impedance(reactance_: Quantity) -> Quantity:
         reactance: reactance_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 551

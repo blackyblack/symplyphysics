@@ -60,3 +60,6 @@ def calculate_force(
     momentum_ = (momentum_change_ / time_change_) * time
     result = law.lhs.subs(momentum(time), momentum_).doit()
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 202

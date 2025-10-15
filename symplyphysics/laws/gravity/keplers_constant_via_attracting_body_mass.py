@@ -46,3 +46,6 @@ def calculate_keplers_constant(attracting_body_mass_: Quantity) -> Quantity:
         attracting_mass: attracting_body_mass_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 357

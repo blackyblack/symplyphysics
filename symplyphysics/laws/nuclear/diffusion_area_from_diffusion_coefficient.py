@@ -55,3 +55,6 @@ def calculate_diffusion_area(diffusion_coefficient_: Quantity,
         macroscopic_absorption_cross_section: macroscopic_absorption_cross_section_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 288

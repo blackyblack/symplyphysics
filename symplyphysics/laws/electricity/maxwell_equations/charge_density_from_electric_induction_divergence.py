@@ -77,3 +77,6 @@ def calculate_charge_volumetric_density_at_point(
         result = result.subs(scalar, scalar.scalar)
 
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 668

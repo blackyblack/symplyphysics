@@ -102,3 +102,6 @@ def calculate_force(
     })
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 706

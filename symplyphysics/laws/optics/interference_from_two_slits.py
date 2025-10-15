@@ -69,3 +69,6 @@ def calculate_travel_difference(coordinate_: Quantity, distance_between_slits_: 
         distance_to_picture: distance_to_picture_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 265

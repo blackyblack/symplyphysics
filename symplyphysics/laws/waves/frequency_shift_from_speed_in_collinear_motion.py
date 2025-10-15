@@ -135,3 +135,6 @@ def calculate_observed_frequency(real_frequency_: Quantity, wave_velocity_: Quan
         observer_speed: observer_velocity_
     })
     return Quantity(frequency_applied)
+
+
+# UNIQUE_LAW_ID: 410

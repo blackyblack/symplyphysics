@@ -133,3 +133,6 @@ def calculate_energy_level(
         angular_frequency: angular_frequency_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 685

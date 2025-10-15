@@ -99,3 +99,6 @@ def calculate_height_barrier(donors_concentration_: Quantity, acceptors_concentr
         charge_electron: charge_electron_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 344

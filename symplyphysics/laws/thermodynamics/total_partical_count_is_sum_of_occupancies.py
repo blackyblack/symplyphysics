@@ -55,3 +55,6 @@ def calculate_total_particle_count(occupancies_: Sequence[float]) -> int:
     for idx_, count_ in enumerate(occupancies_, 1):
         result = result.subs(occupancy[idx_], count_)
     return int(result)
+
+
+# UNIQUE_LAW_ID: 37

@@ -51,3 +51,6 @@ definition = Eq(lorentz_factor, 1 / sqrt(1 - speed**2 / quantities.speed_of_ligh
 def calculate_lorentz_factor(speed_: Quantity) -> Quantity:
     result = definition.rhs.subs(speed, speed_)
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 765

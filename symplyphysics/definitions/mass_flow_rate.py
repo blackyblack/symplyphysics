@@ -52,3 +52,6 @@ def calculate_mass_flow_rate(mass_start_: Quantity, mass_end_: Quantity,
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 767

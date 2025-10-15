@@ -84,3 +84,6 @@ def calculate_force_reaction(force_action_: Quantity) -> Quantity:
     result_force_expr = solve(law, reaction_force, dict=True)[0][reaction_force]
     result_expr = result_force_expr.subs({action_force: force_action_})
     return Quantity(abs(result_expr))
+
+
+# UNIQUE_LAW_ID: 216

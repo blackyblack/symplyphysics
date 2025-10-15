@@ -65,3 +65,6 @@ def calculate_helmholtz_free_energy(
         entropy: entropy_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 23

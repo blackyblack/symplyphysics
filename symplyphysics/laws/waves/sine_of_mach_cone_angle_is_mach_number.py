@@ -54,3 +54,6 @@ def calculate_mach_cone_angle(mach_number_: float) -> Quantity:
     result_expr = solve(law, mach_cone_angle)[1]
     result = result_expr.subs(mach_number, mach_number_)
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 404

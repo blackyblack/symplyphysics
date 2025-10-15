@@ -49,3 +49,6 @@ def calculate_energy_of_electron(radius_: Quantity) -> Quantity:
     result_expr = solve(law, energy, dict=True)[0][energy]
     result = result_expr.subs(radius, radius_)
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 176

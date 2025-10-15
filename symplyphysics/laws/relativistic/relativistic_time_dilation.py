@@ -48,3 +48,6 @@ def calculate_relativistic_time(moving_observer_time_: Quantity, velocity_: Quan
     result_expr = solve(law, relativistic_time, dict=True)[0][relativistic_time]
     time_applied = result_expr.subs({proper_time: moving_observer_time_, speed: velocity_})
     return Quantity(time_applied)
+
+
+# UNIQUE_LAW_ID: 693

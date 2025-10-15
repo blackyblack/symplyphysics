@@ -89,3 +89,6 @@ def calculate_parallel_velocity_component_in_lab_frame(
     })
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 712

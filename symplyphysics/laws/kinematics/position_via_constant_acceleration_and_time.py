@@ -95,3 +95,6 @@ def calculate_distance(initial_position_: Quantity, initial_velocity_: Quantity,
         time: time_
     })
     return Quantity(result_expr_substituted)
+
+
+# UNIQUE_LAW_ID: 436

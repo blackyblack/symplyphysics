@@ -90,3 +90,6 @@ def calculate_angular_position(
         time: time_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 439

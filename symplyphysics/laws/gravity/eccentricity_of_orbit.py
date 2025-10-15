@@ -54,3 +54,6 @@ def calculate_eccentricity(small_semi_axis_: Quantity, large_semi_axis_: Quantit
         semimajor_axis: large_semi_axis_,
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 354

@@ -90,3 +90,6 @@ def calculate_coefficient_of_stiffness(module_of_young_: Quantity, area_: Quanti
     result_expr = solve(law, stiffness, dict=True)[0][stiffness]
     result_expr = result_expr.subs({young_modulus: module_of_young_, area: area_, length: length_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 212

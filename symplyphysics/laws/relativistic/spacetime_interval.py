@@ -79,3 +79,6 @@ def calculate_spacetime_interval(
         spatial_distance: spatial_distance_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 694

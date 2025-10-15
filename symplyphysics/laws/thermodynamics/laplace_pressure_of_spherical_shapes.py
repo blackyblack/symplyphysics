@@ -56,3 +56,6 @@ def calculate_laplace_pressure(surface_tension_of_the_liquid_: Quantity,
         radius_of_curvature: radius_of_curvature_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 76

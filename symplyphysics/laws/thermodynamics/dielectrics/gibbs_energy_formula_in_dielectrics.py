@@ -77,3 +77,6 @@ def calculate_gibbs_energy_density(
         electric_displacement: electric_displacement_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 102

@@ -77,3 +77,6 @@ def calculate_wave_resistance(relative_permittivity_: float, relative_permeabili
         inner_radius: inner_radius_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 593

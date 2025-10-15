@@ -77,3 +77,6 @@ def calculate_serial_inductance(inductances_: list[Quantity]) -> Quantity:
     for i, v in enumerate(inductances_):
         solved = solved.subs(inductance[i + 1], v)
     return Quantity(solved)
+
+
+# UNIQUE_LAW_ID: 558

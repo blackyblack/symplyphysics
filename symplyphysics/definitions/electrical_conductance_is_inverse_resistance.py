@@ -40,3 +40,6 @@ def calculate_conductance(resistance_: Quantity) -> Quantity:
     solved = solve(definition, conductance, dict=True)[0][conductance]
     result_expr = solved.subs({resistance: resistance_})
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 760

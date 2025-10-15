@@ -44,3 +44,6 @@ def calculate_rotational_inertia(mass_: Quantity, radius_: Quantity) -> Quantity
         distance_to_axis: radius_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 462

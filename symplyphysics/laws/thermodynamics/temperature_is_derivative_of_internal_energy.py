@@ -84,3 +84,6 @@ def calculate_temperature(
     internal_energy_ = (internal_energy_change_ / entropy_change_) * entropy
     result = law.rhs.subs(internal_energy(entropy, volume, particle_count), internal_energy_).doit()
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 18

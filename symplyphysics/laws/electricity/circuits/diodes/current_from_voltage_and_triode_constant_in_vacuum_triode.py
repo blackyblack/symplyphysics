@@ -76,3 +76,6 @@ def calculate_current(triode_constant_: Quantity, anode_voltage_: Quantity,
         grid_voltage: grid_voltage_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 567

@@ -74,3 +74,6 @@ def calculate_direct_permeability_coefficient(tabular_coefficient_t_: float, gri
         second_tabular_coefficient: tabular_coefficient_d_
     })
     return convert_to_float(Quantity(result_expr))
+
+
+# UNIQUE_LAW_ID: 562

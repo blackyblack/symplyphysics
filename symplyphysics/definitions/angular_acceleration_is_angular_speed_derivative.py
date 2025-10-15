@@ -58,3 +58,6 @@ def calculate_angular_acceleration(angular_velocity_start_: Quantity,
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 753

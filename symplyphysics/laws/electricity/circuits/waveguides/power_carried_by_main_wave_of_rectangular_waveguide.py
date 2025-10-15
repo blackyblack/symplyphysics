@@ -77,3 +77,6 @@ def calculate_waveguide_power(width_: Quantity, waveguide_height_: Quantity, wav
         electric_field_strength: electric_intensity_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 587

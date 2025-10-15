@@ -95,3 +95,6 @@ def calculate_buckling(neutrons_per_fission_: float, macroscopic_fission_cross_s
         diffusion_coefficient: diffusion_coefficient_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 305

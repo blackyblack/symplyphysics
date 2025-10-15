@@ -70,3 +70,6 @@ def calculate_equilibrium_constant(standard_change_isobaric_potential_: Quantity
         temperature: temperature_
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 152

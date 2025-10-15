@@ -89,3 +89,6 @@ def calculate_cross_sectional_area_of_ionization(
         electron_count: number_of_equivalent_electrons_on_outer_orbit_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 170

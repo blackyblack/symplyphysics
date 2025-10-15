@@ -78,3 +78,6 @@ def calculate_energy(inertia_moment_: Quantity, angular_velocity_: Quantity) -> 
         angular_speed: angular_velocity_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 187

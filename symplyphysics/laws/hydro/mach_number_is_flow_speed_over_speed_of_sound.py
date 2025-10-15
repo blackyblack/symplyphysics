@@ -51,3 +51,6 @@ def calculate_mach_number(velocity_: Quantity, speed_of_sound_: Quantity) -> flo
         speed_of_sound: speed_of_sound_,
     })
     return convert_to_float(result_applied)
+
+
+# UNIQUE_LAW_ID: 732

@@ -55,3 +55,6 @@ def calculate_large_half_axis_length(orbital_speed_: Quantity, planet_mass_: Qua
         attracting_mass: planet_mass_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 370

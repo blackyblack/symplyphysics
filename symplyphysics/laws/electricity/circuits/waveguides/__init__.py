@@ -14,3 +14,6 @@ electromagnetic waves other than light like radio waves.
 The **critical wavelength** of a waveguide is such that signals with a wavelength
 greater than the critical one become attenuated and do not propagate in the waveguide.
 """
+
+
+# UNIQUE_LAW_ID: 574

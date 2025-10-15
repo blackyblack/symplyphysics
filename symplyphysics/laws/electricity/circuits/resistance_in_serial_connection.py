@@ -78,3 +78,6 @@ def calculate_serial_resistance(resistances_: list[Quantity]) -> Quantity:
     for i, v in enumerate(resistances_):
         solved = solved.subs(resistance[i + 1], v)
     return Quantity(solved)
+
+
+# UNIQUE_LAW_ID: 549

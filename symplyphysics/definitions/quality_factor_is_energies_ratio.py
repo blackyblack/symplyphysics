@@ -57,3 +57,6 @@ def calculate_quality_factor(frequency_: Quantity, energy_: Quantity, power_: Qu
         dissipated_power: power_
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 772

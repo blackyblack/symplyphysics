@@ -57,3 +57,6 @@ def calculate_velocity(
     result = law.rhs.subs(position_vector(time), position_vector_).doit()
 
     return QuantityCoordinateVector.from_expr(result)
+
+
+# UNIQUE_LAW_ID: 784

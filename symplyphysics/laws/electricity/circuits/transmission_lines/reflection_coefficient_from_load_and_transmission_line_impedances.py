@@ -56,3 +56,6 @@ def calculate_reflection_coefficient(load_impedance_: Quantity,
         surge_impedance: characteristic_impedance_,
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 596

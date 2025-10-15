@@ -73,3 +73,6 @@ _rhs = homogeneity_condition.rhs.subs(
 )
 
 assert expr_equals(_lhs, _rhs)
+
+
+# UNIQUE_LAW_ID: 5

@@ -52,3 +52,6 @@ def calculate_period(rotational_inertia_: Quantity, torsion_constant_: Quantity)
         torsion_stiffness: torsion_constant_,
     })
     return Quantity(result)
+
+
+# UNIQUE_LAW_ID: 191

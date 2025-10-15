@@ -62,3 +62,6 @@ def calculate_inductance(thickness_of_substrate_: Quantity, radius_of_hole_: Qua
         radius: radius_of_hole_,
     })
     return Quantity(result_expr)
+
+
+# UNIQUE_LAW_ID: 637

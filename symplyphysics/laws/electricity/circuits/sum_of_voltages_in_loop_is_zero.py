@@ -47,3 +47,6 @@ def calculate_voltage(voltages_: Sequence[Quantity]) -> Quantity:
     for i, v in enumerate(voltages_):
         solved = solved.subs(voltage[i + 1], v)
     return Quantity(solved)
+
+
+# UNIQUE_LAW_ID: 555

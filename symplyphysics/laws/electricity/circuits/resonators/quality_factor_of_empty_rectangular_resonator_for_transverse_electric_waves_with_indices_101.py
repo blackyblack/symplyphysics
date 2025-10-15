@@ -95,3 +95,6 @@ def calculate_quality_factor(angular_frequency_: Quantity, relative_permeability
         length: resonator_length_
     })
     return convert_to_float(result_expr)
+
+
+# UNIQUE_LAW_ID: 652
