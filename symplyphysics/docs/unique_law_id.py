@@ -86,7 +86,7 @@ def _process_ids(
         # was renamed; therefore we remove the old file name and replace it with the
         # new one
 
-        saved_names = (name for name, id_ in name_to_id.items() if id_ == match_id)
+        saved_names = [name for name, id_ in name_to_id.items() if id_ == match_id]
         for saved_name in saved_names:
             del name_to_id[saved_name]
 
