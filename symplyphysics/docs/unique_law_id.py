@@ -6,16 +6,17 @@ import json
 ID_PATTERN = re.compile(r"#\s*UNIQUE_LAW_ID:\s*(\d+)\s*")
 
 
-def _check_id_uniqueness(ids: Collection[int]) -> None:
-    id_to_count: dict[int, int] = {}
-    for id_ in ids:
-        id_to_count[id_] = id_to_count.get(id_, 0) + 1
+def _check_name_uniqueness(names: Collection[str]) -> None:
+    name_to_count: dict[str, int] = {}
+    for name in names:
+        name_to_count[name] = name_to_count.get(name, 0) + 1
 
-    repeating_ids = [id_ for id_, count in id_to_count.items() if count > 1]
-    if not repeating_ids:
+    repeating_names = [name for name, count in name_to_count.items() if count > 1]
+    if not repeating_names:
         return
 
-    raise ValueError(f"Repeating ids {repeating_ids}")
+    message = "Repeating names:\n  '{}'".format("',\n  '".join(repeating_names))
+    raise ValueError(message)
 
 
 def _load_saved_data(saved_path: Path) -> dict[str, int]:
@@ -23,9 +24,11 @@ def _load_saved_data(saved_path: Path) -> dict[str, int]:
         return {}
 
     with open(saved_path, "r", encoding="utf-8") as fp:
-        name_to_id = json.load(fp)
+        id_to_name = json.load(fp)
 
-    _check_id_uniqueness(name_to_id.values())
+    assert isinstance(id_to_name, dict)
+    _check_name_uniqueness(id_to_name.values())
+    name_to_id = {name: int(id_) for id_, name in id_to_name.items()}
 
     return name_to_id
 
@@ -128,8 +131,9 @@ def _main(
         with open(path, "w", encoding="utf-8") as fp:
             fp.writelines(lines)
 
+    id_to_name = {id_: name for name, id_ in name_to_id.items()}
     with open(saved_path, "w", encoding="utf-8") as fp:
-        json.dump(name_to_id, fp, ensure_ascii=False, indent=4)
+        json.dump(id_to_name, fp, indent=4)
 
 
 if __name__ == "__main__":
