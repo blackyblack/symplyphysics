@@ -119,7 +119,7 @@ def _main(
         if any(path.is_relative_to(dir_path) for dir_path in exclude_dir_paths):
             continue
 
-        name = "/" + str(path.relative_to(base_dir))
+        name = str(path.relative_to(base_dir))
 
         lines, match_id = _read_file_and_match(path, name, pattern)
         _add_empty_lines(lines, nmax=2)
