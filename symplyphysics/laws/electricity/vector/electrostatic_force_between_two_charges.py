@@ -10,7 +10,7 @@ Also see the :ref:`scalar law <Electrostatic force via charges and distance>`.
 **Notes:**
 
 #. If a given charge is in the vicinity of a system of point charges, then the net law can be
-   found via the :ref:`principle of superposition <Superposition of forces is sum (Vector)>`.
+   found via the :ref:`principle of superposition <Net force vector is sum of forces>`.
 
 **Notation:**
 
