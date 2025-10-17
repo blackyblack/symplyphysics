@@ -1,11 +1,12 @@
 from __future__ import annotations
 
-from typing import Optional
+from typing import Optional, Mapping
 from pathlib import Path
 from dataclasses import dataclass
 from collections import defaultdict
 
 import re
+import json
 
 _HEADING_PAT = re.compile(r"^([^\n]+)")
 
@@ -15,15 +16,23 @@ _LATEX_PAT = re.compile(
 )
 
 
+def _get_name_to_id(path: Path) -> Mapping[str, str]:
+    with open(path, "r", encoding="utf-8") as file:
+        id_to_name = json.load(file)
+
+    return {name: id_ for id_, name in id_to_name.items()}
+
+
 @dataclass(slots=True, frozen=True)
 class _Info:
     parents: str
     name: str
     heading: str
     latex: str
+    id: Optional[str]
 
     @staticmethod
-    def try_parse(path: Path) -> Optional[_Info]:
+    def try_parse(path: Path, name_to_id: Mapping[str, str]) -> Optional[_Info]:
         with open(path, "r", encoding="utf-8") as file:
             source = file.read()
 
@@ -37,9 +46,13 @@ class _Info:
             return None
         latex = m.group(1).strip()
 
-        *parents, name = path.stem.split(".")
+        parts = path.stem.split(".")
+        *parents, name = parts
 
-        return _Info(parents=".".join(parents), name=name, heading=heading, latex=latex)
+        law_path = "/".join(parts) + ".py"
+        id_ = name_to_id.get(law_path, None)
+
+        return _Info(parents=".".join(parents), name=name, heading=heading, latex=latex, id=id_)
 
 
 _HEADING_TEMPLATE = """\
@@ -50,14 +63,14 @@ Formulas
 """
 
 _DIRECTORY_TEMPLATE = """\
-- :doc:`(doc) <{parents}>` :code:`{parents}`
+- (:doc:`doc <{parents}>`) :code:`{parents}`
 
     .. toggle::
 
         {body}"""
 
 _MODULE_TEMPLATE = """\
-- :doc:`(doc) <{parents}.{name}>` {heading}
+- (:doc:`doc <{parents}.{name}>`, ID {id}) {heading}
 
     .. math::
 
@@ -76,6 +89,7 @@ def _print_tree(tree: dict[str, list[_Info]]) -> str:
                 name=info.name,
                 heading=info.heading,
                 latex=info.latex,
+                id=info.id or "n/a",
             )
 
             modules.append(module)
@@ -92,13 +106,15 @@ def _print_tree(tree: dict[str, list[_Info]]) -> str:
     return "\n".join(directories)
 
 
-def generate_formulas(generated_dir: str, output_name: str) -> None:
+def generate_formulas(generated_dir: str, output_name: str, unique_id_path: Path) -> None:
     generated_path = Path(generated_dir)
+
+    name_to_id = _get_name_to_id(unique_id_path)
 
     tree: dict[str, list[_Info]] = defaultdict(list)
 
     for path in generated_path.glob("*.rst"):
-        info = _Info.try_parse(path)
+        info = _Info.try_parse(path, name_to_id)
         if not info:
             continue
 

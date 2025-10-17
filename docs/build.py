@@ -92,6 +92,14 @@ def get_parser() -> argparse.ArgumentParser:
         help="do not generate rST files and only build HTML using the current ones",
     )
 
+    parser.add_argument(
+        "--unique-id-path",
+        action="store",
+        dest="unique_id_path",
+        default="unique_law_id.json",
+        help="path to unique id json file",
+    )
+
     return parser
 
 
@@ -128,7 +136,11 @@ def main(argv: Sequence[str]) -> None:
 
         process_generated_files(args.generated_dir)
 
-        generate_formulas(args.generated_dir, "formulas.rst")
+        generate_formulas(
+            args.generated_dir,
+            "formulas.rst",
+            args.unique_id_path,
+        )
 
     if args.rst_only:
         return
