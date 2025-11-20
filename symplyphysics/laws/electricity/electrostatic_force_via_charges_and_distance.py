@@ -10,9 +10,18 @@ square of the distance between them.
 
 #. :quantity_notation:`vacuum_permittivity`.
 
+**Notes:**
+
+#. Per this law, positive force indicated that the two charges repel (both
+   charges are of the same sign), and negative force indicates that they
+   attract one another (the charges are oppositely charged).
+
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Coulomb%27s_law>`__.
+
+..
+    TODO Flip sign of RHS, force should be positive for attraction.
 """
 
 from sympy import (Eq, solve, pi)
