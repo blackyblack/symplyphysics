@@ -1,44 +1,42 @@
 #!/usr/bin/env python3
+"""
+Calculate the angle of total internal reflection for two given media.
+
+If a ray of light tries to transfer from one medium to another, part of it transfers and refracts,
+and another part reflects. There is a possibility for the whole ray to be reflected with nothing
+refracted into the other medium. It is possible when the ray transfers from a denser medium to a
+less dense one. This phenomenon is utilized by fiber-optics technology.
+
+According to the law, if a1 is the incidence angle and a2 is the refraction angle, then
+n1*sin(a1) = n2*sin(a2), or sin(a2) / sin(a1) = n1 / n2. If n1 > n2, a2 will always be greater
+than a1. If we increase a1, a2 increases as well. There is such a value of a1 when a2 reaches its
+maximum possible value (90 degrees) meaning the refracted ray goes along the border of the media.
+If we continue increasing a1, there will be no refraction anymore; the whole ray will be
+reflected.
+"""
 
 import math
 from sympy import solve, pi
 from symplyphysics.laws.optics import refraction_angle_from_environments as refraction_law
-
-# This example show usefulness of refraction law.
-## If ray of light tries to transfer from one medium to another, part of it transfers and refracts and another part reflects.
-## There is a possibility to have the whole ray to be reflected and nothing refracted to another medium.
-## It is possible when ray transfers from more denser medium to less denser.
-## This phenomenon is utilized by fiber optics technology.
-
-## As law says, if alpha is accidence angle, beta is refraction angle, n1*sin(alpha) = n2*sin(beta), or sin(beta) / sin(alpha) = n1/n2. If n1 > n2, beta will be always more then alpha.
-## If we increase alpha, beta increases as well. There is such value of alpha when beta reaches it's max possible value - 90 degrees, it means refracted ray goes along mediums border.
-## If we continue increasing alpha, there will be no more refraction anymore, the whole ray will be only reflected.
-
-solutions = solve(refraction_law.law, refraction_law.incidence_angle, dict=True)
-result_expr = solutions[0][refraction_law.incidence_angle]
 
 ## Optical fiber usually consists of core with refractive index
 CORE_REFRACTIVE_INDEX = 1.479
 ## and coating with refractive index
 COAT_REFRACTIVE_INDEX = 1.474
 
-angle_applied = result_expr.subs({
+equation = refraction_law.law.subs({
     refraction_law.incidence_refractive_index: CORE_REFRACTIVE_INDEX,
     refraction_law.resulting_refractive_index: COAT_REFRACTIVE_INDEX,
     refraction_law.refraction_angle: pi / 2
 })
 
-if (angle_applied > pi / 2 or angle_applied < -pi / 2):
-    result_expr = solutions[1][refraction_law.incidence_angle]
-    angle_applied = result_expr.subs({
-        refraction_law.incidence_refractive_index: CORE_REFRACTIVE_INDEX,
-        refraction_law.resulting_refractive_index: COAT_REFRACTIVE_INDEX,
-        refraction_law.refraction_angle: pi / 2
-    })
+solutions = solve(equation, refraction_law.incidence_angle)
 
-assert angle_applied <= pi / 2
-assert angle_applied >= -pi / 2
+angle_expr = solutions[0]
+if abs(angle_expr) > pi / 2:
+    angle_expr = solutions[1]
 
-extreme_angle_degrees = angle_applied.evalf(3) / math.pi * 180
-print(
-    f"For full internal reflection angle should be above {extreme_angle_degrees.round(3)} degrees")
+assert abs(angle_expr) <= pi / 2
+
+angle_degrees = (angle_expr / math.pi * 180).evalf(3)
+print(f"For full internal reflection angle should be above {angle_degrees} degrees")
