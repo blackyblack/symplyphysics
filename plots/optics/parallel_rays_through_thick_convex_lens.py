@@ -147,7 +147,7 @@ def calculate(y_in: float) -> tuple[Matrix, Matrix, Matrix]:
     x_f = solve(ray_out1_eqn.subs(y, 0), x)[0]
     p_f = make_point(x_f, 0)
 
-    return p_in, p_out, p_f, u_out1
+    return p_in, p_out, p_f
 
 
 # PART 3. Plotting
