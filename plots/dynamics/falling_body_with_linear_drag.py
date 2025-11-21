@@ -63,8 +63,8 @@ base_plot = plot(
     title="Speed of a body falling in a medium with linear resistance",
     legend=True,
     show=False,
-    xlabel="time, $s$",
-    ylabel="speed, $m/s$",
+    xlabel="time, s",
+    ylabel="speed, m/s",
 )
 
 taus = 0.1, 0.5, 1.0, 1.5
@@ -93,7 +93,7 @@ for tau_, color in zip(taus, colors, strict=True):
     subplot = plot(
         speed_expr_,
         (time, 0, 4),
-        label=rf"$m/b = {tau_}$",
+        label=rf"$m/b = {tau_} \, \text{{s}}$",
         line_color=color,
         show=False,
     )
