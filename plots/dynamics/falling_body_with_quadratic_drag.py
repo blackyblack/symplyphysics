@@ -6,7 +6,7 @@ its speed squared. Plot the body's speed as a function of time.
 
 from sympy import solve, Symbol, Idx, Eq, dsolve, S, sqrt
 from sympy.plotting import plot
-from symplyphysics import quantities, global_index
+from symplyphysics import quantities, global_index, print_expression
 from symplyphysics.core.convert import evaluate_expression
 from symplyphysics.definitions import (
     acceleration_is_speed_derivative as acceleration_def,
@@ -47,6 +47,23 @@ newtons_second_eqn = newtons_second_law.law.subs({
 tau = Symbol("tau", positive=True)
 tau_eqn = Eq(tau, sqrt(mass / (quantities.acceleration_due_to_gravity * drag_constant)))
 
+print(
+    "Parameters:",
+    f"1. `{tau}`\tcharacteristic time",
+    f"2. `{mass}`\tmass",
+    f"3. `{quantities.acceleration_due_to_gravity}`\tacceleration due to gravity",
+    f"4. `{drag_constant}`\tdrag constant",
+    sep="\n",
+    end="\n\n",
+)
+
+print(
+    "Relationship between parameters:",
+    print_expression(tau_eqn),
+    sep="\n",
+    end="\n\n",
+)
+
 speed_expr = solve(
     (tau_eqn, acceleration_def.definition, newtons_second_eqn),
     (drag_constant, speed(time), acceleration_def.acceleration(time)),
@@ -61,7 +78,22 @@ speed_expr = dsolve(deqn, speed(time)).rhs
 c1_expr = solve(Eq(speed_expr.subs(time, 0), 0), c1)[0]
 
 speed_expr = speed_expr.subs(c1, c1_expr).simplify()
+
+print(
+    f"Speed of a falling body as a function of time `{time}`:",
+    print_expression(speed_expr),
+    sep="\n",
+    end="\n\n",
+)
+
 asymptote_expr = speed_expr.limit(time, S.Infinity)
+
+print(
+    "Maximum attainable speed (at infinite time):",
+    print_expression(asymptote_expr),
+    sep="\n",
+    end="\n\n",
+)
 
 base_plot = plot(
     title="Speed of a body falling in a medium with quadratic resistance",
@@ -73,6 +105,7 @@ base_plot = plot(
 
 taus = 0.1, 0.5, 1.0, 1.5
 colors = "blue", "orange", "green", "red"
+tmin, tmax = 0, 4
 
 has_asymptote_label = False  # pylint: disable=invalid-name
 
@@ -87,7 +120,7 @@ for tau_, color in zip(taus, colors, strict=True):
 
     subplot = plot(
         asymptote_expr_,
-        (time, 0, 4),
+        (time, tmin, tmax),
         label=asymptote_label,
         line_color="gray",
         show=False,
