@@ -1,36 +1,38 @@
 #!/usr/bin/env python3
+r"""
+Plot the displacement during damped oscillations for different values of the damping ratio
+:math:`\zeta`.
+"""
 
 from collections import namedtuple
 from sympy import dsolve, Expr, symbols, Function as SymFunction
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
+from symplyphysics import units, convert_to_si
 from symplyphysics.definitions import damped_harmonic_oscillator_equation as damped_eqn
 
-displacement = symbols("displacement", cls=SymFunction, real=True)
-time = symbols("time", positive=True)
+displacement = symbols("q", cls=SymFunction, real=True)
+time = symbols("t", positive=True)
 
-Data = namedtuple("Data", "zeta label color")
+Datum = namedtuple("Datum", "zeta label color")
 
-DATAS = (
-    Data(zeta=0.3, label="underdamping", color="green"),
-    Data(zeta=0.999999, label="critical damping",
+DATA = (
+    Datum(zeta=0.3, label="underdamping", color="green"),
+    Datum(zeta=0.999999, label="critical damping",
     color="red"),  # cannot put 1.0 due to rounding errors
-    Data(zeta=2, label="overdamping", color="blue"),
+    Datum(zeta=2, label="overdamping", color="blue"),
 )
 
-OMEGA = 1.5
-INITIAL_POSITION = 1.0
-INITIAL_VELOCITY = -3.0
+OMEGA = convert_to_si(1.5 * units.radian / units.second)
+INITIAL_POSITION = convert_to_si(1.0 * units.meter)
+INITIAL_VELOCITY = convert_to_si(-3.0 * units.meter / units.second)
 
 initial_conditions = {
     displacement(0): INITIAL_POSITION,
     displacement(time).diff(time).subs(time, 0): INITIAL_VELOCITY,
 }
 
-eqn = damped_eqn.definition.subs(
-    damped_eqn.time,
-    time,
-).subs({
+eqn = damped_eqn.definition.subs(damped_eqn.time, time).subs({
     damped_eqn.displacement(time): displacement(time),
     damped_eqn.undamped_angular_frequency: OMEGA,
 })
@@ -55,9 +57,9 @@ p = plot(
     show=False,
 )
 
-for data in DATAS:
-    sol = get_solution(data.zeta)
-    sub_p = plot(sol, (time, 0, 10), label=data.label, line_color=data.color, show=False)
+for datum in DATA:
+    sol = get_solution(datum.zeta)
+    sub_p = plot(sol, (time, 0, 10), label=datum.label, line_color=datum.color, show=False)
     p.append(sub_p[0])
 
 p.show()
