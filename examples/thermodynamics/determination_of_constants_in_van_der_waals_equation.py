@@ -1,11 +1,19 @@
 #!/usr/bin/env python3
+r"""
+A vessel with a volume of :math:`V = 250 \, \text{mL}` contains :math:`1 \, \text{mol}` of gas.
+At temperature :math:`T_1 = 300 \, \text{K}`, the pressure of the gas is
+:math:`p_1 = 90 \, \text{atm}`. At temperature :math:`T_2 = 350 \, \text{K}`, the pressure becomes
+:math:`p_2 = 110 \, \text{atm}`. Determine the van der Waals constants of this gas.
+
+**Source:** `StudFiles — Example 2.24 <https://studfile.net/preview/1772224/page:8/>`__.
+"""
 
 from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, units, convert_to
-from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import van_der_vaals_equation as van_der_waals_law
-from symplyphysics.laws.quantities import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
-
-# Example from 2.24 in https://studfile.net/preview/1772224/page:8/
+from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import (
+    van_der_vaals_equation as van_der_waals_law,)
+from symplyphysics.laws.quantities import (
+    quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,)
 
 temperature_before = Symbol("temperature_before")
 temperature_after = Symbol("temperature_after")
@@ -46,8 +54,11 @@ state_equation_after = van_der_waals_law.law.subs({
     van_der_waals_law.pressure: pressure_after,
 }).subs(base_variables_of_state_equation)
 
-solved = solve((state_equation_before, state_equation_after), (parameter_a, parameter_b),
-    dict=True)[0]
+solved = solve(
+    (state_equation_before, state_equation_after),
+    (parameter_a, parameter_b),
+    dict=True,
+)[0]
 parameter_a_value = solved[parameter_a]
 parameter_b_value = solved[parameter_b]
 
@@ -59,8 +70,13 @@ print(f"Equation for parameter b:\n{print_expression(answer2)}")
 parameter_a_ = answer1.subs(base_values_of_state_equation).rhs
 parameter_b_ = answer2.subs(base_values_of_state_equation).rhs
 
-answer1_value = convert_to(Quantity(parameter_a_),
-    units.pascals * (units.meters**3 / units.mole)**2)
-answer2_value = convert_to(Quantity(parameter_b_), units.liters / units.mole)
-print(f"Parameter a is: {answer1_value} Pa * (m^3 / moles)^2")
-print(f"Parameter b is: {answer2_value} liters / moles")
+answer1_value = convert_to(
+    Quantity(parameter_a_),
+    units.pascals * (units.meters**3 / units.mole)**2,
+)
+answer2_value = convert_to(
+    Quantity(parameter_b_),
+    units.liters / units.mole,
+)
+print(f"Parameter a is: {answer1_value} Pa * (m^3 / mol)^2")
+print(f"Parameter b is: {answer2_value} L / mol")
