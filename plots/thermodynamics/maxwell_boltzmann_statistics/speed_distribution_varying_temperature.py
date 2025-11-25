@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+Plot the speed distribution of a gas in Maxwell—Boltzmann statistics for different values of gas
+temperature.
+"""
 
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
