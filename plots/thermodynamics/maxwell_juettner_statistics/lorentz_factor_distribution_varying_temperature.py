@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+Plot the distribution function of the Lorentz factor for the Maxwell—Jüttner distribution.
+"""
 
 from sympy import solve
 from sympy.plotting import plot
