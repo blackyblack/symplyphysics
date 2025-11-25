@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+Plot occupancy as a function of reduced temperature for the Bosé—Einstein distribution.
+"""
 
 from sympy import symbols, Eq, solve, S
 from sympy.plotting import plot

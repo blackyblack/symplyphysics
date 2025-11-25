@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Plot the occupancy as a function of reduced energy for different values of temperature for the
+Plot occupancy as a function of reduced energy for different values of temperature for the
 Bosé—Einstein distribution.
 """
 
