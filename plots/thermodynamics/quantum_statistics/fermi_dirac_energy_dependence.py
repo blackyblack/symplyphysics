@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+r"""
+Plot occupancy as a function of reduced energy at different values of temperature for the
+Fermi—Dirak distribution.
+"""
 
 from sympy import symbols, Eq, solve, S
 from sympy.plotting import plot
