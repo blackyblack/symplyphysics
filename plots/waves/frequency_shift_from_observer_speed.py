@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Plot the observed frequency (per unit source frequency) as a function of the observer speed (per
-unit source speed).
+unit wave speed) for different values of the source speed.
 """
 
 from sympy import symbols, Eq, solve
