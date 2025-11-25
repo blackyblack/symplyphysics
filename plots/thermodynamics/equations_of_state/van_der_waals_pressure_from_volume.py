@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+Plot the pressure of a van der Waals gas as a function of its volume for different values of gas
+temperature.
+"""
 
 from sympy import symbols, Eq, solve
 from sympy.plotting import plot
