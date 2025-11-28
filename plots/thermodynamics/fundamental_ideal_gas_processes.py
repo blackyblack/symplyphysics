@@ -1,4 +1,12 @@
 #!/usr/bin/env python3
+"""
+Plot the fundamental processes involving the ideal gas on the pressure-volume diagram:
+
+1. Isothermal process (constant temperature).
+1. Isobaric process (constant pressure).
+1. Isochoric process (constant volume).
+1. Adiabatic process (constant entropy).
+"""
 
 from sympy import symbols, solve, Rational
 from sympy.plotting import plot, plot_parametric

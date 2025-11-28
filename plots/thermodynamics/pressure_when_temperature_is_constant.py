@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+Plot the pressure of an ideal gas as a function of its volume during an isothermal process.
+"""
+
 from sympy import solve, symbols
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend

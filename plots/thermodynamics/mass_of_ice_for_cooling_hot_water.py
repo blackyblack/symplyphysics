@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+"""
+A bath is filled with hot water, and a certain amount of ice is added and the temperature of the
+mixture is measured once the system reaches thermodynamic equilibrium. Plot the mass of ice as a
+function of the equilibrium temperature of the mixture.
+"""
 
 from sympy import Idx, symbols, Eq, solve, simplify
 from sympy.plotting import plot

@@ -1,4 +1,13 @@
 #!/usr/bin/env python3
+"""
+Plot the pressure-volume diagram of the carnot cycle, which consists of 4 stages:
+
+1. Isothermal expansion.
+1. Adiabatic expansion.
+1. Isothermal compressions.
+1. Adiabatic compression.
+"""
+
 from sympy import Eq, solve, symbols
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend

@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+"""
+A meteorite is entering the Earth's atmosphere and a part of it melts during its descent. Plot the
+ratio of the part that melts to the initial mass of the meteorite as a function of the meteorite's
+entry speed for different types of materials composing it.
+"""
 
 from sympy import symbols, Eq, solve
 from sympy.plotting import plot
@@ -51,7 +56,7 @@ matter_parameters: dict[str, dict[str, float]] = {
 
 velocity_of_meteorite = symbols("velocity_of_meteorite")
 temperature_of_meteorite = symbols("temperature_of_meteorite")
-koefficient_of_transfer_to_kinetic = symbols("koefficient_of_transfer_to_kinetic")
+coefficient_of_transfer_to_kinetic = symbols("coefficient_of_transfer_to_kinetic")
 
 specific_heat_heating_meteorite = symbols("specific_heat_heating_meteorite")
 specific_heat_melting_meteorite = symbols("specific_heat_melting_meteorite")
@@ -59,7 +64,7 @@ temperature_of_meteorite_melting = symbols("temperature_of_meteorite_melting")
 
 mass_of_meteorite = symbols("mass_of_meteorite")
 mass_of_melting_meteorite = symbols("mass_of_melting_meteorite")
-koefficient_of_melting_meteorite = symbols("koefficient_of_melting_meteorite")
+coefficient_of_melting_meteorite = symbols("coefficient_of_melting_meteorite")
 
 meteorite_heat_capacity = specific_qty_law.law.rhs.subs({
     specific_qty_law.specific_quantity: specific_heat_heating_meteorite,
@@ -85,24 +90,23 @@ kinetic_energy_of_meteorite = kinetic_energy_law.law.subs({
 
 energy_conservation_equation = energy_conservation_law.law.subs({
     energy_conservation_law.mechanical_energy(energy_conservation_law.initial_time):
-    koefficient_of_transfer_to_kinetic * kinetic_energy_of_meteorite,
+    coefficient_of_transfer_to_kinetic * kinetic_energy_of_meteorite,
     energy_conservation_law.mechanical_energy(energy_conservation_law.final_time):
     energy_to_heating_meteorite + energy_to_meteorite_melting
 })
-mass_of_melting_value = solve(energy_conservation_equation, mass_of_melting_meteorite,
-    dict=True)[0][mass_of_melting_meteorite]
-koefficient_of_melting_meteorite_value = mass_of_melting_value / mass_of_meteorite
-answer = Eq(koefficient_of_melting_meteorite, koefficient_of_melting_meteorite_value)
+mass_of_melting_value = solve(energy_conservation_equation, mass_of_melting_meteorite)[0]
+coefficient_of_melting_meteorite_value = mass_of_melting_value / mass_of_meteorite
+answer = Eq(coefficient_of_melting_meteorite, coefficient_of_melting_meteorite_value)
 print(f"Total equation:\n{print_expression(answer)}")
 
-koefficient_of_melting_meteorite_to_plots = answer.subs({
-    koefficient_of_transfer_to_kinetic: 0.80,  # percents
+coefficient_of_melting_meteorite_to_plots = answer.subs({
+    coefficient_of_transfer_to_kinetic: 0.80,  # percents
     temperature_of_meteorite: 300  # kelvins
 })
 
 base_plot = plot(title="The proportion of a molten meteorite depending on its velocity",
-    xlabel=r"$v, \text{m}/\text{s}$",
-    ylabel=r"$\text{molten ratio}$",
+    xlabel="$v$, m/s",
+    ylabel="molten ratio",
     backend=MatplotlibBackend,
     legend=True,
     show=False)
@@ -110,7 +114,7 @@ base_plot = plot(title="The proportion of a molten meteorite depending on its ve
 MASSES_RATIO_MAXIMUM = 1
 MASSES_RATIO_MINIMUM = 0
 for matter, parameters in matter_parameters.items():
-    masses_ratio_to_subplot = koefficient_of_melting_meteorite_to_plots.subs({
+    masses_ratio_to_subplot = coefficient_of_melting_meteorite_to_plots.subs({
         specific_heat_heating_meteorite:
         parameters["specific_heat_heating"],  # joules / (kilogram * kelvin)
         specific_heat_melting_meteorite: parameters["specific_heat_melting"],  # joules / kilogram
@@ -118,18 +122,18 @@ for matter, parameters in matter_parameters.items():
     })
     # First solve is negative value. Ignore it.
     masses_ratio_maximum_equation = masses_ratio_to_subplot.subs(
-        {koefficient_of_melting_meteorite: MASSES_RATIO_MAXIMUM})
-    velocity_maximum = solve(masses_ratio_maximum_equation, velocity_of_meteorite,
-        dict=True)[-1][velocity_of_meteorite]
+        {coefficient_of_melting_meteorite: MASSES_RATIO_MAXIMUM})
+    velocity_maximum = solve(masses_ratio_maximum_equation, velocity_of_meteorite)[-1]
     masses_ratio_minimum_equation = masses_ratio_to_subplot.subs(
-        {koefficient_of_melting_meteorite: MASSES_RATIO_MINIMUM})
-    velocity_minimum = solve(masses_ratio_minimum_equation, velocity_of_meteorite,
-        dict=True)[-1][velocity_of_meteorite]
+        {coefficient_of_melting_meteorite: MASSES_RATIO_MINIMUM})
+    velocity_minimum = solve(masses_ratio_minimum_equation, velocity_of_meteorite)[-1]
 
-    subplot = plot(masses_ratio_to_subplot.rhs,
+    subplot = plot(
+        masses_ratio_to_subplot.rhs,
         (velocity_of_meteorite, velocity_minimum, velocity_maximum),
-        label=f"Material of meteorite is {matter}",
-        show=False)
+        label=matter,
+        show=False,
+    )
     base_plot.append(subplot[0])
 
 base_plot.show()

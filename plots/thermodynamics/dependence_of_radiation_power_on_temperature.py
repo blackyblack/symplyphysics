@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+"""
+Plot the radiation power of an ideal black body as a function of temperature. See
+*Stefan—Boltzmann's law*.
+"""
+
 from sympy import solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
@@ -17,8 +22,8 @@ print(f"Radiance function is:\n{print_expression(radiance_temperature)}")
 p1 = plot(radiance_temperature, (stefan_boltzmann_law.temperature, 0, 400),
     line_color="black",
     title="Stefan - Boltzmann Law",
-    xlabel="T(K)",
-    ylabel="P(W/m^2)",
+    xlabel="T, K",
+    ylabel=r"P, $\text{W}/\text{m}^2$",
     label="completely black body",
     backend=MatplotlibBackend,
     legend=True,
