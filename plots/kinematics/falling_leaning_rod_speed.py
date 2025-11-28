@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
-A rigid rod :math:`AB` of length :math:`l` leans with both ends onto the floor (with end
-:math:`A`) and the wall (with end :math:`B`). The initial coordinate of end :math:`A` is
-:math:`x_0`. Find the expression for the position of end :math:`B` as a function of time :math:`t`
-as end :math:`A` moves along the floor with constant speed :math:`v` in the positive direction of
-the :math:`x`-axis.
+A rigid rod :math:`AB` of length :math:`l` leans onto the floor (with end :math:`A`) and the wall
+(with end :math:`B`). The initial coordinate of end :math:`A` is :math:`x_0`. Find the expression
+for the position of end :math:`B` as a function of time :math:`t` as end :math:`A` moves along the
+floor with constant speed :math:`v` in the positive direction of the :math:`x`-axis.
 """
 
 from sympy import Eq, solve, ask, Q
