@@ -6,6 +6,8 @@ brick can extend beyond the right edge of the bottom brick that serves as the ba
 stack?
 """
 
+# "Gorbunov, E.D. & Panaiotti E.D., Sbornik zadach po fizike dlya postupayushchikh v VUZ: Uchebnoe posobie, 3rd ed., rev. and enl. Moscow: Izdatel'stvo MGTU im. N. E. Baumana, 2005, 240 p., ill." — page 50, exercise 4.
+
 import matplotlib.pyplot as plt
 from sympy import Idx, solve, Eq, IndexedBase, Indexed, Sum, Wild, Expr, rot_axis3
 from sympy.matrices.dense import DenseMatrix
