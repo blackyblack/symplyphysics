@@ -132,7 +132,7 @@ end_wavelengths_in_nm = [380e-3, 450e-3, 485e-3, 500e-3, 565e-3, 590e-3, 625e-3,
 mid_wavelengths_in_nm = [
     (l1 + l2) / 2 for l1, l2 in zip(end_wavelengths_in_nm, end_wavelengths_in_nm[1:])
 ]
-colors = "violet blue cyan green yellow orange red".split()
+colors = "purple blue cyan green yellow orange red".split()
 assert len(mid_wavelengths_in_nm) == len(colors)
 
 x = sym_symbols("x", positive=True)
