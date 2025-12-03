@@ -8,9 +8,11 @@ from typing import Any
 from math import isnan, isinf
 from argparse import ArgumentParser
 import sys
-from sympy import (ImmutableMatrix as Matrix, symbols as sym_symbols, Eq, solve, Expr, sqrt,
-    rot_axis3, sin, pi, asin, Point2D, sign, im)
-from sympy.plotting import plot, plot_parametric
+from sympy import (ImmutableMatrix, symbols as sym_symbols, Eq, solve, Expr, sqrt, rot_axis3, sin,
+    pi, asin, Point2D, sign, im, plot, plot_parametric)
+from symplyphysics.core.experimental.coordinate_systems import CoordinateVector, CARTESIAN
+from symplyphysics.core.experimental.coordinate_systems.vector import as_coordinate_vector, component
+from symplyphysics.core.experimental.vectors import VectorNorm, VectorCross, VectorDot
 from symplyphysics.laws.optics import refraction_angle_from_environments as snells_law
 from symplyphysics.core.geometry.line import two_point_function
 
@@ -82,10 +84,10 @@ if media_refractive_index >= lens_refractive_index:
 # PART 2. Calculations
 
 
-def make_point(x_: Any, y_: Any) -> Matrix:
+def make_point(x_: Any, y_: Any) -> CoordinateVector:
     """Embeds a 2-dimensional point `(x, y)` into the 3-dimensional plane `z = 0`."""
 
-    return Matrix([x_, y_, 0])
+    return CoordinateVector([x_, y_, 0], CARTESIAN)
 
 
 # Radius of the lens
@@ -116,9 +118,9 @@ x, y = sym_symbols("x y", real=True)
 p = make_point(x, y)
 
 
-def sq_norm(v: Matrix) -> Expr:
+def sq_norm(v: Expr) -> Expr:
     """Returns the square of the norm of `v`."""
-    return v.dot(v)
+    return (VectorNorm(as_coordinate_vector(v)).doit()**2)
 
 
 # Equation of the **left** side of the lens
@@ -128,20 +130,20 @@ left_side_eqn = Eq(sq_norm(p - left_side_center), left_radius**2)
 right_side_eqn = Eq(sq_norm(p - right_side_center), right_radius**2)
 
 
-def normalize(v: Matrix) -> Expr:
+def normalize(v: Expr) -> CoordinateVector:
     """Returns the unit direction vector co-directed with the given vector."""
-    return v / sqrt(sq_norm(v))
+    return as_coordinate_vector(v / sqrt(sq_norm(v)))
 
 
-e_z = Matrix([0, 0, 1])
+e_z = CoordinateVector([0, 0, 1], CARTESIAN)
 
 
-def sin_between_unit_vectors(u1: Matrix, u2: Matrix) -> Expr:
+def sin_between_unit_vectors(u1: CoordinateVector, u2: CoordinateVector) -> Expr:
     """Assumes unit input vectors with a zero third component."""
-    return abs(u1.cross(u2).dot(e_z))
+    return abs(VectorDot(e_z, VectorCross(u1, u2))).doit()
 
 
-def rotate(theta: Expr, v: Matrix) -> Matrix:
+def rotate(theta: Expr, v: Expr) -> CoordinateVector:
     """
     Rotates vector `v` anti-clockwise at angle `theta` if `theta > 0`, and clockwise otherwise.
 
@@ -149,14 +151,25 @@ def rotate(theta: Expr, v: Matrix) -> Matrix:
     >>> assert rotate(-pi / 2, make_point(1, 1)) == make_point(1, -1)
     """
 
-    return rot_axis3(-theta) * v
+    v = as_coordinate_vector(v)
+
+    old_components = ImmutableMatrix([component(v, 0), component(v, 1), component(v, 2)])
+    new_components = rot_axis3(-theta) * old_components
+
+    return CoordinateVector(new_components, v.system, v.point)
+
+
+def line_eqn(point_through: Expr, direction_vector: Expr) -> Expr:
+    return VectorDot(e_z, VectorCross(direction_vector, p - point_through)).doit()
 
 
 (refraction_angle_expr,) = (
     sol for sol in solve(snells_law.law, snells_law.refraction_angle) if isinstance(sol, asin))
 
 
-def calculate(incoming_intersection_y: float) -> tuple[Matrix, Matrix, Matrix] | None:
+def calculate(
+    incoming_intersection_y: float,
+) -> tuple[CoordinateVector, CoordinateVector, CoordinateVector] | None:
     """Calculates intersections with the lens and with the optical axis `y = 0`"""
 
     # Point of intersection of the incoming ray with the left side of the lens
@@ -184,7 +197,7 @@ def calculate(incoming_intersection_y: float) -> tuple[Matrix, Matrix, Matrix] |
         sign(incoming_intersection_y) * incoming_refraction_angle,
         -incoming_unit_normal,
     )
-    ray_in_lens_eqn = Eq((p - incoming_intersection_point).cross(ray_unit_vector_in_lens)[2], 0)
+    ray_in_lens_eqn = line_eqn(incoming_intersection_point, ray_unit_vector_in_lens)
 
     # Point of intersection of the ray in the lens and the right side of the lens.
     (outgoing_intersection_point,) = (make_point(sol[x], sol[y])
@@ -213,10 +226,7 @@ def calculate(incoming_intersection_y: float) -> tuple[Matrix, Matrix, Matrix] |
         outgoing_unit_normal,
     )
 
-    outgoing_ray_eqn = Eq(
-        (p - outgoing_intersection_point).cross(outgoing_ray_unit_vector).dot(e_z),
-        0,
-    )
+    outgoing_ray_eqn = line_eqn(outgoing_intersection_point, outgoing_ray_unit_vector)
 
     # Point of intersection of the outgoing ray with the optical axis
     optical_axis_intersection_x = solve(outgoing_ray_eqn.subs(y, 0), x)[0]
@@ -228,25 +238,30 @@ def calculate(incoming_intersection_y: float) -> tuple[Matrix, Matrix, Matrix] |
 # PART 3. Plotting
 
 
-def to_point2d(m: Matrix) -> Point2D:
-    return Point2D(m[0], m[1])
+def to_point2d(v: Expr) -> Point2D:
+    v = as_coordinate_vector(v)
+
+    v0 = component(v, 0)
+    v1 = component(v, 1)
+
+    return Point2D(v0, v1)
 
 
-def make_line_eqn(v1: Matrix, v2: Matrix) -> Expr:
+def make_line_eqn(v1: Expr, v2: Expr) -> Expr:
     return two_point_function(to_point2d(v1), to_point2d(v2), x)
 
 
 def display() -> None:
     y_ins = (-0.9, -0.7, -0.5, -0.3, -0.1, 0.1, 0.3, 0.5, 0.7, 0.9)
 
-    data: list[tuple[Matrix, Matrix, Matrix]] = []
+    data: list[tuple[CoordinateVector, CoordinateVector, CoordinateVector]] = []
     for y_in in y_ins:
         t = calculate(y_in)
         if not t:
             continue
         data.append(t)
 
-    maxval = max(max((t[2][0] for t in data), default=1), 1) * 1.1
+    maxval = max(max((component(t[2], 0) for t in data), default=1), 1) * 1.1
 
     base_plot = plot(
         title="Parallel rays passing through a thick convex lens",
@@ -272,9 +287,10 @@ def display() -> None:
     left_max_angle: Expr = asin(lens_radius / left_radius)
     right_max_angle: Expr = asin(lens_radius / right_radius)
 
-    eqn1_parametric = rotate(phi, make_point(left_radius, 0)) + left_side_center
+    eqn1_parametric = as_coordinate_vector(
+        rotate(phi, make_point(left_radius, 0)) + left_side_center)
     subplot = plot_parametric(
-        eqn1_parametric[:-1],
+        eqn1_parametric.components[:-1],
         (phi, pi - left_max_angle, pi + left_max_angle),
         line_color="blue",
         label="",
@@ -282,9 +298,10 @@ def display() -> None:
     )
     base_plot.extend(subplot)
 
-    eqn2_parametric = rotate(phi, make_point(right_radius, 0)) + right_side_center
+    eqn2_parametric = as_coordinate_vector(
+        rotate(phi, make_point(right_radius, 0)) + right_side_center)
     subplot = plot_parametric(
-        eqn2_parametric[:-1],
+        eqn2_parametric.components[:-1],
         (phi, -right_max_angle, right_max_angle),
         line_color="blue",
         label="",
@@ -293,10 +310,10 @@ def display() -> None:
     base_plot.extend(subplot)
 
     for p_in, p_out, p_f in data:
-        p_left = make_point(-maxval, p_in[1])
+        p_left = make_point(-maxval, p_in.components[1])
         subplot = plot(
             make_line_eqn(p_left, p_in),
-            (x, -maxval, p_in[0]),
+            (x, -maxval, p_in.components[0]),
             line_color="green",
             label="",
             show=False,
@@ -305,7 +322,7 @@ def display() -> None:
 
         subplot = plot(
             make_line_eqn(p_in, p_out),
-            (x, p_in[0], p_out[0]),
+            (x, p_in.components[0], p_out.components[0]),
             line_color="green",
             label="",
             show=False,
@@ -314,7 +331,7 @@ def display() -> None:
 
         subplot = plot(
             make_line_eqn(p_out, p_f),
-            (x, p_out[0], p_f[0]),
+            (x, p_out.components[0], p_f.components[0]),
             line_color="green",
             label="",
             show=False,

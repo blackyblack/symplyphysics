@@ -281,6 +281,19 @@ class QuantityCoordinateVector(CoordinateVector):
         return as_quantity_coordinate_vector(expr)
 
 
+def component(expr: Expr, index: int) -> Expr:
+    if not (0 <= index < 3):
+        raise ValueError(f"Index should be 0, 1, or 2, got {index}")
+
+    if expr == 0:
+        return 0
+
+    if isinstance(expr, CoordinateVector):
+        return expr.components[index]
+
+    raise TypeError(f"Expect a zero vector or a CoordinateVector, got {type(expr).__name__}")
+
+
 def as_coordinate_vector(expr: Expr) -> CoordinateVector:
     result = combine_coordinate_vectors(expr)
 
