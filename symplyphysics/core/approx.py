@@ -10,11 +10,12 @@ quantity vectors are equal to each other within some tolerance.
 
 from typing import Optional, SupportsFloat
 from pytest import approx
-from sympy import N, re, im
+from sympy import N, re, im, Expr
 from sympy.physics.units import Dimension
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.legacy_vectors.vectors import QuantityVector
+from .coordinate_systems import AppliedPoint
+from .coordinate_systems.vector import as_quantity_coordinate_vector
 
 APPROX_RELATIVE_TOLERANCE = 0.001
 
@@ -121,26 +122,78 @@ def assert_equal(
     ), error_message()
 
 
+# def assert_equal_vectors(
+#     lhs: QuantityVector,
+#     rhs: QuantityVector,
+#     *,
+#     relative_tolerance: Optional[float] = None,
+#     absolute_tolerance: Optional[float] = None,
+#     dimension: Optional[Dimension] = None,
+# ) -> None:
+#     """
+#     Asserts that the quantity vectors ``lhs`` and ``rhs`` are equal to each other component-wise
+#     within ``relative tolerance`` and/or ``absolute_tolerance``.
+#     """
+
+#     for left_component, right_component in zip(lhs.components, rhs.components, strict=True):
+#         assert_equal(
+#             left_component,
+#             right_component,
+#             relative_tolerance=relative_tolerance,
+#             absolute_tolerance=absolute_tolerance,
+#             dimension=dimension,
+#         )
+
+
 def assert_equal_vectors(
-    lhs: QuantityVector,
-    rhs: QuantityVector,
+    lhs: Expr,
+    rhs: Expr,
     *,
     relative_tolerance: Optional[float] = None,
     absolute_tolerance: Optional[float] = None,
     dimension: Optional[Dimension] = None,
 ) -> None:
-    """
-    Asserts that the quantity vectors ``lhs`` and ``rhs`` are equal to each other component-wise
-    within ``relative tolerance`` and/or ``absolute_tolerance``.
-    """
+    lhs = as_quantity_coordinate_vector(lhs)
+    rhs = as_quantity_coordinate_vector(rhs)
 
-    for left_component, right_component in zip(lhs.components, rhs.components, strict=True):
+    if lhs == 0 and rhs == 0:
+        return
+
+    if lhs != 0 and rhs != 0:
+        assert lhs.system == rhs.system
+        assert lhs.point == rhs.point
+
+        for a, b in zip(lhs.components, rhs.components):
+            assert_equal(
+                a,
+                b,
+                relative_tolerance=relative_tolerance,
+                absolute_tolerance=absolute_tolerance,
+                dimension=dimension,
+            )
+
+        return
+
+    components = lhs.components if lhs != 0 else rhs.components
+    for component in components:
         assert_equal(
-            left_component,
-            right_component,
+            component,
+            0,
             relative_tolerance=relative_tolerance,
             absolute_tolerance=absolute_tolerance,
             dimension=dimension,
+        )
+
+
+def assert_quantity_point(point: AppliedPoint, func: Optional[str] = None) -> None:
+    func = func or "assert_quantity_point"
+
+    for base_scalar, coordinate in point.coordinates.items():
+        assert_equivalent_dimension(
+            coordinate,
+            f"point_{base_scalar.display_name}",
+            func,
+            base_scalar.dimension,
         )
 
 
@@ -149,4 +202,5 @@ __all__ = [
     "approx_equal_quantities",
     "assert_equal",
     "assert_equal_vectors",
+    "assert_quantity_point",
 ]

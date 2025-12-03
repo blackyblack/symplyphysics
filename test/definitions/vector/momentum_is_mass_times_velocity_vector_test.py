@@ -3,8 +3,8 @@ from pytest import fixture, raises
 from symplyphysics import units, Quantity, errors
 from symplyphysics.definitions.vector import momentum_is_mass_times_velocity_vector as momentum_def
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
 
 # Description
 ## A particle of mass m = 0.2 kg is moving in space, its velocity vector being (-1, 0, 2) m/s.

@@ -4,7 +4,7 @@ from sympy import cos, pi, sin
 from symplyphysics import assert_equal, errors, units, Quantity
 from symplyphysics.laws.dynamics.vector import mechanical_work_from_force_and_displacement as work_law
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
 
 # Description
 ## Force of 100N is applied to heavy object lying oh horizontal table. Force is directed 60 degrees up.

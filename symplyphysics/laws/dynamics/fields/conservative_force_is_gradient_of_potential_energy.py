@@ -21,9 +21,9 @@ from sympy import Eq
 
 from symplyphysics import symbols, clone_as_function
 
-from symplyphysics.core.experimental.vectors import (clone_as_vector_symbol,
+from symplyphysics.core.vectors import (clone_as_vector_symbol,
     clone_as_vector_function)
-from symplyphysics.core.experimental.operators import VectorGradient
+from symplyphysics.core.operators import VectorGradient
 
 position_vector = clone_as_vector_symbol(symbols.distance_to_origin)
 """

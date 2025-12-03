@@ -29,8 +29,8 @@ into account as well, which results into the series shown below.
 from sympy import Eq, evaluate
 from symplyphysics import Quantity, validate_input, validate_output, symbols, quantities
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorCross
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import clone_as_vector_symbol, VectorCross
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 displacement = clone_as_vector_symbol(symbols.distance)
 """

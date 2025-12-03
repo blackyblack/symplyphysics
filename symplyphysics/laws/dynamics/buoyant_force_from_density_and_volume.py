@@ -16,8 +16,8 @@ from symplyphysics import (clone_as_symbol, symbols, quantities, Quantity, valid
     validate_output, global_index)
 from symplyphysics.core.expr_comparisons import expr_equals
 
-from symplyphysics.core.experimental.coordinate_systems import CoordinateVector, CARTESIAN
-from symplyphysics.core.experimental.vectors import VectorNorm
+from symplyphysics.core.coordinate_systems import CoordinateVector, CARTESIAN
+from symplyphysics.core.vectors import VectorNorm
 
 from symplyphysics.definitions.vector import (
     net_force_vector_is_sum_of_forces as _superposition_law,

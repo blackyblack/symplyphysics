@@ -3,9 +3,9 @@ from pytest import fixture, raises
 from symplyphysics import errors, units, Quantity
 from symplyphysics.laws.gravity.vector import acceleration_due_to_gravity_via_gravity_force_and_centripetal_acceleration as law
 
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector, CARTESIAN
-from symplyphysics.core.experimental.approx import assert_equal_vectors
-from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector, CARTESIAN
+from symplyphysics.core.approx import assert_equal_vectors
+from symplyphysics.core.solvers import solve_for_vector
 
 Args = namedtuple("Args", "f a m g")
 

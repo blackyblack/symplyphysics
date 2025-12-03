@@ -7,8 +7,8 @@ from symplyphysics.laws.dynamics import acceleration_is_force_over_mass
 from symplyphysics.laws.kinematics import position_via_constant_acceleration_and_time as const_acceleration_law
 from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as const_velocity_law
 
-from symplyphysics.core.experimental.coordinate_systems import CoordinateVector, CARTESIAN
-from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.coordinate_systems import CoordinateVector, CARTESIAN
+from symplyphysics.core.solvers import solve_for_vector
 
 # Description
 ## A charged drop with a mass of m = 1.5e-7 g and a negative charge of magnitude Q = 2.8e-13 C enters

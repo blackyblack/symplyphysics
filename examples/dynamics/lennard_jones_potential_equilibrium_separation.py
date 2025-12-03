@@ -5,8 +5,8 @@ from symplyphysics import print_expression, convert_to, units, Quantity
 from symplyphysics.laws.dynamics.fields import (
     conservative_force_is_gradient_of_potential_energy as potential_law,)
 
-from symplyphysics.core.experimental.vectors import VectorNorm
-from symplyphysics.core.experimental.coordinate_systems import (CoordinateScalar, CARTESIAN,
+from symplyphysics.core.vectors import VectorNorm
+from symplyphysics.core.coordinate_systems import (CoordinateScalar, CARTESIAN,
     CoordinateVector)
 
 # Description

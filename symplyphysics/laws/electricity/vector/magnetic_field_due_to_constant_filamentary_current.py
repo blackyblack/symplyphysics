@@ -32,8 +32,8 @@ electric current.
 from sympy import Eq, pi
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorCross, VectorNorm
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import clone_as_vector_symbol, VectorCross, VectorNorm
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 magnetic_flux_density_change = clone_as_vector_symbol(
     symbols.magnetic_flux_density,

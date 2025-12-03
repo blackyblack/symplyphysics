@@ -12,13 +12,13 @@ from sympy.simplify import fraction
 
 from symplyphysics.core.symbols.symbols import DimensionSymbol, Function, IndexedSymbol
 
-from symplyphysics.core.experimental.vectors import (VectorSymbol, VectorNorm, VectorDot,
+from symplyphysics.core.vectors import (VectorSymbol, VectorNorm, VectorDot,
     VectorCross, VectorMixedProduct, AppliedVectorFunction, VectorFunction, IndexedVectorSymbol)
-from symplyphysics.core.experimental.coordinate_systems import CoordinateScalar, CoordinateVector
-from symplyphysics.core.experimental.coordinate_systems.curve import Curve
-from symplyphysics.core.experimental.operators import (VectorGradient, VectorCurl, VectorDivergence,
+from symplyphysics.core.coordinate_systems import CoordinateScalar, CoordinateVector
+from symplyphysics.core.coordinate_systems.curve import Curve
+from symplyphysics.core.operators import (VectorGradient, VectorCurl, VectorDivergence,
     VectorLaplacian)
-from symplyphysics.core.experimental.integrals.line_integral import LineIntegral
+from symplyphysics.core.integrals.line_integral import LineIntegral
 
 from .miscellaneous import process_function
 

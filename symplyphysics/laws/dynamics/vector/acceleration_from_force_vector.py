@@ -14,10 +14,10 @@ proportionality.
 from sympy import Eq, Expr
 from symplyphysics import Quantity, validate_input, validate_output, symbols, clone_as_symbol
 
-from symplyphysics.core.experimental.solvers import solve_for_vector, vector_equals
-from symplyphysics.core.experimental.vectors import (clone_as_vector_symbol,
+from symplyphysics.core.solvers import solve_for_vector, vector_equals
+from symplyphysics.core.vectors import (clone_as_vector_symbol,
     clone_as_vector_function)
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 from symplyphysics.definitions.vector import (
     momentum_is_mass_times_velocity_vector as _momentum_def,

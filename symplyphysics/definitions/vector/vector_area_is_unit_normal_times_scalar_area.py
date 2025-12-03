@@ -39,8 +39,8 @@ from typing import Optional
 from sympy import Eq
 from symplyphysics import symbols, Quantity, validate_input, validate_output, assert_equal
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorSymbol, VectorNorm
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import clone_as_vector_symbol, VectorSymbol, VectorNorm
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 vector_area = clone_as_vector_symbol(symbols.area)
 """

@@ -4,9 +4,9 @@ from sympy import (Function as SymFunction, ImmutableMatrix, sin, cos, sqrt,
     symbols as sym_symbols)
 from symplyphysics.core.symbols.symbols import BasicSymbol, Symbol
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.experimental.vectors import (is_vector_expr, VectorSymbol, VectorNorm as
+from symplyphysics.core.vectors import (is_vector_expr, VectorSymbol, VectorNorm as
     norm, VectorDot as dot, VectorCross as cross, vector_diff)
-from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
+from symplyphysics.core.coordinate_systems import (CartesianCoordinateSystem,
     CylindricalCoordinateSystem, SphericalCoordinateSystem, AppliedPoint, CoordinateVector,
     combine_coordinate_vectors)
 

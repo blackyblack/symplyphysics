@@ -3,8 +3,8 @@ from pytest import fixture, raises
 from symplyphysics import errors, units, Quantity
 from symplyphysics.laws.gravity.vector import falling_body_displacement as law
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
 
 Args = namedtuple("Args", "t v0 w g")
 

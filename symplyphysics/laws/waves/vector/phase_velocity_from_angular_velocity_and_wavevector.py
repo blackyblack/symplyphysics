@@ -23,9 +23,9 @@ collinear with the wavevector.
 from sympy import Eq, solve
 from symplyphysics import Quantity, validate_input, validate_output, symbols, clone_as_symbol
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorNorm
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
-from symplyphysics.core.experimental.solvers import vector_equals, apply, solve_for_vector
+from symplyphysics.core.vectors import clone_as_vector_symbol, VectorNorm
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.solvers import vector_equals, apply, solve_for_vector
 
 phase_velocity = clone_as_vector_symbol(symbols.phase_speed)
 """

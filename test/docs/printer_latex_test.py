@@ -7,9 +7,9 @@ from symplyphysics import (Quantity, Symbol, clone_as_function, clone_as_symbol,
 from symplyphysics.docs.printer_latex import latex_str
 from symplyphysics.core.operations import symbolic
 
-from symplyphysics.core.experimental.vectors import (VectorSymbol, VectorNorm, VectorDot,
+from symplyphysics.core.vectors import (VectorSymbol, VectorNorm, VectorDot,
     VectorCross, VectorMixedProduct, VectorFunction, vector_diff)
-from symplyphysics.core.experimental.coordinate_systems import (CoordinateScalar, CoordinateVector,
+from symplyphysics.core.coordinate_systems import (CoordinateScalar, CoordinateVector,
     CartesianCoordinateSystem, CylindricalCoordinateSystem, QuantityCoordinateVector)
 
 Args = namedtuple(

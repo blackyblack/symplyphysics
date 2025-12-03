@@ -30,8 +30,8 @@ from symplyphysics import symbols, Quantity, validate_input, validate_output
 from symplyphysics.laws.dynamics.springs.vector import (
     spring_reaction_vector_is_proportional_to_deformation as _hookes_vector_law,)
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
-from symplyphysics.core.experimental.solvers import solve_for_vector, vector_equals
+from symplyphysics.core.coordinate_systems import CARTESIAN, CoordinateVector
+from symplyphysics.core.solvers import solve_for_vector, vector_equals
 
 spring_reaction = symbols.force
 """

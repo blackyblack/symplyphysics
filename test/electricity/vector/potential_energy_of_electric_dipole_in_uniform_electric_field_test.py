@@ -4,7 +4,7 @@ from symplyphysics import assert_equal, units, errors
 from symplyphysics.laws.electricity.vector import (
     potential_energy_of_electric_dipole_in_uniform_electric_field as law)
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
 
 Args = namedtuple("Args", "p e")
 

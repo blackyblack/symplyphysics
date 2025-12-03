@@ -5,7 +5,7 @@ from symplyphysics import units, Quantity, assert_equal, errors, quantities
 from symplyphysics.laws.electricity.maxwell_equations import (
     charge_density_from_electric_induction_divergence as gauss_law,)
 
-from symplyphysics.core.experimental.coordinate_systems import (CoordinateVector, CARTESIAN,
+from symplyphysics.core.coordinate_systems import (CoordinateVector, CARTESIAN,
     AppliedPoint)
 
 # The electric induction vector field is given. For its distribution, the electric intensity is

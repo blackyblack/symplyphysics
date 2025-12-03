@@ -7,8 +7,8 @@ Electric field due to dipole (Vector)
 from sympy import Eq, Rational, pi
 from symplyphysics import validate_input, validate_output, symbols, quantities
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorDot, VectorNorm
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import clone_as_vector_symbol, VectorDot, VectorNorm
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 electric_field = clone_as_vector_symbol(symbols.electric_field_strength)
 """

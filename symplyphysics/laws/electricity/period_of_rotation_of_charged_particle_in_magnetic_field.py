@@ -30,8 +30,8 @@ from symplyphysics.laws.kinematics import (
 )
 from symplyphysics.definitions import period_from_angular_frequency as _period_law
 
-from symplyphysics.core.experimental.vectors import VectorNorm
-from symplyphysics.core.experimental.coordinate_systems import CoordinateVector, CARTESIAN
+from symplyphysics.core.vectors import VectorNorm
+from symplyphysics.core.coordinate_systems import CoordinateVector, CARTESIAN
 
 period = symbols.period
 """

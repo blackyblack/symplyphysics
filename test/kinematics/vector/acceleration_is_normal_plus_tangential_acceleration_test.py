@@ -3,8 +3,8 @@ from pytest import fixture, raises
 from symplyphysics import errors, units, Quantity
 from symplyphysics.laws.kinematics.vector import acceleration_is_normal_plus_tangential_acceleration as acceleration_law
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
 
 # Description
 ## A body is moving along a curve. At a certain point in time, its radial acceleration

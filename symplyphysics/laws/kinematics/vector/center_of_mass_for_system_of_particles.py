@@ -17,8 +17,8 @@ from symplyphysics import (validate_input, validate_output, Quantity, symbols, g
     IndexedSum, units)
 from symplyphysics.core.symbols.symbols import clone_as_indexed
 
-from symplyphysics.core.experimental.vectors import clone_as_indexed_vector, VectorSymbol
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import clone_as_indexed_vector, VectorSymbol
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 center_of_mass = VectorSymbol("r_com", units.length, display_latex="{\\vec r}_\\text{COM}")
 """

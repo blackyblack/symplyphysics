@@ -3,9 +3,9 @@ from pytest import fixture, raises
 from symplyphysics import units, errors, Quantity
 from symplyphysics.laws.dynamics.vector import acceleration_from_force_vector as newton_second_law
 
-from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
+from symplyphysics.core.coordinate_systems import (CartesianCoordinateSystem,
     QuantityCoordinateVector)
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.approx import assert_equal_vectors
 
 Args = namedtuple("Args", ["cart", "m", "a", "f"])
 

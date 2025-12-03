@@ -1,8 +1,8 @@
 from collections import namedtuple
 from pytest import fixture
 from symplyphysics import assert_equal
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
-from symplyphysics.core.experimental.vectors import VectorCross, VectorNorm
+from symplyphysics.core.coordinate_systems import CARTESIAN, CoordinateVector
+from symplyphysics.core.vectors import VectorCross, VectorNorm
 from symplyphysics.laws.geometry import (
     cross_product_is_proportional_to_sine_between_vectors as sine_law,)
 

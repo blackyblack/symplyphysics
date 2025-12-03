@@ -19,8 +19,8 @@ evolution of heat transferred from hotter to colder environments in time and spa
 from sympy import Eq, Derivative, evaluate
 from symplyphysics import symbols, clone_as_function, Symbol, Function, units
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol
-from symplyphysics.core.experimental.operators import VectorDivergence, VectorGradient
+from symplyphysics.core.vectors import clone_as_vector_symbol
+from symplyphysics.core.operators import VectorDivergence, VectorGradient
 
 medium_density = symbols.density
 """

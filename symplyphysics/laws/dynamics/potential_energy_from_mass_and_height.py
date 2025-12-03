@@ -22,8 +22,8 @@ from symplyphysics import (Quantity, validate_input, validate_output, symbols, q
     clone_as_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
-from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.coordinate_systems import CARTESIAN, CoordinateVector
+from symplyphysics.core.solvers import solve_for_vector
 
 from symplyphysics.definitions import (
     mechanical_energy_is_kinetic_and_potential_energy as _energy_def,)

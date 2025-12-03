@@ -3,8 +3,8 @@ from pytest import fixture, raises
 from symplyphysics import units, errors, Quantity
 from symplyphysics.laws.electricity.vector import electric_dipole_moment_is_charge_times_displacement as dipole_moment
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
 
 # Description
 ## The vector of the dipole moment of two point charges of magnitude Q = 2e-13 C, the displacement

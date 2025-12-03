@@ -3,8 +3,8 @@ from pytest import fixture, raises
 from symplyphysics import units, Quantity, errors
 from symplyphysics.definitions.vector import acceleration_is_velocity_derivative as law
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
 
 Args = namedtuple("Args", "v0 v1 dt")
 

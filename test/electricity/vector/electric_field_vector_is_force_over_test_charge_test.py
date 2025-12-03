@@ -3,8 +3,8 @@ from pytest import fixture, raises
 from symplyphysics import units, errors, Quantity
 from symplyphysics.laws.electricity.vector import electric_field_vector_is_force_over_test_charge as electric_field
 
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector, CARTESIAN
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector, CARTESIAN
+from symplyphysics.core.approx import assert_equal_vectors
 
 # The electric field at a point is [1, 0, 2] N/C if the force exerted on a test charge of 0.5 C is [0.5, 0, 1] N
 

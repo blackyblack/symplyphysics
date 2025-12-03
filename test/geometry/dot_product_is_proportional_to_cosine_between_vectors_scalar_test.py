@@ -1,8 +1,8 @@
 from collections import namedtuple
 from pytest import fixture
 from symplyphysics import assert_equal
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
-from symplyphysics.core.experimental.vectors import VectorDot, VectorNorm
+from symplyphysics.core.coordinate_systems import CARTESIAN, CoordinateVector
+from symplyphysics.core.vectors import VectorDot, VectorNorm
 from symplyphysics.laws.geometry import dot_product_is_proportional_to_cosine_between_vectors_scalar as cosine_law
 
 # Description

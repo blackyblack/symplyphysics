@@ -14,9 +14,9 @@ from symplyphysics.laws.kinematics import (
 from symplyphysics.laws.kinematics.vector import (
     acceleration_is_normal_plus_tangential_acceleration as total_acceleration_law,)
 
-from symplyphysics.core.experimental.vectors import VectorNorm
-from symplyphysics.core.experimental.coordinate_systems import CoordinateVector, CARTESIAN
-from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.vectors import VectorNorm
+from symplyphysics.core.coordinate_systems import CoordinateVector, CARTESIAN
+from symplyphysics.core.solvers import solve_for_vector
 
 # Description
 ## A wheel is rotating about a fixed axis so that the angular displacement is expressed as k*t^2, where

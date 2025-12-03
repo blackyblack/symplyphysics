@@ -23,8 +23,8 @@ frame :math:`S'`, so it is essentially zero for objects at rest in :math:`S'`.
 from sympy import Eq
 from symplyphysics import validate_input, validate_output, symbols
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorCross
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import clone_as_vector_symbol, VectorCross
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 coriolis_acceleration = clone_as_vector_symbol(
     symbols.acceleration,

@@ -3,7 +3,7 @@ from pytest import fixture, raises
 from symplyphysics import assert_equal, errors, units, Quantity
 from symplyphysics.laws.dynamics.vector import instantaneous_power_is_force_dot_velocity as power_law
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
 
 # Description
 ## A force is acting on an object, and at some time, the force vector is (1, 1, -1) N, and the object

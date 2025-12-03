@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from pytest import fixture
 from sympy import ImmutableMatrix, atan2, sqrt, pi, S
 from symplyphysics import Symbol, units, clone_as_function
-from symplyphysics.core.experimental.coordinate_systems import (BaseCoordinateSystem,
+from symplyphysics.core.coordinate_systems import (BaseCoordinateSystem,
     CylindricalCoordinateSystem)
 
 

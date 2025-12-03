@@ -3,8 +3,8 @@ from pytest import fixture, raises
 from symplyphysics import units, Quantity, errors
 from symplyphysics.definitions.vector import vector_area_is_unit_normal_times_scalar_area as law
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
 
 Args = namedtuple("Args", "n a")
 

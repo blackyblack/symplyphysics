@@ -4,7 +4,7 @@ from sympy import Function as SymFunction, S, Basic, Mul, Expr
 from symplyphysics import units, dimensionless, symbols, Symbol
 from symplyphysics.core.dimensions import dimsys_SI
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.experimental.vectors import (
+from symplyphysics.core.vectors import (
     is_vector_expr,
     into_terms,
     split_factor,
@@ -18,7 +18,7 @@ from symplyphysics.core.experimental.vectors import (
     vector_diff,
     VectorJacobian,
 )
-from symplyphysics.core.experimental.solvers import vector_equals
+from symplyphysics.core.solvers import vector_equals
 
 
 def test_is_vector_expr() -> None:

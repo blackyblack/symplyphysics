@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from pytest import fixture
 from sympy import ImmutableMatrix, sqrt, Expr
 from symplyphysics import Symbol, units
-from symplyphysics.core.experimental.coordinate_systems import (BaseCoordinateSystem,
+from symplyphysics.core.coordinate_systems import (BaseCoordinateSystem,
     CartesianCoordinateSystem)
 
 

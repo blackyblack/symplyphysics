@@ -16,8 +16,8 @@ from sympy import solve, Eq, cos
 from symplyphysics import Quantity, symbols
 from symplyphysics.core.dimensions import any_dimension
 
-from symplyphysics.core.experimental.vectors import VectorSymbol, VectorDot, VectorNorm
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import VectorSymbol, VectorDot, VectorNorm
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 first_vector = VectorSymbol("u", any_dimension)
 """

@@ -13,8 +13,8 @@ acceleration* but is directed oppositely to it.
 from sympy import Eq
 from symplyphysics import validate_input, validate_output, symbols
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import clone_as_vector_symbol
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 centrifugal_acceleration = clone_as_vector_symbol(
     symbols.acceleration,

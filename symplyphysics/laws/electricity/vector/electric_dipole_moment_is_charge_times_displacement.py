@@ -22,8 +22,8 @@ of the system. It is collinear to the vector connecting the two point charges.
 from sympy import Eq
 from symplyphysics import validate_input, validate_output, Quantity, symbols
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import clone_as_vector_symbol
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 electric_dipole_moment = clone_as_vector_symbol(symbols.electric_dipole_moment)
 """

@@ -5,11 +5,11 @@ from sympy import evaluate, sin, cos, pi, sqrt
 from symplyphysics import Symbol, assert_equal, symbols, units
 from symplyphysics.core.symbols.symbols import BasicSymbol
 
-from symplyphysics.core.experimental.vectors import VectorDot, VectorNorm
-from symplyphysics.core.experimental.coordinate_systems import (AppliedPoint, CARTESIAN,
+from symplyphysics.core.vectors import VectorDot, VectorNorm
+from symplyphysics.core.coordinate_systems import (AppliedPoint, CARTESIAN,
     CYLINDRICAL, SPHERICAL, CoordinateVector)
-from symplyphysics.core.experimental.coordinate_systems.surface import Surface
-from symplyphysics.core.experimental.integrals.surface_integral import (SurfaceIntegral,
+from symplyphysics.core.coordinate_systems.surface import Surface
+from symplyphysics.core.integrals.surface_integral import (SurfaceIntegral,
     INFINITESIMAL_VECTOR_AREA as ds)
 
 

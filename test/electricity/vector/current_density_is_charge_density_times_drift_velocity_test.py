@@ -4,8 +4,8 @@ from symplyphysics import units, errors, Quantity
 from symplyphysics.laws.electricity.vector import (
     current_density_is_charge_density_times_drift_velocity as law)
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
 
 Args = namedtuple("Args", "rho u")
 

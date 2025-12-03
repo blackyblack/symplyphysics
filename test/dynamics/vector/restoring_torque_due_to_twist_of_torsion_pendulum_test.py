@@ -4,8 +4,8 @@ from symplyphysics import errors, units, Quantity
 from symplyphysics.laws.dynamics.vector import (restoring_torque_due_to_twist_of_torsion_pendulum as
     pendulum_laws)
 
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector, CARTESIAN
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector, CARTESIAN
+from symplyphysics.core.approx import assert_equal_vectors
 
 # Description
 ## A torsion pendulum is rotated about its axis so that its rotation pseudovector is (0.1, 0.2, -0.1) rad.

@@ -3,8 +3,8 @@ from pytest import fixture, raises
 from symplyphysics import errors, units, Quantity
 from symplyphysics.laws.kinematics.vector import centripetal_acceleration_via_vector_rejection as law
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
 
 Args = namedtuple("Args", "w r a")
 

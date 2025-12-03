@@ -184,7 +184,7 @@ def combine_coordinate_vectors(expr: Expr) -> Expr:
     ========
 
     >>> from sympy import Symbol as SymSymbol
-    >>> from symplyphysics.core.experimental.coordinate_systems import CylindricalCoordinateSystem, CoordinateVector
+    >>> from symplyphysics.core.coordinate_systems import CylindricalCoordinateSystem, CoordinateVector
     >>> sys = CylindricalCoordinateSystem()
     >>> p = SymSymbol("P")
     >>> v1 = CoordinateVector([1, 2, 3], sys, p)

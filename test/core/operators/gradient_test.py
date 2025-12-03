@@ -5,13 +5,13 @@ from sympy import sin, cos, Expr, ImmutableMatrix
 
 from symplyphysics.core.symbols.symbols import BasicSymbol, Symbol
 
-from symplyphysics.core.experimental.vectors import VectorSymbol
-from symplyphysics.core.experimental.coordinate_systems import (BaseCoordinateSystem,
+from symplyphysics.core.vectors import VectorSymbol
+from symplyphysics.core.coordinate_systems import (BaseCoordinateSystem,
     CartesianCoordinateSystem, CylindricalCoordinateSystem, SphericalCoordinateSystem)
-from symplyphysics.core.experimental.coordinate_systems.vector import CoordinateVector
-from symplyphysics.core.experimental.coordinate_systems.scalar import CoordinateScalar
-from symplyphysics.core.experimental.operators import VectorGradient
-from symplyphysics.core.experimental.solvers import vector_equals
+from symplyphysics.core.coordinate_systems.vector import CoordinateVector
+from symplyphysics.core.coordinate_systems.scalar import CoordinateScalar
+from symplyphysics.core.operators import VectorGradient
+from symplyphysics.core.solvers import vector_equals
 
 
 def test_non_coordinate_scalar() -> None:

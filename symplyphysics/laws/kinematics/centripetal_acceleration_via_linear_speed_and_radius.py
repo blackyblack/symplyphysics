@@ -19,8 +19,8 @@ from symplyphysics.definitions import acceleration_is_speed_derivative as accele
 from symplyphysics.laws.geometry import scalar_projection_is_vector_length_times_cosine_of_angle as projector
 from symplyphysics.laws.kinematics import speed_via_angular_speed_and_radius as linear_velocity_law
 
-from symplyphysics.core.experimental.vectors import VectorDot
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
+from symplyphysics.core.vectors import VectorDot
+from symplyphysics.core.coordinate_systems import CARTESIAN, CoordinateVector
 
 centripetal_acceleration = clone_as_symbol(symbols.acceleration, subscript="n")
 """

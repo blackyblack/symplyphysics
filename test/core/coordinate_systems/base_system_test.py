@@ -2,7 +2,7 @@ from typing import Sequence, Optional
 from pytest import raises
 from sympy import ImmutableMatrix, sqrt, Expr, Rational
 from symplyphysics import Symbol, units
-from symplyphysics.core.experimental.coordinate_systems import BaseCoordinateSystem
+from symplyphysics.core.coordinate_systems import BaseCoordinateSystem
 
 
 def test_no_generate_base_scalars() -> None:

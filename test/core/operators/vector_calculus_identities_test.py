@@ -5,12 +5,12 @@ from sympy import Function as SymFunction, sqrt, S, cosh, cos, sinh, sin, exp, E
 from symplyphysics.core.symbols.symbols import BasicSymbol
 
 from symplyphysics import Symbol, units
-from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
+from symplyphysics.core.coordinate_systems import (CartesianCoordinateSystem,
     CylindricalCoordinateSystem, SphericalCoordinateSystem, BaseCoordinateSystem, CoordinateScalar,
     CoordinateVector)
-from symplyphysics.core.experimental.operators import (VectorGradient, VectorDivergence, VectorCurl,
+from symplyphysics.core.operators import (VectorGradient, VectorDivergence, VectorCurl,
     VectorLaplacian)
-from symplyphysics.core.experimental.solvers import vector_equals
+from symplyphysics.core.solvers import vector_equals
 
 
 def check_div_curl(system: BaseCoordinateSystem) -> bool:

@@ -23,9 +23,9 @@ some body :math:`B` in :math:`S` has a component corresponding to that non-unifo
 from sympy import Eq
 from symplyphysics import validate_input, validate_output, Quantity, symbols
 
-from symplyphysics.core.experimental.vectors import (clone_as_vector_symbol,
+from symplyphysics.core.vectors import (clone_as_vector_symbol,
     clone_as_vector_function, VectorCross, VectorDerivative)
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 non_uniform_rotation_acceleration = clone_as_vector_symbol(
     symbols.acceleration,

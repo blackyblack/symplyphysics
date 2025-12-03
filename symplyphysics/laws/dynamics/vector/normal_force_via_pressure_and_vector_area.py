@@ -21,8 +21,8 @@ from sympy import Eq
 
 from symplyphysics import symbols, Quantity, validate_input, validate_output
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import clone_as_vector_symbol
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 normal_force = clone_as_vector_symbol(symbols.force, subscript="n")
 """

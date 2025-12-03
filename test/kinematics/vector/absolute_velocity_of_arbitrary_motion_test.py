@@ -3,9 +3,9 @@ from pytest import fixture, raises
 from symplyphysics import errors, units, Quantity
 from symplyphysics.laws.kinematics.vector import absolute_velocity_of_arbitrary_motion as law
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
-from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
+from symplyphysics.core.solvers import solve_for_vector
 
 Args = namedtuple("Args", "vabs vrel vtr")
 

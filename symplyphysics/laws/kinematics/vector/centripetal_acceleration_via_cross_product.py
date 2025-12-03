@@ -23,10 +23,10 @@ from symplyphysics import validate_input, validate_output, symbols
 from symplyphysics.laws.kinematics.vector import (
     centripetal_acceleration_via_vector_rejection as rejection_law,)
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorCross
-from symplyphysics.core.experimental.coordinate_systems import (CoordinateVector, CARTESIAN,
+from symplyphysics.core.vectors import clone_as_vector_symbol, VectorCross
+from symplyphysics.core.coordinate_systems import (CoordinateVector, CARTESIAN,
     QuantityCoordinateVector)
-from symplyphysics.core.experimental.solvers import vector_equals
+from symplyphysics.core.solvers import vector_equals
 
 centripetal_acceleration = clone_as_vector_symbol(
     symbols.acceleration,

@@ -3,9 +3,9 @@ from pytest import fixture
 from symplyphysics.laws.dynamics.fields import (
     conservative_force_is_gradient_of_potential_energy as gradient_law,)
 
-from symplyphysics.core.experimental.coordinate_systems import (CARTESIAN, CoordinateVector,
+from symplyphysics.core.coordinate_systems import (CARTESIAN, CoordinateVector,
     CoordinateScalar)
-from symplyphysics.core.experimental.solvers import vector_equals
+from symplyphysics.core.solvers import vector_equals
 
 # Description
 ## The force associated with a potential of x^2/2 has the vector form of F = -x*e_x, where

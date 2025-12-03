@@ -17,7 +17,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import momentum_is_mass_times_speed as _momentum_def
 from symplyphysics.laws.dynamics import kinetic_energy_via_momentum as _kinetic_energy_law
 
-from symplyphysics.core.experimental.solvers import apply
+from symplyphysics.core.solvers import apply
 
 speed = symbols.speed
 """

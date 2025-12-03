@@ -5,12 +5,12 @@ from sympy import sin, cos, pi
 from symplyphysics import Symbol, symbols
 from symplyphysics.core.symbols.symbols import BasicSymbol
 
-from symplyphysics.core.experimental.vectors import (clone_as_vector_symbol, vector_diff,
+from symplyphysics.core.vectors import (clone_as_vector_symbol, vector_diff,
     clone_as_vector_function)
-from symplyphysics.core.experimental.coordinate_systems import (CARTESIAN, CoordinateVector,
+from symplyphysics.core.coordinate_systems import (CARTESIAN, CoordinateVector,
     QuantityCoordinateVector)
-from symplyphysics.core.experimental.integrals.vector_integral import integrate_coordinate_vectors
-from symplyphysics.core.experimental.solvers import vector_equals
+from symplyphysics.core.integrals.vector_integral import integrate_coordinate_vectors
+from symplyphysics.core.solvers import vector_equals
 
 
 def test_integrate_single_vector() -> None:

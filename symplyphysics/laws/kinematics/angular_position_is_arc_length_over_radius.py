@@ -18,9 +18,9 @@ from sympy import Eq, solve
 from symplyphysics import Quantity, validate_input, validate_output, symbols, clone_as_symbol
 from symplyphysics.core.expr_comparisons import expr_equals
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
-from symplyphysics.core.experimental.vectors import VectorNorm
-from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.coordinate_systems import CARTESIAN, CoordinateVector
+from symplyphysics.core.vectors import VectorNorm
+from symplyphysics.core.solvers import solve_for_vector
 
 from symplyphysics.laws.kinematics.vector import (
     displacement_is_angular_displacement_cross_radius as _linear_displacement_law,)

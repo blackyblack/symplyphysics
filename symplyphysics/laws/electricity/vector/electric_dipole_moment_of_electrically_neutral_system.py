@@ -31,8 +31,8 @@ from symplyphysics import (Quantity, validate_input, validate_output, symbols, g
     IndexedSum, assert_equal)
 from symplyphysics.core.symbols.symbols import clone_as_indexed
 
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, clone_as_indexed_vector
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import clone_as_vector_symbol, clone_as_indexed_vector
 
 electric_dipole_moment = clone_as_vector_symbol(symbols.electric_dipole_moment)
 """

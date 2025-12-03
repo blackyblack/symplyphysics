@@ -4,9 +4,9 @@ from symplyphysics import errors, units, Quantity
 from symplyphysics.laws.gravity.vector import (
     relative_acceleration_from_force_and_acceleration_due_to_gravity as law)
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
-from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
+from symplyphysics.core.solvers import solve_for_vector
 
 Args = namedtuple("Args", "g ac f m ar")
 

@@ -21,9 +21,9 @@ from sympy import Eq
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.quantities import speed_of_light
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorNorm
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
-from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.vectors import clone_as_vector_symbol, VectorNorm
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.solvers import solve_for_vector
 
 total_energy = symbols.energy
 """

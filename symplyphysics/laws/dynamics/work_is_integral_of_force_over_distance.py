@@ -18,9 +18,9 @@ from symplyphysics import (Quantity, validate_input, validate_output, symbols, c
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 from symplyphysics.core.expr_comparisons import expr_equals
 
-from symplyphysics.core.experimental.coordinate_systems import (AppliedPoint, CARTESIAN,
+from symplyphysics.core.coordinate_systems import (AppliedPoint, CARTESIAN,
     CoordinateVector)
-from symplyphysics.core.experimental.coordinate_systems.curve import Curve
+from symplyphysics.core.coordinate_systems.curve import Curve
 
 from symplyphysics.laws.dynamics.vector import mechanical_work_is_line_integral_of_force as _work_law
 

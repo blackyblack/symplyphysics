@@ -16,8 +16,8 @@ Instantaneous **velocity** is the derivative of the body's position vector w.r.t
 from sympy import Eq
 from symplyphysics import symbols, Quantity, validate_input, validate_output
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_function, VectorDerivative
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import clone_as_vector_function, VectorDerivative
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 time = symbols.time
 """

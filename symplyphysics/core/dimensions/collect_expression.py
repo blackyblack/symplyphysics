@@ -7,10 +7,10 @@ from sympy.physics import units
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import dimsys_SI
 
-from ..experimental.vectors import (VectorDot, VectorCross, VectorNorm, VectorMixedProduct,
+from ..vectors import (VectorDot, VectorCross, VectorNorm, VectorMixedProduct,
     AppliedVectorFunction)
-from ..experimental.coordinate_systems import CoordinateScalar, CoordinateVector
-from ..experimental.operators import VectorGradient, VectorDivergence, VectorCurl, VectorLaplacian
+from ..coordinate_systems import CoordinateScalar, CoordinateVector
+from ..operators import VectorGradient, VectorDivergence, VectorCurl, VectorLaplacian
 
 from ..errors import UnitsError
 from ..symbols.quantities import Quantity

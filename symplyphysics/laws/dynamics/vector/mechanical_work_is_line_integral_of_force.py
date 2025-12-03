@@ -15,10 +15,10 @@ from symplyphysics import Quantity, validate_output, symbols, Symbol
 from symplyphysics.core.symbols.symbols import BasicSymbol
 from symplyphysics.core.dimensions import any_dimension
 
-from symplyphysics.core.experimental.vectors import (clone_as_vector_function,
+from symplyphysics.core.vectors import (clone_as_vector_function,
     clone_as_vector_symbol, VectorDot)
-from symplyphysics.core.experimental.coordinate_systems.curve import Curve
-from symplyphysics.core.experimental.integrals.line_integral import (LineIntegral,
+from symplyphysics.core.coordinate_systems.curve import Curve
+from symplyphysics.core.integrals.line_integral import (LineIntegral,
     INFINITESIMAL_DISPLACEMENT as dr)
 
 work = symbols.work

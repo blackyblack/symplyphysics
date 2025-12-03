@@ -3,9 +3,9 @@ from pytest import fixture, raises
 from symplyphysics import units, prefixes, errors, Quantity
 from symplyphysics.laws.electricity.vector import lorentz_force_via_electromagnetic_field as law
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
-from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
+from symplyphysics.core.solvers import solve_for_vector
 
 Args = namedtuple("Args", "f q e b v")
 

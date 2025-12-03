@@ -6,12 +6,12 @@ from symplyphysics import symbols, units, dimensionless, Quantity
 from symplyphysics.core.errors import UnitsError
 from symplyphysics.core.dimensions.collect_expression import collect_expression_and_dimension
 
-from symplyphysics.core.experimental.vectors import (VectorSymbol, VectorFunction, VectorDot,
+from symplyphysics.core.vectors import (VectorSymbol, VectorFunction, VectorDot,
     VectorCross, VectorNorm, VectorMixedProduct, vector_diff)
-from symplyphysics.core.experimental.coordinate_systems import (CoordinateScalar, CoordinateVector,
+from symplyphysics.core.coordinate_systems import (CoordinateScalar, CoordinateVector,
     QuantityCoordinateVector, CartesianCoordinateSystem, CylindricalCoordinateSystem,
     SphericalCoordinateSystem)
-from symplyphysics.core.experimental.operators import (VectorGradient, VectorDivergence, VectorCurl,
+from symplyphysics.core.operators import (VectorGradient, VectorDivergence, VectorCurl,
     VectorLaplacian)
 
 

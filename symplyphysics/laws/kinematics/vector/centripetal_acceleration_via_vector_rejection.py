@@ -20,8 +20,8 @@ Also see :doc:`laws.kinematics.vector.centripetal_acceleration_via_cross_product
 from sympy import Eq
 from symplyphysics import validate_input, validate_output, symbols
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorDot
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import clone_as_vector_symbol, VectorDot
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 centripetal_acceleration = clone_as_vector_symbol(
     symbols.acceleration,

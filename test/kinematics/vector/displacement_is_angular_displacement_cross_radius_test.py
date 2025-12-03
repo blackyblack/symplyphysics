@@ -4,8 +4,8 @@ from symplyphysics import errors, units, Quantity
 from symplyphysics.laws.kinematics.vector import (
     displacement_is_angular_displacement_cross_radius as linear_displacement_law,)
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
 
 # Description
 ## A body is rotating about a fixes axis. It makes a rotation of 1e-5 rad in the positive direction around the

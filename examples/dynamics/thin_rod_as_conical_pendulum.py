@@ -19,11 +19,11 @@ from symplyphysics.laws.geometry import (
 from symplyphysics.laws.quantities import (
     quantity_is_linear_density_times_length as linear_density_law,)
 
-from symplyphysics.core.experimental.solvers import solve_for_vector
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
-from symplyphysics.core.experimental.coordinate_systems.vector import (integrate_cartesian_vector,
+from symplyphysics.core.solvers import solve_for_vector
+from symplyphysics.core.coordinate_systems import CARTESIAN, CoordinateVector
+from symplyphysics.core.coordinate_systems.vector import (integrate_cartesian_vector,
     as_coordinate_vector)
-from symplyphysics.core.experimental.vectors import VectorNorm
+from symplyphysics.core.vectors import VectorNorm
 
 # Description
 ## A thin rod of length `l` is rotating around one of its ends describing a circular cone

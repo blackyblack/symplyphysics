@@ -4,8 +4,8 @@ from symplyphysics import units, errors
 from symplyphysics.laws.electricity.vector import (
     torque_due_to_electric_dipole_in_uniform_electric_field as law)
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
 
 Args = namedtuple("Args", "p e")
 

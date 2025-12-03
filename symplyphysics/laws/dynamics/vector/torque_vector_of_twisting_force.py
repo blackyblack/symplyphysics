@@ -14,9 +14,9 @@ of force application.
 from sympy import Eq
 from symplyphysics import (symbols, validate_input, validate_output)
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorCross
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
-from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.vectors import clone_as_vector_symbol, VectorCross
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.solvers import solve_for_vector
 
 torque = clone_as_vector_symbol(symbols.torque)
 """

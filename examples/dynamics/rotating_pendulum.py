@@ -22,9 +22,9 @@ from symplyphysics.laws.kinematics import (
     tangential_acceleration_via_angular_acceleration_and_radius as tangential_law,)
 from symplyphysics.laws.geometry import scalar_projection_is_vector_length_times_cosine_of_angle as cosine_law
 
-from symplyphysics.core.experimental.vectors import VectorNorm, VectorCross, VectorDot
-from symplyphysics.core.experimental.solvers import solve_for_vector
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
+from symplyphysics.core.vectors import VectorNorm, VectorCross, VectorDot
+from symplyphysics.core.solvers import solve_for_vector
+from symplyphysics.core.coordinate_systems import CARTESIAN, CoordinateVector
 
 # Description
 ## A physical pendulum consisting of a ball fixed on the end of a thin rigid rod can freely

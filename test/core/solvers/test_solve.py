@@ -2,8 +2,8 @@ from pytest import raises
 from sympy import Eq, evaluate
 from symplyphysics import Symbol
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.experimental.vectors import VectorSymbol, VectorNorm as norm
-from symplyphysics.core.experimental.solvers import apply, solve_for_vector, vector_equals
+from symplyphysics.core.vectors import VectorSymbol, VectorNorm as norm
+from symplyphysics.core.solvers import apply, solve_for_vector, vector_equals
 
 
 def test_apply() -> None:

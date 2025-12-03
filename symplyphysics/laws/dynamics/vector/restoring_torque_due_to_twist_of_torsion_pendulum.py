@@ -13,9 +13,9 @@ Rotating the disk through an angle in either direction introduces a restoring to
 from sympy import Eq
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-from symplyphysics.core.experimental.solvers import solve_for_vector
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.solvers import solve_for_vector
+from symplyphysics.core.vectors import clone_as_vector_symbol
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 torque = clone_as_vector_symbol(symbols.torque)
 """

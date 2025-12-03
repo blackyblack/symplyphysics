@@ -12,9 +12,9 @@ An object's *linear momentum* is a vector quantity defined as the product of its
 from sympy import Eq, Expr
 from symplyphysics import symbols, Quantity, validate_input, validate_output
 
-from symplyphysics.core.experimental.solvers import solve_for_vector
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.solvers import solve_for_vector
+from symplyphysics.core.vectors import clone_as_vector_symbol
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 mass = symbols.mass
 """

@@ -22,8 +22,8 @@ electric field. The torque tends to align the dipole with the field.
 from sympy import Eq
 from symplyphysics import validate_input, validate_output, symbols
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorCross
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import clone_as_vector_symbol, VectorCross
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 torque = clone_as_vector_symbol(symbols.torque)
 """

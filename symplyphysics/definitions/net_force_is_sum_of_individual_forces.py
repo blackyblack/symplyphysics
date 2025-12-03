@@ -21,7 +21,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.symbols import clone_as_indexed
 from symplyphysics.definitions.vector import net_force_vector_is_sum_of_forces as vector_forces_sum
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
+from symplyphysics.core.coordinate_systems import CARTESIAN, CoordinateVector
 
 net_force = symbols.force
 """

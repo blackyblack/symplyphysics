@@ -4,8 +4,8 @@ from sympy import cos, pi, sin
 from symplyphysics import units, Quantity, errors
 from symplyphysics.definitions.vector import net_force_vector_is_sum_of_forces as forces_law
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
 
 Args = namedtuple("Args", ["F1", "F2"])
 

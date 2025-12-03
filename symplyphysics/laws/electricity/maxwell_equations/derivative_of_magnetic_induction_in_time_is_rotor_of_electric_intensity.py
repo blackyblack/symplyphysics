@@ -18,13 +18,13 @@ rotational electric field. This law is valid for any magnetic field that changes
 from sympy import Eq, Expr
 from symplyphysics import Quantity, validate_input, validate_output, symbols, units
 
-from symplyphysics.core.experimental.approx import assert_quantity_point
-from symplyphysics.core.experimental.vectors import (clone_as_vector_function,
+from symplyphysics.core.approx import assert_quantity_point
+from symplyphysics.core.vectors import (clone_as_vector_function,
     clone_as_vector_symbol, VectorDerivative)
-from symplyphysics.core.experimental.operators import VectorCurl
-from symplyphysics.core.experimental.coordinate_systems import (QuantityCoordinateVector,
+from symplyphysics.core.operators import VectorCurl
+from symplyphysics.core.coordinate_systems import (QuantityCoordinateVector,
     AppliedPoint, CoordinateVector)
-from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.solvers import solve_for_vector
 
 time = symbols.time
 """

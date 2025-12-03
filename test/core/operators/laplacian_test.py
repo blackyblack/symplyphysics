@@ -5,12 +5,12 @@ from sympy import sin, cos, tan
 from symplyphysics.core.symbols.symbols import BasicSymbol, Symbol
 
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.experimental.vectors import VectorSymbol
-from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
+from symplyphysics.core.vectors import VectorSymbol
+from symplyphysics.core.coordinate_systems import (CartesianCoordinateSystem,
     CylindricalCoordinateSystem, SphericalCoordinateSystem)
-from symplyphysics.core.experimental.coordinate_systems.vector import CoordinateVector
-from symplyphysics.core.experimental.coordinate_systems.scalar import CoordinateScalar
-from symplyphysics.core.experimental.operators import VectorLaplacian
+from symplyphysics.core.coordinate_systems.vector import CoordinateVector
+from symplyphysics.core.coordinate_systems.scalar import CoordinateScalar
+from symplyphysics.core.operators import VectorLaplacian
 
 
 def test_non_coordinate_scalar() -> None:

@@ -4,10 +4,10 @@ from sympy import cos, sin
 from symplyphysics import errors, units, Quantity
 from symplyphysics.laws.kinematics.vector import acceleration_due_to_non_uniform_rotation as law
 
-from symplyphysics.core.experimental.coordinate_systems import (QuantityCoordinateVector, CARTESIAN,
+from symplyphysics.core.coordinate_systems import (QuantityCoordinateVector, CARTESIAN,
     CoordinateVector)
-from symplyphysics.core.experimental.approx import assert_equal_vectors
-from symplyphysics.core.experimental.solvers import vector_equals
+from symplyphysics.core.approx import assert_equal_vectors
+from symplyphysics.core.solvers import vector_equals
 
 Args = namedtuple("Args", "dw dt r")
 

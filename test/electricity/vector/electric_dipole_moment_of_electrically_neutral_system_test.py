@@ -4,8 +4,8 @@ from symplyphysics import units, errors, Quantity
 from symplyphysics.laws.electricity.vector import (
     electric_dipole_moment_of_electrically_neutral_system as law)
 
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector, CARTESIAN
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector, CARTESIAN
+from symplyphysics.core.approx import assert_equal_vectors
 
 Args = namedtuple("Args", "qs rs")
 

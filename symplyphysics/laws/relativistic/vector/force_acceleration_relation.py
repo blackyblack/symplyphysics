@@ -21,9 +21,9 @@ from sympy import Eq, evaluate
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.definitions import lorentz_factor as lorentz_factor_def
 
-from symplyphysics.core.experimental.vectors import (clone_as_vector_symbol, VectorNorm,
+from symplyphysics.core.vectors import (clone_as_vector_symbol, VectorNorm,
     split_into_tangential_and_normal_components)
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 force = clone_as_vector_symbol(symbols.force)
 """

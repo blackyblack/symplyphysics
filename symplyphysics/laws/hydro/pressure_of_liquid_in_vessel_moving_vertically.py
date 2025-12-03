@@ -19,8 +19,8 @@ from symplyphysics import symbols, Quantity, validate_input, validate_output, qu
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.hydro import hydrostatic_pressure_via_density_height_and_acceleration as pressure_law
 
-from symplyphysics.core.experimental.vectors import VectorNorm
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
+from symplyphysics.core.vectors import VectorNorm
+from symplyphysics.core.coordinate_systems import CARTESIAN, CoordinateVector
 
 pressure = symbols.pressure
 """

@@ -3,9 +3,9 @@ from pytest import raises, fixture
 from sympy import pi, Expr
 from symplyphysics.core.symbols.symbols import BasicSymbol
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
+from symplyphysics.core.coordinate_systems import (CartesianCoordinateSystem,
     CylindricalCoordinateSystem, SphericalCoordinateSystem, AppliedPoint)
-from symplyphysics.core.experimental.coordinate_systems.point import (check_point_with_system,
+from symplyphysics.core.coordinate_systems.point import (check_point_with_system,
     GLOBAL_POINT)
 
 

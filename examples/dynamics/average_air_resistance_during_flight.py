@@ -15,7 +15,7 @@ from symplyphysics.definitions import (
 from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as newtons_second_law
 from symplyphysics.laws.geometry import (
     scalar_projection_is_vector_length_times_cosine_of_angle as projection_law,)
-from symplyphysics.core.experimental.solvers import apply
+from symplyphysics.core.solvers import apply
 
 # NOTE Since the body is moving upwards, both the force of gravity and the force of air resistance
 # are directed along the negative z-axis (i.e. "down"). To simplify the solution, we project all

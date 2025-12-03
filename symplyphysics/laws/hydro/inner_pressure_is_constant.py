@@ -19,7 +19,7 @@ from symplyphysics import (Quantity, validate_input, validate_output, symbols, c
     clone_as_symbol, quantities)
 from symplyphysics.core.expr_comparisons import expr_equals
 
-from symplyphysics.core.experimental.solvers import apply
+from symplyphysics.core.solvers import apply
 
 from symplyphysics.definitions import density_from_mass_volume as _density_def
 from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as _distance_law

@@ -4,10 +4,10 @@ from symplyphysics import errors, units, Quantity
 from symplyphysics.laws.electricity.maxwell_equations import (
     derivative_of_magnetic_induction_in_time_is_rotor_of_electric_intensity as faradays_law)
 
-from symplyphysics.core.experimental.vectors import vector_diff
-from symplyphysics.core.experimental.coordinate_systems import (CARTESIAN, CoordinateVector,
+from symplyphysics.core.vectors import vector_diff
+from symplyphysics.core.coordinate_systems import (CARTESIAN, CoordinateVector,
     AppliedPoint, QuantityCoordinateVector)
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.approx import assert_equal_vectors
 
 Args = namedtuple("Args", ["electric_intensity", "magnetic_induction", "point", "time"])
 

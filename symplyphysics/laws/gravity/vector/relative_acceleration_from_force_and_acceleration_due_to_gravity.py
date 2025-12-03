@@ -17,8 +17,8 @@ relative to :math:`S'` is zero, i.e. :math:`\\vec v = 0` and :math:`{\\vec a}_\\
 from sympy import Eq
 from symplyphysics import symbols, Quantity, validate_input, validate_output, quantities
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import clone_as_vector_symbol
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 relative_acceleration = clone_as_vector_symbol(
     symbols.acceleration,

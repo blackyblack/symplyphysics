@@ -29,7 +29,7 @@ from symplyphysics.laws.electricity import (
 from symplyphysics.laws.quantities import (
     quantity_is_areal_density_times_area as _areal_qty_law,)
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
+from symplyphysics.core.coordinate_systems import CARTESIAN, CoordinateVector
 
 electric_field_strength = symbols.electric_field_strength
 """

@@ -16,8 +16,8 @@ from sympy import Eq, solve
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.laws.dynamics.vector import acceleration_from_force_vector as acceleration_law
 
-from symplyphysics.core.experimental.solvers import solve_for_vector
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
+from symplyphysics.core.solvers import solve_for_vector
+from symplyphysics.core.coordinate_systems import CARTESIAN, CoordinateVector
 
 acceleration = symbols.acceleration
 """

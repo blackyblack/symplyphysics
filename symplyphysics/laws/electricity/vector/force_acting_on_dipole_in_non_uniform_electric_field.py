@@ -53,9 +53,9 @@ experiences an overall non-zero acceleration.
 from sympy import Eq
 from symplyphysics import validate_input, validate_output, Quantity, symbols
 
-from symplyphysics.core.experimental.vectors import (clone_as_vector_symbol,
+from symplyphysics.core.vectors import (clone_as_vector_symbol,
     clone_as_vector_function, VectorDerivative)
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 force = clone_as_vector_symbol(symbols.force)
 """

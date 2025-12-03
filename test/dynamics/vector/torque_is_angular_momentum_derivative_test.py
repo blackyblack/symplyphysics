@@ -3,8 +3,8 @@ from pytest import fixture, raises
 from symplyphysics import units, errors, Quantity
 from symplyphysics.laws.dynamics.vector import (torque_is_angular_momentum_derivative as torque_law)
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
 
 # Description
 ## During the interval of 1 s, the particle's angular momentum changed from (1, 2, -1) kg*m**2/s

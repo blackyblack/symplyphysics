@@ -20,8 +20,8 @@ vector of the particle defined relative to that origin.
 from sympy import Eq, Expr
 from symplyphysics import validate_input, validate_output, symbols
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorCross
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import clone_as_vector_symbol, VectorCross
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 position_vector = clone_as_vector_symbol(symbols.distance_to_origin)
 """

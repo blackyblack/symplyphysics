@@ -23,9 +23,9 @@ from symplyphysics.laws.dynamics.vector import (
 from symplyphysics.laws.geometry.vector import (
     dot_product_is_proportional_to_cosine_between_vectors as _dot_product_law,)
 
-from symplyphysics.core.experimental.solvers import solve_for_vector
-from symplyphysics.core.experimental.coordinate_systems import CoordinateVector, CARTESIAN
-from symplyphysics.core.experimental.vectors import VectorNorm
+from symplyphysics.core.solvers import solve_for_vector
+from symplyphysics.core.coordinate_systems import CoordinateVector, CARTESIAN
+from symplyphysics.core.vectors import VectorNorm
 
 torque = symbols.torque
 """

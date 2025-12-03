@@ -3,7 +3,7 @@ from pytest import fixture, raises
 from symplyphysics import assert_equal, units, errors
 from symplyphysics.laws.electricity.vector import electric_flux_of_uniform_electric_field as law
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
 
 Args = namedtuple("Args", "e a")
 

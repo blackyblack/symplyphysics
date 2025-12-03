@@ -5,9 +5,9 @@ from symplyphysics import assert_equal, units
 from symplyphysics.laws.dynamics.vector import mechanical_work_is_line_integral_of_force as law
 from symplyphysics.core.expr_comparisons import expr_equals
 
-from symplyphysics.core.experimental.coordinate_systems import (CoordinateVector, CARTESIAN,
+from symplyphysics.core.coordinate_systems import (CoordinateVector, CARTESIAN,
     AppliedPoint)
-from symplyphysics.core.experimental.coordinate_systems.curve import Curve
+from symplyphysics.core.coordinate_systems.curve import Curve
 
 Args = namedtuple("Args", "f0 fxy c")
 

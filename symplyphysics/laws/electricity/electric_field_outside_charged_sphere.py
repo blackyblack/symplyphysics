@@ -30,8 +30,8 @@ from symplyphysics.laws.electricity.vector import electric_flux_of_uniform_elect
 
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.symbols import BasicSymbol
-from symplyphysics.core.experimental.coordinate_systems import SPHERICAL, CoordinateVector, AppliedPoint
-from symplyphysics.core.experimental.coordinate_systems.surface import Surface
+from symplyphysics.core.coordinate_systems import SPHERICAL, CoordinateVector, AppliedPoint
+from symplyphysics.core.coordinate_systems.surface import Surface
 
 electric_field_strength = symbols.electric_field_strength
 """

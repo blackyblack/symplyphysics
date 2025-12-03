@@ -15,8 +15,8 @@ using the position vector relative to that frame's origin.
 from sympy import Eq
 from symplyphysics import symbols, validate_input, validate_output, Quantity
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_function, SymDerivative
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import clone_as_vector_function, SymDerivative
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 time = symbols.time
 """

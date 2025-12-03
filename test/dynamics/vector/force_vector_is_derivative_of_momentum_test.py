@@ -3,8 +3,8 @@ from pytest import fixture, raises
 from symplyphysics import units, errors, Quantity
 from symplyphysics.laws.dynamics.vector import force_vector_is_derivative_of_momentum as force_momentum_law
 
-from symplyphysics.core.experimental.approx import assert_equal_vectors
-from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
+from symplyphysics.core.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import (CartesianCoordinateSystem,
     QuantityCoordinateVector)
 
 # Description

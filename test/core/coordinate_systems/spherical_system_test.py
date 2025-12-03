@@ -3,7 +3,7 @@ from pytest import fixture
 from sympy import ImmutableMatrix, sin, cos, atan2, sqrt, pi, S
 from symplyphysics import Symbol, units, clone_as_function
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.experimental.coordinate_systems import (BaseCoordinateSystem,
+from symplyphysics.core.coordinate_systems import (BaseCoordinateSystem,
     SphericalCoordinateSystem)
 
 

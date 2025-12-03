@@ -7,9 +7,9 @@ from symplyphysics.core.convert import evaluate_expression
 from symplyphysics.laws.relativistic.vector import force_acceleration_relation as force_law
 from symplyphysics.definitions import lorentz_factor as lorentz_factor_def
 
-from symplyphysics.core.experimental.vectors import (VectorNorm,
+from symplyphysics.core.vectors import (VectorNorm,
     split_into_tangential_and_normal_components)
-from symplyphysics.core.experimental.coordinate_systems import CoordinateVector, CARTESIAN
+from symplyphysics.core.coordinate_systems import CoordinateVector, CARTESIAN
 
 Datum = namedtuple("Datum", "label acceleration")
 

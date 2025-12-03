@@ -8,13 +8,13 @@ from sympy.matrices.dense import DenseMatrix
 from sympy.simplify import fraction
 from sympy.printing.precedence import precedence
 
-from symplyphysics.core.experimental.vectors import (VectorSymbol, VectorNorm, VectorDot,
+from symplyphysics.core.vectors import (VectorSymbol, VectorNorm, VectorDot,
     VectorCross, VectorMixedProduct, AppliedVectorFunction, VectorFunction, IndexedVectorSymbol)
-from symplyphysics.core.experimental.coordinate_systems import CoordinateScalar, CoordinateVector
-from symplyphysics.core.experimental.coordinate_systems.curve import Curve
-from symplyphysics.core.experimental.operators import (VectorGradient, VectorCurl, VectorDivergence,
+from symplyphysics.core.coordinate_systems import CoordinateScalar, CoordinateVector
+from symplyphysics.core.coordinate_systems.curve import Curve
+from symplyphysics.core.operators import (VectorGradient, VectorCurl, VectorDivergence,
     VectorLaplacian)
-from symplyphysics.core.experimental.integrals.line_integral import LineIntegral
+from symplyphysics.core.integrals.line_integral import LineIntegral
 
 from ..core.symbols.symbols import DimensionSymbol, Function, IndexedSymbol
 from .miscellaneous import needs_mul_brackets, needs_add_brackets, process_function

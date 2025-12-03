@@ -22,9 +22,9 @@ from symplyphysics import (Quantity, validate_input, validate_output, symbols, c
 from symplyphysics.laws.electricity.vector import magnetic_field_due_to_constant_filamentary_current as _biot_savart_law
 
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.experimental.vectors import VectorNorm, VectorCross, VectorDot
-from symplyphysics.core.experimental.solvers import vector_equals
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
+from symplyphysics.core.vectors import VectorNorm, VectorCross, VectorDot
+from symplyphysics.core.solvers import vector_equals
+from symplyphysics.core.coordinate_systems import CARTESIAN, CoordinateVector
 
 magnetic_flux_density = symbols.magnetic_flux_density
 """

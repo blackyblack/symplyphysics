@@ -13,9 +13,9 @@ magnetic charges do not exist.
 from sympy import Eq
 from symplyphysics import symbols
 
-from symplyphysics.core.experimental.vectors import (clone_as_vector_function,
+from symplyphysics.core.vectors import (clone_as_vector_function,
     clone_as_vector_symbol)
-from symplyphysics.core.experimental.operators import VectorDivergence
+from symplyphysics.core.operators import VectorDivergence
 
 position_vector = clone_as_vector_symbol(symbols.distance_to_origin)
 """

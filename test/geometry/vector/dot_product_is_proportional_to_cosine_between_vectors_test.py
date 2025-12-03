@@ -4,7 +4,7 @@ from symplyphysics import (assert_equal, Quantity, units)
 from symplyphysics.laws.geometry.vector import (
     dot_product_is_proportional_to_cosine_between_vectors as dot_product_law)
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
 
 # Description
 ## A particle with position vector (0.0, 0.3, 2.3) m is moving under a force (1.0, 2.0, -1.5) N.

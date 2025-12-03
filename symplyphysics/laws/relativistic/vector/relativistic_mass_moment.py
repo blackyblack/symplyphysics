@@ -16,8 +16,8 @@ from sympy import Eq
 from symplyphysics import Quantity, validate_input, validate_output, symbols, units
 from symplyphysics.definitions import lorentz_factor as lorentz_factor_def
 
-from symplyphysics.core.experimental.vectors import VectorSymbol, clone_as_vector_symbol, VectorNorm
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import VectorSymbol, clone_as_vector_symbol, VectorNorm
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 mass_moment = VectorSymbol("N", units.mass * units.length)
 """

@@ -4,8 +4,8 @@ from symplyphysics import units, Quantity, errors
 from symplyphysics.definitions.vector import (damping_force_is_proportional_to_velocity as
     damping_def)
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
 
 # Description
 ## A damping force acts on a body. The body's velocity is (4, -2, 0) m/s, the damping constant

@@ -6,9 +6,9 @@ from symplyphysics.laws.electricity.maxwell_equations import (
     curl_of_magnetic_field_is_conductivity_current_density_and_electric_induction_derivative as
     current_density_law)
 
-from symplyphysics.core.experimental.coordinate_systems import (CARTESIAN, CoordinateVector,
+from symplyphysics.core.coordinate_systems import (CARTESIAN, CoordinateVector,
     AppliedPoint, QuantityCoordinateVector)
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.approx import assert_equal_vectors
 
 ## The vector field of magnetic intensity is given. For its distribution, the amplitude is known, which is equal to 1 kiloampere per meter.
 ## The vector field of electric induction is given. For its distribution, the electric intensity is known, which is equal to 10 kilovolt per meter.

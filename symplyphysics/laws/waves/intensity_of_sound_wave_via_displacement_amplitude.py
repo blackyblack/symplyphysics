@@ -21,7 +21,7 @@ from sympy import Eq, solve, cos, Expr
 from symplyphysics import (Quantity, validate_input, validate_output, symbols, clone_as_symbol,
     clone_as_function)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.experimental.solvers import apply
+from symplyphysics.core.solvers import apply
 
 from symplyphysics.definitions import (
     intensity_of_sound_wave_is_rate_of_energy_transfer_over_area as _intensity_def,

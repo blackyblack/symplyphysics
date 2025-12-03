@@ -30,8 +30,8 @@ frame relative to the lab frame.
 from sympy import Eq, evaluate
 from symplyphysics import validate_input, validate_output, symbols, quantities
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorDot
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import clone_as_vector_symbol, VectorDot
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 tangential_velocity_in_lab_frame = clone_as_vector_symbol(
     symbols.speed,

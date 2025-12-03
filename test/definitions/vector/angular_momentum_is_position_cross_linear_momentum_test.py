@@ -4,8 +4,8 @@ from symplyphysics import units, Quantity, errors
 from symplyphysics.definitions.vector import (
     angular_momentum_is_position_cross_linear_momentum as angular_momentum_def,)
 
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector, CARTESIAN
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector, CARTESIAN
+from symplyphysics.core.approx import assert_equal_vectors
 
 # Description
 ## A particle is located at a point with position vector of (1, 2, -1) m and possesses

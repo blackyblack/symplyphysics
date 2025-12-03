@@ -19,10 +19,10 @@ from sympy import Eq, Idx
 
 from symplyphysics import symbols, validate_input, validate_output, IndexedSum, global_index
 
-from symplyphysics.core.experimental.solvers import solve_for_vector
-from symplyphysics.core.experimental.vectors import (clone_as_vector_symbol,
+from symplyphysics.core.solvers import solve_for_vector
+from symplyphysics.core.vectors import (clone_as_vector_symbol,
     clone_as_indexed_vector)
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 net_force = clone_as_vector_symbol(symbols.force)
 """

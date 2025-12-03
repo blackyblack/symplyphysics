@@ -4,8 +4,8 @@ from symplyphysics import errors, units, Quantity
 from symplyphysics.laws.waves.vector import (
     phase_velocity_from_angular_velocity_and_wavevector as phase_velocity_law,)
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
 
 # Description
 ## A wave is propagating with the wavevector k = (2, 3, -6) rad/m and angular frequency w = 5 Hz.

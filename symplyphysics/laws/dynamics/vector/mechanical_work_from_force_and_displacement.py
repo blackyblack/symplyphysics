@@ -23,8 +23,8 @@ to be changed. Work is a scalar value equal to the dot product of force and disp
 from sympy import Eq
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorDot
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import clone_as_vector_symbol, VectorDot
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
 
 work = symbols.work
 """

@@ -6,7 +6,7 @@ from symplyphysics import units, Quantity, assert_equal
 from symplyphysics.conditions.electricity.maxwell_equations import (
     divergence_of_magnetic_induction_field_is_zero as divergence_cond,)
 
-from symplyphysics.core.experimental.coordinate_systems import (CARTESIAN, CoordinateVector,
+from symplyphysics.core.coordinate_systems import (CARTESIAN, CoordinateVector,
     CoordinateScalar)
 
 ## The magnetic induction vector field is given. For its distribution, the magnetic amplitude is

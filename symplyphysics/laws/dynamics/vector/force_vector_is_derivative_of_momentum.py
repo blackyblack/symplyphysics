@@ -20,9 +20,9 @@ from sympy import Eq, Expr
 
 from symplyphysics import Quantity, symbols, validate_input, validate_output
 
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
-from symplyphysics.core.experimental.vectors import VectorDerivative, clone_as_vector_function
-from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.vectors import VectorDerivative, clone_as_vector_function
+from symplyphysics.core.solvers import solve_for_vector
 
 time = symbols.time
 """

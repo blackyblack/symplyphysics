@@ -4,8 +4,8 @@ from symplyphysics import units, Quantity, errors
 from symplyphysics.quantities import speed_of_light
 from symplyphysics.laws.relativistic.vector import acceleration_from_force_and_velocity as law
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
 
 Args = namedtuple("Args", "m a v f")
 

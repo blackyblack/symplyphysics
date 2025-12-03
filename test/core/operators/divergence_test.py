@@ -5,13 +5,13 @@ from sympy import sin, cos, tan, Function as SymFunction
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.symbols import BasicSymbol, Symbol
 
-from symplyphysics.core.experimental.vectors import VectorSymbol, VectorCross
-from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
+from symplyphysics.core.vectors import VectorSymbol, VectorCross
+from symplyphysics.core.coordinate_systems import (CartesianCoordinateSystem,
     CylindricalCoordinateSystem, SphericalCoordinateSystem)
-from symplyphysics.core.experimental.coordinate_systems.vector import CoordinateVector
-from symplyphysics.core.experimental.coordinate_systems.scalar import CoordinateScalar
-from symplyphysics.core.experimental.operators import VectorDivergence
-from symplyphysics.core.experimental.solvers import vector_equals
+from symplyphysics.core.coordinate_systems.vector import CoordinateVector
+from symplyphysics.core.coordinate_systems.scalar import CoordinateScalar
+from symplyphysics.core.operators import VectorDivergence
+from symplyphysics.core.solvers import vector_equals
 
 
 def test_non_coordinate_vector() -> None:

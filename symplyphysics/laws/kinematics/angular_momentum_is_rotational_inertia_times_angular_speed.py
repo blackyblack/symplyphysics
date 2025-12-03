@@ -21,7 +21,7 @@ from sympy import Eq, solve
 from symplyphysics import Quantity, validate_input, validate_output, symbols, clone_as_symbol
 from symplyphysics.core.expr_comparisons import expr_equals
 
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorNorm, VectorDot
+from symplyphysics.core.vectors import clone_as_vector_symbol, VectorNorm, VectorDot
 
 from symplyphysics.definitions import (
     rotational_inertia_is_mass_times_squared_radius as _rotational_inertia_def,)

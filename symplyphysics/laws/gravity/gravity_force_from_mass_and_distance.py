@@ -23,8 +23,8 @@ from symplyphysics.laws.dynamics.fields import (
     conservative_force_is_gradient_of_potential_energy as gradient_law,)
 from symplyphysics.laws.gravity import gravitational_potential_energy
 
-from symplyphysics.core.experimental.vectors import VectorNorm
-from symplyphysics.core.experimental.coordinate_systems import (CARTESIAN, CoordinateScalar,
+from symplyphysics.core.vectors import VectorNorm
+from symplyphysics.core.coordinate_systems import (CARTESIAN, CoordinateScalar,
     CoordinateVector)
 
 gravitational_force = symbols.force

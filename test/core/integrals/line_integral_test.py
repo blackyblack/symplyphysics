@@ -6,11 +6,11 @@ from symplyphysics import Symbol, assert_equal, units
 from symplyphysics.core.symbols.symbols import BasicSymbol
 from symplyphysics.core.expr_comparisons import expr_equals
 
-from symplyphysics.core.experimental.vectors import VectorDot
-from symplyphysics.core.experimental.coordinate_systems import (AppliedPoint, CARTESIAN,
+from symplyphysics.core.vectors import VectorDot
+from symplyphysics.core.coordinate_systems import (AppliedPoint, CARTESIAN,
     CoordinateVector)
-from symplyphysics.core.experimental.coordinate_systems.curve import Curve
-from symplyphysics.core.experimental.integrals.line_integral import (LineIntegral,
+from symplyphysics.core.coordinate_systems.curve import Curve
+from symplyphysics.core.integrals.line_integral import (LineIntegral,
     INFINITESIMAL_ARC_LENGTH as ds, INFINITESIMAL_DISPLACEMENT as dr)
 
 x, y, z = CARTESIAN.base_scalars

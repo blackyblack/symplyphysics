@@ -16,10 +16,10 @@ equal to the time rate change of the system's total angular momentum.
 from sympy import Eq
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-from symplyphysics.core.experimental.vectors import (clone_as_vector_function, VectorDerivative,
+from symplyphysics.core.vectors import (clone_as_vector_function, VectorDerivative,
     vector_diff, convert_sympy_to_vector_derivatives)
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
-from symplyphysics.core.experimental.solvers import solve_for_vector, apply, vector_equals
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.solvers import solve_for_vector, apply, vector_equals
 
 from symplyphysics.definitions.vector import (
     velocity_is_position_vector_derivative as _velocity_def,

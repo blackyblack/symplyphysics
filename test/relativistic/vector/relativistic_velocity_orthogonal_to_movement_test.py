@@ -4,9 +4,9 @@ from sympy.physics.units import speed_of_light
 from symplyphysics import units, Quantity, errors
 from symplyphysics.laws.relativistic.vector import relativistic_velocity_orthogonal_to_movement as law
 
-from symplyphysics.core.experimental.vectors import VectorDot
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.vectors import VectorDot
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
 
 # Description
 ## The velocity vector of the body in the proper frame of reference is (0.1*c, 0.2*c, -0.333*c). The velocity vector of the

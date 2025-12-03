@@ -20,9 +20,9 @@ from sympy import Eq
 from symplyphysics import validate_input, validate_output, symbols, Quantity
 
 from symplyphysics.core.approx import approx_equal_numbers
-from symplyphysics.core.experimental.vectors import clone_as_vector_symbol, VectorDot
-from symplyphysics.core.experimental.coordinate_systems import QuantityCoordinateVector
-from symplyphysics.core.experimental.solvers import solve_for_vector
+from symplyphysics.core.vectors import clone_as_vector_symbol, VectorDot
+from symplyphysics.core.coordinate_systems import QuantityCoordinateVector
+from symplyphysics.core.solvers import solve_for_vector
 
 total_acceleration = clone_as_vector_symbol(symbols.acceleration)
 """

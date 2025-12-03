@@ -4,7 +4,7 @@ from symplyphysics import assert_equal, units, errors
 from symplyphysics.laws.dynamics.vector import (
     kinetic_energy_via_angular_momentum_and_angular_velocity as law)
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
 
 Args = namedtuple("Args", "l w")
 

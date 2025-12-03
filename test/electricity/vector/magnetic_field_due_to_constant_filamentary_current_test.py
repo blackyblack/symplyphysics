@@ -3,8 +3,8 @@ from pytest import fixture, raises
 from symplyphysics import units, errors, Quantity, quantities
 from symplyphysics.laws.electricity.vector import magnetic_field_due_to_constant_filamentary_current as law
 
-from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, QuantityCoordinateVector
-from symplyphysics.core.experimental.approx import assert_equal_vectors
+from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
+from symplyphysics.core.approx import assert_equal_vectors
 
 Args = namedtuple("Args", "mu i r l dl")
 

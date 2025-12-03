@@ -3,11 +3,11 @@ from pytest import raises, fixture
 from sympy import Expr, Matrix, ImmutableMatrix, Basic
 from symplyphysics.core.symbols.symbols import BasicSymbol
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.experimental.vectors import VectorSymbol
-from symplyphysics.core.experimental.coordinate_systems import (CartesianCoordinateSystem,
+from symplyphysics.core.vectors import VectorSymbol
+from symplyphysics.core.coordinate_systems import (CartesianCoordinateSystem,
     CylindricalCoordinateSystem, SphericalCoordinateSystem, AppliedPoint, CoordinateScalar,
     CoordinateVector)
-from symplyphysics.core.experimental.coordinate_systems.point import GLOBAL_POINT
+from symplyphysics.core.coordinate_systems.point import GLOBAL_POINT
 
 
 @dataclass(frozen=True, kw_only=True)
