@@ -1,8 +1,8 @@
 from typing import Sequence, Any
 from sympy import (Expr, Symbol as SymSymbol)
 from symplyphysics import Quantity
-from symplyphysics.core.fields.analysis import flux_across_surface
-from symplyphysics.core.fields.vector_field import VectorField
+from symplyphysics.core.legacy_fields.analysis import flux_across_surface
+from symplyphysics.core.legacy_fields.vector_field import VectorField
 
 # Description
 ## Flux is defined as the amount of "stuff" going through a curve or a surface

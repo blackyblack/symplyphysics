@@ -1,12 +1,12 @@
 from typing import Sequence, Any
 from sympy import Expr, integrate, simplify
-from ..vectors.vectors import Vector
-from ..vectors.arithmetics import dot_vectors, vector_magnitude, vector_unit
-from ..fields.operators import curl_operator, divergence_operator
-from ..fields.vector_field import VectorField
-from ..geometry.elements import parametrized_curve_element, parametrized_curve_element_magnitude, volume_element_magnitude
-from ..geometry.normals import parametrized_curve_normal, parametrized_surface_normal
-from ..fields.parameters import ParameterLimits
+from ..legacy_vectors.vectors import Vector
+from ..legacy_vectors.arithmetics import dot_vectors, vector_magnitude, vector_unit
+from ..legacy_fields.operators import curl_operator, divergence_operator
+from ..legacy_fields.vector_field import VectorField
+from ..geometry.legacy_elements import parametrized_curve_element, parametrized_curve_element_magnitude, volume_element_magnitude
+from ..geometry.legacy_normals import parametrized_curve_normal, parametrized_surface_normal
+from ..legacy_fields.parameters import ParameterLimits
 
 
 # trajectory should be array with projections to coordinates, eg [3 * cos(parameter), 3 * sin(parameter)]

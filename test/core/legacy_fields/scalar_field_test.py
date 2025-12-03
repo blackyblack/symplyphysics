@@ -5,10 +5,10 @@ from sympy.vector import express
 from symplyphysics.core.test_decorators import unsupported_usage
 from symplyphysics.core.points.cylinder_point import CylinderPoint
 from symplyphysics.core.points.sphere_point import SpherePoint
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
+from symplyphysics.core.legacy_coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
 from symplyphysics.core.points.cartesian_point import CartesianPoint
 from symplyphysics.core.points.point import Point
-from symplyphysics.core.fields.scalar_field import ScalarField
+from symplyphysics.core.legacy_fields.scalar_field import ScalarField
 
 Args = namedtuple("Args", ["C"])
 

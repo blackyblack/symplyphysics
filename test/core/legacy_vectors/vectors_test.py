@@ -3,8 +3,8 @@ from pytest import fixture, raises
 from sympy import atan, pi, sqrt, symbols, sin, cos
 from sympy.vector import Vector as SympyVector, express
 from symplyphysics import Quantity, dimensionless, units, errors, assert_equal
-from symplyphysics.core.vectors.vectors import Vector, QuantityVector
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
+from symplyphysics.core.legacy_vectors.vectors import Vector, QuantityVector
+from symplyphysics.core.legacy_coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
 
 Args = namedtuple("Args", ["C"])
 

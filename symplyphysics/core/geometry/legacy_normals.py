@@ -1,8 +1,8 @@
 from sympy import Expr, diff
 
-from ..geometry.elements import parametrized_curve_element
-from ..vectors.vectors import Vector
-from ..vectors.arithmetics import cross_cartesian_vectors
+from .legacy_elements import parametrized_curve_element
+from ..legacy_vectors.vectors import Vector
+from ..legacy_vectors.arithmetics import cross_cartesian_vectors
 
 
 # Curve normal is orthogonal to its tangent.

@@ -4,10 +4,10 @@ from pytest import fixture
 from sympy import Expr, cos, exp, sin, Symbol as SymSymbol, sqrt, S
 from sympy.vector import VectorZero
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
-from symplyphysics.core.fields.vector_field import VectorField
-from symplyphysics.core.fields.scalar_field import ScalarField
-from symplyphysics.core.fields.operators import curl_operator, divergence_operator, gradient_operator
+from symplyphysics.core.legacy_coordinate_systems.coordinate_systems import CoordinateSystem
+from symplyphysics.core.legacy_fields.vector_field import VectorField
+from symplyphysics.core.legacy_fields.scalar_field import ScalarField
+from symplyphysics.core.legacy_fields.operators import curl_operator, divergence_operator, gradient_operator
 from symplyphysics.core.points.cartesian_point import CartesianPoint
 from symplyphysics.core.points.cylinder_point import CylinderPoint
 from symplyphysics.core.points.sphere_point import SpherePoint

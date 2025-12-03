@@ -7,8 +7,8 @@ from symplyphysics import (
     Quantity,
     units,
 )
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
-from symplyphysics.core.fields.vector_field import VectorField
+from symplyphysics.core.legacy_coordinate_systems.coordinate_systems import CoordinateSystem
+from symplyphysics.core.legacy_fields.vector_field import VectorField
 from symplyphysics.laws.fields import flux_is_integral_across_surface as flux_def
 
 Args = namedtuple("Args", ["C", "radius_unit"])

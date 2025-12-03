@@ -26,8 +26,7 @@ from sympy import (Eq, Rational, sqrt, pi, exp, symbols as sym_symbols, solve)
 from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output,
     clone_as_symbol, symbols, quantities)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.geometry.elements import volume_element_magnitude
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
+from symplyphysics.core.experimental.coordinate_systems import SPHERICAL
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import velocity_component_distribution
 
 speed_distribution_function = Symbol("f(v)", 1 / units.velocity)
@@ -80,15 +79,18 @@ _velocity_y_distribution = _velocity_component_distribution.subs(
 _velocity_z_distribution = _velocity_component_distribution.subs(
     velocity_component_distribution.velocity_component, _velocity_z)
 
-_spherical_coordinate_system = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
+# _spherical_coordinate_system = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
 
-_radius, _azimuthal_angle, _polar_angle = _spherical_coordinate_system.coord_system.base_scalars()
+_radius, _polar_angle, _azimuthal_angle = SPHERICAL.base_scalars
+
+_h1, _h2, _h3 = SPHERICAL.lame_coefficients()
+_volume_element = _h1 * _h2 * _h3
 
 # The speed distribution depends solely on the radial component of the velocity vector.
 # Therefore we integrate over polar and azimuthal angles to get rid of them.
 # We work in the three-dimensional velocity space `d^3(v)` so radius is speed (magnitude of velocity vector)
-_spherical_volume_velocity_element = (volume_element_magnitude(_spherical_coordinate_system).subs(
-    _radius, particle_speed).integrate((_polar_angle, 0, pi), (_azimuthal_angle, 0, 2 * pi)))
+_spherical_volume_velocity_element = _volume_element.subs(_radius, particle_speed).integrate(
+    (_polar_angle, 0, pi), (_azimuthal_angle, 0, 2 * pi))
 
 # `v_x`, `v_y` and `v_z` are independent random variables, therefore we can get the distribution of
 # the velocity vector `v` by multiplying the distributions of its coordinates.

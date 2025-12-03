@@ -1,7 +1,7 @@
 from sympy import Expr, diff, sin, S
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
-from symplyphysics.core.vectors.arithmetics import vector_magnitude
-from ..vectors.vectors import Vector
+from symplyphysics.core.legacy_coordinate_systems.coordinate_systems import CoordinateSystem
+from symplyphysics.core.legacy_vectors.arithmetics import vector_magnitude
+from ..legacy_vectors.vectors import Vector
 
 
 # Curve element is its tangent vector

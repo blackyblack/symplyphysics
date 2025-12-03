@@ -7,8 +7,8 @@ from symplyphysics.core.test_decorators import unsupported_usage
 from symplyphysics.core.points.cylinder_point import CylinderPoint
 from symplyphysics.core.points.cartesian_point import CartesianPoint
 from symplyphysics.core.points.point import Point
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
-from symplyphysics.core.fields.vector_field import VectorField
+from symplyphysics.core.legacy_coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
+from symplyphysics.core.legacy_fields.vector_field import VectorField
 
 
 def _assert_point(field_: VectorField, point_: Point, expected_: Sequence[Any]) -> None:

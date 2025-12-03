@@ -2,9 +2,9 @@ from collections import namedtuple
 from typing import Sequence
 from pytest import fixture, mark, raises
 from sympy import Expr, cos, pi, sin, sqrt, Symbol as SymSymbol, S
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
-from symplyphysics.core.fields.analysis import circulation_along_curve, circulation_along_surface_boundary, flux_across_curve, flux_across_surface, flux_across_surface_boundary, flux_across_volume_boundary
-from symplyphysics.core.fields.vector_field import VectorField
+from symplyphysics.core.legacy_coordinate_systems.coordinate_systems import CoordinateSystem
+from symplyphysics.core.legacy_fields.analysis import circulation_along_curve, circulation_along_surface_boundary, flux_across_curve, flux_across_surface, flux_across_surface_boundary, flux_across_volume_boundary
+from symplyphysics.core.legacy_fields.vector_field import VectorField
 from symplyphysics.core.points.cartesian_point import CartesianPoint
 from symplyphysics.core.points.cylinder_point import CylinderPoint
 from symplyphysics.core.approx import approx_equal_numbers

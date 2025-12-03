@@ -1,9 +1,9 @@
 from sympy import diff, sin, tan, Expr, S
 
-from ..fields.vector_field import VectorField
-from ..fields.scalar_field import ScalarField
-from ..coordinate_systems.coordinate_systems import CoordinateSystem
-from ..vectors.vectors import Vector
+from ..legacy_fields.vector_field import VectorField
+from ..legacy_fields.scalar_field import ScalarField
+from ..legacy_coordinate_systems.coordinate_systems import CoordinateSystem
+from ..legacy_vectors.vectors import Vector
 
 
 def gradient_operator(field: ScalarField) -> Vector:

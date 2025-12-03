@@ -1,21 +1,29 @@
 from typing import Optional
+from sympy import Expr
 from sympy.physics.units import Dimension
 
 from symplyphysics.core.approx import assert_equal
 from symplyphysics.core.dimensions.dimensions import assert_equivalent_dimension
 
-from .coordinate_systems import QuantityCoordinateVector, AppliedPoint
+from .coordinate_systems import AppliedPoint
+from .coordinate_systems.vector import as_quantity_coordinate_vector
 
 
 def assert_equal_vectors(
-    lhs: QuantityCoordinateVector | float,
-    rhs: QuantityCoordinateVector | float,
+    lhs: Expr,
+    rhs: Expr,
     *,
     relative_tolerance: Optional[float] = None,
     absolute_tolerance: Optional[float] = None,
     dimension: Optional[Dimension] = None,
 ) -> None:
-    if isinstance(lhs, QuantityCoordinateVector) and isinstance(rhs, QuantityCoordinateVector):
+    lhs = as_quantity_coordinate_vector(lhs)
+    rhs = as_quantity_coordinate_vector(rhs)
+
+    if lhs == 0 and rhs == 0:
+        return
+
+    if lhs != 0 and rhs != 0:
         assert lhs.system == rhs.system
         assert lhs.point == rhs.point
 
@@ -30,7 +38,15 @@ def assert_equal_vectors(
 
         return
 
-    assert lhs == 0 and rhs == 0
+    components = lhs.components if lhs != 0 else rhs.components
+    for component in components:
+        assert_equal(
+            component,
+            0,
+            relative_tolerance=relative_tolerance,
+            absolute_tolerance=absolute_tolerance,
+            dimension=dimension,
+        )
 
 
 def assert_quantity_point(point: AppliedPoint, func: Optional[str] = None) -> None:

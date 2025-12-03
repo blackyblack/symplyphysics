@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from typing import Optional, Any, Iterable
 
-from sympy import (ImmutableMatrix, Expr, sqrt, Basic, Derivative as SymDerivative, S)
+from sympy import (ImmutableMatrix, Expr, sqrt, Basic, Derivative as SymDerivative, S, Symbol as
+    SymSymbol, integrate as sym_integrate)
 from sympy.matrices.dense import DenseMatrix
 from sympy.physics.units import Dimension
 from sympy.physics.units.systems.si import dimsys_SI
@@ -310,6 +311,22 @@ def construct_position_vector(point: AppliedPoint) -> CoordinateVector:
     components = system.extract_position_vector_components(point.coordinates.values())
 
     return CoordinateVector(components, system, point)
+
+
+def integrate_cartesian_vector(
+    vector: Expr,
+    *args: SymSymbol | tuple[SymSymbol, Expr, Expr],
+) -> Expr:
+    vector = as_coordinate_vector(vector)
+    if vector == 0:
+        return vector
+    if not isinstance(vector.system, CartesianCoordinateSystem):
+        message = f"Expect a vector in a CartesianCoordinateSystem, got {type(vector.system).__name__}"
+        raise ValueError(message)
+
+    components = vector.components
+    integrated_components = sym_integrate(components, *args)
+    return CoordinateVector(integrated_components, vector.system, vector.point)
 
 
 __all__ = [

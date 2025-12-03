@@ -1,8 +1,8 @@
 from collections import namedtuple
 from pytest import fixture
 from symplyphysics import assert_equal
-from symplyphysics.core.vectors.vectors import Vector
-from symplyphysics.core.vectors.arithmetics import vector_magnitude, dot_vectors
+from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
+from symplyphysics.core.experimental.vectors import VectorDot, VectorNorm
 from symplyphysics.laws.geometry import dot_product_is_proportional_to_cosine_between_vectors_scalar as cosine_law
 
 # Description
@@ -14,15 +14,11 @@ Args = namedtuple("Args", "f_norm r_norm f_dot_r")
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    f = Vector([
-        1.0,
-        2.0,
-        -1.5,
-    ])
-    r = Vector([0.0, 0.3, 2.3])
-    f_norm = vector_magnitude(f)
-    r_norm = vector_magnitude(r)
-    f_dot_r = dot_vectors(f, r)
+    f = CoordinateVector([1.0, 2.0, -1.5], CARTESIAN)
+    r = CoordinateVector([0.0, 0.3, 2.3], CARTESIAN)
+    f_norm = VectorNorm(f)
+    r_norm = VectorNorm(r)
+    f_dot_r = VectorDot(f, r)
     return Args(f_norm, r_norm, f_dot_r)
 
 

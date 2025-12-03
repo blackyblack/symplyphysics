@@ -8,8 +8,8 @@ from ..points.point import Point
 from ..points.cartesian_point import CartesianPoint
 from ..points.sphere_point import SpherePoint
 from ..points.cylinder_point import CylinderPoint
-from ..coordinate_systems.coordinate_systems import CoordinateSystem
-from ..vectors.vectors import Vector
+from ..legacy_coordinate_systems.coordinate_systems import CoordinateSystem
+from ..legacy_vectors.vectors import Vector
 
 T = TypeVar("T", bound="Point")
 FieldFunction: TypeAlias = Callable[[T], Sequence[Expr]] | Sequence[Any]

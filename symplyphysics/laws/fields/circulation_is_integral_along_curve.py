@@ -1,8 +1,8 @@
 from typing import Sequence, Any
 from sympy import Expr, Symbol as SymSymbol
 from symplyphysics import Quantity
-from symplyphysics.core.fields.analysis import circulation_along_curve
-from symplyphysics.core.fields.vector_field import VectorField
+from symplyphysics.core.legacy_fields.analysis import circulation_along_curve
+from symplyphysics.core.legacy_fields.vector_field import VectorField
 
 # Description
 ## Field circulation along closed curve is curvilinear integral of field by this curve.

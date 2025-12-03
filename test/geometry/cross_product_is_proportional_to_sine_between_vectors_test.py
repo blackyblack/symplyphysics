@@ -1,8 +1,8 @@
 from collections import namedtuple
 from pytest import fixture
 from symplyphysics import assert_equal
-from symplyphysics.core.vectors.vectors import Vector
-from symplyphysics.core.vectors.arithmetics import cross_cartesian_vectors, vector_magnitude
+from symplyphysics.core.experimental.coordinate_systems import CARTESIAN, CoordinateVector
+from symplyphysics.core.experimental.vectors import VectorCross, VectorNorm
 from symplyphysics.laws.geometry import (
     cross_product_is_proportional_to_sine_between_vectors as sine_law,)
 
@@ -16,16 +16,12 @@ Args = namedtuple("Args", "r_norm f_norm tau_norm")
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    f = Vector([
-        1.0,
-        2.0,
-        -1.0,
-    ])
-    r = Vector([0.0, 1.0, -2.0])
-    tau = cross_cartesian_vectors(r, f)
-    r_norm = vector_magnitude(r)
-    f_norm = vector_magnitude(f)
-    tau_norm = vector_magnitude(tau)
+    f = CoordinateVector([1.0, 2.0, -1.0], CARTESIAN)
+    r = CoordinateVector([0.0, 1.0, -2.0], CARTESIAN)
+    tau = VectorCross(r, f)
+    r_norm = VectorNorm(r)
+    f_norm = VectorNorm(f)
+    tau_norm = VectorNorm(tau)
     return Args(r_norm=r_norm, f_norm=f_norm, tau_norm=tau_norm)
 
 

@@ -5,7 +5,7 @@ from sympy import S, Expr, cos, sin, sqrt, sympify, diff, integrate
 
 from .vectors import Vector
 from ..expr_comparisons import expr_equals
-from ..coordinate_systems.coordinate_systems import CoordinateSystem
+from ..legacy_coordinate_systems.coordinate_systems import CoordinateSystem
 
 
 # Add zeroes so that both vectors have the same length.

@@ -10,7 +10,7 @@ from ..dimensions import assert_equivalent_dimension, dimensionless
 from ..symbols.quantities import Quantity, subs_list
 from ..symbols.id_generator import next_id
 from ..symbols.symbols import DimensionSymbol
-from ..coordinate_systems.coordinate_systems import CoordinateSystem
+from ..legacy_coordinate_systems.coordinate_systems import CoordinateSystem
 
 
 # Contains list of SymPy expressions or any numbers as components.

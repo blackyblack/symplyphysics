@@ -1,8 +1,8 @@
 from typing import Sequence, Any
 from sympy import (Expr, Symbol as SymSymbol)
 from symplyphysics import Quantity
-from symplyphysics.core.fields.analysis import circulation_along_surface_boundary
-from symplyphysics.core.fields.vector_field import VectorField
+from symplyphysics.core.legacy_fields.analysis import circulation_along_surface_boundary
+from symplyphysics.core.legacy_fields.vector_field import VectorField
 
 # Description
 ## Circulation of the field along the closed curve is flow of the rotor (or curl) of this field

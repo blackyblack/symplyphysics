@@ -14,7 +14,7 @@ from sympy import N, re, im
 from sympy.physics.units import Dimension
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.vectors.vectors import QuantityVector
+from symplyphysics.core.legacy_vectors.vectors import QuantityVector
 
 APPROX_RELATIVE_TOLERANCE = 0.001
 
