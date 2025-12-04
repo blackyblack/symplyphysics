@@ -42,11 +42,9 @@ surface = BasicSymbol("S")
 Surface along which the integral is evaluated.
 
 Symbol:
-
     :code:`S`
 
 Latex:
-
     :math:`S`
 """
 

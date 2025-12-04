@@ -34,6 +34,12 @@ Any vector field, i.e. a vector-valued function that depends on the position vec
 curve = BasicSymbol("C")
 """
 Curve along which the :attr:`~circulation` is calculated.
+
+Symbol:
+    :code:`C`
+
+Latex:
+    :math:`C`
 """
 
 initial_parameter = Symbol("u_1", dimensionless)
