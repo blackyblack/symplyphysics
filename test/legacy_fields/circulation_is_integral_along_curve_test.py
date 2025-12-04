@@ -8,7 +8,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.legacy_coordinate_systems.coordinate_systems import CoordinateSystem
 from symplyphysics.core.legacy_fields.vector_field import VectorField
-from symplyphysics.laws.fields import circulation_is_integral_along_curve as circulation_def
+from symplyphysics.laws.legacy_fields import circulation_is_integral_along_curve as circulation_def
 
 Args = namedtuple("Args", ["C", "radius_unit", "field"])
 
