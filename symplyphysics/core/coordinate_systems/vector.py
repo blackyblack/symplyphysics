@@ -120,6 +120,10 @@ class CoordinateVector(VectorExpr):
     def _eval_vector_norm(self) -> Expr:
         return sqrt(sum(elem**2 for elem in self.components))
 
+    def _eval_simplify(self, **kwargs: Any) -> CoordinateVector:
+        components = self.components.simplify(**kwargs)
+        return CoordinateVector(components, self.system, self.point)
+
     @classmethod
     def _eval_vector_dot(cls, lhs: VectorExpr, rhs: VectorExpr) -> Optional[Expr]:
         if not (isinstance(lhs, CoordinateVector) and isinstance(rhs, CoordinateVector)):
