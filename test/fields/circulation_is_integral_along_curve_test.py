@@ -31,19 +31,15 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = law.calculate_circulation(test_args.f, test_args.c, (test_args.u1, test_args.u2))
+    result = law.calculate_circulation(test_args.f, test_args.c, test_args.u1, test_args.u2)
     assert_equal(result, 5 * (sqrt(5) - 5) / 96 * units.volt)
 
 
 def test_bad_bounds(test_args: Args) -> None:
-    law.calculate_circulation(test_args.f, test_args.c, (0, 0))
-    law.calculate_circulation(test_args.f, test_args.c, (0, 2))
-    law.calculate_circulation(test_args.f, test_args.c, (1, 0))
-    law.calculate_circulation(test_args.f, test_args.c, (1, 2))
-
-    with raises(TypeError):
-        law.calculate_circulation(test_args.f, test_args.c, (1, 2 * units.meter))
+    bad_parameter = units.meter
     with raises(errors.UnitsError):
-        law.calculate_circulation(test_args.f, test_args.c, (2 * units.meter, 1))
+        law.calculate_circulation(test_args.f, test_args.c, 1, bad_parameter)
     with raises(errors.UnitsError):
-        law.calculate_circulation(test_args.f, test_args.c, (1 * units.meter, 2 * units.coulomb))
+        law.calculate_circulation(test_args.f, test_args.c, bad_parameter, 1)
+    with raises(errors.UnitsError):
+        law.calculate_circulation(test_args.f, test_args.c, bad_parameter, 2 * bad_parameter)

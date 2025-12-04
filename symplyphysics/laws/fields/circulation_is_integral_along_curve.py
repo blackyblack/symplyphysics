@@ -13,8 +13,8 @@ the field along the curve.
 """
 
 from sympy import Eq
-from symplyphysics import Quantity
-from symplyphysics.core.dimensions import any_dimension, assert_equivalent_dimension
+from symplyphysics import Quantity, validate_input
+from symplyphysics.core.dimensions import any_dimension, dimensionless
 from symplyphysics.core.symbols.symbols import BasicSymbol, Symbol
 from symplyphysics.core.coordinate_systems import CoordinateVector
 from symplyphysics.core.coordinate_systems.curve import Curve
@@ -36,12 +36,12 @@ curve = BasicSymbol("C")
 Curve along which the :attr:`~circulation` is calculated.
 """
 
-initial_parameter = Symbol("u_1", any_dimension)
+initial_parameter = Symbol("u_1", dimensionless)
 """
 Initial value of the curve parameter.
 """
 
-final_parameter = Symbol("u_2", any_dimension)
+final_parameter = Symbol("u_2", dimensionless)
 """
 Final value of the curve parameter.
 """
@@ -58,18 +58,21 @@ law = Eq(
 """
 
 
+@validate_input(
+    initial_parameter_=initial_parameter,
+    final_parameter_=final_parameter,
+)
 def calculate_circulation(
     field_: CoordinateVector,
     curve_: Curve,
-    bounds_: tuple[Quantity, Quantity],
+    initial_parameter_: Quantity | float,
+    final_parameter_: Quantity | float,
 ) -> Quantity:
-    u1_, u2_ = bounds_
-    assert_equivalent_dimension(u1_, "initial_parameter_", "calculate_circulation", u2_)
-
     result = law.rhs.subs({
         field: field_,
+    }).subs({
         curve: curve_,
-        initial_parameter: u1_,
-        final_parameter: u2_,
+        initial_parameter: initial_parameter_,
+        final_parameter: final_parameter_,
     }).doit().doit()
     return Quantity(result)

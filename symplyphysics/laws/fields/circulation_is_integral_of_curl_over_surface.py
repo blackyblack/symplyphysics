@@ -18,8 +18,8 @@ is the curve along which the circulation is calculated.
 """
 
 from sympy import Eq
-from symplyphysics import Quantity
-from symplyphysics.core.dimensions import any_dimension, assert_equivalent_dimension
+from symplyphysics import Quantity, validate_input
+from symplyphysics.core.dimensions import any_dimension, dimensionless
 from symplyphysics.core.symbols.symbols import BasicSymbol, Symbol
 from symplyphysics.core.coordinate_systems import CoordinateVector
 from symplyphysics.core.coordinate_systems.surface import Surface
@@ -50,22 +50,22 @@ Latex:
     :math:`S`
 """
 
-initial_first_parameter = Symbol("u_1", any_dimension)
+initial_first_parameter = Symbol("u_1", dimensionless)
 """
 Initial value of the first surface parameter.
 """
 
-final_first_parameter = Symbol("u_2", any_dimension)
+final_first_parameter = Symbol("u_2", dimensionless)
 """
 Final value of the first surface parameter.
 """
 
-initial_second_parameter = Symbol("v_1", any_dimension)
+initial_second_parameter = Symbol("v_1", dimensionless)
 """
 Initial value of the second surface parameter.
 """
 
-final_second_parameter = Symbol("v_2", any_dimension)
+final_second_parameter = Symbol("v_2", dimensionless)
 """
 Final value of the second surface parameter.
 """
@@ -93,23 +93,27 @@ Latex:
 """
 
 
+@validate_input(
+    initial_first_parameter_=initial_first_parameter,
+    final_first_parameter_=final_first_parameter,
+    initial_second_parameter_=initial_second_parameter,
+    final_second_parameter_=final_second_parameter,
+)
 def calculate_circulation(
     field_: CoordinateVector,
     surface_: Surface,
-    bounds_: tuple[tuple[Quantity, Quantity], tuple[Quantity, Quantity]],
+    initial_first_parameter_: Quantity | float,
+    final_first_parameter_: Quantity | float,
+    initial_second_parameter_: Quantity | float,
+    final_second_parameter_: Quantity | float,
 ) -> Quantity:
-    (u1_, u2_), (v1_, v2_) = bounds_
-    assert_equivalent_dimension(u1_, "first_initial_parameter_", "calculate_circulation", u2_)
-    assert_equivalent_dimension(v1_, "second_initial_parameter_", "calculate_circulation", v2_)
     result = law.rhs.subs({
         field: field_,
     }).subs({
         surface: surface_,
-        initial_first_parameter: u1_,
-        final_first_parameter: u2_,
-        initial_second_parameter: v1_,
-        final_second_parameter: v2_,
-    })
-
-    result = result.doit().doit()
+        initial_first_parameter: initial_first_parameter_,
+        final_first_parameter: final_first_parameter_,
+        initial_second_parameter: initial_second_parameter_,
+        final_second_parameter: final_second_parameter_,
+    }).doit().doit()
     return Quantity(result)

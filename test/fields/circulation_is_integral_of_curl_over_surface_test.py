@@ -1,9 +1,7 @@
 from collections import namedtuple
-from pytest import fixture, mark
+from pytest import fixture, raises
 from sympy import sin, sqrt, pi, Symbol as SymSymbol
-from symplyphysics import assert_equal, units
-from sympy import sin, pi, sqrt
-from symplyphysics import units, assert_equal
+from symplyphysics import units, assert_equal, errors
 from symplyphysics.core.coordinate_systems import CYLINDRICAL, CoordinateVector
 from symplyphysics.core.coordinate_systems.point import AppliedPoint
 from symplyphysics.core.coordinate_systems.surface import Surface
@@ -37,8 +35,30 @@ def test_args_fixture() -> Args:
     return Args(f=f, s=s, u1=u1, u2=u2, v1=v1, v2=v2)
 
 
-# @mark.skip("Doesn't produce the correct answer")
 def test_law(test_args: Args) -> None:
-    result = law.calculate_circulation(test_args.f, test_args.s,
-        ((test_args.u1, test_args.u2), (test_args.v1, test_args.v2)))
+    result = law.calculate_circulation(test_args.f, test_args.s, test_args.u1, test_args.u2,
+        test_args.v1, test_args.v2)
     assert_equal(result, 5 * (sqrt(5) - 5) / 96 * units.volt)
+
+
+def test_bad_bounds(test_args: Args) -> None:
+    bad_parameter = units.coulomb
+
+    with raises(errors.UnitsError):
+        law.calculate_circulation(test_args.f, test_args.s, bad_parameter, test_args.u2,
+            test_args.v1, test_args.v2)
+    with raises(errors.UnitsError):
+        law.calculate_circulation(test_args.f, test_args.s, test_args.u1, bad_parameter,
+            test_args.v1, test_args.v2)
+    with raises(errors.UnitsError):
+        law.calculate_circulation(test_args.f, test_args.s, bad_parameter, 2 * bad_parameter,
+            test_args.v1, test_args.v2)
+    with raises(errors.UnitsError):
+        law.calculate_circulation(test_args.f, test_args.s, test_args.u1, test_args.u2,
+            bad_parameter, test_args.v2)
+    with raises(errors.UnitsError):
+        law.calculate_circulation(test_args.f, test_args.s, test_args.u1, test_args.u2,
+            test_args.v1, bad_parameter)
+    with raises(errors.UnitsError):
+        law.calculate_circulation(test_args.f, test_args.s, test_args.u1, test_args.u2,
+            bad_parameter, 2 * bad_parameter)
