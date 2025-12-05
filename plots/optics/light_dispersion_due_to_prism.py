@@ -4,12 +4,10 @@ Light enters a prism whose cross section is an equilateral triangle. The prism i
 silica. Plot the dispersion of light after it passes the prism.
 """
 
-from sympy import symbols as sym_symbols, Eq, solve, pi, plot, sin, cos, tan, Expr, Rational, sqrt
+from sympy import symbols as sym_symbols, Eq, solve, pi, plot, sin, cos, tan, Rational, sqrt
 from symplyphysics import symbols, clone_as_symbol
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 from symplyphysics.laws.optics import refraction_angle_from_environments as snells_law
-
-wavelength_in_um = sym_symbols("lambda_um", positive=True)
 
 air_refractive_index = clone_as_symbol(
     symbols.relative_refractive_index,
@@ -25,64 +23,99 @@ glass_refractive_index = clone_as_symbol(
 
 ## Part 1. Solve the problem analytically.
 
-# TODO: create a figure to refer to.
+# NOTE Refer to the figure at `../../img/light_dispersion_due_to_prism.svg`
 
+# Distance from the top vertex to the point of intersection of the light ray with the first side.
 lb = sym_symbols("LB", positive=True)
 
 # Length of the triangle sides
 a = sym_symbols("a", positive=True)
 
+# Angle `E1BA` in the figure.
 incoming_incidence_angle = clone_as_symbol(symbols.angle, positive=True)
 
 refraction_angle_expr = solve(snells_law.law, snells_law.refraction_angle)[1]
 
+# Angle `E2BC` in the figure.
 incoming_refraction_angle_expr = refraction_angle_expr.subs({
     snells_law.incidence_refractive_index: air_refractive_index,
     snells_law.incidence_angle: incoming_incidence_angle,
     snells_law.resulting_refractive_index: glass_refractive_index,
 })
 
-lbc_expr = pi / 2 - incoming_refraction_angle_expr
+angle_lbe2_expr = pi / 2
 
-lcb_expr = pi - pi / 3 - lbc_expr
+angle_lbc_expr = angle_lbe2_expr - incoming_refraction_angle_expr
 
-outgoing_incidence_angle_expr = pi / 2 - lcb_expr
+# The triangle `MLN` is equilateral
+angle_blc_expr = pi / 3
 
+# Per the angle sum property in the triangle `BLC`
+angle_lcb_expr = pi - angle_blc_expr - angle_lbc_expr
+
+angle_lcf2_expr = pi / 2
+
+# Angle `BCF2` in the figure.
+outgoing_incidence_angle_expr = angle_lcf2_expr - angle_lcb_expr
+
+# Angle `F1CD` in the figure.
 outgoing_refraction_angle_expr = refraction_angle_expr.subs({
     snells_law.incidence_refractive_index: glass_refractive_index,
     snells_law.incidence_angle: outgoing_incidence_angle_expr,
     snells_law.resulting_refractive_index: air_refractive_index,
 })
 
-lcd_expr = pi / 2 + outgoing_refraction_angle_expr
+angle_lcf1_expr = pi / 2
 
-cdn_expr = lcd_expr - 2 * pi / 3
+angle_lcd_expr = angle_lcf1_expr + outgoing_refraction_angle_expr
 
-cdx_expr = pi - cdn_expr
+# The triangle `MLN` is equilateral.
+angle_cnh_expr = pi / 3
+
+# Angle outer to angle `CNH`
+angle_cnd_expr = pi - angle_cnh_expr
+
+# External angle of triangle: `angle(LCD) = angle(CND) + angle(CDN)`
+angle_cdn_expr = angle_lcd_expr - angle_cnd_expr
+
+# Angle `CDx` in the figure, i.e. the angle outer to angle `CDN`.
+angle_cdx_expr = pi - angle_cdn_expr
 
 lc = sym_symbols("LC", positive=True)
 
-# Law of sines
-sines_eqn = Eq(lb / sin(lcb_expr), lc / sin(lbc_expr))
+# Law of sines in the triangle `LBC` (see figure)
+sines_eqn = Eq(lb / sin(angle_lcb_expr), lc / sin(angle_lbc_expr))
 
 lc_expr = solve(sines_eqn, lc)[0]
 
 cn_expr = a - lc_expr
 
-ch_expr = sin(pi / 3) * cn_expr
+# In the right triangle `CNH`
+ch_expr = sin(angle_cnh_expr) * cn_expr
 
-hn_expr = cos(pi / 3) * cn_expr
+# In the right triangle `CNH`
+hn_expr = cos(angle_cnh_expr) * cn_expr
 
-oh_expr = a / 2 - hn_expr
+# Holds for equilateral triangles
+on_expr = a / 2
 
-hcd_expr = pi / 2 - cdn_expr
+# `ON = OH + HN => OH = ON - HN`
+oh_expr = on_expr - hn_expr
 
-hd_expr = ch_expr * tan(hcd_expr)
+angle_chd_expr = pi / 2
+
+# Per the angle sum property in the triangle `CHD`
+angle_hcd_expr = pi - angle_chd_expr - angle_cdn_expr
+
+# In the right triangle `CHD`
+hd_expr = ch_expr * tan(angle_hcd_expr)
 
 od_expr = (oh_expr + hd_expr).simplify()
 
 ## Part 2. Program the dependency of refractive index of fused silica on wavelength.
 # Source: `https://doi.org/10.1364/JOSA.55.001205`
+
+wavelength_in_um = sym_symbols("lambda_um", positive=True)
 
 a1, a2, a3, a4, a5, a6 = sym_symbols("a_1:7", positive=True)
 
