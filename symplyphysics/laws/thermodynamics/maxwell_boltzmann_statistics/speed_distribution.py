@@ -79,8 +79,6 @@ _velocity_y_distribution = _velocity_component_distribution.subs(
 _velocity_z_distribution = _velocity_component_distribution.subs(
     velocity_component_distribution.velocity_component, _velocity_z)
 
-# _spherical_coordinate_system = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
-
 _radius, _polar_angle, _azimuthal_angle = SPHERICAL.base_scalars
 
 _h1, _h2, _h3 = SPHERICAL.lame_coefficients()

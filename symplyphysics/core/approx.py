@@ -122,29 +122,6 @@ def assert_equal(
     ), error_message()
 
 
-# def assert_equal_vectors(
-#     lhs: QuantityVector,
-#     rhs: QuantityVector,
-#     *,
-#     relative_tolerance: Optional[float] = None,
-#     absolute_tolerance: Optional[float] = None,
-#     dimension: Optional[Dimension] = None,
-# ) -> None:
-#     """
-#     Asserts that the quantity vectors ``lhs`` and ``rhs`` are equal to each other component-wise
-#     within ``relative tolerance`` and/or ``absolute_tolerance``.
-#     """
-
-#     for left_component, right_component in zip(lhs.components, rhs.components, strict=True):
-#         assert_equal(
-#             left_component,
-#             right_component,
-#             relative_tolerance=relative_tolerance,
-#             absolute_tolerance=absolute_tolerance,
-#             dimension=dimension,
-#         )
-
-
 def assert_equal_vectors(
     lhs: Expr,
     rhs: Expr,
