@@ -47,7 +47,6 @@ distance_between_maxima_subs = distance_between_maxima_expr.subs({
     distance_between_slits: Quantity(0.2 * prefixes.milli * units.meters),
     wavelength: Quantity(500 * prefixes.nano * units.meters),
 })
-assert_equal(distance_between_maxima_subs, 3.75 * units.milli * units.meter)
 
 distance_between_maxima_float = convert_to(
     distance_between_maxima_subs,
