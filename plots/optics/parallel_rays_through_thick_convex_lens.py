@@ -25,14 +25,14 @@ def make_parser() -> ArgumentParser:
         "-r1",
         action="store",
         default=2.0,
-        dest="left_radius",
+        dest="left_side_radius",
         help="radius of curvature of the left side of the lens",
     )
     parser.add_argument(
         "-r2",
         action="store",
         default=2.0,
-        dest="right_radius",
+        dest="right_side_radius",
         help="radius of curvature of the right side of the lens",
     )
     parser.add_argument(
@@ -66,10 +66,10 @@ def positive_finite_float(s: str) -> float:
 args = make_parser().parse_args(sys.argv[1:])
 
 # Radius of curvature of the **left** side of the lens
-left_radius = positive_finite_float(args.left_radius)
+left_side_radius = positive_finite_float(args.left_side_radius)
 
 # Radius of curvature of the **right** side of the lens
-right_radius = positive_finite_float(args.right_radius)
+right_side_radius = positive_finite_float(args.right_side_radius)
 
 # Refractive index of the medium surrounding the lens
 media_refractive_index = positive_finite_float(args.media_refractive_index)
@@ -90,44 +90,63 @@ def make_point(x_: Any, y_: Any) -> CoordinateVector:
     return CoordinateVector([x_, y_, 0], CARTESIAN)
 
 
-# Radius of the lens
-lens_radius = 1.0
+# NOTE Refer to the figure at `../../img/parallel_rays_through_thick_convex_lens.svg`
 
-# Thickness of the lens
-lens_thickness = (left_radius - sqrt(left_radius**2 - lens_radius**2)) + (right_radius -
-    sqrt(right_radius**2 - lens_radius**2))
+# Radius `GH` of the lens, i.e. the radius at the base of the [spherical caps](https://en.wikipedia.org/wiki/Spherical_cap) which compose the lens.
+lens_radius = 1
 
-# Effective focus length of the lens
-# TODO Use lensmaker equation to calculate effective focus length:
-effective_focus_length = 1 / ((lens_refractive_index - media_refractive_index) *
-    (1 / left_radius + 1 / right_radius -
-    (lens_refractive_index - media_refractive_index) * lens_thickness /
-    (lens_refractive_index * left_radius * right_radius)))
+# `C1C2 = C1H + C2H`
+# Pythagoras theorem: `C1H^2 + GH^2 = R1^2`
+# Pythagoras theorem: `C2H^2 + GH^2 = R2^2`
+distance_between_centers = (sqrt(left_side_radius**2 - lens_radius**2) +
+    sqrt(right_side_radius**2 - lens_radius**2))
 
-# Focus length of an ideal thin lens with the same radii of curvature
-ideal_focus_length = 1 / ((lens_refractive_index - media_refractive_index) *
-    (1 / left_radius + 1 / right_radius))
+# `C2H` using Pythagoras theorem in the triangle `C2HG`
+left_side_center_to_origin = sqrt(left_side_radius**2 - lens_radius**2)
+
+# `C1H` using Pythagoras theorem in the triangle `C1HG`
+right_side_center_to_origin = sqrt(right_side_radius**2 - lens_radius**2)
+
+# `C1C2 = C1H + C2H` since `C1, H, C2` lie on a straight line.
+distance_between_centers = left_side_center_to_origin + right_side_center_to_origin
+
+# `C2E2 = C1C2 - C1E2`
+left_side_center_to_lens = distance_between_centers - right_side_radius
+
+# `C1E1 = C1C2 - C2E1`
+right_side_center_to_lens = distance_between_centers - left_side_radius
+
+# Thickness `E1E2` of the lens: `E1E2 = C1C2 - C1E1 - C2E2`
+lens_thickness = distance_between_centers - left_side_center_to_lens - right_side_center_to_lens
 
 # Position vector of the center of the circle making up the **left** side of the lens
-left_side_center = make_point(+sqrt(left_radius**2 - lens_radius**2), 0)
+left_side_center = make_point(+left_side_center_to_origin, 0)
 
 # Position vector of the center of the circle making up the **right** side of the lens
-right_side_center = make_point(-sqrt(right_radius**2 - lens_radius**2), 0)
+right_side_center = make_point(-right_side_center_to_origin, 0)
 
+# Represents a point on the plane. To be used in equations as free variables.
 x, y = sym_symbols("x y", real=True)
 p = make_point(x, y)
 
 
 def sq_norm(v: Expr) -> Expr:
     """Returns the square of the norm of `v`."""
-    return (VectorNorm(as_coordinate_vector(v)).doit()**2)
+    return VectorNorm(as_coordinate_vector(v)).doit()**2
+
+
+def circle_equation(center: CoordinateVector, radius: Expr) -> Eq:
+    # A circle is a set of points positioned at an equal distance (`radius`) from a given point (`center`).
+    # In Cartesian coordinates, this equation is `(x - x_center)^2 + (y - y_center)^2 = radius^2`
+    return Eq(sq_norm(p - center), radius**2)
 
 
 # Equation of the **left** side of the lens
-left_side_eqn = Eq(sq_norm(p - left_side_center), left_radius**2)
+left_side_eqn = circle_equation(left_side_center, left_side_radius)
 
 # Equation of the **right** side of the lens
-right_side_eqn = Eq(sq_norm(p - right_side_center), right_radius**2)
+right_side_eqn = circle_equation(right_side_center, right_side_radius)
+# right_side_eqn = Eq(sq_norm(p - right_side_center), right_side_radius**2)
 
 
 def normalize(v: Expr) -> CoordinateVector:
@@ -160,9 +179,16 @@ def rotate(theta: Expr, v: Expr) -> CoordinateVector:
 
 
 def line_eqn(point_through: Expr, direction_vector: Expr) -> Expr:
+    # If `p` is a free position vector, `q` is the position vector of a point on the line, and `u`
+    # is the unit direction vector of the line, then `p - q` would be parallel to `u` if and only
+    # if `p` lies on the line as well. Therefore, the cross product between `p - q` and `u` would
+    # be `0`. Since all of `p, q, u` lie in the `xy`-plane, the cross product would be a vector
+    # parallel to the `z`-axis. Here, `q` is `point_through` and `u` is `direction_vector`.
+
     return VectorDot(e_z, VectorCross(direction_vector, p - point_through)).doit()
 
 
+# The other solution is `pi - sol`; we don't need it since the refraction angle cannot exceed `pi / 2`.
 (refraction_angle_expr,) = (
     sol for sol in solve(snells_law.law, snells_law.refraction_angle) if isinstance(sol, asin))
 
@@ -170,69 +196,78 @@ def line_eqn(point_through: Expr, direction_vector: Expr) -> Expr:
 def calculate(
     incoming_intersection_y: float,
 ) -> tuple[CoordinateVector, CoordinateVector, CoordinateVector] | None:
-    """Calculates intersections with the lens and with the optical axis `y = 0`"""
+    """Calculates intersections with the lens and the optical axis `y = 0`"""
 
-    # Point of intersection of the incoming ray with the left side of the lens
+    # Point `B1` of intersection of the incoming ray with the left side of the lens
     (incoming_intersection_x,) = (
         x for x in solve(left_side_eqn.subs(y, incoming_intersection_y), x) if x < 0)
     incoming_intersection_point = make_point(incoming_intersection_x, incoming_intersection_y)
 
-    # Unit normal on the left surface of the lens at `incoming_intersection_point`
+    # Unit normal `B1N1` on the left surface of the lens at `incoming_intersection_point`
     incoming_unit_normal = normalize(incoming_intersection_point - left_side_center)
 
+    # Unit vector parallel to `A1B1`
     incoming_ray_unit_vector = make_point(1, 0)
 
-    sine_of_incoming_incidence_angle = sin_between_unit_vectors(
-        incoming_unit_normal,
-        incoming_ray_unit_vector,
-    )
+    # Sine of angle `N1B1A1`
+    sine_of_incoming_incidence_angle = sin_between_unit_vectors(incoming_unit_normal,
+        incoming_ray_unit_vector)
 
+    # Angle `M1B1B2`
     incoming_refraction_angle = refraction_angle_expr.subs({
         snells_law.incidence_refractive_index: media_refractive_index,
         sin(snells_law.incidence_angle): sine_of_incoming_incidence_angle,
         snells_law.resulting_refractive_index: lens_refractive_index,
     })
 
+    # Unit vector parallel to `B1B2`. We can obtain it by rotating `B1M1` by `incoming_refraction_angle`.
+    # The rotating is counterclockwise in the "top" part of the lens, else clockwise (see figure).
     ray_unit_vector_in_lens = rotate(
         sign(incoming_intersection_y) * incoming_refraction_angle,
         -incoming_unit_normal,
     )
     ray_in_lens_eqn = line_eqn(incoming_intersection_point, ray_unit_vector_in_lens)
 
-    # Point of intersection of the ray in the lens and the right side of the lens.
+    # Point `B2` of intersection of the ray in the lens and the right side of the lens.
     (outgoing_intersection_point,) = (make_point(sol[x], sol[y])
         for sol in solve((right_side_eqn, ray_in_lens_eqn), (x, y), dict=True)
         if sol[x] > 0)
 
-    # Unit normal on the right surface of the lens at `outgoing_intersection_point`
+    # Unit normal `B2N2` on the right surface of the lens at `outgoing_intersection_point`
     outgoing_unit_normal = normalize(outgoing_intersection_point - right_side_center)
 
-    sine_of_outgoing_incidence_angle = sin_between_unit_vectors(
-        outgoing_unit_normal,
-        ray_unit_vector_in_lens,
-    )
+    # Sine of angle `B1B2M2`
+    sine_of_outgoing_incidence_angle = sin_between_unit_vectors(outgoing_unit_normal,
+        ray_unit_vector_in_lens)
 
+    # Angle `N2B2A2`
     outgoing_refraction_angle = refraction_angle_expr.subs({
         snells_law.incidence_refractive_index: lens_refractive_index,
         sin(snells_law.incidence_angle): sine_of_outgoing_incidence_angle,
         snells_law.resulting_refractive_index: media_refractive_index,
     })
+
+    # Total internal reflection: there is no outgoing ray.
     if im(outgoing_refraction_angle) != 0:
-        # Case of total internal reflection
         return None
 
+    # Unit vector parallel to `B2A2`. We can obtain it by rotating `B2N2` by angle `outgoing_refraction_angle`.
+    # The rotation is clockwise in the "top" part of the lens, else counterclockwise (see figure).
     outgoing_ray_unit_vector = rotate(
         -sign(incoming_intersection_y) * outgoing_refraction_angle,
         outgoing_unit_normal,
     )
 
+    # Equation of the line `B2A2`
     outgoing_ray_eqn = line_eqn(outgoing_intersection_point, outgoing_ray_unit_vector)
 
-    # Point of intersection of the outgoing ray with the optical axis
+    # Point `A2` of intersection of the outgoing ray with the optical axis
     optical_axis_intersection_x = solve(outgoing_ray_eqn.subs(y, 0), x)[0]
     optical_axis_intersection_point = make_point(optical_axis_intersection_x, 0)
 
-    return incoming_intersection_point, outgoing_intersection_point, optical_axis_intersection_point
+    # Return `B1, B2, A2`
+    return (incoming_intersection_point, outgoing_intersection_point,
+        optical_axis_intersection_point)
 
 
 # PART 3. Plotting
@@ -270,25 +305,20 @@ def display() -> None:
         ylim=(-maxval, maxval),
         xlim=(-maxval, maxval),
         size=(8, 8),
-        legend=True,
         show=False,
     )
-
-    subplot = plot_parametric(
-        (effective_focus_length, y),
-        (y, -maxval, maxval),
-        line_color="pink",
-        label="effective focus plane",
-        show=False,
-    )
-    base_plot.extend(subplot)
 
     phi = sym_symbols("phi", real=True)
-    left_max_angle: Expr = asin(lens_radius / left_radius)
-    right_max_angle: Expr = asin(lens_radius / right_radius)
 
+    # Angle `GC2C1` (see figure)
+    left_max_angle: Expr = asin(lens_radius / left_side_radius)
+
+    # Angle `GC1C2` (see figure)
+    right_max_angle: Expr = asin(lens_radius / right_side_radius)
+
+    # Rotate the radius-vector relative to the circle center and then shift the circle center.
     eqn1_parametric = as_coordinate_vector(
-        rotate(phi, make_point(left_radius, 0)) + left_side_center)
+        rotate(phi, make_point(left_side_radius, 0)) + left_side_center)
     subplot = plot_parametric(
         eqn1_parametric.components[:-1],
         (phi, pi - left_max_angle, pi + left_max_angle),
@@ -298,8 +328,9 @@ def display() -> None:
     )
     base_plot.extend(subplot)
 
+    # Rotate the radius-vector relative to the circle center and then shift the circle center.
     eqn2_parametric = as_coordinate_vector(
-        rotate(phi, make_point(right_radius, 0)) + right_side_center)
+        rotate(phi, make_point(right_side_radius, 0)) + right_side_center)
     subplot = plot_parametric(
         eqn2_parametric.components[:-1],
         (phi, -right_max_angle, right_max_angle),
