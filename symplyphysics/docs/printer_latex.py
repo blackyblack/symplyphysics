@@ -435,7 +435,7 @@ class SymbolLatexPrinter(LatexPrinter):
 
         s_curve = wrap_unless_in_braces(self._print(curve))
 
-        return f"\\int_{s_curve} {s_integrand}"
+        return f"\\int \\limits_{s_curve} {s_integrand}"
 
 
 def latex_str(expr: Any, **settings: Any) -> str:
