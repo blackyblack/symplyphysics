@@ -1,6 +1,6 @@
 """
-Flux is integral across curve
-=============================
+Flux is integral along flat curve
+=================================
 
 The flux of a vector field exiting a boundary flat curve is defined as the line integral of the
 component of the field normal to the curve along the curve.
