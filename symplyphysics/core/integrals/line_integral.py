@@ -72,7 +72,7 @@ class LineIntegral(Expr):  # pylint: disable=too-few-public-methods
             curve.parametrization,
         )
 
-        expr = expr.subs(INFINITESIMAL_DISPLACEMENT, dr)
+        expr = expr.subs(INFINITESIMAL_DISPLACEMENT, dr).simplify()
 
         return curve.to_integral(expr, bounds)
 
