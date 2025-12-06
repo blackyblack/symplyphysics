@@ -10,9 +10,9 @@ from argparse import ArgumentParser
 import sys
 from sympy import (ImmutableMatrix, symbols as sym_symbols, Eq, solve, Expr, sqrt, rot_axis3, sin,
     pi, asin, Point2D, sign, im, plot, plot_parametric)
-from symplyphysics.core.experimental.coordinate_systems import CoordinateVector, CARTESIAN
-from symplyphysics.core.experimental.coordinate_systems.vector import as_coordinate_vector, component
-from symplyphysics.core.experimental.vectors import VectorNorm, VectorCross, VectorDot
+from symplyphysics.core.coordinate_systems import CoordinateVector, CARTESIAN
+from symplyphysics.core.coordinate_systems.vector import as_coordinate_vector, component
+from symplyphysics.core.vectors import VectorNorm, VectorCross, VectorDot
 from symplyphysics.laws.optics import refraction_angle_from_environments as snells_law
 from symplyphysics.core.geometry.line import two_point_function
 
