@@ -116,6 +116,10 @@ class CoordinateVector(VectorExpr):
         inner = ", ".join(str(component) for component in self.components)
 
         return f"{name}Vector({inner})"
+    
+    def _eval_simplify(self, **kwargs: Any) -> CoordinateVector:
+        components = self.components.simplify(**kwargs)
+        return CoordinateVector(components, self.system, self.point)
 
     def _eval_vector_norm(self) -> Expr:
         return sqrt(sum(elem**2 for elem in self.components))
