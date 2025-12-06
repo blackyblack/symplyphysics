@@ -5,7 +5,8 @@ from .spherical_system import SphericalCoordinateSystem
 
 from .point import AppliedPoint
 from .scalar import CoordinateScalar
-from .vector import CoordinateVector, QuantityCoordinateVector, combine_coordinate_vectors
+from .vector import (CoordinateVector, QuantityCoordinateVector, combine_coordinate_vectors,
+    as_coordinate_vector)
 
 CARTESIAN = CartesianCoordinateSystem()
 CYLINDRICAL = CylindricalCoordinateSystem()
@@ -29,4 +30,5 @@ __all__ = [
     "CoordinateVector",
     "QuantityCoordinateVector",
     "combine_coordinate_vectors",
+    "as_coordinate_vector",
 ]

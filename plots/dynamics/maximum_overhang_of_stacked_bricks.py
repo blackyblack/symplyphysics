@@ -13,10 +13,10 @@ from sympy import Idx, solve, Eq, IndexedBase, Indexed, Sum, Wild, Expr, rot_axi
 from sympy.matrices.dense import DenseMatrix
 from symplyphysics import symbols, print_expression, global_index, clone_as_symbol
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.experimental.coordinate_systems import (CARTESIAN, CoordinateVector,
+from symplyphysics.core.coordinate_systems import (CARTESIAN, CoordinateVector,
     as_coordinate_vector)
-from symplyphysics.core.experimental.vectors import VectorDot, VectorCross
-from symplyphysics.core.experimental.solvers import vector_equals
+from symplyphysics.core.vectors import VectorDot, VectorCross
+from symplyphysics.core.solvers import vector_equals
 from symplyphysics.laws.dynamics import potential_energy_from_mass_and_height as potential_energy_law
 from symplyphysics.laws.kinematics.vector import center_of_mass_for_system_of_particles as center_of_mass_def
 
