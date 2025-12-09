@@ -1,6 +1,6 @@
 """
-Coordinate conversion at constant velocity
-==========================================
+Lorentz transformation of coordinate
+====================================
 
 Let the frame of reference move relative to the other frame of reference at a constant speed along the X
 axis, and the origin of the spatial coordinates coincide at the initial moment of time in both systems.
@@ -11,12 +11,14 @@ knowing the x coordinate in another frame of reference.
 
 #. :quantity_notation:`speed_of_light`.
 
+**Conditions:**
+
+#. The relative speed of the reference frames must be constant since the Lorentz transformation
+   only applies to inertial reference frames.
+
 **Links:**
 
 #. `Wikipedia, second formula in box <https://en.wikipedia.org/wiki/Lorentz_transformation#Coordinate_transformation>`__.
-
-..
-    TODO rename file
 """
 
 from sympy import (Eq, solve, sqrt)

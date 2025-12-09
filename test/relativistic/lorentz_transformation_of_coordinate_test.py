@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.relativistic import coordinate_conversion_velocity_constant as coordinate_law
+from symplyphysics.laws.relativistic import lorentz_transformation_of_coordinate as coordinate_law
 
 # Description
 ## Let the coordinate in the first frame of reference be 2 meter, the speed of the second system relative to

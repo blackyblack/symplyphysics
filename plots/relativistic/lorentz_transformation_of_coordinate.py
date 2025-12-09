@@ -6,7 +6,7 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression
 from symplyphysics.quantities import speed_of_light
-from symplyphysics.laws.relativistic import coordinate_conversion_velocity_constant as transform_law
+from symplyphysics.laws.relativistic import lorentz_transformation_of_coordinate as transform_law
 
 reduced_speed = symbols("beta")
 speed = transform_law.proper_frame_speed_in_lab_frame
