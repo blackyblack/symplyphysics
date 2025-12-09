@@ -5,7 +5,7 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression
 from symplyphysics.quantities import speed_of_light
-from symplyphysics.laws.relativistic import relativistic_mass
+from symplyphysics.laws.relativistic import relativistic_mass_via_rest_mass_and_speed
 
 # Description
 ## Plot the dependency of the relativistic to rest mass ratio on the fraction of the speed of light
@@ -21,10 +21,10 @@ speed_ratio_definition = Eq(speed_ratio, speed / speed_of_light)
 rel_mass_sub = solve(mass_ratio_definition, rel_mass)[0]
 speed_sub = solve(speed_ratio_definition, speed)[0]
 
-law = relativistic_mass.law.subs({
-    relativistic_mass.relativistic_mass: rel_mass_sub,
-    relativistic_mass.rest_mass: rest_mass,
-    relativistic_mass.speed: speed_sub,
+law = relativistic_mass_via_rest_mass_and_speed.law.subs({
+    relativistic_mass_via_rest_mass_and_speed.relativistic_mass: rel_mass_sub,
+    relativistic_mass_via_rest_mass_and_speed.rest_mass: rest_mass,
+    relativistic_mass_via_rest_mass_and_speed.speed: speed_sub,
 })
 
 result_mass_ratio = solve(law, mass_ratio)[0]

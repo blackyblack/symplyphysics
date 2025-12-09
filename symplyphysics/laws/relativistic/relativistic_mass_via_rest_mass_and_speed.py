@@ -16,9 +16,6 @@ infinity as its speed approaches the speed of light.
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Mass_in_special_relativity#Relativistic_mass>`__.
-
-..
-    TODO rename file
 """
 
 from sympy import Eq, solve, sqrt

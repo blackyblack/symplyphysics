@@ -9,9 +9,9 @@ from symplyphysics.laws.conservation import (
     initial_momentum_equals_final_momentum as momentum_conservation_law,
 )
 from symplyphysics.laws.relativistic import (
+    relativistic_mass_via_rest_mass_and_speed as moving_mass_law,
     total_energy_via_momentum_and_rest_mass as energy_momentum_law,
     total_energy_via_relativistic_mass as energy_is_mass,
-    relativistic_mass as moving_mass_law,
     relativistic_momentum as moving_momentum_law,
 )
 
