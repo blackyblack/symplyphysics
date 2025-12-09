@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import critical_pressure as critical_law
+from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import critical_van_der_waals_pressure as critical_law
 
 # Description
 ## The critical pressure of Argon within the van der Waals equation of state model is
