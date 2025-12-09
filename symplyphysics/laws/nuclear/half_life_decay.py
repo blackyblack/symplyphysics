@@ -1,6 +1,6 @@
 """
-Solution to the exponential decay equation
-==========================================
+Half life decay
+===============
 
 The solution to the exponential decay equation is the product of the initial quantity
 and the ratio of the current time to the half-life of the quantity, raised to the
