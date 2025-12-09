@@ -22,9 +22,9 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import (
-    critical_molar_volume,
     critical_pressure,
     critical_temperature,
+    critical_van_der_waals_molar_volume,
     reduced_pressure as reduced_pressure_law,
     reduced_volume as reduced_volume_law,
     reduced_temperature as reduced_temperature_law,
@@ -63,8 +63,8 @@ _critical_pressure_expr = critical_pressure.law.rhs.subs({
     critical_pressure.excluded_volume_parameter: van_der_vaals_equation.excluded_volume_parameter,
 })
 
-_critical_molar_volume_expr = critical_molar_volume.law.rhs.subs({
-    critical_molar_volume.excluded_volume_parameter: van_der_vaals_equation.excluded_volume_parameter,
+_critical_molar_volume_expr = critical_van_der_waals_molar_volume.law.rhs.subs({
+    critical_van_der_waals_molar_volume.excluded_volume_parameter: van_der_vaals_equation.excluded_volume_parameter,
 })
 
 _critical_temperature_expr = critical_temperature.law.rhs.subs({
