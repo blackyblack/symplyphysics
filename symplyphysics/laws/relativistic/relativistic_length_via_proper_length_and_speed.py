@@ -1,6 +1,6 @@
 """
-Relativistic length via rest length and speed
-=============================================
+Relativistic length via proper length and speed
+===============================================
 
 Length contraction is the phenomenon that a moving object's length is measured to be shorter
 than its proper length, which is the length as measured in the object's own rest frame. Note

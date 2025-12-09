@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.relativistic import relativistic_length
+from symplyphysics.laws.relativistic import relativistic_length_via_proper_length_and_speed as law
 
 Args = namedtuple("Args", ["l", "v"])
 
@@ -19,21 +19,21 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_length(test_args: Args) -> None:
-    result = relativistic_length.calculate_relativistic_length(test_args.l, test_args.v)
+    result = law.calculate_relativistic_length(test_args.l, test_args.v)
     assert_equal(result, 99.98 * units.meter)
 
 
 def test_bad_length(test_args: Args) -> None:
     ml = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        relativistic_length.calculate_relativistic_length(ml, test_args.v)
+        law.calculate_relativistic_length(ml, test_args.v)
     with raises(TypeError):
-        relativistic_length.calculate_relativistic_length(100, test_args.v)
+        law.calculate_relativistic_length(100, test_args.v)
 
 
 def test_bad_velocity(test_args: Args) -> None:
     mv = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        relativistic_length.calculate_relativistic_length(test_args.l, mv)
+        law.calculate_relativistic_length(test_args.l, mv)
     with raises(TypeError):
-        relativistic_length.calculate_relativistic_length(test_args.l, 100)
+        law.calculate_relativistic_length(test_args.l, 100)
