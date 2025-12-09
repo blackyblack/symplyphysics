@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import reduced_pressure
+from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import reduced_van_der_waals_pressure
 
 # Description
 ## The pressure of a van der Waals gas is 1 Pa, the value of critical pressure is 0.5 Pa. Then the reduced
@@ -23,17 +23,17 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = reduced_pressure.calculate_reduced_pressure(test_args.p, test_args.pc)
+    result = reduced_van_der_waals_pressure.calculate_reduced_pressure(test_args.p, test_args.pc)
     assert_equal(result, 2)
 
 
 def test_bad_pressure(test_args: Args) -> None:
     pb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        reduced_pressure.calculate_reduced_pressure(pb, test_args.pc)
+        reduced_van_der_waals_pressure.calculate_reduced_pressure(pb, test_args.pc)
     with raises(TypeError):
-        reduced_pressure.calculate_reduced_pressure(100, test_args.pc)
+        reduced_van_der_waals_pressure.calculate_reduced_pressure(100, test_args.pc)
     with raises(errors.UnitsError):
-        reduced_pressure.calculate_reduced_pressure(test_args.p, pb)
+        reduced_van_der_waals_pressure.calculate_reduced_pressure(test_args.p, pb)
     with raises(TypeError):
-        reduced_pressure.calculate_reduced_pressure(test_args.p, 100)
+        reduced_van_der_waals_pressure.calculate_reduced_pressure(test_args.p, 100)
