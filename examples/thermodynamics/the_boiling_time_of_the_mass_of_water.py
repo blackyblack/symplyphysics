@@ -10,7 +10,7 @@ from symplyphysics.laws.thermodynamics import (
     heat_of_vaporization_via_mass as energy_to_vapor_law,
 )
 from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
-from symplyphysics.definitions import mass_flow_rate as mass_rate_law
+from symplyphysics.definitions import mass_flow_rate_is_time_derivative_of_mass as mass_rate_law
 
 # Example from https://easyfizika.ru/zadachi/termodinamika/na-zazhzhennuyu-spirtovku-s-kpd-60-postavili-sosud-s-500-g-vody-pri-20-c-cherez-kakoe/
 # A vessel with 500 g of water at 20 ° C was placed on a lighted alcohol lamp

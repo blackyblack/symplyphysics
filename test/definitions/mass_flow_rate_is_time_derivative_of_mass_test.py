@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.definitions import mass_flow_rate as mass_rate_definition
+from symplyphysics.definitions import mass_flow_rate_is_time_derivative_of_mass as mass_rate_definition
 
 Args = namedtuple("Args", ["m0", "m1", "t"])
 
