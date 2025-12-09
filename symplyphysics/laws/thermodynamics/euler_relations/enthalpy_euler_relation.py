@@ -1,6 +1,6 @@
 """
-Enthalpy formula
-================
+Euler relation for enthalpy
+===========================
 
 The enthalpy differential can be integrated using the Euler's theorem on homogeneous functions for
 internal energy.

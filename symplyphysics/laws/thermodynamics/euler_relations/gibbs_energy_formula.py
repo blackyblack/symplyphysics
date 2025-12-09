@@ -19,7 +19,7 @@ from sympy import Eq
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import gibbs_energy_via_enthalpy as gibbs_energy_def
-from symplyphysics.laws.thermodynamics.euler_relations import enthalpy_formula
+from symplyphysics.laws.thermodynamics.euler_relations import enthalpy_euler_relation
 
 gibbs_energy = symbols.gibbs_energy
 """
@@ -45,11 +45,11 @@ law = Eq(gibbs_energy, chemical_potential * particle_count)
 
 # Derive from Gibbs energy definition and enthalpy formula
 
-_enthalpy_expr = enthalpy_formula.law.rhs.subs({
-    enthalpy_formula.temperature: gibbs_energy_def.temperature,
-    enthalpy_formula.entropy: gibbs_energy_def.entropy,
-    enthalpy_formula.chemical_potential: chemical_potential,
-    enthalpy_formula.particle_count: particle_count,
+_enthalpy_expr = enthalpy_euler_relation.law.rhs.subs({
+    enthalpy_euler_relation.temperature: gibbs_energy_def.temperature,
+    enthalpy_euler_relation.entropy: gibbs_energy_def.entropy,
+    enthalpy_euler_relation.chemical_potential: chemical_potential,
+    enthalpy_euler_relation.particle_count: particle_count,
 })
 
 _gibbs_energy_expr = gibbs_energy_def.law.rhs.subs({

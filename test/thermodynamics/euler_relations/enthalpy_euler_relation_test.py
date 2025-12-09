@@ -7,7 +7,7 @@ from symplyphysics import (
     prefixes,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics.euler_relations import enthalpy_formula
+from symplyphysics.laws.thermodynamics.euler_relations import enthalpy_euler_relation
 
 # Description
 ## The enthalpy of a system at temperature T = 100 K, having entropy S = 1 kJ/K and chemical potential
@@ -26,7 +26,7 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = enthalpy_formula.calculate_enthalpy(test_args.t, test_args.s, test_args.mu,
+    result = enthalpy_euler_relation.calculate_enthalpy(test_args.t, test_args.s, test_args.mu,
         test_args.n)
     assert_equal(result, 98 * prefixes.kilo * units.joule, relative_tolerance=5e-3)
 
@@ -34,28 +34,28 @@ def test_law(test_args: Args) -> None:
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        enthalpy_formula.calculate_enthalpy(tb, test_args.s, test_args.mu, test_args.n)
+        enthalpy_euler_relation.calculate_enthalpy(tb, test_args.s, test_args.mu, test_args.n)
     with raises(TypeError):
-        enthalpy_formula.calculate_enthalpy(100, test_args.s, test_args.mu, test_args.n)
+        enthalpy_euler_relation.calculate_enthalpy(100, test_args.s, test_args.mu, test_args.n)
 
 
 def test_bad_entropy(test_args: Args) -> None:
     sb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        enthalpy_formula.calculate_enthalpy(test_args.t, sb, test_args.mu, test_args.n)
+        enthalpy_euler_relation.calculate_enthalpy(test_args.t, sb, test_args.mu, test_args.n)
     with raises(TypeError):
-        enthalpy_formula.calculate_enthalpy(test_args.t, 100, test_args.mu, test_args.n)
+        enthalpy_euler_relation.calculate_enthalpy(test_args.t, 100, test_args.mu, test_args.n)
 
 
 def test_bad_chemical_potential(test_args: Args) -> None:
     mub = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        enthalpy_formula.calculate_enthalpy(test_args.t, test_args.s, mub, test_args.n)
+        enthalpy_euler_relation.calculate_enthalpy(test_args.t, test_args.s, mub, test_args.n)
     with raises(TypeError):
-        enthalpy_formula.calculate_enthalpy(test_args.t, test_args.s, 100, test_args.n)
+        enthalpy_euler_relation.calculate_enthalpy(test_args.t, test_args.s, 100, test_args.n)
 
 
 def test_bad_particle_number(test_args: Args) -> None:
     nb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        enthalpy_formula.calculate_enthalpy(test_args.t, test_args.s, test_args.mu, nb)
+        enthalpy_euler_relation.calculate_enthalpy(test_args.t, test_args.s, test_args.mu, nb)
