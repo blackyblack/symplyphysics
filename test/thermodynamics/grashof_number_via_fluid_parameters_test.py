@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
-from symplyphysics.laws.thermodynamics import grashof_number
+from symplyphysics.laws.thermodynamics import grashof_number_via_fluid_parameters as law
 
 # Example from: https://www.azcalculator.com/calc/grashof-number.php
 
@@ -25,7 +25,7 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_grashof_number(test_args: Args) -> None:
-    result = grashof_number.calculate_grashof_number(
+    result = law.calculate_grashof_number(
         test_args.beta,
         test_args.t_surf,
         test_args.t_bulk,
@@ -38,44 +38,44 @@ def test_basic_grashof_number(test_args: Args) -> None:
 def test_bad_coefficient_of_volume_expansion(test_args: Args) -> None:
     beta = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        grashof_number.calculate_grashof_number(beta, test_args.t_surf, test_args.t_bulk,
+        law.calculate_grashof_number(beta, test_args.t_surf, test_args.t_bulk,
             test_args.l, test_args.mu)
     with raises(TypeError):
-        grashof_number.calculate_grashof_number(100, test_args.t_surf, test_args.t_bulk,
+        law.calculate_grashof_number(100, test_args.t_surf, test_args.t_bulk,
             test_args.l, test_args.mu)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     ts = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        grashof_number.calculate_grashof_number(test_args.beta, ts, test_args.t_bulk, test_args.l,
+        law.calculate_grashof_number(test_args.beta, ts, test_args.t_bulk, test_args.l,
             test_args.mu)
     with raises(errors.UnitsError):
-        grashof_number.calculate_grashof_number(test_args.beta, test_args.t_surf, ts, test_args.l,
+        law.calculate_grashof_number(test_args.beta, test_args.t_surf, ts, test_args.l,
             test_args.mu)
     with raises(TypeError):
-        grashof_number.calculate_grashof_number(test_args.beta, 100, test_args.t_bulk, test_args.l,
+        law.calculate_grashof_number(test_args.beta, 100, test_args.t_bulk, test_args.l,
             test_args.mu)
     with raises(TypeError):
-        grashof_number.calculate_grashof_number(test_args.beta, test_args.t_surf, 100, test_args.l,
+        law.calculate_grashof_number(test_args.beta, test_args.t_surf, 100, test_args.l,
             test_args.mu)
 
 
 def test_bad_length(test_args: Args) -> None:
     l = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        grashof_number.calculate_grashof_number(test_args.beta, test_args.t_surf, test_args.t_bulk,
+        law.calculate_grashof_number(test_args.beta, test_args.t_surf, test_args.t_bulk,
             l, test_args.mu)
     with raises(TypeError):
-        grashof_number.calculate_grashof_number(test_args.beta, test_args.t_surf, test_args.t_bulk,
+        law.calculate_grashof_number(test_args.beta, test_args.t_surf, test_args.t_bulk,
             100, test_args.mu)
 
 
 def test_bad_viscosity(test_args: Args) -> None:
     mu = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        grashof_number.calculate_grashof_number(test_args.beta, test_args.t_surf, test_args.t_bulk,
+        law.calculate_grashof_number(test_args.beta, test_args.t_surf, test_args.t_bulk,
             test_args.l, mu)
     with raises(TypeError):
-        grashof_number.calculate_grashof_number(test_args.beta, test_args.t_surf, test_args.t_bulk,
+        law.calculate_grashof_number(test_args.beta, test_args.t_surf, test_args.t_bulk,
             test_args.l, 100)
