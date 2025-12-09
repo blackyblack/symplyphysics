@@ -7,8 +7,8 @@ from symplyphysics.definitions import (
 from symplyphysics.laws.waves import (
     photon_energy_is_proportional_to_linear_frequency as energy_law,)
 from symplyphysics.laws.relativistic import (
+    relativistic_energy_via_relativistic_mass as energy_is_mass,
     relativistic_mass_via_rest_mass_and_speed as moving_mass_law,
-    total_energy_via_relativistic_mass as energy_is_mass,
 )
 
 # Description

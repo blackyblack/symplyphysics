@@ -1,6 +1,6 @@
 """
-Total energy via relativistic mass
-==================================
+Relativistic energy via relativistic mass
+=========================================
 
 Fundamentally the energy of an object is synonimical to its mass.
 
