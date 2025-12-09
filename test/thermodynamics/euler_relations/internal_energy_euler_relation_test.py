@@ -7,7 +7,7 @@ from symplyphysics import (
     prefixes,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics.euler_relations import internal_energy_formula as formula
+from symplyphysics.laws.thermodynamics.euler_relations import internal_energy_euler_relation as formula
 
 # Description
 ## The internal energy of a system at temperature T = 300 K, pressure p = 10 atm, with entropy S = 10 J/K,

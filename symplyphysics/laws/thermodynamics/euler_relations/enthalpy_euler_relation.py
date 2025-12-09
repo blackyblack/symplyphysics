@@ -19,7 +19,7 @@ from sympy import Eq
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import enthalpy_is_internal_energy_plus_pressure_energy as enthalpy_def
-from symplyphysics.laws.thermodynamics.euler_relations import internal_energy_formula
+from symplyphysics.laws.thermodynamics.euler_relations import internal_energy_euler_relation
 
 enthalpy = symbols.enthalpy
 """
@@ -56,13 +56,13 @@ law = Eq(enthalpy, temperature * entropy + chemical_potential * particle_count)
 
 # Derive from enthalpy definition and internal energy Euler relation
 
-_internal_energy_expr = internal_energy_formula.law.rhs.subs({
-    internal_energy_formula.temperature: temperature,
-    internal_energy_formula.entropy: entropy,
-    internal_energy_formula.pressure: enthalpy_def.pressure,
-    internal_energy_formula.volume: enthalpy_def.volume,
-    internal_energy_formula.chemical_potential: chemical_potential,
-    internal_energy_formula.particle_count: particle_count,
+_internal_energy_expr = internal_energy_euler_relation.law.rhs.subs({
+    internal_energy_euler_relation.temperature: temperature,
+    internal_energy_euler_relation.entropy: entropy,
+    internal_energy_euler_relation.pressure: enthalpy_def.pressure,
+    internal_energy_euler_relation.volume: enthalpy_def.volume,
+    internal_energy_euler_relation.chemical_potential: chemical_potential,
+    internal_energy_euler_relation.particle_count: particle_count,
 })
 
 _enthalpy_expr = enthalpy_def.law.rhs.subs({enthalpy_def.internal_energy: _internal_energy_expr})
