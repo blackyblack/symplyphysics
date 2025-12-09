@@ -1,6 +1,6 @@
 """
-Acceleration from force and velocity
-====================================
+Relativistic acceleration from relativistic force and velocity
+==============================================================
 
 In special relativity, the Newton's second law does not hold in the classical form
 :math:`\\vec F = m \\vec a`, but acceleration can still be expressed via force and velocity.

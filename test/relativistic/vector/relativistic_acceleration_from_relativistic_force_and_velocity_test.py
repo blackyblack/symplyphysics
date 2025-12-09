@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import units, Quantity, errors
 from symplyphysics.quantities import speed_of_light
-from symplyphysics.laws.relativistic.vector import acceleration_from_force_and_velocity as law
+from symplyphysics.laws.relativistic.vector import relativistic_acceleration_from_relativistic_force_and_velocity as law
 
 from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
 from symplyphysics.core.approx import assert_equal_vectors
