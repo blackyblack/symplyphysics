@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
-from symplyphysics.laws.optics import light_pressure as pressure_law
+from symplyphysics.laws.optics import light_pressure_via_radiation_intensity_and_reflection_coefficient as pressure_law
 
 # Description
 ## Let the intensity of the incident radiation be 0.6 [watt / meter^2] and the reflection coefficient be 1.
