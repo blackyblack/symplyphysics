@@ -26,8 +26,8 @@ from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import (
     critical_van_der_waals_pressure,
     critical_van_der_waals_temperature,
     reduced_van_der_waals_pressure as reduced_pressure_law,
+    reduced_van_der_waals_temperature as reduced_temperature_law,
     reduced_volume as reduced_volume_law,
-    reduced_temperature as reduced_temperature_law,
     van_der_vaals_equation,
 )
 

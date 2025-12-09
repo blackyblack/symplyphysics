@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import reduced_temperature
+from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import reduced_van_der_waals_temperature
 
 # Description
 ## The temperature of a van der Waals gas is 400 K, the value of critical temperature is 200 K. Then the reduced
@@ -23,17 +23,17 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = reduced_temperature.calculate_reduced_temperature(test_args.t, test_args.tc)
+    result = reduced_van_der_waals_temperature.calculate_reduced_temperature(test_args.t, test_args.tc)
     assert_equal(result, 2)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        reduced_temperature.calculate_reduced_temperature(tb, test_args.tc)
+        reduced_van_der_waals_temperature.calculate_reduced_temperature(tb, test_args.tc)
     with raises(TypeError):
-        reduced_temperature.calculate_reduced_temperature(100, test_args.tc)
+        reduced_van_der_waals_temperature.calculate_reduced_temperature(100, test_args.tc)
     with raises(errors.UnitsError):
-        reduced_temperature.calculate_reduced_temperature(test_args.t, tb)
+        reduced_van_der_waals_temperature.calculate_reduced_temperature(test_args.t, tb)
     with raises(TypeError):
-        reduced_temperature.calculate_reduced_temperature(test_args.t, 100)
+        reduced_van_der_waals_temperature.calculate_reduced_temperature(test_args.t, 100)
