@@ -7,7 +7,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.relativistic import spacetime_interval as law
+from symplyphysics.laws.relativistic import spacetime_interval_via_time_and_distance as law
 
 Args = namedtuple("Args", "dt dx")
 
