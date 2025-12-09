@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import (
-    dimensionless_equation as state_equation_law,)
+    dimensionless_van_der_waals_equation as state_equation_law,)
 
 # Description
 ## The value of reduced pressure for any van der Waals fluid is p* = 0.176 at reduced
