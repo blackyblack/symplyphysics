@@ -1,8 +1,8 @@
 """
-First escape speed
-==================
+First escape velocity
+=====================
 
-**First escape speed** is the minimum speed needed for an object to escape from contact with or orbit of a primary body.
+**First escape velocity** is the minimum speed needed for an object to escape from contact with or orbit of a primary body.
 
 **Notation:**
 
@@ -11,9 +11,6 @@ First escape speed
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Escape_velocity#From_an_orbiting_body>`__.
-
-..
-    TODO rename file
 """
 
 from sympy import Eq, solve, sqrt
