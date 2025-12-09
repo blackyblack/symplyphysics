@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.definitions import mass_fraction as mass_fraction_law
+from symplyphysics.definitions import mass_fraction_is_component_mass_over_total_mass as mass_fraction_law
 
 Args = namedtuple("Args", ["m_i", "m"])
 
