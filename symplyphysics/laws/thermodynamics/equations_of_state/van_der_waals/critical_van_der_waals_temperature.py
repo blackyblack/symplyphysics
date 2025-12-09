@@ -1,6 +1,6 @@
 """
-Critical temperature
-====================
+Critical van der Waals temperature
+==================================
 
 Critical temperature of a van der Waals fluid depends on the parameters :math:`a` and :math:`b`
 of the van der Waals equation and the molar gas constant :math:`R`. See :ref:`vdw_critical_parameters_def`.

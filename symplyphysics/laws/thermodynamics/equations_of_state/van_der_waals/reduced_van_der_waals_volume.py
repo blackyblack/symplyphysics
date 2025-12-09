@@ -1,6 +1,6 @@
 """
-Reduced volume
-==============
+Reduced van der Waals volume
+============================
 
 See :ref:`vdw_reduced_units_def`.
 

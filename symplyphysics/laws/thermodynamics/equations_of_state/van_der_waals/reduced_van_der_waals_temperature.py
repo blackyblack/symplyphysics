@@ -1,6 +1,6 @@
 """
-Reduced temperature
-===================
+Reduced van der Waals temperature
+=================================
 
 See :ref:`vdw_reduced_units_def`.
 

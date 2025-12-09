@@ -1,6 +1,6 @@
 """
-Dimensionless equation
-======================
+Dimensionless van der Waals equation
+====================================
 
 The *dimensionless form* of the van der Waals equation of state features :ref:`reduced quantities
 <vdw_reduced_units_def>`. One notable property of the dimensionless equation of state is that it

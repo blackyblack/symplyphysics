@@ -1,6 +1,6 @@
 """
-Reduced pressure
-================
+Reduced van der Waals pressure
+==============================
 
 See :ref:`vdw_reduced_units_def`.
 

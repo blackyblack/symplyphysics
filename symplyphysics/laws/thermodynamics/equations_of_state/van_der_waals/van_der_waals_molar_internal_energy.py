@@ -1,6 +1,6 @@
 """
-Molar internal energy
-=====================
+Van der Waals molar internal energy
+===================================
 
 If the equation of state is known, the internal energy of a substance can be found
 as a function of volume at constant temperature.

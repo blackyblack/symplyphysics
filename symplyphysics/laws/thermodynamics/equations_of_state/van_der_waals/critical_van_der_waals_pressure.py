@@ -1,6 +1,6 @@
 """
-Critical pressure
-=================
+Critical van der Waals pressure
+===============================
 
 Critical pressure in a van der Waals fluid depends on the parameters :math:`a` and
 :math:`b` of the van der Waals equation. See :ref:`vdw_critical_parameters_def`.

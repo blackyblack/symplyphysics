@@ -1,6 +1,6 @@
 """
-Second virial coefficient
-=========================
+Van der Waals second virial coefficient
+=======================================
 
 The *second virial coefficient* is a coefficient appearing in the virial equation of state of
 a gas which describes the deviation from ideal gas behaviour. This coefficient describes pair
