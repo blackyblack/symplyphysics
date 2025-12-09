@@ -7,7 +7,7 @@ from symplyphysics import (
     prefixes,
     Quantity,
 )
-from symplyphysics.laws.relativistic import relativistic_kinetic_energy as law
+from symplyphysics.laws.relativistic import relativistic_kinetic_energy_via_rest_mass_and_lorentz_factor as law
 
 Args = namedtuple("Args", "g m")
 

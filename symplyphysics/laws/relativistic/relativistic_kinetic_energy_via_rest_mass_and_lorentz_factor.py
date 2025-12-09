@@ -1,6 +1,6 @@
 """
-Relativistic kinetic energy
-===========================
+Relativistic kinetic energy via rest mass and Lorentz factor
+============================================================
 
 The kinetic energy of an object is the form of energy that it possesses due to its motion.
 
