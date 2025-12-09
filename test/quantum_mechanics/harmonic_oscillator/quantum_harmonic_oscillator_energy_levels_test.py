@@ -7,7 +7,7 @@ from symplyphysics import (
     errors,
     prefixes,
 )
-from symplyphysics.laws.quantum_mechanics.harmonic_oscillator import energy_levels as energy_law
+from symplyphysics.laws.quantum_mechanics.harmonic_oscillator import quantum_harmonic_oscillator_energy_levels as energy_law
 
 # Description
 ## The energy of the third level of a quantum harmonic oscillator for an angular frequency of
