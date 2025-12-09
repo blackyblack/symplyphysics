@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.relativistic import relativistic_momentum as momentum_law
+from symplyphysics.laws.relativistic import relativistic_momentum_via_rest_mass_and_speed as momentum_law
 
 # Description
 ## Let the mass be 0.1 gram, the speed is 3e6 meter per second.
