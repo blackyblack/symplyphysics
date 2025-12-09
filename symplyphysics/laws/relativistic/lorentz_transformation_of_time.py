@@ -29,6 +29,9 @@ transformation** of space and time.
 #. Space is uniform and isotropic.
 #. Time is uniform.
 #. The relative frame velocity is parallel to the :math:`x`-axis.
+#. The relative speed of the reference frames must be constant since the Lorentz transformation
+   only applies to inertial reference frames.
+
 
 **Links:**
 
