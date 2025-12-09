@@ -1,6 +1,6 @@
 """
-Energy—momentum relation
-========================
+Relativistic energy—momentum relation
+=====================================
 
 Relativistic momentum and total relativistic energy of a relativistic particle are related by a
 linear equation.
