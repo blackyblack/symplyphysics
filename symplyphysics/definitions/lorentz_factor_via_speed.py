@@ -1,6 +1,6 @@
 """
-Lorentz factor
-==============
+Lorentz factor via speed
+========================
 
 The *Lorentz factor* (also called the *gamma factor*) expresses how time intervals,
 lengths, and other physical quantities transform for a body while it moves.

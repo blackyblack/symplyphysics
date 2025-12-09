@@ -19,7 +19,7 @@ In special relativity, the Newton's second law does not hold in the classical fo
 
 from sympy import Eq, evaluate
 from symplyphysics import Quantity, validate_input, validate_output, symbols
-from symplyphysics.definitions import lorentz_factor as lorentz_factor_def
+from symplyphysics.definitions import lorentz_factor_via_speed as lorentz_factor_def
 
 from symplyphysics.core.vectors import (clone_as_vector_symbol, VectorNorm,
     split_into_tangential_and_normal_components)

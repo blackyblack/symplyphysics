@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.definitions import lorentz_factor
+from symplyphysics.definitions import lorentz_factor_via_speed
 
 # Description
 ## The speed of an object is 2e5 km/s. Its Lorentz factor is 1.34
@@ -21,13 +21,13 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = lorentz_factor.calculate_lorentz_factor(test_args.v)
+    result = lorentz_factor_via_speed.calculate_lorentz_factor(test_args.v)
     assert_equal(result, 1.34, relative_tolerance=2e-3)
 
 
 def test_bad_velocity() -> None:
     vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        lorentz_factor.calculate_lorentz_factor(vb)
+        lorentz_factor_via_speed.calculate_lorentz_factor(vb)
     with raises(TypeError):
-        lorentz_factor.calculate_lorentz_factor(100)
+        lorentz_factor_via_speed.calculate_lorentz_factor(100)
