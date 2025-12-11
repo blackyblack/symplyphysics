@@ -27,7 +27,8 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
     clone_as_symbol, symbols, quantities)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.coordinate_systems import SPHERICAL
-from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import velocity_component_distribution
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import (
+    maxwell_boltzmann_velocity_component_distribution as _velocity_component_distribution)
 
 speed_distribution_function = Symbol("f(v)", 1 / units.velocity)
 """
@@ -63,21 +64,21 @@ law = Eq(
 
 # Derive from Maxwell-Boltzmann distribution of velocity vector components
 
-_velocity_component_distribution = velocity_component_distribution.law.rhs.subs({
-    velocity_component_distribution.particle_mass: particle_mass,
-    velocity_component_distribution.equilibrium_temperature: equilibrium_temperature,
+_velocity_component_distribution = _velocity_component_distribution.law.rhs.subs({
+    _velocity_component_distribution.particle_mass: particle_mass,
+    _velocity_component_distribution.equilibrium_temperature: equilibrium_temperature,
 })
 
 _velocity_x, _velocity_y, _velocity_z = sym_symbols("velocity_x:z", real=True)
 
 _velocity_x_distribution = _velocity_component_distribution.subs(
-    velocity_component_distribution.velocity_component, _velocity_x)
+    _velocity_component_distribution.velocity_component, _velocity_x)
 
 _velocity_y_distribution = _velocity_component_distribution.subs(
-    velocity_component_distribution.velocity_component, _velocity_y)
+    _velocity_component_distribution.velocity_component, _velocity_y)
 
 _velocity_z_distribution = _velocity_component_distribution.subs(
-    velocity_component_distribution.velocity_component, _velocity_z)
+    _velocity_component_distribution.velocity_component, _velocity_z)
 
 _radius, _polar_angle, _azimuthal_angle = SPHERICAL.base_scalars
 

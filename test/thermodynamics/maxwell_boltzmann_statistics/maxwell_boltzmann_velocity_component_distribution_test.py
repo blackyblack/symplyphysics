@@ -8,7 +8,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import (
-    velocity_component_distribution as distribution_law,)
+    maxwell_boltzmann_velocity_component_distribution as distribution_law,)
 
 # Description
 ## The value of the velocity component distribution function for an ensemble of
