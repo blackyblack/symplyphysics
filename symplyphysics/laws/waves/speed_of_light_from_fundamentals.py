@@ -21,12 +21,10 @@ from symplyphysics import units, convert_to, quantities
 
 law = Eq(quantities.speed_of_light,
     1 / sqrt(quantities.vacuum_permittivity * quantities.vacuum_permeability))
-r"""
-:code:`c = 1 / sqrt(epsilon_0 * mu_0)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        c = \frac{1}{\sqrt{\varepsilon_0 \mu_0}}
+:laws:latex::
 """
 
 assert convert_to(law.lhs, units.meter / units.second) == convert_to(law.rhs,
