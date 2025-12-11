@@ -4,7 +4,7 @@ from collections import namedtuple
 from sympy import Symbol, plot, sqrt
 from symplyphysics.quantities import speed_of_light
 from symplyphysics.core.convert import evaluate_expression
-from symplyphysics.laws.relativistic.vector import force_acceleration_relation as force_law
+from symplyphysics.laws.relativistic.vector import relativistic_force_acceleration_relation as force_law
 from symplyphysics.definitions import lorentz_factor_via_speed as lorentz_factor_def
 
 from symplyphysics.core.vectors import (VectorNorm,
