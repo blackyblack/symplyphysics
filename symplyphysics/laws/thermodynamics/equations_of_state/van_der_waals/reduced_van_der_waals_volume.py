@@ -37,8 +37,7 @@ volume = symbols.volume
 
 critical_volume = clone_as_symbol(symbols.volume, display_symbol="V_c", display_latex="V_\\text{c}")
 """
-See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.critical_molar_volume`
-and :symbols:`volume`.
+See :ref:`Critical van der Waals molar volume` and :symbols:`volume`.
 """
 
 law = Eq(reduced_volume, volume / critical_volume)

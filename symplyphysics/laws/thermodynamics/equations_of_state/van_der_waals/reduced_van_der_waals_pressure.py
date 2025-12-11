@@ -35,7 +35,7 @@ critical_pressure = clone_as_symbol(symbols.pressure,
     display_symbol="p_c",
     display_latex="p_\\text{c}")
 """
-Critical :symbols:`pressure`. See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.critical_pressure`.
+Critical :symbols:`pressure`. See :ref:`Critical van der Waals pressure`.
 """
 
 law = Eq(reduced_pressure, pressure / critical_pressure)

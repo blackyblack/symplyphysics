@@ -35,8 +35,7 @@ critical_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T_c",
     display_latex="T_\\text{c}")
 """
-See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.critical_temperature`
-and :symbols:`temperature`.
+See :ref:`Critical van der Waals temperature` and :symbols:`temperature`.
 """
 
 law = Eq(reduced_temperature, temperature / critical_temperature)

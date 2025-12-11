@@ -33,17 +33,17 @@ from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import (
 
 reduced_pressure = Symbol("p_r", dimensionless)
 """
-See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.reduced_pressure`.
+See :ref:`Reduced van der Waals pressure`.
 """
 
 reduced_volume = Symbol("V_r", dimensionless)
 """
-See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.reduced_volume`.
+See :ref:`Reduced van der Waals volume`.
 """
 
 reduced_temperature = Symbol("T_r", dimensionless)
 """
-See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.reduced_temperature`.
+See :ref:`Reduced van der Waals temperature`.
 """
 
 law = Eq(
