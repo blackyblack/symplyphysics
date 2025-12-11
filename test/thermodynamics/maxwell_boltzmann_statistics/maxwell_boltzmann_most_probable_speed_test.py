@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import most_probable_speed
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import maxwell_boltzmann_most_probable_speed as law
 
 # Description
 ## The most probable speed of Argon particles (m = 39.948 u) at equilibrium temperature T = 150 K
@@ -23,21 +23,21 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = most_probable_speed.calculate_most_probable_speed(test_args.t, test_args.m)
+    result = law.calculate_most_probable_speed(test_args.t, test_args.m)
     assert_equal(result, 250 * units.meter / units.second)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        most_probable_speed.calculate_most_probable_speed(tb, test_args.m)
+        law.calculate_most_probable_speed(tb, test_args.m)
     with raises(TypeError):
-        most_probable_speed.calculate_most_probable_speed(100, test_args.m)
+        law.calculate_most_probable_speed(100, test_args.m)
 
 
 def test_bad_mass(test_args: Args) -> None:
     mb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        most_probable_speed.calculate_most_probable_speed(test_args.t, mb)
+        law.calculate_most_probable_speed(test_args.t, mb)
     with raises(TypeError):
-        most_probable_speed.calculate_most_probable_speed(test_args.t, 100)
+        law.calculate_most_probable_speed(test_args.t, 100)
