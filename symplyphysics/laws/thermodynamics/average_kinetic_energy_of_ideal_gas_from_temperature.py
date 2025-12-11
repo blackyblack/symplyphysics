@@ -30,7 +30,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.operations.symbolic import Average
-from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import energy_distribution
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import maxwell_boltzmann_energy_distribution as _energy_distribution
 
 average_kinetic_energy = Average(symbols.kinetic_energy)
 """
@@ -55,13 +55,13 @@ law = Eq(average_kinetic_energy,
 
 # Derive from Maxwell-Boltzmann energy distribution
 
-_distribution = energy_distribution.law.rhs.subs(
-    energy_distribution.equilibrium_temperature,
+_distribution = _energy_distribution.law.rhs.subs(
+    _energy_distribution.equilibrium_temperature,
     equilibrium_temperature,
 )
 
 _random_energy_variable = stats.ContinuousRV(
-    energy_distribution.energy,
+    _energy_distribution.energy,
     _distribution,
     set=Interval(0, S.Infinity),
 )

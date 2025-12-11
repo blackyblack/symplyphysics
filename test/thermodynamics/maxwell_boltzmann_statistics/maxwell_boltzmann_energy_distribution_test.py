@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import energy_distribution
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import maxwell_boltzmann_energy_distribution
 
 # Description
 ## The value of the energy distribution function for an ensemble of Argon particles at
@@ -23,21 +23,21 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = energy_distribution.calculate_energy_distribution_function(test_args.e, test_args.t)
+    result = maxwell_boltzmann_energy_distribution.calculate_energy_distribution_function(test_args.e, test_args.t)
     assert_equal(result, 2.78 / units.joule, relative_tolerance=2e-3)
 
 
 def test_bad_energy(test_args: Args) -> None:
     eb = Quantity(1.0 * units.meter)
     with raises(errors.UnitsError):
-        energy_distribution.calculate_energy_distribution_function(eb, test_args.t)
+        maxwell_boltzmann_energy_distribution.calculate_energy_distribution_function(eb, test_args.t)
     with raises(TypeError):
-        energy_distribution.calculate_energy_distribution_function(100, test_args.t)
+        maxwell_boltzmann_energy_distribution.calculate_energy_distribution_function(100, test_args.t)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1.0 * units.meter)
     with raises(errors.UnitsError):
-        energy_distribution.calculate_energy_distribution_function(test_args.e, tb)
+        maxwell_boltzmann_energy_distribution.calculate_energy_distribution_function(test_args.e, tb)
     with raises(TypeError):
-        energy_distribution.calculate_energy_distribution_function(test_args.e, 100)
+        maxwell_boltzmann_energy_distribution.calculate_energy_distribution_function(test_args.e, 100)
