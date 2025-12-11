@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import single_particle_discrete_distribution as law
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import single_particle_discrete_maxwell_boltzmann_distribution as law
 
 # Description
 ## A classical system of non-interacting particles in thermal equilibrium contains 1000 particles.
