@@ -29,7 +29,7 @@ from symplyphysics import (
     quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import maxwell_boltzmann_speed_distribution
 
 most_probable_speed = clone_as_symbol(symbols.speed,
     display_symbol="v_prob",
@@ -58,15 +58,15 @@ law = Eq(most_probable_speed,
 
 # Derive from the Maxwell-Boltzmann speed distribution function
 
-_distribution = speed_distribution.law.rhs.subs({
-    speed_distribution.particle_mass: molecular_mass,
-    speed_distribution.equilibrium_temperature: equilibrium_temperature,
+_distribution = maxwell_boltzmann_speed_distribution.law.rhs.subs({
+    maxwell_boltzmann_speed_distribution.particle_mass: molecular_mass,
+    maxwell_boltzmann_speed_distribution.equilibrium_temperature: equilibrium_temperature,
 })
 
-_distribution_first_derivative = _distribution.diff(speed_distribution.particle_speed)
+_distribution_first_derivative = _distribution.diff(maxwell_boltzmann_speed_distribution.particle_speed)
 
 # Found the points of extremum of the speed distribution function
-_solutions = solve(_distribution_first_derivative, speed_distribution.particle_speed)
+_solutions = solve(_distribution_first_derivative, maxwell_boltzmann_speed_distribution.particle_speed)
 
 # Asserting there is only one point of extremum
 assert len(_solutions) == 1
@@ -75,10 +75,10 @@ _most_probable_speed_derived = _solutions[0]
 assert expr_equals(_most_probable_speed_derived, law.rhs)
 
 _distribution_second_derivative = _distribution_first_derivative.diff(
-    speed_distribution.particle_speed)
+    maxwell_boltzmann_speed_distribution.particle_speed)
 
 _distribution_second_derivative_at_most_probable_speed = _distribution_second_derivative.subs(
-    speed_distribution.particle_speed, _most_probable_speed_derived)
+    maxwell_boltzmann_speed_distribution.particle_speed, _most_probable_speed_derived)
 
 # Proved that the point of extremum found is the point of maximum
 assert sign(_distribution_second_derivative_at_most_probable_speed) == S.NegativeOne

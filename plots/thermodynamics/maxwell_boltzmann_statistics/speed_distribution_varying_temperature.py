@@ -7,13 +7,13 @@ temperature.
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, convert_to, Quantity, units, quantities
-from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import maxwell_boltzmann_speed_distribution
 
 argon_mass_ = convert_to(Quantity(39.948 * units.amu), units.kilogram)
 temperatures_ = [100, 200, 300, 400, 500]  # K
 
 print(
-    f"Maxwell-Boltzmann speed distribution function of Argon:\n{print_expression(speed_distribution.law)}\n"
+    f"Maxwell-Boltzmann speed distribution function of Argon:\n{print_expression(maxwell_boltzmann_speed_distribution.law)}\n"
 )
 
 temperature_plot = plot(
@@ -25,15 +25,15 @@ temperature_plot = plot(
     show=False,
 )
 
-distribution = speed_distribution.law.rhs.subs({
-    speed_distribution.particle_mass: argon_mass_,
+distribution = maxwell_boltzmann_speed_distribution.law.rhs.subs({
+    maxwell_boltzmann_speed_distribution.particle_mass: argon_mass_,
     quantities.boltzmann_constant: convert_to(units.boltzmann_constant, units.joule / units.kelvin),
 })
 
 for temperature_ in temperatures_:
     temperature_subplot = plot(
-        distribution.subs(speed_distribution.equilibrium_temperature, temperature_),
-        (speed_distribution.particle_speed, 0, 1000),
+        distribution.subs(maxwell_boltzmann_speed_distribution.equilibrium_temperature, temperature_),
+        (maxwell_boltzmann_speed_distribution.particle_speed, 0, 1000),
         label=f"$T = {temperature_} K$",
         show=False,
     )

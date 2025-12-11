@@ -9,7 +9,7 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, Quantity, units, quantities, convert_to_si
 from symplyphysics.core.convert import evaluate_expression
-from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import maxwell_boltzmann_speed_distribution
 
 MassDatum = namedtuple("MassDatum", "mass label")
 
@@ -24,7 +24,7 @@ mass_data_ = [
 ]
 
 print(
-    f"Maxwell-Boltzmann speed distribution function:\n{print_expression(speed_distribution.law)}\n")
+    f"Maxwell-Boltzmann speed distribution function:\n{print_expression(maxwell_boltzmann_speed_distribution.law)}\n")
 
 mass_plot = plot(
     title="Maxwell—Boltzmann speed distribution for particles of different masses, $T$ = const",
@@ -35,15 +35,15 @@ mass_plot = plot(
     show=False,
 )
 
-distribution = speed_distribution.law.rhs.subs(speed_distribution.equilibrium_temperature,
+distribution = maxwell_boltzmann_speed_distribution.law.rhs.subs(maxwell_boltzmann_speed_distribution.equilibrium_temperature,
     quantities.standard_conditions_temperature)
 distribution = evaluate_expression(distribution)
 
 for mass_datum_ in mass_data_:
     mass_ = convert_to_si(Quantity(mass_datum_.mass * units.amu))
     mass_subplot = plot(
-        distribution.subs(speed_distribution.particle_mass, mass_),
-        (speed_distribution.particle_speed, 0, 2000),
+        distribution.subs(maxwell_boltzmann_speed_distribution.particle_mass, mass_),
+        (maxwell_boltzmann_speed_distribution.particle_speed, 0, 2000),
         label=f"$m_{{{mass_datum_.label}}} = {mass_datum_.mass} \\, \\text{{amu}}$",
         show=False,
     )

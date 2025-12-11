@@ -3,7 +3,7 @@
 from sympy import solve, symbols, integrate
 from symplyphysics import Quantity, units, convert_to, quantities
 from symplyphysics.laws.chemistry import molar_mass_via_molecular_mass as molar_mass_law
-from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import maxwell_boltzmann_speed_distribution
 
 # Description
 ## In oxygen, whose molar mass is 0.032 kg/mol, at room temperature, what fraction of the molecules
@@ -21,14 +21,14 @@ values = {
 molecule_mass = (solve(molar_mass_law.law,
     molar_mass_law.molecular_mass)[0].subs(molar_mass_law.molar_mass, molar_mass))
 
-speed_distribution_expr = speed_distribution.law.rhs.subs({
-    speed_distribution.particle_mass: molecule_mass,
-    speed_distribution.equilibrium_temperature: quantities.standard_laboratory_temperature,
+speed_distribution_expr = maxwell_boltzmann_speed_distribution.law.rhs.subs({
+    maxwell_boltzmann_speed_distribution.particle_mass: molecule_mass,
+    maxwell_boltzmann_speed_distribution.equilibrium_temperature: quantities.standard_laboratory_temperature,
 })
 
 fraction_of_molecules = integrate(
     speed_distribution_expr,
-    (speed_distribution.particle_speed, initial_speed, final_speed),
+    (maxwell_boltzmann_speed_distribution.particle_speed, initial_speed, final_speed),
 )
 
 fraction_of_molecules_ = fraction_of_molecules.subs(values)

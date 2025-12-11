@@ -8,7 +8,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import (
-    speed_distribution as distribution_law,)
+    maxwell_boltzmann_speed_distribution as distribution_law,)
 
 # Description
 ## The value of the speed distribution function for an ensemble of Argon particles (particle mass m = 39.948 u)
