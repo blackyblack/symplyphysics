@@ -35,7 +35,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy_law
-from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import maxwell_boltzmann_speed_distribution
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import maxwell_boltzmann_speed_distribution as _speed_distribution
 
 energy = clone_as_symbol(symbols.energy, positive=True)
 """
@@ -71,16 +71,16 @@ law = Eq(
 
 _speed = solve(kinetic_energy_law.law, kinetic_energy_law.speed)[0].subs({
     kinetic_energy_law.kinetic_energy: energy,
-    kinetic_energy_law.mass: maxwell_boltzmann_speed_distribution.particle_mass,
+    kinetic_energy_law.mass: _speed_distribution.particle_mass,
 })
 
-_speed_distribution = maxwell_boltzmann_speed_distribution.law.rhs.subs(maxwell_boltzmann_speed_distribution.equilibrium_temperature,
+_speed_distribution = _speed_distribution.law.rhs.subs(_speed_distribution.equilibrium_temperature,
     equilibrium_temperature)
 
 _speed_derivative_wrt_energy = _speed.diff(energy)
 
 _energy_distribution_derived = (
-    _speed_distribution.subs(maxwell_boltzmann_speed_distribution.particle_speed, _speed) *
+    _speed_distribution.subs(_speed_distribution.particle_speed, _speed) *
     abs(_speed_derivative_wrt_energy))
 
 assert expr_equals(_energy_distribution_derived, law.rhs)

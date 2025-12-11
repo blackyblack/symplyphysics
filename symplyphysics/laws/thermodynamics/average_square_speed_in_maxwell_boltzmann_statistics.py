@@ -26,7 +26,7 @@ from sympy import (Eq, solve, S, stats, Interval)
 from symplyphysics import (Quantity, validate_input, validate_output, symbols, clone_as_symbol,
     quantities)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import maxwell_boltzmann_speed_distribution
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import maxwell_boltzmann_speed_distribution as _speed_distribution
 from symplyphysics.core.operations.symbolic import Average
 
 average_square_speed = Average(symbols.speed**2)
@@ -56,13 +56,13 @@ law = Eq(
 
 # Derive law from Maxwell-Boltzmann distribution function
 
-_distribution = maxwell_boltzmann_speed_distribution.law.rhs.subs({
-    maxwell_boltzmann_speed_distribution.particle_mass: molecular_mass,
-    maxwell_boltzmann_speed_distribution.equilibrium_temperature: equilibrium_temperature,
+_distribution = _speed_distribution.law.rhs.subs({
+    _speed_distribution.particle_mass: molecular_mass,
+    _speed_distribution.equilibrium_temperature: equilibrium_temperature,
 })
 
 _speed_random_variable = stats.ContinuousRV(
-    maxwell_boltzmann_speed_distribution.particle_speed,
+    _speed_distribution.particle_speed,
     _distribution,
     set=Interval(0, S.Infinity),
 )
