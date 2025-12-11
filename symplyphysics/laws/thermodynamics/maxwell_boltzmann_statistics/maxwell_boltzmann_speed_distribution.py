@@ -64,20 +64,20 @@ law = Eq(
 
 # Derive from Maxwell-Boltzmann distribution of velocity vector components
 
-_velocity_component_distribution = _velocity_component_distribution.law.rhs.subs({
+_velocity_component_distribution_expr = _velocity_component_distribution.law.rhs.subs({
     _velocity_component_distribution.particle_mass: particle_mass,
     _velocity_component_distribution.equilibrium_temperature: equilibrium_temperature,
 })
 
 _velocity_x, _velocity_y, _velocity_z = sym_symbols("velocity_x:z", real=True)
 
-_velocity_x_distribution = _velocity_component_distribution.subs(
+_velocity_x_distribution = _velocity_component_distribution_expr.subs(
     _velocity_component_distribution.velocity_component, _velocity_x)
 
-_velocity_y_distribution = _velocity_component_distribution.subs(
+_velocity_y_distribution = _velocity_component_distribution_expr.subs(
     _velocity_component_distribution.velocity_component, _velocity_y)
 
-_velocity_z_distribution = _velocity_component_distribution.subs(
+_velocity_z_distribution = _velocity_component_distribution_expr.subs(
     _velocity_component_distribution.velocity_component, _velocity_z)
 
 _radius, _polar_angle, _azimuthal_angle = SPHERICAL.base_scalars

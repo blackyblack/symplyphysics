@@ -74,13 +74,13 @@ _speed = solve(kinetic_energy_law.law, kinetic_energy_law.speed)[0].subs({
     kinetic_energy_law.mass: _speed_distribution.particle_mass,
 })
 
-_speed_distribution = _speed_distribution.law.rhs.subs(_speed_distribution.equilibrium_temperature,
+_speed_distribution_expr = _speed_distribution.law.rhs.subs(_speed_distribution.equilibrium_temperature,
     equilibrium_temperature)
 
 _speed_derivative_wrt_energy = _speed.diff(energy)
 
 _energy_distribution_derived = (
-    _speed_distribution.subs(_speed_distribution.particle_speed, _speed) *
+    _speed_distribution_expr.subs(_speed_distribution.particle_speed, _speed) *
     abs(_speed_derivative_wrt_energy))
 
 assert expr_equals(_energy_distribution_derived, law.rhs)
