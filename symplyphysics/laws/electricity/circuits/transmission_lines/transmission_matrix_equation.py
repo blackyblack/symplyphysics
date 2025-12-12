@@ -12,9 +12,6 @@ output voltage and output current.
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Two-port_network#ABCD-parameters>`__.
-
-..
-    TODO: rename file
 """
 
 from sympy import Eq, solve

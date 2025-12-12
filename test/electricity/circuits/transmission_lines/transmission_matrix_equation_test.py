@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (errors, units, Quantity, assert_equal, prefixes)
 
-from symplyphysics.laws.electricity.circuits.transmission_lines import transmission_matrix as parameter_matrix_law
+from symplyphysics.laws.electricity.circuits.transmission_lines import transmission_matrix_equation as parameter_matrix_law
 
 ## The input voltage is 100 volt, the input current is 25 ampere. ABCD-parameters: A is equal to 50, B is equal to 100 ohm,
 ## C is equal to 1000 siemens, D is equal to 50.
