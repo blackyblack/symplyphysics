@@ -6,7 +6,7 @@ from symplyphysics import (
     Quantity,
     errors,
 )
-from symplyphysics.laws.astronomy import luminosity_of_sun_in_past_from_luminosity_in_present as luminosity_law
+from symplyphysics.reorganized.astronomy.stellar_evolution import luminosity_of_sun_in_past_from_luminosity_in_present as luminosity_law
 
 # Description
 ## Let the time be equal to 1 billion years. Then the luminosity of the Sun in the past will be equal to 0.762 units of the luminosity of the Sun.
