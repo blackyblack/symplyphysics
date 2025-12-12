@@ -23,7 +23,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematics.rotational_inertia.geometries import (
-    slab_about_perpendicular_axis_through_center as slab_formula)
+    rotational_inertia_of_slab_about_perpendicular_axis_through_center as slab_formula)
 
 rotational_inertia = symbols.rotational_inertia
 """

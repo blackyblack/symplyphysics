@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.kinematics.rotational_inertia.geometries import (
-    solid_disk_about_central_axis as solid_disk)
+    rotational_inertia_of_solid_disk_about_central_axis as solid_disk)
 
 # Description
 ## A disk is rotating about its central axis. It is 2.0 kg heavy and it has a radius of 0.4 m.

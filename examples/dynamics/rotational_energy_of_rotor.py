@@ -5,7 +5,7 @@ from symplyphysics import Quantity, convert_to, print_expression, units
 from symplyphysics.laws.dynamics import (kinetic_energy_from_rotational_inertia_and_angular_speed as
     rotational_energy_law)
 from symplyphysics.laws.kinematics.rotational_inertia.geometries import (
-    solid_disk_about_central_axis as disk_formula)
+    rotational_inertia_of_solid_disk_about_central_axis as disk_formula)
 
 # Description
 ## An spin testing was conducted involving a solid steel rotor of mass M = 272 kg and

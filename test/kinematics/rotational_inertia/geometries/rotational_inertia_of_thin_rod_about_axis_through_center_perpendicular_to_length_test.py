@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.kinematics.rotational_inertia.geometries import (
-    thin_rod_about_axis_through_center_perpendicular_to_length as thin_rod_formula)
+    rotational_inertia_of_thin_rod_about_axis_through_center_perpendicular_to_length as thin_rod_formula)
 
 # Description
 ## A thin rod of length of 30 cm and a mass of 0.5 kg rotates about an axis that passes through
