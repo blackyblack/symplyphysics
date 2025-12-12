@@ -15,9 +15,6 @@ and output.
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Scattering_parameters#Two-port_S-parameters>`__.
-
-..
-    TODO: rename file
 """
 
 from sympy import Eq, solve, sqrt

@@ -3,7 +3,7 @@ from pytest import fixture, raises
 from sympy import sqrt
 from symplyphysics import (errors, units, Quantity, assert_equal)
 
-from symplyphysics.laws.electricity.circuits.transmission_lines import scattering_matrix as parameters_matrix_law
+from symplyphysics.laws.electricity.circuits.transmission_lines import scattering_matrix_equation as parameters_matrix_law
 
 ## The reflected wave coefficient per input port is 0.2 [watt^(1/2)], the reflected wave coefficient per output port is 0.2 [watt^(1/2)].
 ## S-parameters S11, S12, S21, S22 are equal to 0.2, 0.5, 0.5, 0.2, respectively.
