@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.astronomy import change_in_apparent_magnitude_from_distance as magnitude_law
+from symplyphysics.reorganized.astronomy.observational_astronomy import change_in_apparent_magnitude_from_distance as magnitude_law
 
 # Description
 ## Let the illumination of the first object be 1 joule per square meter, the illumination of the second object is 3.512 joules per square meter.
