@@ -19,7 +19,7 @@ from symplyphysics import symbols, Quantity, validate_input, validate_output
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.laws.dynamics.vector import (
-    torque_vector_of_twisting_force as _torque_vector_def,)
+    torque_is_position_vector_cross_force as _torque_vector_def,)
 from symplyphysics.laws.geometry.vector import (
     dot_product_is_proportional_to_cosine_between_vectors as _dot_product_law,)
 

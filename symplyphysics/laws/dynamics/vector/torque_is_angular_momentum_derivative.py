@@ -29,7 +29,7 @@ from symplyphysics.definitions.vector import (
 )
 from symplyphysics.laws.dynamics.vector import (
     acceleration_from_force_vector as _newtons_second_law,
-    torque_vector_of_twisting_force as _torque_def,
+    torque_is_position_vector_cross_force as _torque_def,
 )
 
 time = symbols.time

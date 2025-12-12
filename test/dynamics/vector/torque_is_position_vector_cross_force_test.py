@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import errors, units, Quantity
-from symplyphysics.laws.dynamics.vector import torque_vector_of_twisting_force as torque_def
+from symplyphysics.laws.dynamics.vector import torque_is_position_vector_cross_force as torque_def
 
 from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
 from symplyphysics.core.approx import assert_equal_vectors
