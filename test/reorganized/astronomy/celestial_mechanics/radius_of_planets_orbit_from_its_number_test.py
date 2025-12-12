@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.astronomy import radius_of_planets_orbit_from_its_number as radius_law
+from symplyphysics.reorganized.astronomy.celestial_mechanics import radius_of_planets_orbit_from_its_number as radius_law
 
 # Description
 ## The first number of the planet corresponds to the Earth. Then the radius of the orbit will be equal to 1 astronomical unit.
