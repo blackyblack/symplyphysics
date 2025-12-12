@@ -6,7 +6,7 @@ from symplyphysics import (
     Quantity,
     errors,
 )
-from symplyphysics.laws.astronomy import luminosity_of_sun_in_future_from_luminosity_in_present as luminosity_law
+from symplyphysics.reorganized.astronomy.stellar_evolution import luminosity_of_sun_in_future_from_luminosity_in_present as luminosity_law
 
 # Description
 ## Let the time be equal to 15 billion years. Then the luminosity of the Sun in the future will be equal to 2.863 units of the luminosity of the Sun.
