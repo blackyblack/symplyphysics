@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, errors, units, Quantity, prefixes)
 
-from symplyphysics.laws.optics import optical_strength_of_spherical_lens_from_refractive_indices_of_environment_and_lens_and_focal_distances as spherical_lens_law
+from symplyphysics.laws.optics import optical_power_of_spherical_lens_from_refractive_indices_and_distances as spherical_lens_law
 
 # A thin, flat-convex lens is slightly immersed in water
 # with its horizontal flat side (the convex surface of the lens is in the air).

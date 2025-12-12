@@ -22,7 +22,7 @@ from sympy import Eq, simplify, solve
 from symplyphysics import (Quantity, validate_input, validate_output, symbols, clone_as_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.optics import (
-    optical_strength_of_spherical_lens_from_refractive_indices_of_environment_and_lens_and_focal_distances
+    optical_power_of_spherical_lens_from_refractive_indices_and_distances
     as spherical_lens_law,)
 from symplyphysics.laws.optics import lens_focus_from_object_and_image as focus_law
 
