@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.astronomy import ratio_of_luminosities_from_ratio_of_masses_of_stars as illuminance_law
+from symplyphysics.reorganized.astronomy.observational_astronomy import ratio_of_luminosities_from_ratio_of_masses_of_stars as illuminance_law
 
 # Description
 ## The mass of the first star is 1.98847e30 kilograms, and the luminosity is 2 [joule / meter^2]. The mass of the second star is 3.97694e30 kilograms.
