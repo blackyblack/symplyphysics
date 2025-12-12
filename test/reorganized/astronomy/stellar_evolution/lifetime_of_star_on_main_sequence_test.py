@@ -6,7 +6,7 @@ from symplyphysics import (
     Quantity,
     errors,
 )
-from symplyphysics.laws.astronomy import lifetime_of_star_on_main_sequence as lifetime_law
+from symplyphysics.reorganized.astronomy.stellar_evolution import lifetime_of_star_on_main_sequence as lifetime_law
 
 # Description
 ## The lifetime of the Sun on the main sequence is approximately 10 billion years. The indicator for the Sun is 4.75.
