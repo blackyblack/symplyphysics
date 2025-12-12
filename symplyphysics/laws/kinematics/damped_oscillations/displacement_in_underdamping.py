@@ -26,8 +26,8 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.definitions import damped_harmonic_oscillator_equation as damped_eqn
 from symplyphysics.laws.kinematics.damped_oscillations import (
+    damped_angular_frequency_via_damping_ratio as damped_frequency_law,
     damping_ratio_from_decay_constant_and_undamped_frequency as damping_ratio_law,
-    damped_angular_frequency as damped_frequency_law,
 )
 
 displacement = symbols.euclidean_distance
