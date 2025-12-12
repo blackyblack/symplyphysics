@@ -6,7 +6,7 @@ from symplyphysics import (
     Quantity,
     errors,
 )
-from symplyphysics.laws.astronomy import approximate_time_of_stars_location_on_the_main_sequence as time_law
+from symplyphysics.reorganized.astronomy.stellar_evolution import approximate_time_of_stars_location_on_the_main_sequence as time_law
 
 # Description
 ## The mass of the star is 3.978e30 kilograms, and its luminosity is 11.481e26 watts. Then the time of its stay on
