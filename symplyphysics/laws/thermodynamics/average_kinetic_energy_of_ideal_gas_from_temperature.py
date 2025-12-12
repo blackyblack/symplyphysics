@@ -13,6 +13,7 @@ temperature of the gas and only depends on the temperature.
 **Conditions:**
 
 #. The gas is ideal.
+#. The gas is monatomic.
 
 **Links:**
 
