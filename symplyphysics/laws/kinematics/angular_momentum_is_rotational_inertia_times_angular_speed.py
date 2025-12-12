@@ -23,8 +23,8 @@ from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.core.vectors import clone_as_vector_symbol, VectorNorm, VectorDot
 
-from symplyphysics.definitions import (
-    rotational_inertia_is_mass_times_squared_radius as _rotational_inertia_def,)
+from symplyphysics.laws.kinematics.rotational_inertia import (
+    rotational_inertia_of_particle as _rotational_inertia_def)
 from symplyphysics.definitions.vector import (
     angular_momentum_is_position_cross_linear_momentum as _angular_momentum_def,
     momentum_is_mass_times_velocity_vector as _linear_momentum_def,
@@ -117,11 +117,11 @@ _l_vec = _l_vec.subs(_linear_momentum_def.velocity, _v_vec).subs(_orthogonality_
 _l_t_expr = VectorDot(_l_vec, _e_w_vec).subs(_orthogonality_condition)
 _l_t_expr = _l_t_expr.subs({
     VectorNorm(_w_vec): angular_speed,
-    VectorNorm(_r_n_vec): _rotational_inertia_def.radial_distance,  # see note in (1)
+    VectorNorm(_r_n_vec): _rotational_inertia_def.distance_to_axis,  # see note in (1)
 })
 
 _l_t_expr = solve(
-    (Eq(angular_momentum, _l_t_expr), _rotational_inertia_def.definition),
+    (Eq(angular_momentum, _l_t_expr), _rotational_inertia_def.law),
     (angular_momentum, _rotational_inertia_def.mass),
     dict=True,
 )[0][angular_momentum]
