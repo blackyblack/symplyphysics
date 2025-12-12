@@ -8,7 +8,7 @@ falls on the slits. Find the distance between adjacent interference fringes.
 """
 
 from sympy import solve, Symbol
-from symplyphysics import print_expression, Quantity, prefixes, units, convert_to, assert_equal
+from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.laws.optics import (
     interference_from_two_slits as two_slits_law,
     interference_maximum as interference_maximum_law,

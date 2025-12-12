@@ -11,7 +11,7 @@ from symplyphysics.core.convert import evaluate_expression
 from symplyphysics.laws.gravity import free_fall_acceleration_from_height as acceleration_law
 
 print(
-    f"Free fall acceleration `a` as a function of elevation `h`:",
+    "Free fall acceleration `a` as a function of elevation `h`:",
     print_expression(acceleration_law.law),
     sep="\n",
     end="\n\n",

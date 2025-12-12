@@ -116,7 +116,7 @@ class CoordinateVector(VectorExpr):
         inner = ", ".join(str(component) for component in self.components)
 
         return f"{name}Vector({inner})"
-    
+
     def _eval_simplify(self, **kwargs: Any) -> CoordinateVector:
         components = self.components.simplify(**kwargs)
         return CoordinateVector(components, self.system, self.point)
@@ -248,8 +248,8 @@ class QuantityCoordinateVector(CoordinateVector):
         factors = []
         dimension = None
 
-        for component in components:
-            factor, dimension_ = collect_quantity_factor_and_dimension(component)
+        for component_ in components:
+            factor, dimension_ = collect_quantity_factor_and_dimension(component_)
             factors.append(factor)
 
             if is_any_dimension(factor):
@@ -287,7 +287,7 @@ class QuantityCoordinateVector(CoordinateVector):
 
 
 def component(expr: Expr, index: int) -> Expr:
-    if not (0 <= index < 3):
+    if index < 0 or index > 2:
         raise ValueError(f"Index should be 0, 1, or 2, got {index}")
 
     if expr == 0:
