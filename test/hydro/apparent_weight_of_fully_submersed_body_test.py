@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 
-from symplyphysics.laws.hydro import weight_in_fluid_via_ratio_of_densities as weight
+from symplyphysics.laws.hydro import apparent_weight_of_fully_submersed_body as weight
 
 Args = namedtuple("Args", ["weight_vacuum", "liquid_density", "body_density"])
 

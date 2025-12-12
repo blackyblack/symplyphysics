@@ -1,6 +1,6 @@
 """
-Apparent weight of a fully submersed body in fluid
-==================================================
+Apparent weight of fully submersed body
+=======================================
 
 The *Archimedean force* acting on a body fully submersed in a fluid is equal to the weight of the
 fluid displaced by the body. It can be derived that the weight of the body submersed in the fluid
