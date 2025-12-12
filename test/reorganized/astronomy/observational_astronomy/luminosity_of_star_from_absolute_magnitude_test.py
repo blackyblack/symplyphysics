@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.astronomy import luminosity_of_star_from_absolute_magnitude as luminosity_law
+from symplyphysics.reorganized.astronomy.observational_astronomy import luminosity_of_star_from_absolute_magnitude as luminosity_law
 
 # Description
 ## The absolute magnitude of red dwarfs is approximately 17. Then the luminosity value will be 0.00001584.
