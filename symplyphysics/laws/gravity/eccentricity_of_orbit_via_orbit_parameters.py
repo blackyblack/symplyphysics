@@ -1,6 +1,6 @@
 """
-Eccentricity of orbit
-=====================
+Eccentricity of orbit via orbit parameters
+==========================================
 
 Many bodies in space move in orbits that are conic sections. For an elliptical orbit, the
 eccentricity can be calculated from the parameters of the orbit. The eccentricity can be
