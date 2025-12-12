@@ -10,7 +10,6 @@ the position of the image if the position of the object is known and vice versa.
 #. `Studme <https://studme.org/341451/matematika_himiya_fizik/prelomlenie_otrazhenie_sveta_sfericheskoy_poverhnosti>`__.
 
 ..
-    TODO rename file
     TODO find English link
 """
 
