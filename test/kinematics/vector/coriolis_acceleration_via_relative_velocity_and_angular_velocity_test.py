@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import errors, units
-from symplyphysics.laws.kinematics.vector import coriolis_acceleration as law
+from symplyphysics.laws.kinematics.vector import coriolis_acceleration_via_relative_velocity_and_angular_velocity as law
 
 from symplyphysics.core.coordinate_systems import CARTESIAN, QuantityCoordinateVector
 from symplyphysics.core.approx import assert_equal_vectors

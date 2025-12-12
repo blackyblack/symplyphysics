@@ -1,6 +1,6 @@
 """
-Coriolis acceleration
-=====================
+Coriolis acceleration via relative velocity and angular velocity
+================================================================
 
 Imagine two reference frames, one of which is fixed (:math:`S`) and the other one is moving
 (:math:`S'`). When the body is moving within a rotating coordinate system, its path deflects due
@@ -15,9 +15,6 @@ frame :math:`S'`, so it is essentially zero for objects at rest in :math:`S'`.
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Coriolis_force#Formula>`__.
-
-..
-    TODO: rename law to include its dependency on relative and angular velocity
 """
 
 from sympy import Eq
