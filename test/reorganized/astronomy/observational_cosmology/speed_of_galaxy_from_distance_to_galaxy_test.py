@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.astronomy import speed_of_galaxy_from_distance_to_galaxy as speed_law
+from symplyphysics.reorganized.astronomy.observational_cosmology import speed_of_galaxy_from_distance_to_galaxy as speed_law
 
 # Description
 ## Let the distance to the galaxy be 4.6285e+22 kilometers. Then the speed of the galaxy is 101827 kilometer per second.
