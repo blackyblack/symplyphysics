@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (errors, units, Quantity, assert_equal, prefixes)
 
-from symplyphysics.laws.electricity.circuits.transmission_lines import total_resistance_matrix as resistance_matrix_law
+from symplyphysics.laws.electricity.circuits.transmission_lines import impedance_matrix_equation as resistance_matrix_law
 
 ## The input voltage is 100 volts, the output voltage is 25 volts. Z-parameters Z11, Z12, Z21, Z22 are equal
 ## to 100, 50, 50, 1000 ohms, respectively.
