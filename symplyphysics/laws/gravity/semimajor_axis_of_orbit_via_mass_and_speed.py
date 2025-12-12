@@ -11,7 +11,6 @@ rotates and the orbital velocity.
 
 ..
     TODO: find link
-    TODO: rename file
 """
 
 from sympy import Eq, solve

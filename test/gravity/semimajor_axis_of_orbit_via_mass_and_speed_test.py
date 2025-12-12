@@ -6,7 +6,7 @@ from symplyphysics import (
     Quantity,
     errors,
 )
-from symplyphysics.laws.gravity import large_half_axis_of_orbit as axis_law
+from symplyphysics.laws.gravity import semimajor_axis_of_orbit_via_mass_and_speed as axis_law
 
 # Description
 ## The mass of the sun is 1.989e30 kilograms, and the orbital speed of the Earth is 29.8 kilometers per second.
