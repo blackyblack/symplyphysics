@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.astronomy import latitude_from_zenith_distances_and_declinations as latitude_law
+from symplyphysics.reorganized.astronomy.positional_astronomy import latitude_from_zenith_distances_and_declinations as latitude_law
 
 # Description
 ## If the zenith distance and declination of the star north of the zenith are equal to 30 and 25 degrees, respectively,
