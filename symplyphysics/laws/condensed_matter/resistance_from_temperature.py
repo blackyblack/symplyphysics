@@ -26,15 +26,6 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-# Description
-
-## Law is: R = R0 * (1 + a * (T - T0)), where
-## R - resistance,
-## R0 - resistance at zero degrees celsius,
-## a - temperature coefficient,
-## T - temperature,
-## T0 - 273.15 kelvin degrees.
-
 resistance = symbols.electrical_resistance
 """
 :symbols:`electrical_resistance`.

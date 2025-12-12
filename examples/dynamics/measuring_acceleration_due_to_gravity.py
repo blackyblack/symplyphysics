@@ -5,7 +5,7 @@ from symplyphysics import print_expression, quantities
 from symplyphysics.laws.dynamics import (
     period_of_physical_pendulum as pendulum_law,)
 from symplyphysics.laws.kinematics.rotational_inertia.geometries import (
-    thin_rod_about_axis_through_center_perpendicular_to_length as rod_inertia_law)
+    rotational_inertia_of_thin_rod_about_axis_through_center_perpendicular_to_length as rod_inertia_law)
 from symplyphysics.laws.kinematics.rotational_inertia import (
     rotational_inertia_about_axis_and_through_center_of_mass as parallel_axis_theorem,)
 

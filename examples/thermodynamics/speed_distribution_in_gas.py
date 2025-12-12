@@ -3,7 +3,7 @@
 from sympy import solve, symbols, integrate
 from symplyphysics import Quantity, units, convert_to, quantities
 from symplyphysics.laws.chemistry import molar_mass_via_molecular_mass as molar_mass_law
-from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import maxwell_boltzmann_speed_distribution as speed_distribution
 
 # Description
 ## In oxygen, whose molar mass is 0.032 kg/mol, at room temperature, what fraction of the molecules

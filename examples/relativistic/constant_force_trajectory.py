@@ -5,7 +5,7 @@ from symplyphysics import print_expression
 from symplyphysics.laws.dynamics import (
     force_is_derivative_of_momentum as newtons_second_law,)
 from symplyphysics.laws.relativistic import (
-    relativistic_momentum as relativistic_momentum_law,)
+    relativistic_momentum_via_rest_mass_and_speed as relativistic_momentum_law,)
 
 # Description
 ## A particle with an initial momentum `p_0` starts moving at a moment `t = 0` due to a constant

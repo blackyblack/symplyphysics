@@ -2,7 +2,7 @@
 
 from sympy import Idx, solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, units, convert_to, global_index
-from symplyphysics.definitions import mass_fraction as mass_fraction_law
+from symplyphysics.definitions import mass_fraction_is_component_mass_over_total_mass as mass_fraction_law
 from symplyphysics.laws.conservation import initial_mass_equals_final_mass as conservation_mass_law
 from symplyphysics.laws.conservation import mixture_mass_is_sum_of_component_masses as mixture_mass_law
 

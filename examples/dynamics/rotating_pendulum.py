@@ -16,7 +16,7 @@ from symplyphysics.laws.dynamics.vector import (
 from symplyphysics.laws.kinematics.vector import (
     acceleration_of_transfer_between_relative_frames as transfer_law,
     centripetal_acceleration_via_cross_product as centripetal_law,
-    coriolis_acceleration as coriolis_law,
+    coriolis_acceleration_via_relative_velocity_and_angular_velocity as coriolis_law,
 )
 from symplyphysics.laws.kinematics import (
     tangential_acceleration_via_angular_acceleration_and_radius as tangential_law,)

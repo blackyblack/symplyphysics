@@ -41,8 +41,7 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.conservation import (
     initial_momentum_equals_final_momentum as momentum_conservation_law,)
-from symplyphysics.definitions import (momentum_is_mass_times_speed as momentum_def, mass_flow_rate
-    as flow_rate_def)
+from symplyphysics.definitions import (mass_flow_rate_is_time_derivative_of_mass as flow_rate_def, momentum_is_mass_times_speed as momentum_def)
 from symplyphysics.laws.kinematics import (
     classical_addition_of_velocities as galilean_law,
     speed_via_constant_acceleration_and_time as acceleration_def,

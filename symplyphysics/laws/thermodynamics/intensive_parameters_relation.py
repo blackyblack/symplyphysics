@@ -25,7 +25,7 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.operations.symbolic import ExactDifferential
 from symplyphysics.laws.thermodynamics import internal_energy_differential
-from symplyphysics.laws.thermodynamics.euler_relations import internal_energy_formula
+from symplyphysics.laws.thermodynamics.euler_relations import internal_energy_euler_relation
 
 entropy = symbols.entropy
 """
@@ -71,23 +71,23 @@ law = Eq(
 # Derive from internal energy representations
 
 _internal_energy_diff_eqn = internal_energy_differential.law.subs({
-    internal_energy_differential.temperature: internal_energy_formula.temperature,
-    internal_energy_differential.pressure: internal_energy_formula.pressure,
-    internal_energy_differential.chemical_potential: internal_energy_formula.chemical_potential,
+    internal_energy_differential.temperature: internal_energy_euler_relation.temperature,
+    internal_energy_differential.pressure: internal_energy_euler_relation.pressure,
+    internal_energy_differential.chemical_potential: internal_energy_euler_relation.chemical_potential,
 })
 
-_internal_energy_expr = internal_energy_formula.law.rhs.subs({
-    internal_energy_formula.entropy: entropy,
-    internal_energy_formula.volume: volume,
-    internal_energy_formula.particle_count: particle_count,
+_internal_energy_expr = internal_energy_euler_relation.law.rhs.subs({
+    internal_energy_euler_relation.entropy: entropy,
+    internal_energy_euler_relation.volume: volume,
+    internal_energy_euler_relation.particle_count: particle_count,
 })
 
 _internal_energy_diff_expr = (
-    _internal_energy_expr.diff(internal_energy_formula.temperature) * temperature_change +
+    _internal_energy_expr.diff(internal_energy_euler_relation.temperature) * temperature_change +
     _internal_energy_expr.diff(entropy) * internal_energy_differential.entropy_change +
-    _internal_energy_expr.diff(internal_energy_formula.pressure) * pressure_change +
+    _internal_energy_expr.diff(internal_energy_euler_relation.pressure) * pressure_change +
     _internal_energy_expr.diff(volume) * internal_energy_differential.volume_change +
-    _internal_energy_expr.diff(internal_energy_formula.chemical_potential) *
+    _internal_energy_expr.diff(internal_energy_euler_relation.chemical_potential) *
     chemical_potential_change +
     _internal_energy_expr.diff(particle_count) * internal_energy_differential.particle_count_change)
 

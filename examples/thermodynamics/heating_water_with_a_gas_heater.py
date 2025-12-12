@@ -13,7 +13,7 @@ from symplyphysics.laws.quantities import quantity_is_molar_quantity_times_amoun
 from symplyphysics.definitions import density_from_mass_volume as density_law
 from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as velocity_law
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as clapeyron_law
-from symplyphysics.definitions import mass_flow_rate as mass_rate_law
+from symplyphysics.definitions import mass_flow_rate_is_time_derivative_of_mass as mass_rate_law
 
 # Example from https://easyfizika.ru/zadachi/termodinamika/gazovaya-nagrevatelnaya-kolonka-potreblyaet-1-8-m3-metana-ch4-v-chas-najti-temperaturu/
 # The gas heater consumes 1.8 m^3 of methane (CH4) per hour. Find

@@ -11,6 +11,7 @@ Internal energy of an ideal gas is the sum of the kinetic energy of all of its m
 **Conditions:**
 
 #. The gas is ideal.
+#. The gas is monatomic.
 
 **Links:**
 
@@ -20,7 +21,6 @@ Internal energy of an ideal gas is the sum of the kinetic energy of all of its m
 
 ..
     TODO replace `mass/molar_mass` with `amount_of_substance`
-    TODO add to conditions that the gas is monatomic
 """
 
 from sympy import Eq, solve

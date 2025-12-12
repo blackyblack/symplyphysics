@@ -16,32 +16,21 @@ moving in opposite directions.
 #. `Physics LibreTexts, similar to formula 14.7.3 <https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_Introductory_Physics_-_Building_Models_to_Describe_Our_World_(Martin_Neary_Rinaldo_and_Woodman)/14%3A_Waves/14.07%3A_Standing_waves>`__.
 """
 
-from sympy import Eq, sin, cos, symbols as sym_symbols
-from symplyphysics import Quantity, validate_input, symbols
+from sympy import Eq, sin, cos
+from symplyphysics import Quantity, validate_input, symbols, Symbol
+from symplyphysics.core.dimensions import any_dimension
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.quantity_decorator import validate_output_same
 from symplyphysics.laws.waves import phase_of_traveling_wave as phase_law
 
-total_displacement = sym_symbols("u")
+total_displacement = Symbol("u", any_dimension)
 """
 Displacement of the resulting wave.
-
-Symbol:
-    :code:`u`
-
-Latex:
-    :math:`u`
 """
 
-amplitude = sym_symbols("u_max")
-r"""
+amplitude = Symbol("u_max", any_dimension, display_latex="u_\\text{max}")
+"""
 Amplitude of the interfering waves.
-
-Symbol:
-    :code:`u_max`
-
-Latex:
-    :math:`u_\text{max}`
 """
 
 angular_wavenumber = symbols.angular_wavenumber
@@ -66,12 +55,10 @@ time = symbols.time
 
 law = Eq(total_displacement,
     (2 * amplitude) * sin(angular_wavenumber * position) * cos(angular_frequency * time))
-r"""
-:code:`u = 2 * u_max * sin(k * x) * cos(w * t)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        u = 2 u_\text{max} \sin(k x) \cos(\omega t)
+:laws:latex::
 """
 
 # Derive from the sum of two traveling waves

@@ -14,7 +14,7 @@ vector of mass moment is a polar ("ordinary") vector and therefore invariant und
 from sympy import Eq
 
 from symplyphysics import Quantity, validate_input, validate_output, symbols, units
-from symplyphysics.definitions import lorentz_factor as lorentz_factor_def
+from symplyphysics.definitions import lorentz_factor_via_speed as lorentz_factor_def
 
 from symplyphysics.core.vectors import VectorSymbol, clone_as_vector_symbol, VectorNorm
 from symplyphysics.core.coordinate_systems import QuantityCoordinateVector

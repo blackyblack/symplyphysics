@@ -93,7 +93,7 @@ def make_point(x_: Any, y_: Any) -> CoordinateVector:
 # NOTE Refer to the figure at `../../img/parallel_rays_through_thick_convex_lens.svg`
 
 # Radius `GH` of the lens, i.e. the radius at the base of the [spherical caps](https://en.wikipedia.org/wiki/Spherical_cap) which compose the lens.
-lens_radius = 1
+lens_radius = 1  # pylint: disable=invalid-name
 
 # `C1C2 = C1H + C2H`
 # Pythagoras theorem: `C1H^2 + GH^2 = R1^2`

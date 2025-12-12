@@ -3,12 +3,12 @@
 from sympy import Symbol, Eq, reduce_inequalities, false
 from symplyphysics import print_expression
 from symplyphysics.definitions import (
-    lorentz_factor as lorentz_factor_def,)
+    lorentz_factor_via_speed as lorentz_factor_def,)
 from symplyphysics.laws.waves import (
     photon_energy_is_proportional_to_linear_frequency as energy_law,)
 from symplyphysics.laws.relativistic import (
-    total_energy_via_relativistic_mass as energy_is_mass,
-    relativistic_mass as moving_mass_law,
+    relativistic_energy_via_relativistic_mass as energy_is_mass,
+    relativistic_mass_via_rest_mass_and_speed as moving_mass_law,
 )
 
 # Description

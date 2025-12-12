@@ -86,4 +86,4 @@ values = {
 average_air_resistance_qty = average_air_resistance_expr.subs(values)
 average_air_resistance_si = convert_to_si(average_air_resistance_qty).evalf(2)
 
-print(f"The average force of air resistance amounted to", average_air_resistance_si, "N.")
+print("The average force of air resistance amounted to", average_air_resistance_si, "N.")
