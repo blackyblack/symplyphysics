@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.dynamics import resonant_oscillations as resonance_law
+from symplyphysics.laws.dynamics import displacement_in_forced_resonant_oscillations as resonance_law
 
 # Description
 ## An external driving force is acting on an oscillator and is in resonance with it.
