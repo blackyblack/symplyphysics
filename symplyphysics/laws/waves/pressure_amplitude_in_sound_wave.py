@@ -17,11 +17,11 @@ from symplyphysics import (Quantity, validate_input, validate_output, symbols, c
 from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.laws.hydro import bulk_stress_is_bulk_modulus_times_strain as _bulk_law
+from symplyphysics.reorganized.continuum_mechanics.acoustic_waves import speed_of_sound_via_bulk_modulus_and_density as _sound_speed_law
 from symplyphysics.reorganized.quantity_relations import (
     fractional_change_is_change_over_initial_value as _fractional_law,)
 from symplyphysics.laws.waves import (
     phase_of_traveling_wave as _phase_law,
-    speed_of_sound_via_bulk_modulus_and_density as _sound_speed_law,
     phase_velocity_from_angular_frequency_and_wavenumber as _phase_speed_law,
 )
 from symplyphysics.reorganized.waves.general import wave_equation_general_solution_in_one_dimension as _solution_law

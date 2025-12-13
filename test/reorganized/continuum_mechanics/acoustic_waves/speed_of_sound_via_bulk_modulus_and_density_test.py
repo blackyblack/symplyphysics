@@ -7,7 +7,7 @@ from symplyphysics import (
     prefixes,
     Quantity,
 )
-from symplyphysics.laws.waves import speed_of_sound_via_bulk_modulus_and_density as sound_speed_law
+from symplyphysics.reorganized.continuum_mechanics.acoustic_waves import speed_of_sound_via_bulk_modulus_and_density as sound_speed_law
 
 # Description
 ## In air at 20 degrees Celsius (bulk modulus B = 142 kPa, density rho = 1.204 kg/m**3)
