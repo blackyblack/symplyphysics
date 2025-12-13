@@ -18,8 +18,8 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import temporal_frequency_from_period as frequency_law
 from symplyphysics.laws.waves import (
     wavelength_from_phase_speed_and_period as wavelength_law,
-    wavelength_of_standing_wave_in_string_with_fixed_ends as resonance_law,
 )
+from symplyphysics.reorganized.waves.stretched_string import wavelength_of_standing_wave_in_string_with_fixed_ends as resonance_law
 
 resonant_frequency = symbols.temporal_frequency
 """

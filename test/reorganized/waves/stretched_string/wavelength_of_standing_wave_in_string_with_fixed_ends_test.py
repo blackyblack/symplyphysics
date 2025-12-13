@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.waves import (
+from symplyphysics.reorganized.waves.stretched_string import (
     wavelength_of_standing_wave_in_string_with_fixed_ends as standing_wave_law,)
 
 # Description
