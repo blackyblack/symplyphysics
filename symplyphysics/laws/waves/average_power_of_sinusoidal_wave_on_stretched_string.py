@@ -43,7 +43,7 @@ from symplyphysics.laws.dynamics import (
     kinetic_energy_from_mass_and_speed as _kinetic_energy_def,
     mechanical_work_from_force_and_distance as _work_law,
 )
-from symplyphysics.laws.quantities import (
+from symplyphysics.reorganized.quantity_relations import (
     quantity_is_linear_density_times_length as _linear_density_law,)
 from symplyphysics.laws.waves import (
     phase_of_traveling_wave as _phase_law,

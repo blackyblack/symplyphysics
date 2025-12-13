@@ -16,7 +16,7 @@ from symplyphysics.laws.kinematics.vector import (
 )
 from symplyphysics.laws.geometry import (
     scalar_projection_is_vector_length_times_cosine_of_angle as cosine_law,)
-from symplyphysics.laws.quantities import (
+from symplyphysics.reorganized.quantity_relations import (
     quantity_is_linear_density_times_length as linear_density_law,)
 
 from symplyphysics.core.solvers import solve_for_vector

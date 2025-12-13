@@ -6,7 +6,7 @@ from symplyphysics import (
     Quantity,
     errors,
 )
-from symplyphysics.laws.quantities import quantity_is_linear_density_times_length as law
+from symplyphysics.reorganized.quantity_relations import quantity_is_linear_density_times_length as law
 
 Args = namedtuple("Args", "m q l")
 
