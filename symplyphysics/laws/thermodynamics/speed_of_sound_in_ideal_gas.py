@@ -32,9 +32,9 @@ from symplyphysics.laws.thermodynamics import (
 )
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
 from symplyphysics.laws.quantities import (
-    quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,
     quantity_is_volumetric_density_times_volume as density_law,
 )
+from symplyphysics.reorganized.quantity_relations import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
 
 speed_of_sound = clone_as_symbol(
     symbols.speed,

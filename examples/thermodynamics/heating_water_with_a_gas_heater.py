@@ -9,7 +9,7 @@ from symplyphysics.laws.thermodynamics import (
     heat_of_combustion_via_mass as combustion_energy_law,
 )
 from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
-from symplyphysics.laws.quantities import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
+from symplyphysics.reorganized.quantity_relations import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
 from symplyphysics.definitions import density_from_mass_volume as density_law
 from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as velocity_law
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as clapeyron_law

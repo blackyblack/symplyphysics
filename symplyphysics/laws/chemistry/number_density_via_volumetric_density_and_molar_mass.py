@@ -20,7 +20,7 @@ from symplyphysics import Quantity, validate_input, validate_output, quantities,
 from symplyphysics.definitions import number_density_is_number_of_objects_per_unit_volume
 from symplyphysics.definitions import density_from_mass_volume
 from symplyphysics.laws.chemistry import avogadro_constant_is_particle_count_over_amount_of_substance
-from symplyphysics.laws.quantities import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
+from symplyphysics.reorganized.quantity_relations import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
 
 number_density = symbols.number_density
 """

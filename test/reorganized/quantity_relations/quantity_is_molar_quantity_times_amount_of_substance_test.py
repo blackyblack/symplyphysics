@@ -6,7 +6,7 @@ from symplyphysics import (
     Quantity,
     errors,
 )
-from symplyphysics.laws.quantities import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
+from symplyphysics.reorganized.quantity_relations import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
 
 Args = namedtuple("Args", "vm mm n")
 
