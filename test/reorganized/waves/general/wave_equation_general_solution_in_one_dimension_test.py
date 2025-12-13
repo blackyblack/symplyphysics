@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.waves import wave_equation_general_solution_in_one_dimension as wave_law
+from symplyphysics.reorganized.waves.general import wave_equation_general_solution_in_one_dimension as wave_law
 
 # Description
 ## A wave is traveling in a stretched string with maximum amplitude of 5 cm. When wave phase

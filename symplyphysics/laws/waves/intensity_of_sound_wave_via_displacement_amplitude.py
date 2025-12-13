@@ -34,8 +34,8 @@ from symplyphysics.definitions import (
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as _kinetic_energy_law
 from symplyphysics.laws.waves import (
     phase_of_traveling_wave as _phase_law,
-    wave_equation_general_solution_in_one_dimension as _solution_law,
 )
+from symplyphysics.reorganized.waves.general import wave_equation_general_solution_in_one_dimension as _solution_law
 
 wave_intensity = symbols.intensity
 """

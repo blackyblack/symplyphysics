@@ -21,10 +21,10 @@ from symplyphysics.reorganized.quantity_relations import (
     fractional_change_is_change_over_initial_value as _fractional_law,)
 from symplyphysics.laws.waves import (
     phase_of_traveling_wave as _phase_law,
-    wave_equation_general_solution_in_one_dimension as _solution_law,
     speed_of_sound_via_bulk_modulus_and_density as _sound_speed_law,
     phase_velocity_from_angular_frequency_and_wavenumber as _phase_speed_law,
 )
+from symplyphysics.reorganized.waves.general import wave_equation_general_solution_in_one_dimension as _solution_law
 
 pressure_amplitude = clone_as_symbol(
     symbols.pressure,
