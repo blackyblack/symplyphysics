@@ -31,7 +31,7 @@ from symplyphysics.laws.thermodynamics import (
     pressure_and_volume_in_adiabatic_process as adiabate_law,
 )
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
-from symplyphysics.laws.quantities import (
+from symplyphysics.reorganized.quantity_relations import (
     quantity_is_volumetric_density_times_volume as density_law,
 )
 from symplyphysics.reorganized.quantity_relations import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law

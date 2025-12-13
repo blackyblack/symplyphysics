@@ -6,7 +6,7 @@ from symplyphysics import (
     Quantity,
     errors,
 )
-from symplyphysics.laws.quantities import quantity_is_volumetric_density_times_volume as density_law
+from symplyphysics.reorganized.quantity_relations import quantity_is_volumetric_density_times_volume as density_law
 
 Args = namedtuple("Args", "u q v")
 
