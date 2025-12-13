@@ -32,8 +32,8 @@ from symplyphysics.definitions import (
 from symplyphysics.laws.waves import (
     photon_momentum_is_proportional_to_angular_wavenumber as _momentum_law,
     photon_energy_is_proportional_to_angular_frequency as _energy_law,
-    wavelength_from_phase_speed_and_period as _wavelength_law,
 )
+from symplyphysics.reorganized.waves.wave_propagation import wavelength_from_phase_speed_and_period as _wavelength_law
 
 momentum = symbols.momentum
 """

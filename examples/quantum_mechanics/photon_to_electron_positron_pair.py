@@ -4,10 +4,10 @@ from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression, units, convert_to, quantities
 from symplyphysics.laws.waves import (
     photon_energy_is_proportional_to_linear_frequency as energy_law,
-    wavelength_from_phase_speed_and_period as wavelength_law,
 )
 from symplyphysics.laws.relativistic import relativistic_energy_via_relativistic_mass as mass_law
 from symplyphysics.definitions import temporal_frequency_from_period as frequency_law
+from symplyphysics.reorganized.waves.wave_propagation import wavelength_from_phase_speed_and_period as wavelength_law
 
 # Description
 ## Can a free photon with enough energy turn into an electron-positron pair?
