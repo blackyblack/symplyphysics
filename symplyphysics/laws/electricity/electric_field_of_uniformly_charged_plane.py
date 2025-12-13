@@ -26,7 +26,7 @@ from symplyphysics.laws.electricity.vector import (
     electric_flux_of_uniform_electric_field as _flux_law,)
 from symplyphysics.laws.electricity import (
     electric_flux_through_closed_surface_via_total_charge as _gauss_law,)
-from symplyphysics.laws.quantities import (
+from symplyphysics.reorganized.quantity_relations import (
     quantity_is_areal_density_times_area as _areal_qty_law,)
 
 from symplyphysics.core.coordinate_systems import CARTESIAN, CoordinateVector

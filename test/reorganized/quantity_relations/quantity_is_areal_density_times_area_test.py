@@ -6,7 +6,7 @@ from symplyphysics import (
     Quantity,
     errors,
 )
-from symplyphysics.laws.quantities import quantity_is_areal_density_times_area as law
+from symplyphysics.reorganized.quantity_relations import quantity_is_areal_density_times_area as law
 
 Args = namedtuple("Args", "m q a")
 
