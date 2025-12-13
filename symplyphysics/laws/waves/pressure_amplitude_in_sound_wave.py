@@ -17,7 +17,7 @@ from symplyphysics import (Quantity, validate_input, validate_output, symbols, c
 from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.laws.hydro import bulk_stress_is_bulk_modulus_times_strain as _bulk_law
-from symplyphysics.laws.quantities import (
+from symplyphysics.reorganized.quantity_relations import (
     fractional_change_is_change_over_initial_value as _fractional_law,)
 from symplyphysics.laws.waves import (
     phase_of_traveling_wave as _phase_law,

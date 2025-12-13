@@ -6,7 +6,7 @@ from symplyphysics import (
     Quantity,
     errors,
 )
-from symplyphysics.laws.quantities import (
+from symplyphysics.reorganized.quantity_relations import (
     fractional_change_is_change_over_initial_value as law,)
 
 Args = namedtuple("Args", "dm m dv v")
