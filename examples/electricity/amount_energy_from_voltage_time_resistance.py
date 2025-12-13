@@ -9,7 +9,7 @@ from symplyphysics.definitions import (
 )
 from symplyphysics.laws.thermodynamics import (
     heat_is_heat_capacity_times_temperature_change as thermal_energy_law,)
-from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
+from symplyphysics.reorganized.quantity_relations import quantity_is_specific_quantity_times_mass as specific_qty_law
 
 # The household electric kettle heated 0.5 liters of water from 20 degree Celsius to boiling.
 # The power of the kettle is 1500 watts. How long did the heating process take?

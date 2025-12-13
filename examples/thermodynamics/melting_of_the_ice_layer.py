@@ -8,7 +8,7 @@ from symplyphysics.laws.thermodynamics import (
     latent_heat_of_fusion_via_mass as energy_melting_law,
     total_energy_transfer_is_zero_in_isolated_system as thermodinamics_law_1,
 )
-from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
+from symplyphysics.reorganized.quantity_relations import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.definitions import density_from_mass_volume as density_law
 
 # The 4.2 cm thick ice layer has a temperature of 0 °C.

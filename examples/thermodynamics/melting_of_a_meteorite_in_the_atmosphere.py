@@ -7,7 +7,7 @@ from symplyphysics.laws.thermodynamics import (
     heat_is_heat_capacity_times_temperature_change as thermal_energy_law,
     latent_heat_of_fusion_via_mass as energy_melting_law,
 )
-from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
+from symplyphysics.reorganized.quantity_relations import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.laws.conservation import (
     initial_mechanical_energy_equals_final_mechanical_energy as energy_conservation_law,)
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy_law
