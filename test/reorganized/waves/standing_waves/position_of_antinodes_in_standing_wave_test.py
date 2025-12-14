@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.waves import position_of_antinodes_in_standing_wave as antinode_law
+from symplyphysics.reorganized.waves.standing_waves import position_of_antinodes_in_standing_wave as antinode_law
 
 # Description
 ## For a standing wave of wavelength 8 nm the 4th antinode is located at x = 18 nm.
