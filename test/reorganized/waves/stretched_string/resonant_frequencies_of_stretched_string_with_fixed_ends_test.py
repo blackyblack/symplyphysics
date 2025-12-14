@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.waves import (
+from symplyphysics.reorganized.waves.stretched_string import (
     resonant_frequencies_of_stretched_string_with_fixed_ends as frequencies_law,)
 
 # Description
