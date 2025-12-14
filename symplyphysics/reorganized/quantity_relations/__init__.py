@@ -1,5 +1,5 @@
 """
-Quantity relations
+Quantity Relations
 ==================
 
 """

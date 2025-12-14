@@ -1,4 +1,5 @@
 """
-Waves on stretched string
-=========================
+Stretched String (Waves)
+========================
+
 """

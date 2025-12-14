@@ -1,5 +1,5 @@
 """
-Observational astronomy
+Observational Astronomy
 =======================
 
 """

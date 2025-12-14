@@ -1,5 +1,5 @@
 """
-Electromagnetic wave propagation
+Electromagnetic Wave Propagation
 ================================
 
 """

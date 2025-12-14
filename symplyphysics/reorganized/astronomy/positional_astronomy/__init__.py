@@ -1,5 +1,5 @@
 """
-Positional astronomy
+Positional Astronomy
 ====================
 
 """

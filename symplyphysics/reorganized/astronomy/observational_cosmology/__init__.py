@@ -1,5 +1,5 @@
 """
-Observational cosmology
+Observational Cosmology
 =======================
 
 """

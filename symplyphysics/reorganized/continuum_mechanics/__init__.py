@@ -1,5 +1,5 @@
 """
-Celestial Mechanics
+Continuum Mechanics
 ===================
 
 """
