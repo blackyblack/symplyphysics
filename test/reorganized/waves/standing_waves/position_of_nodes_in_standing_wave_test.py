@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.waves import position_of_nodes_in_standing_wave as node_law
+from symplyphysics.reorganized.waves.standing_waves import position_of_nodes_in_standing_wave as node_law
 
 # Description
 ## For a standing wave of wavelength 5 nm the 1000th node is located at x = 2.5 µm.
