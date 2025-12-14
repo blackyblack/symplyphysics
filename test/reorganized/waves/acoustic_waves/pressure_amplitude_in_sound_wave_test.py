@@ -7,7 +7,7 @@ from symplyphysics import (
     prefixes,
     Quantity,
 )
-from symplyphysics.laws.waves import pressure_amplitude_in_sound_wave as pressure_law
+from symplyphysics.reorganized.waves.acoustic_waves import pressure_amplitude_in_sound_wave as pressure_law
 
 # Description
 ## A sound wave of angular frequency w = 6.28e3 rad/s is propagating in air of density
