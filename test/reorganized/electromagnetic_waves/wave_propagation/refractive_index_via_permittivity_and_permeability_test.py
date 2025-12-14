@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import assert_equal, Quantity, units, errors
-from symplyphysics.laws.waves import refractive_index_via_permittivity_and_permeability as media_law
+from symplyphysics.reorganized.electromagnetic_waves.wave_propagation import refractive_index_via_permittivity_and_permeability as media_law
 
 # Description.
 ## Refraction factor of air is 1.000292. Air dielectric permeability is 1.000576. Air magnetic permeability is 1.00000037.
