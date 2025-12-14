@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.waves import sine_of_mach_cone_angle_is_mach_number as mach_angle_law
+from symplyphysics.reorganized.continuum_mechanics.fluid_mechanics.supersonic_flow import sine_of_mach_cone_angle_is_mach_number as mach_angle_law
 
 # Description
 ## An object is moving with ultrasonic speed and is characterized by Mach number M = 2.5.
