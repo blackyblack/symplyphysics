@@ -29,7 +29,7 @@ from symplyphysics.definitions import (
     angular_wavenumber_is_inverse_wavelength as _wavenumber_def,
     period_from_angular_frequency as _period_def,
 )
-from symplyphysics.laws.waves import (
+from symplyphysics.reorganized.quantum_physics.photons import (
     photon_energy_is_proportional_to_angular_frequency as _energy_law,
 )
 from symplyphysics.reorganized.quantum_physics.photons import photon_momentum_is_proportional_to_angular_wavenumber as _momentum_law

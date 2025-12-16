@@ -7,7 +7,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.waves import photon_energy_is_proportional_to_angular_frequency as planck_law
+from symplyphysics.reorganized.quantum_physics.photons import photon_energy_is_proportional_to_angular_frequency as planck_law
 
 Args = namedtuple("Args", ["w"])
 
