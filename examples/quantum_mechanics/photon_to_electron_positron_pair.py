@@ -2,7 +2,7 @@
 
 from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression, units, convert_to, quantities
-from symplyphysics.laws.waves import (
+from symplyphysics.reorganized.quantum_physics.photons import (
     photon_energy_is_proportional_to_linear_frequency as energy_law,
 )
 from symplyphysics.laws.relativistic import relativistic_energy_via_relativistic_mass as mass_law

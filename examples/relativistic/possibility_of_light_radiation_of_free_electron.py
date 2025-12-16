@@ -4,7 +4,7 @@ from sympy import Symbol, Eq, reduce_inequalities, false
 from symplyphysics import print_expression
 from symplyphysics.definitions import (
     lorentz_factor_via_speed as lorentz_factor_def,)
-from symplyphysics.laws.waves import (
+from symplyphysics.reorganized.quantum_physics.photons import (
     photon_energy_is_proportional_to_linear_frequency as energy_law,)
 from symplyphysics.laws.relativistic import (
     relativistic_energy_via_relativistic_mass as energy_is_mass,
