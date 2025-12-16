@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.waves import photoelectron_energy_from_photon_energy as photoeffect
+from symplyphysics.reorganized.quantum_physics.light_interaction import photoelectron_energy_from_photon_energy as photoeffect
 
 # Description
 ## The metal surface with the work function 3.81e-19 J is irradiated with photons of frequency 9.23e14 Hz.

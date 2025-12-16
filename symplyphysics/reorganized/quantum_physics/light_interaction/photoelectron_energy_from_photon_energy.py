@@ -18,9 +18,6 @@ of the material.
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Photoelectric_effect#Theoretical_explanation>`__.
-
-..
-    TODO move to `quantum_mechanics`?
 """
 
 from sympy import Eq, solve
