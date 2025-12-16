@@ -47,9 +47,9 @@ from symplyphysics.reorganized.quantity_relations import (
     quantity_is_linear_density_times_length as _linear_density_law,)
 from symplyphysics.laws.waves import (
     phase_of_traveling_wave as _phase_law,
-    phase_speed_of_wave_on_stretched_string as _string_speed_law,
 )
 from symplyphysics.reorganized.waves.general import wave_equation_general_solution_in_one_dimension as _solution_law
+from symplyphysics.reorganized.waves.stretched_string import phase_speed_of_wave_on_stretched_string as _string_speed_law
 from symplyphysics.reorganized.waves.wave_propagation import phase_velocity_from_angular_frequency_and_wavenumber as _phase_speed_law
 
 wave_average_power = symbols.power
