@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.waves import (
+from symplyphysics.reorganized.waves.wave_propagation import (
     phase_velocity_from_angular_frequency_and_wavenumber as phase_velocity_law,)
 
 # Description
