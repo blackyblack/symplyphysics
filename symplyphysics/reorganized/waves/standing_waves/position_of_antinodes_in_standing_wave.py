@@ -19,8 +19,8 @@ of the wavelength.
 from sympy import Eq, S
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.definitions import angular_wavenumber_is_inverse_wavelength as wavenumber_def
-from symplyphysics.laws.waves import displacement_in_standing_wave as standing_wave_law
+from symplyphysics.reorganized.waves.general import angular_wavenumber_is_inverse_wavelength as wavenumber_def
+from symplyphysics.reorganized.waves.standing_waves import displacement_in_standing_wave as standing_wave_law
 
 antinode_position = symbols.position
 r"""

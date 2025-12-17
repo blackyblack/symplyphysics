@@ -4,7 +4,7 @@ from sympy import pi
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import units, convert_to, quantities
-from symplyphysics.laws.quantum_mechanics.harmonic_oscillator import quantum_oscillator_wave_eigenfunctions as law
+from symplyphysics.reorganized.quantum_physics.quantum_harmonic_oscillator import quantum_oscillator_wave_eigenfunctions as law
 
 values = {
     law.oscillator_mass: convert_to(units.planck_mass, units.kilogram).evalf(),

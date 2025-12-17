@@ -8,7 +8,7 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, quantities, convert_to_si, units
 from symplyphysics.core.convert import evaluate_expression
-from symplyphysics.laws.electricity import electrostatic_force_via_charges_and_distance as coulomb_law
+from symplyphysics.reorganized.electromagnetism.electrostatics.point_charge import electrostatic_force_via_charges_and_distance as coulomb_law
 
 print(f"Formula is:\n{print_expression(coulomb_law.law)}")
 

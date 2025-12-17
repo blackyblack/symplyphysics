@@ -2,8 +2,8 @@
 
 from sympy import solve
 from symplyphysics import units, convert_to, Quantity, print_expression
-from symplyphysics.laws.conservation import initial_momentum_equals_final_momentum as momentum_conservation_law
-from symplyphysics.definitions import momentum_is_mass_times_speed as momentum_def
+from symplyphysics.reorganized.classical_mechanics.conservation_laws import initial_momentum_equals_final_momentum as momentum_conservation_law
+from symplyphysics.reorganized.classical_mechanics.dynamics.translational_motion import momentum_is_mass_times_speed as momentum_def
 
 # Inelastic collision transforms two objects with masses m1, m2 and velocities v1 and v2 to one object with mass m = m1 + m2 and unknown velocity to be resolved
 # Assert 1-dimentional environment.

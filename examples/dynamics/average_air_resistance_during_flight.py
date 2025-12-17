@@ -8,13 +8,10 @@ Find the average force of the air's resistance exerted on the body during its fl
 from sympy import solve, integrate, Idx, Eq, pi
 from symplyphysics import (clone_as_function, clone_as_symbol, quantities, global_index,
     print_expression, units, convert_to_si)
-from symplyphysics.definitions import (
-    net_force_is_sum_of_individual_forces as superposition_law,
-    acceleration_is_speed_derivative as acceleration_def,
-)
-from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as newtons_second_law
-from symplyphysics.laws.geometry import (
-    scalar_projection_is_vector_length_times_cosine_of_angle as projection_law,)
+from symplyphysics.reorganized.classical_mechanics.dynamics.force import net_force_is_sum_of_individual_forces as superposition_law
+from symplyphysics.reorganized.classical_mechanics.kinematics.translational_motion import acceleration_is_speed_derivative as acceleration_def
+from symplyphysics.reorganized.classical_mechanics.dynamics.force import acceleration_is_force_over_mass as newtons_second_law
+from symplyphysics.reorganized.mathematics.geometry import scalar_projection_is_vector_length_times_cosine_of_angle as projection_law
 from symplyphysics.core.solvers import apply
 
 # NOTE Since the body is moving upwards, both the force of gravity and the force of air resistance

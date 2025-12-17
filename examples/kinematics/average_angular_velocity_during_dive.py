@@ -2,8 +2,8 @@
 
 from sympy import solve, symbols, pi
 from symplyphysics import units, print_expression
-from symplyphysics.laws.kinematics import average_angular_speed_is_angular_distance_over_time as angular_velocity_law
-from symplyphysics.laws.kinematics import position_via_constant_acceleration_and_time as const_acceleration_law
+from symplyphysics.reorganized.classical_mechanics.kinematics.rotational_motion import average_angular_speed_is_angular_distance_over_time as angular_velocity_law
+from symplyphysics.reorganized.classical_mechanics.kinematics.translational_motion import position_via_constant_acceleration_and_time as const_acceleration_law
 
 # Description
 ## A diver makes 2.5 revolutions on the way from a 10-m-high platform to the water. Assuming zero initial

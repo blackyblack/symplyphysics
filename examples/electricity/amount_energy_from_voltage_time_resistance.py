@@ -3,12 +3,9 @@
 from sympy import solve, Eq, dsolve
 from symplyphysics import (units, convert_to, Quantity, prefixes)
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
-from symplyphysics.definitions import (
-    density_from_mass_volume as density_def,
-    power_is_energy_derivative as power_def,
-)
-from symplyphysics.laws.thermodynamics import (
-    heat_is_heat_capacity_times_temperature_change as thermal_energy_law,)
+from symplyphysics.reorganized.classical_mechanics.fundamentals import density_from_mass_volume as density_def
+from symplyphysics.reorganized.classical_mechanics.dynamics.energy import power_is_energy_derivative as power_def
+from symplyphysics.reorganized.thermodynamics.response_functions.heat_capacity import heat_is_heat_capacity_times_temperature_change as thermal_energy_law
 from symplyphysics.reorganized.quantity_relations import quantity_is_specific_quantity_times_mass as specific_qty_law
 
 # The household electric kettle heated 0.5 liters of water from 20 degree Celsius to boiling.

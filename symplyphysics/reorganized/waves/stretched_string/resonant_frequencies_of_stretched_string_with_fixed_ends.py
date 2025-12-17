@@ -15,7 +15,7 @@ the first harmonic, the mode corresponding to :math:`N = 2` is the second harmon
 from sympy import Eq, solve
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.definitions import temporal_frequency_from_period as frequency_law
+from symplyphysics.reorganized.oscillations.general import temporal_frequency_from_period as frequency_law
 from symplyphysics.reorganized.waves.wave_propagation import (
     wavelength_from_phase_speed_and_period as wavelength_law,
 )

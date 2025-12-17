@@ -3,8 +3,7 @@ from sympy import sqrt, symbols, Eq, solve, limit, oo
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, units
-from symplyphysics.laws.condensed_matter import (
-    concentration_of_intrinsic_charge_carriers as carriers_law,)
+from symplyphysics.reorganized.condensed_matter.semiconductors import concentration_of_intrinsic_charge_carriers as carriers_law
 
 reduced_concentration = symbols("reduced_concentration")
 

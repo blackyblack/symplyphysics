@@ -2,7 +2,7 @@
 
 from sympy import solve, Eq
 from symplyphysics import print_expression, symbols, clone_as_symbol
-from symplyphysics.laws.dynamics import potential_energy_from_mass_and_height as potential_energy
+from symplyphysics.reorganized.classical_mechanics.dynamics.gravity import potential_energy_from_mass_and_height as potential_energy
 
 # Under what condition will the potential energies of two different bodies be the same
 # if the mass of the first body is half the mass of the second body?

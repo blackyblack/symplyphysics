@@ -2,12 +2,9 @@
 
 from sympy import symbols, dsolve, solve
 from symplyphysics import Quantity, units, convert_to, print_expression
-from symplyphysics.definitions import (
-    angular_speed_is_angular_distance_derivative as angular_velocity_def,
-    period_from_angular_frequency as period_def,
-)
-from symplyphysics.laws.kinematics import (
-    position_via_constant_speed_and_time as distance_law,)
+from symplyphysics.reorganized.classical_mechanics.kinematics.rotational_motion import angular_speed_is_angular_distance_derivative as angular_velocity_def
+from symplyphysics.reorganized.oscillations.general import period_from_angular_frequency as period_def
+from symplyphysics.reorganized.classical_mechanics.kinematics.translational_motion import position_via_constant_speed_and_time as distance_law
 
 # Description
 ## A shooter and a target are positioned on a merry-go-round opposite to one another.

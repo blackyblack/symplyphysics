@@ -2,19 +2,14 @@
 
 from sympy import solve, Symbol, Eq
 from symplyphysics import Quantity, convert_to, units, print_expression
-from symplyphysics.definitions import (
-    mechanical_energy_is_kinetic_and_potential_energy as mechanical_energy_def,
-    momentum_is_mass_times_speed as momentum_def,
-)
-from symplyphysics.laws.conservation import (
-    initial_mechanical_energy_equals_final_mechanical_energy as energy_conservation_law,
-    initial_momentum_equals_final_momentum as momentum_conservation_law)
-from symplyphysics.laws.dynamics import (
-    braking_path_via_speed_and_friction_force as braking_path_law,
-    kinetic_energy_from_mass_and_speed as kinetic_energy_def,
-    potential_energy_from_mass_and_height as potential_energy_def,
-    friction_force_from_normal_force as friction_law,
-)
+from symplyphysics.reorganized.classical_mechanics.dynamics.energy import mechanical_energy_is_kinetic_and_potential_energy as mechanical_energy_def
+from symplyphysics.reorganized.classical_mechanics.dynamics.translational_motion import momentum_is_mass_times_speed as momentum_def
+from symplyphysics.reorganized.classical_mechanics.conservation_laws import initial_mechanical_energy_equals_final_mechanical_energy as energy_conservation_law
+from symplyphysics.reorganized.classical_mechanics.conservation_laws import initial_momentum_equals_final_momentum as momentum_conservation_law
+from symplyphysics.reorganized.classical_mechanics.dynamics.force import braking_path_via_speed_and_friction_force as braking_path_law
+from symplyphysics.reorganized.classical_mechanics.dynamics.translational_motion import kinetic_energy_from_mass_and_speed as kinetic_energy_def
+from symplyphysics.reorganized.classical_mechanics.dynamics.gravity import potential_energy_from_mass_and_height as potential_energy_def
+from symplyphysics.reorganized.classical_mechanics.dynamics.force import friction_force_from_normal_force as friction_law
 
 # Description
 ## Block 1 of mass m1 slides from rest along a frictionless ramp from height h = 2.50 m and then

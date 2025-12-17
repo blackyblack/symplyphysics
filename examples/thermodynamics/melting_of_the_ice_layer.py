@@ -3,13 +3,11 @@
 from sympy import Idx, solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to, global_index
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
-from symplyphysics.laws.thermodynamics import (
-    heat_is_heat_capacity_times_temperature_change as thermal_energy_law,
-    latent_heat_of_fusion_via_mass as energy_melting_law,
-    total_energy_transfer_is_zero_in_isolated_system as thermodinamics_law_1,
-)
+from symplyphysics.reorganized.thermodynamics.response_functions.heat_capacity import heat_is_heat_capacity_times_temperature_change as thermal_energy_law
+from symplyphysics.reorganized.thermodynamics.phase_transitions.latent_heat import latent_heat_of_fusion_via_mass as energy_melting_law
+from symplyphysics.reorganized.thermodynamics.conservation_laws import total_energy_transfer_is_zero_in_isolated_system as thermodinamics_law_1
 from symplyphysics.reorganized.quantity_relations import quantity_is_specific_quantity_times_mass as specific_qty_law
-from symplyphysics.definitions import density_from_mass_volume as density_law
+from symplyphysics.reorganized.classical_mechanics.fundamentals import density_from_mass_volume as density_law
 
 # The 4.2 cm thick ice layer has a temperature of 0 °C.
 # What is the minimum thickness of the water layer at a temperature of 306 K

@@ -3,7 +3,7 @@
 from sympy import symbols, plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, quantities, convert_to_si
-from symplyphysics.laws.electricity import electric_field_due_to_point_charge as electric_field
+from symplyphysics.reorganized.electromagnetism.electrostatics.point_charge import electric_field_due_to_point_charge as electric_field
 
 # Description
 ## Reference to example (net_field_is_zero_from_two_point_charges.py)[../../../examples/electricity/net_field_is_zero_from_two_point_charges.py]

@@ -21,10 +21,8 @@ from sympy import symbols as sym_symbols, solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import units, convert_to_si
-from symplyphysics.laws.electricity.circuits import (
-    voltage_across_charging_capacitor_in_serial_resistor_capacitor_circuit as rc_node,
-    time_constant_of_resistor_capacitor_circuit as time_constant_law,
-)
+from symplyphysics.reorganized.circuits.transient_analysis.serial_resistor_capacitor_circuit import voltage_across_charging_capacitor_in_serial_resistor_capacitor_circuit as rc_node
+from symplyphysics.reorganized.circuits.transient_analysis.serial_resistor_capacitor_circuit import time_constant_of_resistor_capacitor_circuit as time_constant_law
 
 time = sym_symbols("time")
 

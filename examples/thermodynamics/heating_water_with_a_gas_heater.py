@@ -3,17 +3,15 @@
 from sympy import dsolve, solve, Symbol, Eq, pi
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
-from symplyphysics.laws.electricity import power_factor_is_real_power_over_apparent_power as efficiency_law
-from symplyphysics.laws.thermodynamics import (
-    heat_is_heat_capacity_times_temperature_change as thermal_energy_law,
-    heat_of_combustion_via_mass as combustion_energy_law,
-)
+from symplyphysics.reorganized.circuits.alternating_current.general import power_factor_is_real_power_over_apparent_power as efficiency_law
+from symplyphysics.reorganized.thermodynamics.response_functions.heat_capacity import heat_is_heat_capacity_times_temperature_change as thermal_energy_law
+from symplyphysics.reorganized.thermodynamics.phase_transitions.latent_heat import heat_of_combustion_via_mass as combustion_energy_law
 from symplyphysics.reorganized.quantity_relations import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.reorganized.quantity_relations import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
-from symplyphysics.definitions import density_from_mass_volume as density_law
-from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as velocity_law
-from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as clapeyron_law
-from symplyphysics.definitions import mass_flow_rate_is_time_derivative_of_mass as mass_rate_law
+from symplyphysics.reorganized.classical_mechanics.fundamentals import density_from_mass_volume as density_law
+from symplyphysics.reorganized.classical_mechanics.kinematics.translational_motion import position_via_constant_speed_and_time as velocity_law
+from symplyphysics.reorganized.thermodynamics.equations_of_state.ideal_gas import ideal_gas_equation as clapeyron_law
+from symplyphysics.reorganized.classical_mechanics.fundamentals import mass_flow_rate_is_time_derivative_of_mass as mass_rate_law
 
 # Example from https://easyfizika.ru/zadachi/termodinamika/gazovaya-nagrevatelnaya-kolonka-potreblyaet-1-8-m3-metana-ch4-v-chas-najti-temperaturu/
 # The gas heater consumes 1.8 m^3 of methane (CH4) per hour. Find

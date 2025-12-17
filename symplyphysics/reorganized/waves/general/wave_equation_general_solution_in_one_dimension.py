@@ -18,10 +18,8 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.quantity_decorator import validate_output_same
 from symplyphysics.core.symbols.quantities import scale_factor
 
-from symplyphysics.definitions import wave_equation_in_one_dimension as wave_eqn
-from symplyphysics.laws.waves import (
-    phase_of_traveling_wave as phase_law,
-)
+from symplyphysics.reorganized.waves.general import wave_equation_in_one_dimension as wave_eqn
+from symplyphysics.reorganized.waves.wave_propagation import phase_of_traveling_wave as phase_law
 from symplyphysics.reorganized.waves.wave_propagation import phase_velocity_from_angular_frequency_and_wavenumber as phase_velocity_law
 
 displacement = Symbol("u", any_dimension)
