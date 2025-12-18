@@ -2,7 +2,7 @@
 Reduced van der Waals pressure
 ==============================
 
-See :ref:`vdw_reduced_units_def`.
+See :ref:`Reduced units <vdw_reduced_units_def>`.
 
 **Links:**
 
