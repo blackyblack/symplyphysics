@@ -11,9 +11,9 @@ Contents:
   :maxdepth: 5
 
   formulas
+  laws
   symbols
   quantities
-  reorganized
 
 Indices and tables
 ==================
