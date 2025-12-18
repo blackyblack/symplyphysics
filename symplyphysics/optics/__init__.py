@@ -1,6 +1,6 @@
 """
-**Optics**
-==========
+Optics
+======
 
 *Optics* is the branch of physics which is concerned with light and its behavioural
 pattern and properties. Optics is a branch of physics that deals with the determination

@@ -1,5 +1,5 @@
 """
-**Special Relativity**
-======================
+Special Relativity
+==================
 
 """

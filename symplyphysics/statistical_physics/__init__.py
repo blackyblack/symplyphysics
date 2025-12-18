@@ -1,5 +1,5 @@
 """
-**Statistical Physics**
-=======================
+Statistical Physics
+===================
 
 """

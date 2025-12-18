@@ -1,5 +1,5 @@
 """
-**Classical Mechanics**
-=======================
+Classical Mechanics
+===================
 
 """

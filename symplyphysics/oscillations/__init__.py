@@ -1,5 +1,5 @@
 """
-**Oscillations**
-================
+Oscillations
+============
 
 """

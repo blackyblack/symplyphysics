@@ -1,5 +1,5 @@
 """
-**Electromagnetic waves**
-=========================
+Electromagnetic waves
+=====================
 
 """
