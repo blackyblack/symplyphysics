@@ -2,11 +2,11 @@
 
 from sympy import Symbol, Eq, reduce_inequalities, false
 from symplyphysics import print_expression
-from symplyphysics.laws.special_relativity.fundamentals import lorentz_factor_via_speed as lorentz_factor_def
-from symplyphysics.laws.quantum_physics.photons import (
+from symplyphysics.special_relativity.fundamentals import lorentz_factor_via_speed as lorentz_factor_def
+from symplyphysics.quantum_physics.photons import (
     photon_energy_is_proportional_to_linear_frequency as energy_law,)
-from symplyphysics.laws.special_relativity.relativistic_dynamics.energy_and_momentum import relativistic_energy_via_relativistic_mass as energy_is_mass
-from symplyphysics.laws.special_relativity.relativistic_dynamics.obsolete_concepts import relativistic_mass_via_rest_mass_and_speed as moving_mass_law
+from symplyphysics.special_relativity.relativistic_dynamics.energy_and_momentum import relativistic_energy_via_relativistic_mass as energy_is_mass
+from symplyphysics.special_relativity.relativistic_dynamics.obsolete_concepts import relativistic_mass_via_rest_mass_and_speed as moving_mass_law
 
 # Description
 ## Can free electrons radiate (and absorb) light freely, without being accelerated?

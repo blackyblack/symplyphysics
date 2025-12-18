@@ -10,11 +10,11 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, global_index
 from symplyphysics.core.symbols.celsius import to_kelvin, Celsius
-from symplyphysics.laws.thermodynamics.response_functions.heat_capacity import heat_is_heat_capacity_times_temperature_change as thermal_energy_law
-from symplyphysics.laws.thermodynamics.phase_transitions.latent_heat import latent_heat_of_fusion_via_mass as energy_melting_law
-from symplyphysics.laws.classical_mechanics.fundamentals import density_from_mass_volume as density_law
-from symplyphysics.laws.quantity_relations import quantity_is_specific_quantity_times_mass as specific_qty_law
-from symplyphysics.laws.thermodynamics.conservation_laws import total_energy_transfer_is_zero_in_isolated_system as thermodinamics_law_1
+from symplyphysics.thermodynamics.response_functions.heat_capacity import heat_is_heat_capacity_times_temperature_change as thermal_energy_law
+from symplyphysics.thermodynamics.phase_transitions.latent_heat import latent_heat_of_fusion_via_mass as energy_melting_law
+from symplyphysics.classical_mechanics.fundamentals import density_from_mass_volume as density_law
+from symplyphysics.quantity_relations import quantity_is_specific_quantity_times_mass as specific_qty_law
+from symplyphysics.thermodynamics.conservation_laws import total_energy_transfer_is_zero_in_isolated_system as thermodinamics_law_1
 
 temperature_of_hot_water_values = [5, 20, 35, 50, 65, 80]
 

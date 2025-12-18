@@ -3,12 +3,12 @@
 from sympy import Idx, solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to, global_index
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
-from symplyphysics.laws.chemistry.conservation_laws import mixture_mass_is_sum_of_component_masses as sum_masses_law
-from symplyphysics.laws.thermodynamics.response_functions.heat_capacity import heat_is_heat_capacity_times_temperature_change as thermal_energy_law
-from symplyphysics.laws.thermodynamics.phase_transitions.latent_heat import latent_heat_of_fusion_via_mass as energy_melting_law
-from symplyphysics.laws.thermodynamics.conservation_laws import total_energy_transfer_is_zero_in_isolated_system as thermodinamics_law_1
-from symplyphysics.laws.quantity_relations import quantity_is_specific_quantity_times_mass as specific_qty_law
-from symplyphysics.laws.classical_mechanics.fundamentals import density_from_mass_volume as density_law
+from symplyphysics.chemistry.conservation_laws import mixture_mass_is_sum_of_component_masses as sum_masses_law
+from symplyphysics.thermodynamics.response_functions.heat_capacity import heat_is_heat_capacity_times_temperature_change as thermal_energy_law
+from symplyphysics.thermodynamics.phase_transitions.latent_heat import latent_heat_of_fusion_via_mass as energy_melting_law
+from symplyphysics.thermodynamics.conservation_laws import total_energy_transfer_is_zero_in_isolated_system as thermodinamics_law_1
+from symplyphysics.quantity_relations import quantity_is_specific_quantity_times_mass as specific_qty_law
+from symplyphysics.classical_mechanics.fundamentals import density_from_mass_volume as density_law
 
 # Example from https://easyfizika.ru/zadachi/termodinamika/vannu-emkostyu-100-litrov-neobhodimo-zapolnit-vodoj-imeyushhej-temperaturu-30-c/
 # A bath with a capacity of 100 liters must be filled

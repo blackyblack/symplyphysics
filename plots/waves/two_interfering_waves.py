@@ -5,7 +5,7 @@ from sympy import pi
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression
-from symplyphysics.laws.waves.wave_interference import displacement_in_interfering_waves as interference_law
+from symplyphysics.waves.wave_interference import displacement_in_interfering_waves as interference_law
 
 # Description
 ## Plot the interference of two waves of unit amplitude and angular wavenumber at zero time

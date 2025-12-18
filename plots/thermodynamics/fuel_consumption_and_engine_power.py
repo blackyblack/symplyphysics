@@ -11,11 +11,11 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, units, Quantity
 from symplyphysics.core.convert import evaluate_expression
-from symplyphysics.laws.classical_mechanics.fundamentals import density_from_mass_volume as density_law
-from symplyphysics.laws.classical_mechanics.kinematics.translational_motion import position_via_constant_speed_and_time as distance_law
-from symplyphysics.laws.circuits.alternating_current.general import power_factor_is_real_power_over_apparent_power as efficiency_law
-from symplyphysics.laws.classical_mechanics.fundamentals import energy_via_constant_power_and_time as energy_law
-from symplyphysics.laws.thermodynamics.phase_transitions.latent_heat import heat_of_combustion_via_mass as combustion_energy_law
+from symplyphysics.classical_mechanics.fundamentals import density_from_mass_volume as density_law
+from symplyphysics.classical_mechanics.kinematics.translational_motion import position_via_constant_speed_and_time as distance_law
+from symplyphysics.circuits.alternating_current.general import power_factor_is_real_power_over_apparent_power as efficiency_law
+from symplyphysics.classical_mechanics.fundamentals import energy_via_constant_power_and_time as energy_law
+from symplyphysics.thermodynamics.phase_transitions.latent_heat import heat_of_combustion_via_mass as combustion_energy_law
 
 efficiency_factor_values = [0.15, 0.3, 0.45, 0.6, 0.75]
 

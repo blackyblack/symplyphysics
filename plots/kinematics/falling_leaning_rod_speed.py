@@ -9,7 +9,7 @@ floor with constant speed :math:`v` in the positive direction of the :math:`x`-a
 from sympy import Eq, solve, ask, Q
 from sympy.plotting import plot
 from symplyphysics import symbols, clone_as_symbol, print_expression
-from symplyphysics.laws.classical_mechanics.kinematics.translational_motion import position_via_constant_speed_and_time as position_law
+from symplyphysics.classical_mechanics.kinematics.translational_motion import position_via_constant_speed_and_time as position_law
 
 a_initial_position = clone_as_symbol(symbols.position, subscript="0")
 a_speed = clone_as_symbol(symbols.speed, positive=True)

@@ -5,7 +5,7 @@ from pytest import approx
 from sympy import symbols, solve, pi, sin
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend, Plot
-from symplyphysics.laws.optics.geometrical_optics.refraction import refraction_angle_from_environments as refraction_law
+from symplyphysics.optics.geometrical_optics.refraction import refraction_angle_from_environments as refraction_law
 
 # Description
 ## Plot the dependency of refraction angle on incidence angle for different environments

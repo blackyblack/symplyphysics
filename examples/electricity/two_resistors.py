@@ -2,11 +2,11 @@
 
 from sympy import Idx, solve, symbols
 from symplyphysics import units, global_index
-from symplyphysics.laws.circuits.direct_current.general import current_is_voltage_over_resistance as ohm_law
-from symplyphysics.laws.circuits.alternating_current.admittance import admittance_in_parallel_connection as total_admittance_law
-from symplyphysics.laws.circuits.alternating_current.admittance import admittance_is_conductance_and_susceptance as admittance_law
-from symplyphysics.laws.circuits.direct_current.resistance import resistance_in_serial_connection as serial_resistance
-from symplyphysics.laws.circuits.direct_current.conductance import electrical_conductance_is_inverse_resistance as conductivity_law
+from symplyphysics.circuits.direct_current.general import current_is_voltage_over_resistance as ohm_law
+from symplyphysics.circuits.alternating_current.admittance import admittance_in_parallel_connection as total_admittance_law
+from symplyphysics.circuits.alternating_current.admittance import admittance_is_conductance_and_susceptance as admittance_law
+from symplyphysics.circuits.direct_current.resistance import resistance_in_serial_connection as serial_resistance
+from symplyphysics.circuits.direct_current.conductance import electrical_conductance_is_inverse_resistance as conductivity_law
 
 # Two resistors are connected across a 12 V battery with internal resistance of 1 Ohm.
 # When they are connected in parallel, the current in the circuit is 4 A.

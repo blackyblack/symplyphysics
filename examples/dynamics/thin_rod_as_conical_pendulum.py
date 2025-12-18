@@ -2,14 +2,14 @@
 
 from sympy import symbols, pi, solve, refine, Q, cos, S
 from symplyphysics import print_expression, quantities
-from symplyphysics.laws.classical_mechanics.statics.equilibrium import total_torque_is_zero as equilibrium_law
-from symplyphysics.laws.oscillations.general import period_from_angular_frequency as period_def
-from symplyphysics.laws.classical_mechanics.dynamics.force import acceleration_from_force_vector as force_law
-from symplyphysics.laws.classical_mechanics.dynamics.rotational_motion import torque_is_position_vector_cross_force as torque_def
-from symplyphysics.laws.classical_mechanics.kinematics.rotational_motion import centripetal_acceleration_via_vector_rejection as centripetal_law
-from symplyphysics.laws.classical_mechanics.kinematics.relative_motion import centrifugal_acceleration_via_centripetal_acceleration as centrifugal_law
-from symplyphysics.laws.mathematics.geometry import scalar_projection_is_vector_length_times_cosine_of_angle as cosine_law
-from symplyphysics.laws.quantity_relations import (
+from symplyphysics.classical_mechanics.statics.equilibrium import total_torque_is_zero as equilibrium_law
+from symplyphysics.oscillations.general import period_from_angular_frequency as period_def
+from symplyphysics.classical_mechanics.dynamics.force import acceleration_from_force_vector as force_law
+from symplyphysics.classical_mechanics.dynamics.rotational_motion import torque_is_position_vector_cross_force as torque_def
+from symplyphysics.classical_mechanics.kinematics.rotational_motion import centripetal_acceleration_via_vector_rejection as centripetal_law
+from symplyphysics.classical_mechanics.kinematics.relative_motion import centrifugal_acceleration_via_centripetal_acceleration as centrifugal_law
+from symplyphysics.mathematics.geometry import scalar_projection_is_vector_length_times_cosine_of_angle as cosine_law
+from symplyphysics.quantity_relations import (
     quantity_is_linear_density_times_length as linear_density_law,)
 
 from symplyphysics.core.solvers import solve_for_vector

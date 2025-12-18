@@ -3,12 +3,12 @@
 from sympy import solve, Symbol, Eq, dsolve
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
-from symplyphysics.laws.circuits.alternating_current.general import power_factor_is_real_power_over_apparent_power as efficiency_law
-from symplyphysics.laws.thermodynamics.response_functions.heat_capacity import heat_is_heat_capacity_times_temperature_change as heating_law
-from symplyphysics.laws.thermodynamics.phase_transitions.latent_heat import heat_of_combustion_via_mass as combustion_energy_law
-from symplyphysics.laws.thermodynamics.phase_transitions.latent_heat import heat_of_vaporization_via_mass as energy_to_vapor_law
-from symplyphysics.laws.quantity_relations import quantity_is_specific_quantity_times_mass as specific_qty_law
-from symplyphysics.laws.classical_mechanics.fundamentals import mass_flow_rate_is_time_derivative_of_mass as mass_rate_law
+from symplyphysics.circuits.alternating_current.general import power_factor_is_real_power_over_apparent_power as efficiency_law
+from symplyphysics.thermodynamics.response_functions.heat_capacity import heat_is_heat_capacity_times_temperature_change as heating_law
+from symplyphysics.thermodynamics.phase_transitions.latent_heat import heat_of_combustion_via_mass as combustion_energy_law
+from symplyphysics.thermodynamics.phase_transitions.latent_heat import heat_of_vaporization_via_mass as energy_to_vapor_law
+from symplyphysics.quantity_relations import quantity_is_specific_quantity_times_mass as specific_qty_law
+from symplyphysics.classical_mechanics.fundamentals import mass_flow_rate_is_time_derivative_of_mass as mass_rate_law
 
 # Example from https://easyfizika.ru/zadachi/termodinamika/na-zazhzhennuyu-spirtovku-s-kpd-60-postavili-sosud-s-500-g-vody-pri-20-c-cherez-kakoe/
 # A vessel with 500 g of water at 20 ° C was placed on a lighted alcohol lamp

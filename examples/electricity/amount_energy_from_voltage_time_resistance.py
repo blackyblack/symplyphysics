@@ -3,10 +3,10 @@
 from sympy import solve, Eq, dsolve
 from symplyphysics import (units, convert_to, Quantity, prefixes)
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
-from symplyphysics.laws.classical_mechanics.fundamentals import density_from_mass_volume as density_def
-from symplyphysics.laws.classical_mechanics.dynamics.energy import power_is_energy_derivative as power_def
-from symplyphysics.laws.thermodynamics.response_functions.heat_capacity import heat_is_heat_capacity_times_temperature_change as thermal_energy_law
-from symplyphysics.laws.quantity_relations import quantity_is_specific_quantity_times_mass as specific_qty_law
+from symplyphysics.classical_mechanics.fundamentals import density_from_mass_volume as density_def
+from symplyphysics.classical_mechanics.dynamics.energy import power_is_energy_derivative as power_def
+from symplyphysics.thermodynamics.response_functions.heat_capacity import heat_is_heat_capacity_times_temperature_change as thermal_energy_law
+from symplyphysics.quantity_relations import quantity_is_specific_quantity_times_mass as specific_qty_law
 
 # The household electric kettle heated 0.5 liters of water from 20 degree Celsius to boiling.
 # The power of the kettle is 1500 watts. How long did the heating process take?

@@ -11,9 +11,27 @@ Contents:
   :maxdepth: 5
 
   formulas
-  laws
   symbols
   quantities
+  mathematics
+  classical_mechanics
+  oscillations
+  waves
+  continuum_mechanics
+  special_relativity
+  general_relativity
+  electromagnetism
+  circuits
+  electromagnetic_waves
+  optics
+  astronomy
+  nuclear_physics
+  chemistry
+  quantity_relations
+  quantum_physics
+  condensed_matter
+  thermodynamics
+  statistical_physics
 
 Indices and tables
 ==================

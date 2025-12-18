@@ -2,7 +2,7 @@
 
 from sympy import solve
 from symplyphysics import (units, convert_to, Quantity, prefixes)
-from symplyphysics.laws.waves.doppler_effect import frequency_shift_from_speed_in_collinear_motion as doppler_law
+from symplyphysics.waves.doppler_effect import frequency_shift_from_speed_in_collinear_motion as doppler_law
 
 # This example show usefulness of Doppler law.
 ## Doppler effect is widely used in systems like radars. This effect is applicable not only to waves emitted by source, but also to waves reflected by it.

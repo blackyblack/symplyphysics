@@ -7,8 +7,8 @@ from symplyphysics import (
     convert_to,
     units,
 )
-from symplyphysics.laws.classical_mechanics.kinematics.general_motion import speed_via_angular_speed_and_radius as velocity_law
-from symplyphysics.laws.oscillations.general import period_from_angular_frequency as period_law
+from symplyphysics.classical_mechanics.kinematics.general_motion import speed_via_angular_speed_and_radius as velocity_law
+from symplyphysics.oscillations.general import period_from_angular_frequency as period_law
 
 # Description
 ## The Sun is 2.3*10^4 ly (light-years) away from the center of the Milky Way galaxy. For this example

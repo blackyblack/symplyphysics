@@ -8,9 +8,9 @@ from sympy import solve, Symbol, Idx, Eq, dsolve, S, sqrt
 from sympy.plotting import plot
 from symplyphysics import quantities, global_index, print_expression
 from symplyphysics.core.convert import evaluate_expression
-from symplyphysics.laws.classical_mechanics.kinematics.translational_motion import acceleration_is_speed_derivative as acceleration_def
-from symplyphysics.laws.classical_mechanics.dynamics.force import net_force_is_sum_of_individual_forces as force_superposition_law
-from symplyphysics.laws.classical_mechanics.dynamics.force import acceleration_is_force_over_mass as newtons_second_law
+from symplyphysics.classical_mechanics.kinematics.translational_motion import acceleration_is_speed_derivative as acceleration_def
+from symplyphysics.classical_mechanics.dynamics.force import net_force_is_sum_of_individual_forces as force_superposition_law
+from symplyphysics.classical_mechanics.dynamics.force import acceleration_is_force_over_mass as newtons_second_law
 
 mass = newtons_second_law.mass
 time = acceleration_def.time

@@ -2,9 +2,9 @@
 
 from sympy import Idx, solve, simplify
 from symplyphysics import (print_expression, symbols, clone_as_symbol, global_index)
-from symplyphysics.laws.circuits.components.inductors import coil_impedance_via_inductance_and_frequency as coil_impedance_law
-from symplyphysics.laws.circuits.alternating_current.admittance import admittance_is_inverse_impedance as admittance_def
-from symplyphysics.laws.circuits.alternating_current.admittance import admittance_in_parallel_connection as parallel_admittance_law
+from symplyphysics.circuits.components.inductors import coil_impedance_via_inductance_and_frequency as coil_impedance_law
+from symplyphysics.circuits.alternating_current.admittance import admittance_is_inverse_impedance as admittance_def
+from symplyphysics.circuits.alternating_current.admittance import admittance_in_parallel_connection as parallel_admittance_law
 
 # This example shows how resulting inductivity of 2 parallel coils might be calculated from inductivities of single coils.
 

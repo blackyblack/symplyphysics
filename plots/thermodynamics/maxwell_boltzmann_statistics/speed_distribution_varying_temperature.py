@@ -7,7 +7,7 @@ temperature.
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, convert_to, Quantity, units, quantities
-from symplyphysics.laws.statistical_physics.classical_statistics.maxwell_boltzmann import maxwell_boltzmann_speed_distribution as speed_distribution
+from symplyphysics.statistical_physics.classical_statistics.maxwell_boltzmann import maxwell_boltzmann_speed_distribution as speed_distribution
 
 argon_mass_ = convert_to(Quantity(39.948 * units.amu), units.kilogram)
 temperatures_ = [100, 200, 300, 400, 500]  # K

@@ -1,0 +1,133 @@
+"""
+Energy levels of harmonic oscillator
+====================================
+
+As opposed to the classical harmonic oscillator, the energy levels of a quantum harmonic oscillator
+are quantized, meaning that its energy take a value out of a discrete range. These energy levels
+are equidistant, i.e. the difference between successive energy levels is the same for all levels.
+
+**Notation:**
+
+#. :quantity_notation:`hbar`.
+
+**Notes**
+
+#. This means that the energy of a quantum oscillator cannot be zero and the lowest it can be
+   is the zero-point energy :math:`E_0 = \\hbar \\omega / 2`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Quantum_harmonic_oscillator#Hamiltonian_and_energy_eigenstates>`__.
+"""
+
+from sympy import Eq, Rational, solve, symbols as sym_symbols, sqrt
+from sympy.functions.special.polynomials import hermite
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+    quantities,
+)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.quantum_physics.quantum_harmonic_oscillator import quantum_harmonic_oscillator_equation as _equation
+from symplyphysics.quantum_physics.quantum_harmonic_oscillator import quantum_oscillator_wave_eigenfunctions as _eigenfunction_law
+
+energy_level = clone_as_symbol(symbols.energy, subscript="n")
+"""
+Energy of the level corresponding to the :attr:`~mode_number`.
+"""
+
+mode_number = symbols.nonnegative_number
+"""
+Quantum number of oscillator, which is any non-negative integer (:math:`0, 1, 2, \\dots`).
+See :symbols:`nonnegative_number`.
+"""
+
+angular_frequency = symbols.angular_frequency
+"""
+:symbols:`angular_frequency` of the oscillator.
+"""
+
+law = Eq(
+    energy_level,
+    (mode_number + Rational(1, 2)) * quantities.hbar * angular_frequency,
+)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
+
+# Derive from Schrödinger equation and wave eigenfunction expressions
+
+_position = _equation.position
+_mass = _equation.particle_mass
+
+_schrodinger_eqn = _equation.law.subs({
+    _equation.angular_frequency: angular_frequency,
+    _equation.particle_energy: energy_level,
+})
+
+_eigenfunction_expr = _eigenfunction_law.law.rhs.subs({
+    _eigenfunction_law.mode_number: mode_number,
+    _eigenfunction_law.oscillator_mass: _mass,
+    _eigenfunction_law.angular_frequency: angular_frequency,
+    _eigenfunction_law.position: _position,
+})
+
+_schrodinger_eqn = _schrodinger_eqn.replace(
+    _equation.wave_function,
+    lambda position_: _eigenfunction_expr.subs(_position, position_),
+).doit()
+
+_reduced_position = sym_symbols("_reduced_position")
+
+_reduced_position_eqn = Eq(
+    _reduced_position,
+    _position * sqrt(angular_frequency * _mass / quantities.hbar),
+)
+
+_energy_expr = solve(
+    (_schrodinger_eqn, _reduced_position_eqn),
+    (energy_level, _position),
+    dict=True,
+)[0][energy_level]
+
+# See [this](https://en.wikipedia.org/wiki/Hermite_polynomials#Recurrence_relation)
+_hermite_recurrence_relation = Eq(
+    hermite(mode_number + 1, _reduced_position),
+    2 * _reduced_position * hermite(mode_number, _reduced_position) -
+    2 * mode_number * hermite(mode_number - 1, _reduced_position),
+)
+
+_energy_expr = solve(
+    (
+    Eq(energy_level, _energy_expr),
+    _hermite_recurrence_relation.subs(mode_number, mode_number - 1),
+    ),
+    (
+    energy_level,
+    hermite(mode_number - 2, _reduced_position),
+    ),
+    dict=True,
+)[0][energy_level].simplify()
+
+assert expr_equals(_energy_expr, law.rhs)
+
+
+@validate_input(
+    mode_number_=mode_number,
+    angular_frequency_=angular_frequency,
+)
+@validate_output(energy_level)
+def calculate_energy_level(
+    mode_number_: int,
+    angular_frequency_: Quantity,
+) -> Quantity:
+    result = law.rhs.subs({
+        mode_number: mode_number_,
+        angular_frequency: angular_frequency_,
+    })
+    return Quantity(result)

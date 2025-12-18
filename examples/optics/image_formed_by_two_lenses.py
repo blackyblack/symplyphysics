@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from sympy import symbols, solve
-from symplyphysics.laws.optics.geometrical_optics.lenses import lens_focus_from_object_and_image as thin_lens
+from symplyphysics.optics.geometrical_optics.lenses import lens_focus_from_object_and_image as thin_lens
 
 # Two thin converging lenses of focal lengths 10 cm and 20 cm are separated by 20 cm.
 # An object is placed 15 cm to the left of lens 1. What is the position of the final image?

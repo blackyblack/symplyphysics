@@ -9,8 +9,8 @@ falls on the slits. Find the distance between adjacent interference fringes.
 
 from sympy import solve, Symbol
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
-from symplyphysics.laws.optics.wave_optics.interference.double_slit import interference_from_two_slits as two_slits_law
-from symplyphysics.laws.optics.wave_optics.interference.minmax import interference_maximum as interference_maximum_law
+from symplyphysics.optics.wave_optics.interference.double_slit import interference_from_two_slits as two_slits_law
+from symplyphysics.optics.wave_optics.interference.minmax import interference_maximum as interference_maximum_law
 
 distance_to_picture = two_slits_law.distance_to_picture
 distance_between_slits = two_slits_law.distance_between_slits

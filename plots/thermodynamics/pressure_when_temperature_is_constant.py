@@ -7,7 +7,7 @@ from sympy import solve, symbols
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression
-from symplyphysics.laws.thermodynamics.equations_of_state.ideal_gas import pressure_and_volume_in_isothermal_process as boyles_law
+from symplyphysics.thermodynamics.equations_of_state.ideal_gas import pressure_and_volume_in_isothermal_process as boyles_law
 
 print(f"Formula is:\n{print_expression(boyles_law.law)}")
 

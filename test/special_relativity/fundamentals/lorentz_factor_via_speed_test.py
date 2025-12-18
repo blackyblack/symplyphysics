@@ -1,0 +1,33 @@
+from collections import namedtuple
+from pytest import fixture, raises
+from symplyphysics import (
+    assert_equal,
+    errors,
+    units,
+    Quantity,
+)
+from symplyphysics.special_relativity.fundamentals import lorentz_factor_via_speed
+
+# Description
+## The speed of an object is 2e5 km/s. Its Lorentz factor is 1.34
+
+Args = namedtuple("Args", "v")
+
+
+@fixture(name="test_args")
+def test_args_fixture() -> Args:
+    v = Quantity(2e5 * units.kilometer / units.second)
+    return Args(v=v)
+
+
+def test_law(test_args: Args) -> None:
+    result = lorentz_factor_via_speed.calculate_lorentz_factor(test_args.v)
+    assert_equal(result, 1.34, relative_tolerance=2e-3)
+
+
+def test_bad_velocity() -> None:
+    vb = Quantity(1 * units.coulomb)
+    with raises(errors.UnitsError):
+        lorentz_factor_via_speed.calculate_lorentz_factor(vb)
+    with raises(TypeError):
+        lorentz_factor_via_speed.calculate_lorentz_factor(100)

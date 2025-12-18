@@ -2,8 +2,8 @@
 
 from sympy import Symbol, pi
 from symplyphysics import Quantity, convert_to, print_expression, units
-from symplyphysics.laws.classical_mechanics.dynamics.rotational_motion import kinetic_energy_from_rotational_inertia_and_angular_speed as rotational_energy_law
-from symplyphysics.laws.classical_mechanics.kinematics.rotational_inertia import rotational_inertia_of_solid_disk_about_central_axis as disk_formula
+from symplyphysics.classical_mechanics.dynamics.rotational_motion import kinetic_energy_from_rotational_inertia_and_angular_speed as rotational_energy_law
+from symplyphysics.classical_mechanics.kinematics.rotational_inertia import rotational_inertia_of_solid_disk_about_central_axis as disk_formula
 
 # Description
 ## An spin testing was conducted involving a solid steel rotor of mass M = 272 kg and
