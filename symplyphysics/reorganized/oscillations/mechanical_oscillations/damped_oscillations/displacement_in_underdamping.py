@@ -54,7 +54,7 @@ damped_angular_frequency = clone_as_symbol(
     display_latex="\\omega_\\text{d}",
 )
 """
-:doc:`Damped angular frequency <laws.kinematics.damped_oscillations.damped_angular_frequency>`
+:ref:`Damped angular frequency <Damped angular frequency via damping ratio>`
 of the oscillator. See :symbols:`angular_frequency`.
 """
 

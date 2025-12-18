@@ -40,7 +40,7 @@ isochoric_molar_heat_capacity = clone_as_symbol(
 
 adiabatic_index = symbols.adiabatic_index
 """
-:symbols:`adiabatic_index`, also known as :doc:`heat capacity ratio <definitions.heat_capacity_ratio>`, of the gas.
+:symbols:`adiabatic_index`, also known as :ref:`Heat capacity ratio` of the gas.
 """
 
 law = Eq(isochoric_molar_heat_capacity, quantities.molar_gas_constant / (adiabatic_index - 1))

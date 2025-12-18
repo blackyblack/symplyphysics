@@ -16,6 +16,7 @@ Contents:
   conditions
   symbols
   quantities
+  reorganized
 
 Indices and tables
 ==================

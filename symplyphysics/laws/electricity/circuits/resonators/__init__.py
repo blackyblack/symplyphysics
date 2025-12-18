@@ -1,6 +1,6 @@
 """
-**Resonators**
-=========================
+**Resonators** (Old)
+====================
 
 A *resonator* is an electronic component that can generate a resonant frequency.
 """

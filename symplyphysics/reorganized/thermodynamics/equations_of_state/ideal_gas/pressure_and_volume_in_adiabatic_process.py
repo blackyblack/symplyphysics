@@ -30,7 +30,7 @@ from symplyphysics.reorganized.thermodynamics.equations_of_state.ideal_gas impor
 
 adiabatic_index = symbols.adiabatic_index
 """
-:symbols:`adiabatic_index`, also known as :doc:`heat capacity ratio <definitions.heat_capacity_ratio>`, of the gas.
+:symbols:`adiabatic_index`, also known as :ref:`heat capacity ratio <Heat capacity ratio>`, of the gas.
 """
 
 # Some of the following parameters depend on each other. It is up to user which to choose as known.

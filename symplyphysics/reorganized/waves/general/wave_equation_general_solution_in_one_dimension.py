@@ -4,7 +4,7 @@ General solution to wave equation in one dimension
 
 Any function of a single variable can be a solution of the wave equation if it depends
 on the phase of the wave, i.e. the position and time variables only appear in its
-expression in the form of the :doc:`wave phase <laws.waves.phase_of_traveling_wave>`.
+expression in the form of the :ref:`wave phase <Phase of traveling wave>`.
 
 **Links:**
 

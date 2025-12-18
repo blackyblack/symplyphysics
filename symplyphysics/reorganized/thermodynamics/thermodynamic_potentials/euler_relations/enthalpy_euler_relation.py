@@ -23,7 +23,7 @@ from symplyphysics.reorganized.thermodynamics.thermodynamic_potentials.euler_rel
 
 enthalpy = symbols.enthalpy
 """
-:symbols:`enthalpy` of the system. Also see :doc:`laws.thermodynamics.enthalpy_is_internal_energy_plus_pressure_energy`.
+:symbols:`enthalpy` of the system. Also see :ref:`Enthalpy is internal energy plus pressure energy`.
 """
 
 temperature = symbols.temperature
@@ -33,13 +33,13 @@ temperature = symbols.temperature
 
 entropy = symbols.entropy
 """
-:symbols:`entropy` of the system. Also see :doc:`laws.thermodynamics.entropy_change_in_reversible_process`.
+:symbols:`entropy` of the system. Also see :ref:`Entropy change in reversible process`.
 """
 
 chemical_potential = symbols.chemical_potential
 """
 :symbols:`chemical_potential` of the system. Also see
-:doc:`laws.thermodynamics.chemical_potential_is_particle_count_derivative_of_internal_energy`.
+:ref:`Chemical potential is particle count derivative of internal energy`.
 """
 
 particle_count = symbols.particle_count

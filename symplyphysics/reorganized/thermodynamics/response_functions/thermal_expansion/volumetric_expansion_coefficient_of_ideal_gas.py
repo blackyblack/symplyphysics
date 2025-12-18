@@ -29,7 +29,7 @@ volumetric_expansion_coefficient = clone_as_symbol(symbols.thermal_expansion_coe
     subscript="V")
 """
 Volumetric :symbols:`thermal_expansion_coefficient` of the material. Also see
-:doc:`Volumetric expansion coefficient <definitions.volumetric_coefficient_of_thermal_expansion>`.
+:ref:`Volumetric expansion coefficient <Volumetric coefficient of thermal expansion>`.
 """
 
 temperature = symbols.temperature

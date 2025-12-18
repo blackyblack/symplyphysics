@@ -1,6 +1,6 @@
 """
-**Blackbody radiation**
-=======================
+**Blackbody radiation** (Old)
+=============================
 
 Blackbody radiation is the thermal electromagnetic radiation within, or surrounding,
 a body in thermodynamic equilibrium with its environment, emitted by a black body, which

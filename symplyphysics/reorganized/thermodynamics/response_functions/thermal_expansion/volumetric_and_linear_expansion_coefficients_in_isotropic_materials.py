@@ -31,13 +31,13 @@ volumetric_expansion_coefficient = clone_as_symbol(symbols.thermal_expansion_coe
     subscript="V")
 """
 Volumetric :symbols:`thermal_expansion_coefficient` of the material. Also see
-:doc:`Volumetric expansion coefficient <definitions.volumetric_coefficient_of_thermal_expansion>`.
+:ref:`Volumetric expansion coefficient <Volumetric coefficient of thermal expansion>`.
 """
 
 linear_expansion_coefficient = clone_as_symbol(symbols.thermal_expansion_coefficient, subscript="l")
 """
 Linear :symbols:`thermal_expansion_coefficient` of the material. Also see
-:doc:`Linear expansion coefficient <definitions.linear_coefficient_of_thermal_expansion>`.
+:ref:`Linear expansion coefficient <Linear coefficient of thermal expansion>`.
 """
 
 law = Eq(volumetric_expansion_coefficient, 3 * linear_expansion_coefficient)

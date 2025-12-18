@@ -12,7 +12,7 @@ From that one can derive the expression of the isochoric heat capacity of ideal 
 
 **Notes:**
 
-#. For applications, see :doc:`internal energy of ideal gas <laws.thermodynamics.internal_energy_of_ideal_gas_via_temperature>`.
+#. For applications, see :ref:`internal energy of ideal gas <Internal energy of ideal gas via temperature>`.
 #. :math:`f = 3` for monatomic molecules.
 #. :math:`f = 5` for diatomic molecules.
 #. :math:`f = 6` for non-linear polyatomic molecules.

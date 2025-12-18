@@ -1,5 +1,5 @@
 """
-Stellar Evolution
-=================
+**Stellar Evolution**
+=====================
 
 """

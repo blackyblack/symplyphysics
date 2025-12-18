@@ -1,5 +1,5 @@
 """
-Photons (Quantum Physics)
-=========================
+**Photons (Quantum Physics)**
+=============================
 
 """

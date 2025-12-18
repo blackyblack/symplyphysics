@@ -5,7 +5,7 @@ Centripetal acceleration via cross product
 *Centripetal acceleration* is the acceleration of a body in a rotating coordinate system which is
 directed towards the axis of rotation.
 
-Also see :doc:`laws.kinematics.vector.centrifugal_acceleration_via_centripetal_acceleration`.
+Also see :ref:`Centrifugal acceleration via centripetal acceleration`.
 
 **Notation:**
 

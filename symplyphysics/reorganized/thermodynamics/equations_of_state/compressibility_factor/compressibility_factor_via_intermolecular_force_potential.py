@@ -40,8 +40,8 @@ from symplyphysics.reorganized.condensed_matter.interaction_potentials import ha
 
 compressibility_factor = symbols.compressibility_factor
 """
-:symbols:`compressibility_factor` of the gas. Also see :doc:`Compressibility factor
-<definitions.compressibility_factor_is_deviation_from_ideal_gas>`.
+:symbols:`compressibility_factor` of the gas. Also see :ref:`Compressibility factor
+<Compressibility factor is deviation from ideal gas>`.
 """
 
 particle_count = clone_as_symbol(

@@ -3,7 +3,7 @@ Efflux speed via hydrostatic pressure and density
 =================================================
 
 The speed of a fluid flowing out from a small orifice can be expressed as a function
-of the fluid's :doc:`hydrostatic pressure <laws.hydro.hydrostatic_pressure_via_density_and_height>`
+of the fluid's :ref:`hydrostatic pressure <Hydrostatic pressure via density and height>`
 and density.
 
 **Conditions:**

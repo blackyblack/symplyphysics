@@ -7,7 +7,7 @@ to the heat capacity of the body times the change in the body's temperature.
 
 **Notes:**
 
-#. Usually intensive heat capacity is known, in that case refer to :doc:`laws.quantities` laws.
+#. Usually intensive heat capacity is known, in that case refer to :ref:`Physical constants` laws.
 
 **Condition:**
 

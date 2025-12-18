@@ -16,7 +16,7 @@ from symplyphysics import (Quantity, validate_input, validate_output, symbols)
 energy_density = symbols.energy_density
 """
 Volumetric :symbols:`energy_density` of the electric field, see
-:doc:`laws.quantities.quantity_is_volumetric_density_times_volume`.
+:ref:`Quantity is volumetric density times volume`.
 """
 
 absolute_permittivity = symbols.absolute_permittivity

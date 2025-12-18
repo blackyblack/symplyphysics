@@ -11,7 +11,7 @@ the Young modulus of the material and also depends on its Poisson ratio.
 
 #. The body is isotropic and uniform.
 #. The :ref:`Poisson ratio <poisson-ratio>` :math:`\nu < \frac{1}{2}`,
-   since :doc:`elastic energy density <laws.dynamics.deformation.elastic_energy_density_of_bulk_compression_via_pressure>`
+   since :ref:`elastic energy density <Elastic energy density of bulk compression via pressure>`
    cannot be negative.
 
 **Links:**

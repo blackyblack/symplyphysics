@@ -53,8 +53,8 @@ thermal_expansion_coefficient = clone_as_symbol(
     subscript="V",
 )
 """
-:symbols:`thermal_expansion_coefficient` of the substance. Also see :doc:`Thermal volumetric expansion
-coefficient <definitions.volumetric_coefficient_of_thermal_expansion>`.
+:symbols:`thermal_expansion_coefficient` of the substance. Also see :ref:`Volumetric coefficient
+of thermal expansion`.
 """
 
 isothermal_compressibility = clone_as_symbol(
@@ -62,8 +62,8 @@ isothermal_compressibility = clone_as_symbol(
     subscript="T",
 )
 """
-:symbols:`thermodynamic_compressibility` of the substance. Also see :doc:`Isothermal compressibility
-<definitions.thermodynamic_compressibility>`.
+:symbols:`thermodynamic_compressibility` of the substance. Also see :ref:`Isothermal compressibility
+<Thermodynamic compressibility>`.
 """
 
 law = Eq(

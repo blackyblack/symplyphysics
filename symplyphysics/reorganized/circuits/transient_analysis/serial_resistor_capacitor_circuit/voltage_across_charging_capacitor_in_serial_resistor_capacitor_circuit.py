@@ -51,7 +51,7 @@ time = symbols.time
 
 time_constant = symbols.electric_time_constant
 """
-:doc:`Time constant <laws.electricity.circuits.time_constant_of_resistor_capacitor_circuit>` of the circuit.
+:ref:`Time constant <Time constant of resistor-capacitor circuit>` of the circuit.
 See :symbols:`electric_time_constant`.
 """
 

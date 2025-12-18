@@ -39,7 +39,7 @@ from symplyphysics import (
 
 compressibility_factor = symbols.compressibility_factor
 """
-:symbols:`compressibility_factor`. Also see :doc:`definitions.compressibility_factor_is_deviation_from_ideal_gas`.
+:symbols:`compressibility_factor`. Also see :ref:`Compressibility factor is deviation from ideal gas`.
 """
 
 second_virial_coefficient = Symbol("C_2", units.volume / units.amount_of_substance, real=True)
@@ -58,7 +58,7 @@ molar_density = Symbol("rho_m",
     display_latex="\\rho_\\text{m}")
 """
 Molar density of the system, or :symbols:`amount_of_substance` per unit :symbols:`volume`.
-See :doc:`laws.quantities.quantity_is_volumetric_density_times_volume`.
+See :ref:`Quantity is volumetric density times volume`.
 """
 
 law = Eq(

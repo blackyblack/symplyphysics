@@ -2,7 +2,7 @@
 Frequency shift from speed and angle
 ====================================
 
-See :doc:`laws.waves.relativistic.longitudinal_frequency_shift_from_velocity`.
+See :ref:`Longitudinal frequency shift from speed`.
 
 **Notes:**
 

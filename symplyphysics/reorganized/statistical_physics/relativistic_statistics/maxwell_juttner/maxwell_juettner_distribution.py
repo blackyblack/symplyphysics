@@ -51,7 +51,7 @@ lorentz_factor = symbols.lorentz_factor
 
 reduced_temperature = Symbol("theta", dimensionless, display_latex="\\theta")
 """
-:doc:`Reduced temperature <laws.thermodynamics.relativistic.reduced_temperature_in_maxwell_juettner_statistics>` of the system.
+:ref:`Reduced temperature <Reduced temperature in Maxwell—Jüttner statistics>` of the system.
 """
 
 law = Eq(

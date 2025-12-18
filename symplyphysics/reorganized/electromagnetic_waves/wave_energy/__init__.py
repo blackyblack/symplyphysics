@@ -1,0 +1,5 @@
+"""
+**Wave Energy (Electromagnetic Waves)**
+=======================================
+
+"""

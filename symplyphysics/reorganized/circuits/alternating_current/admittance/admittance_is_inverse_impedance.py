@@ -4,7 +4,7 @@ Admittance is inverse impedance
 
 *Admittance* (sometimes called complex conductance) describes how easily alternating current flows through a network. It is defined as the reciprocal of impedance.
 
-Also see :doc:`Impedance law <definitions.impedance_is_resistance_and_reactance>`
+Also see :ref:`Impedance law <Impedance is resistance and reactance>`
 
 **Conditions:**
 

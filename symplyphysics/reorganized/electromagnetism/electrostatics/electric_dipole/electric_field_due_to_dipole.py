@@ -40,7 +40,7 @@ electric_field_strength = symbols.electric_field_strength
 
 electric_dipole_moment = symbols.electric_dipole_moment
 """
-See :doc:`laws.electricity.electric_dipole_moment_is_charge_times_distance` and
+See :ref:`Electric dipole moment is charge times distance` and
 :symbols:`electric_dipole_moment`.
 """
 

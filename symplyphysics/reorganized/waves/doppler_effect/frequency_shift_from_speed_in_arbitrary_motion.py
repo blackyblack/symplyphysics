@@ -5,7 +5,7 @@ Frequency shift from speed in arbitrary motion
 The *Doppler effect* or *Doppler shift* is the apparent change in frequency of a wave in
 relation to an observer moving relative to the wave source.
 
-Also see :doc:`laws.waves.frequency_shift_from_speed_in_collinear_motion`.
+Also see :ref:`Frequency shift from speed in collinear motion`.
 
 **Conditions:**
 

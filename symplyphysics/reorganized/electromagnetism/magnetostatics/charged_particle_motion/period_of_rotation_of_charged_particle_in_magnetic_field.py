@@ -2,8 +2,7 @@
 Period of rotation of charged particle in magnetic field
 ========================================================
 
-When a charged particle enters a magnetic field, it experiences an :doc:`electromagnetic
-force <laws.electricity.vector.lorentz_force_via_electromagnetic_field>` upon itself.
+When a charged particle enters a magnetic field, it experiences an :ref:`electromagnetic force <Lorentz force via electromagnetic field>` upon itself.
 In the absence of the electric field, the particle starts moving in a circular orbit. The
 period of the particle's rotation is determined by the mass and charge of the particle
 as well as by the magnetic field and it does not depend on the particle speed.

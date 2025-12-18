@@ -1,5 +1,5 @@
 """
-Standing Waves
-==============
+**Standing Waves**
+==================
 
 """

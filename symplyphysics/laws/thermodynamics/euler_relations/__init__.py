@@ -1,6 +1,6 @@
 """
-**Euler relations**
-===================
+**Euler relations** (Old)
+=========================
 
 *Euler relations* are thermodynamic equations relating thermodynamic potentials with parameters
 of the system such as pressure, volume, temperature, entropy, etc. They are also called *Euler

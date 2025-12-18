@@ -1,6 +1,6 @@
 """
-**Maxwell—Boltzmann statistics**
-================================
+**Maxwell—Boltzmann statistics** (Old)
+======================================
 
 In statistical mechanics, Maxwell—Boltzmann statistics describes the distribution of classical material
 particles over various energy states in thermal equilibrium. It is applicable when the temperature is

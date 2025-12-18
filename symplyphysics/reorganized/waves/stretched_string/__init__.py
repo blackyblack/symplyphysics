@@ -1,5 +1,5 @@
 """
-Stretched String (Waves)
-========================
+**Stretched String (Waves)**
+============================
 
 """

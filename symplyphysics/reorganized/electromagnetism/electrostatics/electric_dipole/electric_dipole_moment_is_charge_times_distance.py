@@ -4,7 +4,7 @@ Electric dipole moment is charge times distance
 
 Electric dipole moment is a measure of the separation of positive and negative
 electrical charges within a system, i.e. it is a measure of the system's overall
-polarity. Also see :doc:`vector counterpart <laws.electricity.vector.electric_dipole_moment_is_charge_times_displacement>`.
+polarity. Also see :ref:`vector counterpart <Electric dipole moment is charge times displacement>`.
 
 **Notes:**
 

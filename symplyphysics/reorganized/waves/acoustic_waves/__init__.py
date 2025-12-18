@@ -1,5 +1,5 @@
 """
-Acoustic Waves (Waves)
-======================
+**Acoustic Waves (Waves)**
+==========================
 
 """

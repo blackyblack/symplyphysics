@@ -4,7 +4,7 @@ Speed of sound in ideal gas
 
 Also known as the Laplace's formula of the speed of sound, it provides a correct expression
 for the speed of sound for ideal gases compared to the Newton's formula. See
-:doc:`laws.thermodynamics.isentropic_speed_of_sound_via_pressure_derivative`.
+:ref:`Isentropic speed of sound via pressure derivative`.
 
 **Notation:**
 

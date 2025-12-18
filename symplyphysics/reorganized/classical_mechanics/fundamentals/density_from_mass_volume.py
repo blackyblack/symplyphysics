@@ -2,8 +2,8 @@
 Density from mass and volume
 ============================
 
-Volumetric mass *density* is the mass of substance contained in a unit volume of a substance. See :doc:`laws.quantities.quantity_is_volumetric_density_times_volume`
-for a generalized version of this law.
+Volumetric mass *density* is the mass of substance contained in a unit volume of a substance. See
+:ref:`Quantity is volumetric density times volume` for a generalized version of this law.
 
 **Conditions:**
 
@@ -11,7 +11,7 @@ for a generalized version of this law.
 
 **Links:**
 
-#. `Wikipedia – Density <https://en.wikipedia.org/wiki/Density>`__
+#. `Wikipedia — Density <https://en.wikipedia.org/wiki/Density>`__
 """
 
 from sympy import Eq, solve

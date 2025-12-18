@@ -4,8 +4,8 @@ Photon momentum is proportional to energy
 
 The momentum of a photon is its energy divided by the speed of light.
 
-See :doc:`laws.waves.photon_energy_is_proportional_to_angular_frequency` or
-:doc:`laws.waves.photon_energy_is_proportional_to_linear_frequency` for energy
+See :ref:`Photon energy is proportional to angular frequency` or
+:ref:`Photon energy is proportional to linear frequency` for energy
 expressions.
 
 **Notation:**

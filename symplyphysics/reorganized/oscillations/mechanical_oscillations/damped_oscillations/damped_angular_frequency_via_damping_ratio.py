@@ -1,6 +1,6 @@
 """
-Damped angular frequency
-========================
+Damped angular frequency via damping ratio
+==========================================
 
 A damped oscillator performs oscillations with a frequency proportional
 to that of an undamped oscillator, i.e. to the frequency of an oscillator when

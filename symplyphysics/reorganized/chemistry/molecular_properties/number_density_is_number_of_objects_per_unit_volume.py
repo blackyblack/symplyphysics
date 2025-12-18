@@ -3,7 +3,7 @@ Number density is number of objects per unit volume
 ===================================================
 
 **Number density**, or **concentration**, is the number of particles per unit volume.
-See :doc:`laws.quantities.quantity_is_volumetric_density_times_volume` for a more general law.
+See :ref:`Quantity is volumetric density times volume` for a more general law.
 
 **Links:**
 

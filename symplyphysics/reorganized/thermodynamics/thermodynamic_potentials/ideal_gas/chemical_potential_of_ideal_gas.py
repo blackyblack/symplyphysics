@@ -44,8 +44,7 @@ Concentration of the gas, or :symbols:`number_density`.
 
 thermal_wavelength = symbols.thermal_wavelength
 """
-:symbols:`thermal_wavelength` of the gas. Also see :doc:`Thermal de Broglie wavelength
-<definitions.thermal_de_broglie_wavelength>`.
+:symbols:`thermal_wavelength` of the gas. Also see :ref:`Thermal de Broglie wavelength`.
 """
 
 law = Eq(chemical_potential,

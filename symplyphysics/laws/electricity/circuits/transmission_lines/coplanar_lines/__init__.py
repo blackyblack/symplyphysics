@@ -1,6 +1,6 @@
 """
-**Coplanar lines**
-==================
+**Coplanar lines** (Old)
+========================
 
 A *coplanar* transmission line is a type of transmission line where the signal strip and
 ground planes are all located on the same side of the substrate. It is commonly used in

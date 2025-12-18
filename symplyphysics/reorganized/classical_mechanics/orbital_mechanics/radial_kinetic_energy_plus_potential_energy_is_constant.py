@@ -35,7 +35,7 @@ The projection of the velocity vector in the radial direction. See :symbols:`spe
 
 potential_energy = symbols.potential_energy
 """
-The :doc:`potential energy <laws.gravity.radial_motion.potential_energy_of_planetary_motion>` of the planet.
+The :ref:`potential energy <Potential energy of radial planetary motion>` of the planet.
 See :symbols:`potential_energy`.
 """
 

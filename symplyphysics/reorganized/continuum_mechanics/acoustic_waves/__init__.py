@@ -1,5 +1,5 @@
 """
-Acoustic Waves (Continuum Mechanics)
-====================================
+**Acoustic Waves (Continuum Mechanics)**
+========================================
 
 """

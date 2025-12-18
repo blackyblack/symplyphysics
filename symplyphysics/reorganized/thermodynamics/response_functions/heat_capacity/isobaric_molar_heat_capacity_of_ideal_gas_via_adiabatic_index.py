@@ -44,7 +44,7 @@ isobaric_molar_heat_capacity = clone_as_symbol(
 
 adiabatic_index = symbols.adiabatic_index
 """
-:symbols:`adiabatic_index`, or :doc:`heat capacity ratio <definitions.heat_capacity_ratio>`
+:symbols:`adiabatic_index`, or :ref:`Heat capacity ratio`
 of the gas.
 """
 
