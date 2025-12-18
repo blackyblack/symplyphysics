@@ -3,7 +3,7 @@ from sympy import symbols
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression
-from symplyphysics.reorganized.condensed_matter.interaction_potentials import lennard_jones_potential
+from symplyphysics.laws.condensed_matter.interaction_potentials import lennard_jones_potential
 
 print(f"Formula of Lennard-Jones potential:\n{print_expression(lennard_jones_potential.law)}\n")
 

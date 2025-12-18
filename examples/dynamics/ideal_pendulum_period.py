@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 from symplyphysics import Quantity, convert_to, units, print_expression
-from symplyphysics.reorganized.oscillations.mechanical_oscillations.physical_pendulum import period_of_ideal_pendulum_from_length as pendulum_period
-from symplyphysics.reorganized.oscillations.general import temporal_frequency_from_period as frequency_def
+from symplyphysics.laws.oscillations.mechanical_oscillations.physical_pendulum import period_of_ideal_pendulum_from_length as pendulum_period
+from symplyphysics.laws.oscillations.general import temporal_frequency_from_period as frequency_def
 
 # This example calculates ideal pendulum period from its length
 

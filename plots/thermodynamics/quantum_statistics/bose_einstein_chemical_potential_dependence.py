@@ -8,7 +8,7 @@ from sympy import symbols, Eq, solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, units
-from symplyphysics.reorganized.statistical_physics.quantum_statistics.bose_einstein import single_particle_state_distribution as distribution_law
+from symplyphysics.laws.statistical_physics.quantum_statistics.bose_einstein import single_particle_state_distribution as distribution_law
 
 occupancy = distribution_law.occupancy_of_state
 energy = distribution_law.energy_of_state

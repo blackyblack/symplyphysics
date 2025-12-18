@@ -8,8 +8,8 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, units
 from symplyphysics.core.convert import evaluate_expression
-from symplyphysics.reorganized.statistical_physics.relativistic_statistics.maxwell_juttner import maxwell_juettner_distribution as distribution_law
-from symplyphysics.reorganized.statistical_physics.relativistic_statistics.maxwell_juttner import reduced_temperature_in_maxwell_juettner_statistics as reduced_law
+from symplyphysics.laws.statistical_physics.relativistic_statistics.maxwell_juttner import maxwell_juettner_distribution as distribution_law
+from symplyphysics.laws.statistical_physics.relativistic_statistics.maxwell_juttner import reduced_temperature_in_maxwell_juettner_statistics as reduced_law
 
 print("Maxwell-Juettner distribution formula:\n")
 print(print_expression(distribution_law.law))

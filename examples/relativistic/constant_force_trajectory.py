@@ -2,8 +2,8 @@
 
 from sympy import symbols, dsolve, solve, Eq
 from symplyphysics import print_expression
-from symplyphysics.reorganized.classical_mechanics.dynamics.force import force_is_derivative_of_momentum as newtons_second_law
-from symplyphysics.reorganized.special_relativity.relativistic_dynamics.energy_and_momentum import relativistic_momentum_via_rest_mass_and_speed as relativistic_momentum_law
+from symplyphysics.laws.classical_mechanics.dynamics.force import force_is_derivative_of_momentum as newtons_second_law
+from symplyphysics.laws.special_relativity.relativistic_dynamics.energy_and_momentum import relativistic_momentum_via_rest_mass_and_speed as relativistic_momentum_law
 
 # Description
 ## A particle with an initial momentum `p_0` starts moving at a moment `t = 0` due to a constant

@@ -4,8 +4,8 @@ from collections import namedtuple
 from sympy import Symbol, plot, sqrt
 from symplyphysics.quantities import speed_of_light
 from symplyphysics.core.convert import evaluate_expression
-from symplyphysics.reorganized.special_relativity.relativistic_dynamics.force_and_acceleration import relativistic_force_acceleration_relation as force_law
-from symplyphysics.reorganized.special_relativity.fundamentals import lorentz_factor_via_speed as lorentz_factor_def
+from symplyphysics.laws.special_relativity.relativistic_dynamics.force_and_acceleration import relativistic_force_acceleration_relation as force_law
+from symplyphysics.laws.special_relativity.fundamentals import lorentz_factor_via_speed as lorentz_factor_def
 
 from symplyphysics.core.vectors import (VectorNorm,
     split_into_tangential_and_normal_components)

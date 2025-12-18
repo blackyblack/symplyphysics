@@ -17,8 +17,8 @@ from symplyphysics.core.coordinate_systems import (CARTESIAN, CoordinateVector,
     as_coordinate_vector)
 from symplyphysics.core.vectors import VectorDot, VectorCross
 from symplyphysics.core.solvers import vector_equals
-from symplyphysics.reorganized.classical_mechanics.dynamics.gravity import potential_energy_from_mass_and_height as potential_energy_law
-from symplyphysics.reorganized.classical_mechanics.kinematics.centers import center_of_mass_for_system_of_particles as center_of_mass_def
+from symplyphysics.laws.classical_mechanics.dynamics.gravity import potential_energy_from_mass_and_height as potential_energy_law
+from symplyphysics.laws.classical_mechanics.kinematics.centers import center_of_mass_for_system_of_particles as center_of_mass_def
 
 ## Part 1. Creating the necessary symbols
 

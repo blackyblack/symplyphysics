@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from symplyphysics import (units, convert_to, Quantity, print_expression)
-from symplyphysics.reorganized.classical_mechanics.dynamics.force import acceleration_is_force_over_mass as newton_law2
+from symplyphysics.laws.classical_mechanics.dynamics.force import acceleration_is_force_over_mass as newton_law2
 
 m = Quantity(1 * units.kilogram)
 a = Quantity(3 * units.meter / units.second**2)

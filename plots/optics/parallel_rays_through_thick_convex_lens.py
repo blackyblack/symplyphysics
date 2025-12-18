@@ -13,7 +13,7 @@ from sympy import (ImmutableMatrix, symbols as sym_symbols, Eq, solve, Expr, sqr
 from symplyphysics.core.coordinate_systems import CoordinateVector, CARTESIAN
 from symplyphysics.core.coordinate_systems.vector import as_coordinate_vector, component
 from symplyphysics.core.vectors import VectorNorm, VectorCross, VectorDot
-from symplyphysics.reorganized.optics.geometrical_optics.refraction import refraction_angle_from_environments as snells_law
+from symplyphysics.laws.optics.geometrical_optics.refraction import refraction_angle_from_environments as snells_law
 from symplyphysics.core.geometry.line import two_point_function
 
 # PART 1. Parsing command line arguments

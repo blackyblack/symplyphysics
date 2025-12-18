@@ -20,8 +20,8 @@ this problem.
 
 from sympy import solve, Eq, simplify
 from symplyphysics import (print_expression, units, convert_to, Quantity)
-from symplyphysics.reorganized.classical_mechanics.kinematics.general_motion import centripetal_acceleration_via_linear_speed_and_radius as centripetal_acceleration_law
-from symplyphysics.reorganized.classical_mechanics.dynamics.gravity import free_fall_acceleration_from_height as free_fall_acceleration_law
+from symplyphysics.laws.classical_mechanics.kinematics.general_motion import centripetal_acceleration_via_linear_speed_and_radius as centripetal_acceleration_law
+from symplyphysics.laws.classical_mechanics.dynamics.gravity import free_fall_acceleration_from_height as free_fall_acceleration_law
 
 equation = Eq(centripetal_acceleration_law.law.rhs, free_fall_acceleration_law.law.rhs).subs(
     centripetal_acceleration_law.radius_of_curvature,

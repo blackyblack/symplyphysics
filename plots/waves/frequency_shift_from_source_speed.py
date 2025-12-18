@@ -8,7 +8,7 @@ from sympy import symbols, Eq, solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression
-from symplyphysics.reorganized.waves.doppler_effect import frequency_shift_from_speed_in_collinear_motion as shift_law
+from symplyphysics.laws.waves.doppler_effect import frequency_shift_from_speed_in_collinear_motion as shift_law
 
 reduced_frequency = symbols("reduced_frequency")
 

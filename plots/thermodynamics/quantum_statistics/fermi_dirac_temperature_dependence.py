@@ -7,7 +7,7 @@ from sympy import symbols, Eq, solve, S
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, units
-from symplyphysics.reorganized.statistical_physics.quantum_statistics.fermi_dirac import single_particle_state_fermi_distribution as distribution_law
+from symplyphysics.laws.statistical_physics.quantum_statistics.fermi_dirac import single_particle_state_fermi_distribution as distribution_law
 
 occupancy = distribution_law.occupancy_of_state
 energy = distribution_law.energy_of_state

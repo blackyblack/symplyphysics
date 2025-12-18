@@ -9,7 +9,7 @@ from sympy import dsolve, Expr, symbols, Function as SymFunction
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import units, convert_to_si
-from symplyphysics.reorganized.oscillations.mechanical_oscillations.damped_oscillations import damped_harmonic_oscillator_equation as damped_eqn
+from symplyphysics.laws.oscillations.mechanical_oscillations.damped_oscillations import damped_harmonic_oscillator_equation as damped_eqn
 
 displacement = symbols("q", cls=SymFunction, real=True)
 time = symbols("t", positive=True)

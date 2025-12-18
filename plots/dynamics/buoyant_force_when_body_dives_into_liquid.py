@@ -4,8 +4,8 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, quantities
 from symplyphysics.core.convert import evaluate_expression
-from symplyphysics.reorganized.continuum_mechanics.fluid_mechanics.hydrostatics import buoyant_force_from_density_and_volume as archimedes_law
-from symplyphysics.reorganized.classical_mechanics.dynamics.force import acceleration_is_force_over_mass as gravity_law
+from symplyphysics.laws.continuum_mechanics.fluid_mechanics.hydrostatics import buoyant_force_from_density_and_volume as archimedes_law
+from symplyphysics.laws.classical_mechanics.dynamics.force import acceleration_is_force_over_mass as gravity_law
 
 print(f"Formula is:\n{print_expression(archimedes_law.law)}")
 

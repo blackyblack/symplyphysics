@@ -10,8 +10,8 @@ At temperature :math:`T_1 = 300 \, \text{K}`, the pressure of the gas is
 
 from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, units, convert_to
-from symplyphysics.reorganized.thermodynamics.equations_of_state.van_der_waals import van_der_vaals_equation as van_der_waals_law
-from symplyphysics.reorganized.quantity_relations import (
+from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import van_der_vaals_equation as van_der_waals_law
+from symplyphysics.laws.quantity_relations import (
     quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,)
 
 temperature_before = Symbol("temperature_before")

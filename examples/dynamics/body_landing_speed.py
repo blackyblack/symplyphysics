@@ -1,9 +1,9 @@
 from sympy import solve, Eq, Symbol
 from symplyphysics import print_expression, units
-from symplyphysics.reorganized.classical_mechanics.dynamics.gravity import potential_energy_from_mass_and_height as potential_energy
-from symplyphysics.reorganized.classical_mechanics.dynamics.translational_motion import kinetic_energy_from_mass_and_speed as kinetic_energy
-from symplyphysics.reorganized.classical_mechanics.conservation_laws import initial_mechanical_energy_equals_final_mechanical_energy as conservation
-from symplyphysics.reorganized.classical_mechanics.dynamics.energy import mechanical_energy_is_kinetic_and_potential_energy as mechanical_energy
+from symplyphysics.laws.classical_mechanics.dynamics.gravity import potential_energy_from_mass_and_height as potential_energy
+from symplyphysics.laws.classical_mechanics.dynamics.translational_motion import kinetic_energy_from_mass_and_speed as kinetic_energy
+from symplyphysics.laws.classical_mechanics.conservation_laws import initial_mechanical_energy_equals_final_mechanical_energy as conservation
+from symplyphysics.laws.classical_mechanics.dynamics.energy import mechanical_energy_is_kinetic_and_potential_energy as mechanical_energy
 
 # From http://kornev-school.ru/f9_law_of_energy_conservation.html first example
 # A soccer ball falls without initial velocity from a height.

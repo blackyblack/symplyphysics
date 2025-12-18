@@ -17,7 +17,7 @@ reflected.
 
 import math
 from sympy import solve, pi
-from symplyphysics.reorganized.optics.geometrical_optics.refraction import refraction_angle_from_environments as refraction_law
+from symplyphysics.laws.optics.geometrical_optics.refraction import refraction_angle_from_environments as refraction_law
 
 ## Optical fiber usually consists of core with refractive index
 CORE_REFRACTIVE_INDEX = 1.479
