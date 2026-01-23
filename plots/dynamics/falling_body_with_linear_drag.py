@@ -8,12 +8,9 @@ from sympy import solve, Symbol, Idx, Eq, dsolve, S
 from sympy.plotting import plot
 from symplyphysics import quantities, global_index
 from symplyphysics.core.convert import evaluate_expression
-from symplyphysics.definitions import (
-    acceleration_is_speed_derivative as acceleration_def,
-    net_force_is_sum_of_individual_forces as force_superposition_law,
-)
-from symplyphysics.laws.dynamics import (
-    acceleration_is_force_over_mass as newtons_second_law,)
+from symplyphysics.classical_mechanics.kinematics.translational_motion import acceleration_is_speed_derivative as acceleration_def
+from symplyphysics.classical_mechanics.dynamics.force import net_force_is_sum_of_individual_forces as force_superposition_law
+from symplyphysics.classical_mechanics.dynamics.force import acceleration_is_force_over_mass as newtons_second_law
 
 mass = newtons_second_law.mass
 time = acceleration_def.time
@@ -32,7 +29,7 @@ drag_constant = Symbol("b", positive=True)
 # TODO: find or add law for the force of drag (linear w.r.t velocity)
 drag_force_expr = -1 * drag_constant * speed(time)  # projection on -z
 
-total_force = force_superposition_law.definition.rhs.subs({
+total_force = force_superposition_law.law.rhs.subs({
     global_index: Idx("i", (1, 2)),
 }).doit().subs({
     force_superposition_law.force[1]: gravity_force_expr,
@@ -48,7 +45,7 @@ tau = Symbol("tau", positive=True)
 tau_eqn = Eq(tau, mass / drag_constant)
 
 speed_expr = solve(
-    (tau_eqn, acceleration_def.definition, newtons_second_eqn),
+    (tau_eqn, acceleration_def.law, newtons_second_eqn),
     (drag_constant, speed(time), acceleration_def.acceleration(time)),
     dict=True,
 )[0][speed(time)]

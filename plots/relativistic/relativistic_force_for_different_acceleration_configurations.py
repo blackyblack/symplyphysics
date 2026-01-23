@@ -4,8 +4,8 @@ from collections import namedtuple
 from sympy import Symbol, plot, sqrt
 from symplyphysics.quantities import speed_of_light
 from symplyphysics.core.convert import evaluate_expression
-from symplyphysics.laws.relativistic.vector import relativistic_force_acceleration_relation as force_law
-from symplyphysics.definitions import lorentz_factor_via_speed as lorentz_factor_def
+from symplyphysics.special_relativity.relativistic_dynamics.force_and_acceleration import relativistic_force_acceleration_relation as force_law
+from symplyphysics.special_relativity.fundamentals import lorentz_factor_via_speed as lorentz_factor_def
 
 from symplyphysics.core.vectors import (VectorNorm,
     split_into_tangential_and_normal_components)
@@ -39,7 +39,7 @@ base_plot = plot(
     show=False,
 )
 
-lorentz_factor = lorentz_factor_def.definition.rhs.subs(
+lorentz_factor = lorentz_factor_def.law.rhs.subs(
     lorentz_factor_def.speed,
     reduced_speed * speed_of_light,
 )

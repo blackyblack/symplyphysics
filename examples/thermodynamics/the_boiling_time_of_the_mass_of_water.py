@@ -3,14 +3,12 @@
 from sympy import solve, Symbol, Eq, dsolve
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
-from symplyphysics.laws.electricity import power_factor_is_real_power_over_apparent_power as efficiency_law
-from symplyphysics.laws.thermodynamics import (
-    heat_is_heat_capacity_times_temperature_change as heating_law,
-    heat_of_combustion_via_mass as combustion_energy_law,
-    heat_of_vaporization_via_mass as energy_to_vapor_law,
-)
-from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
-from symplyphysics.definitions import mass_flow_rate_is_time_derivative_of_mass as mass_rate_law
+from symplyphysics.electromagnetism.circuits.alternating_current import power_factor_is_real_power_over_apparent_power as efficiency_law
+from symplyphysics.thermodynamics.response_functions.heat_capacity import heat_is_heat_capacity_times_temperature_change as heating_law
+from symplyphysics.thermodynamics.phase_transitions.latent_heat import heat_of_combustion_via_mass as combustion_energy_law
+from symplyphysics.thermodynamics.phase_transitions.latent_heat import heat_of_vaporization_via_mass as energy_to_vapor_law
+from symplyphysics.quantity_relations import quantity_is_specific_quantity_times_mass as specific_qty_law
+from symplyphysics.classical_mechanics.fundamentals import mass_flow_rate_is_time_derivative_of_mass as mass_rate_law
 
 # Example from https://easyfizika.ru/zadachi/termodinamika/na-zazhzhennuyu-spirtovku-s-kpd-60-postavili-sosud-s-500-g-vody-pri-20-c-cherez-kakoe/
 # A vessel with 500 g of water at 20 ° C was placed on a lighted alcohol lamp
@@ -37,7 +35,7 @@ time = Symbol("time")
 # Then, at the initial moment of time, the mass of the burnt alcohol is zero.
 # The constant C1, which occurs during integration, corresponds exactly to the mass of burnt alcohol at time t=0
 mass_flow_rate_constant = Symbol("mass_flow_rate_constant", constant=True)
-mass_flow_rate_constant_equation = mass_rate_law.definition.subs(
+mass_flow_rate_constant_equation = mass_rate_law.law.subs(
     {mass_rate_law.mass_flow_rate(mass_rate_law.time): mass_flow_rate_constant})
 mass_gas_integral = dsolve(mass_flow_rate_constant_equation, mass_rate_law.mass(mass_rate_law.time))
 mass_of_gas_equation = mass_gas_integral.subs({

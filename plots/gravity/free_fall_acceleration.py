@@ -8,7 +8,7 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, quantities, units
 from symplyphysics.core.convert import evaluate_expression
-from symplyphysics.laws.gravity import free_fall_acceleration_from_height as acceleration_law
+from symplyphysics.classical_mechanics.dynamics.gravity import free_fall_acceleration_from_height as acceleration_law
 
 print(
     "Free fall acceleration `a` as a function of elevation `h`:",

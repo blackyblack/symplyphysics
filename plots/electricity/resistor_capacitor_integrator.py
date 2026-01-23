@@ -21,10 +21,8 @@ from sympy import symbols as sym_symbols, solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import units, convert_to_si
-from symplyphysics.laws.electricity.circuits import (
-    voltage_across_charging_capacitor_in_serial_resistor_capacitor_circuit as rc_node,
-    time_constant_of_resistor_capacitor_circuit as time_constant_law,
-)
+from symplyphysics.electromagnetism.circuits.transient_analysis.serial_resistor_capacitor_circuit import voltage_across_charging_capacitor_in_serial_resistor_capacitor_circuit as rc_node
+from symplyphysics.electromagnetism.circuits.transient_analysis.serial_resistor_capacitor_circuit import time_constant_of_resistor_capacitor_circuit as time_constant_law
 
 time = sym_symbols("time")
 
@@ -49,7 +47,7 @@ capacitor_voltage_function = solve(applied_law, rc_node.capacitor_voltage,
 
 # see resistor_and_capacitor_as_integrator_node.capacitor_current_eq for a proof the current on resistor equals to current on capacitor
 # see resistor_and_capacitor_as_integrator_node.resistor_voltage_eq for a proof the voltage on resistor is (initial_voltage - capacitor_voltage_function)
-# see symplyphysics.laws.electricity.current_is_proportional_to_voltage for a proof that current through resistor = resistor voltage / resistor impedance
+# see symplyphysics.electricity.current_is_proportional_to_voltage for a proof that current through resistor = resistor voltage / resistor impedance
 capacitor_current_function = (INITIAL_VOLTAGE - capacitor_voltage_function) / EXAMPLE_RESISTANCE
 
 UC = plot(capacitor_voltage_function, (time, 0, 8 * RC_TIME_CONSTANT),

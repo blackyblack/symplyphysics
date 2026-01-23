@@ -2,11 +2,11 @@
 
 from sympy import solve, Eq, symbols
 from symplyphysics import print_expression
-from symplyphysics.definitions import heat_capacity_ratio
-from symplyphysics.laws.electricity import energy_via_constant_power_and_time as energy_law
-from symplyphysics.laws.thermodynamics import heat_is_heat_capacity_times_temperature_change as thermal_eqn
-from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
-from symplyphysics.laws.quantities import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
+from symplyphysics.thermodynamics.response_functions.heat_capacity import heat_capacity_ratio
+from symplyphysics.classical_mechanics.fundamentals import energy_via_constant_power_and_time as energy_law
+from symplyphysics.thermodynamics.response_functions.heat_capacity import heat_is_heat_capacity_times_temperature_change as thermal_eqn
+from symplyphysics.thermodynamics.equations_of_state.ideal_gas import ideal_gas_equation
+from symplyphysics.quantity_relations import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
 
 # Description
 ## In order to measure the value of the adiabatic index (gamma = C_p / C_V), one can use the
@@ -78,7 +78,7 @@ solved = solve(
 isochoric_molar_heat_expr = solved[isochoric_molar_heat]
 isobaric_molar_heat_expr = solved[isobaric_molar_heat]
 
-adiabatic_index_expr = heat_capacity_ratio.definition.rhs.subs({
+adiabatic_index_expr = heat_capacity_ratio.law.rhs.subs({
     heat_capacity_ratio.isobaric_heat_capacity: isobaric_molar_heat_expr,
     heat_capacity_ratio.isochoric_heat_capacity: isochoric_molar_heat_expr,
 })

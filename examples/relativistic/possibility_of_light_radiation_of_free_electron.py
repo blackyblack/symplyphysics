@@ -2,14 +2,11 @@
 
 from sympy import Symbol, Eq, reduce_inequalities, false
 from symplyphysics import print_expression
-from symplyphysics.definitions import (
-    lorentz_factor_via_speed as lorentz_factor_def,)
-from symplyphysics.laws.waves import (
+from symplyphysics.special_relativity.fundamentals import lorentz_factor_via_speed as lorentz_factor_def
+from symplyphysics.quantum_physics.photons import (
     photon_energy_is_proportional_to_linear_frequency as energy_law,)
-from symplyphysics.laws.relativistic import (
-    relativistic_energy_via_relativistic_mass as energy_is_mass,
-    relativistic_mass_via_rest_mass_and_speed as moving_mass_law,
-)
+from symplyphysics.special_relativity.relativistic_dynamics.energy_and_momentum import relativistic_energy_via_relativistic_mass as energy_is_mass
+from symplyphysics.special_relativity.relativistic_dynamics.obsolete_concepts import relativistic_mass_via_rest_mass_and_speed as moving_mass_law
 
 # Description
 ## Can free electrons radiate (and absorb) light freely, without being accelerated?
@@ -49,7 +46,7 @@ energy_conservation_eqn = Eq(total_energy_before_radiation, total_energy_after_r
 
 lorentz_factor = lorentz_factor_def.lorentz_factor
 
-lorentz_factor_expr = lorentz_factor_def.definition.rhs.subs(lorentz_factor_def.speed,
+lorentz_factor_expr = lorentz_factor_def.law.rhs.subs(lorentz_factor_def.speed,
     electron_speed)
 
 energy_conservation_eqn = energy_conservation_eqn.replace(lorentz_factor_expr, lorentz_factor)

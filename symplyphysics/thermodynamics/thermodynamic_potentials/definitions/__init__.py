@@ -1,0 +1,5 @@
+"""
+**Definitions (Thermodynamic Potentials)**
+==========================================
+
+"""

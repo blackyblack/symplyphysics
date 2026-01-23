@@ -3,13 +3,10 @@
 from sympy import solve, Eq, dsolve
 from symplyphysics import (units, convert_to, Quantity, prefixes)
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
-from symplyphysics.definitions import (
-    density_from_mass_volume as density_def,
-    power_is_energy_derivative as power_def,
-)
-from symplyphysics.laws.thermodynamics import (
-    heat_is_heat_capacity_times_temperature_change as thermal_energy_law,)
-from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
+from symplyphysics.classical_mechanics.fundamentals import density_from_mass_volume as density_def
+from symplyphysics.classical_mechanics.dynamics.energy import power_is_energy_derivative as power_def
+from symplyphysics.thermodynamics.response_functions.heat_capacity import heat_is_heat_capacity_times_temperature_change as thermal_energy_law
+from symplyphysics.quantity_relations import quantity_is_specific_quantity_times_mass as specific_qty_law
 
 # The household electric kettle heated 0.5 liters of water from 20 degree Celsius to boiling.
 # The power of the kettle is 1500 watts. How long did the heating process take?
@@ -29,13 +26,13 @@ final_temperature = Celsius(100)
 initial_temperature_kelvin = to_kelvin_quantity(initial_temperature)
 final_temperature_kelvin = to_kelvin_quantity(final_temperature)
 
-water_mass = solve(density_def.definition, density_def.mass)[0].subs({
+water_mass = solve(density_def.law, density_def.mass)[0].subs({
     density_def.density: water_density,
     density_def.volume: kettle_volume,
 })
 
 heat_via_power = dsolve(
-    power_def.definition.subs(power_def.power(power_def.time), kettle_power),
+    power_def.law.subs(power_def.power(power_def.time), kettle_power),
     power_def.energy(power_def.time),
     ics={
     power_def.energy(0): 0

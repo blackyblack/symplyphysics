@@ -9,7 +9,7 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, Quantity, units, quantities, convert_to_si
 from symplyphysics.core.convert import evaluate_expression
-from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import maxwell_boltzmann_speed_distribution as speed_distribution
+from symplyphysics.statistical_physics.classical_statistics.maxwell_boltzmann import maxwell_boltzmann_speed_distribution as speed_distribution
 
 MassDatum = namedtuple("MassDatum", "mass label")
 

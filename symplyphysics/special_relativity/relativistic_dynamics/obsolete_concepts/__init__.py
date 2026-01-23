@@ -1,0 +1,5 @@
+"""
+**Obsolete Concepts (Special Relativity)**
+==========================================
+
+"""

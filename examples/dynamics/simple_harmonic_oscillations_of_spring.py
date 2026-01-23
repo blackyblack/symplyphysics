@@ -2,11 +2,9 @@
 
 from sympy import solve, symbols, Eq
 from symplyphysics import Quantity, units, print_expression, convert_to
-from symplyphysics.definitions import period_from_angular_frequency as period_def
-from symplyphysics.laws.dynamics import (
-    period_of_spring_from_mass as spring_period_law,)
-from symplyphysics.laws.kinematics import (
-    displacement_in_simple_harmonic_motion as harmonic_law,)
+from symplyphysics.oscillations import period_from_angular_frequency as period_def
+from symplyphysics.oscillations.mechanical_oscillations.spring import period_of_spring_from_mass as spring_period_law
+from symplyphysics.oscillations.natural_oscillations import displacement_in_simple_harmonic_motion as harmonic_law
 
 # Description
 ## A simple harmonic oscillator consists of a block of mass 2.00 kg attached to a spring of

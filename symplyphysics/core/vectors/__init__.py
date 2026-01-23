@@ -67,7 +67,7 @@ def _check_vector(value: Any) -> Expr:
 
 
 @cacheit
-def is_vector_expr(value: Any) -> bool:  # pylint: disable=too-many-return-statements
+def is_vector_expr(value: Any) -> bool:  # pylint: disable=too-many-return-statements,too-many-branches
     """
     Checks if `value` is a vector expression, for which `value` must either be `0` or a linear
     combination of other vector expressions, i.e. it can at most be a sum of vectors multiplied

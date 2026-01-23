@@ -8,13 +8,10 @@ Find the average force of the air's resistance exerted on the body during its fl
 from sympy import solve, integrate, Idx, Eq, pi
 from symplyphysics import (clone_as_function, clone_as_symbol, quantities, global_index,
     print_expression, units, convert_to_si)
-from symplyphysics.definitions import (
-    net_force_is_sum_of_individual_forces as superposition_law,
-    acceleration_is_speed_derivative as acceleration_def,
-)
-from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as newtons_second_law
-from symplyphysics.laws.geometry import (
-    scalar_projection_is_vector_length_times_cosine_of_angle as projection_law,)
+from symplyphysics.classical_mechanics.dynamics.force import net_force_is_sum_of_individual_forces as superposition_law
+from symplyphysics.classical_mechanics.kinematics.translational_motion import acceleration_is_speed_derivative as acceleration_def
+from symplyphysics.classical_mechanics.dynamics.force import acceleration_is_force_over_mass as newtons_second_law
+from symplyphysics.mathematics.geometry import scalar_projection_is_vector_length_times_cosine_of_angle as projection_law
 from symplyphysics.core.solvers import apply
 
 # NOTE Since the body is moving upwards, both the force of gravity and the force of air resistance
@@ -31,12 +28,12 @@ gravity_force = solve(newtons_second_law.law, newtons_second_law.force)[0].subs(
     newtons_second_law.acceleration: quantities.acceleration_due_to_gravity,
 })
 
-net_force = superposition_law.definition.rhs.subs(global_index, Idx("i", (1, 2))).doit().subs({
+net_force = superposition_law.law.rhs.subs(global_index, Idx("i", (1, 2))).doit().subs({
     superposition_law.force[1]: gravity_force,
     superposition_law.force[2]: air_resistance(time),
 })
 
-acceleration_expr = acceleration_def.definition.rhs
+acceleration_expr = acceleration_def.law.rhs
 
 newtons_second_eqn = newtons_second_law.law.subs({
     newtons_second_law.acceleration: acceleration_expr,

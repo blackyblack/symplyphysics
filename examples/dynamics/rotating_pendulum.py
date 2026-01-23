@@ -3,24 +3,17 @@
 from sympy import (symbols, Function as SymFunction, pi, cos, sin, solve, dsolve, Eq,
     reduce_inequalities)
 from symplyphysics import print_expression, quantities
-from symplyphysics.definitions import (
-    angular_acceleration_is_angular_speed_derivative as angular_acceleration_def,
-    angular_speed_is_angular_distance_derivative as angular_speed_def,
-    harmonic_oscillator_is_second_derivative_equation as harmonic_def,
-    period_from_angular_frequency as period_def,
-)
-from symplyphysics.laws.dynamics.vector import (
-    acceleration_from_force_vector as force_law,
-    relative_acceleration_from_force as motion_law,
-)
-from symplyphysics.laws.kinematics.vector import (
-    acceleration_of_transfer_between_relative_frames as transfer_law,
-    centripetal_acceleration_via_cross_product as centripetal_law,
-    coriolis_acceleration_via_relative_velocity_and_angular_velocity as coriolis_law,
-)
-from symplyphysics.laws.kinematics import (
-    tangential_acceleration_via_angular_acceleration_and_radius as tangential_law,)
-from symplyphysics.laws.geometry import scalar_projection_is_vector_length_times_cosine_of_angle as cosine_law
+from symplyphysics.classical_mechanics.kinematics.rotational_motion import angular_acceleration_is_angular_speed_derivative as angular_acceleration_def
+from symplyphysics.classical_mechanics.kinematics.rotational_motion import angular_speed_is_angular_distance_derivative as angular_speed_def
+from symplyphysics.oscillations.natural_oscillations import harmonic_oscillator_is_second_derivative_equation as harmonic_def
+from symplyphysics.oscillations import period_from_angular_frequency as period_def
+from symplyphysics.classical_mechanics.dynamics.force import acceleration_from_force_vector as force_law
+from symplyphysics.classical_mechanics.dynamics.relative_motion import relative_acceleration_from_force as motion_law
+from symplyphysics.classical_mechanics.kinematics.relative_motion import acceleration_of_transfer_between_relative_frames as transfer_law
+from symplyphysics.classical_mechanics.kinematics.rotational_motion import centripetal_acceleration_via_cross_product as centripetal_law
+from symplyphysics.classical_mechanics.kinematics.relative_motion import coriolis_acceleration_via_relative_velocity_and_angular_velocity as coriolis_law
+from symplyphysics.classical_mechanics.kinematics.general_motion import tangential_acceleration_via_angular_acceleration_and_radius as tangential_law
+from symplyphysics.mathematics.geometry import scalar_projection_is_vector_length_times_cosine_of_angle as cosine_law
 
 from symplyphysics.core.vectors import VectorNorm, VectorCross, VectorDot
 from symplyphysics.core.solvers import solve_for_vector
@@ -142,10 +135,10 @@ ball_tangential_acceleration_via_forces = VectorDot(
     cos(ball_angle(time)): cos(ball_angle_sym),
 }).series(ball_angle_sym, 0, 2).removeO().subs(ball_angle_sym, ball_angle(time))
 
-ball_angular_speed = angular_speed_def.definition.rhs.subs(angular_speed_def.time,
+ball_angular_speed = angular_speed_def.law.rhs.subs(angular_speed_def.time,
     time).replace(angular_speed_def.angular_distance, ball_angle).doit()
 
-ball_angular_acceleration = angular_acceleration_def.definition.rhs.subs(
+ball_angular_acceleration = angular_acceleration_def.law.rhs.subs(
     angular_acceleration_def.time, time).replace(
     angular_acceleration_def.angular_speed,
     lambda time_: ball_angular_speed.subs(time, time_),
@@ -161,7 +154,7 @@ oscillation_eqn_derived = Eq(
     ball_tangential_acceleration_via_forces,
 )
 
-oscillation_eqn_from_def = harmonic_def.definition.subs(harmonic_def.time, time).replace(
+oscillation_eqn_from_def = harmonic_def.law.subs(harmonic_def.time, time).replace(
     harmonic_def.displacement,
     ball_angle,
 )

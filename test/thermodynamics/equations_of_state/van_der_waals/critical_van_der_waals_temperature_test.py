@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import critical_van_der_waals_temperature as critical_law
+from symplyphysics.thermodynamics.equations_of_state.van_der_waals import critical_van_der_waals_temperature as critical_law
 
 # Description
 ## The critical temperature of Argon within the van der Waals equation of state model is

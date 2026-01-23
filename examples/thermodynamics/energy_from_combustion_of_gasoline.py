@@ -2,11 +2,11 @@
 
 from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
-from symplyphysics.definitions import density_from_mass_volume as density_law
-from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as distance_law
-from symplyphysics.laws.electricity import power_factor_is_real_power_over_apparent_power as efficiency_law
-from symplyphysics.laws.electricity import energy_via_constant_power_and_time as energy_law
-from symplyphysics.laws.thermodynamics import heat_of_combustion_via_mass as combustion_energy_law
+from symplyphysics.classical_mechanics.fundamentals import density_from_mass_volume as density_law
+from symplyphysics.classical_mechanics.kinematics.translational_motion import position_via_constant_speed_and_time as distance_law
+from symplyphysics.electromagnetism.circuits.alternating_current import power_factor_is_real_power_over_apparent_power as efficiency_law
+from symplyphysics.classical_mechanics.fundamentals import energy_via_constant_power_and_time as energy_law
+from symplyphysics.thermodynamics.phase_transitions.latent_heat import heat_of_combustion_via_mass as combustion_energy_law
 
 # Example from https://easyfizika.ru/zadachi/termodinamika/na-skolko-kilometrov-puti-hvatit-40-l-benzina-avtomobilyu-dvizhushhemusya-so-skorostyu/
 # How many kilometers will 40 liters of gasoline be enough for a car moving at a speed of 54 km/h?
@@ -34,7 +34,7 @@ energy_from_power_value = energy_law.law.rhs.subs({
     energy_law.power: power_of_car,
 })
 
-density_of_gasoline_equation = density_law.definition.subs({
+density_of_gasoline_equation = density_law.law.subs({
     density_law.density: density_of_gasoline,
     density_law.volume: volume_of_gasoline
 })

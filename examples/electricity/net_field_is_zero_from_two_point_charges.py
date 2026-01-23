@@ -1,6 +1,6 @@
 from sympy import solve, Eq, symbols
 from symplyphysics import units, convert_to, Quantity
-from symplyphysics.laws.electricity import electric_field_due_to_point_charge as point_charge
+from symplyphysics.electromagnetism.electrostatics.point_charge import electric_field_due_to_point_charge as point_charge
 
 # Description
 ## Two charged particles are fixed to an x-axis. Particle 1 of charge q1 = 2.1*10^-8 C is at position x = 20 cm;

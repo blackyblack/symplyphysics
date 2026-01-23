@@ -10,11 +10,11 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, global_index
 from symplyphysics.core.symbols.celsius import to_kelvin, Celsius
-from symplyphysics.laws.thermodynamics import heat_is_heat_capacity_times_temperature_change as thermal_energy_law
-from symplyphysics.laws.thermodynamics import latent_heat_of_fusion_via_mass as energy_melting_law
-from symplyphysics.definitions import density_from_mass_volume as density_law
-from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
-from symplyphysics.laws.thermodynamics import total_energy_transfer_is_zero_in_isolated_system as thermodinamics_law_1
+from symplyphysics.thermodynamics.response_functions.heat_capacity import heat_is_heat_capacity_times_temperature_change as thermal_energy_law
+from symplyphysics.thermodynamics.phase_transitions.latent_heat import latent_heat_of_fusion_via_mass as energy_melting_law
+from symplyphysics.classical_mechanics.fundamentals import density_from_mass_volume as density_law
+from symplyphysics.quantity_relations import quantity_is_specific_quantity_times_mass as specific_qty_law
+from symplyphysics.thermodynamics.conservation_laws import total_energy_transfer_is_zero_in_isolated_system as thermodinamics_law_1
 
 temperature_of_hot_water_values = [5, 20, 35, 50, 65, 80]
 
@@ -31,7 +31,7 @@ temperature_melt_ice = symbols("temperature_melt_ice")
 mass_of_ice = symbols("mass_of_ice")
 mass_of_hot_water = symbols("mass_of_hot_water")
 
-mass_of_all_water = solve(density_law.definition, density_law.mass, dict=True)[0][density_law.mass]
+mass_of_all_water = solve(density_law.law, density_law.mass, dict=True)[0][density_law.mass]
 
 # the mass of all the water filling the bath consists of the mass of hot water
 # that was in the bathroom initially, and the mass of water of melted ice

@@ -2,9 +2,9 @@
 
 from sympy import Idx, solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, units, convert_to, global_index
-from symplyphysics.definitions import mass_fraction_is_component_mass_over_total_mass as mass_fraction_law
-from symplyphysics.laws.conservation import initial_mass_equals_final_mass as conservation_mass_law
-from symplyphysics.laws.conservation import mixture_mass_is_sum_of_component_masses as mixture_mass_law
+from symplyphysics.classical_mechanics.fundamentals import mass_fraction_is_component_mass_over_total_mass as mass_fraction_law
+from symplyphysics.chemistry.conservation_laws import initial_mass_equals_final_mass as conservation_mass_law
+from symplyphysics.chemistry.conservation_laws import mixture_mass_is_sum_of_component_masses as mixture_mass_law
 
 # Example from 6th in https://uchitel.pro/%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8-%D0%BD%D0%B0-%D0%B2%D1%8B%D1%87%D0%B8%D1%81%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BC%D0%B0%D1%81%D1%81%D1%8B-%D1%80%D0%B0%D1%81%D1%82%D0%B2%D0%BE%D1%80%D0%B5%D0%BD/
 # The mass fraction of salt in a solution saturated at a temperature of 40 ° C is 35%.
@@ -20,7 +20,7 @@ mass_of_salt_after = Symbol("mass_of_salt_after")
 
 solubility = Symbol("solubility")
 
-mass_fraction_equation = mass_fraction_law.definition.subs({
+mass_fraction_equation = mass_fraction_law.law.subs({
     mass_fraction_law.mass_of_mixture: mass_of_mixture,
     mass_fraction_law.mass_fraction: mass_fraction_of_salt
 })
@@ -50,7 +50,7 @@ mass_of_mixture_equation = mass_of_two_components.subs({
 
 mass_of_water_value = solve(mass_of_mixture_equation, mass_of_water, dict=True)[0][mass_of_water]
 
-solubility_value = mass_fraction_law.definition.subs({
+solubility_value = mass_fraction_law.law.subs({
     mass_fraction_law.mass_of_mixture: mass_of_water_value,
     mass_fraction_law.mass_of_component: mass_of_salt_after_value
 }).rhs

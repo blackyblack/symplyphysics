@@ -7,7 +7,7 @@ silica. Plot the dispersion of light after it passes the prism.
 from sympy import symbols as sym_symbols, Eq, solve, pi, plot, sin, cos, tan, Rational, sqrt
 from symplyphysics import symbols, clone_as_symbol
 from symplyphysics.core.geometry.line import two_point_function, Point2D
-from symplyphysics.laws.optics import refraction_angle_from_environments as snells_law
+from symplyphysics.optics.geometrical_optics.refraction import refraction_angle_from_environments as snells_law
 
 air_refractive_index = clone_as_symbol(
     symbols.relative_refractive_index,

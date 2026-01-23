@@ -5,7 +5,7 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression
 from symplyphysics.quantities import speed_of_light
-from symplyphysics.laws.relativistic import relativistic_mass_via_rest_mass_and_speed
+from symplyphysics.special_relativity.relativistic_dynamics.obsolete_concepts import relativistic_mass_via_rest_mass_and_speed
 
 # Description
 ## Plot the dependency of the relativistic to rest mass ratio on the fraction of the speed of light

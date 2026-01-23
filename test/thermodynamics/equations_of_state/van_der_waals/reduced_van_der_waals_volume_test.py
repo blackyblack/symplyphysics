@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import reduced_van_der_waals_volume
+from symplyphysics.thermodynamics.equations_of_state.van_der_waals import reduced_van_der_waals_volume
 
 # Description
 ## The volume of a van der Waals gas is 1 m**3, the value of critical volume is 0.5 m**3. Then the reduced

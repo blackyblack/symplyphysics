@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import reduced_van_der_waals_temperature
+from symplyphysics.thermodynamics.equations_of_state.van_der_waals import reduced_van_der_waals_temperature
 
 # Description
 ## The temperature of a van der Waals gas is 400 K, the value of critical temperature is 200 K. Then the reduced

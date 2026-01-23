@@ -4,16 +4,12 @@ from sympy import Symbol, Eq, solve, oo, plot
 from symplyphysics import print_expression
 from symplyphysics.core.convert import evaluate_expression
 from symplyphysics.quantities import speed_of_light
-from symplyphysics.laws.conservation import (
-    initial_mechanical_energy_equals_final_mechanical_energy as energy_conservation_law,
-    initial_momentum_equals_final_momentum as momentum_conservation_law,
-)
-from symplyphysics.laws.relativistic import (
-    relativistic_energy_via_relativistic_mass as energy_is_mass,
-    relativistic_energy_via_relativistic_momentum_and_rest_mass as energy_momentum_law,
-    relativistic_mass_via_rest_mass_and_speed as moving_mass_law,
-    relativistic_momentum_via_rest_mass_and_speed as moving_momentum_law,
-)
+from symplyphysics.classical_mechanics.conservation_laws import initial_mechanical_energy_equals_final_mechanical_energy as energy_conservation_law
+from symplyphysics.classical_mechanics.conservation_laws import initial_momentum_equals_final_momentum as momentum_conservation_law
+from symplyphysics.special_relativity.relativistic_dynamics.energy_and_momentum import relativistic_energy_via_relativistic_mass as energy_is_mass
+from symplyphysics.special_relativity.relativistic_dynamics.energy_and_momentum import relativistic_energy_via_relativistic_momentum_and_rest_mass as energy_momentum_law
+from symplyphysics.special_relativity.relativistic_dynamics.obsolete_concepts import relativistic_mass_via_rest_mass_and_speed as moving_mass_law
+from symplyphysics.special_relativity.relativistic_dynamics.energy_and_momentum import relativistic_momentum_via_rest_mass_and_speed as moving_momentum_law
 
 # Description
 ## A flat light wave hits an ideal flat mirror at rest, perpendicular to its surface. Under the influence of the force

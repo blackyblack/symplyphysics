@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import reduced_van_der_waals_pressure
+from symplyphysics.thermodynamics.equations_of_state.van_der_waals import reduced_van_der_waals_pressure
 
 # Description
 ## The pressure of a van der Waals gas is 1 Pa, the value of critical pressure is 0.5 Pa. Then the reduced

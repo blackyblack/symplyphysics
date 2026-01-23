@@ -13,8 +13,8 @@ Earth's radius is :math:`6371 \, \text{km}`; Earth's mass is :math:`5.9722 \cdot
 
 from sympy import solve
 from symplyphysics import print_expression, units, convert_to_si, Quantity, clone_as_symbol, symbols
-from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_force_law
-from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as newtons_second_law
+from symplyphysics.classical_mechanics.dynamics.gravity import gravity_force_from_mass_and_distance as gravity_force_law
+from symplyphysics.classical_mechanics.dynamics.force import acceleration_is_force_over_mass as newtons_second_law
 
 planet_mass = clone_as_symbol(symbols.mass, display_symbol="M")
 probe_mass = clone_as_symbol(symbols.mass)

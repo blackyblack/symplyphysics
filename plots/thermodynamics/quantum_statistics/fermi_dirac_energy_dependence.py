@@ -8,8 +8,7 @@ from sympy import symbols, Eq, solve, S
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, units
-from symplyphysics.laws.thermodynamics.fermi_dirac_statistics import (
-    single_particle_state_fermi_distribution as distribution_law,)
+from symplyphysics.statistical_physics.quantum_statistics.fermi_dirac import single_particle_state_fermi_distribution as distribution_law
 
 occupancy = distribution_law.occupancy_of_state
 energy = distribution_law.energy_of_state
@@ -48,7 +47,7 @@ factors_ = 1, 2, 10, 100
 
 for factor_ in factors_:
     expr_ = distribution_expr.subs(reduced_temperature, S.One / factor_)
-    LABEL = r"$k_\text{B} T = \mu" + (f"/{factor_}$" if factor_ != 1 else "$")
+    LABEL = r"$k_\text{B} T = \mu" + (f"/{factor_}$" if factor_ != 1 else "$") # pylint: disable=invalid-name
     sub_plot = plot(
         expr_,
         (reduced_energy, 0, 5),
