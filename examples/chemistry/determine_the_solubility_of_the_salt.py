@@ -20,7 +20,7 @@ mass_of_salt_after = Symbol("mass_of_salt_after")
 
 solubility = Symbol("solubility")
 
-mass_fraction_equation = mass_fraction_law.definition.subs({
+mass_fraction_equation = mass_fraction_law.law.subs({
     mass_fraction_law.mass_of_mixture: mass_of_mixture,
     mass_fraction_law.mass_fraction: mass_fraction_of_salt
 })
@@ -50,7 +50,7 @@ mass_of_mixture_equation = mass_of_two_components.subs({
 
 mass_of_water_value = solve(mass_of_mixture_equation, mass_of_water, dict=True)[0][mass_of_water]
 
-solubility_value = mass_fraction_law.definition.subs({
+solubility_value = mass_fraction_law.law.subs({
     mass_fraction_law.mass_of_mixture: mass_of_water_value,
     mass_fraction_law.mass_of_component: mass_of_salt_after_value
 }).rhs

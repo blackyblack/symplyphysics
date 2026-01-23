@@ -38,7 +38,7 @@ distance = clone_as_function(
 :symbols:`distance` traveled by the body as a function of time.
 """
 
-definition = Eq(speed(time), Derivative(distance(time), time))
+law = Eq(speed(time), Derivative(distance(time), time))
 """
 :laws:symbol::
 
@@ -51,7 +51,7 @@ definition = Eq(speed(time), Derivative(distance(time), time))
 def calculate_velocity(position_start_: Quantity, position_end_: Quantity,
     moving_time_: Quantity) -> Quantity:
     movement_function_ = time * (position_end_ - position_start_) / moving_time_
-    applied_definition = definition.subs(distance(time), movement_function_)
+    applied_definition = law.subs(distance(time), movement_function_)
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
     return Quantity(result_expr)

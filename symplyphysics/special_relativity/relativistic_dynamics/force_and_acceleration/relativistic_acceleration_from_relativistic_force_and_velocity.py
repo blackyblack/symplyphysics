@@ -72,7 +72,7 @@ def calculate_acceleration(
     force_: QuantityCoordinateVector,
     velocity_: QuantityCoordinateVector,
 ) -> QuantityCoordinateVector:
-    lorentz_factor_ = lorentz_factor_def.definition.rhs.subs(
+    lorentz_factor_ = lorentz_factor_def.law.rhs.subs(
         lorentz_factor_def.speed,
         VectorNorm(velocity_),
     )

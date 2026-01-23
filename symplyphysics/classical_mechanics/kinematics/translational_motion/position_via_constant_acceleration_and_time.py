@@ -58,14 +58,14 @@ law = Eq(final_position, initial_position + initial_speed * time + acceleration 
 
 # Derive the same law from velocity and acceleration definitions
 
-_constant_acceleration_definition = _acceleration_definition.definition.subs({
+_constant_acceleration_definition = _acceleration_definition.law.subs({
     _acceleration_definition.acceleration(_acceleration_definition.time): acceleration,
     _acceleration_definition.time: time
 })
 _dsolved_velocity = dsolve(_constant_acceleration_definition, _acceleration_definition.speed(time))
 _constant_accelerated_velocity_function = _dsolved_velocity.rhs
 
-_constant_accelerated_movement_definition = _velocity_definition.definition.subs({
+_constant_accelerated_movement_definition = _velocity_definition.law.subs({
     _velocity_definition.speed(_velocity_definition.time): _constant_accelerated_velocity_function,
     _velocity_definition.time: time
 })

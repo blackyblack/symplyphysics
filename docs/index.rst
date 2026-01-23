@@ -21,7 +21,6 @@ Contents:
   special_relativity
   general_relativity
   electromagnetism
-  circuits
   electromagnetic_waves
   optics
   astronomy

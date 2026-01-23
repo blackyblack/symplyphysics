@@ -3,7 +3,7 @@
 from sympy import symbols, dsolve, solve
 from symplyphysics import Quantity, units, convert_to, print_expression
 from symplyphysics.classical_mechanics.kinematics.rotational_motion import angular_speed_is_angular_distance_derivative as angular_velocity_def
-from symplyphysics.oscillations.general import period_from_angular_frequency as period_def
+from symplyphysics.oscillations import period_from_angular_frequency as period_def
 from symplyphysics.classical_mechanics.kinematics.translational_motion import position_via_constant_speed_and_time as distance_law
 
 # Description
@@ -32,7 +32,7 @@ values = {
 time = angular_velocity_def.time
 
 ride_rotation_angle_expr = dsolve(
-    angular_velocity_def.definition.subs(
+    angular_velocity_def.law.subs(
     angular_velocity_def.angular_speed(time),
     ride_angular_velocity,
     ),

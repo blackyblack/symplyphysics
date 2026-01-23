@@ -44,7 +44,7 @@ isochoric_heat_capacity = clone_as_symbol(symbols.heat_capacity,
 :symbols:`heat_capacity` of the system at constant volume.
 """
 
-definition = Eq(heat_capacity_ratio, isobaric_heat_capacity / isochoric_heat_capacity)
+law = Eq(heat_capacity_ratio, isobaric_heat_capacity / isochoric_heat_capacity)
 """
 :laws:symbol::
 
@@ -61,7 +61,7 @@ def calculate_heat_capacity_ratio(
     isobaric_heat_capacity_: Quantity,
     isochoric_heat_capacity_: Quantity,
 ) -> float:
-    result = definition.rhs.subs({
+    result = law.rhs.subs({
         isobaric_heat_capacity: isobaric_heat_capacity_,
         isochoric_heat_capacity: isochoric_heat_capacity_,
     })

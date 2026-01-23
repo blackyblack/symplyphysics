@@ -6,7 +6,7 @@ from symplyphysics.quantum_physics.photons import (
     photon_energy_is_proportional_to_linear_frequency as energy_law,
 )
 from symplyphysics.special_relativity.relativistic_dynamics.energy_and_momentum import relativistic_energy_via_relativistic_mass as mass_law
-from symplyphysics.oscillations.general import temporal_frequency_from_period as frequency_law
+from symplyphysics.oscillations import temporal_frequency_from_period as frequency_law
 from symplyphysics.waves.wave_propagation import wavelength_from_phase_speed_and_period as wavelength_law
 
 # Description

@@ -50,7 +50,7 @@ refracted_wave_speed = clone_as_symbol(
 :symbols:`phase_speed` of the refracted wave.
 """
 
-definition = Eq(relative_refractive_index, incident_wave_speed / refracted_wave_speed)
+law = Eq(relative_refractive_index, incident_wave_speed / refracted_wave_speed)
 """
 :laws:symbol::
 
@@ -63,7 +63,7 @@ definition = Eq(relative_refractive_index, incident_wave_speed / refracted_wave_
 @validate_output(relative_refractive_index)
 def calculate_refractive_index(incident_wave_speed_: Quantity,
     refracted_wave_speed_: Quantity) -> float:
-    result_index_expr = solve(definition, relative_refractive_index,
+    result_index_expr = solve(law, relative_refractive_index,
         dict=True)[0][relative_refractive_index]
     result_expr = result_index_expr.subs({
         incident_wave_speed: incident_wave_speed_,

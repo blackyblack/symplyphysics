@@ -22,7 +22,7 @@ potential_energy_before = potential_energy.law.subs({
     potential_energy.height: body_height,
     potential_energy.mass: body_mass
 }).rhs
-mechanical_energy_before = mechanical_energy.definition.subs({
+mechanical_energy_before = mechanical_energy.law.subs({
     mechanical_energy.kinetic_energy: kinetic_energy_before,
     mechanical_energy.potential_energy: potential_energy_before,
 }).rhs
@@ -34,7 +34,7 @@ potential_energy_after = potential_energy.law.subs({
     potential_energy.height: 0,
     potential_energy.mass: body_mass
 }).rhs
-mechanical_energy_after = mechanical_energy.definition.subs({
+mechanical_energy_after = mechanical_energy.law.subs({
     mechanical_energy.kinetic_energy: kinetic_energy_after,
     mechanical_energy.potential_energy: potential_energy_after,
 }).rhs

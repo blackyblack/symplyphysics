@@ -56,7 +56,7 @@ _kinetic_energy_diff_momentum_eqn = apply(
     lambda x: x.diff(momentum(speed)),
 )
 
-_momentum_eqn = _momentum_def.definition.subs({
+_momentum_eqn = _momentum_def.law.subs({
     _momentum_def.momentum: momentum(speed),
     _momentum_def.speed: speed,
 })

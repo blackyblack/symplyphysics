@@ -28,12 +28,12 @@ gravity_force = solve(newtons_second_law.law, newtons_second_law.force)[0].subs(
     newtons_second_law.acceleration: quantities.acceleration_due_to_gravity,
 })
 
-net_force = superposition_law.definition.rhs.subs(global_index, Idx("i", (1, 2))).doit().subs({
+net_force = superposition_law.law.rhs.subs(global_index, Idx("i", (1, 2))).doit().subs({
     superposition_law.force[1]: gravity_force,
     superposition_law.force[2]: air_resistance(time),
 })
 
-acceleration_expr = acceleration_def.definition.rhs
+acceleration_expr = acceleration_def.law.rhs
 
 newtons_second_eqn = newtons_second_law.law.subs({
     newtons_second_law.acceleration: acceleration_expr,

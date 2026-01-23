@@ -40,7 +40,7 @@ mass_of_mixture = symbols.mass
 Total :symbols:`mass` of the mixture.
 """
 
-definition = Eq(mass_fraction, mass_of_component / mass_of_mixture)
+law = Eq(mass_fraction, mass_of_component / mass_of_mixture)
 """
 :laws:symbol::
 
@@ -51,7 +51,7 @@ definition = Eq(mass_fraction, mass_of_component / mass_of_mixture)
 @validate_input(mass_of_component_=mass_of_component, mass_of_mixture_=mass_of_mixture)
 @validate_output(mass_fraction)
 def calculate_mass_fraction(mass_of_component_: Quantity, mass_of_mixture_: Quantity) -> Fraction:
-    result_mass_fraction_expr = solve(definition, mass_fraction, dict=True)[0][mass_fraction]
+    result_mass_fraction_expr = solve(law, mass_fraction, dict=True)[0][mass_fraction]
     result_expr = result_mass_fraction_expr.subs({
         mass_of_component: mass_of_component_,
         mass_of_mixture: mass_of_mixture_

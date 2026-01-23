@@ -65,10 +65,10 @@ _curve_radius_vertical = projector.law.rhs.subs({
 
 # NOTE: replace 'moving_time' first as Derivative can have difficulties when processing both substitutions at once
 
-_velocity_horisontal = velocity_def.definition.rhs.subs(velocity_def.time,
+_velocity_horisontal = velocity_def.law.rhs.subs(velocity_def.time,
     _time).subs(velocity_def.distance(_time), _curve_radius_horisontal).doit()
 
-_velocity_vertical = velocity_def.definition.rhs.subs(velocity_def.time,
+_velocity_vertical = velocity_def.law.rhs.subs(velocity_def.time,
     _time).subs(velocity_def.distance(_time), _curve_radius_vertical).doit()
 
 _velocity_vector = CoordinateVector([_velocity_horisontal, _velocity_vertical, 0], CARTESIAN)
@@ -88,11 +88,11 @@ assert expr_equals(VectorDot(_radial_unit_vector, _velocity_vector), 0)
 assert expr_equals(VectorDot(_tangential_unit_vector, _radial_unit_vector), 0)
 
 ## Use acceleration definition to calculate '_acceleration_vector'
-_acceleration_horisontal = acceleration_def.definition.rhs.subs(acceleration_def.time, _time)
+_acceleration_horisontal = acceleration_def.law.rhs.subs(acceleration_def.time, _time)
 _acceleration_horisontal = _acceleration_horisontal.subs(acceleration_def.speed(_time),
     _velocity_horisontal).doit()
 
-_acceleration_vertical = acceleration_def.definition.rhs.subs(acceleration_def.time, _time)
+_acceleration_vertical = acceleration_def.law.rhs.subs(acceleration_def.time, _time)
 _acceleration_vertical = _acceleration_vertical.subs(acceleration_def.speed(_time),
     _velocity_vertical).doit()
 
@@ -121,7 +121,7 @@ assert expr_equals(_radial_acceleration_component, _radial_acceleration_magnitud
 ## We are not interested in tangential_acceleration as we are looking for centripetal acceleration which is 'radial_acceleration'
 ## in our proof.
 
-_angular_velocity_applied = angular_velocity_def.definition.rhs.subs(angular_velocity_def.time,
+_angular_velocity_applied = angular_velocity_def.law.rhs.subs(angular_velocity_def.time,
     _time)
 _angular_velocity_applied = _angular_velocity_applied.subs(
     angular_velocity_def.angular_distance(_time), _alpha(_time))

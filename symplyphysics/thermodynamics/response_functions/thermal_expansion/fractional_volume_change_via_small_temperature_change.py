@@ -66,7 +66,7 @@ _temperature = coefficient_def.temperature
 _volume = coefficient_def.volume(_temperature, _parameters)
 
 # Approximate the derivative with a fraction.
-_coefficient_eqn = coefficient_def.definition.subs({
+_coefficient_eqn = coefficient_def.law.subs({
     coefficient_def.volumetric_expansion_coefficient: volumetric_expansion_coefficient,
     _volume.diff(_temperature): _volume_change / temperature_change,
 })

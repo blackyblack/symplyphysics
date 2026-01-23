@@ -27,11 +27,11 @@ from symplyphysics.waves.acoustic_waves import intensity_of_sound_wave_is_rate_o
 from symplyphysics.classical_mechanics.fundamentals import density_from_mass_volume as _density_def
 from symplyphysics.classical_mechanics.kinematics.translational_motion import speed_is_distance_derivative as _speed_def
 from symplyphysics.classical_mechanics.dynamics.energy import power_is_energy_derivative as _power_def
-from symplyphysics.oscillations.general import period_from_angular_frequency as _period_def
+from symplyphysics.oscillations import period_from_angular_frequency as _period_def
 from symplyphysics.classical_mechanics.dynamics.energy import mechanical_energy_is_kinetic_and_potential_energy as _mechanical_energy_def
 from symplyphysics.classical_mechanics.dynamics.translational_motion import kinetic_energy_from_mass_and_speed as _kinetic_energy_law
 from symplyphysics.waves.wave_propagation import phase_of_traveling_wave as _phase_law
-from symplyphysics.waves.general import wave_equation_general_solution_in_one_dimension as _solution_law
+from symplyphysics.waves import wave_equation_general_solution_in_one_dimension as _solution_law
 
 wave_intensity = symbols.intensity
 """
@@ -83,7 +83,7 @@ _area = _intensity_def.area
 
 _small_volume_expr = _small_thickness * _area
 
-_small_mass_expr = solve(_density_def.definition, _density_def.mass)[0].subs({
+_small_mass_expr = solve(_density_def.law, _density_def.mass)[0].subs({
     _density_def.density: medium_density,
     _density_def.volume: _small_volume_expr,
 })
@@ -110,7 +110,7 @@ _displacement_expr = _solution_law.law.rhs.replace(
 
 # 3. Find the speed of an oscillating element of the medium
 
-_speed_expr = _speed_def.definition.rhs.subs(_speed_def.time, _time).replace(
+_speed_expr = _speed_def.law.rhs.subs(_speed_def.time, _time).replace(
     _speed_def.distance,
     lambda _: _displacement_expr,
 ).doit()
@@ -128,13 +128,13 @@ _small_kinetic_energy_expr = _kinetic_energy_law.law.rhs.subs({
 _kinetic_energy_change = clone_as_symbol(symbols.kinetic_energy, display_symbol="dK", positive=True)
 _time_change = clone_as_symbol(symbols.time, display_symbol="dt", real=True)
 
-_original_power_eqn = _power_def.definition.subs(_power_def.time, _time)
+_original_power_eqn = _power_def.law.subs(_power_def.time, _time)
 
 _power_eqn = _original_power_eqn.subs({
     _power_def.energy(_time).diff(_time): _kinetic_energy_change / _time_change,
 })
 
-_speed_eqn = _speed_def.definition.subs(_speed_def.time, _time).subs({
+_speed_eqn = _speed_def.law.subs(_speed_def.time, _time).subs({
     _speed_def.speed(_time): phase_speed,
     _speed_def.distance(_time).diff(_time): _small_thickness / _time_change,
 })
@@ -170,7 +170,7 @@ _mechanical_energy = clone_as_function(symbols.mechanical_energy, (_time,), posi
 _potential_energy = clone_as_function(symbols.potential_energy, (_time,), positive=True)
 _kinetic_energy = clone_as_function(symbols.kinetic_energy, (_time,), positive=True)
 
-_mechanical_energy_eqn = _mechanical_energy_def.definition.subs({
+_mechanical_energy_eqn = _mechanical_energy_def.law.subs({
     _mechanical_energy_def.mechanical_energy: _mechanical_energy(_time),
     _mechanical_energy_def.potential_energy: _potential_energy(_time),
     _mechanical_energy_def.kinetic_energy: _kinetic_energy(_time),
@@ -214,7 +214,7 @@ _average_mechanical_power_expr = _average_mechanical_power_expr.subs({
 
 # 7. Use the definition of intensity
 
-_intensity_expr = _intensity_def.definition.rhs.subs({
+_intensity_expr = _intensity_def.law.rhs.subs({
     _intensity_def.power: _average_mechanical_power_expr,
 })
 

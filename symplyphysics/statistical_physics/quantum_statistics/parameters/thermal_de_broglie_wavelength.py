@@ -42,7 +42,7 @@ temperature = symbols.temperature
 :symbols:`temperature` of the gas.
 """
 
-definition = Eq(
+law = Eq(
     thermal_wavelength,
     quantities.hbar * sqrt(2 * pi / (mass * quantities.boltzmann_constant * temperature)))
 """
@@ -61,7 +61,7 @@ def calculate_thermal_wavelength(
     mass_: Quantity,
     temperature_: Quantity,
 ) -> Quantity:
-    result = definition.rhs.subs({
+    result = law.rhs.subs({
         mass: mass_,
         temperature: temperature_,
     })

@@ -2,9 +2,9 @@
 
 from sympy import Idx, solve, simplify
 from symplyphysics import (print_expression, symbols, clone_as_symbol, global_index)
-from symplyphysics.circuits.components.inductors import coil_impedance_via_inductance_and_frequency as coil_impedance_law
-from symplyphysics.circuits.alternating_current.admittance import admittance_is_inverse_impedance as admittance_def
-from symplyphysics.circuits.alternating_current.admittance import admittance_in_parallel_connection as parallel_admittance_law
+from symplyphysics.electromagnetism.circuits.components.inductors import coil_impedance_via_inductance_and_frequency as coil_impedance_law
+from symplyphysics.electromagnetism.circuits.alternating_current.admittance import admittance_is_inverse_impedance as admittance_def
+from symplyphysics.electromagnetism.circuits.alternating_current.admittance import admittance_in_parallel_connection as parallel_admittance_law
 
 # This example shows how resulting inductivity of 2 parallel coils might be calculated from inductivities of single coils.
 
@@ -17,7 +17,7 @@ inductivity_2 = clone_as_symbol(symbols.inductance, subscript="2")
 # Parallel connection of dipoles summarizes their admittances.
 # First find impedances and then admittances
 impedance_law = coil_impedance_law.law.subs(coil_impedance_law.impedance, admittance_def.impedance)
-admittance_solved = solve([impedance_law, admittance_def.definition],
+admittance_solved = solve([impedance_law, admittance_def.law],
     admittance_def.impedance,
     admittance_def.admittance,
     dict=True)[0][admittance_def.admittance]
@@ -35,7 +35,7 @@ result_admittance = solve(admittances_law, parallel_admittance_law.total_admitta
     dict=True)[0][parallel_admittance_law.total_admittance]
 
 # And finally find resulting inductivity back through the impedance
-result_impedance = solve(admittance_def.definition, admittance_def.impedance,
+result_impedance = solve(admittance_def.law, admittance_def.impedance,
     dict=True)[0][admittance_def.impedance].subs(admittance_def.admittance, result_admittance)
 
 result_inductivity = solve(coil_impedance_law.law, coil_impedance_law.inductance,

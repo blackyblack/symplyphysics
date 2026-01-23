@@ -39,7 +39,7 @@ voltage = symbols.voltage
 :symbols:`voltage` across the object.
 """
 
-definition = Eq(capacitance, charge / voltage)
+law = Eq(capacitance, charge / voltage)
 """
 :laws:symbol::
 
@@ -50,6 +50,6 @@ definition = Eq(capacitance, charge / voltage)
 @validate_input(charge_=charge, voltage_=voltage)
 @validate_output(capacitance)
 def calculate_capacitance(charge_: Quantity, voltage_: Quantity) -> Quantity:
-    solved = solve(definition, capacitance, dict=True)[0][capacitance]
+    solved = solve(law, capacitance, dict=True)[0][capacitance]
     result_expr = solved.subs({charge: charge_, voltage: voltage_})
     return Quantity(result_expr)

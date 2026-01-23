@@ -29,7 +29,7 @@ drag_constant = Symbol("b", positive=True)
 # TODO: add law for the force of drag, quadratic w.r.t velocity
 drag_force_expr = -1 * drag_constant * speed(time)**2  # projection on -z
 
-total_force = force_superposition_law.definition.rhs.subs({
+total_force = force_superposition_law.law.rhs.subs({
     global_index: Idx("i", (1, 2)),
 }).doit().subs({
     force_superposition_law.force[1]: gravity_force_expr,
@@ -62,7 +62,7 @@ print(
 )
 
 speed_expr = solve(
-    (tau_eqn, acceleration_def.definition, newtons_second_eqn),
+    (tau_eqn, acceleration_def.law, newtons_second_eqn),
     (drag_constant, speed(time), acceleration_def.acceleration(time)),
     dict=True,
 )[0][speed(time)]

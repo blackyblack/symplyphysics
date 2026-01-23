@@ -78,7 +78,7 @@ solved = solve(
 isochoric_molar_heat_expr = solved[isochoric_molar_heat]
 isobaric_molar_heat_expr = solved[isobaric_molar_heat]
 
-adiabatic_index_expr = heat_capacity_ratio.definition.rhs.subs({
+adiabatic_index_expr = heat_capacity_ratio.law.rhs.subs({
     heat_capacity_ratio.isobaric_heat_capacity: isobaric_molar_heat_expr,
     heat_capacity_ratio.isochoric_heat_capacity: isochoric_molar_heat_expr,
 })

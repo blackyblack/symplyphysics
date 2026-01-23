@@ -59,7 +59,7 @@ temperature = symbols.temperature
 :symbols:`temperature` of the gas.
 """
 
-definition = Eq(compressibility_factor,
+law = Eq(compressibility_factor,
     (pressure * volume) / (amount_of_substance * quantities.molar_gas_constant * temperature))
 """
 :laws:symbol::
@@ -81,7 +81,7 @@ def calculate_compressibility_factor(
     amount_of_substance_: Quantity,
     temperature_: Quantity,
 ) -> float:
-    result = definition.rhs.subs({
+    result = law.rhs.subs({
         pressure: pressure_,
         volume: volume_,
         amount_of_substance: amount_of_substance_,

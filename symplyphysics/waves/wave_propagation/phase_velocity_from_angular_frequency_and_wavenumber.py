@@ -16,9 +16,9 @@ It is the speed at which the phase of one frequency component of the wave travel
 from sympy import Eq, solve
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.waves.general import angular_wavenumber_is_inverse_wavelength as wavenumber_def
+from symplyphysics.waves import angular_wavenumber_is_inverse_wavelength as wavenumber_def
 from symplyphysics.waves.wave_propagation import wavelength_from_phase_speed_and_period as velocity_law
-from symplyphysics.oscillations.general import period_from_angular_frequency as frequency_law
+from symplyphysics.oscillations import period_from_angular_frequency as frequency_law
 
 phase_speed = symbols.phase_speed
 """
@@ -44,7 +44,7 @@ law = Eq(phase_speed, angular_frequency / angular_wavenumber)
 
 # Derive from definition of phase velocity via wavelength and time period
 
-_wavelength = solve(wavenumber_def.definition,
+_wavelength = solve(wavenumber_def.law,
     wavenumber_def.wavelength)[0].subs(wavenumber_def.angular_wavenumber, angular_wavenumber)
 
 _time_period = solve(frequency_law.law,

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Optional, Iterable, Any, Sized
+from collections.abc import Sized
+from typing import Optional, Iterable, Any
 
 from sympy import Basic, Expr, Dict, Tuple
 from sympy.printing.printer import Printer

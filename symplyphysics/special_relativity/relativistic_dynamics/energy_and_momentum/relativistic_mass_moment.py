@@ -73,7 +73,7 @@ def calculate_mass_moment(
     velocity_: QuantityCoordinateVector,
     time_: Quantity,
 ) -> QuantityCoordinateVector:
-    lorentz_factor_ = lorentz_factor_def.definition.rhs.subs(
+    lorentz_factor_ = lorentz_factor_def.law.rhs.subs(
         lorentz_factor_def.speed,
         VectorNorm(velocity_),
     )

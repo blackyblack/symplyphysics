@@ -132,9 +132,9 @@ _extreme_time_case = _extreme_time_case.subs({
 }).simplify()
 
 # Finally, let's use the definition of the refractive index as the ratio of the speed of light in the medium to that in _a reference medium (vacuum).
-_outer_refraction_definition = refractive_index_definition.definition.subs(
+_outer_refraction_definition = refractive_index_definition.law.subs(
     {refractive_index_definition.relative_refractive_index: incidence_refractive_index})
-_medium_refreaction_definition = refractive_index_definition.definition.subs(
+_medium_refreaction_definition = refractive_index_definition.law.subs(
     {refractive_index_definition.relative_refractive_index: resulting_refractive_index})
 _outer_refraction_velocity = solve(_outer_refraction_definition,
     refractive_index_definition.refracted_wave_speed,

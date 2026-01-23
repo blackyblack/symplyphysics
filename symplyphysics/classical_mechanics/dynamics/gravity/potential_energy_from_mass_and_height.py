@@ -94,12 +94,12 @@ _k1 = _work_energy_law.kinetic_energy(_work_energy_law.time_after)
 _u0 = clone_as_symbol(potential_energy, subscript="0")
 _u1 = clone_as_symbol(potential_energy, subscript="1")
 
-_e0 = _energy_def.definition.rhs.subs({
+_e0 = _energy_def.law.rhs.subs({
     _energy_def.kinetic_energy: _k0,
     _energy_def.potential_energy: _u0,
 })
 
-_e1 = _energy_def.definition.rhs.subs({
+_e1 = _energy_def.law.rhs.subs({
     _energy_def.kinetic_energy: _k1,
     _energy_def.potential_energy: _u1,
 })

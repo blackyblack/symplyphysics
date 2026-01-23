@@ -32,7 +32,7 @@ area = symbols.area
 Surface :symbols:`area`.
 """
 
-definition = Eq(intensity, power / area)
+law = Eq(intensity, power / area)
 """
 :laws:symbol::
 
@@ -43,5 +43,5 @@ definition = Eq(intensity, power / area)
 @validate_input(power_=power, area_=area)
 @validate_output(intensity)
 def calculate_intensity(power_: Quantity, area_: Quantity) -> Quantity:
-    result = definition.rhs.subs({power: power_, area: area_})
+    result = law.rhs.subs({power: power_, area: area_})
     return Quantity(result)

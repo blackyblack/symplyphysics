@@ -6,7 +6,7 @@ from symplyphysics import print_expression, quantities
 from symplyphysics.classical_mechanics.kinematics.rotational_motion import angular_acceleration_is_angular_speed_derivative as angular_acceleration_def
 from symplyphysics.classical_mechanics.kinematics.rotational_motion import angular_speed_is_angular_distance_derivative as angular_speed_def
 from symplyphysics.oscillations.natural_oscillations import harmonic_oscillator_is_second_derivative_equation as harmonic_def
-from symplyphysics.oscillations.general import period_from_angular_frequency as period_def
+from symplyphysics.oscillations import period_from_angular_frequency as period_def
 from symplyphysics.classical_mechanics.dynamics.force import acceleration_from_force_vector as force_law
 from symplyphysics.classical_mechanics.dynamics.relative_motion import relative_acceleration_from_force as motion_law
 from symplyphysics.classical_mechanics.kinematics.relative_motion import acceleration_of_transfer_between_relative_frames as transfer_law
@@ -135,10 +135,10 @@ ball_tangential_acceleration_via_forces = VectorDot(
     cos(ball_angle(time)): cos(ball_angle_sym),
 }).series(ball_angle_sym, 0, 2).removeO().subs(ball_angle_sym, ball_angle(time))
 
-ball_angular_speed = angular_speed_def.definition.rhs.subs(angular_speed_def.time,
+ball_angular_speed = angular_speed_def.law.rhs.subs(angular_speed_def.time,
     time).replace(angular_speed_def.angular_distance, ball_angle).doit()
 
-ball_angular_acceleration = angular_acceleration_def.definition.rhs.subs(
+ball_angular_acceleration = angular_acceleration_def.law.rhs.subs(
     angular_acceleration_def.time, time).replace(
     angular_acceleration_def.angular_speed,
     lambda time_: ball_angular_speed.subs(time, time_),
@@ -154,7 +154,7 @@ oscillation_eqn_derived = Eq(
     ball_tangential_acceleration_via_forces,
 )
 
-oscillation_eqn_from_def = harmonic_def.definition.subs(harmonic_def.time, time).replace(
+oscillation_eqn_from_def = harmonic_def.law.subs(harmonic_def.time, time).replace(
     harmonic_def.displacement,
     ball_angle,
 )

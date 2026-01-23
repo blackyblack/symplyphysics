@@ -53,7 +53,7 @@ law = Eq(final_speed, initial_speed + acceleration * time)
 
 # Derive law
 
-_acceleration_eqn = _acceleration_def.definition.subs(
+_acceleration_eqn = _acceleration_def.law.subs(
     _acceleration_def.time,
     time,
 ).replace(

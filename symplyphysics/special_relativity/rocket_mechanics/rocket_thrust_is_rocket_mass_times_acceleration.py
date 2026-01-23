@@ -85,19 +85,19 @@ _rocket_speed = clone_as_symbol(symbols.speed)
 _rocket_speed_change = clone_as_symbol(symbols.speed, display_symbol="dv")
 _fuel_mass_thrusted = clone_as_symbol(symbols.mass, display_symbol="m_thrust")
 
-_rocket_momentum_before_release = momentum_def.definition.rhs.subs({
+_rocket_momentum_before_release = momentum_def.law.rhs.subs({
     momentum_def.mass: mass,
     momentum_def.speed: _rocket_speed,
 })
 
-_rocket_momentum_after_release = momentum_def.definition.rhs.subs({
+_rocket_momentum_after_release = momentum_def.law.rhs.subs({
     momentum_def.mass: mass - _fuel_mass_thrusted,
     momentum_def.speed: _rocket_speed + _rocket_speed_change,
 })
 
 _products_speed = clone_as_symbol(symbols.speed, display_symbol="v_product")
 
-_products_momentum = momentum_def.definition.rhs.subs({
+_products_momentum = momentum_def.law.rhs.subs({
     momentum_def.mass: _fuel_mass_thrusted,
     momentum_def.speed: _products_speed,
 })
@@ -132,7 +132,7 @@ _time_change = clone_as_symbol(symbols.time, display_symbol="dt")
 
 # solve differential equation with constant fuel_consumption_rate
 _dsolved_fuel_mass = dsolve(
-    flow_rate_def.definition.subs(flow_rate_def.mass_flow_rate(flow_rate_def.time),
+    flow_rate_def.law.subs(flow_rate_def.mass_flow_rate(flow_rate_def.time),
     fuel_consumption_rate), flow_rate_def.mass(flow_rate_def.time))
 _fuel_consumption_eqn = Eq(_fuel_mass_thrusted, _dsolved_fuel_mass.rhs)
 # C1 is initial fuel mass thrusted

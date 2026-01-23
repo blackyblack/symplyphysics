@@ -64,7 +64,7 @@ law = Eq(
 
 _displacement = clone_as_function(displacement, [time])
 
-_eqn = damped_eqn.definition.subs(damped_eqn.time, time).subs({
+_eqn = damped_eqn.law.subs(damped_eqn.time, time).subs({
     damped_eqn.displacement(time): _displacement(time),
     damped_eqn.undamped_angular_frequency: undamped_angular_frequency,
     damped_eqn.damping_ratio: 1,

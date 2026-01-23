@@ -25,7 +25,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.classical_mechanics.kinematics.rotational_motion import angular_acceleration_is_angular_speed_derivative as angular_acceleration_def
 from symplyphysics.classical_mechanics.kinematics.rotational_motion import angular_speed_is_angular_distance_derivative as angular_velocity_def
 from symplyphysics.oscillations.natural_oscillations import harmonic_oscillator_is_second_derivative_equation as oscillator_eqn
-from symplyphysics.oscillations.general import period_from_angular_frequency as period_law
+from symplyphysics.oscillations import period_from_angular_frequency as period_law
 from symplyphysics.classical_mechanics.dynamics.force import acceleration_is_force_over_mass as newtons_second_law
 from symplyphysics.classical_mechanics.dynamics.rotational_motion import torque_via_force_and_radial_distance as torque_def
 from symplyphysics.classical_mechanics.dynamics.rotational_motion import torque_via_rotational_inertia_and_angular_acceleration as torque_law
@@ -71,10 +71,10 @@ gravitational_force = solve(newtons_second_law.law, newtons_second_law.force)[0]
     newtons_second_law.acceleration: quantities.acceleration_due_to_gravity,
 })
 
-angular_velocity = (angular_velocity_def.definition.rhs.subs(angular_velocity_def.time,
+angular_velocity = (angular_velocity_def.law.rhs.subs(angular_velocity_def.time,
     time).subs(angular_velocity_def.angular_distance(time), angle_function(time)))
 
-angular_acceleration = (angular_acceleration_def.definition.rhs.subs(angular_acceleration_def.time,
+angular_acceleration = (angular_acceleration_def.law.rhs.subs(angular_acceleration_def.time,
     time).subs(angular_acceleration_def.angular_speed(time), angular_velocity))
 
 # The factor of -1 indicates that gravitational force acts to reduce the angle.
@@ -96,7 +96,7 @@ torque_due_to_acceleration = torque_law.law.rhs.subs({
 
 diff_eqn_derived = Eq(torque_due_to_gravity, torque_due_to_acceleration)
 
-diff_eqn_original = (oscillator_eqn.definition.subs(oscillator_eqn.time,
+diff_eqn_original = (oscillator_eqn.law.subs(oscillator_eqn.time,
     time).subs(oscillator_eqn.displacement(time), angle_function(time)))
 
 angular_velocity_expr = solve([diff_eqn_derived, diff_eqn_original],

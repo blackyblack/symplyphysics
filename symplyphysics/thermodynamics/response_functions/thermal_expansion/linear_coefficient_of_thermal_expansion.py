@@ -50,7 +50,7 @@ length = clone_as_function(symbols.length, [temperature, pressure])
 :symbols:`length` of the object as a function of temperature and, indirectly, pressure :math:`p`.
 """
 
-definition = Eq(
+law = Eq(
     linear_expansion_coefficient,
     Derivative(length(temperature, pressure), temperature) / length(temperature, pressure),
 )
@@ -81,7 +81,7 @@ def calculate_linear_expansion_coefficient(
         Point2D(temperature_after_, length_after_),
         temperature,
     )
-    result = definition.rhs.replace(
+    result = law.rhs.replace(
         length,
         lambda temperature_, _: length_function.subs(temperature, temperature_),
     )

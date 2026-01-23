@@ -28,7 +28,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.continuum_mechanics.elasticity.energy import potential_energy_from_deformation as spring_energy
 from symplyphysics.classical_mechanics.dynamics.translational_motion import kinetic_energy_from_mass_and_speed as kinetic_energy
 from symplyphysics.classical_mechanics.kinematics.translational_motion import speed_is_distance_derivative as velocity_def
-from symplyphysics.oscillations.general import period_from_angular_frequency as period_definition
+from symplyphysics.oscillations import period_from_angular_frequency as period_definition
 from symplyphysics.oscillations.natural_oscillations import harmonic_oscillator_is_second_derivative_equation as oscillator
 
 period = symbols.period
@@ -71,7 +71,7 @@ amount_of_potential_energy = spring_energy.law.subs({
 
 ## Kinetic energy of the pendulum is:
 ## object_mass * (linear_velocity)**2 / 2
-velocity_def_eq = velocity_def.definition.subs(velocity_def.time, time)
+velocity_def_eq = velocity_def.law.subs(velocity_def.time, time)
 linear_velocity = velocity_def_eq.subs(velocity_def.distance(time), spring_displacement(time)).rhs
 amount_of_kinetic_energy = kinetic_energy.law.subs({
     kinetic_energy.mass: mass,
@@ -92,7 +92,7 @@ spring_acceleration_derived_from_energy = solve(total_energy_diff_eq,
 spring_acceleration_diff_eq = Eq(Derivative(spring_displacement(time), (time, 2)),
     spring_acceleration_derived_from_energy)
 
-oscillator_eq = oscillator.definition.subs(oscillator.time, time)
+oscillator_eq = oscillator.law.subs(oscillator.time, time)
 oscillator_eq = oscillator_eq.subs(oscillator.displacement(time), spring_displacement(time))
 angular_frequency_solved = simplify(
     solve([oscillator_eq, spring_acceleration_diff_eq],

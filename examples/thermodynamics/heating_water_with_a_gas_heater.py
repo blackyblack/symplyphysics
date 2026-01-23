@@ -3,7 +3,7 @@
 from sympy import dsolve, solve, Symbol, Eq, pi
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
-from symplyphysics.circuits.alternating_current.general import power_factor_is_real_power_over_apparent_power as efficiency_law
+from symplyphysics.electromagnetism.circuits.alternating_current import power_factor_is_real_power_over_apparent_power as efficiency_law
 from symplyphysics.thermodynamics.response_functions.heat_capacity import heat_is_heat_capacity_times_temperature_change as thermal_energy_law
 from symplyphysics.thermodynamics.phase_transitions.latent_heat import heat_of_combustion_via_mass as combustion_energy_law
 from symplyphysics.quantity_relations import quantity_is_specific_quantity_times_mass as specific_qty_law
@@ -50,7 +50,7 @@ pipe_cross_sectional_area = pi * diameter_of_pipe**2 / 4
 # V = S * l(t)
 volume_value = pipe_cross_sectional_area * distance_value
 
-density_of_water_equation = density_law.definition.subs({
+density_of_water_equation = density_law.law.subs({
     density_law.density: density_of_water,
     density_law.volume: volume_value
 })
@@ -80,7 +80,7 @@ state_equation = clapeyron_law.law.subs({
 mass_of_gas_in_state_value = solve(state_equation, molar_qty_law.extensive_quantity,
     dict=True)[0][molar_qty_law.extensive_quantity]
 
-mass_gas_dsolved = dsolve(mass_rate_law.definition, mass_rate_law.mass(mass_rate_law.time))
+mass_gas_dsolved = dsolve(mass_rate_law.law, mass_rate_law.mass(mass_rate_law.time))
 # C1 is initial mass of consumed gas
 # HACK: we should tell dsolve() that mass flow rate is constant, but solve() does not work properly with constant
 #       value. So we substitute it with constant and revert to normal mass flow rate after dsolve()

@@ -34,7 +34,7 @@ thermal_conductivity = symbols.thermal_conductivity
 :symbols:`thermal_conductivity` of the insulating material.
 """
 
-definition = Eq(thermal_insulance, slab_thickness / thermal_conductivity)
+law = Eq(thermal_insulance, slab_thickness / thermal_conductivity)
 """
 :laws:symbol::
 
@@ -51,7 +51,7 @@ def calculate_thermal_insulance(
     slab_thickness_: Quantity,
     thermal_conductivity_: Quantity,
 ) -> Quantity:
-    result = definition.rhs.subs({
+    result = law.rhs.subs({
         slab_thickness: slab_thickness_,
         thermal_conductivity: thermal_conductivity_,
     })

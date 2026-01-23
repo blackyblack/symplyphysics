@@ -34,7 +34,7 @@ mass = clone_as_function(symbols.mass, [time])
 :symbols:`mass` as a function of time.
 """
 
-definition = Eq(mass_flow_rate(time), Derivative(mass(time), time))
+law = Eq(mass_flow_rate(time), Derivative(mass(time), time))
 """
 :laws:symbol::
 
@@ -48,7 +48,7 @@ def calculate_mass_flow_rate(mass_start_: Quantity, mass_end_: Quantity,
     time_: Quantity) -> Quantity:
     # mass changes linearly over the time interval `time_`
     mass_function_ = time * (mass_end_ - mass_start_) / time_
-    applied_definition = definition.subs(mass(time), mass_function_)
+    applied_definition = law.subs(mass(time), mass_function_)
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
     return Quantity(result_expr)

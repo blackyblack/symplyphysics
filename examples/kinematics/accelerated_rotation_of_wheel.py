@@ -28,8 +28,8 @@ values = {
     linear_velocity: Quantity(0.65 * units.meter / units.second),
 }
 
-angular_velocity_eqn = angular_velocity_def.definition.subs(angular_velocity_def.time, time)
-angular_acceleration_eqn = angular_acceleration_def.definition.subs(angular_acceleration_def.time,
+angular_velocity_eqn = angular_velocity_def.law.subs(angular_velocity_def.time, time)
+angular_acceleration_eqn = angular_acceleration_def.law.subs(angular_acceleration_def.time,
     time)
 
 angular_position = factor * time**2

@@ -20,7 +20,7 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.classical_mechanics.dynamics.translational_motion import kinetic_energy_from_mass_and_speed as kinetic_energy_def
 from symplyphysics.classical_mechanics.kinematics.general_motion import speed_via_angular_speed_and_radius as linear_velocity_law
-from symplyphysics.classical_mechanics.kinematics.rotational_inertia import rotational_inertia_of_particle as rotational_inertia_def
+from symplyphysics.classical_mechanics.kinematics.rotational_motion.rotational_inertia import rotational_inertia_of_particle as rotational_inertia_def
 
 kinetic_energy = symbols.kinetic_energy
 """

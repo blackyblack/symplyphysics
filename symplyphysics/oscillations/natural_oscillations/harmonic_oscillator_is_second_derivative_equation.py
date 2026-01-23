@@ -44,7 +44,7 @@ angular_frequency = symbols.angular_frequency
 :symbols:`angular_frequency` of the oscillator.
 """
 
-definition = Eq(Derivative(displacement(time), (time, 2)),
+law = Eq(Derivative(displacement(time), (time, 2)),
     -angular_frequency**2 * displacement(time))
 """
 :laws:symbol::
@@ -66,7 +66,7 @@ _amplitude = sympy_symbols("amplitude")
 _initial_phase = sympy_symbols("initial_phase")
 _displacement_function_eq = Eq(displacement(time),
     _amplitude * cos(angular_frequency * time + _initial_phase))
-_dsolved = definition.subs(displacement(time), _displacement_function_eq.rhs)
+_dsolved = law.subs(displacement(time), _displacement_function_eq.rhs)
 assert expr_equals(_dsolved.lhs, _dsolved.rhs)
 
 ## There are many solutions for harmonic_oscillation_eq. Add condition, that at initial point of time (time = 0)

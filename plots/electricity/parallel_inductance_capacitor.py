@@ -11,12 +11,12 @@ from sympy import Abs, Idx, solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import global_index, symbols
-from symplyphysics.circuits.alternating_current.admittance import admittance_in_parallel_connection as parallel_admittance_law
-from symplyphysics.circuits.alternating_current.admittance import admittance_is_inverse_impedance as admittance_def
-from symplyphysics.circuits.components.capacitors import capacitor_impedance_from_capacitance_and_frequency as capacitor_impedance
-from symplyphysics.circuits.components.inductors import coil_impedance_via_inductance_and_frequency as coil_impedance
-from symplyphysics.circuits.transient_analysis.serial_inductor_capacitor_circuit import oscillation_period_of_inductor_capacitor_network as thomsons_formula
-from symplyphysics.oscillations.general import period_from_angular_frequency as period_definition
+from symplyphysics.electromagnetism.circuits.alternating_current.admittance import admittance_in_parallel_connection as parallel_admittance_law
+from symplyphysics.electromagnetism.circuits.alternating_current.admittance import admittance_is_inverse_impedance as admittance_def
+from symplyphysics.electromagnetism.circuits.components.capacitors import capacitor_impedance_from_capacitance_and_frequency as capacitor_impedance
+from symplyphysics.electromagnetism.circuits.components.inductors import coil_impedance_via_inductance_and_frequency as coil_impedance
+from symplyphysics.electromagnetism.circuits.transient_analysis.serial_inductor_capacitor_circuit import oscillation_period_of_inductor_capacitor_network as thomsons_formula
+from symplyphysics.oscillations import period_from_angular_frequency as period_definition
 
 frequency_arg = symbols.angular_frequency
 
@@ -27,17 +27,17 @@ EXAMPLE_RESISTANCE = 5000000
 # Parallel connection of dipoles summarizes their admittances.
 # First find impedances and then admittances
 L_impedance = coil_impedance.law.rhs.subs({coil_impedance.angular_frequency: frequency_arg})
-L_admittance = admittance_def.definition.rhs.subs({
+L_admittance = admittance_def.law.rhs.subs({
     admittance_def.impedance: L_impedance
 }).subs({coil_impedance.inductance: EXAMPLE_INDUCTANCE})
 
 C_impedance = capacitor_impedance.law.rhs.subs(
     {capacitor_impedance.angular_frequency: frequency_arg})
-C_admittance = admittance_def.definition.rhs.subs({
+C_admittance = admittance_def.law.rhs.subs({
     admittance_def.impedance: C_impedance
 }).subs({capacitor_impedance.capacitance: EXAMPLE_CAPACITANCE})
 
-R_admittance = admittance_def.definition.rhs.subs({admittance_def.impedance: EXAMPLE_RESISTANCE})
+R_admittance = admittance_def.law.rhs.subs({admittance_def.impedance: EXAMPLE_RESISTANCE})
 
 ideal_elements = (L_admittance, C_admittance)
 real_elements = (L_admittance, C_admittance, R_admittance)
@@ -52,7 +52,7 @@ admittance_real = parallel_admittance_law.law.rhs.subs(global_index, index_local
 for i, v in enumerate(real_elements):
     admittance_real = admittance_real.subs(parallel_admittance_law.admittance[i + 1], v)
 
-impedance_from_admittance_law = solve(admittance_def.definition,
+impedance_from_admittance_law = solve(admittance_def.law,
     admittance_def.impedance,
     dict=True)[0][admittance_def.impedance]
 

@@ -19,7 +19,7 @@ traction_force = Symbol("traction_force")
 # of the trolleybus, and the drag force is directed horizontally against
 # the movement.
 index_local = Idx("index_local", (1, 2))
-superposition_of_two_forces = superposition_law.definition.subs(global_index, index_local).doit()
+superposition_of_two_forces = superposition_law.law.subs(global_index, index_local).doit()
 
 acceleration_force = superposition_of_two_forces.subs({
     superposition_law.force[1]: traction_force,

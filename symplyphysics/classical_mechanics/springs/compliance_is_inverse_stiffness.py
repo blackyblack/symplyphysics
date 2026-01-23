@@ -32,7 +32,7 @@ stiffness = symbols.stiffness
 :symbols:`stiffness` of the spring.
 """
 
-definition = Eq(compliance, 1 / stiffness)
+law = Eq(compliance, 1 / stiffness)
 """
 :laws:symbol::
 
@@ -43,5 +43,5 @@ definition = Eq(compliance, 1 / stiffness)
 @validate_input(stiffness_=stiffness)
 @validate_output(compliance)
 def calculate_compliance(stiffness_: Quantity) -> Quantity:
-    result = definition.rhs.subs(stiffness, stiffness_)
+    result = law.rhs.subs(stiffness, stiffness_)
     return Quantity(result)

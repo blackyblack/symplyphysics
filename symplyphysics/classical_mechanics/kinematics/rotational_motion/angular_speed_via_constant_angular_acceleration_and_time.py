@@ -56,7 +56,7 @@ law = Eq(final_angular_speed, initial_angular_speed + angular_acceleration * tim
 # Derive this law from definition of angular acceleration
 
 _angular_velocity_formula = dsolve(
-    angular_acceleration_def.definition.subs(angular_acceleration_def.time, time),
+    angular_acceleration_def.law.subs(angular_acceleration_def.time, time),
     angular_acceleration_def.angular_speed(time),
 ).rhs.subs(
     angular_acceleration_def.angular_acceleration(time),

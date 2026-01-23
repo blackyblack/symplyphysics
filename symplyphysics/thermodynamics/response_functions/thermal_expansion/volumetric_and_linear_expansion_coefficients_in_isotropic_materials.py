@@ -63,7 +63,7 @@ _volume_expr = solve(_volume_eqn, _volume)[0]
 _initial_volume_expr = _volume_expr.subs(_length, _initial_length)
 _final_volume_expr = _volume_expr.subs(_length, _final_length_expr)
 
-_volumetric_expr = volumetric_def.definition.rhs.subs({
+_volumetric_expr = volumetric_def.law.rhs.subs({
     volumetric_def.volume(volumetric_def.temperature, volumetric_def.parameters).diff(volumetric_def.temperature):
     _volume_change / _temperature_change,
     _volume_change:
@@ -76,7 +76,7 @@ _volumetric_expr = volumetric_def.definition.rhs.subs({
 # can be taken into account.
 _volumetric_expr_series = _volumetric_expr.series(_length_change, 0, 2).removeO()
 
-_linear_eqn = linear_def.definition.subs({
+_linear_eqn = linear_def.law.subs({
     linear_def.length(linear_def.temperature, linear_def.pressure).diff(linear_def.temperature):
     _length_change / _temperature_change,
     linear_def.length(linear_def.temperature, linear_def.pressure):

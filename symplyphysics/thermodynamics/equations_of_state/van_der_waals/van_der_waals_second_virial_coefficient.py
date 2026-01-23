@@ -90,7 +90,7 @@ _pressure_expr = solve(vdw_eqn.law, vdw_eqn.pressure)[0].subs({
     vdw_eqn.excluded_volume_parameter: excluded_volume_parameter,
 })
 
-_compressibility_via_volume = compressibility_def.definition.rhs.subs({
+_compressibility_via_volume = compressibility_def.law.rhs.subs({
     compressibility_def.pressure: _pressure_expr,
     compressibility_def.temperature: temperature,
 })

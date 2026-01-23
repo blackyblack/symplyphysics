@@ -37,7 +37,7 @@ volume = symbols.volume
 :symbols:`volume` of the object.
 """
 
-definition = Eq(density, mass / volume)
+law = Eq(density, mass / volume)
 """
 :laws:symbol::
 
@@ -48,6 +48,6 @@ definition = Eq(density, mass / volume)
 @validate_input(mass_=mass, volume_=volume)
 @validate_output(density)
 def calculate_density(mass_: Quantity, volume_: Quantity) -> Quantity:
-    solved = solve(definition, density, dict=True)[0][density]
+    solved = solve(law, density, dict=True)[0][density]
     result_expr = solved.subs({mass: mass_, volume: volume_})
     return Quantity(result_expr)

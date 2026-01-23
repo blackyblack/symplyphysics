@@ -95,7 +95,7 @@ _solved = solve([_decay_eqn, _frequencies_eqn], (_damping_ratio_sym, _undamped_f
 _damping_ratio_expr = _solved[_damping_ratio_sym]
 _undamped_frequency_expr = _solved[_undamped_frequency_sym]
 
-_diff_eqn = damped_eqn.definition.subs(damped_eqn.time, time)
+_diff_eqn = damped_eqn.law.subs(damped_eqn.time, time)
 
 _diff_eqn_subs = _diff_eqn.subs({
     damped_eqn.displacement(time): law.rhs,

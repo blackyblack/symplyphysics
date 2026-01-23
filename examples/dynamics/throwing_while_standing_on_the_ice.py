@@ -23,10 +23,10 @@ distance = Symbol("distance")
 
 gravity_acceleration = Symbol("gravity_acceleration")
 
-momentum_of_skater = momentum.definition.subs({
+momentum_of_skater = momentum.law.subs({
     momentum.mass: mass_of_skater,
 }).rhs
-momentum_of_puck = momentum.definition.subs({
+momentum_of_puck = momentum.law.subs({
     momentum.mass: mass_of_puck,
     momentum.speed: velocity_of_puck
 }).rhs

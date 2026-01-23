@@ -30,7 +30,7 @@ temperature_melt_ice = Symbol("temperature_melt_ice")
 mass_of_ice = Symbol("mass_of_ice")
 mass_of_hot_water = Symbol("mass_of_hot_water")
 
-density_of_water_equation = density_law.definition.subs({
+density_of_water_equation = density_law.law.subs({
     density_law.volume: volume_of_bath,
     density_law.density: density_of_water
 })

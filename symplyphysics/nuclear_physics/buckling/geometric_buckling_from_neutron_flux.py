@@ -17,7 +17,7 @@ from symplyphysics import (SI, units, Quantity, validate_output, symbols, clone_
     Function)
 from symplyphysics.core.dimensions import collect_expression_and_dimension
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.nuclear_physics.general import diffusion_equation_from_neutron_flux as diffusion_equation
+from symplyphysics.nuclear_physics import diffusion_equation_from_neutron_flux as diffusion_equation
 
 position = symbols.position
 """

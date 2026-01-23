@@ -63,7 +63,7 @@ _second_spring_reaction = abs(
 _total_reaction = abs(
     newtons_third_law.law.rhs.subs(newtons_third_law.action_force, _second_spring_reaction))
 
-_stiffness_expr = solve(compliance_def.definition, compliance_def.stiffness)[0]
+_stiffness_expr = solve(compliance_def.law, compliance_def.stiffness)[0]
 _first_stiffness = _stiffness_expr.subs(compliance_def.compliance, first_compliance)
 _second_stiffness = _stiffness_expr.subs(compliance_def.compliance, second_compliance)
 _total_stiffness = _stiffness_expr.subs(compliance_def.compliance, total_compliance)

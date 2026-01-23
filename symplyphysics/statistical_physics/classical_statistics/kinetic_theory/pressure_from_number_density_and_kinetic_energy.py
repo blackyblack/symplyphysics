@@ -55,7 +55,7 @@ _temperature_eq = kinetic_energy.law.subs({
 
 _derived_temperature = solve(_temperature_eq, kinetic_energy.equilibrium_temperature)[0]
 
-_particles_number_eq = number_density_def.definition.subs({
+_particles_number_eq = number_density_def.law.subs({
     number_density_def.volume: ideal_gas_law.volume,
     number_density_def.number_density: number_density
 })

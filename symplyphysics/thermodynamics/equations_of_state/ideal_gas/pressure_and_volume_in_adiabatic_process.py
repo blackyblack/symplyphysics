@@ -143,7 +143,7 @@ _temperature_change_expr = solve(
     dict=True,
 )[0][_temperature_change]
 
-_adiabatic_index_eqn = heat_capacity_ratio.definition.subs({
+_adiabatic_index_eqn = heat_capacity_ratio.law.subs({
     heat_capacity_ratio.heat_capacity_ratio: _adiabatic_index,
     heat_capacity_ratio.isochoric_heat_capacity: _isochoric_heat_capacity,
     heat_capacity_ratio.isobaric_heat_capacity: _isobaric_heat_capacity,

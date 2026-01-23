@@ -33,7 +33,7 @@ force = clone_as_indexed(symbols.force)
 Individual :symbols:`force`.
 """
 
-definition = Eq(net_force, IndexedSum(force[global_index], global_index))
+law = Eq(net_force, IndexedSum(force[global_index], global_index))
 """
 :laws:symbol::
 
@@ -45,7 +45,7 @@ definition = Eq(net_force, IndexedSum(force[global_index], global_index))
 # Derive the law using 2 forces. Any number of forces can be represented, using 2 of them,
 # eg A + B + C = A + (B + C) = Sum(A, Sum(B, C))
 _local_index = Idx("local_index_", (1, 2))
-_forces_law = definition.subs(global_index, _local_index)
+_forces_law = law.subs(global_index, _local_index)
 _expected_sum = _forces_law.doit().rhs
 
 # Using one dimensional vectors represents scalar form of the law
@@ -66,7 +66,7 @@ assert _resultant_vector.components[2] == 0
 @validate_output(net_force)
 def calculate_resultant_force(forces_: Sequence[Quantity]) -> Quantity:
     local_index = Idx("index_local", (1, len(forces_)))
-    forces_law = definition.subs(global_index, local_index)
+    forces_law = law.subs(global_index, local_index)
     forces_law = forces_law.doit()
     solved = solve(forces_law, net_force, dict=True)[0][net_force]
     for i, v in enumerate(forces_):

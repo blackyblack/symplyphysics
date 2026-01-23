@@ -32,7 +32,7 @@ initial_conditions = {
     displacement(time).diff(time).subs(time, 0): INITIAL_VELOCITY,
 }
 
-eqn = damped_eqn.definition.subs(damped_eqn.time, time).subs({
+eqn = damped_eqn.law.subs(damped_eqn.time, time).subs({
     damped_eqn.displacement(time): displacement(time),
     damped_eqn.undamped_angular_frequency: OMEGA,
 })

@@ -73,7 +73,7 @@ law = Eq(displacement, amplitude * cos(angular_frequency * time + phase_shift))
 
 _displacement = clone_as_function(displacement, [time])
 
-_eqn = harmonic_eqn.definition.replace(harmonic_eqn.displacement, _displacement).subs({
+_eqn = harmonic_eqn.law.replace(harmonic_eqn.displacement, _displacement).subs({
     harmonic_eqn.time: time,
     harmonic_eqn.angular_frequency: angular_frequency,
 })

@@ -28,7 +28,7 @@ from symplyphysics import (
     quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.waves.general import radiant_exitance_is_radiant_flux_emitted_per_unit_area as exitance_def
+from symplyphysics.waves import radiant_exitance_is_radiant_flux_emitted_per_unit_area as exitance_def
 from symplyphysics.electromagnetic_waves.blackbody_radiation import radiation_power_via_temperature as radiation_law
 
 radiance = symbols.radiant_exitance
@@ -56,7 +56,7 @@ _thermal_radiation_power = radiation_law.law.rhs.subs({
     radiation_law.surface_area: exitance_def.area,
 })
 
-_radiant_exitance_derived = exitance_def.definition.rhs.subs(
+_radiant_exitance_derived = exitance_def.law.rhs.subs(
     exitance_def.radiant_flux(exitance_def.area),
     _thermal_radiation_power,
 ).doit()

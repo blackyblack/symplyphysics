@@ -34,7 +34,7 @@ angular_distance = clone_as_function(symbols.angular_distance, [time])
 :symbols:`angular_distance` as a function of time.
 """
 
-definition = Eq(angular_speed(time), Derivative(angular_distance(time), time))
+law = Eq(angular_speed(time), Derivative(angular_distance(time), time))
 """
 :laws:symbol::
 
@@ -50,7 +50,7 @@ def calculate_angular_velocity(angle_start_: Quantity | float, angle_end_: Quant
     angle_start_radians = convert_to_si(angle_start_)
     angle_end_radians = convert_to_si(angle_end_)
     angle_function_ = time * (angle_end_radians - angle_start_radians) / moving_time_
-    applied_definition = definition.subs(angular_distance(time), angle_function_)
+    applied_definition = law.subs(angular_distance(time), angle_function_)
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
     return Quantity(result_expr)

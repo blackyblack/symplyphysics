@@ -19,7 +19,7 @@ of the wavelength.
 from sympy import Eq, S
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.waves.general import angular_wavenumber_is_inverse_wavelength as wavenumber_def
+from symplyphysics.waves import angular_wavenumber_is_inverse_wavelength as wavenumber_def
 from symplyphysics.waves.standing_waves import displacement_in_standing_wave as standing_wave_law
 
 antinode_position = symbols.position
@@ -50,7 +50,7 @@ law = Eq(antinode_position, (integer_factor + S.One / 2) * wavelength / 2)
 
 _standing_wave_expr = standing_wave_law.law.rhs
 
-_angular_wavenumber = wavenumber_def.definition.rhs.subs(wavenumber_def.wavelength, wavelength)
+_angular_wavenumber = wavenumber_def.law.rhs.subs(wavenumber_def.wavelength, wavelength)
 
 _standing_wave_expr = _standing_wave_expr.subs(standing_wave_law.angular_wavenumber,
     _angular_wavenumber)

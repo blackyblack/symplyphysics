@@ -49,7 +49,7 @@ damping_ratio = clone_as_symbol(symbols.damping_ratio, positive=True)
 :symbols:`damping_ratio` of the system.
 """
 
-definition = Eq(
+law = Eq(
     Derivative(displacement(time), time, 2) +
     2 * damping_ratio * undamped_angular_frequency * Derivative(displacement(time), time) +
     undamped_angular_frequency**2 * displacement(time), 0)
@@ -80,7 +80,7 @@ def calculate_displacement(
         displacement(time).diff(time).subs(time, 0): initial_velocity_,
     }
     dsolved = dsolve(
-        definition,
+        law,
         displacement(time),
         ics=ics,
     ).rhs

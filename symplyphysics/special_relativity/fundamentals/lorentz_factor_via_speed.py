@@ -38,7 +38,7 @@ speed = symbols.speed
 :symbols:`speed` of the body.
 """
 
-definition = Eq(lorentz_factor, 1 / sqrt(1 - speed**2 / quantities.speed_of_light**2))
+law = Eq(lorentz_factor, 1 / sqrt(1 - speed**2 / quantities.speed_of_light**2))
 """
 :laws:symbol::
 
@@ -49,5 +49,5 @@ definition = Eq(lorentz_factor, 1 / sqrt(1 - speed**2 / quantities.speed_of_ligh
 @validate_input(speed_=speed)
 @validate_output(lorentz_factor)
 def calculate_lorentz_factor(speed_: Quantity) -> Quantity:
-    result = definition.rhs.subs(speed, speed_)
+    result = law.rhs.subs(speed, speed_)
     return Quantity(result)

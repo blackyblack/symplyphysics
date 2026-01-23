@@ -48,7 +48,7 @@ law = Eq(final_position, initial_position + speed * time)
 
 # Derive the same law from velocity definition
 
-_constant_velocity_movement_definition = velocity_definition.definition.subs({
+_constant_velocity_movement_definition = velocity_definition.law.subs({
     velocity_definition.speed(velocity_definition.time): speed,
     velocity_definition.time: time
 })

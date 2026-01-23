@@ -35,14 +35,14 @@ from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.classical_mechanics.kinematics.translational_motion import speed_is_distance_derivative as _speed_def
 from symplyphysics.classical_mechanics.dynamics.energy import power_is_energy_derivative as _power_def
-from symplyphysics.oscillations.general import period_from_angular_frequency as _period_law
+from symplyphysics.oscillations import period_from_angular_frequency as _period_law
 from symplyphysics.classical_mechanics.dynamics.energy import mechanical_energy_is_kinetic_and_potential_energy as _mechanical_energy_def
 from symplyphysics.classical_mechanics.dynamics.translational_motion import kinetic_energy_from_mass_and_speed as _kinetic_energy_def
 from symplyphysics.classical_mechanics.dynamics.translational_motion import mechanical_work_from_force_and_distance as _work_law
 from symplyphysics.quantity_relations import (
     quantity_is_linear_density_times_length as _linear_density_law,)
 from symplyphysics.waves.wave_propagation import phase_of_traveling_wave as _phase_law
-from symplyphysics.waves.general import wave_equation_general_solution_in_one_dimension as _solution_law
+from symplyphysics.waves import wave_equation_general_solution_in_one_dimension as _solution_law
 from symplyphysics.waves.stretched_string import phase_speed_of_wave_on_stretched_string as _string_speed_law
 from symplyphysics.waves.wave_propagation import phase_velocity_from_angular_frequency_and_wavenumber as _phase_speed_law
 
@@ -112,7 +112,7 @@ _transverse_displacement_expr = _solution_law.law.rhs.replace(
 
 # This is the speed at which a string element at a specific location moves in the transverse
 # direction.
-_transverse_speed_expr = _speed_def.definition.rhs.subs(_speed_def.time, _time).replace(
+_transverse_speed_expr = _speed_def.law.rhs.subs(_speed_def.time, _time).replace(
     _speed_def.distance,
     lambda _: _transverse_displacement_expr,
 ).doit()
@@ -175,7 +175,7 @@ _potential_energy_change_expr = _work_law.law.rhs.subs({
 
 # 3. Find mechanical energy change
 
-_mechanical_energy_change_expr = _mechanical_energy_def.definition.rhs.subs({
+_mechanical_energy_change_expr = _mechanical_energy_def.law.rhs.subs({
     _mechanical_energy_def.kinetic_energy: _small_element_kinetic_energy_expr,
     _mechanical_energy_def.potential_energy: _potential_energy_change_expr,
 }).simplify()
@@ -190,11 +190,11 @@ _mechanical_energy_change_eqn = Eq(_mechanical_energy_change, _mechanical_energy
 
 _time_change = clone_as_symbol(symbols.time, display_symbol="dt", real=True)
 
-_power_eqn = _power_def.definition.subs(_power_def.time, _time).subs({
+_power_eqn = _power_def.law.subs(_power_def.time, _time).subs({
     _power_def.energy(_time).diff(_time): _mechanical_energy_change / _time_change,
 })
 
-_speed_eqn = _speed_def.definition.subs(_speed_def.time, _time).subs({
+_speed_eqn = _speed_def.law.subs(_speed_def.time, _time).subs({
     _speed_def.speed(_time): phase_speed,
     _speed_def.distance(_time).diff(_time): _small_element_length / _time_change,
 })

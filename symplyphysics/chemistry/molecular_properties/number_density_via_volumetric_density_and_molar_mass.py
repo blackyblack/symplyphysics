@@ -46,7 +46,7 @@ law = Eq(number_density, volumetric_density * quantities.avogadro_constant / mol
 
 # Derive the same law from volume number density law
 
-_density_law = density_from_mass_volume.definition.subs({
+_density_law = density_from_mass_volume.law.subs({
     density_from_mass_volume.volume: number_density_is_number_of_objects_per_unit_volume.volume,
     density_from_mass_volume.density: volumetric_density
 })
@@ -66,7 +66,7 @@ _atomic_weight_law = molar_qty_law.law.subs({
 })
 
 _derived_law = [
-    number_density_is_number_of_objects_per_unit_volume.definition, _density_law, _avogadro_law,
+    number_density_is_number_of_objects_per_unit_volume.law, _density_law, _avogadro_law,
     _atomic_weight_law
 ]
 

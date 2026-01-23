@@ -3,7 +3,7 @@
 from sympy import symbols, pi, solve, refine, Q, cos, S
 from symplyphysics import print_expression, quantities
 from symplyphysics.classical_mechanics.statics.equilibrium import total_torque_is_zero as equilibrium_law
-from symplyphysics.oscillations.general import period_from_angular_frequency as period_def
+from symplyphysics.oscillations import period_from_angular_frequency as period_def
 from symplyphysics.classical_mechanics.dynamics.force import acceleration_from_force_vector as force_law
 from symplyphysics.classical_mechanics.dynamics.rotational_motion import torque_is_position_vector_cross_force as torque_def
 from symplyphysics.classical_mechanics.kinematics.rotational_motion import centripetal_acceleration_via_vector_rejection as centripetal_law

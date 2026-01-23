@@ -63,7 +63,7 @@ _net_force_derived = solve(
     dict=True,
 )[0][_force(_time)]
 
-_net_force_expected = _additive_law.definition.rhs.subs(
+_net_force_expected = _additive_law.law.rhs.subs(
     global_index,
     Idx("i", (1, 2)),
 ).doit().subs({

@@ -31,7 +31,7 @@ mass = symbols.mass
 :symbols:`mass` of the object.
 """
 
-definition = Eq(momentum, mass * speed)
+law = Eq(momentum, mass * speed)
 """
 :laws:symbol::
 
@@ -42,6 +42,6 @@ definition = Eq(momentum, mass * speed)
 @validate_input(speed_=speed, mass_=mass)
 @validate_output(momentum)
 def calculate_momentum(mass_: Quantity, speed_: Quantity) -> Quantity:
-    solved = solve(definition, momentum, dict=True)[0][momentum]
+    solved = solve(law, momentum, dict=True)[0][momentum]
     result_expr = solved.subs({mass: mass_, speed: speed_})
     return Quantity(result_expr)

@@ -40,7 +40,7 @@ reference_intensity = Quantity(1e-12 * units.watt / units.meter**2, display_symb
 The intensity of a sound wave relative to which the sound level is measured.
 """
 
-definition = Eq(sound_level, reference_sound_level * log(intensity / reference_intensity, 10))
+law = Eq(sound_level, reference_sound_level * log(intensity / reference_intensity, 10))
 """
 :laws:symbol::
 
@@ -51,5 +51,5 @@ definition = Eq(sound_level, reference_sound_level * log(intensity / reference_i
 @validate_input(intensity_=intensity)
 @validate_output(sound_level)
 def calculate_sound_level(intensity_: Quantity) -> float:
-    result = definition.rhs.subs(intensity, intensity_)
+    result = law.rhs.subs(intensity, intensity_)
     return scale_factor(Quantity(result))

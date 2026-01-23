@@ -25,7 +25,7 @@ from symplyphysics.electromagnetism.electrodynamics.dynamics import lorentz_forc
 from symplyphysics.classical_mechanics.dynamics.force import acceleration_is_force_over_mass as _newtons_second_law
 from symplyphysics.classical_mechanics.kinematics.rotational_motion import centripetal_acceleration_via_angular_speed_and_radius as _centripetal_acceleration_law
 from symplyphysics.classical_mechanics.kinematics.general_motion import speed_via_angular_speed_and_radius as _speed_law
-from symplyphysics.oscillations.general import period_from_angular_frequency as _period_law
+from symplyphysics.oscillations import period_from_angular_frequency as _period_law
 
 from symplyphysics.core.vectors import VectorNorm
 from symplyphysics.core.coordinate_systems import CoordinateVector, CARTESIAN

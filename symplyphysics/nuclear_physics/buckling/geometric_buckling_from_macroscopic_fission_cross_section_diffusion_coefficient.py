@@ -21,7 +21,7 @@ from symplyphysics import (
     clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.nuclear_physics.general import diffusion_equation_from_neutron_flux as diffusion_equation_law
+from symplyphysics.nuclear_physics import diffusion_equation_from_neutron_flux as diffusion_equation_law
 from symplyphysics.nuclear_physics.buckling import geometric_buckling_from_neutron_flux as buckling_law
 
 neutrons_per_fission = clone_as_symbol(symbols.particle_count,

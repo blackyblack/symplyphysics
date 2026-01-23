@@ -39,7 +39,7 @@ base_plot = plot(
     show=False,
 )
 
-lorentz_factor = lorentz_factor_def.definition.rhs.subs(
+lorentz_factor = lorentz_factor_def.law.rhs.subs(
     lorentz_factor_def.speed,
     reduced_speed * speed_of_light,
 )

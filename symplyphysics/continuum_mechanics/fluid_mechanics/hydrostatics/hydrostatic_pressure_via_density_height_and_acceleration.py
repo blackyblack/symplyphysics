@@ -59,7 +59,7 @@ _pressure_eqn = _pressure_def.law.subs(_pressure_def.pressure, hydrostatic_press
 
 _force_eqn = _newtons_second_law.law.subs(_newtons_second_law.acceleration, acceleration)
 
-_density_eqn = _density_def.definition.subs({
+_density_eqn = _density_def.law.subs({
     _density_def.density: density,
     _density_def.mass: _newtons_second_law.mass,
     _density_def.volume: _pressure_def.area * height,

@@ -14,7 +14,7 @@ from sympy import (Eq, solve)
 from symplyphysics import (Quantity, validate_input, validate_output, symbols, clone_as_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
-from symplyphysics.oscillations.general import temporal_frequency_is_number_of_events_per_unit_time as frequency_def
+from symplyphysics.oscillations import temporal_frequency_is_number_of_events_per_unit_time as frequency_def
 
 average_angular_speed = clone_as_symbol(
     symbols.angular_speed,
@@ -44,7 +44,7 @@ law = Eq(average_angular_speed, angular_distance / time)
 
 # Derive the same law from temporal frequency definition
 
-_frequency_of_radian = frequency_def.definition.subs({
+_frequency_of_radian = frequency_def.law.subs({
     frequency_def.number_of_events: angular_distance,
     frequency_def.time: time
 }).rhs

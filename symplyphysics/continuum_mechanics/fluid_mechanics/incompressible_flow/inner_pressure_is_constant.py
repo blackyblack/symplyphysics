@@ -86,7 +86,7 @@ _distance_change_expr = _distance_law.law.rhs.subs({
 })
 
 _mass_change_original_expr = solve(
-    _density_def.definition,
+    _density_def.law,
     _density_def.mass,
 )[0].subs({
     _density_def.volume: _tube_area(time) * _distance_change_expr,

@@ -2,11 +2,11 @@
 
 from sympy import Idx, solve, symbols
 from symplyphysics import units, global_index
-from symplyphysics.circuits.direct_current.general import current_is_voltage_over_resistance as ohm_law
-from symplyphysics.circuits.alternating_current.admittance import admittance_in_parallel_connection as total_admittance_law
-from symplyphysics.circuits.alternating_current.admittance import admittance_is_conductance_and_susceptance as admittance_law
-from symplyphysics.circuits.direct_current.resistance import resistance_in_serial_connection as serial_resistance
-from symplyphysics.circuits.direct_current.conductance import electrical_conductance_is_inverse_resistance as conductivity_law
+from symplyphysics.electromagnetism.circuits.direct_current import current_is_voltage_over_resistance as ohm_law
+from symplyphysics.electromagnetism.circuits.alternating_current.admittance import admittance_in_parallel_connection as total_admittance_law
+from symplyphysics.electromagnetism.circuits.alternating_current.admittance import admittance_is_conductance_and_susceptance as admittance_law
+from symplyphysics.electromagnetism.circuits.direct_current.resistance import resistance_in_serial_connection as serial_resistance
+from symplyphysics.electromagnetism.circuits.direct_current.conductance import electrical_conductance_is_inverse_resistance as conductivity_law
 
 # Two resistors are connected across a 12 V battery with internal resistance of 1 Ohm.
 # When they are connected in parallel, the current in the circuit is 4 A.
@@ -24,10 +24,10 @@ I_parallel = symbols("I_parallel")
 
 ## Find resistance R12 using the law of conductance
 
-sigma1 = solve(conductivity_law.definition,
+sigma1 = solve(conductivity_law.law,
     conductivity_law.conductance)[0].subs({conductivity_law.resistance: R1})
 
-sigma2 = solve(conductivity_law.definition,
+sigma2 = solve(conductivity_law.law,
     conductivity_law.conductance)[0].subs({conductivity_law.resistance: R2})
 
 index_local = Idx("index_local", (1, 2))
@@ -41,9 +41,9 @@ sigma_parallel = (total_admittance_law.law.rhs.subs(global_index, index_local).d
     total_admittance_law.admittance[2]: admittance2,
 }))
 
-resistance_definition = conductivity_law.definition.subs(
+resistance_law = conductivity_law.law.subs(
     {conductivity_law.conductance: sigma_parallel})
-R12_parallel = solve(resistance_definition, conductivity_law.resistance)[0]
+R12_parallel = solve(resistance_law, conductivity_law.resistance)[0]
 
 ## The sum resistance R12 is still connected in series to the internal resistance of the battery
 

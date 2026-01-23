@@ -34,7 +34,7 @@ energy = clone_as_function(symbols.energy, [time])
 :symbols:`energy` as a function of time.
 """
 
-definition = Eq(power(time), Derivative(energy(time), time))
+law = Eq(power(time), Derivative(energy(time), time))
 """
 :laws:symbol::
 
@@ -46,7 +46,7 @@ definition = Eq(power(time), Derivative(energy(time), time))
 @validate_output(power)
 def calculate_power(energy_start_: Quantity, energy_end_: Quantity, time_: Quantity) -> Quantity:
     energy_function_ = time * (energy_end_ - energy_start_) / time_
-    applied_definition = definition.subs(energy(time), energy_function_)
+    applied_definition = law.subs(energy(time), energy_function_)
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
     return Quantity(result_expr)

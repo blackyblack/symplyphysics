@@ -60,7 +60,7 @@ _work_expr = _work_law.law.rhs.subs({
     _work_law.displacement: _displacement(_time),
 }).doit()
 
-_power_expr = _power_def.definition.rhs.subs(
+_power_expr = _power_def.law.rhs.subs(
     _power_def.energy(_time),
     _work_expr,
 ).doit()

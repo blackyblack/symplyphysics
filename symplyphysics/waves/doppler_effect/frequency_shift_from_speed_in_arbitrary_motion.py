@@ -29,7 +29,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.waves.wave_propagation import (
     wavelength_from_phase_speed_and_period as period_law,)
-from symplyphysics.oscillations.general import temporal_frequency_from_period as frequency_def
+from symplyphysics.oscillations import temporal_frequency_from_period as frequency_def
 from symplyphysics.mathematics.geometry import scalar_projection_is_vector_length_times_cosine_of_angle as projector
 from symplyphysics.classical_mechanics.kinematics.translational_motion import position_via_constant_speed_and_time as distance_law
 

@@ -21,7 +21,7 @@ from symplyphysics.continuum_mechanics.acoustic_waves import speed_of_sound_via_
 from symplyphysics.quantity_relations import (
     fractional_change_is_change_over_initial_value as _fractional_law,)
 from symplyphysics.waves.wave_propagation import phase_of_traveling_wave as _phase_law
-from symplyphysics.waves.general import wave_equation_general_solution_in_one_dimension as _solution_law
+from symplyphysics.waves import wave_equation_general_solution_in_one_dimension as _solution_law
 from symplyphysics.waves.wave_propagation import phase_velocity_from_angular_frequency_and_wavenumber as _phase_speed_law
 
 pressure_amplitude = clone_as_symbol(

@@ -63,7 +63,7 @@ law = Eq(
 # Derive law from definitions of angular velocity and acceleration
 
 _angular_velocity_formula = dsolve(
-    angular_acceleration_def.definition.subs(angular_acceleration_def.time, time),
+    angular_acceleration_def.law.subs(angular_acceleration_def.time, time),
     angular_acceleration_def.angular_speed(time),
 ).rhs.subs(
     angular_acceleration_def.angular_acceleration(time),
@@ -81,7 +81,7 @@ _angular_velocity_derived = solve(
 )[0][_angular_velocity]
 
 _angular_displacement_formula = dsolve(
-    angular_velocity_def.definition.subs(angular_velocity_def.time, time),
+    angular_velocity_def.law.subs(angular_velocity_def.time, time),
     angular_velocity_def.angular_distance(time),
 ).rhs.subs(
     angular_velocity_def.angular_speed(time),

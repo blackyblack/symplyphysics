@@ -92,7 +92,7 @@ _archimedes_force_expr = _archimedes_law.law.rhs.subs({
 # 2. True weight of the body is equal to the gravity force on the body as a whole.
 
 _body_mass_expr = solve(
-    _density_def.definition,
+    _density_def.law,
     _density_def.mass,
 )[0].subs({
     _density_def.density: body_density,
@@ -120,7 +120,7 @@ _gravity_force_proj_expr = _projection_law.law.rhs.subs({
 #    gravity force and the buoyant force are antiparallel.
 
 # This is the projection of the net force on the z-axis.
-_net_force_proj_expr = _superposition_law.definition.rhs.subs(
+_net_force_proj_expr = _superposition_law.law.rhs.subs(
     global_index,
     Idx("i", (1, 2)),
 ).doit().subs({

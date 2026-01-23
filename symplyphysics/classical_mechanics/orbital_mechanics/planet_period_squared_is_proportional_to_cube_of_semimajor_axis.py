@@ -20,7 +20,7 @@ from symplyphysics import (
     quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.oscillations.general import period_from_angular_frequency as period_law
+from symplyphysics.oscillations import period_from_angular_frequency as period_law
 from symplyphysics.classical_mechanics.dynamics.force import acceleration_is_force_over_mass as newtons_second_law
 from symplyphysics.classical_mechanics.dynamics.gravity import gravity_force_from_mass_and_distance as gravity_law
 from symplyphysics.classical_mechanics.kinematics.rotational_motion import centripetal_acceleration_via_angular_speed_and_radius as centripetal_law

@@ -25,8 +25,8 @@ from sympy import Eq, solve
 from symplyphysics import Quantity, validate_input, validate_output, quantities, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
 
-from symplyphysics.waves.general import angular_wavenumber_is_inverse_wavelength as _wavenumber_def
-from symplyphysics.oscillations.general import period_from_angular_frequency as _period_def
+from symplyphysics.waves import angular_wavenumber_is_inverse_wavelength as _wavenumber_def
+from symplyphysics.oscillations import period_from_angular_frequency as _period_def
 from symplyphysics.quantum_physics.photons import (
     photon_energy_is_proportional_to_angular_frequency as _energy_law,
 )
@@ -60,7 +60,7 @@ _energy_eqn = _energy_law.law.subs({
     _energy_law.energy: energy,
 })
 
-_wavenumber_eqn = _wavenumber_def.definition.subs({
+_wavenumber_eqn = _wavenumber_def.law.subs({
     _wavenumber_def.angular_wavenumber: _momentum_law.angular_wavenumber,
 })
 

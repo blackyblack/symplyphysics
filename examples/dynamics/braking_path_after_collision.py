@@ -45,7 +45,7 @@ kinetic_energy_before_1 = kinetic_energy_def.law.rhs.subs({
     kinetic_energy_def.speed: 0,
 })
 
-mechanical_energy_before_1 = mechanical_energy_def.definition.rhs.subs({
+mechanical_energy_before_1 = mechanical_energy_def.law.rhs.subs({
     mechanical_energy_def.potential_energy: potential_energy_before_1,
     mechanical_energy_def.kinetic_energy: kinetic_energy_before_1,
 })
@@ -61,7 +61,7 @@ kinetic_energy_after_1 = kinetic_energy_def.law.rhs.subs({
     kinetic_energy_def.speed: speed_before_1,
 })
 
-mechanical_energy_after_1 = mechanical_energy_def.definition.rhs.subs({
+mechanical_energy_after_1 = mechanical_energy_def.law.rhs.subs({
     mechanical_energy_def.potential_energy: potential_energy_after_1,
     mechanical_energy_def.kinetic_energy: kinetic_energy_after_1,
 })
@@ -75,7 +75,7 @@ energy_conservation_eqn_1 = energy_conservation_law.law.subs({
 
 speed_before_1 = solve(energy_conservation_eqn_1, speed_before_1)[0]
 
-momentum_before_1 = momentum_def.definition.rhs.subs({
+momentum_before_1 = momentum_def.law.rhs.subs({
     momentum_def.mass: mass_1,
     momentum_def.speed: speed_before_1,
 })
@@ -84,12 +84,12 @@ momentum_before_1 = momentum_def.definition.rhs.subs({
 
 mechanical_energy_before_elastic = mechanical_energy_before_1
 
-momentum_after_1_elastic = momentum_def.definition.rhs.subs({
+momentum_after_1_elastic = momentum_def.law.rhs.subs({
     momentum_def.mass: mass_1,
     momentum_def.speed: speed_after_1,
 })
 
-momentum_after_2_elastic = momentum_def.definition.rhs.subs({
+momentum_after_2_elastic = momentum_def.law.rhs.subs({
     momentum_def.mass: mass_2,
     momentum_def.speed: speed_after_2,
 })
@@ -115,7 +115,7 @@ kinetic_energy_after_2_elastic = kinetic_energy_def.law.rhs.subs({
 
 kinetic_energy_after_elastic = kinetic_energy_after_1_elastic + kinetic_energy_after_2_elastic
 
-mechanical_energy_after_elastic = mechanical_energy_def.definition.rhs.subs({
+mechanical_energy_after_elastic = mechanical_energy_def.law.rhs.subs({
     mechanical_energy_def.potential_energy: 0,
     mechanical_energy_def.kinetic_energy: kinetic_energy_after_elastic,
 })
@@ -136,7 +136,7 @@ speed_after_2_elastic = solve(
 
 speed_after = Symbol("speed_after")
 
-momentum_after_inelastic = momentum_def.definition.rhs.subs({
+momentum_after_inelastic = momentum_def.law.rhs.subs({
     momentum_def.mass: mass_1 + mass_2,
     momentum_def.speed: speed_after,
 })

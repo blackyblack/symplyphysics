@@ -70,7 +70,7 @@ _diff_linear_velocity_law = Eq(_linear_velocity_law_sub.lhs.diff(_time),
     _linear_velocity_law_sub.rhs.diff(_time))
 
 # alpha = d(omega)/dt
-_angular_acceleration_def_sub = angular_acceleration_def.definition.subs(
+_angular_acceleration_def_sub = angular_acceleration_def.law.subs(
     angular_acceleration_def.time, _time)
 _angular_acceleration_def_sub = _angular_acceleration_def_sub.subs(
     angular_acceleration_def.angular_speed(_time), _angular_velocity(_time))
@@ -82,7 +82,7 @@ linear_velocity_derivative_eq = Eq(Derivative(_linear_velocity(_time), _time),
     _linear_velocity_derivative)
 
 # a_t = dv/dt
-_acceleration_def_sub = acceleration_def.definition.subs(acceleration_def.time, _time)
+_acceleration_def_sub = acceleration_def.law.subs(acceleration_def.time, _time)
 _acceleration_def_sub = _acceleration_def_sub.subs(acceleration_def.speed(_time),
     _linear_velocity(_time))
 _tangential_acceleration_value = solve([linear_velocity_derivative_eq, _acceleration_def_sub],

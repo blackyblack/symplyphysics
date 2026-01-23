@@ -35,13 +35,13 @@ volume_equation = Eq(volume, height * area)
 volume_of_ice_value = volume_equation.subs({height: layer_thickness_of_ice}).rhs
 volume_of_water_value = volume_equation.subs({height: layer_thickness_of_water}).rhs
 
-density_of_ice_equation = density_law.definition.subs({
+density_of_ice_equation = density_law.law.subs({
     density_law.density: density_of_ice,
     density_law.volume: volume_of_ice_value
 })
 mass_of_ice = solve(density_of_ice_equation, density_law.mass, dict=True)[0][density_law.mass]
 
-density_of_water_equation = density_law.definition.subs({
+density_of_water_equation = density_law.law.subs({
     density_law.density: density_of_water,
     density_law.volume: volume_of_water_value
 })

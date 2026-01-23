@@ -50,7 +50,7 @@ volume = clone_as_function(symbols.volume, [pressure, parameters])
 :symbols:`volume` of the gas as a function of :attr:`~pressure` and :attr:`~parameters`.
 """
 
-definition = Eq(
+law = Eq(
     compressibility,
     -1 * Derivative(volume(pressure, parameters), pressure) / volume(pressure, parameters))
 """
@@ -80,6 +80,6 @@ def calculate_compressibility(
         Point2D(pressure_after_, volume_after_),
         pressure,
     )
-    expr = definition.rhs.subs(volume(pressure, parameters), volume_function).doit()
+    expr = law.rhs.subs(volume(pressure, parameters), volume_function).doit()
     result = expr.subs(pressure, pressure_after_)
     return Quantity(result)

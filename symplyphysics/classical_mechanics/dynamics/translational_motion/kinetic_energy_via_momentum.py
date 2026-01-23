@@ -54,7 +54,7 @@ _energy_eqn = energy_law.law.subs({
     energy_law.mass: mass,
 })
 
-_momentum_eqn = momentum_def.definition.subs({
+_momentum_eqn = momentum_def.law.subs({
     momentum_def.momentum: momentum,
     momentum_def.mass: mass,
 })

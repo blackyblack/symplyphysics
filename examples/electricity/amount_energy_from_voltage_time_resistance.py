@@ -26,13 +26,13 @@ final_temperature = Celsius(100)
 initial_temperature_kelvin = to_kelvin_quantity(initial_temperature)
 final_temperature_kelvin = to_kelvin_quantity(final_temperature)
 
-water_mass = solve(density_def.definition, density_def.mass)[0].subs({
+water_mass = solve(density_def.law, density_def.mass)[0].subs({
     density_def.density: water_density,
     density_def.volume: kettle_volume,
 })
 
 heat_via_power = dsolve(
-    power_def.definition.subs(power_def.power(power_def.time), kettle_power),
+    power_def.law.subs(power_def.power(power_def.time), kettle_power),
     power_def.energy(power_def.time),
     ics={
     power_def.energy(0): 0

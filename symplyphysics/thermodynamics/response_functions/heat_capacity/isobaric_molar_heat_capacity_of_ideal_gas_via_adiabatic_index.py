@@ -61,7 +61,7 @@ law = Eq(isobaric_molar_heat_capacity,
 _isobaric_heat = mayers_law.isobaric_heat_capacity
 _isochoric_heat = mayers_law.isochoric_heat_capacity
 
-_adiabatic_index_eqn = heat_capacity_ratio.definition.subs({
+_adiabatic_index_eqn = heat_capacity_ratio.law.subs({
     heat_capacity_ratio.isobaric_heat_capacity: _isobaric_heat,
     heat_capacity_ratio.isochoric_heat_capacity: _isochoric_heat,
     heat_capacity_ratio.heat_capacity_ratio: adiabatic_index,

@@ -31,7 +31,7 @@ from symplyphysics.mathematics.geometry import scalar_projection_is_vector_lengt
 from symplyphysics.classical_mechanics.dynamics.gravity import potential_energy_from_mass_and_height as potential_energy
 from symplyphysics.classical_mechanics.dynamics.translational_motion import kinetic_energy_from_mass_and_speed as kinetic_energy
 from symplyphysics.classical_mechanics.kinematics.general_motion import speed_via_angular_speed_and_radius as angular_velocity_law
-from symplyphysics.oscillations.general import period_from_angular_frequency as angular_frequency
+from symplyphysics.oscillations import period_from_angular_frequency as angular_frequency
 from symplyphysics.oscillations.natural_oscillations import harmonic_oscillator_is_second_derivative_equation as oscillator
 from symplyphysics.classical_mechanics.dynamics.energy import mechanical_energy_is_kinetic_and_potential_energy as mechanical_energy_def
 from symplyphysics.classical_mechanics.conservation_laws import mechanical_energy_is_constant as mechanical_energy_conservation
@@ -88,7 +88,7 @@ amount_of_kinetic_energy = kinetic_energy.law.subs({
     kinetic_energy.speed: linear_velocity
 }).rhs
 
-mechanical_energy = mechanical_energy_def.definition.subs({
+mechanical_energy = mechanical_energy_def.law.subs({
     mechanical_energy_def.kinetic_energy: amount_of_kinetic_energy,
     mechanical_energy_def.potential_energy: amount_of_potential_energy
 }).rhs
@@ -120,7 +120,7 @@ small_angle_harmonic_oscillation_eq = total_energy_diff_solved_eq.subs(
 
 # Will result in harmonic oscillator equation:
 ## Derivative(pendulum_angle(time), (time, 2)) = -free_fall_acceleration / length * pendulum_angle(time)
-oscillator_eq = oscillator.definition.subs(oscillator.time, time)
+oscillator_eq = oscillator.law.subs(oscillator.time, time)
 oscillator_eq = oscillator_eq.subs(oscillator.displacement(time), pendulum_angle(time))
 angular_frequency_solved = solve([oscillator_eq, small_angle_harmonic_oscillation_eq],
     (oscillator.angular_frequency, pendulum_angle(time)),

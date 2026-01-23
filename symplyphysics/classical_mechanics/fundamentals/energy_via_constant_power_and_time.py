@@ -50,7 +50,7 @@ law = Eq(energy, power * time)
 
 # Derive from definition of power from energy
 
-_power_eqn = (power_def.definition.replace(power_def.power,
+_power_eqn = (power_def.law.replace(power_def.power,
     lambda _: power).subs(power_def.time, time))
 
 _energy_expr = dsolve(

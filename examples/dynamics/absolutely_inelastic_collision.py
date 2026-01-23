@@ -18,14 +18,14 @@ body_velocity = Quantity(0 * units.meter / units.second, dimension=units.velocit
 
 print(
     f"Formula for momentum conservation law is:\n{print_expression(momentum_conservation_law.law)}")
-print(f"Formula for momentum is:\n{print_expression(momentum_def.definition)}")
+print(f"Formula for momentum is:\n{print_expression(momentum_def.law)}")
 
 # initial body velocity is 0 so the momentum is 0 as well. So the momentum of system before collision equals to momentum of bullet
 momentum_before = momentum_def.calculate_momentum(bullet_mass, bullet_velocity)
 momentum_after = momentum_conservation_law.calculate_momentum_after(momentum_before)
 
 # Mass of the resulting object is a sum of masses of a bullet and plasticine
-solved = solve(momentum_def.definition, momentum_def.speed, dict=True)[0][momentum_def.speed]
+solved = solve(momentum_def.law, momentum_def.speed, dict=True)[0][momentum_def.speed]
 result_expr = solved.subs({
     momentum_def.mass: Quantity(bullet_mass + body_mass),
     momentum_def.momentum: momentum_after

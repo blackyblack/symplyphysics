@@ -89,7 +89,7 @@ def calculate_force(
     tangential_acceleration_, normal_acceleration_ = split_into_tangential_and_normal_components(
         acceleration_, velocity_)
 
-    lorentz_factor_ = lorentz_factor_def.definition.rhs.subs(
+    lorentz_factor_ = lorentz_factor_def.law.rhs.subs(
         lorentz_factor_def.speed,
         VectorNorm(velocity_),
     )

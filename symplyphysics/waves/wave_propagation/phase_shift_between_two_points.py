@@ -19,7 +19,7 @@ from symplyphysics import (Quantity, validate_input, validate_output, convert_to
     clone_as_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
 
-from symplyphysics.waves.general import angular_wavenumber_is_inverse_wavelength as _wavenumber_def
+from symplyphysics.waves import angular_wavenumber_is_inverse_wavelength as _wavenumber_def
 from symplyphysics.waves.wave_propagation import phase_of_traveling_wave as _phase_law
 
 phase_shift = symbols.phase_shift
@@ -58,7 +58,7 @@ _second_phase = _phase_law.law.rhs.subs(_phase_law.position, _second_position)
 _phase_shift_eqn = Eq(phase_shift, _first_phase - _second_phase)
 _distance_eqn = Eq(distance, _first_position - _second_position)
 
-_wavenumber_eqn = _wavenumber_def.definition.subs({
+_wavenumber_eqn = _wavenumber_def.law.subs({
     _wavenumber_def.angular_wavenumber: _phase_law.angular_wavenumber,
     _wavenumber_def.wavelength: wavelength,
 })

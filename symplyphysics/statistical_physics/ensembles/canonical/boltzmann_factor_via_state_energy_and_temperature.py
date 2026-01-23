@@ -43,7 +43,7 @@ equilibrium_temperature = symbols.temperature
 :symbols:`temperature` of the system at equilibrium.
 """
 
-definition = Eq(
+law = Eq(
     boltzmann_factor,
     exp(-1 * energy_of_state / (quantities.boltzmann_constant * equilibrium_temperature)))
 """
@@ -62,7 +62,7 @@ def calculate_boltzmann_factor(
     energy_of_state_: Quantity,
     equilibrium_temperature_: Quantity,
 ) -> float:
-    result = definition.rhs.subs({
+    result = law.rhs.subs({
         energy_of_state: energy_of_state_,
         equilibrium_temperature: equilibrium_temperature_,
     })

@@ -39,7 +39,7 @@ speed = clone_as_function(symbols.speed, [time])
 :symbols:`speed` of the body as a function of time.
 """
 
-definition = Eq(acceleration(time), Derivative(speed(time), time))
+law = Eq(acceleration(time), Derivative(speed(time), time))
 """
 :laws:symbol::
 
@@ -53,7 +53,7 @@ def calculate_linear_acceleration(velocity_start_: Quantity, velocity_end_: Quan
     time_: Quantity) -> Quantity:
     # velocity changes linearly over the time interval `time_`
     velocity_function_ = time * (velocity_end_ - velocity_start_) / time_
-    applied_definition = definition.subs(speed(time), velocity_function_)
+    applied_definition = law.subs(speed(time), velocity_function_)
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
     return Quantity(result_expr)
