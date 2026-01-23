@@ -48,7 +48,7 @@ factors_ = 1, 2, 10, 15
 
 for factor_ in factors_:
     expr_ = distribution_expr.subs(reduced_temperature, factor_)
-    LABEL = r"$k_\text{B} T = -" + (f"{factor_}" if factor_ != 1 else "") + r"\mu$"
+    LABEL = r"$k_\text{B} T = -" + (f"{factor_}" if factor_ != 1 else "") + r"\mu$" # pylint: disable=invalid-name
     sub_plot = plot(
         expr_,
         (reduced_energy, 0, 5),

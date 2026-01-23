@@ -46,7 +46,7 @@ values_ = -0.5, -1, -2, -5
 
 for value_ in values_:
     expr_ = distribution_expr.subs(reduced_chemical_potential, value_)
-    LABEL = r"$\mu = " + (str(value_) if value_ != -1 else "-") + r" k_\text{B} T$"
+    LABEL = r"$\mu = " + (str(value_) if value_ != -1 else "-") + r" k_\text{B} T$" # pylint: disable=invalid-name
     sub_plot = plot(
         expr_,
         (reduced_energy, 0, 5),
