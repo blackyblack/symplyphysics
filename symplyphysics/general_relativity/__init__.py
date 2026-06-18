@@ -2,7 +2,7 @@
 General Relativity
 ==================
 
-**General relativity** is a branch of physics that generalized :ref:`special relativity
+**General relativity** is a branch of physics that generalizes :ref:`special relativity
 <Special Relativity>` and refines Isaac Newton's :ref:`law of universal gravitation
 <Gravity (Dynamics)>`, providing a unified description of gravity as a geometric property of space
 and time, or four-dimensional spacetime.
