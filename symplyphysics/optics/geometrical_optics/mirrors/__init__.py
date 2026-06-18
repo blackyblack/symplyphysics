@@ -1,8 +1,12 @@
 """
-**Mirrors**
-===========
+Mirrors
+=======
+
+A **mirror** is an object that *reflects* an image; light that bounces off a mirror forms an image
+of whatever is in front of it. Mirrors reverse the direction of light at an angle equal to its
+incidence.
 
 **Links:**
 
-#. `Spherical mirrors <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_III_-_Optics_and_Modern_Physics_(OpenStax)/02%3A_Geometric_Optics_and_Image_Formation/2.03%3A_Spherical_Mirrors>`__.
+#. `Wikipedia — Mirror — Physical principles <https://en.wikipedia.org/wiki/Mirror#Physical_principles>`__
 """
