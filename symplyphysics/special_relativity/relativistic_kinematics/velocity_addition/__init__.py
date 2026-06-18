@@ -3,7 +3,7 @@ Relativistic Velocity Addition
 ==============================
 
 Due to the requirement of the `Lorentz transformations` that the speed of light be constant,
-relativistic velocities cannon be simple added together by laws of vector algebra. Instead, a
+relativistic velocities cannot be simply added together by laws of vector algebra. Instead, a
 *composition law for velocities* is used to determine the combined velocity.
 
 **Links:**
