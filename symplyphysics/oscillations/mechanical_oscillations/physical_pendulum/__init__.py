@@ -2,7 +2,7 @@
 Physical Pendulum
 =================
 
-A **pendulum** a body suspended from a fixed support that freely swings back and forth under the
+A **pendulum** is a body suspended from a fixed support that freely swings back and forth under the
 influence of gravity.
 
 A **physical pendulum** is a pendulum where the rod is an arbitrarily shaped rigid body swinging by
