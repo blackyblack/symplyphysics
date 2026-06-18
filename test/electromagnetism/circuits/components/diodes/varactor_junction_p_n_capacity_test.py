@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
-from symplyphysics.electromagnetism.circuits.components.varactors import varactor_junction_p_n_capacity as capacity_law
+from symplyphysics.electromagnetism.circuits.components.diodes import varactor_junction_p_n_capacity as capacity_law
 
 # Description
 ## The capacity of the varactor without bias voltage is equal to 10 nanofarad. The voltage is 0.5 volt,
