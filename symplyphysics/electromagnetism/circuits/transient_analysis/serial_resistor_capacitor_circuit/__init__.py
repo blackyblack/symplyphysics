@@ -2,7 +2,7 @@
 Serial RC Circuit
 =================
 
-An **RC circtui**, also known as **RC filter**, is an :ref:`electrical circuit <Circuits>` composed
+An **RC circuit**, also known as **RC filter**, is an :ref:`electrical circuit <Circuits>` composed
 of resistors (R) and capacitors (C). They can be used to filter a signal by blocking certain
 frequencies and passing others.
 
