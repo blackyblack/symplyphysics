@@ -5,7 +5,7 @@ Alternating Current
 **Alternating current** (often shortened to **AC**) is an electric current that periodically
 reverses direction and changes its magnitude continuously with time.
 
-The identities included in this module include
+The identities of this module include
 
 - a version of the :ref:`Ohm's law <Current is voltage over resistance>` applicable to
   time-independent AC circuits
