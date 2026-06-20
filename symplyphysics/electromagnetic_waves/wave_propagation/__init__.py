@@ -4,7 +4,7 @@ Wave Propagation (Electromagnetic Waves)
 
 The propagation of electromagnetic waves is determined by :ref:`Maxwell's Equations`. At short
 distances, it can be approximated by *rectilinear propagation* (the tendency of light waves to
-travel in straight lines) thought what is called *transmission medium*. The medium can also be
+travel in straight lines) through what is called *transmission medium*. The medium can also be
 classified into
 
 #. *bounded* (having finite extent) and *unbounded*;
