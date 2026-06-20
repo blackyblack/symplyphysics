@@ -3,7 +3,7 @@ Euler Relations
 ===============
 
 The **Euler relations** are named after *Euler's homogeneous function theorem* being applied to the
-internal energy. Thus, they serve as a way of integrating fundamental themodynamic relations.
+internal energy. Thus, they serve as a way of integrating fundamental thermodynamic relations.
 
 **Links:**
 
