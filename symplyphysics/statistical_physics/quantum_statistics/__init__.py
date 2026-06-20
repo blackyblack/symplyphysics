@@ -8,7 +8,7 @@ one another, i.e. exchanging two particles within an ensemble does lead to a new
 
 .. _pauli-exclusion-principle:
 
-An important concept what determines the existence of two quantum statistics is the **Pauli
+An important concept that determines the existence of two quantum statistics is the **Pauli
 exclusion principle**. It states that two or more identical particles with half-integer spins (which
 are called *fermions*) cannot simultaneously occupy the same quantum state within a system that
 obeys the laws of quantum mechanics. This principle does not apply to quantum particles with
