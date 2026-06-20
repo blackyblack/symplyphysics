@@ -6,7 +6,7 @@ A *waveguide* is a structure that guides waves by restricting the transmission o
 to one direction. Common types of waveguides include acoustic waveguides which direct
 sound, optical waveguides which direct light, and radio-frequency waveguides which direct
 electromagnetic waves other than light like radio waves. It is used as a
-:ref:`transmission line <Transmission Lines>` mostly at microwave frequencies to connecting
+:ref:`transmission line <Transmission Lines>` mostly at microwave frequencies to connect
 microwave transmitters and receivers to their antennas.
 
 .. _critical_wavelength_waveguide_def:

@@ -7,7 +7,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.electromagnetic_waves.doppler_effect import frequency_shift_from_velocity_and_angle as doppler_law
+from symplyphysics.electromagnetic_waves.relativistic_effects import frequency_shift_from_velocity_and_angle as doppler_law
 
 # Using calculations from the paper: http://www.mrelativity.net/TransDoppler/Relativistic%20Transverse%20Doppler%20Effect.pdf.
 

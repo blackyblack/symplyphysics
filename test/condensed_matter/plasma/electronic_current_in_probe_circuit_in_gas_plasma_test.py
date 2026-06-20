@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (errors, units, Quantity, assert_equal)
 
-from symplyphysics.condensed_matter.gas_plasma import electronic_current_in_probe_circuit_in_gas_plasma as current_law
+from symplyphysics.condensed_matter.plasma import electronic_current_in_probe_circuit_in_gas_plasma as current_law
 
 ## The probe surface area is equal to 10 [millimeter^2]. The concentration of electrons in plasma is 3.5e16 [1 / centimeter^3].
 ## The temperature of electrons in plasma is 6000 kelvin. The floating plasma potential is 100 volt. The potential at the location of the probe is 95 volt.

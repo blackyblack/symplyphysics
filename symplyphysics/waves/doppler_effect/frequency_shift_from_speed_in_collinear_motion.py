@@ -33,7 +33,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.waves.doppler_effect import frequency_shift_from_speed_in_arbitrary_motion as classical_doppler_with_angle
-from symplyphysics.electromagnetic_waves.doppler_effect import longitudinal_frequency_shift_from_absolute_velocities as general_doppler_law
+from symplyphysics.electromagnetic_waves.relativistic_effects import longitudinal_frequency_shift_from_absolute_velocities as general_doppler_law
 
 observed_frequency = clone_as_symbol(
     symbols.temporal_frequency,
