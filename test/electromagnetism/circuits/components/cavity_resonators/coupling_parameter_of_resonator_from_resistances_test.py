@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.electromagnetism.circuits.components.resonators import coupling_parameter_of_resonator_from_resistances as parameter_law
+from symplyphysics.electromagnetism.circuits.components.cavity_resonators import coupling_parameter_of_resonator_from_resistances as parameter_law
 
 # Description
 ## Resonator's resistance is 80 ohms, the load resistance is 100 ohms.

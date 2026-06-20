@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
-from symplyphysics.electromagnetism.circuits.components.resonators import resonant_frequency_of_ring_resonator as frequency_law
+from symplyphysics.electromagnetism.circuits.components.cavity_resonators import resonant_frequency_of_ring_resonator as frequency_law
 
 # Description
 ## The length of the ring resonator is 850 micrometer. The effective dielectric permittivity is 4. The order of interference is 1.

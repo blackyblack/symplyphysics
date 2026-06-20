@@ -1,5 +1,0 @@
-"""
-**Doppler Effect (Electromagnetic Waves)**
-==========================================
-
-"""

@@ -9,7 +9,7 @@ point of the isothermal pressure-volume dependency line.
 
 **Note:**
 
-#. These equations need to be solved together with the :ref:`equation of state <**Equations of state**>`.
+#. These equations need to be solved together with the :ref:`equation of state <Equations of state>`.
 
 **Links:**
 

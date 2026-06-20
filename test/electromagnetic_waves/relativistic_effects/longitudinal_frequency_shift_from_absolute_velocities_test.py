@@ -9,7 +9,7 @@ from symplyphysics import (
     SI,
     convert_to,
 )
-from symplyphysics.electromagnetic_waves.doppler_effect import longitudinal_frequency_shift_from_absolute_velocities as doppler_law
+from symplyphysics.electromagnetic_waves.relativistic_effects import longitudinal_frequency_shift_from_absolute_velocities as doppler_law
 
 # Using calculations from the paper: http://www.mrelativity.net/TransDoppler/Relativistic%20Transverse%20Doppler%20Effect.pdf.
 
