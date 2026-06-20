@@ -2,7 +2,7 @@
 Hydraulic Press
 ===============
 
-A **hydraulic press**nis a machine which is using a hydraulic cylinder to generate a compressive force.
+A **hydraulic press** is a machine which is using a hydraulic cylinder to generate a compressive force.
 This is the hydraulic equivalent of a mechanical lever.
 
 **Links:**
