@@ -2,7 +2,7 @@
 Acoustic Waves (Continuum Mechanics)
 ====================================
 
-This module deals in particular with the calculation of the **speed of sound** in continuus media.
+This module deals in particular with the calculation of the **speed of sound** in continuous media.
 
 **Links:**
 
