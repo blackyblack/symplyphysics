@@ -2,8 +2,8 @@
 **Microstrip Lines**
 ====================
 
-*Microstrip* is a type of electrical transmission line which can be fabricated with
-any technology where a conductor is separated from a ground plane by a dielectric
+*Microstrip* is a type of electrical :ref:`transmission line <Transmission Lines>` which can be
+fabricated with any technology where a conductor is separated from a ground plane by a dielectric
 layer known as "substrate". Microstrip lines are used to convey microwave-frequency signals.
 
 By design, the microstrip line is a dielectric substrate on which a metal strip is
@@ -27,9 +27,11 @@ microstrip line. The (relative) permittivity of such a medium will be called the
 
 .. _effective_width_microstrip_line_def:
 
-**Effective width of microstrip line**
-
 *Effective width* of a microstrip line is the width of such a flat capacitor, the
 electric intensity between the plates of which is equal to the electric intensity in the
 dielectric of the substrate under the line strip.
+
+**Links:**
+
+#. `Wikipedia — Microstrip <https://en.wikipedia.org/wiki/Microstrip>`__
 """
