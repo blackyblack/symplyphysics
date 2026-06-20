@@ -1,21 +1,19 @@
 """
-Wave Propagation (Electromagnetic Waves)
-========================================
+Wave Propagation (Waves)
+========================
 
-The propagation of electromagnetic waves is determined by :ref:`Maxwell's Equations`. At short
-distances, it can be approximated by *rectilinear propagation* (the tendency of light waves to
-travel in straight lines) through what is called *transmission medium*. The medium can also be
-classified into
+**Wave propagation refers** to the transmission of disturbances or oscillations through a medium or
+through space, carrying energy and momentum without the transport of matter.
 
-#. *bounded* (having finite extent) and *unbounded*;
-#. *linear* (the amplitudes of different waves can be summed up at any point) and *non-linear*;
-#. *uniform* or *homogeneous* (i.e. its physical properties are independent of position in space) 
-   and *heterogeneous*;
-#. *isotropic* (i.e. its physical properties are independent of direction) and *anisotropic*.
+**Phase velocity** is the speed at which a single phase point of a wave travels through space. 
+
+**Group velocity** is the speed at which the overall envelope of a wave packet moves. In dispersive
+media, phase and group velocities can differ because different frequency components propagate at
+different speeds.
 
 **Links:**
 
-#. `Wikipedia — Optical medium <https://en.wikipedia.org/wiki/Optical_medium>`__
-#. `Wikipedia — Rectilinear propagation <https://en.wikipedia.org/wiki/Rectilinear_propagation>`__
-#. `Wikipedia — Transmission medium <https://en.wikipedia.org/wiki/Transmission_medium>`__
+#. `Physics LibreTexts — Wave Propagation <https://phys.libretexts.org/Bookshelves/Classical_Mechanics/Variational_Principles_in_Classical_Mechanics_(Cline)/03%3A_Linear_Oscillators/3.11%3A_Wave_Propagation>`__
+#. `Wikipedia — Phase velocity <https://en.wikipedia.org/wiki/Phase_velocity>`__
+#. `Wikipedia — Group velocity <https://en.wikipedia.org/wiki/Group_velocity>`__
 """

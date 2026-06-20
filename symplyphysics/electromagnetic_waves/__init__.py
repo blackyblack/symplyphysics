@@ -1,14 +1,12 @@
 """
-Electromagnetic waves
-=====================
+Waves
+=====
 
-An **electromagnetic wave** (also referred to as **elelectromagnetic radiation**) is a
-self-propagating wave of the electromagnetic field that carries momentum and radiant energy through
-space. In vacuum, any electromagnetic wave will travel at the speed of light and exhibit
-wave-particle duality. In quantum mechanics, it is viewed as consisting of photons that are
-responsible for all electromagnetic interactions.
+A **wave** is a propagating dynamic disturbance, in other words a change from equilibrium, of one or
+more quantities. The two most commonly studied types of waves are mechanical waves and :ref:`electromagnetic waves` (covered in this
+module).
 
 **Links:**
 
-#. `Wikipedia — Electromagnetic radiation <https://en.wikipedia.org/wiki/Electromagnetic_radiation>`__
+#. `Wikipedia — Wave <https://en.wikipedia.org/wiki/Wave>`__
 """
