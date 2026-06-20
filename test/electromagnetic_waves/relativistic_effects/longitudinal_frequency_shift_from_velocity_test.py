@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.electromagnetic_waves.doppler_effect import longitudinal_frequency_shift_from_velocity as doppler_law
+from symplyphysics.electromagnetic_waves.relativistic_effects import longitudinal_frequency_shift_from_velocity as doppler_law
 
 # Description. With help of online calculator at https://physics.icalculator.com/the-doppler-effect-in-light-waves-calculator.html:
 ## For red wave with frequency 384THz (3.84e14 Hz) emitted by object moving away from observer with velocity 0.1c = 29979245.8 m/s

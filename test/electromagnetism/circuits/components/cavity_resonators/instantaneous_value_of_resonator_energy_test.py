@@ -3,7 +3,7 @@ from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (errors, units, Quantity, assert_equal, prefixes)
 
-from symplyphysics.electromagnetism.circuits.components.resonators import instantaneous_value_of_resonator_energy as energy_law
+from symplyphysics.electromagnetism.circuits.components.cavity_resonators import instantaneous_value_of_resonator_energy as energy_law
 
 ## The initial energy value in the resonator is 10000 joule. The frequency is 2 * pi * 100e6 radian per second,
 ## the time is 1 microsecond. The quality factor of the resonator is 10000.

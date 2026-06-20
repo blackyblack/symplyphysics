@@ -34,8 +34,8 @@ from symplyphysics import (
 )
 from symplyphysics.quantities import speed_of_light
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.electromagnetic_waves.doppler_effect import longitudinal_frequency_shift_from_absolute_velocities as general_doppler_law
-from symplyphysics.electromagnetic_waves.doppler_effect import frequency_shift_from_velocity_and_angle as relativistic_doppler_with_angle
+from symplyphysics.electromagnetic_waves.relativistic_effects import longitudinal_frequency_shift_from_absolute_velocities as general_doppler_law
+from symplyphysics.electromagnetic_waves.relativistic_effects import frequency_shift_from_velocity_and_angle as relativistic_doppler_with_angle
 
 observer_frequency = clone_as_symbol(
     symbols.angular_frequency,
