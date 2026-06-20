@@ -4,7 +4,7 @@ Maxwell—Boltzmann Statistics
 
 The **Maxwell—Boltzmann distribution** is a probability distribution used for describing speeds of
 ideal gas particles (atoms or molecules), i.e. they do not interact between each other except for
-brief collisions when the exchange or energy and momentum occurs.
+brief collisions when the exchange of energy and momentum occurs.
 
 **Links:**
 
