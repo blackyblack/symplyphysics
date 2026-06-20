@@ -7,7 +7,7 @@ usually liquid—gas, due to the difference in forces that the surface molecules
 to the molecules within the bulk of the fluid. They are responsible for the formation of droplets,
 bubbles, menisci, etc.
 
-The *surface energy* which is related to the energy of the formation of the interface. Physical
+The *surface energy* is related to the energy of the formation of the interface. Physical
 systems tend to minimize surface energy, thus creating *surface tension*.
 
 **Links:**
