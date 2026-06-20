@@ -9,7 +9,7 @@ generates direct current.
 
 This module also features
 
-- the :ref:`Ohm's law <Current is voltage over resistance>`, which is connects current to voltage
+- the :ref:`Ohm's law <Current is voltage over resistance>`, which connects current to voltage
   and resistance,
 - formulas for the electric power in resistive circuits
 
