@@ -4,7 +4,7 @@ Legendre Transformation (Thermodynamic Potentials)
 
 Given two variables, we can convert a function depending on one variable into another function that
 depends on another variable using a so called **Legendre transformation**, and the two variables
-will be called **conjugate variables**. For a function :math:`f` of a single variable :math:`x`
+which are known as **conjugate variables**. For a function :math:`f` of a single variable :math:`x`
 this can be shown to be
 
 .. math::
