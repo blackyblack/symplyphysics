@@ -19,7 +19,10 @@ that this phenomenon is only observed in the direction parallel to the velocity 
 """
 
 from sympy import Eq, solve, sqrt
-from symplyphysics import (Quantity, validate_input, validate_output, symbols, quantities)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, quantities,
+    clone_as_symbol)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.special_relativity.relativistic_kinematics.lorentz_transformation import lorentz_transformation_of_coordinate as coordinate_transformation
 
 proper_length = symbols.proper_length
 """
@@ -43,6 +46,31 @@ law = Eq(relativistic_length, proper_length * sqrt(1 - speed**2 / quantities.spe
 
 :laws:latex::
 """
+
+# Derive the law from the Lorentz transformation of coordinate.
+
+## Consider a rod at rest in the proper frame S', which moves with the given speed relative
+## to the lab frame. The length of the rod in the lab frame is measured by locating both of
+## its ends at the same lab time, so the positions of the ends in the lab frame differ by
+## the relativistic length.
+_first_end_position = clone_as_symbol(symbols.position, subscript="1")
+_second_end_position = _first_end_position + relativistic_length
+
+## Transform the positions of both ends into the proper frame S'. Since both measurement
+## events happen at the same lab time, the time-dependent terms cancel out in the difference.
+_first_end_position_transformed = coordinate_transformation.law.rhs.subs(
+    coordinate_transformation.position_in_lab_frame, _first_end_position)
+_second_end_position_transformed = coordinate_transformation.law.rhs.subs(
+    coordinate_transformation.position_in_lab_frame, _second_end_position)
+
+## The distance between the ends of the rod in its rest frame S' is the proper length.
+_proper_length_expr = (_second_end_position_transformed - _first_end_position_transformed).subs(
+    coordinate_transformation.proper_frame_speed_in_lab_frame, speed)
+
+_relativistic_length_derived = solve(Eq(proper_length, _proper_length_expr),
+    relativistic_length)[0]
+
+assert expr_equals(_relativistic_length_derived, law.rhs)
 
 
 @validate_input(rest_length_=proper_length, velocity_=speed)
