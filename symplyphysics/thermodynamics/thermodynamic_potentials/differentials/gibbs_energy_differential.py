@@ -26,7 +26,7 @@ thermodynamic quantities depend on variables that are measurable experimentally.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Fundamental_thermodynamic_relation>`__.
 """
 
-from sympy import Eq
+from sympy import Eq, symbols as sympy_symbols, Function as SymFunction, Symbol as SymSymbol
 from symplyphysics import (
     clone_as_symbol,
     symbols,
@@ -34,6 +34,9 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.thermodynamics.thermodynamic_potentials.definitions import gibbs_energy_via_enthalpy as gibbs_energy_def
+from symplyphysics.thermodynamics.thermodynamic_potentials.differentials import enthalpy_differential
 
 gibbs_energy_change = clone_as_symbol(symbols.gibbs_energy, display_symbol="dG", display_latex="dG")
 """
@@ -82,6 +85,65 @@ law = Eq(
 
 :laws:latex::
 """
+
+# Derive from the definition of Gibbs energy and enthalpy differential
+
+_enthalpy_sym = sympy_symbols("enthalpy", cls=SymFunction)
+_entropy_change = SymSymbol("entropy_change")
+_temperature = SymSymbol("temperature")
+_pressure = SymSymbol("pressure")
+_particle_count = SymSymbol("particle_count")
+
+_enthalpy = _enthalpy_sym(entropy, _pressure, _particle_count)
+
+_gibbs_energy = gibbs_energy_def.law.rhs.subs({
+    gibbs_energy_def.enthalpy: _enthalpy,
+    gibbs_energy_def.temperature: _temperature,
+    gibbs_energy_def.entropy: entropy,
+})
+
+# The differential of Gibbs energy can be found by adding up the products of
+# the partial derivative of Gibbs energy with respect to a thermodynamic quantity
+# and the infinitesimal change of that quantity
+_gibbs_energy_change = (_gibbs_energy.diff(_temperature) * temperature_change +
+    _gibbs_energy.diff(entropy) * _entropy_change +
+    _gibbs_energy.diff(_pressure) * pressure_change +
+    _gibbs_energy.diff(_particle_count) * particle_count_change)
+
+_enthalpy_diff = enthalpy_differential.law.rhs.subs({
+    enthalpy_differential.temperature: _temperature,
+    enthalpy_differential.entropy_change: _entropy_change,
+    enthalpy_differential.volume: volume,
+    enthalpy_differential.pressure_change: pressure_change,
+    enthalpy_differential.chemical_potential: chemical_potential,
+    enthalpy_differential.particle_count_change: particle_count_change,
+})
+
+_enthalpy_diff_entropy = _enthalpy_diff.subs({
+    _entropy_change: 1,
+    pressure_change: 0,
+    particle_count_change: 0
+})
+
+_enthalpy_diff_pressure = _enthalpy_diff.subs({
+    _entropy_change: 0,
+    pressure_change: 1,
+    particle_count_change: 0
+})
+
+_enthalpy_diff_particle_count = _enthalpy_diff.subs({
+    _entropy_change: 0,
+    pressure_change: 0,
+    particle_count_change: 1
+})
+
+_gibbs_energy_change = _gibbs_energy_change.subs({
+    _enthalpy.diff(entropy): _enthalpy_diff_entropy,
+    _enthalpy.diff(_pressure): _enthalpy_diff_pressure,
+    _enthalpy.diff(_particle_count): _enthalpy_diff_particle_count,
+})
+
+assert expr_equals(_gibbs_energy_change, law.rhs)
 
 
 @validate_input(

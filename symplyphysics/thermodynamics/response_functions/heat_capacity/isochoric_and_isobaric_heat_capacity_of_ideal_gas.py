@@ -27,6 +27,11 @@ from symplyphysics import (
     symbols,
     clone_as_symbol,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.thermodynamics.equations_of_state.ideal_gas import ideal_gas_equation
+from symplyphysics.thermodynamics.response_functions.heat_capacity import isochoric_and_isobaric_heat_capacities_of_homogeneous_substance as general_mayers_relation
+from symplyphysics.thermodynamics.response_functions.thermal_expansion import volumetric_coefficient_of_thermal_expansion as expansion_coefficient_def
+from symplyphysics.thermodynamics.response_functions.compressibility import thermodynamic_compressibility as compressibility_def
 
 isobaric_heat_capacity = clone_as_symbol(symbols.heat_capacity, subscript="p")
 """
@@ -52,6 +57,38 @@ law = Eq(
 
 :laws:latex::
 """
+
+# Derive the law from the Mayer's relation for a homogeneous substance by evaluating the
+# thermal expansion coefficient and the isothermal compressibility on the ideal gas
+# equation of state.
+
+## Express the volume of the ideal gas as a function of temperature and pressure.
+_ideal_gas_volume = solve(ideal_gas_equation.law, ideal_gas_equation.volume)[0]
+
+## Evaluate the volumetric thermal expansion coefficient of the ideal gas. Note that
+## the pressure is held constant during the expansion, as required by the definition.
+_expansion_coefficient = expansion_coefficient_def.law.rhs.subs(
+    expansion_coefficient_def.volume(expansion_coefficient_def.temperature,
+    expansion_coefficient_def.parameters),
+    _ideal_gas_volume,
+).doit()
+
+## Evaluate the isothermal compressibility of the ideal gas. Note that the temperature
+## is held constant, so the compressibility is indeed the isothermal one.
+_compressibility = compressibility_def.law.rhs.subs(
+    compressibility_def.volume(compressibility_def.pressure, compressibility_def.parameters),
+    _ideal_gas_volume,
+).doit()
+
+## Substitute the ideal gas volume and response functions into the general Mayer's relation.
+_heat_capacity_difference = general_mayers_relation.law.rhs.subs({
+    general_mayers_relation.volume: _ideal_gas_volume,
+    general_mayers_relation.temperature: ideal_gas_equation.temperature,
+    general_mayers_relation.thermal_expansion_coefficient: _expansion_coefficient,
+    general_mayers_relation.isothermal_compressibility: _compressibility,
+})
+
+assert expr_equals(_heat_capacity_difference, law.rhs)
 
 
 @validate_input(
