@@ -11,13 +11,15 @@ and particle count are extensive.
 #. `Wikipedia, last formula in paragraph <https://en.wikipedia.org/wiki/Gibbs_free_energy#Definitions>`__.
 """
 
-from sympy import Eq
+from sympy import Eq, solve
 from symplyphysics import (
     Quantity,
     validate_input,
     validate_output,
     symbols,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.thermodynamics.thermodynamic_potentials.euler_relations import gibbs_energy_euler_relation
 
 chemical_potential = symbols.chemical_potential
 """
@@ -41,7 +43,20 @@ law = Eq(chemical_potential, gibbs_energy / particle_count)
 :laws:latex::
 """
 
-# TODO: derive law from the extensive property of chemical potential
+# Derive the law from the Euler relation for the Gibbs energy.
+
+## The Euler relation states that the Gibbs energy is the product of the chemical potential
+## and the particle count, so the chemical potential is found by solving it.
+_chemical_potential_derived = solve(
+    gibbs_energy_euler_relation.law.subs({
+    gibbs_energy_euler_relation.gibbs_energy: gibbs_energy,
+    gibbs_energy_euler_relation.chemical_potential: chemical_potential,
+    gibbs_energy_euler_relation.particle_count: particle_count,
+    }),
+    chemical_potential,
+)[0]
+
+assert expr_equals(_chemical_potential_derived, law.rhs)
 
 
 @validate_input(
