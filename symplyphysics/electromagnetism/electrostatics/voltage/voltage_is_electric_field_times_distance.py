@@ -20,7 +20,9 @@ multiplying by the necessary sign.
 """
 
 from sympy import Eq
-from symplyphysics import Quantity, validate_input, validate_output, symbols
+from symplyphysics import Quantity, validate_input, validate_output, symbols, clone_as_symbol
+from symplyphysics.core.expr_comparisons import expr_equals_abs
+from symplyphysics.electromagnetism.electrostatics.voltage import voltage_is_line_integral_of_electric_field as voltage_integral_law
 
 voltage = symbols.voltage
 """
@@ -44,7 +46,26 @@ law = Eq(voltage, electric_field_strength * distance)
 :laws:latex::
 """
 
-# Derivable from the integral in `./voltage_is_line_integral_of_electric_field.py`
+# Derive the law from the line integral of the electric field.
+
+## Assumption: the electric field is constant between the two points, so the tangent component
+## of the electric field along the integration path is the constant field strength.
+_integrand = voltage_integral_law.law.rhs.subs(
+    voltage_integral_law.electric_field_component(voltage_integral_law.distance),
+    electric_field_strength,
+)
+
+## The integration path is a straight line connecting the two points, so the final distance
+## exceeds the initial one by the distance between the points.
+_initial_distance = clone_as_symbol(symbols.distance, subscript="0")
+_voltage_derived = _integrand.subs({
+    voltage_integral_law.initial_distance: _initial_distance,
+    voltage_integral_law.final_distance: _initial_distance + distance,
+}).doit()
+
+## The sign of the voltage depends on the mutual orientation of the electric field and the
+## integration path, hence only the magnitudes are compared.
+assert expr_equals_abs(_voltage_derived, law.rhs)
 
 
 @validate_input(
