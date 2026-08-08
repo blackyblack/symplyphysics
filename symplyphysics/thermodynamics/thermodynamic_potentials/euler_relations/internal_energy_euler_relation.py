@@ -15,7 +15,7 @@ homogeneous functions to get the following expression.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Thermodynamic_potential#Euler_relations>`__.
 """
 
-from sympy import Eq, Derivative
+from sympy import Eq, Derivative, solve
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.thermodynamics.thermodynamic_potentials.differentials import internal_energy_differential
@@ -67,11 +67,19 @@ law = Eq(internal_energy,
 # Derive from the homogeneity property of internal energy and the internal energy differential
 # using Euler's homogeneous function theorem.
 
+## Internal energy is an extensive quantity: scaling the system, i.e. multiplying its extensive
+## natural variables (entropy, volume, particle count) by a factor `k`, multiplies the internal
+## energy by the same factor. This is expressed by the homogeneity condition
+## `U(k*S, k*V, k*N) = k*U(S, V, N)`, which is exactly what allows the internal energy
+## differential to be integrated into a closed-form expression for `U`.
+
 _factor = homogeneity_property.factor
 
-## Differentiate both sides of the homogeneity condition `U(k*S, k*V, k*N) = k*U(S, V, N)`
-## with respect to the scaling factor `k` and evaluate at `k = 1`. This yields Euler's
-## theorem for first-order homogeneous functions:
+## Differentiate both sides of the homogeneity condition with respect to the scaling factor `k`.
+## The condition holds for any value of `k`, so its derivative holds for any `k` as well, and we
+## are free to evaluate it at any point; `k = 1` is chosen because there the arguments of `U`
+## reduce to the unscaled variables `S`, `V`, `N`. This yields Euler's theorem for first-order
+## homogeneous functions:
 ## `S * dU/dS + V * dU/dV + N * dU/dN = U(S, V, N)`.
 _euler_theorem = Eq(
     homogeneity_property.homogeneity_condition.lhs.diff(_factor),
@@ -109,7 +117,12 @@ _euler_theorem = _euler_theorem.subs({
         }),
 })
 
-_internal_energy_derived = _euler_theorem.lhs.subs({
+## The right-hand side of the Euler theorem equation is `U(S, V, N)`, the internal energy of the
+## unscaled system, so the equation is solved for it to obtain the closed-form expression.
+_internal_energy_derived = solve(
+    _euler_theorem.subs(_energy_function, internal_energy),
+    internal_energy,
+)[0].subs({
     internal_energy_differential.temperature: temperature,
     internal_energy_differential.pressure: pressure,
     internal_energy_differential.chemical_potential: chemical_potential,
