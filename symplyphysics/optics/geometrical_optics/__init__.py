@@ -1,6 +1,6 @@
 """
-**Geometrical Optics**
-======================
+Geometrical Optics
+==================
 
 **Geometrical optics** (or **ray optics**) is a model of optics that describes light propagation in
 terms of *rays*. The ray in geometrical optics is an abstraction useful for approximating the paths

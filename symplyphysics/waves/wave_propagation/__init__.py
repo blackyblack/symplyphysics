@@ -1,5 +1,5 @@
 """
-**Wave Propagation (Waves)**
-============================
+Wave Propagation (Waves)
+========================
 
 """
