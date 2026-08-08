@@ -1,6 +1,6 @@
 """
-Thermodynamic Compressibility
-=============================
+Compressibility
+===============
 
 **Compressibility**, or a **coefficient of compressibility**, is a thermodynamic quantity that
 measures the relative volume change as a result of pressure or stress change. Like heat capacity,

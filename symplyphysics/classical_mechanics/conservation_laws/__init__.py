@@ -2,7 +2,7 @@
 Conservation Laws (Classical Mechanics)
 =======================================
 
-In a :ref:`closed <closed-system-def_>` classical system, both its total mechanical energy and total 
+In a :ref:`closed <closed-system-def>` classical system, both its total mechanical energy and total
 momentum are conserved.
 
 **Links:**

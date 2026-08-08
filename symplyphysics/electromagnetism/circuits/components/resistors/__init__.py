@@ -3,7 +3,7 @@ Resistors
 =========
 
 A **resistor** is a passive two-terminal electronic component that implements :ref:`electrical
-resistance <Resistance (Direct Current)>` as a circuit element.
+resistance <Resistance>` as a circuit element.
 
 **Links:**
 

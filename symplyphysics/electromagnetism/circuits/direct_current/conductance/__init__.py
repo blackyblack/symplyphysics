@@ -4,7 +4,7 @@ Conductance
 
 **Electrical conductance** is a physical quantity that measures the ease with which an electric
 current passes through a medium. Its reciprocal quantity is :ref:`resistance
-<Resistance (Direct Current)>`.
+<Resistance>`.
 
 The SI unit of conductance is siemens :math:`\mathrm{S}`.
 
