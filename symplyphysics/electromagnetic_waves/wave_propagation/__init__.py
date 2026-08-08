@@ -1,6 +1,6 @@
 """
-Wave Propagation (Waves)
-========================
+Wave Propagation (Electromagnetic Waves)
+========================================
 
 **Wave propagation refers** to the transmission of disturbances or oscillations through a medium or
 through space, carrying energy and momentum without the transport of matter.
