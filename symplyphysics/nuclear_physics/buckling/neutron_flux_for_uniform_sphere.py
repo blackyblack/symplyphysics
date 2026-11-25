@@ -17,8 +17,8 @@ from symplyphysics.nuclear_physics.buckling import geometric_buckling_from_neutr
 
 dimension_factor = clone_as_symbol(symbols.neutron_flux, subscript="0")
 """
-Dimension factor that appears as a coefficient in the solution to the :ref:`differential
-equation <Diffusion equation from neutron flux>`. See :symbols:`neutron_flux`.
+:symbols:`neutron_flux` at the center of the sphere, given by the limit as :math:`r`
+approaches zero.
 """
 
 radial_distance = symbols.distance_to_origin
@@ -41,8 +41,8 @@ neutron_flux = symbols.neutron_flux
 # See: [geometric buckling for uniform sphere](geometric_buckling_for_uniform_sphere.py)
 radial_constant = pi / radius
 
-law = Eq(neutron_flux,
-    dimension_factor * (sin(radial_constant * radial_distance) / radial_distance))
+_phase = radial_constant * radial_distance
+law = Eq(neutron_flux, dimension_factor * sin(_phase) / _phase)
 """
 :laws:symbol::
 
