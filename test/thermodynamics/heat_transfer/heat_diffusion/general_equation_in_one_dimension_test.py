@@ -1,6 +1,7 @@
 from collections import namedtuple
 from pytest import fixture
 from sympy import sin, exp, Rational
+from symplyphysics.core.dimensions import collect_expression_and_dimension, dimsys_SI
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.thermodynamics.heat_transfer.heat_diffusion import general_equation_in_one_dimension as heat_equation
 
@@ -18,6 +19,12 @@ def test_args_fixture() -> Args:
     q = 0
     T = sin(100 * heat_equation.position) * exp(Rational(-8, 75) * heat_equation.time)
     return Args(rho=rho, cp=cp, k=k, q=q, T=T)
+
+
+def test_law_dimensions() -> None:
+    _, lhs_dimension = collect_expression_and_dimension(heat_equation.law.lhs)
+    _, rhs_dimension = collect_expression_and_dimension(heat_equation.law.rhs)
+    assert dimsys_SI.equivalent_dims(lhs_dimension, rhs_dimension)
 
 
 def test_law(test_args: Args) -> None:
