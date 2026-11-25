@@ -66,7 +66,7 @@ def calculate_acceleration(
 ) -> QuantityCoordinateVector:
     dot = Quantity(VectorDot(normal_acceleration_, tangential_acceleration_))
 
-    if not approx_equal_numbers(dot.scale_factor, 0):
+    if not approx_equal_numbers(float(dot.scale_factor), 0):
         raise ValueError("The normal and tangential accelerations must be orthogonal")
 
     result = solve_for_vector(law, total_acceleration).subs({

@@ -61,7 +61,7 @@ def calculate_linear_displacement(
 ) -> QuantityCoordinateVector:
     dot = Quantity(VectorDot(angular_displacement_, rotation_radius_))
 
-    if not approx_equal_numbers(dot.scale_factor, 0, absolute_tolerance=1e-10):
+    if not approx_equal_numbers(float(dot.scale_factor), 0, absolute_tolerance=1e-10):
         raise ValueError("Angular displacement and rotation radius vector must be orthogonal")
 
     result = law.rhs.subs({
