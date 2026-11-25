@@ -20,7 +20,7 @@ the evolution of heat transferred from hotter to colder environments in time and
 """
 
 from sympy import Eq, Derivative
-from symplyphysics import units, Symbol, symbols, clone_as_function
+from symplyphysics import units, Function, Symbol, symbols, clone_as_function
 
 position = symbols.position
 """
@@ -53,12 +53,10 @@ thermal_conductivity = clone_as_function(symbols.thermal_conductivity, [position
 :symbols:`thermal_conductivity` of the medium as a function of :attr:`~position`.
 """
 
-heat_source_density = clone_as_function(symbols.energy_density, [position, time],
-    display_symbol="q",
-    display_latex="q")
+heat_source_density = Function("q", [position, time], dimension=units.power / units.volume)
 """
-Density of the rate of heat production by external sources as a function of
-:attr:`~position` and :attr:`~time`. See :symbols:`energy_density`.
+Rate of heat production by external sources per unit volume as a function of
+:attr:`~position` and :attr:`~time`.
 """
 
 law = Eq(
