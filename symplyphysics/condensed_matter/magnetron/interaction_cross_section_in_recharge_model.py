@@ -81,8 +81,8 @@ reference_speed = Quantity(2.2e6 * units.meter / units.second, display_symbol="v
 _energy_ratio = ionization_energy / hydrogen_ionization_energy
 _area_scale = reference_area / _energy_ratio
 _neutral_density = pressure / (boltzmann_constant * temperature)
-_collision_speed = sqrt(2 * elementary_charge * electric_field_strength /
-    (molecular_mass * _neutral_density * cross_section))
+_collision_speed = sqrt((2 * elementary_charge * electric_field_strength /
+    (molecular_mass * _neutral_density * cross_section)))
 _speed_ratio = reference_speed * sqrt(_energy_ratio) / _collision_speed
 
 law = Eq(cross_section, _area_scale * log(_speed_ratio)**2)
@@ -102,11 +102,9 @@ law = Eq(cross_section, _area_scale * log(_speed_ratio)**2)
 def calculate_cross_sectional_area_of_interaction(ionization_energy_: Quantity,
     mass_of_atom_: Quantity, pressure_: Quantity, temperature_: Quantity,
     electric_intensity_: Quantity) -> Quantity:
-    """Demonstrate the low-speed solution when the law admits multiple roots.
-
-    The largest cross section gives the shortest acceleration path and the 
-    lowest collision speed. If this branch is unavailable, return the first available root.
-    """
+    ## Demonstrate the low-speed solution when the law admits multiple roots.
+    ## The largest cross section gives the shortest acceleration path and the 
+    ## lowest collision speed. If this branch is unavailable, return the first available root.
     substitutions = {
         ionization_energy: ionization_energy_,
         molecular_mass: mass_of_atom_,
