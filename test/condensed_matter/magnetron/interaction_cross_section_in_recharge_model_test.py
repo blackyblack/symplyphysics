@@ -1,5 +1,5 @@
 from collections import namedtuple
-from pytest import fixture, raises
+from pytest import fixture, mark, raises
 from symplyphysics import (
     errors,
     units,
@@ -11,7 +11,7 @@ from symplyphysics.condensed_matter.magnetron import interaction_cross_section_i
 
 ## The ionization energy of atoms is equal to 14.69 electronvolt. The mass of an atom is 4.64e-26 kilogram.
 ## The pressure is 1 pascal, the temperature is 573 kelvin. The electric field strength is 5857 volt per meter.
-## Then the cross-sectional area of the interaction will be 1.31e-18 [meter^2].
+## Then the low-speed charge-exchange cross section is 1.16014e-19 m^2.
 
 Args = namedtuple("Args",
     ["ionization_energy", "mass_of_atom", "pressure", "temperature", "electric_intensity"])
@@ -40,7 +40,22 @@ def test_basic_cross_sectional_area_of_interaction(test_args: Args) -> None:
         test_args.temperature,
         test_args.electric_intensity,
     )
-    assert_equal(result, 1.31e-18 * units.meter**2, relative_tolerance=0.01)
+    assert_equal(result, 1.16014e-19 * units.meter**2, relative_tolerance=1e-4)
+
+
+@mark.parametrize("parameter", Args._fields)
+def test_negative_input(test_args: Args, parameter: str) -> None:
+    negative_value = Quantity(-getattr(test_args, parameter))
+    args = test_args._replace(**{parameter: negative_value})
+    with raises(ValueError, match="inputs must be positive"):
+        cross_section_law.calculate_cross_sectional_area_of_interaction(*args)
+
+
+def test_returns_high_speed_solution(test_args: Args) -> None:
+    result = cross_section_law.calculate_cross_sectional_area_of_interaction(
+        test_args.ionization_energy, test_args.mass_of_atom, test_args.pressure,
+        test_args.temperature, Quantity(100 * test_args.electric_intensity))
+    assert_equal(result, 2.17684e-21 * units.meter**2, relative_tolerance=1e-4)
 
 
 def test_bad_ionization_energy(test_args: Args) -> None:
